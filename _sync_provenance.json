@@ -1,0 +1,14 @@
+{
+  "synced_at": "2026-03-26 23:00:06",
+  "source_bundle_dir": "V:/Sistema_Operativo_Tesis_Posgrado/06_dashboard/publico",
+  "source_repo": {
+    "remote_origin": "git@github.com:Dtcsrni/Sistema_Operativo_Tesis_Posgrado.git",
+    "branch": "codex/bootstrap",
+    "commit": "649ba20fe80cad06192b8ca2a64825a9bd75d164"
+  },
+  "public_repo": {
+    "branch": "main",
+    "commit_before_sync": "3d1685ba11c08ea9b97960d6a85272d7ddb854b7"
+  },
+  "bundle_fingerprint": "c6ea24aa67d2377dcbf1ba762d0c1c02bc17fe3e0ba7be61440a757794425fa3"
+}
