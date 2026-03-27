@@ -27,7 +27,7 @@ TEXT_SUFFIXES = {
 }
 DEFAULT_PUBLICATION_CONFIG = "00_sistema_tesis/config/publicacion.yaml"
 FILE_URI_PATTERN = re.compile(r"file:///[^\s)>\]`\"']+")
-WINDOWS_PATH_PATTERN = re.compile(r"[A-Za-z]:[\\/][^\s)>\]`\"']+")
+WINDOWS_PATH_PATTERN = re.compile(r"(?<![A-Za-z])[A-Za-z]:[\\/][^\s)>\]`\"']+")
 GITHUB_PATTERNS = (
     re.compile(r"ghp_[A-Za-z0-9]{36}"),
     re.compile(r"github_pat_[A-Za-z0-9_]{82}"),
@@ -158,6 +158,22 @@ def build_publication_index(config: dict, manifest_payload: dict) -> str:
         "- **Privada:** canon, ledger, matriz, bitácoras, backlog y auditoría completa.",
         "- **Pública:** derivado sanitizado para lectura humana, divulgación y evaluación externa.",
         "- **IA:** apoyo opcional; la operación del bundle público no depende de IA.",
+        "",
+        "## Rutas de navegación pública",
+        "",
+        "- Entrada general: `README_publico.md`.",
+        "- Mapa del sistema y ruta base: `wiki/index.md`.",
+        "- Propósito, módulos y flujos: `wiki/sistema.md`.",
+        "- Reglas y límites: `wiki/gobernanza.md`.",
+        "- Términos, IDs y convenciones: `wiki/terminologia.md`.",
+        "- Exploración visual: `dashboard/index.html` y `wiki_html/index.html`.",
+        "",
+        "## Cómo rastrear hacia el origen canónico",
+        "",
+        "- Cada página pública proviene de una página wiki derivada de la base privada.",
+        "- La wiki declara sus fuentes canónicas y el bundle conserva esa semántica con sanitización aplicada.",
+        "- Si necesitas reconstruir o auditar, usa el par `wiki/index.md` + `manifest_publico.json` y compáralo con la wiki interna generada.",
+        "- La capa pública explica el origen, pero no expone ledger privado, transcripciones ni canon sensible.",
         "",
         "## Artefactos incluidos",
         "",

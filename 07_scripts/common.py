@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import os
+import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -45,6 +46,35 @@ else:
 
 VALID_PRIORITIES = {"baja", "media", "alta", "critica"}
 VALID_EVIDENCE = {"ausente", "parcial", "fuerte"}
+VOLATILE_PATH_PREFIXES = (
+    "00_sistema_tesis/bitacora/audit_history/",
+    "config/backups/",
+)
+GENERATED_PATH_PREFIXES = (
+    "06_dashboard/generado/",
+    "06_dashboard/wiki/",
+    "06_dashboard/publico/",
+)
+GENERATED_PATHS = {
+    "README.md",
+}
+DASHBOARD_TIMESTAMP_SOURCES = [
+    "00_sistema_tesis/config/sistema_tesis.yaml",
+    "00_sistema_tesis/config/hipotesis.yaml",
+    "00_sistema_tesis/config/bloques.yaml",
+    "00_sistema_tesis/config/dashboard.yaml",
+    "00_sistema_tesis/config/publicacion.yaml",
+    "00_sistema_tesis/config/ia_gobernanza.yaml",
+    "00_sistema_tesis/config/security_report.json",
+    "00_sistema_tesis/config/token_budget.json",
+    "00_sistema_tesis/config/token_usage_snapshot.json",
+    "01_planeacion/backlog.csv",
+    "01_planeacion/riesgos.csv",
+    "00_sistema_tesis/decisiones",
+    "00_sistema_tesis/reportes_semanales",
+    "00_sistema_tesis/bitacora",
+    "06_dashboard/publico/manifest_publico.json",
+]
 
 
 def load_yaml_json(relative_path: str) -> dict:
@@ -146,6 +176,42 @@ def now_stamp() -> str:
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
+def stable_generated_at(relative_paths: list[str]) -> str:
+    mtimes: list[float] = []
+    for relative_path in relative_paths:
+        path = ROOT / relative_path
+        if path.is_file():
+            rel = relative_posix(path)
+            if any(rel.startswith(prefix) for prefix in VOLATILE_PATH_PREFIXES):
+                continue
+            mtimes.append(path.stat().st_mtime)
+            continue
+        if path.is_dir():
+            for item in path.rglob("*"):
+                if not item.is_file():
+                    continue
+                rel = relative_posix(item)
+                if any(rel.startswith(prefix) for prefix in VOLATILE_PATH_PREFIXES):
+                    continue
+                mtimes.append(item.stat().st_mtime)
+    if not mtimes:
+        return now_stamp()
+    return datetime.fromtimestamp(max(mtimes)).strftime("%Y-%m-%d %H:%M:%S")
+
+
+def preferred_python_executable() -> str:
+    candidates = [
+        ROOT / ".venv" / "bin" / "python.exe",
+        ROOT / ".venv" / "Scripts" / "python.exe",
+        ROOT / ".venv" / "bin" / "python",
+        ROOT / ".venv" / "Scripts" / "python",
+    ]
+    for candidate in candidates:
+        if candidate.exists() and candidate.is_file():
+            return str(candidate)
+    return sys.executable
+
+
 def ensure_generated_dir() -> None:
     DASHBOARD_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -171,12 +237,26 @@ def file_sha256(relative_path: str) -> str:
 
 def path_timestamp(relative_path: str) -> str:
     path = ROOT / relative_path
+    normalized = relative_path.replace("\\", "/")
+    if normalized == "06_dashboard/generado/index.html":
+        return stable_generated_at(DASHBOARD_TIMESTAMP_SOURCES)
+    if normalized in GENERATED_PATHS or any(normalized.startswith(prefix) for prefix in GENERATED_PATH_PREFIXES):
+        return stable_generated_at([normalized])
+    if path.is_dir():
+        return stable_generated_at([relative_path])
     return datetime.fromtimestamp(path.stat().st_mtime).strftime("%Y-%m-%d %H:%M:%S")
 
 
 def dump_json(relative_path: str, payload: dict) -> Path:
     path = ROOT / relative_path
     return dump_structured_path(path, payload)
+
+
+def write_text_if_changed(path: Path, content: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.exists() and path.read_text(encoding="utf-8") == content:
+        return
+    path.write_text(content, encoding="utf-8")
 
 
 def directory_markdown_status(relative_dir: str) -> dict:
@@ -205,7 +285,7 @@ def canonical_file_status() -> list[dict]:
                 "clave": label,
                 "ruta": rel_path,
                 "existe": exists,
-                "modificado": datetime.fromtimestamp(path.stat().st_mtime).strftime("%Y-%m-%d %H:%M:%S") if exists else "n/a",
+                "modificado": path_timestamp(rel_path) if exists else "n/a",
             }
         )
     return statuses

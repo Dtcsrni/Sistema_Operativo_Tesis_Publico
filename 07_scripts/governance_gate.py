@@ -7,11 +7,12 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 from datetime import datetime
 from pathlib import Path
 
 from canon import EVENTS_PATH, import_legacy_events, materialize_events, projection_paths, step_ids_exist, validate_events
-from common import ROOT, now_stamp
+from common import ROOT, now_stamp, preferred_python_executable
 from guardrails import is_protected_path
 
 
@@ -249,8 +250,12 @@ def file_hashes(paths: list[str]) -> dict[str, str]:
     return hashes
 
 
+def public_sync_check_dir() -> str:
+    return str(Path(tempfile.gettempdir()) / "sistema_tesis_public_sync_check")
+
+
 def checks_for_stage(stage: str) -> list[tuple[str, list[str]]]:
-    python = sys.executable
+    python = preferred_python_executable()
     pre_commit_checks = [
         ("Auditar canon", [python, "07_scripts/tesis.py", "audit", "--check"]),
         ("Validar estructura", [python, "07_scripts/validate_structure.py"]),
@@ -268,6 +273,21 @@ def checks_for_stage(stage: str) -> list[tuple[str, list[str]]]:
         return [
             ("Verificar firma GPG", [python, "07_scripts/setup_gpg_attestation.py", "--check"]),
             ("Pruebas", [python, "-m", "pytest", "-q"]),
+            (
+                "Verificar downstream público sanitizado",
+                [
+                    python,
+                    "07_scripts/sync_public_repo.py",
+                    "--mode",
+                    "mirror",
+                    "--target-dir",
+                    public_sync_check_dir(),
+                    "--branch",
+                    "main",
+                    "--check",
+                    "--allow-dirty",
+                ],
+            ),
             ("Build total", [python, "07_scripts/build_all.py"]),
             ("Artefactos versionados", ["git", "diff", "--exit-code"]),
         ]

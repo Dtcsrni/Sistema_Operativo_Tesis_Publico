@@ -14,6 +14,7 @@
     "index",
     "sistema",
     "gobernanza",
+    "terminologia",
     "hipotesis",
     "bloques",
     "planeacion",
@@ -32,6 +33,10 @@
       "sources": [
         "README_INICIO.md",
         "00_sistema_tesis/manual_operacion_humana.md",
+        "00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md",
+        "00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md",
+        "00_sistema_tesis/documentacion_sistema/flujos_operativos.md",
+        "00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md",
         "00_sistema_tesis/config/sistema_tesis.yaml",
         "00_sistema_tesis/config/publicacion.yaml"
       ],
@@ -43,9 +48,25 @@
       "markdown": "06_dashboard/wiki/gobernanza.md",
       "html": "06_dashboard/generado/wiki/gobernanza.html",
       "sources": [
+        "00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md",
+        "00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md",
+        "00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md",
         "00_sistema_tesis/config/sistema_tesis.yaml",
         "00_sistema_tesis/config/ia_gobernanza.yaml",
         "00_sistema_tesis/config/publicacion.yaml"
+      ],
+      "verified": false
+    },
+    {
+      "id": "terminologia",
+      "title": "Terminología",
+      "markdown": "06_dashboard/wiki/terminologia.md",
+      "html": "06_dashboard/generado/wiki/terminologia.html",
+      "sources": [
+        "00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md",
+        "00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json",
+        "01_planeacion/backlog_guia.md",
+        "00_sistema_tesis/config/ia_gobernanza.yaml"
       ],
       "verified": false
     },
@@ -138,13 +159,49 @@
   "sources": [
     {
       "path": "README_INICIO.md",
-      "sha256": "f9d88f3255c2cbfcf515527b367b89acfdd607a678b24636b72fd33a08c7317d",
+      "sha256": "376e7d1b4caed9372389f54347a31bafcba3225c1c2dabe24e45534763f57441",
       "modified": "[fecha_hora_redactada]",
       "kind": "file"
     },
     {
       "path": "00_sistema_tesis/manual_operacion_humana.md",
-      "sha256": "9fff6d99eaec61207346bcedd0ac65e74833de0291297ce4aa34e945c87a12eb",
+      "sha256": "ceb3f399b3608fba9035f04be88f3ae2d422bd1689c5f595e5684af374fcf6ca",
+      "modified": "[fecha_hora_redactada]",
+      "kind": "file"
+    },
+    {
+      "path": "00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md",
+      "sha256": "044982c71ad0e55015a5f578b3ed06005dae36c6f5c0e858259b120a3a3e1f45",
+      "modified": "[fecha_hora_redactada]",
+      "kind": "file"
+    },
+    {
+      "path": "00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md",
+      "sha256": "c0fa6f9b07c16279cbd6cbf939ab758d385efdaa5553d18850663c8f23ced2ec",
+      "modified": "[fecha_hora_redactada]",
+      "kind": "file"
+    },
+    {
+      "path": "00_sistema_tesis/documentacion_sistema/flujos_operativos.md",
+      "sha256": "d8b46aaef7d125df5480847cba470e30292c72f2d96c84cce07b7a184b85580d",
+      "modified": "[fecha_hora_redactada]",
+      "kind": "file"
+    },
+    {
+      "path": "00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md",
+      "sha256": "3d5ed8039785b9c235b100a5e057433046f9adfbb9e1564c8c87016d83ac8110",
+      "modified": "[fecha_hora_redactada]",
+      "kind": "file"
+    },
+    {
+      "path": "00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md",
+      "sha256": "c8a23bbcaf4e50df542c9eebb1cb89fa23c6f1e2ae2451f4dfd5c679ec8cf7af",
+      "modified": "[fecha_hora_redactada]",
+      "kind": "file"
+    },
+    {
+      "path": "00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json",
+      "sha256": "1632f985de4f8bb0ccf03f6bac0d4361e3f9f371aba93ee1511e154038c02a7c",
       "modified": "[fecha_hora_redactada]",
       "kind": "file"
     },

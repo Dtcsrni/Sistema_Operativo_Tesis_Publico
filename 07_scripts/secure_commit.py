@@ -6,6 +6,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from common import preferred_python_executable
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -23,7 +25,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
-    cmd = [sys.executable, "07_scripts/tesis.py", "sync", "--message", args.message]
+    cmd = [preferred_python_executable(), "07_scripts/tesis.py", "sync", "--message", args.message]
     if args.step_id:
         cmd.extend(["--step-id", args.step_id])
     if args.agent:

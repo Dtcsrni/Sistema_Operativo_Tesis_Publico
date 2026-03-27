@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "obligatorio": [
+    "superficie_aislada",
+    "fuente_apropiada",
+    "sin_energia_al_cablear",
+    "proteccion_antiestatica_si_aplica",
+    "documentar_incidentes"
+  ],
+  "prohibido": [
+    "energizar_sin_checklist",
+    "asumir_compatibilidad_3v3_5v",
+    "cambiar_conexiones_bajo_carga_sin_justificacion"
+  ]
+}

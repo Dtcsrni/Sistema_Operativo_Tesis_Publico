@@ -44,7 +44,8 @@ def load_structured_path(path: Path) -> Any:
 def dump_structured_path(path: Path, payload: Any) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     rendered = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
-    path.write_text(rendered, encoding="utf-8")
+    if not path.exists() or path.read_text(encoding="utf-8") != rendered:
+        path.write_text(rendered, encoding="utf-8")
     return path
 
 

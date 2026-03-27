@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from html import escape
 from pathlib import Path
+import re
 
 from common import (
     ROOT,
@@ -13,14 +14,16 @@ from common import (
     list_markdown_entries,
     load_csv_rows,
     load_yaml_json,
-    now_stamp,
     path_timestamp,
+    stable_generated_at,
+    write_text_if_changed,
 )
 
 
 SECTION_IDS = {
     "sistema",
     "gobernanza",
+    "terminologia",
     "hipotesis",
     "bloques",
     "planeacion",
@@ -29,6 +32,48 @@ SECTION_IDS = {
     "experimentos",
     "implementacion",
     "tesis",
+}
+
+PAGE_ORDER = [
+    "sistema",
+    "gobernanza",
+    "terminologia",
+    "planeacion",
+    "hipotesis",
+    "bloques",
+    "decisiones",
+    "bitacora",
+    "experimentos",
+    "implementacion",
+    "tesis",
+]
+
+PAGE_TITLES = {
+    "sistema": "Sistema",
+    "gobernanza": "Gobernanza",
+    "terminologia": "Terminología",
+    "hipotesis": "Hipótesis",
+    "bloques": "Bloques",
+    "planeacion": "Planeación",
+    "decisiones": "Decisiones",
+    "bitacora": "Bitácora",
+    "experimentos": "Experimentos",
+    "implementacion": "Implementación",
+    "tesis": "Tesis",
+}
+
+PAGE_RELATED = {
+    "sistema": ["gobernanza", "terminologia", "planeacion"],
+    "gobernanza": ["sistema", "terminologia", "bitacora"],
+    "terminologia": ["sistema", "gobernanza", "planeacion"],
+    "planeacion": ["bloques", "hipotesis", "decisiones"],
+    "hipotesis": ["planeacion", "bloques", "experimentos"],
+    "bloques": ["planeacion", "hipotesis", "implementacion"],
+    "decisiones": ["bitacora", "planeacion", "sistema"],
+    "bitacora": ["decisiones", "gobernanza", "planeacion"],
+    "experimentos": ["hipotesis", "implementacion", "tesis"],
+    "implementacion": ["bloques", "experimentos", "tesis"],
+    "tesis": ["experimentos", "implementacion", "decisiones"],
 }
 
 REQUIRED_PAGE_FIELDS = [
@@ -78,6 +123,80 @@ def render_table(headers: list[str], rows: list[list[str]]) -> list[str]:
         sanitized = [str(item).replace("\n", " ").replace("|", "\\|") for item in row]
         lines.append("|" + "|".join(sanitized) + "|")
     lines.append("")
+    return lines
+
+
+def render_markdown_fragment(rel_path: str, *, demote_by: int = 1) -> list[str]:
+    target = ROOT / rel_path
+    if not target.exists():
+        return [f"_Fuente narrativa no disponible: `{rel_path}`_", ""]
+    lines: list[str] = []
+    for raw_line in target.read_text(encoding="utf-8").splitlines():
+        match = re.match(r"^(#+)\s+(.*)$", raw_line)
+        if match:
+            hashes, title = match.groups()
+            raw_line = f"{'#' * (len(hashes) + demote_by)} {title}"
+        lines.append(raw_line)
+    lines.append("")
+    return lines
+
+
+def render_source_links(sources: list[str]) -> list[str]:
+    rows: list[list[str]] = []
+    for path in sources:
+        source = ROOT / path
+        kind = "directorio" if source.is_dir() else "archivo"
+        rows.append([f"`{path}`", kind, "sí" if source.exists() else "no"])
+    return render_table(["Fuente canónica", "Tipo", "Existe"], rows)
+
+
+def render_page_navigation(page_id: str) -> list[str]:
+    position = PAGE_ORDER.index(page_id)
+    previous_page = PAGE_ORDER[position - 1] if position > 0 else None
+    next_page = PAGE_ORDER[position + 1] if position + 1 < len(PAGE_ORDER) else None
+    related = PAGE_RELATED.get(page_id, [])
+    lines = [
+        "## Navegación de esta página",
+        "",
+        "- [Volver al índice](index.md).",
+    ]
+    if previous_page:
+        lines.append(f"- Página anterior en la ruta base: [{PAGE_TITLES[previous_page]}]({relative_wiki_link(previous_page)}).")
+    if next_page:
+        lines.append(f"- Página siguiente en la ruta base: [{PAGE_TITLES[next_page]}]({relative_wiki_link(next_page)}).")
+    for related_page in related:
+        lines.append(f"- Relacionada: [{PAGE_TITLES[related_page]}]({relative_wiki_link(related_page)}).")
+    lines.append("")
+    return lines
+
+
+def render_origin_block(page_id: str, sources: list[str]) -> list[str]:
+    lines = [
+        "## Origen canónico y artefactos relacionados",
+        "",
+        "### Cómo rastrear esta página hasta su origen canónico",
+        "",
+        f"1. Esta página derivada: `06_dashboard/wiki/{page_id}.md`.",
+        "2. Revisa la lista de fuentes canónicas que alimentan su contenido.",
+        "3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.",
+        "4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.",
+        "5. Si necesitas cambiar el contenido, edita la fuente canónica y reconstruye; no edites esta salida a mano.",
+        "",
+        "### Fuentes canónicas declaradas",
+        "",
+    ]
+    lines.extend(render_source_links(sources))
+    lines.extend(
+        [
+            "### Artefactos derivados relacionados",
+            "",
+            f"- Markdown interno: `06_dashboard/wiki/{page_id}.md`",
+            f"- HTML interno: `06_dashboard/generado/wiki/{page_id}.html`",
+            f"- Markdown público sanitizado: `06_dashboard/publico/wiki/{page_id}.md`",
+            f"- HTML público sanitizado: `06_dashboard/publico/wiki_html/{page_id}.html`",
+            "",
+        ]
+    )
     return lines
 
 
@@ -135,6 +254,47 @@ def render_index_page(wiki: dict, pages: list[dict], generated_at: str) -> str:
     lines.extend(
         [
             "",
+            "## Qué explica esta documentación",
+            "",
+            "- Para qué y por qué existe el sistema.",
+            "- Cuáles son sus módulos y cómo se relacionan.",
+            "- Cuáles son sus flujos operativos principales.",
+            "- Cómo interactúa con él el tesista.",
+            "- Cómo puede explorarlo y evaluarlo un lector público sin acceder a superficies privadas.",
+            "",
+            "## Ruta de lectura",
+            "",
+            "- Si necesitas entender el sistema completo, empieza por [Sistema](sistema.md).",
+            "- Si necesitas reglas y límites, continúa con [Gobernanza](gobernanza.md).",
+            "- Si necesitas lenguaje, familias de IDs y convenciones, pasa por [Terminología](terminologia.md).",
+            "- Si necesitas estado del trabajo, revisa [Planeación](planeacion.md), [Hipótesis](hipotesis.md) y [Bloques](bloques.md).",
+            "- Si necesitas evidencia de avance o cobertura, revisa [Decisiones](decisiones.md), [Bitácora](bitacora.md), [Implementación](implementacion.md), [Experimentos](experimentos.md) y [Tesis](tesis.md).",
+            "",
+            "## Mapa de navegación por intención",
+            "",
+            "- Entender el sistema: [Sistema](sistema.md) -> [Gobernanza](gobernanza.md) -> [Terminología](terminologia.md).",
+            "- Retomar ejecución: [Planeación](planeacion.md) -> [Bloques](bloques.md) -> [Hipótesis](hipotesis.md).",
+            "- Rastrear decisiones y sesiones: [Decisiones](decisiones.md) -> [Bitácora](bitacora.md).",
+            "- Revisar madurez técnica: [Experimentos](experimentos.md) -> [Implementación](implementacion.md) -> [Tesis](tesis.md).",
+            "",
+            "## Cómo rastrear un artefacto derivado hasta su origen canónico",
+            "",
+            "- Empieza por la página derivada que estás leyendo.",
+            "- Revisa su bloque `Origen canónico y artefactos relacionados`.",
+            "- Sigue la lista de fuentes canónicas declaradas en esa misma página.",
+            "- Si necesitas validar la cadena de publicación, cruza con `06_dashboard/generado/wiki_manifest.json` y `06_dashboard/publico/manifest_publico.json`.",
+            "- Si necesitas trazabilidad operativa interna, consulta `00_sistema_tesis/bitacora/matriz_trazabilidad.md` y `00_sistema_tesis/bitacora/log_conversaciones_ia.md`.",
+            "",
+            "## Módulos del sistema",
+            "",
+            "- Gobierno y soberanía humana.",
+            "- Trazabilidad y evidencia.",
+            "- Planeación y control del trabajo.",
+            "- Canon técnico y configuración.",
+            "- Automatización y validación.",
+            "- Publicación derivada y superficie pública.",
+            "- Tesis IoT como objeto gobernado.",
+            "",
             "## Operación humana y frontera público/privado",
             "",
             "- La superficie **privada** gobierna canon, backlog, decisiones, bitácora y auditoría completa.",
@@ -148,6 +308,7 @@ def render_index_page(wiki: dict, pages: list[dict], generated_at: str) -> str:
             "- `01_planeacion/backlog.csv`",
             "- `01_planeacion/riesgos.csv`",
             "- `00_sistema_tesis/bitacora/matriz_trazabilidad.md`",
+            "- `06_dashboard/generado/wiki_manifest.json`",
             "- `06_dashboard/wiki/index.md`",
             "- `06_dashboard/generado/index.html`",
             "- `06_dashboard/publico/index.md`",
@@ -174,6 +335,8 @@ def build_sistema_page(section: dict, generated_at: str, notice: str) -> str:
         "",
     ]
     lines.extend(render_metadata(generated_at=generated_at, status="ok", sources=section["fuentes"], notice=notice))
+    lines.extend(render_page_navigation("sistema"))
+    lines.extend(render_origin_block("sistema", section["fuentes"]))
     lines.extend(
         [
             "## Identidad del proyecto",
@@ -203,6 +366,35 @@ def build_sistema_page(section: dict, generated_at: str, notice: str) -> str:
             f"- Formatos derivados: {', '.join(f'`{item}`' for item in sistema['arquitectura_base']['formatos_derivados'])}",
             f"- Criterio de bajo rozamiento: {sistema['arquitectura_base']['criterio_bajo_rozamiento']}",
             "",
+            "## Narrativa del sistema",
+            "",
+        ]
+    )
+    lines.extend(render_markdown_fragment("00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md", demote_by=1))
+    lines.extend(render_markdown_fragment("00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md", demote_by=1))
+    lines.extend(render_markdown_fragment("00_sistema_tesis/documentacion_sistema/flujos_operativos.md", demote_by=1))
+    lines.extend(render_markdown_fragment("00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md", demote_by=1))
+    lines.extend(
+        [
+            "## Mapa rápido de términos e IDs",
+            "",
+            "- `VAL_STEP_{nnn}`: familia de validación o instrucción humana crítica trazada en canon.",
+            "- `EVT_{nnnn}`: familia de evento canónico general, por ejemplo evidencia fuente.",
+            "- `DEC-{nnnn}`: decisión formal.",
+            "- `T-{nnn}`, `R-{nnn}`, `ENT-{nnn}`, `B{n}`, `F{n}`: planeación, riesgo, entregable, bloque y fase.",
+            "- Si un término o ID no es evidente, la referencia central es `glosario_terminologia_y_convenciones.md`.",
+            "",
+            "## Terminología de evidencia e ingestión",
+            "",
+            "- `paquete`: conjunto versionado de contexto o evidencia a integrar.",
+            "- `staging`: zona temporal de verificación antes de integrar al canon.",
+            "- `indice maestro`: registro consolidado de ingreso y destino de artefactos.",
+            "- `evidencia`, `soporte`, `politica`, `modulo`, `rol`, `tier`, `status`, `accion`: etiquetas de clasificación que no deben confundirse entre sí.",
+            "",
+        ]
+    )
+    lines.extend(
+        [
             "## Operación humana y superficies",
             "",
             "- **Superficie privada:** canon, backlog, decisiones, bitácora, auditoría y evidencia íntegra.",
@@ -238,12 +430,37 @@ def build_gobernanza_page(section: dict, generated_at: str, notice: str) -> str:
         "",
     ]
     lines.extend(render_metadata(generated_at=generated_at, status="ok", sources=section["fuentes"], notice=notice))
+    lines.extend(render_page_navigation("gobernanza"))
+    lines.extend(render_origin_block("gobernanza", section["fuentes"]))
+    lines.extend(
+        [
+            "## Qué resuelve este subsistema",
+            "",
+            "- Evita que la IA o la automatización se presenten como autoridad final.",
+            "- Obliga a distinguir entre confirmación humana, evidencia fuerte y artefacto derivado.",
+            "- Mantiene visible qué reglas aplican en privado y qué puede explicarse en público.",
+            "",
+        ]
+    )
     lines.extend(["## Políticas del sistema", ""])
     for item in sistema["politicas_sistema"]:
         lines.append(f"- {item}")
     lines.extend(["", "## Principios de gobernanza de IA", ""])
     for item in ia["principios"]:
         lines.append(f"- {item}")
+    lines.extend(
+        [
+            "",
+            "## Vocabulario de gobernanza y trazabilidad",
+            "",
+            "- `validación humana`: acto humano trazado que autoriza o confirma un cambio relevante.",
+            "- `evidencia fuente`: soporte de conversación que respalda un `VAL-STEP` nuevo cuando aplica enforcement.",
+            "- `source_event_id`: enlace desde una validación humana hacia la evidencia de conversación registrada.",
+            "- `human_validation.confirmation_text`: texto exacto de la confirmación humana en el canon.",
+            "- `enforcement`: regla obligatoria que el sistema no trata como sugerencia opcional.",
+            "",
+        ]
+    )
     lines.extend(["", "## Política TDD operativa", ""])
     for item in ia["principios_tdd"]:
         lines.append(f"- {item}")
@@ -259,14 +476,20 @@ def build_gobernanza_page(section: dict, generated_at: str, notice: str) -> str:
             "- La IA es opcional y nunca sustituye validación, criterio metodológico ni publicación responsable.",
             "- La exposición pública solo ocurre mediante sanitización reproducible desde la base privada.",
             f"- Bundle público: `{publicacion['salida']['directorio']}`",
+            "",
+            "## Límites de la capa pública",
+            "",
+            "- La parte pública sirve para explorar y evaluar el sistema, no para sustituir el canon privado.",
+            "- El ledger detallado, la matriz interna completa, las transcripciones y la evidencia fuente permanecen fuera de la superficie pública.",
+            "- La arquitectura IoT se describe hasta el marco canónico vigente; los pendientes abiertos deben mostrarse como pendientes y no como diseño cerrado.",
         ]
     )
     lines.append("")
     return "\n".join(lines)
 
 
-def build_hipotesis_page(section: dict, generated_at: str, notice: str) -> str:
-    hipotesis = load_yaml_json("00_sistema_tesis/config/hipotesis.yaml")["hipotesis"]
+def build_terminologia_page(section: dict, generated_at: str, notice: str) -> str:
+    naming = load_yaml_json("00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json")
     lines = [
         f"# {section['titulo']}",
         "",
@@ -274,6 +497,81 @@ def build_hipotesis_page(section: dict, generated_at: str, notice: str) -> str:
         "",
     ]
     lines.extend(render_metadata(generated_at=generated_at, status="ok", sources=section["fuentes"], notice=notice))
+    lines.extend(render_page_navigation("terminologia"))
+    lines.extend(render_origin_block("terminologia", section["fuentes"]))
+    lines.extend(
+        [
+            "## Lectura rápida",
+            "",
+            "- Esta página es la referencia central para términos, familias de IDs y convenciones de nombre.",
+            "- La capa privada puede mostrar ejemplos concretos como `VAL-STEP-530` o `EVT-0053`.",
+            "- La capa pública explica la misma semántica usando formas seguras como `VAL_STEP_{nnn}` y `EVT_{nnnn}`.",
+            "",
+            "## Familias de IDs más usadas",
+            "",
+        ]
+    )
+    lines.extend(
+        render_table(
+            ["Familia", "Qué representa", "Fuente principal"],
+            [
+                ["`VAL_STEP_{nnn}`", "Validación humana o instrucción crítica trazada", "`events.jsonl` + ledger/matriz"],
+                ["`EVT_{nnnn}`", "Evento canónico general", "`events.jsonl`"],
+                ["`DEC-{nnnn}`", "Decisión formal", "`00_sistema_tesis/decisiones/`"],
+                ["`T-{nnn}`", "Tarea del backlog", "`backlog.csv`"],
+                ["`R-{nnn}`", "Riesgo", "`riesgos.csv`"],
+                ["`ENT-{nnn}`", "Entregable", "`entregables.csv`"],
+                ["`B{n}`", "Bloque macro", "`bloques.yaml`"],
+                ["`F{n}`", "Fase del roadmap", "`roadmap.csv`"],
+            ],
+        )
+    )
+    lines.extend(
+        [
+            "## Convención de nombres de evidencia ingerida",
+            "",
+            f"- Objetivo: {naming['naming_objective']}",
+            f"- Patrón base: `{naming['pattern']}`",
+            "",
+            "### Reglas activas",
+            "",
+        ]
+    )
+    for item in naming["rules"]:
+        lines.append(f"- {item}")
+    lines.extend(["", "## Glosario canónico", ""])
+    lines.extend(render_markdown_fragment("00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md", demote_by=1))
+    return "\n".join(lines)
+
+
+def build_hipotesis_page(section: dict, generated_at: str, notice: str) -> str:
+    hipotesis = load_yaml_json("00_sistema_tesis/config/hipotesis.yaml")["hipotesis"]
+    criticas = [item for item in hipotesis if item["prioridad"] == "critica"]
+    lines = [
+        f"# {section['titulo']}",
+        "",
+        section["descripcion"],
+        "",
+    ]
+    lines.extend(render_metadata(generated_at=generated_at, status="ok", sources=section["fuentes"], notice=notice))
+    lines.extend(render_page_navigation("hipotesis"))
+    lines.extend(render_origin_block("hipotesis", section["fuentes"]))
+    lines.extend(
+        [
+            "## Qué resuelve este subsistema",
+            "",
+            "- Convierte el objetivo general de la tesis en afirmaciones contrastables.",
+            "- Vincula cada hipótesis con bloques de trabajo, criterios de soporte y futura evidencia.",
+            "- Evita que la narrativa técnica crezca sin criterios explícitos de validación o rechazo.",
+            "",
+            "## Lectura rápida",
+            "",
+            f"- Hipótesis activas: `{len(hipotesis)}`",
+            f"- Hipótesis de prioridad crítica: `{len(criticas)}`",
+            "- Esta página describe hipótesis vigentes, no resultados ya confirmados.",
+            "",
+        ]
+    )
     
     # Agregar Diagrama Mermaid de Hipótesis
     lines.extend([
@@ -314,6 +612,8 @@ def build_hipotesis_page(section: dict, generated_at: str, notice: str) -> str:
 
 def build_bloques_page(section: dict, generated_at: str, notice: str) -> str:
     bloques = load_yaml_json("00_sistema_tesis/config/bloques.yaml")["bloques"]
+    activos = [item for item in bloques if item["estado"] == "activo"]
+    no_iniciados = [item for item in bloques if item["estado"] == "no_iniciado"]
     lines = [
         f"# {section['titulo']}",
         "",
@@ -321,6 +621,24 @@ def build_bloques_page(section: dict, generated_at: str, notice: str) -> str:
         "",
     ]
     lines.extend(render_metadata(generated_at=generated_at, status="ok", sources=section["fuentes"], notice=notice))
+    lines.extend(render_page_navigation("bloques"))
+    lines.extend(render_origin_block("bloques", section["fuentes"]))
+    lines.extend(
+        [
+            "## Qué resuelve este subsistema",
+            "",
+            "- Ordena la tesis como una secuencia de bloques mayores con dependencias explícitas.",
+            "- Permite distinguir qué parte del sistema está activa, cuál depende de otra y cuál sigue pendiente.",
+            "- Sirve como puente entre gobernanza macro y backlog operativo detallado.",
+            "",
+            "## Lectura rápida",
+            "",
+            f"- Bloques activos: `{len(activos)}`",
+            f"- Bloques no iniciados: `{len(no_iniciados)}`",
+            "- Un bloque no se interpreta como completado solo por existir en la estructura; depende de su criterio de salida.",
+            "",
+        ]
+    )
 
     # Agregar Diagrama Mermaid de Bloques
     lines.extend([
@@ -367,6 +685,8 @@ def build_planeacion_page(section: dict, generated_at: str, notice: str) -> str:
     backlog = load_csv_rows("01_planeacion/backlog.csv")
     riesgos = load_csv_rows("01_planeacion/riesgos.csv")
     entregables = load_csv_rows("01_planeacion/entregables.csv")
+    backlog_activo = [item for item in backlog if item["estado"] in {"pendiente", "en_progreso"}]
+    riesgos_abiertos = [item for item in riesgos if str(item.get("estado", "")).strip() == "abierto"]
     lines = [
         f"# {section['titulo']}",
         "",
@@ -383,6 +703,33 @@ def build_planeacion_page(section: dict, generated_at: str, notice: str) -> str:
         "",
     ]
     lines.extend(render_metadata(generated_at=generated_at, status="ok", sources=section["fuentes"], notice=notice))
+    lines.extend(render_page_navigation("planeacion"))
+    lines.extend(render_origin_block("planeacion", section["fuentes"]))
+    lines.extend(
+        [
+            "## Qué resuelve este subsistema",
+            "",
+            "- Traduce la estrategia de tesis en trabajo secuenciado, riesgos visibles y entregables verificables.",
+            "- Permite entender qué sigue, qué amenaza el avance y qué artefacto representa cada salida mayor.",
+            "- Hace explícita la diferencia entre estructura de bloques y ejecución operativa concreta.",
+            "",
+            "## Lectura rápida",
+            "",
+            f"- Tareas pendientes o en progreso: `{len(backlog_activo)}`",
+            f"- Riesgos abiertos: `{len(riesgos_abiertos)}`",
+            f"- Entregables definidos: `{len(entregables)}`",
+            "",
+            "## Convenciones de planeación",
+            "",
+            "- `B{n}`: bloque macro del sistema o de la tesis.",
+            "- `T-{nnn}`: tarea concreta del backlog.",
+            "- `R-{nnn}`: riesgo registrado.",
+            "- `ENT-{nnn}`: entregable mayor.",
+            "- `F{n}`: fase del roadmap.",
+            "- El detalle normativo completo se resume en la página de terminología y en `backlog_guia.md`.",
+            "",
+        ]
+    )
     
     # Agregar Diagrama Gantt de Roadmap
     lines.extend([
@@ -469,6 +816,18 @@ def build_decisiones_page(section: dict, generated_at: str, notice: str) -> str:
         "",
     ]
     lines.extend(render_metadata(generated_at=generated_at, status="ok", sources=section["fuentes"], notice=notice))
+    lines.extend(render_page_navigation("decisiones"))
+    lines.extend(render_origin_block("decisiones", section["fuentes"]))
+    lines.extend(
+        [
+            "## Qué resuelve este subsistema",
+            "",
+            "- Conserva decisiones de arquitectura, método y operación como piezas defendibles y fechadas.",
+            "- Evita que cambios estructurales queden solo en conversaciones o commits sin narrativa.",
+            "- Se interpreta como registro de criterio, no como lista genérica de notas.",
+            "",
+        ]
+    )
     if not entries:
         lines.extend(["## Estado", "", "Sin decisiones registradas aún.", ""])
         return "\n".join(lines)
@@ -489,6 +848,18 @@ def build_bitacora_page(section: dict, generated_at: str, notice: str) -> str:
         "",
     ]
     lines.extend(render_metadata(generated_at=generated_at, status="ok", sources=section["fuentes"], notice=notice))
+    lines.extend(render_page_navigation("bitacora"))
+    lines.extend(render_origin_block("bitacora", section["fuentes"]))
+    lines.extend(
+        [
+            "## Qué resuelve este subsistema",
+            "",
+            "- Conserva el trabajo de sesión, aprendizaje operativo y continuidad entre conversaciones.",
+            "- Permite distinguir entre evidencia de trabajo, cierre operativo y validación humana formal.",
+            "- Complementa decisiones y planeación, pero no las sustituye.",
+            "",
+        ]
+    )
     lines.extend(["## Bitácoras", ""])
     if bitacoras:
         for item in bitacoras:
@@ -507,6 +878,7 @@ def build_bitacora_page(section: dict, generated_at: str, notice: str) -> str:
 
 def build_coverage_page(section: dict, generated_at: str, notice: str) -> str:
     status = directory_markdown_status(section["fuentes"][0])
+    section_id = str(section["id"])
     lines = [
         f"# {section['titulo']}",
         "",
@@ -514,6 +886,18 @@ def build_coverage_page(section: dict, generated_at: str, notice: str) -> str:
         "",
     ]
     lines.extend(render_metadata(generated_at=generated_at, status="ok", sources=section["fuentes"], notice=notice))
+    lines.extend(render_page_navigation(section_id))
+    lines.extend(render_origin_block(section_id, section["fuentes"]))
+    lines.extend(
+        [
+            "## Cómo leer esta cobertura",
+            "",
+            "- Esta página no inventa contenido faltante.",
+            "- Solo reporta si la ruta existe y si ya contiene material operativo utilizable.",
+            "- El objetivo es mostrar madurez real del subsistema, no una promesa editorial.",
+            "",
+        ]
+    )
     lines.extend(
         [
             "## Estado de cobertura",
@@ -549,6 +933,7 @@ def build_coverage_page(section: dict, generated_at: str, notice: str) -> str:
 SECTION_BUILDERS = {
     "sistema": build_sistema_page,
     "gobernanza": build_gobernanza_page,
+    "terminologia": build_terminologia_page,
     "hipotesis": build_hipotesis_page,
     "bloques": build_bloques_page,
     "planeacion": build_planeacion_page,
@@ -626,7 +1011,8 @@ def build_wiki() -> dict:
 
     markdown_dir = ensure_directory(wiki["salida"]["markdown_dir"])
     html_dir = ensure_directory(wiki["salida"]["html_dir"])
-    generated_at = now_stamp()
+    source_paths = list(dict.fromkeys(wiki["fuentes_base"] + [source for section in wiki["secciones"] for source in section["fuentes"]]))
+    generated_at = stable_generated_at(source_paths)
     notice = wiki["politica"]["aviso_no_editar"]
     page_records: list[dict] = []
 
@@ -645,11 +1031,11 @@ def build_wiki() -> dict:
                 is_verified = any(s["archivo"] == source_rel and s["hash_verificado"] == current_hash for s in sign_offs)
 
         markdown_path = markdown_dir / f"{page_id}.md"
-        markdown_path.write_text(markdown_content + "\n", encoding="utf-8")
+        write_text_if_changed(markdown_path, markdown_content + "\n")
 
         html_content = render_html_page(section["titulo"], markdown_content, generated_at)
         html_path = html_dir / f"{page_id}.html"
-        html_path.write_text(html_content, encoding="utf-8")
+        write_text_if_changed(html_path, html_content)
 
         page_records.append(
             {
@@ -664,9 +1050,9 @@ def build_wiki() -> dict:
 
     index_content = render_index_page(wiki, page_records, generated_at)
     index_path = markdown_dir / "index.md"
-    index_path.write_text(index_content + "\n", encoding="utf-8")
+    write_text_if_changed(index_path, index_content + "\n")
     index_html_path = html_dir / "index.html"
-    index_html_path.write_text(render_html_page("Wiki verificable", index_content, generated_at), encoding="utf-8")
+    write_text_if_changed(index_html_path, render_html_page("Wiki verificable", index_content, generated_at))
 
     page_names = ["index"] + [item["id"] for item in page_records]
     manifest = {

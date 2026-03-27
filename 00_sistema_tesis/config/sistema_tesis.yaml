@@ -81,17 +81,17 @@
     {
       "tema": "datos_fair",
       "fuente": "Wilkinson et al., The FAIR Guiding Principles for scientific data management and stewardship, Scientific Data, 2016",
-      "url": "http[ruta_local_redactada]"
+      "url": "https://www.nature.com/articles/sdata201618"
     },
     {
       "tema": "citacion_y_trazabilidad_de_software",
       "fuente": "Smith et al., Software citation principles, PeerJ Computer Science, FORCE11, 2016",
-      "url": "http[ruta_local_redactada]"
+      "url": "https://peerj.com/articles/cs-86/"
     },
     {
       "tema": "gobernanza_de_proyectos_reproducibles",
       "fuente": "The Turing Way, Guide for reproducible, ethical and collaborative data science",
-      "url": "http[ruta_local_redactada]"
+      "url": "https://book.the-turing-way.org/"
     }
   ]
 }

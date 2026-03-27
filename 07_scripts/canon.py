@@ -573,8 +573,13 @@ def validate_events(events: list[dict[str, Any]] | None = None) -> list[str]:
                 errors.append(f"Validación humana sin fuente de verdad de confirmación en {event_id}")
             source_meta = resolve_human_validation_source_metadata(event)
             if source_evidence_required_for_step(event_id):
-                required_fields = ("source_event_id", "provenance_status", "quote_verification_status", "source_capture_required")
-                for field in required_fields:
+                required_source_fields = (
+                    "source_event_id",
+                    "provenance_status",
+                    "quote_verification_status",
+                    "source_capture_required",
+                )
+                for field in required_source_fields:
                     if field not in human_validation:
                         errors.append(f"Validación humana {event_id} no declara {field}.")
                 if not source_meta["source_event_id"]:

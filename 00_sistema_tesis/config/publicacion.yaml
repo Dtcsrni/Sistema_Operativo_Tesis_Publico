@@ -54,7 +54,7 @@
   ],
   "sanitizacion": {
     "prohibidos_en_salida": [
-      "fil[ruta_local_redactada]",
+      "file:///",
       "[evidencia_privada_redactada]/",
       "[evidencia_privada_redactada]",
       "VAL-STEP-",

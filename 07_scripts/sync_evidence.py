@@ -6,10 +6,12 @@ from datetime import datetime
 
 # Importar utilitarios de common si es posible
 try:
-    from common import ROOT, load_yaml_json
+    from common import ROOT, load_yaml_json, preferred_python_executable
     from canon import projection_paths
 except ImportError:
     ROOT = Path(__file__).resolve().parents[1]
+    def preferred_python_executable():  # type: ignore
+        return sys.executable
     def projection_paths(events=None):  # type: ignore
         return []
 
@@ -30,7 +32,7 @@ def check_structure_integrity():
     """Ejecuta el validador de estructura y retorna True si pasa."""
     try:
         result = subprocess.run(
-            [sys.executable, "07_scripts/validate_structure.py"],
+            [preferred_python_executable(), "07_scripts/validate_structure.py"],
             cwd=ROOT,
             capture_output=True,
             text=True
@@ -43,7 +45,7 @@ def check_md_format():
     """Ejecuta el validador de formato MD y retorna True si pasa."""
     try:
         result = subprocess.run(
-            [sys.executable, "07_scripts/validate_md_format.py"],
+            [preferred_python_executable(), "07_scripts/validate_md_format.py"],
             cwd=ROOT,
             capture_output=True,
             text=True

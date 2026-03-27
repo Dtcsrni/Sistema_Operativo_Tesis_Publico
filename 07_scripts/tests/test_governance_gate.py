@@ -8,9 +8,11 @@ sys.path.insert(0, str(ROOT / "07_scripts"))
 
 from governance_gate import (  # noqa: E402
     auto_resolve_step_id,
+    checks_for_stage,
     detect_projection_policy_errors,
     extract_step_ids_from_diff,
     get_protected_files,
+    public_sync_check_dir,
     render_markdown,
     step_ids_exist_in_ledger,
     validate_step_id,
@@ -155,6 +157,19 @@ class TestGovernanceGate(unittest.TestCase):
         json_path, md_path = write_attestation(attestation, output_dir)
         self.assertTrue(json_path.exists())
         self.assertTrue(md_path.exists())
+
+    def test_ci_checks_use_repo_preferred_python(self):
+        checks = checks_for_stage("ci")
+        test_check = next(item for item in checks if item[0] == "Pruebas")
+        self.assertIn(".venv", test_check[1][0].replace("\\", "/"))
+        self.assertEqual(test_check[1][1:], ["-m", "pytest", "-q"])
+
+    def test_ci_checks_include_public_downstream_verification(self):
+        checks = checks_for_stage("ci")
+        sync_check = next(item for item in checks if item[0] == "Verificar downstream público sanitizado")
+        self.assertIn("07_scripts/sync_public_repo.py", sync_check[1][1:])
+        self.assertIn("--check", sync_check[1])
+        self.assertIn(public_sync_check_dir().replace("\\", "/"), [item.replace("\\", "/") for item in sync_check[1]])
 
 
 if __name__ == "__main__":

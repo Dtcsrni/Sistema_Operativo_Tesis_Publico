@@ -1,6 +1,6 @@
 # Reporte de consistencia
 
-- Fecha de generación: [fecha_hora_redactada]
+    - Fecha de generación: [fecha_hora_redactada]
 - Proyecto: Sistema Operativo de la Tesis IoT Pachuca
 - Versión del sistema: 0.1.0
 
@@ -12,7 +12,7 @@
 - Tareas en backlog: 26
 - Tareas pendientes: 7
 - Riesgos abiertos: 8
-- Decisiones registradas: 18
+- Decisiones registradas: 21
 - Errores de validación de wiki: 0
 - Resúmenes semanales con economía de uso: 1/1
 - Bitácoras con economía de uso: 5/8

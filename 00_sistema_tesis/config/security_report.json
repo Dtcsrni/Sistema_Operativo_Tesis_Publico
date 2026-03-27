@@ -4,7 +4,7 @@
         "passed": 7,
         "failed": 0,
         "critical_failures": 0,
-        "timestamp": "2026-03-26T23:26:30.719447"
+        "timestamp": "2026-03-27T03:54:01.523596"
     },
     "details": [
         {
@@ -12,49 +12,49 @@
             "success": true,
             "critical": true,
             "output": "[OK] Integridad del sistema verificada.",
-            "timestamp": "2026-03-26T23:26:30.805430"
+            "timestamp": "2026-03-27T03:54:01.610983"
         },
         {
             "name": "Audit Ledger IA",
             "success": true,
             "critical": true,
-            "output": "AUDITORA LEDGER: OK (17 bloques enlazados)",
-            "timestamp": "2026-03-26T23:26:30.890262"
+            "output": "AUDITORA LEDGER: OK (25 bloques enlazados)",
+            "timestamp": "2026-03-27T03:54:01.689106"
         },
         {
             "name": "Cadena de Bit\u00e1coras",
             "success": true,
             "critical": true,
             "output": "[OK] Cadena de Bitcoras ntegra",
-            "timestamp": "2026-03-26T23:26:30.957036"
+            "timestamp": "2026-03-27T03:54:01.757198"
         },
         {
             "name": "Escaneo de Secretos",
             "success": true,
             "critical": true,
             "output": "[PROCESS] Escaneando secretos en el repositorio...\n[OK] No se detectaron secretos evidentes.",
-            "timestamp": "2026-03-26T23:26:31.222830"
+            "timestamp": "2026-03-27T03:54:02.044412"
         },
         {
             "name": "Jerarqu\u00eda de Tareas",
             "success": true,
             "critical": false,
             "output": "AUDITORA DE JERARQUA: EXITOSA (Dependencias Verificadas)",
-            "timestamp": "2026-03-26T23:26:31.286149"
+            "timestamp": "2026-03-27T03:54:02.111369"
         },
         {
             "name": "Autoauditor\u00eda Documental",
             "success": true,
             "critical": false,
             "output": "AUTOAUDITORA DOCUMENTAL: XITOSA (Integridad de Trazabilidad Confirmada)",
-            "timestamp": "2026-03-26T23:26:31.350581"
+            "timestamp": "2026-03-27T03:54:02.183024"
         },
         {
             "name": "Est\u00e1ndares Externos",
             "success": true,
             "critical": false,
             "output": "AUDITORA DE ESTNDARES EXTERNOS (6 referencias)\n - Verificando: NIST AI Risk Management Framework 1.0 (AI RMF 1.0)... OK\n - Verificando: Recomendaciones de la UNESCO sobre la tica de la IA... OK\n - Verificando: COPE (Committee on Publication Ethics): Authorship and AI tools... OK\n - Verificando: ISO/IEC 42001:2023 - Artificial intelligence  Management system... OK\n - Verificando: IEEE 7000-2021 - Value-Based Engineering... OK\n - Verificando: Principios FAIR (Findable, Accessible, Interoperable, Reusable)... OK\n\nAUDITORA DE ESTNDARES: EXITOSA",
-            "timestamp": "2026-03-26T23:26:34.471722"
+            "timestamp": "2026-03-27T03:54:05.101729"
         }
     ]
 }

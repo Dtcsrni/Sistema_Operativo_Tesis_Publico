@@ -6,50 +6,102 @@
 
 ## Qué es este repositorio
 
-Este repositorio es el **Sistema Operativo de la Tesis** para una investigación de posgrado en IoT sobre resiliencia de telemetría y control adaptativo en entornos urbanos intermitentes.
+Este repositorio es el **Sistema Operativo de la Tesis**: una base documental, técnica y operativa para gobernar una tesis de posgrado en IoT sobre resiliencia de telemetría y control adaptativo en entornos urbanos intermitentes.
 
-Su objetivo no es delegar la tesis a la IA. Su objetivo es dejar una base **humana, trazable, auditable y explicable** para gobernar:
+No existe para delegar la tesis a la IA. Existe para dejar una base:
 
-- decisiones
-- hipótesis
-- backlog
-- riesgos
-- experimentos
-- datos
-- implementación
-- redacción
-- uso instrumental de IA
-- exposición pública sanitizada
+- humana;
+- trazable;
+- auditable;
+- explicable;
+- publicable sin exponer la superficie privada.
+
+## Por qué existe
+
+Existe para que el proyecto pueda:
+
+- retomar contexto en minutos y no en días;
+- vincular decisiones, evidencia, backlog, implementación y redacción;
+- sostener soberanía humana estricta cuando se usa IA instrumental;
+- separar base privada canónica de superficie pública sanitizada;
+- explicarse con claridad al tesista y a lectores externos.
+
+## Módulos del sistema
+
+Los subsistemas principales son:
+
+- gobierno y soberanía humana;
+- trazabilidad y evidencia;
+- planeación y control del trabajo;
+- canon técnico y configuración;
+- automatización y validación;
+- publicación derivada y superficie pública;
+- tesis IoT como objeto gobernado por el sistema.
 
 ## Principio operativo
 
 - **Superficie privada:** canon, backlog, decisiones, bitácora, auditoría y evidencia completa.
 - **Superficie pública:** bundle sanitizado en `06_dashboard/publico/`, derivado y no editable a mano.
+- **Publicación externa:** el sitio y la exposición pública salen del downstream `https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico`, no del repo privado canónico.
 - **IA opcional:** la IA acelera trabajo, pero no es requisito para operar el sistema.
 
-## Retoma rápida
+## Estructura operativa nueva
 
-Si retomas el proyecto después de días o semanas, sigue esta ruta:
+La capa operativa para despliegue real y reproducibilidad ahora se organiza también en:
 
-1. Lee [`00_sistema_tesis/manual_operacion_humana.md`](/[ruta_local_redactada]/00_sistema_tesis/manual_operacion_humana.md).
-2. Ejecuta `python 07_scripts/tesis.py status`.
-3. Ejecuta `python 07_scripts/tesis.py next`.
-4. Si necesitas diagnóstico completo, ejecuta `python 07_scripts/tesis.py doctor`.
+- `docs/`: arquitectura, operación, seguridad y reproducibilidad.
+- `manifests/`: contratos máquina-legibles de almacenamiento, servicios, dominios, routing y publicación.
+- `bootstrap/`: instalación por fases para host Windows y Orange Pi.
+- `runtime/openclaw/`: integración opcional de OpenClaw, wrappers y políticas.
+- `config/systemd/` y `config/env/`: units y variables de entorno de referencia.
+- `tests/smoke/` y `tests/integration/`: pruebas operativas pensadas para el sistema objetivo.
+- `benchmarks/` y `ops/`: medición, respaldo, recuperación y actualización.
 
-## Archivos canónicos principales
+## Ruta de lectura rápida
 
+Si retomas el proyecto o necesitas explicar el sistema desde cero:
+
+1. Lee este archivo completo.
+2. Lee [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md).
+3. Lee [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md).
+4. Lee [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/flujos_operativos.md).
+5. Lee [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md) para entender IDs, términos y convenciones.
+6. Si vas a operar el sistema, continúa con [`00_sistema_tesis/manual_operacion_humana.md`](/[ruta_local_redactada]/00_sistema_tesis/manual_operacion_humana.md).
+7. Si vas a preparar despliegue, revisa [`docs/02_arquitectura/arquitectura-general.md`](/[ruta_local_redactada]/docs/02_arquitectura/arquitectura-general.md), [`docs/02_arquitectura/topologia-de-almacenamiento.md`](/[ruta_local_redactada]/docs/02_arquitectura/topologia-de-almacenamiento.md) y `bootstrap/`.
+8. Si quieres diagnóstico inmediato, ejecuta `python 07_scripts/tesis.py status` y `python 07_scripts/tesis.py next`.
+
+## Mapa de navegación y rastreo
+
+Si necesitas orientarte sin perder el origen canónico:
+
+1. Empieza en [`README_INICIO.md`](/[ruta_local_redactada]/README_INICIO.md) y luego entra a [`06_dashboard/wiki/index.md`](/[ruta_local_redactada]/06_dashboard/wiki/index.md).
+2. Desde cada página de la wiki, usa el bloque `Origen canónico y artefactos relacionados`.
+3. Si necesitas cambiar contenido, salta de la página derivada a su fuente canónica declarada y edítala ahí.
+4. Si necesitas verificar publicación o sanitización, cruza [`06_dashboard/generado/wiki_manifest.json`](/[ruta_local_redactada]/06_dashboard/generado/wiki_manifest.json) con [`06_dashboard/publico/manifest_publico.json`](/[ruta_local_redactada]/06_dashboard/publico/manifest_publico.json).
+5. Si necesitas trazabilidad operativa interna, revisa [`[matriz_privada]`](/[ruta_local_redactada]/[matriz_privada]) y [`[ledger_privado]`](/[ruta_local_redactada]/[ledger_privado]).
+
+## Entradas por necesidad
+
+- Entender propósito, módulos y flujos: [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md), [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md) y [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/flujos_operativos.md).
+- Entender reglas e interacción humana: [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md) y [`00_sistema_tesis/config/ia_gobernanza.yaml`](/[ruta_local_redactada]/00_sistema_tesis/config/ia_gobernanza.yaml).
+- Entender términos, IDs y convenciones: [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md).
+- Entender trabajo en curso: [`01_planeacion/backlog.csv`](/[ruta_local_redactada]/01_planeacion/backlog.csv), [`01_planeacion/riesgos.csv`](/[ruta_local_redactada]/01_planeacion/riesgos.csv) y [`06_dashboard/wiki/planeacion.md`](/[ruta_local_redactada]/06_dashboard/wiki/planeacion.md).
+- Entender decisiones y continuidad: [`00_sistema_tesis/decisiones`](/[ruta_local_redactada]/00_sistema_tesis/decisiones) y [`[bitacora_privada]`](/[ruta_local_redactada]/[bitacora_privada]).
+
+## Fuentes canónicas para entender el sistema
+
+- [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md)
+- [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md)
+- [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/flujos_operativos.md)
+- [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md)
+- [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md)
 - [`00_sistema_tesis/config/sistema_tesis.yaml`](/[ruta_local_redactada]/00_sistema_tesis/config/sistema_tesis.yaml)
-- [`00_sistema_tesis/config/hipotesis.yaml`](/[ruta_local_redactada]/00_sistema_tesis/config/hipotesis.yaml)
-- [`00_sistema_tesis/config/bloques.yaml`](/[ruta_local_redactada]/00_sistema_tesis/config/bloques.yaml)
-- [`00_sistema_tesis/config/ia_gobernanza.yaml`](/[ruta_local_redactada]/00_sistema_tesis/config/ia_gobernanza.yaml)
 - [`00_sistema_tesis/config/publicacion.yaml`](/[ruta_local_redactada]/00_sistema_tesis/config/publicacion.yaml)
-- [`01_planeacion/backlog.csv`](/[ruta_local_redactada]/01_planeacion/backlog.csv)
-- [`01_planeacion/riesgos.csv`](/[ruta_local_redactada]/01_planeacion/riesgos.csv)
+- [`00_sistema_tesis/config/ia_gobernanza.yaml`](/[ruta_local_redactada]/00_sistema_tesis/config/ia_gobernanza.yaml)
 
 ## Qué revisar siempre
 
 - [`00_sistema_tesis/manual_operacion_humana.md`](/[ruta_local_redactada]/00_sistema_tesis/manual_operacion_humana.md)
-- [`00_sistema_tesis/config/sistema_tesis.yaml`](/[ruta_local_redactada]/00_sistema_tesis/config/sistema_tesis.yaml)
 - [`01_planeacion/backlog.csv`](/[ruta_local_redactada]/01_planeacion/backlog.csv)
 - [`01_planeacion/riesgos.csv`](/[ruta_local_redactada]/01_planeacion/riesgos.csv)
 - [`[matriz_privada]`](/[ruta_local_redactada]/[matriz_privada])
@@ -57,9 +109,9 @@ Si retomas el proyecto después de días o semanas, sigue esta ruta:
 - [`06_dashboard/generado/index.html`](/[ruta_local_redactada]/06_dashboard/generado/index.html)
 - [`06_dashboard/publico/index.md`](/[ruta_local_redactada]/06_dashboard/publico/index.md)
 
-## Comandos útiles
+## Flujos operativos mínimos
 
-Estado humano y próxima acción:
+Retomar estado:
 
 ```powershell
 python 07_scripts/tesis.py status
@@ -67,26 +119,34 @@ python 07_scripts/tesis.py next
 python 07_scripts/tesis.py doctor
 ```
 
-Validación y auditoría:
+Si `doctor` reporta que el `python` del shell no coincide con la `.venv`, usa los wrappers oficiales del repo (`tesis.py`, `build_all.py`, `governance_gate.py`), porque ellos fuerzan el intérprete preferido del proyecto.
+
+Auditar y regenerar:
 
 ```powershell
 python 07_scripts/tesis.py audit --check
 python 07_scripts/build_all.py
 ```
 
-Publicación sanitizada:
+Publicar salida sanitizada:
 
 ```powershell
 python 07_scripts/tesis.py publish --check
 python 07_scripts/tesis.py publish --build
+python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --branch main --check
 ```
 
-Evidencia fuente de conversación:
+Para publicación real del downstream:
 
 ```powershell
-python 07_scripts/tesis.py source register --session-id codex-YYYYMMDD --transcript ruta\\a\\transcripcion.md --screenshots ruta\\a\\captura_001.png --quote "texto exacto"
-python 07_scripts/tesis.py source verify --step-id [validacion_humana_interna]
+python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push
+```
+
+Verificar evidencia fuente de conversación:
+
+```powershell
 python 07_scripts/tesis.py source status --check
+python 07_scripts/tesis.py source verify --step-id [validacion_humana_interna]
 ```
 
 ## Dónde registrar cada cosa
@@ -110,9 +170,9 @@ No se corrigen manualmente los artefactos derivados. Se regeneran.
 
 ## Criterio de esta base
 
-- formatos simples antes que automatización opaca
-- trazabilidad antes que comodidad aparente
-- operación humana explícita antes que dependencia de IA
-- público derivado y sanitizado antes que duplicación manual
-- confirmación verbal corroborada con transcripción y captura para `VAL-STEP` nuevos
-- TDD para automatización, validadores y software nuevo
+- formatos simples antes que automatización opaca;
+- trazabilidad antes que comodidad aparente;
+- operación humana explícita antes que dependencia de IA;
+- público derivado y sanitizado antes que duplicación manual;
+- confirmación verbal corroborada con transcripción para `VAL-STEP` nuevos;
+- TDD para automatización, validadores y software nuevo.

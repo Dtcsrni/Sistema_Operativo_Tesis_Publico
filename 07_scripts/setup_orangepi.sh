@@ -1,50 +1,22 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-# Script de instalación y arranque para Orange Pi 5 Plus (Linux ARM64 - Ubuntu/Debian/Armbian)
-# Prepara el entorno del Sistema Operativo de Tesis asegurando dependencias nativas instaladas a nivel sistema.
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-set -e # Detiene ejecución si ocurre un error
+echo "[SETUP] Wrapper legado hacia bootstrap/orangepi por fases"
+for phase in \
+  "bootstrap/orangepi/10_primer-arranque.sh" \
+  "bootstrap/orangepi/50_hardening-base.sh" \
+  "bootstrap/orangepi/60_instalar-node-herramientas-opcionales.sh" \
+  "bootstrap/orangepi/80_configurar-workspace-tesis.sh"
+do
+  echo "[SETUP] Ejecutando ${phase}"
+  bash "${ROOT}/${phase}"
+done
 
-echo "[SETUP] Actualizando repositorios base de apt..."
-sudo apt-get update -y
-
-echo "[SETUP] Instalando entorno de Python3, pip, Git y dependencias esenciales de compilación..."
-# python3-dev y build-essential son fundamentales en ARM para compilar librerías de datos o DVC (orjson/aiohttp) si no hay wheels ARM64 disponibles.
-sudo apt-get install -y python3 python3-venv python3-pip git build-essential python3-dev
-
-echo "[SETUP] Creando entorno virtual local (.venv)..."
-if [ ! -d ".venv" ]; then
-    python3 -m venv .venv
-    echo "[SETUP] Entorno virtual .venv creado exitosamente."
-else
-    echo "[SETUP] El entorno virtual .venv ya existe, omitiendo creación."
-fi
-
-echo "[SETUP] Instalando dependencias del proyecto (pytest, pre-commit, dvc)..."
-./.venv/bin/pip install --upgrade pip
-./.venv/bin/pip install -r requirements-dev.txt
-
-echo "[SETUP] Instalando hooks de pre-commit para auto-validaciones locales..."
-./.venv/bin/pre-commit install
-./.venv/bin/pre-commit install --hook-type pre-push
-
-echo "[SETUP] Inicializando DVC (Data Version Control) de manera local si no existe..."
-if [ ! -d ".dvc" ]; then
-    ./.venv/bin/dvc init
-    echo "[SETUP] DVC inicializado correctamente."
-else
-    echo "[SETUP] DVC ya estaba inicializado, omitiendo."
-fi
-
-echo "[SETUP] Regenerando Dashboard de Tesis inicial..."
-./.venv/bin/python 07_scripts/build_all.py
-
-echo "---------------------------------------------------------"
-echo "[¡ÉXITO!] El Sistema Operativo de Tesis está listo en tu Orange Pi."
-echo ""
-echo "Recuerda activar el entorno antes de trabajar:"
-echo "    source .venv/bin/activate"
-echo ""
-echo "Y para compilar de nuevo todos tus archivos, corre:"
-echo "    python 07_scripts/build_all.py"
-echo "---------------------------------------------------------"
+echo "[SETUP] Fases base completadas. Revisa y ejecuta manualmente las fases con mayor riesgo:"
+echo "  - bootstrap/orangepi/20_preparar-nvme.sh"
+echo "  - bootstrap/orangepi/30_instalar-rootfs-en-nvme.sh"
+echo "  - bootstrap/orangepi/40_montar-emmc.sh"
+echo "  - bootstrap/orangepi/70_instalar-servicios.sh"
+echo "  - bootstrap/orangepi/90_postcheck.sh"

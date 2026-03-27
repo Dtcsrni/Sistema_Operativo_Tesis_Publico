@@ -15,6 +15,12 @@
   "fuentes_base": [
     "README_INICIO.md",
     "00_sistema_tesis/manual_operacion_humana.md",
+    "00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md",
+    "00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md",
+    "00_sistema_tesis/documentacion_sistema/flujos_operativos.md",
+    "00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md",
+    "00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md",
+    "00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json",
     "00_sistema_tesis/config/sistema_tesis.yaml",
     "00_sistema_tesis/config/hipotesis.yaml",
     "00_sistema_tesis/config/bloques.yaml",
@@ -41,10 +47,14 @@
     {
       "id": "sistema",
       "titulo": "Sistema",
-      "descripcion": "Identidad, propósito, arquitectura base y reglas generales del sistema operativo de tesis.",
+      "descripcion": "Propósito, alcance, módulos, flujos e interacción del sistema operativo de tesis.",
       "fuentes": [
         "README_INICIO.md",
         "00_sistema_tesis/manual_operacion_humana.md",
+        "00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md",
+        "00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md",
+        "00_sistema_tesis/documentacion_sistema/flujos_operativos.md",
+        "00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md",
         "00_sistema_tesis/config/sistema_tesis.yaml",
         "00_sistema_tesis/config/publicacion.yaml"
       ]
@@ -52,11 +62,25 @@
     {
       "id": "gobernanza",
       "titulo": "Gobernanza",
-      "descripcion": "Políticas del sistema, gobernanza de IA, trazabilidad y disciplina TDD.",
+      "descripcion": "Políticas del sistema, soberanía humana, trazabilidad y disciplina de automatización responsable.",
       "fuentes": [
+        "00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md",
+        "00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md",
+        "00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md",
         "00_sistema_tesis/config/sistema_tesis.yaml",
         "00_sistema_tesis/config/ia_gobernanza.yaml",
         "00_sistema_tesis/config/publicacion.yaml"
+      ]
+    },
+    {
+      "id": "terminologia",
+      "titulo": "Terminología",
+      "descripcion": "Glosario, familias de IDs, referencias globales y convenciones de nomenclatura del sistema.",
+      "fuentes": [
+        "00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md",
+        "00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json",
+        "01_planeacion/backlog_guia.md",
+        "00_sistema_tesis/config/ia_gobernanza.yaml"
       ]
     },
     {

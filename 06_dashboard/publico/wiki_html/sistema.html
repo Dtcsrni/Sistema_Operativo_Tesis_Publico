@@ -50,13 +50,51 @@
     </header>
     <pre># Sistema
 
-Identidad, propósito, arquitectura base y reglas generales del sistema operativo de tesis.
+Propósito, alcance, módulos, flujos e interacción del sistema operativo de tesis.
 
 - **Tesista:** `Erick Renato Vega Ceron`
 - **Fecha:** `[fecha_hora_redactada]`
 - **Estado:** `OK`
-- **Fuentes:** `README_INICIO.md`, `00_sistema_tesis/manual_operacion_humana.md`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/publicacion.yaml`
+- **Fuentes:** `README_INICIO.md`, `00_sistema_tesis/manual_operacion_humana.md`, `00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`, `00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`, `00_sistema_tesis/documentacion_sistema/flujos_operativos.md`, `00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/publicacion.yaml`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
+
+## Navegación de esta página
+
+- [Volver al índice](index.md).
+- Página siguiente en la ruta base: [Gobernanza](gobernanza.md).
+- Relacionada: [Gobernanza](gobernanza.md).
+- Relacionada: [Terminología](terminologia.md).
+- Relacionada: [Planeación](planeacion.md).
+
+## Origen canónico y artefactos relacionados
+
+### Cómo rastrear esta página hasta su origen canónico
+
+1. Esta página derivada: `06_dashboard/wiki/sistema.md`.
+2. Revisa la lista de fuentes canónicas que alimentan su contenido.
+3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
+4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
+5. Si necesitas cambiar el contenido, edita la fuente canónica y reconstruye; no edites esta salida a mano.
+
+### Fuentes canónicas declaradas
+
+|Fuente canónica|Tipo|Existe|
+|---|---|---|
+|`README_INICIO.md`|archivo|sí|
+|`00_sistema_tesis/manual_operacion_humana.md`|archivo|sí|
+|`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`|archivo|sí|
+|`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`|archivo|sí|
+|`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`|archivo|sí|
+|`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`|archivo|sí|
+|`00_sistema_tesis/config/sistema_tesis.yaml`|archivo|sí|
+|`00_sistema_tesis/config/publicacion.yaml`|archivo|sí|
+
+### Artefactos derivados relacionados
+
+- Markdown interno: `06_dashboard/wiki/sistema.md`
+- HTML interno: `06_dashboard/generado/wiki/sistema.html`
+- Markdown público sanitizado: `06_dashboard/publico/wiki/sistema.md`
+- HTML público sanitizado: `06_dashboard/publico/wiki_html/sistema.html`
 
 ## Identidad del proyecto
 
@@ -84,6 +122,342 @@ Identidad, propósito, arquitectura base y reglas generales del sistema operativ
 - Formatos fuente: `markdown`, `yaml`, `csv`
 - Formatos derivados: `html`, `csv`, `markdown`
 - Criterio de bajo rozamiento: retomar el proyecto en menos de 3 minutos desde README_INICIO.md
+
+## Narrativa del sistema
+
+## Proposito y alcance del sistema
+
+### Que es
+
+El Sistema Operativo de la Tesis es la capa de gobierno documental, tecnico y operativo que permite conducir una tesis de posgrado sin perder soberania humana, trazabilidad de evidencia ni capacidad de explicacion publica.
+
+No sustituye la tesis. Gobierna la tesis.
+
+### Por que existe
+
+Existe para resolver cuatro problemas simultaneos:
+
+1. Evitar que decisiones, cambios y resultados queden dispersos o dependan de memoria informal.
+2. Mantener control humano explicito cuando se usa automatizacion o IA instrumental.
+3. Separar con rigor la base privada canonica de la superficie publica divulgable.
+4. Permitir retomar, auditar, defender y publicar el sistema sin reconstruir contexto desde cero.
+
+### Que protege
+
+Protege:
+
+- la autoria y soberania del tesista;
+- la trazabilidad de decisiones, evidencia y validaciones;
+- la coherencia entre backlog, riesgos, decisiones, implementacion y redaccion;
+- la frontera entre informacion privada y exposicion publica;
+- la reproducibilidad documental y tecnica del trabajo.
+
+### Que gobierna
+
+El sistema gobierna:
+
+- decisiones y criterios de aceptacion;
+- hipotesis, bloques, backlog, riesgos y entregables;
+- bitacora, ledger y matriz de trazabilidad;
+- evidencia tecnica, evidencia conversacional y registros de ingestion;
+- scripts de validacion, materializacion y publicacion;
+- wiki, dashboard y bundle publico sanitizado;
+- la relacion entre la tesis IoT como objeto de estudio y la infraestructura documental que la sostiene.
+
+### Alcance editorial
+
+La documentacion del sistema debe permitir dos lecturas validas:
+
+- lectura interna del tesista: operar, registrar, auditar y publicar;
+- lectura publica: explorar, entender y evaluar el sistema sin acceder a superficies privadas.
+
+### Limites
+
+El sistema no debe:
+
+- inventar arquitectura IoT que aun no sea canonica;
+- presentar la IA como autora o validadora final;
+- mezclar evidencia privada con la superficie publica;
+- reemplazar fuentes canonicas con artefactos derivados.
+
+### Estado actual de la arquitectura IoT
+
+La tesis IoT documentada por este sistema tiene como nucleo vigente el diseno de una arquitectura resiliente para telemetria y control adaptativo en entornos urbanos intermitentes.
+
+El sistema debe describir:
+
+- objetivo general y problema de investigacion;
+- modulos actuales y relacion entre evidencia, backlog, hipotesis e implementacion;
+- limites y pendientes canonicos todavia abiertos.
+
+El sistema no debe describir como cerrado lo que en planeacion o decisiones siga pendiente de formalizacion tecnica profunda.
+
+## Mapa de modulos del sistema
+
+### Vista general
+
+El sistema se organiza por subsistemas coordinados. Cada subsistema tiene una funcion distinta, artefactos fuente, artefactos derivados y una frontera de visibilidad.
+
+### Modulos nucleares
+
+#### 1. Gobierno y soberania humana
+
+- Proposito: asegurar que toda decision sustantiva quede vinculada a consentimiento humano y a trazabilidad explicita.
+- Fuentes principales: decisiones, `ia_gobernanza.yaml`, ledger, matriz.
+- Derivados: proyecciones del canon, auditorias, indicadores.
+- Visible al publico: principios generales y politica de supervision.
+- Privado: confirmaciones verbales exactas, hashes, soporte fino de validacion.
+
+#### 2. Trazabilidad y evidencia
+
+- Proposito: conservar cadena verificable entre instruccion, evidencia, sesion, cambio y artefacto.
+- Fuentes principales: canon, ledger, matriz, evidencia privada, registros de ingestion.
+- Derivados: indices, reportes de consistencia, estado de evidencia.
+- Visible al publico: existencia del mecanismo y su papel metodologico.
+- Privado: archivos de evidencia, transcripciones, rutas sensibles, hashes y correlaciones internas.
+
+#### 3. Planeacion y control del trabajo
+
+- Proposito: traducir objetivos de tesis a backlog, riesgos, roadmap y entregables.
+- Fuentes principales: `backlog.csv`, `riesgos.csv`, `roadmap.csv`, `entregables.csv`.
+- Derivados: resumenes, dashboard, portada README.
+- Visible al publico: estado de avance de alto nivel y prioridades visibles.
+- Privado: trazabilidad operativa fina cuando corresponda.
+
+#### 4. Canon tecnico y configuracion
+
+- Proposito: definir identidad, reglas, parametros y rutas canonicas del sistema.
+- Fuentes principales: `sistema_tesis.yaml`, `bloques.yaml`, `hipotesis.yaml`, `publicacion.yaml`, `wiki.yaml`.
+- Derivados: wiki, dashboard, bundle publico, chequeos automáticos.
+- Visible al publico: estructura general del sistema y politicas de publicacion.
+- Privado: configuraciones sensibles, identidad de agente y metadatos restringidos.
+
+#### 5. Automatizacion y validacion
+
+- Proposito: materializar, verificar y regenerar artefactos sin edicion manual de salidas derivadas.
+- Fuentes principales: `07_scripts/`.
+- Derivados: README generado, wiki generada, dashboard, badges, bundle publico.
+- Visible al publico: que la salida es derivada, reproducible y auditable.
+- Privado: auditorias completas, evidencia local y rutas internas.
+
+#### 6. Publicacion derivada y superficie publica
+
+- Proposito: exponer una vista tecnica util para evaluacion externa sin romper la frontera de seguridad.
+- Fuentes principales: politica de publicacion y artefactos generados.
+- Derivados: `06_dashboard/publico/`, wiki publica, manifest y nota de seguridad.
+- Visible al publico: casi todo el modulo, salvo reglas internas de enforcement y superficies privadas.
+- Privado: canon bruto y evidencia fuente.
+
+#### 7. Tesis IoT como objeto gobernado
+
+- Proposito: usar el sistema para dar continuidad al trabajo de tesis sobre resiliencia de telemetria y control adaptativo.
+- Fuentes principales: hipotesis, bloques, backlog, evidencia, implementacion y manuscrito.
+- Derivados: narrativa publica del proyecto, seguimiento de cobertura y estado del manuscrito.
+- Visible al publico: objetivo, problema, marco actual, modulos y limites.
+- Privado: evidencia no publicada, borradores internos y soportes no sanitizados.
+
+### Relaciones clave
+
+- Gobierno define las reglas con las que opera trazabilidad.
+- Trazabilidad conserva evidencia de lo que planeacion y ejecucion producen.
+- Planeacion orienta que se construye, valida o redacta.
+- Canon y configuracion determinan las rutas oficiales y las salidas derivadas.
+- Automatizacion convierte fuentes en vistas legibles sin duplicacion manual.
+- Publicacion filtra la vista externa sin alterar la base privada.
+- La tesis IoT recibe estructura, continuidad y explicabilidad gracias a todos los modulos anteriores.
+
+### Regla de lectura
+
+Si una persona necesita entender rapidamente el sistema:
+
+1. Primero identifica el modulo implicado.
+2. Luego localiza sus fuentes canonicas.
+3. Despues revisa el flujo operativo asociado.
+4. Finalmente distingue que partes son privadas y cuales son publicas.
+
+## Flujos operativos
+
+### Flujo 1. Retomar el sistema
+
+Objetivo: volver a entender el estado actual en pocos minutos.
+
+Secuencia:
+
+1. Leer `README_INICIO.md`.
+2. Revisar `00_sistema_tesis/manual_operacion_humana.md`.
+3. Ejecutar `python 07_scripts/tesis.py status`.
+4. Ejecutar `python 07_scripts/tesis.py next`.
+5. Si hace falta, ejecutar `python 07_scripts/tesis.py doctor`.
+
+Salida esperada:
+
+- entender que es el sistema;
+- identificar bloque activo, siguiente entregable y riesgos;
+- saber que modulo o archivo tocar despues.
+
+### Flujo 2. Registrar un cambio o una decision
+
+Objetivo: incorporar trabajo nuevo sin romper soberania ni trazabilidad.
+
+Secuencia:
+
+1. Editar la fuente canonica correcta.
+2. Si el cambio afecta arquitectura, metodo, evidencia o gobernanza, registrar decision o bitacora.
+3. Si corresponde a una instruccion humana critica, vincularla a `VAL-STEP`.
+4. Si el `VAL-STEP` es nuevo y esta por encima del umbral de enforcement, registrar primero la evidencia fuente de conversacion.
+5. Regenerar y auditar artefactos derivados.
+
+Salida esperada:
+
+- cambio explicado desde su fuente de verdad;
+- soporte humano verificable;
+- proyecciones sincronizadas.
+
+### Flujo 3. Auditar el estado del sistema
+
+Objetivo: comprobar integridad, consistencia y operabilidad.
+
+Secuencia:
+
+1. Ejecutar `python 07_scripts/tesis.py audit --check`.
+2. Ejecutar `python 07_scripts/tesis.py source status --check`.
+3. Ejecutar `python 07_scripts/build_all.py`.
+4. Revisar wiki y dashboard generados si se requiere lectura humana rapida.
+
+Salida esperada:
+
+- estado de integridad del sistema;
+- estado de evidencia fuente;
+- estado de salida publica y artefactos derivados.
+
+### Flujo 4. Publicar la superficie publica
+
+Objetivo: exponer una vista tecnica evaluable sin abrir la base privada.
+
+Secuencia:
+
+1. Confirmar que la base privada ya paso auditorias.
+2. Ejecutar `python 07_scripts/tesis.py publish --build`.
+3. Revisar `06_dashboard/publico/index.md` y `manifest_publico.json`.
+4. Validar que no haya rutas privadas, hashes o referencias internas prohibidas.
+
+Salida esperada:
+
+- bundle publico regenerado;
+- narrativa tecnica clara para terceros;
+- sanitizacion intacta.
+
+### Flujo 5. Consultar el sistema desde la capa publica
+
+Objetivo: permitir que terceros entiendan y evalúen sin editar ni acceder a lo privado.
+
+Secuencia:
+
+1. Abrir el indice publico.
+2. Leer la pagina de sistema para entender proposito, modulos y limites.
+3. Recorrer wiki y dashboard para revisar planeacion, gobernanza, estado y cobertura.
+4. Usar la informacion para evaluar consistencia, madurez y direccion del proyecto.
+
+Salida esperada:
+
+- comprension tecnica suficiente para evaluacion externa;
+- claridad sobre que informacion es publica y que informacion permanece interna.
+
+### Regla transversal
+
+Todo flujo del sistema debe cumplir tres condiciones:
+
+- tener una fuente canonica identificable;
+- tener una salida humana legible;
+- poder distinguir entre superficie privada y superficie publica.
+
+## Interaccion por actor
+
+### Tesista
+
+#### Que necesita poder hacer
+
+- retomar el proyecto con baja friccion;
+- decidir que fuente editar segun el tipo de cambio;
+- registrar decisiones, evidencia y validaciones;
+- auditar el sistema antes de cerrar trabajo;
+- publicar una capa externa sanitizada.
+
+#### Como interactua
+
+- usa `README_INICIO.md` como puerta de entrada;
+- usa el manual humano como ruta operativa;
+- usa CLI y fuentes canonicas como superficie principal;
+- usa la wiki y el dashboard como vistas derivadas de apoyo.
+
+#### Lo que no debe hacer
+
+- editar artefactos derivados a mano;
+- usar la capa publica como fuente de verdad;
+- asumir que una salida de IA equivale a validacion humana;
+- marcar una tarea principal como cerrada si los prerrequisitos siguen pendientes.
+
+### Lector publico
+
+#### Que necesita poder hacer
+
+- entender para que existe el sistema;
+- identificar los modulos del sistema y su relacion;
+- entender los flujos principales de operacion;
+- evaluar la tesis y su infraestructura documental desde una vista sanitizada;
+- detectar limites, pendientes y reglas de acceso.
+
+#### Como interactua
+
+- entra por el bundle publico y la wiki derivada;
+- lee la narrativa tecnica del sistema, no el canon privado;
+- usa el dashboard para estado y la wiki para explicacion;
+- interpreta la salida publica como derivada, no como repositorio editable.
+
+#### Lo que no debe asumir
+
+- que la parte publica contiene toda la evidencia;
+- que la ausencia de un detalle implica ausencia de trazabilidad;
+- que la IA conduce autonomamente el sistema;
+- que los pendientes tecnicos abiertos ya estan resueltos.
+
+### IA instrumental
+
+#### Funcion permitida
+
+- acelerar estructuracion, redaccion, automatizacion y analisis;
+- apoyar implementacion de scripts y artefactos documentales;
+- producir salidas sujetas a revision humana proporcional al riesgo.
+
+#### Limites
+
+- no valida por si misma;
+- no sustituye soberania humana;
+- no debe exponer superficies privadas en la capa publica;
+- no debe inventar especificacion tecnica cerrada cuando el canon aun muestra brechas.
+
+### Regla editorial
+
+Toda documentacion mejorada del sistema debe responder implicitamente a estas preguntas:
+
+- que puede hacer el tesista con esta pagina;
+- que puede entender un lector publico con esta pagina;
+- que limites de acceso o interpretacion siguen vigentes.
+
+## Mapa rápido de términos e IDs
+
+- `VAL_STEP_{nnn}`: familia de validación o instrucción humana crítica trazada en canon.
+- `EVT_{nnnn}`: familia de evento canónico general, por ejemplo evidencia fuente.
+- `DEC-{nnnn}`: decisión formal.
+- `T-{nnn}`, `R-{nnn}`, `ENT-{nnn}`, `B{n}`, `F{n}`: planeación, riesgo, entregable, bloque y fase.
+- Si un término o ID no es evidente, la referencia central es `glosario_terminologia_y_convenciones.md`.
+
+## Terminología de evidencia e ingestión
+
+- `paquete`: conjunto versionado de contexto o evidencia a integrar.
+- `staging`: zona temporal de verificación antes de integrar al canon.
+- `indice maestro`: registro consolidado de ingreso y destino de artefactos.
+- `evidencia`, `soporte`, `politica`, `modulo`, `rol`, `tier`, `status`, `accion`: etiquetas de clasificación que no deben confundirse entre sí.
 
 ## Operación humana y superficies
 

@@ -1,0 +1,17 @@
+[Unit]
+Description=OpenClaw Gateway opcional del Sistema Operativo de Tesis
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/tesis-os/openclaw.env
+ExecStart=/bin/bash -lc '/usr/local/bin/openclaw gateway --port "${OPENCLAW_PORT:-18789}"'
+Restart=always
+RestartSec=5
+User=tesis
+Group=tesis
+WorkingDirectory=/srv/tesis/repo
+
+[Install]
+WantedBy=multi-user.target

@@ -50,13 +50,56 @@
     </header>
     <pre># Gobernanza
 
-Políticas del sistema, gobernanza de IA, trazabilidad y disciplina TDD.
+Políticas del sistema, soberanía humana, trazabilidad y disciplina de automatización responsable.
 
 - **Tesista:** `Erick Renato Vega Ceron`
 - **Fecha:** `[fecha_hora_redactada]`
 - **Estado:** `OK`
-- **Fuentes:** `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/ia_gobernanza.yaml`, `00_sistema_tesis/config/publicacion.yaml`
+- **Fuentes:** `00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`, `00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`, `00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/ia_gobernanza.yaml`, `00_sistema_tesis/config/publicacion.yaml`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
+
+## Navegación de esta página
+
+- [Volver al índice](index.md).
+- Página anterior en la ruta base: [Sistema](sistema.md).
+- Página siguiente en la ruta base: [Terminología](terminologia.md).
+- Relacionada: [Sistema](sistema.md).
+- Relacionada: [Terminología](terminologia.md).
+- Relacionada: [Bitácora](bitacora.md).
+
+## Origen canónico y artefactos relacionados
+
+### Cómo rastrear esta página hasta su origen canónico
+
+1. Esta página derivada: `06_dashboard/wiki/gobernanza.md`.
+2. Revisa la lista de fuentes canónicas que alimentan su contenido.
+3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
+4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
+5. Si necesitas cambiar el contenido, edita la fuente canónica y reconstruye; no edites esta salida a mano.
+
+### Fuentes canónicas declaradas
+
+|Fuente canónica|Tipo|Existe|
+|---|---|---|
+|`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`|archivo|sí|
+|`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`|archivo|sí|
+|`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`|archivo|sí|
+|`00_sistema_tesis/config/sistema_tesis.yaml`|archivo|sí|
+|`00_sistema_tesis/config/ia_gobernanza.yaml`|archivo|sí|
+|`00_sistema_tesis/config/publicacion.yaml`|archivo|sí|
+
+### Artefactos derivados relacionados
+
+- Markdown interno: `06_dashboard/wiki/gobernanza.md`
+- HTML interno: `06_dashboard/generado/wiki/gobernanza.html`
+- Markdown público sanitizado: `06_dashboard/publico/wiki/gobernanza.md`
+- HTML público sanitizado: `06_dashboard/publico/wiki_html/gobernanza.html`
+
+## Qué resuelve este subsistema
+
+- Evita que la IA o la automatización se presenten como autoridad final.
+- Obliga a distinguir entre confirmación humana, evidencia fuerte y artefacto derivado.
+- Mantiene visible qué reglas aplican en privado y qué puede explicarse en público.
 
 ## Políticas del sistema
 
@@ -82,6 +125,15 @@ Políticas del sistema, gobernanza de IA, trazabilidad y disciplina TDD.
 - Toda salida asistida por IA debe someterse a revisión humana proporcional al riesgo.
 - Se impone el protocolo de &#x27;Human-Agent Handshake&#x27; (DEC-0014) para toda validación de infraestructura o método.
 
+## Vocabulario de gobernanza y trazabilidad
+
+- `validación humana`: acto humano trazado que autoriza o confirma un cambio relevante.
+- `evidencia fuente`: soporte de conversación que respalda un `VAL-STEP` nuevo cuando aplica enforcement.
+- `source_event_id`: enlace desde una validación humana hacia la evidencia de conversación registrada.
+- `human_validation.confirmation_text`: texto exacto de la confirmación humana en el canon.
+- `enforcement`: regla obligatoria que el sistema no trata como sugerencia opcional.
+
+
 ## Política TDD operativa
 
 - Todo cambio en scripts, validadores, generadores y software nuevo debe iniciar con una prueba o contrato verificable que falle antes de implementar la solución.
@@ -105,6 +157,12 @@ Políticas del sistema, gobernanza de IA, trazabilidad y disciplina TDD.
 - La IA es opcional y nunca sustituye validación, criterio metodológico ni publicación responsable.
 - La exposición pública solo ocurre mediante sanitización reproducible desde la base privada.
 - Bundle público: `06_dashboard/publico`
+
+## Límites de la capa pública
+
+- La parte pública sirve para explorar y evaluar el sistema, no para sustituir el canon privado.
+- El ledger detallado, la matriz interna completa, las transcripciones y la evidencia fuente permanecen fuera de la superficie pública.
+- La arquitectura IoT se describe hasta el marco canónico vigente; los pendientes abiertos deben mostrarse como pendientes y no como diseño cerrado.
 </pre>
   </main>
 </body>

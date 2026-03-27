@@ -30,7 +30,7 @@ from canon import (
     validate_events,
     verify_conversation_source_for_step,
 )
-from common import ROOT, file_sha256, load_csv_rows, load_yaml_json
+from common import ROOT, file_sha256, load_csv_rows, load_yaml_json, preferred_python_executable
 from governance_gate import extract_step_ids_from_diff
 from publication import publication_bundle_status
 
@@ -144,7 +144,7 @@ def ensure_canon_initialized() -> list[dict]:
 
 
 def run_python_script(script: str, *args: str) -> None:
-    subprocess.run([sys.executable, script, *args], cwd=ROOT, check=True)
+    subprocess.run([preferred_python_executable(), script, *args], cwd=ROOT, check=True)
 
 
 def run_command(cmd: list[str], *, check: bool = True, env: dict[str, str] | None = None) -> subprocess.CompletedProcess[str]:
@@ -281,7 +281,7 @@ def run_gate_pre_commit_step(*, step_id: str, agent: str = "") -> None:
     if agent:
         env["SISTEMA_TESIS_AGENT"] = agent
     result = run_command(
-        [sys.executable, "07_scripts/governance_gate.py", "--stage", "pre-commit"],
+        [preferred_python_executable(), "07_scripts/governance_gate.py", "--stage", "pre-commit"],
         check=False,
         env=env,
     )
@@ -384,7 +384,7 @@ def build_gate_env(args: argparse.Namespace) -> dict[str, str]:
 def run_gate_pre_commit(args: argparse.Namespace) -> None:
     env = build_gate_env(args)
     result = run_command(
-        [sys.executable, "07_scripts/governance_gate.py", "--stage", "pre-commit"],
+        [preferred_python_executable(), "07_scripts/governance_gate.py", "--stage", "pre-commit"],
         check=False,
         env=env,
     )
@@ -616,7 +616,8 @@ def cmd_doctor(args: argparse.Namespace) -> int:
         )
         else "DOCTOR: WARN"
     )
-    print(f"- Python: {sys.executable}")
+    print(f"- Python shell: {sys.executable}")
+    print(f"- Python preferido repo: {preferred_python_executable()}")
     print(f"- Raíz: {ROOT}")
     print(f"- Eventos canon: {len(events)}")
     print(f"- Último Step ID: {latest_step_id(events)}")

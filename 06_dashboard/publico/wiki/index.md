@@ -5,14 +5,14 @@ Definir la wiki derivada, verificable y reconstruible del sistema operativo de t
 - **Tesista:** `Erick Renato Vega Ceron`
 - **Fecha:** `[fecha_hora_redactada]`
 - **Estado:** `OK`
-- **Fuentes:** `README_INICIO.md`, `00_sistema_tesis/manual_operacion_humana.md`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/hipotesis.yaml`, `00_sistema_tesis/config/bloques.yaml`, `00_sistema_tesis/config/dashboard.yaml`, `00_sistema_tesis/config/ia_gobernanza.yaml`, `00_sistema_tesis/config/publicacion.yaml`, `01_planeacion/backlog.csv`, `01_planeacion/riesgos.csv`, `01_planeacion/roadmap.csv`, `01_planeacion/entregables.csv`, `00_sistema_tesis/decisiones`, `[bitacora_privada]`, `[reportes_privados]`, `02_experimentos`, `04_implementacion`, `05_tesis`
+- **Fuentes:** `README_INICIO.md`, `00_sistema_tesis/manual_operacion_humana.md`, `00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`, `00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`, `00_sistema_tesis/documentacion_sistema/flujos_operativos.md`, `00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`, `00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`, `00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/hipotesis.yaml`, `00_sistema_tesis/config/bloques.yaml`, `00_sistema_tesis/config/dashboard.yaml`, `00_sistema_tesis/config/ia_gobernanza.yaml`, `00_sistema_tesis/config/publicacion.yaml`, `01_planeacion/backlog.csv`, `01_planeacion/riesgos.csv`, `01_planeacion/roadmap.csv`, `01_planeacion/entregables.csv`, `00_sistema_tesis/decisiones`, `[bitacora_privada]`, `[reportes_privados]`, `02_experimentos`, `04_implementacion`, `05_tesis`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
 
 ## Estado de verificación
 
 - Fecha de generación: `[fecha_hora_redactada]`
 - Estado de verificación: `ok`
-- Fuentes canónicas: `README_INICIO.md`, `00_sistema_tesis/manual_operacion_humana.md`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/hipotesis.yaml`, `00_sistema_tesis/config/bloques.yaml`, `00_sistema_tesis/config/dashboard.yaml`, `00_sistema_tesis/config/ia_gobernanza.yaml`, `00_sistema_tesis/config/publicacion.yaml`, `01_planeacion/backlog.csv`, `01_planeacion/riesgos.csv`, `01_planeacion/roadmap.csv`, `01_planeacion/entregables.csv`, `00_sistema_tesis/decisiones`, `[bitacora_privada]`, `[reportes_privados]`, `02_experimentos`, `04_implementacion`, `05_tesis`
+- Fuentes canónicas: `README_INICIO.md`, `00_sistema_tesis/manual_operacion_humana.md`, `00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`, `00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`, `00_sistema_tesis/documentacion_sistema/flujos_operativos.md`, `00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`, `00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`, `00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/hipotesis.yaml`, `00_sistema_tesis/config/bloques.yaml`, `00_sistema_tesis/config/dashboard.yaml`, `00_sistema_tesis/config/ia_gobernanza.yaml`, `00_sistema_tesis/config/publicacion.yaml`, `01_planeacion/backlog.csv`, `01_planeacion/riesgos.csv`, `01_planeacion/roadmap.csv`, `01_planeacion/entregables.csv`, `00_sistema_tesis/decisiones`, `[bitacora_privada]`, `[reportes_privados]`, `02_experimentos`, `04_implementacion`, `05_tesis`
 
 ## Métrica de Soberanía Humana
 
@@ -28,6 +28,7 @@ graph LR
 
 - [Sistema](sistema.md)
 - [Gobernanza](gobernanza.md)
+- [Terminología](terminologia.md)
 - [Hipótesis](hipotesis.md)
 - [Bloques](bloques.md)
 - [Planeación](planeacion.md)
@@ -36,6 +37,47 @@ graph LR
 - [Experimentos](experimentos.md)
 - [Implementación](implementacion.md)
 - [Tesis](tesis.md)
+
+## Qué explica esta documentación
+
+- Para qué y por qué existe el sistema.
+- Cuáles son sus módulos y cómo se relacionan.
+- Cuáles son sus flujos operativos principales.
+- Cómo interactúa con él el tesista.
+- Cómo puede explorarlo y evaluarlo un lector público sin acceder a superficies privadas.
+
+## Ruta de lectura
+
+- Si necesitas entender el sistema completo, empieza por [Sistema](sistema.md).
+- Si necesitas reglas y límites, continúa con [Gobernanza](gobernanza.md).
+- Si necesitas lenguaje, familias de IDs y convenciones, pasa por [Terminología](terminologia.md).
+- Si necesitas estado del trabajo, revisa [Planeación](planeacion.md), [Hipótesis](hipotesis.md) y [Bloques](bloques.md).
+- Si necesitas evidencia de avance o cobertura, revisa [Decisiones](decisiones.md), [Bitácora](bitacora.md), [Implementación](implementacion.md), [Experimentos](experimentos.md) y [Tesis](tesis.md).
+
+## Mapa de navegación por intención
+
+- Entender el sistema: [Sistema](sistema.md) -> [Gobernanza](gobernanza.md) -> [Terminología](terminologia.md).
+- Retomar ejecución: [Planeación](planeacion.md) -> [Bloques](bloques.md) -> [Hipótesis](hipotesis.md).
+- Rastrear decisiones y sesiones: [Decisiones](decisiones.md) -> [Bitácora](bitacora.md).
+- Revisar madurez técnica: [Experimentos](experimentos.md) -> [Implementación](implementacion.md) -> [Tesis](tesis.md).
+
+## Cómo rastrear un artefacto derivado hasta su origen canónico
+
+- Empieza por la página derivada que estás leyendo.
+- Revisa su bloque `Origen canónico y artefactos relacionados`.
+- Sigue la lista de fuentes canónicas declaradas en esa misma página.
+- Si necesitas validar la cadena de publicación, cruza con `06_dashboard/generado/wiki_manifest.json` y `06_dashboard/publico/manifest_publico.json`.
+- Si necesitas trazabilidad operativa interna, consulta `[matriz_privada]` y `[ledger_privado]`.
+
+## Módulos del sistema
+
+- Gobierno y soberanía humana.
+- Trazabilidad y evidencia.
+- Planeación y control del trabajo.
+- Canon técnico y configuración.
+- Automatización y validación.
+- Publicación derivada y superficie pública.
+- Tesis IoT como objeto gobernado.
 
 ## Operación humana y frontera público/privado
 
@@ -50,6 +92,7 @@ graph LR
 - `01_planeacion/backlog.csv`
 - `01_planeacion/riesgos.csv`
 - `[matriz_privada]`
+- `06_dashboard/generado/wiki_manifest.json`
 - `06_dashboard/wiki/index.md`
 - `06_dashboard/generado/index.html`
 - `06_dashboard/publico/index.md`

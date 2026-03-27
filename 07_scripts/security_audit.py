@@ -4,6 +4,8 @@ import json
 from pathlib import Path
 from datetime import datetime
 
+from common import preferred_python_executable, write_text_if_changed
+
 ROOT = Path(__file__).resolve().parents[1]
 
 AUDITS = [
@@ -58,9 +60,20 @@ AUDITS = [
     }
 ]
 
+
+def normalized_report(report):
+    summary = dict(report.get("summary", {}))
+    summary.pop("timestamp", None)
+    details = []
+    for item in report.get("details", []):
+        normalized = dict(item)
+        normalized.pop("timestamp", None)
+        details.append(normalized)
+    return {"summary": summary, "details": details}
+
 def run_audit(audit):
     print(f"[RUNNING] {audit['name']}...")
-    cmd = [sys.executable, str(ROOT / audit['script'])] + audit['args']
+    cmd = [preferred_python_executable(), str(ROOT / audit['script'])] + audit['args']
     result = subprocess.run(cmd, capture_output=True, text=True, encoding='utf-8', errors='ignore')
     
     success = result.returncode == 0
@@ -101,9 +114,15 @@ def main():
     report_path = ROOT / "00_sistema_tesis" / "config" / "security_report.json"
     if not report_path.parent.exists():
         report_path.parent.mkdir(parents=True, exist_ok=True)
+
+    if report_path.exists():
+        with open(report_path, "r", encoding="utf-8") as existing_handle:
+            existing_report = json.load(existing_handle)
+        if normalized_report(existing_report) == normalized_report(report):
+            report = existing_report
         
-    with open(report_path, "w", encoding='utf-8') as f:
-        json.dump(report, f, indent=4)
+    report_text = json.dumps(report, indent=4)
+    write_text_if_changed(report_path, report_text)
         
     # Save to history
     history_dir = ROOT / "00_sistema_tesis" / "bitacora" / "audit_history"
@@ -111,8 +130,8 @@ def main():
     timestamp_fs = datetime.now().strftime("%Y-%m-%d_%H%M")
     history_path = history_dir / f"security_report_{timestamp_fs}.json"
     
-    with open(history_path, "w", encoding='utf-8') as f:
-        json.dump(report, f, indent=4)
+    history_text = json.dumps(report, indent=4)
+    write_text_if_changed(history_path, history_text)
     print(f"[AUDIT] Historial guardado: {history_path.relative_to(ROOT)}")
         
     # Print summary

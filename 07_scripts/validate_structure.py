@@ -47,6 +47,28 @@ REQUIRED_PATHS = [
     "01_planeacion/entregables.csv",
     "README_INICIO.md",
     "README.md",
+    "docs/02_arquitectura/arquitectura-general.md",
+    "docs/03_operacion/rol-de-openclaw-en-la-tesis.md",
+    "docs/04_seguridad/politica-de-sanitizacion-y-publicacion.md",
+    "docs/05_reproducibilidad/relacion-entre-repo-privado-y-publico.md",
+    "manifests/storage_layout.yaml",
+    "manifests/service_matrix.yaml",
+    "manifests/domain_boundaries.yaml",
+    "manifests/public_private_sync_policy.yaml",
+    "manifests/openclaw_evaluation_policy.yaml",
+    "bootstrap/host/00_validar-descargas.ps1",
+    "bootstrap/orangepi/10_primer-arranque.sh",
+    "bootstrap/orangepi/90_postcheck.sh",
+    "config/systemd/tesis-healthcheck.service",
+    "config/systemd/tesis-backup.service",
+    "config/systemd/tesis-sync.service",
+    "config/env/tesis-os.env.example",
+    "runtime/openclaw/policies/ethics-policy.md",
+    "runtime/openclaw/wrappers/healthcheck.sh",
+    "data_contracts/literature_matrix_schema.md",
+    "tests/smoke/test_boot.sh",
+    "tests/integration/test_repo_layout.sh",
+    "benchmarks/scripts/bench_repo_ops.sh",
     "07_scripts/tesis.py",
     "07_scripts/rotate_backups.py",
 ]
@@ -68,6 +90,11 @@ def validate() -> list[str]:
     wiki = load_yaml_json("00_sistema_tesis/config/wiki.yaml")
     backlog = load_csv_rows("01_planeacion/backlog.csv")
     ia_policy = load_yaml_json("00_sistema_tesis/config/ia_gobernanza.yaml")
+    storage_layout = load_yaml_json("manifests/storage_layout.yaml")
+    service_matrix = load_yaml_json("manifests/service_matrix.yaml")
+    domain_boundaries = load_yaml_json("manifests/domain_boundaries.yaml")
+    public_sync = load_yaml_json("manifests/public_private_sync_policy.yaml")
+    openclaw_eval = load_yaml_json("manifests/openclaw_evaluation_policy.yaml")
 
     bloque_ids = {item["id"] for item in bloques_doc["bloques"]}
     hipotesis_ids = {item["id"] for item in hipotesis_doc["hipotesis"]}
@@ -123,6 +150,29 @@ def validate() -> list[str]:
 
     if publicacion["politica"]["editable_directamente"] is not False:
         errors.append("publicacion.yaml debe indicar que el bundle público no es editable directamente")
+
+    if storage_layout["medios"]["nvme"]["rol"] != "rootfs_principal":
+        errors.append("storage_layout.yaml debe modelar NVMe como rootfs principal")
+    if "/mnt/emmc/backups" not in storage_layout["medios"]["emmc"]["montajes"]:
+        errors.append("storage_layout.yaml debe incluir /mnt/emmc/backups")
+
+    service_ids = {service["id"] for service in service_matrix["servicios"]}
+    for service_id in {"tesis-healthcheck", "tesis-backup", "tesis-sync", "openclaw-gateway"}:
+        if service_id not in service_ids:
+            errors.append(f"service_matrix.yaml no contiene el servicio requerido: {service_id}")
+
+    domain_ids = {item["id"] for item in domain_boundaries["dominios"]}
+    for domain_id in {"personal", "profesional", "academico", "edge", "administrativo"}:
+        if domain_id not in domain_ids:
+            errors.append(f"domain_boundaries.yaml no contiene el dominio requerido: {domain_id}")
+
+    if public_sync["modelo"] != "upstream_privado_downstream_publico":
+        errors.append("public_private_sync_policy.yaml debe declarar el modelo upstream_privado_downstream_publico")
+
+    if openclaw_eval["posicion"] != "capa_asistiva_opcional":
+        errors.append("openclaw_evaluation_policy.yaml debe mantener a OpenClaw como capa asistiva opcional")
+    if openclaw_eval["fallo_de_openclaw_no_detiene_sistema"] is not True:
+        errors.append("openclaw_evaluation_policy.yaml debe declarar que el fallo de OpenClaw no detiene el sistema")
 
     source_policy = dict(ia_policy.get("evidencia_fuente_conversacion", {}))
     if not source_policy:

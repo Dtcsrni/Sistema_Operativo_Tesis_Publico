@@ -9,7 +9,7 @@ from datetime import datetime
 from pathlib import Path
 
 from common import ROOT, load_yaml_json
-from publication import load_publication_config, sanitize_text
+from publication import load_publication_config, sanitize_text, validate_publication_output
 
 
 PRIVATE_EXCLUDE_PREFIXES = (
@@ -40,6 +40,18 @@ TEXT_SUFFIXES = {
     ".yml",
     ".yaml",
 }
+PUBLIC_REPO_NAME = "Dtcsrni/Sistema_Operativo_Tesis_Publico"
+SEVERE_PRIVATE_LEAK_TOKENS = (
+    "00_sistema_tesis/canon/events.jsonl",
+    "00_sistema_tesis/canon/",
+    "00_sistema_tesis/canon",
+    "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
+    "00_sistema_tesis/bitacora/indice_fuentes_conversacion.md",
+    "00_sistema_tesis/evidencia_privada/",
+    "00_sistema_tesis/evidencia_privada",
+    "00_sistema_tesis/config/agent_identity.json",
+    "00_sistema_tesis/config/sign_offs.json",
+)
 
 
 def run_command(cmd: list[str], cwd: Path, *, check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -137,6 +149,52 @@ def _render_payloads(source_map: dict[str, Path], *, sanitize: bool) -> dict[str
             payload = source_path.read_bytes()
         payloads[rel_path] = payload
     return payloads
+
+
+def validate_sync_payloads(payloads: dict[str, bytes]) -> list[str]:
+    errors: list[str] = []
+    publication = load_publication_config()
+
+    leaked_private_paths = sorted(rel_path for rel_path in payloads if _is_private_path(rel_path))
+    for rel_path in leaked_private_paths:
+        errors.append(f"La proyección pública incluye una ruta privada excluida: {rel_path}")
+
+    for rel_path, payload in payloads.items():
+        if rel_path.startswith(".git/"):
+            errors.append(f"La proyección pública intenta publicar metadatos Git: {rel_path}")
+            continue
+        if Path(rel_path).suffix.lower() in TEXT_SUFFIXES:
+            text = payload.decode("utf-8", errors="ignore")
+            if rel_path.startswith("06_dashboard/publico/"):
+                errors.extend(validate_publication_output(rel_path, payload, publication))
+            else:
+                for token in SEVERE_PRIVATE_LEAK_TOKENS:
+                    if token in text:
+                        errors.append(f"La proyección pública filtró una referencia privada en {rel_path}: {token}")
+
+    pages_payload = payloads.get(".github/workflows/pages.yml")
+    if not pages_payload:
+        errors.append("Falta `.github/workflows/pages.yml` en la proyección pública.")
+    else:
+        pages_text = pages_payload.decode("utf-8", errors="ignore")
+        if PUBLIC_REPO_NAME not in pages_text:
+            errors.append("El workflow de Pages no restringe el despliegue al repo público derivado.")
+        if "refs/heads/main" not in pages_text:
+            errors.append("El workflow de Pages no fija `main` como rama de despliegue.")
+
+    mkdocs_payload = payloads.get("mkdocs.yml")
+    if not mkdocs_payload:
+        errors.append("Falta `mkdocs.yml` en la proyección pública.")
+    else:
+        mkdocs_text = mkdocs_payload.decode("utf-8", errors="ignore")
+        if "repo_url: [ruta_local_redactada]" in mkdocs_text:
+            errors.append("`mkdocs.yml` redaccionó la URL del repo público en lugar de conservarla.")
+        if f"repo_url: https://github.com/{PUBLIC_REPO_NAME}" not in mkdocs_text:
+            errors.append("`mkdocs.yml` no apunta al repositorio público derivado.")
+        if "Sistema_Operativo_Tesis_Posgrado" in mkdocs_text:
+            errors.append("`mkdocs.yml` aún referencia el repo privado en la proyección pública.")
+
+    return errors
 
 
 def copy_selected_files(payloads: dict[str, bytes], target_dir: Path) -> None:
@@ -258,6 +316,7 @@ def main() -> int:
     parser.add_argument("--contact-email", default="")
     parser.add_argument("--commit-message", default="chore: actualizar proyeccion publica sanitizada")
     parser.add_argument("--allow-dirty", action="store_true")
+    parser.add_argument("--check", action="store_true", help="Verifica la proyección sin crear commit ni hacer push.")
     parser.add_argument("--push", action="store_true")
     args = parser.parse_args()
 
@@ -279,12 +338,27 @@ def main() -> int:
         source_map = _source_map_mirror(ROOT)
         payloads = _render_payloads(source_map, sanitize=True)
 
+    validation_errors = validate_sync_payloads(payloads)
+    if validation_errors:
+        raise SystemExit(
+            "SYNC-PUBLIC: la proyección pública incumple la política de sanitización:\n"
+            + json.dumps(validation_errors, ensure_ascii=False, indent=2)
+        )
+
     ensure_target_repo(target_dir, args.branch, args.repo_url)
     reset_content_dir(target_dir)
     copy_selected_files(payloads, target_dir)
     verify_sync(payloads, target_dir)
     write_sync_provenance(payloads, target_dir, args.branch, args.mode)
     write_security_notice(target_dir, contact_email=args.contact_email or _tesista_contact_default())
+
+    if args.check:
+        print("SYNC-PUBLIC: CHECK")
+        print(f"SOURCE: {source_dir}")
+        print(f"MODE: {args.mode}")
+        print(f"TARGET: {target_dir}")
+        print(f"FILES: {len(payloads)}")
+        return 0
 
     run_command(["git", "add", "-A"], cwd=target_dir)
     if has_changes(target_dir):

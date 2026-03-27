@@ -8,6 +8,51 @@ Hipótesis activas, criterios de soporte, evidencia y relación con bloques.
 - **Fuentes:** `00_sistema_tesis/config/hipotesis.yaml`, `00_sistema_tesis/config/bloques.yaml`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
 
+## Navegación de esta página
+
+- [Volver al índice](index.md).
+- Página anterior en la ruta base: [Planeación](planeacion.md).
+- Página siguiente en la ruta base: [Bloques](bloques.md).
+- Relacionada: [Planeación](planeacion.md).
+- Relacionada: [Bloques](bloques.md).
+- Relacionada: [Experimentos](experimentos.md).
+
+## Origen canónico y artefactos relacionados
+
+### Cómo rastrear esta página hasta su origen canónico
+
+1. Esta página derivada: `06_dashboard/wiki/hipotesis.md`.
+2. Revisa la lista de fuentes canónicas que alimentan su contenido.
+3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
+4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
+5. Si necesitas cambiar el contenido, edita la fuente canónica y reconstruye; no edites esta salida a mano.
+
+### Fuentes canónicas declaradas
+
+|Fuente canónica|Tipo|Existe|
+|---|---|---|
+|`00_sistema_tesis/config/hipotesis.yaml`|archivo|sí|
+|`00_sistema_tesis/config/bloques.yaml`|archivo|sí|
+
+### Artefactos derivados relacionados
+
+- Markdown interno: `06_dashboard/wiki/hipotesis.md`
+- HTML interno: `06_dashboard/generado/wiki/hipotesis.html`
+- Markdown público sanitizado: `06_dashboard/publico/wiki/hipotesis.md`
+- HTML público sanitizado: `06_dashboard/publico/wiki_html/hipotesis.html`
+
+## Qué resuelve este subsistema
+
+- Convierte el objetivo general de la tesis en afirmaciones contrastables.
+- Vincula cada hipótesis con bloques de trabajo, criterios de soporte y futura evidencia.
+- Evita que la narrativa técnica crezca sin criterios explícitos de validación o rechazo.
+
+## Lectura rápida
+
+- Hipótesis activas: `7`
+- Hipótesis de prioridad crítica: `2`
+- Esta página describe hipótesis vigentes, no resultados ya confirmados.
+
 ## Mapa de Hipótesis
 
 ```mermaid

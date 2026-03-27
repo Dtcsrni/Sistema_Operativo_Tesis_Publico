@@ -5,7 +5,7 @@ from html import escape
 import os
 from pathlib import Path
 
-from common import ROOT, canonical_file_status, ensure_generated_dir, extract_markdown_labeled_value, extract_markdown_section_bullets, list_markdown_entries, load_csv_rows, load_yaml_json, now_stamp
+from common import ROOT, canonical_file_status, ensure_generated_dir, extract_markdown_labeled_value, extract_markdown_section_bullets, list_markdown_entries, load_csv_rows, load_yaml_json, stable_generated_at, write_text_if_changed
 
 
 def priority_rank(value: str) -> int:
@@ -242,6 +242,25 @@ def main() -> int:
     reportes_semanales = list_markdown_entries("00_sistema_tesis/reportes_semanales")
     bitacoras = list_markdown_entries("00_sistema_tesis/bitacora")
     file_status = canonical_file_status()
+    generated_at = stable_generated_at(
+        [
+            "00_sistema_tesis/config/sistema_tesis.yaml",
+            "00_sistema_tesis/config/hipotesis.yaml",
+            "00_sistema_tesis/config/bloques.yaml",
+            "00_sistema_tesis/config/dashboard.yaml",
+            "00_sistema_tesis/config/publicacion.yaml",
+            "00_sistema_tesis/config/ia_gobernanza.yaml",
+            "00_sistema_tesis/config/security_report.json",
+            "00_sistema_tesis/config/token_budget.json",
+            "00_sistema_tesis/config/token_usage_snapshot.json",
+            "01_planeacion/backlog.csv",
+            "01_planeacion/riesgos.csv",
+            "00_sistema_tesis/decisiones",
+            "00_sistema_tesis/reportes_semanales",
+            "00_sistema_tesis/bitacora",
+            publicacion["salida"]["manifest"],
+        ]
+    )
 
     # Security Summary
     sec_summary = security_report.get("summary", {})
@@ -526,7 +545,7 @@ def main() -> int:
       </div>
       <div class="meta-card">
         <span class="meta-label">Build</span>
-        <strong>{escape(now_stamp())}</strong>
+        <strong>{escape(generated_at)}</strong>
       </div>
     </div>
   </header>
@@ -1718,12 +1737,12 @@ self.addEventListener('fetch', (event) => {
     manifest_path = ROOT / dashboard["salida"]["manifest"]
     sw_path = ROOT / dashboard["salida"]["service_worker"]
     icon_path = ROOT / dashboard["salida"]["icon"]
-    html_path.write_text(html, encoding="utf-8")
-    css_path.write_text(css.strip() + "\n", encoding="utf-8")
-    js_path.write_text(js.strip() + "\n", encoding="utf-8")
-    manifest_path.write_text(manifest.strip() + "\n", encoding="utf-8")
-    sw_path.write_text(service_worker.strip() + "\n", encoding="utf-8")
-    icon_path.write_text(icon.strip() + "\n", encoding="utf-8")
+    write_text_if_changed(html_path, html)
+    write_text_if_changed(css_path, css.strip() + "\n")
+    write_text_if_changed(js_path, js.strip() + "\n")
+    write_text_if_changed(manifest_path, manifest.strip() + "\n")
+    write_text_if_changed(sw_path, service_worker.strip() + "\n")
+    write_text_if_changed(icon_path, icon.strip() + "\n")
 
     print(f"Dashboard generado en {html_path}")
     return 0

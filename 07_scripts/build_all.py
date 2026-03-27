@@ -4,6 +4,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from common import preferred_python_executable
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -39,7 +41,7 @@ STEPS = [
 
 def run_step(label: str, script: str, args: list[str]) -> None:
     print(f"[RUN] {label} -> {script}")
-    cmd = [sys.executable, str(ROOT / script)]
+    cmd = [preferred_python_executable(), str(ROOT / script)]
     if args:
         cmd.extend(args)
     

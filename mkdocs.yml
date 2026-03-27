@@ -28,8 +28,7 @@ theme:
     - search.highlight
     - content.code.copy
 
-repo_url: http[ruta_local_redactada]
-edit_uri: edit/codex/bootstrap/
+repo_url: https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico
 
 docs_dir: 06_dashboard/wiki
 

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from common import ROOT, ensure_generated_dir, extract_markdown_labeled_value, extract_markdown_section_bullets, list_markdown_entries, load_csv_rows, load_yaml_json, now_stamp
+from common import ROOT, ensure_generated_dir, extract_markdown_labeled_value, extract_markdown_section_bullets, list_markdown_entries, load_csv_rows, load_yaml_json, stable_generated_at, write_text_if_changed
 from validate_structure import validate
 from validate_wiki import validate_wiki
 
@@ -76,6 +76,19 @@ def main() -> int:
         if contains_actual_waste_signal(extract_markdown_labeled_value(item["archivo"], "Economía de uso", "Qué consumió de más para el valor obtenido"))
     )
     task_matrix = gobernanza_ia["economia_y_optimizacion_de_uso"]["matriz_operativa_por_tipo_de_tarea"]
+    generated_at = stable_generated_at(
+        [
+            "00_sistema_tesis/config/sistema_tesis.yaml",
+            "00_sistema_tesis/config/hipotesis.yaml",
+            "00_sistema_tesis/config/bloques.yaml",
+            "00_sistema_tesis/config/ia_gobernanza.yaml",
+            "01_planeacion/backlog.csv",
+            "01_planeacion/riesgos.csv",
+            "00_sistema_tesis/decisiones",
+            "00_sistema_tesis/reportes_semanales",
+            "00_sistema_tesis/bitacora",
+        ]
+    )
     usage_recommendation = build_usage_recommendation(
         weekly_waste_opportunities=weekly_waste_opportunities,
         weekly_actual_waste_signals=weekly_actual_waste_signals,
@@ -85,7 +98,7 @@ def main() -> int:
 
     output = f"""# Reporte de consistencia
 
-- Fecha de generación: {now_stamp()}
+    - Fecha de generación: {generated_at}
 - Proyecto: {sistema["identidad_proyecto"]["nombre_corto"]}
 - Versión del sistema: {sistema["version"]}
 
@@ -139,8 +152,7 @@ def main() -> int:
     ) + "\n"
 
     report_path = ROOT / "06_dashboard" / "generado" / "reporte_consistencia.md"
-    with report_path.open("w", encoding="utf-8") as handle:
-        handle.write(output)
+    write_text_if_changed(report_path, output)
 
     print(f"Reporte generado en: {report_path}")
     total_errors = len(errores) + len(errores_wiki)

@@ -1,12 +1,83 @@
 # Manual de Operación Humana
 
-Este manual define la ruta de uso humano del sistema operativo de tesis. La IA es opcional: acelera trabajo, pero no es requisito para retomar, auditar, registrar ni publicar.
+Este manual es la ruta operativa del tesista. Explica cómo usar el sistema; la explicación conceptual del por qué existe y cómo se organiza vive en `README_INICIO.md` y en `00_sistema_tesis/documentacion_sistema/`.
+
+La IA es opcional: acelera trabajo, pero no es requisito para retomar, registrar, auditar ni publicar.
 
 ## Superficies
 
 - **Superficie privada:** canon, backlog, decisiones, bitácora, auditoría, evidencia y configuración completa.
-- **Superficie pública:** clon filtrado del repositorio privado (sin superficies restringidas), derivado desde la base privada.
+- **Superficie pública:** clon filtrado y bundle sanitizado derivados desde la base privada.
 - **IA opcional:** si no hay IA disponible, el sistema sigue siendo legible y operable mediante Markdown, CSV, YAML y CLI.
+
+## Ruta mínima de operación
+
+### Retomar
+
+1. Leer `README_INICIO.md`.
+2. Ejecutar `python 07_scripts/tesis.py status`.
+3. Ejecutar `python 07_scripts/tesis.py next`.
+4. Si hace falta un diagnóstico más fino, ejecutar `python 07_scripts/tesis.py doctor`.
+5. Si `doctor` muestra un `Python shell` distinto al `Python preferido repo`, seguir usando los wrappers oficiales; ellos fuerzan la `.venv` del proyecto.
+
+### Registrar cambio o decisión
+
+1. Editar primero la fuente canónica correspondiente.
+2. Si cambia arquitectura, método, evidencia o gobernanza, registrar decisión en `00_sistema_tesis/decisiones/`.
+3. Si cambia trabajo diario, seguimiento o cierre de sesión, registrar la bitácora o el backlog.
+4. Si la validación humana crea un `VAL-STEP` nuevo a partir de `[validacion_humana_interna]`, registrar primero la evidencia fuente con `python 07_scripts/tesis.py source register ...` o `source auto-register`.
+5. Enlazar el `source_event_id` resultante al `VAL-STEP` y verificarlo con `python 07_scripts/tesis.py source verify --step-id STEP_ID_REAL`.
+6. Ejecutar `python 07_scripts/build_all.py`.
+7. Si habrá exposición pública, regenerar además `python 07_scripts/tesis.py publish --build`.
+
+### Auditar
+
+1. Ejecutar `python 07_scripts/tesis.py doctor`.
+2. Ejecutar `python 07_scripts/tesis.py audit --check`.
+3. Ejecutar `python 07_scripts/tesis.py source status --check`.
+4. Ejecutar `python 07_scripts/build_all.py` antes de cerrar trabajo o proponer cambios.
+5. Revisar wiki y dashboard generados si se necesita lectura rápida humana.
+
+### Preparar despliegue en Orange Pi
+
+1. Revisar `docs/02_arquitectura/arquitectura-general.md` y `docs/02_arquitectura/topologia-de-almacenamiento.md`.
+2. Validar descargas e imagen base desde `bootstrap/host/`.
+3. Ejecutar por fases `bootstrap/orangepi/` en lugar de depender de un script monolítico.
+4. Correr `bash bootstrap/orangepi/90_postcheck.sh` al finalizar.
+5. Registrar cualquier desviación real de hardware, almacenamiento o servicios en bitácora/decisión.
+
+### Publicación pública
+
+1. Confirmar que el trabajo privado ya pasó `python 07_scripts/build_all.py`.
+2. Ejecutar `python 07_scripts/tesis.py publish --build`.
+3. Revisar `06_dashboard/publico/index.md` y `06_dashboard/publico/manifest_publico.json`.
+4. Ejecutar `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --branch main --check` antes de publicar.
+5. Publicar el downstream con `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`.
+6. Nunca corregir a mano el bundle público ni usar GitHub Pages del repo privado; si algo está mal, ajustar la fuente privada o la política de sanitización y volver a generar.
+
+## Evidencia fuente de conversación
+
+Use este flujo cuando una confirmación verbal de Codex deba sostener un `VAL-STEP` nuevo.
+
+1. Abrir o preparar sesión de evidencia en `[evidencia_privada_redactada]/conversaciones_codex/<session_id>/`.
+2. Preparar `transcripcion.md` de la conversación.
+3. Registrar la fuente con `python 07_scripts/tesis.py source auto-register --session-id ...` o `source register`.
+4. Conservar el `[evento_interno]` resultante como `source_event_id`.
+5. Registrar el `VAL-STEP` enlazando ese `source_event_id`.
+6. Ejecutar `python 07_scripts/tesis.py source verify --step-id STEP_ID_REAL`.
+
+Si se requiere scaffold manual:
+
+- `python 07_scripts/tesis.py source scaffold --session-id ...`
+
+La evidencia fuente vive en `[evidencia_privada_redactada]/conversaciones_codex/`, es privada y no debe publicarse.
+
+## Firma humana de artefactos
+
+La firma humana no se autoemite desde IA. Si un artefacto requiere renovar supervisión humana, el tesista debe revisarlo y registrar la firma explícitamente.
+
+- Comando base: `python 07_scripts/sign_off.py 07_scripts/README.md "Revisado y aprobado por tesista humano." --session-id <session_id>`
+- Verificación: `python 07_scripts/tesis.py doctor --check`
 
 ## Qué revisar siempre
 
@@ -18,74 +89,17 @@ Este manual define la ruta de uso humano del sistema operativo de tesis. La IA e
 - `06_dashboard/generado/index.html`
 - `06_dashboard/publico/index.md`
 
-## Retomar en menos de 5 minutos
-
-1. Leer `README_INICIO.md`.
-2. Ejecutar `python 07_scripts/tesis.py status`.
-3. Ejecutar `python 07_scripts/tesis.py next`.
-4. Si hace falta un diagnóstico más fino, ejecutar `python 07_scripts/tesis.py doctor`.
-
-## Registrar cambio o decisión
-
-1. Editar primero la fuente canónica correspondiente.
-2. Si cambia arquitectura, método, evidencia o gobernanza, registrar decisión en `00_sistema_tesis/decisiones/`.
-3. Si cambia el trabajo diario o el seguimiento, registrar la bitácora o el backlog.
-4. Si la validación humana crea un `VAL-STEP` nuevo a partir de `[validacion_humana_interna]`, registrar primero la evidencia fuente con `python 07_scripts/tesis.py source register ...`.
-5. Enlazar el `source_event_id` resultante al `VAL-STEP` y verificarlo con `python 07_scripts/tesis.py source verify --step-id STEP_ID_REAL`.
-4. Ejecutar `python 07_scripts/build_all.py`.
-5. Si habrá exposición pública, regenerar además `python 07_scripts/tesis.py publish --build`.
-
-## Auditar estado del sistema
-
-1. Ejecutar `python 07_scripts/tesis.py doctor`.
-2. Ejecutar `python 07_scripts/tesis.py audit --check`.
-3. Ejecutar `python 07_scripts/tesis.py source status --check` para revisar evidencia fuente de conversación.
-3. Ejecutar `python 07_scripts/build_all.py` antes de cerrar trabajo o proponer cambios.
-4. Revisar el dashboard derivado y la wiki verificable si se necesita lectura rápida humana.
-
-## Evidencia fuente de conversación
-
-Use este flujo cuando una confirmación verbal de Codex deba sostener un `VAL-STEP` nuevo.
-
-0. Al abrir sesión con `python 07_scripts/tesis.py session open --session-id ...` se genera automáticamente un scaffold privado en `[evidencia_privada_redactada]/conversaciones_codex/<session_id>/`.
-1. Preparar `transcripcion.md` de la conversación.
-2. (Opcional) Agregar capturas si se desea evidencia visual adicional.
-3. Ejecución automática recomendada: `python 07_scripts/tesis.py source auto-register --session-id ...`.
-4. Alternativa manual: `python 07_scripts/tesis.py source register --session-id ... --transcript ... --quote "texto exacto"` (opcionalmente `--screenshots ...`).
-5. Conservar el `[evento_interno]` resultante como `source_event_id`.
-6. Crear o registrar el `VAL-STEP` enlazando ese `source_event_id`.
-7. Ejecutar `python 07_scripts/tesis.py source verify --step-id STEP_ID_REAL`.
-
-Si se requiere regenerar el scaffold manualmente:
-- `python 07_scripts/tesis.py source scaffold --session-id ...`
-
-La evidencia fuente vive en `[evidencia_privada_redactada]/conversaciones_codex/`, es privada y no debe publicarse.
-
-## Publicación pública sanitizada
-
-1. Confirmar que el trabajo privado ya pasó `python 07_scripts/build_all.py`.
-2. Ejecutar `python 07_scripts/tesis.py publish --build`.
-3. Revisar `06_dashboard/publico/index.md` y `06_dashboard/publico/manifest_publico.json`.
-4. Nunca corregir a mano el bundle público; si algo está mal, ajustar la fuente privada o la política de sanitización y volver a generar.
-
 ## Publicación dual (privado + repo público derivado)
 
 1. Mantener este repositorio como fuente soberana privada.
-2. Crear o usar un repositorio GitHub público derivado (ejemplo: `Dtcsrni/Sistema_Operativo_Tesis_Publico`).
-3. Confirmar árbol privado limpio (sin cambios sin commit) para conservar sincronía exacta por commit.
+2. Crear o usar un repositorio GitHub público derivado.
+3. Confirmar árbol privado limpio para conservar sincronía exacta por commit.
 4. Ejecutar sincronización derivada en modo clon filtrado:
-   - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url http[ruta_local_redactada] --branch main --push`
-5. Verificar en el repo público que existan:
-   - `index.md`
-   - `manifest_publico.json`
-   - `_sync_provenance.json`
-   - `NOTA_SEGURIDAD_Y_ACCESO.md`
-   - `wiki/`
-   - `wiki_html/`
-   - `dashboard/`
-6. Verificar que `NOTA_SEGURIDAD_Y_ACCESO.md` indique política de seguridad y contacto al tesista para solicitudes de detalle no público.
-7. Validar que el clon filtrado no incluya rutas privadas (`canon/`, `bitacora/`, `evidencia_privada/`, secretos locales).
-8. Validar que ChatGPT use la URL del repositorio derivado público, no la del repo privado soberano.
+   - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`
+5. Verificar que el repo público incluya `index.md`, `manifest_publico.json`, `_sync_provenance.json`, `NOTA_SEGURIDAD_Y_ACCESO.md`, `wiki/`, `wiki_html/` y `dashboard/`.
+6. Validar que el clon filtrado no incluya rutas privadas (`canon/`, `bitacora/`, `evidencia_privada/`, secretos locales).
+7. Validar que cualquier consumidor externo use la URL del repositorio derivado público y no la del repo privado soberano.
+8. Confirmar que GitHub Pages quede deshabilitado en el repo privado y habilitado solo en el repo público derivado.
 
 ## Rollback de publicación pública
 
@@ -93,4 +107,4 @@ La evidencia fuente vive en `[evidencia_privada_redactada]/conversaciones_codex/
 2. Corregir la fuente privada o la política de sanitización.
 3. Ejecutar de nuevo:
    - `python 07_scripts/build_all.py`
-   - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url http[ruta_local_redactada] --branch main --push`
+   - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`

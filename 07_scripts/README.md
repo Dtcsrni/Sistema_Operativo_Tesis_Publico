@@ -21,7 +21,7 @@ python 07_scripts/build_all.py
 ```powershell
 python 07_scripts/tesis.py publish --check
 python 07_scripts/tesis.py publish --build
-python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url http[ruta_local_redactada] --branch main --push
+python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push
 ```
 
 ### 4. Corroborar confirmación verbal con evidencia fuente
@@ -71,6 +71,14 @@ python 07_scripts/tesis.py split-staged --commit
 - `report_consistency.py`: resumen legible de consistencia.
 - `validate_structure.py`: valida estructura y relaciones canónicas.
 - `governance_gate.py`: gate agnóstico de agente para hooks, CI y prechecks.
+
+## Capas operativas relacionadas
+
+- `bootstrap/`: instalación por fases para host Windows y Orange Pi.
+- `manifests/`: políticas y contratos máquina-legibles del sistema.
+- `config/systemd/`: servicios y timers de referencia.
+- `config/env/`: variables de entorno de ejemplo.
+- `runtime/openclaw/`: integración opcional, políticas y healthcheck de OpenClaw.
 
 ## Criterio operativo
 

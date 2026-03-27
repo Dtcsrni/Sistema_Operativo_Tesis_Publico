@@ -8,8 +8,49 @@ Registro de decisiones de arquitectura, método y operación.
 - **Fuentes:** `00_sistema_tesis/decisiones`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
 
+## Navegación de esta página
+
+- [Volver al índice](index.md).
+- Página anterior en la ruta base: [Bloques](bloques.md).
+- Página siguiente en la ruta base: [Bitácora](bitacora.md).
+- Relacionada: [Bitácora](bitacora.md).
+- Relacionada: [Planeación](planeacion.md).
+- Relacionada: [Sistema](sistema.md).
+
+## Origen canónico y artefactos relacionados
+
+### Cómo rastrear esta página hasta su origen canónico
+
+1. Esta página derivada: `06_dashboard/wiki/decisiones.md`.
+2. Revisa la lista de fuentes canónicas que alimentan su contenido.
+3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
+4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
+5. Si necesitas cambiar el contenido, edita la fuente canónica y reconstruye; no edites esta salida a mano.
+
+### Fuentes canónicas declaradas
+
+|Fuente canónica|Tipo|Existe|
+|---|---|---|
+|`00_sistema_tesis/decisiones`|directorio|sí|
+
+### Artefactos derivados relacionados
+
+- Markdown interno: `06_dashboard/wiki/decisiones.md`
+- HTML interno: `06_dashboard/generado/wiki/decisiones.html`
+- Markdown público sanitizado: `06_dashboard/publico/wiki/decisiones.md`
+- HTML público sanitizado: `06_dashboard/publico/wiki_html/decisiones.html`
+
+## Qué resuelve este subsistema
+
+- Conserva decisiones de arquitectura, método y operación como piezas defendibles y fechadas.
+- Evita que cambios estructurales queden solo en conversaciones o commits sin narrativa.
+- Se interpreta como registro de criterio, no como lista genérica de notas.
+
 ## Decisiones registradas
 
+- `2026-03-27` [DEC-0021 Publicacion desde Downstream Publico Sanitizado](../00_sistema_tesis/decisiones/2026-03-27_DEC-0021_publicacion_desde_downstream_publico_sanitizado.md)
+- `2026-03-27` [DEC-0020 OpenClaw como Capa Asistiva Opcional y Evaluable](../00_sistema_tesis/decisiones/2026-03-27_DEC-0020_openclaw_como_capa_asistiva_opcional_y_evaluable.md)
+- `2026-03-27` [DEC-0019 Reestructura Operativa y Despliegue Orange Pi](../00_sistema_tesis/decisiones/2026-03-27_DEC-0019_reestructura_operativa_y_despliegue_orangepi.md)
 - `2026-03-26` [DEC-0018 Evidencia Fuente de Conversación Codex para Confirmación Verbal](../00_sistema_tesis/decisiones/2026-03-26_DEC-0018_evidencia_fuente_conversacion_codex_para_confirmacion_verbal.md)
 - `2026-03-26` [DEC-0017 Operación Humana Dual y Superficies Privada/Pública](../00_sistema_tesis/decisiones/2026-03-26_DEC-0017_operacion_humana_dual_y_superficies_privada_publica.md)
 - `2026-03-26` [DEC-0016 Canon unificado de eventos y proyecciones derivadas](../00_sistema_tesis/decisiones/2026-03-26_DEC-0016_canon_unificado_de_eventos_y_proyecciones.md)

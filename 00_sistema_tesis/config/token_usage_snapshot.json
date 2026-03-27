@@ -4,8 +4,8 @@
   "status": "degraded",
   "message": "OPENAI_ADMIN_KEY no configurada. No se pudo sincronizar uso real desde la API.",
   "source": {
-    "usage_endpoint": "http[ruta_local_redactada]",
-    "costs_endpoint": "http[ruta_local_redactada]",
+    "usage_endpoint": "https://api.openai.com/v1/organization/usage/completions",
+    "costs_endpoint": "https://api.openai.com/v1/organization/costs",
     "lookback_days": 31
   },
   "budgets": {

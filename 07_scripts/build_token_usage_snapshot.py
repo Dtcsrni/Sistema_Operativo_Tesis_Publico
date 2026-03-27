@@ -14,12 +14,25 @@ from common import ROOT, dump_json, now_stamp
 USAGE_ENDPOINT = "https://api.openai.com/v1/organization/usage/completions"
 COSTS_ENDPOINT = "https://api.openai.com/v1/organization/costs"
 LOOKBACK_DAYS = 31
+SNAPSHOT_PATH = "00_sistema_tesis/config/token_usage_snapshot.json"
 
 
 def load_json(relative_path: str) -> dict[str, Any]:
     path = ROOT / relative_path
     with path.open("r", encoding="utf-8") as handle:
         return json.load(handle)
+
+
+def dump_snapshot(payload: dict[str, Any]) -> None:
+    existing: dict[str, Any] = {}
+    path = ROOT / SNAPSHOT_PATH
+    if path.exists():
+        existing = load_json(SNAPSHOT_PATH)
+    comparable_payload = {key: value for key, value in payload.items() if key != "generated_at"}
+    comparable_existing = {key: value for key, value in existing.items() if key != "generated_at"}
+    if comparable_existing == comparable_payload and existing.get("generated_at"):
+        payload["generated_at"] = existing["generated_at"]
+    dump_json(SNAPSHOT_PATH, payload)
 
 
 def require_config(mapping: dict[str, Any], dotted_path: str) -> Any:
@@ -241,7 +254,7 @@ def main() -> int:
             "Configurar OPENAI_ADMIN_KEY para habilitar medicion exacta de consumo diario y semanal.",
             "Mientras tanto, usar el overlay local como presupuesto operativo estimado.",
         ]
-        dump_json("00_sistema_tesis/config/token_usage_snapshot.json", payload)
+        dump_snapshot(payload)
         print("[WARN] Snapshot de tokens generado sin sincronizacion API (falta OPENAI_ADMIN_KEY).")
         return 0
 
@@ -279,7 +292,7 @@ def main() -> int:
             "Revisar permisos del OPENAI_ADMIN_KEY para endpoints de organization usage/costs.",
             "Verificar que el key pertenezca a la organizacion correcta y tenga alcance admin.",
         ]
-        dump_json("00_sistema_tesis/config/token_usage_snapshot.json", payload)
+        dump_snapshot(payload)
         print(f"[WARN] Snapshot degradado por error HTTP: {exc.code} {exc.reason}")
         return 0
     except Exception as exc:  # noqa: BLE001
@@ -292,7 +305,7 @@ def main() -> int:
             "Reintentar sincronizacion en la siguiente corrida de build.",
             "Si persiste, registrar x-request-id y revisar conectividad/proxy.",
         ]
-        dump_json("00_sistema_tesis/config/token_usage_snapshot.json", payload)
+        dump_snapshot(payload)
         print(f"[WARN] Snapshot degradado por excepcion: {exc}")
         return 0
 
@@ -374,7 +387,8 @@ def main() -> int:
         }
     )
 
-    output_path = dump_json("00_sistema_tesis/config/token_usage_snapshot.json", payload)
+    dump_snapshot(payload)
+    output_path = ROOT / SNAPSHOT_PATH
     print(f"[OK] Snapshot de uso de tokens generado en: {output_path}")
     return 0
 

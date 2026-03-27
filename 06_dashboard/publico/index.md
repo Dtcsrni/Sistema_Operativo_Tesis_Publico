@@ -2,9 +2,9 @@
 
 Definir la exportación pública sanitizada, legible y reproducible del sistema operativo de tesis sin exponer trazabilidad privada ni infraestructura sensible.
 
-- **Generado:** `2026-03-26`
+- **Generado:** `2026-03-27`
 - **Estado:** `ok`
-- **Fingerprint del bundle:** `977c500b045f2d9a212705442c3f400a2831b9ef3e2a2f830cec3219914df375`
+- **Fingerprint del bundle:** `22bf346c9169d82e041b9742804fce709a9d50e715059a1f6cb8be3fbbde5cb7`
 - **Aviso:** Este bundle público es un artefacto derivado y sanitizado. No se corrige a mano; se reconstruye desde la base privada.
 
 ## Superficies
@@ -12,6 +12,22 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 - **Privada:** canon, ledger, matriz, bitácoras, backlog y auditoría completa.
 - **Pública:** derivado sanitizado para lectura humana, divulgación y evaluación externa.
 - **IA:** apoyo opcional; la operación del bundle público no depende de IA.
+
+## Rutas de navegación pública
+
+- Entrada general: `README_publico.md`.
+- Mapa del sistema y ruta base: `wiki/index.md`.
+- Propósito, módulos y flujos: `wiki/sistema.md`.
+- Reglas y límites: `wiki/gobernanza.md`.
+- Términos, IDs y convenciones: `wiki/terminologia.md`.
+- Exploración visual: `dashboard/index.html` y `wiki_html/index.html`.
+
+## Cómo rastrear hacia el origen canónico
+
+- Cada página pública proviene de una página wiki derivada de la base privada.
+- La wiki declara sus fuentes canónicas y el bundle conserva esa semántica con sanitización aplicada.
+- Si necesitas reconstruir o auditar, usa el par `wiki/index.md` + `manifest_publico.json` y compáralo con la wiki interna generada.
+- La capa pública explica el origen, pero no expone ledger privado, transcripciones ni canon sensible.
 
 ## Artefactos incluidos
 
@@ -26,6 +42,7 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 - `06_dashboard/publico/wiki/index.md` ← `06_dashboard/wiki/index.md`
 - `06_dashboard/publico/wiki/planeacion.md` ← `06_dashboard/wiki/planeacion.md`
 - `06_dashboard/publico/wiki/sistema.md` ← `06_dashboard/wiki/sistema.md`
+- `06_dashboard/publico/wiki/terminologia.md` ← `06_dashboard/wiki/terminologia.md`
 - `06_dashboard/publico/wiki/tesis.md` ← `06_dashboard/wiki/tesis.md`
 - `06_dashboard/publico/wiki_html/bitacora.html` ← `06_dashboard/generado/wiki/bitacora.html`
 - `06_dashboard/publico/wiki_html/bloques.html` ← `06_dashboard/generado/wiki/bloques.html`
@@ -37,6 +54,7 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 - `06_dashboard/publico/wiki_html/index.html` ← `06_dashboard/generado/wiki/index.html`
 - `06_dashboard/publico/wiki_html/planeacion.html` ← `06_dashboard/generado/wiki/planeacion.html`
 - `06_dashboard/publico/wiki_html/sistema.html` ← `06_dashboard/generado/wiki/sistema.html`
+- `06_dashboard/publico/wiki_html/terminologia.html` ← `06_dashboard/generado/wiki/terminologia.html`
 - `06_dashboard/publico/wiki_html/tesis.html` ← `06_dashboard/generado/wiki/tesis.html`
 - `06_dashboard/publico/dashboard/index.html` ← `06_dashboard/generado/index.html`
 - `06_dashboard/publico/dashboard/estilos.css` ← `06_dashboard/generado/estilos.css`

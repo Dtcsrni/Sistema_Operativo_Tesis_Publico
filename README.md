@@ -27,6 +27,7 @@ Este repositorio privado gobierna decisiones, hipótesis, backlog, riesgos, expe
 ## Qué contiene
 
 - `00_sistema_tesis/`: gobierno del sistema, decisiones, bitácora, reportes y plantillas.
+- `00_sistema_tesis/documentacion_sistema/`: narrativa canónica del propósito, módulos, flujos e interacción.
 - `01_planeacion/`: backlog, riesgos, roadmap y entregables canónicos.
 - `02_experimentos/`: simulación y validación experimental.
 - `03_datos/`: datos raw, procesados y catálogos.
@@ -34,6 +35,12 @@ Este repositorio privado gobierna decisiones, hipótesis, backlog, riesgos, expe
 - `05_tesis/`: capítulos, figuras y ensamblaje de tesis.
 - `06_dashboard/`: dashboard HTML y exportables derivados.
 - `07_scripts/`: validación, generación y consolidación.
+- `docs/`: arquitectura, operación, seguridad y reproducibilidad estructuradas.
+- `manifests/`: contratos máquina-legibles de almacenamiento, dominios, servicios y publicación.
+- `bootstrap/`: instalación por fases para host Windows y Orange Pi.
+- `runtime/openclaw/`: integración opcional, wrappers y políticas de OpenClaw.
+- `config/systemd/` y `config/env/`: servicios, timers y variables de entorno de referencia.
+- `tests/smoke/`, `tests/integration/`, `benchmarks/` y `ops/`: verificación, medición y operación de campo.
 
 ## Retoma rápida
 
@@ -44,9 +51,34 @@ Empieza por estos archivos:
 - [`00_sistema_tesis/config/hipotesis.yaml`](00_sistema_tesis/config/hipotesis.yaml)
 - [`00_sistema_tesis/config/bloques.yaml`](00_sistema_tesis/config/bloques.yaml)
 - [`00_sistema_tesis/config/publicacion.yaml`](00_sistema_tesis/config/publicacion.yaml)
+- [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md)
+- [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md)
+- [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](00_sistema_tesis/documentacion_sistema/flujos_operativos.md)
+- [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md)
+- [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md)
 - [`01_planeacion/backlog.csv`](01_planeacion/backlog.csv)
+- [`docs/02_arquitectura/arquitectura-general.md`](docs/02_arquitectura/arquitectura-general.md)
+- [`manifests/storage_layout.yaml`](manifests/storage_layout.yaml)
+- [`bootstrap/orangepi/10_primer-arranque.sh`](bootstrap/orangepi/10_primer-arranque.sh)
 - [`06_dashboard/wiki/index.md`](06_dashboard/wiki/index.md)
 - [`06_dashboard/generado/index.html`](06_dashboard/generado/index.html)
+
+## Ruta de lectura
+
+- Para entender para qué existe el sistema: `README_INICIO.md` y `proposito_y_alcance.md`.
+- Para entender módulos y relaciones: `mapa_de_modulos.md`.
+- Para entender recorridos de trabajo: `flujos_operativos.md`.
+- Para entender identificadores, términos y convenciones: `glosario_terminologia_y_convenciones.md`.
+- Para operar como tesista: `manual_operacion_humana.md`.
+- Para exploración externa: wiki derivada y bundle público sanitizado.
+
+## Navegación y trazabilidad
+
+- La entrada navegable del sistema es [`06_dashboard/wiki/index.md`](06_dashboard/wiki/index.md).
+- Cada página de la wiki debe declarar navegación local, fuentes canónicas y artefactos derivados relacionados.
+- Si una salida derivada necesita cambio, la intervención correcta es sobre la fuente canónica declarada, no sobre el derivado.
+- Para cerrar la cadena de rastreo revisa [`06_dashboard/generado/wiki_manifest.json`](06_dashboard/generado/wiki_manifest.json) y [`06_dashboard/publico/manifest_publico.json`](06_dashboard/publico/manifest_publico.json).
+- Para trazabilidad operativa interna revisa [`[matriz_privada]`]([matriz_privada]) y [`[ledger_privado]`]([ledger_privado]).
 
 ## Qué revisar siempre
 
@@ -88,9 +120,9 @@ Empieza por estos archivos:
 
 ## Decisiones recientes
 
-- **2026-03-26** · [DEC-0018 Evidencia Fuente de Conversación Codex para Confirmación Verbal](00_sistema_tesis/decisiones/2026-03-26_DEC-0018_evidencia_fuente_conversacion_codex_para_confirmacion_verbal.md)
-- **2026-03-26** · [DEC-0017 Operación Humana Dual y Superficies Privada/Pública](00_sistema_tesis/decisiones/2026-03-26_DEC-0017_operacion_humana_dual_y_superficies_privada_publica.md)
-- **2026-03-26** · [DEC-0016 Canon unificado de eventos y proyecciones derivadas](00_sistema_tesis/decisiones/2026-03-26_DEC-0016_canon_unificado_de_eventos_y_proyecciones.md)
+- **2026-03-27** · [DEC-0021 Publicacion desde Downstream Publico Sanitizado](00_sistema_tesis/decisiones/2026-03-27_DEC-0021_publicacion_desde_downstream_publico_sanitizado.md)
+- **2026-03-27** · [DEC-0020 OpenClaw como Capa Asistiva Opcional y Evaluable](00_sistema_tesis/decisiones/2026-03-27_DEC-0020_openclaw_como_capa_asistiva_opcional_y_evaluable.md)
+- **2026-03-27** · [DEC-0019 Reestructura Operativa y Despliegue Orange Pi](00_sistema_tesis/decisiones/2026-03-27_DEC-0019_reestructura_operativa_y_despliegue_orangepi.md)
 
 ## Operación
 
@@ -162,6 +194,7 @@ python 07_scripts/report_consistency.py
 - La superficie privada conserva canon, backlog, decisiones, bitácora y auditoría completa.
 - La superficie pública vive en `06_dashboard/publico/` como bundle sanitizado y derivado.
 - La IA es opcional; el sistema debe poder operarse y explicarse siguiendo rutas humanas explícitas.
+- La capa pública existe para exploración y evaluación técnica, no para sustituir el canon privado.
 
 ## Criterios de gobierno
 

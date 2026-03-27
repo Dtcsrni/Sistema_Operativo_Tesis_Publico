@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-03-26",
+  "generated_at": "2026-03-27",
   "status": "ok",
   "scope": "publico_sanitizado",
-  "bundle_fingerprint": "977c500b045f2d9a212705442c3f400a2831b9ef3e2a2f830cec3219914df375",
+  "bundle_fingerprint": "22bf346c9169d82e041b9742804fce709a9d50e715059a1f6cb8be3fbbde5cb7",
   "notice": "Este bundle público es un artefacto derivado y sanitizado. No se corrige a mano; se reconstruye desde la base privada.",
   "artifacts": [
     {
@@ -50,6 +50,10 @@
       "output": "06_dashboard/publico/wiki/sistema.md"
     },
     {
+      "source": "06_dashboard/wiki/terminologia.md",
+      "output": "06_dashboard/publico/wiki/terminologia.md"
+    },
+    {
       "source": "06_dashboard/wiki/tesis.md",
       "output": "06_dashboard/publico/wiki/tesis.md"
     },
@@ -92,6 +96,10 @@
     {
       "source": "06_dashboard/generado/wiki/sistema.html",
       "output": "06_dashboard/publico/wiki_html/sistema.html"
+    },
+    {
+      "source": "06_dashboard/generado/wiki/terminologia.html",
+      "output": "06_dashboard/publico/wiki_html/terminologia.html"
     },
     {
       "source": "06_dashboard/generado/wiki/tesis.html",

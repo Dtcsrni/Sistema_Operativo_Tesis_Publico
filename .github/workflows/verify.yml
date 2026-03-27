@@ -23,6 +23,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
 
+      - name: Install shellcheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+
+      - name: Shellcheck bootstrap and ops scripts
+        run: |
+          find bootstrap ops runtime/openclaw tests/smoke tests/integration benchmarks/scripts -type f -name "*.sh" -print0 | xargs -0 -r shellcheck
+
+      - name: Validate downstream public projection
+        run: |
+          python 07_scripts/sync_public_repo.py --mode mirror --target-dir "$RUNNER_TEMP/public-sync-check" --branch main --check
+
       - name: Run governance gate
         run: python 07_scripts/governance_gate.py --stage ci --agent github-actions
 

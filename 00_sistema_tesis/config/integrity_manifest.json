@@ -1,7 +1,7 @@
 {
     "AGENTS.md": "8601b80a2119ab67de28ed4bb65395b4cfdf9bde721505771eb30b21076379ef",
     "_agents\\skills\\handshake_ledger\\SKILL.md": "9806fed4b458fa87546b242f7f0d43e27ba3e4627b47dd8ecdac9cb073c2ef46",
-    "00_sistema_tesis\\canon\\events.jsonl": "a117e7d3b9205bbe3fe9e4b75a66c402a3f2d92541f46e4f1b743f716c2c5048",
+    "00_sistema_tesis\\canon\\events.jsonl": "6cc38465669941bba669ba1e1db28ce9d325dfbaea0dc3d2e7a04b07dd0f835e",
     "00_sistema_tesis\\config\\agent_identity.json": "a533526689e9c74e24911b91b80d93390ae1c2b8c6c44c8c8434e0101a737fb4",
     "00_sistema_tesis\\config\\ia_gobernanza.yaml": "c94d487ff52e47733d0d383f1deb073cd5fb1eb5b8359c716e0c1a2030be5660",
     "00_sistema_tesis\\decisiones\\2026-03-23_DEC-0001_arquitectura_sistema_tesis.md": "7ea949db3d8218fe8fb449603cf3202d19ae36269fafb775f319f8edfa6bde16",
@@ -21,5 +21,9 @@
     "00_sistema_tesis\\decisiones\\2026-03-24_DEC-0015_protocolo_de_sanitizaci\u00f3n_para_exposici\u00f3n_p\u00fablica.md": "8c331eafcd72e439411958f6805e34f7192c06e903c8b6467250efe02e534f2d",
     "00_sistema_tesis\\decisiones\\2026-03-26_DEC-0016_canon_unificado_de_eventos_y_proyecciones.md": "8ae78067f75612f2c7f01fa553d37df50a4ec979ce541a071b1114e8c735c65b",
     "00_sistema_tesis\\decisiones\\2026-03-26_DEC-0017_operacion_humana_dual_y_superficies_privada_publica.md": "f3382a53ae4059bdd008e43e86ea5caf50faf5b41a00741181ebc0bf0fb084f7",
-    "00_sistema_tesis\\decisiones\\2026-03-26_DEC-0018_evidencia_fuente_conversacion_codex_para_confirmacion_verbal.md": "981a5e3ebaecb65cc0ef070aef3204e5caaf86fb7023db73823cda5a2aebee49"
+    "00_sistema_tesis\\decisiones\\2026-03-26_DEC-0018_evidencia_fuente_conversacion_codex_para_confirmacion_verbal.md": "981a5e3ebaecb65cc0ef070aef3204e5caaf86fb7023db73823cda5a2aebee49",
+    "00_sistema_tesis\\decisiones\\2026-03-27_DEC-0019_reestructura_operativa_y_despliegue_orangepi.md": "39c13c7e698398e0558b0fba0adf1749af7179d77aa278b88e094c2b113378db",
+    "00_sistema_tesis\\decisiones\\2026-03-27_DEC-0020_openclaw_como_capa_asistiva_opcional_y_evaluable.md": "c06462d33d14ebf629c41e8ee541981f47ce94415dbecb45a3f9a9d9775f415d",
+    "00_sistema_tesis\\decisiones\\2026-03-27_DEC-0021_publicacion_desde_downstream_publico_sanitizado.md": "36d7cba881f4a3673e4fd08fb42c54cb5988cfc2c3dcb2a7c1f91f9cb46deec2",
+    "00_sistema_tesis\\evidencia_privada\\conversaciones_codex\\codex-local-20260327-migracion-sistema-tesis\\transcripcion.md": "dd144a1006b544c0275c6f70219e535551ef40bcfe1d89cd7acd949361f9a0eb"
 }
