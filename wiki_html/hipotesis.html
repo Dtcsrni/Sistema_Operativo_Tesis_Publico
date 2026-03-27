@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hipótesis</title>
+  <style>
+    body {
+      margin: 0;
+      background: #f6f3eb;
+      color: #1e293b;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+    header {
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      margin: 0 0 0.5rem;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+    }
+    .stamp {
+      color: #475569;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      font-size: 0.9rem;
+    }
+    pre {
+      white-space: pre-wrap;
+      background: #fff;
+      border: 1px solid #d6d3d1;
+      border-radius: 16px;
+      padding: 1rem;
+      overflow-wrap: anywhere;
+      line-height: 1.55;
+    }
+    a {
+      color: #0f766e;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Hipótesis</h1>
+      <p class="stamp">Artefacto derivado generado el [fecha_hora_redactada]</p>
+    </header>
+    <pre># Hipótesis
+
+Hipótesis activas, criterios de soporte, evidencia y relación con bloques.
+
+- **Tesista:** `Erick Renato Vega Ceron`
+- **Fecha:** `[fecha_hora_redactada]`
+- **Estado:** `OK`
+- **Fuentes:** `00_sistema_tesis/config/hipotesis.yaml`, `00_sistema_tesis/config/bloques.yaml`
+- **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
+
+## Mapa de Hipótesis
+
+```mermaid
+graph TD
+  HG --&gt; B2
+  HG --&gt; B3
+  style HG fill:#f9f,stroke:#333,stroke-width:2px
+  H1 --&gt; B2
+  H1 --&gt; B4
+  style H1 fill:#f9f,stroke:#333,stroke-width:2px
+  H2 --&gt; B2
+  H2 --&gt; B4
+  style H2 fill:#f9f,stroke:#333,stroke-width:2px
+  H3 --&gt; B2
+  H3 --&gt; B3
+  style H3 fill:#f9f,stroke:#333,stroke-width:2px
+  H4 --&gt; B3
+  H4 --&gt; B4
+  style H4 fill:#f9f,stroke:#333,stroke-width:2px
+  H5 --&gt; B4
+  H5 --&gt; B5
+  style H5 fill:#f9f,stroke:#333,stroke-width:2px
+  H6 --&gt; B1
+  H6 --&gt; B2
+  style H6 fill:#f9f,stroke:#333,stroke-width:2px
+```
+
+## Hipótesis activas
+
+|ID|Nombre|Prioridad|Estado|Bloques|Criterio de soporte|
+|---|---|---|---|---|---|
+|HG|Superioridad integrada de arquitectura resiliente|critica|activa|B2, B3, B4, B5, B6, B7|Se considera soportada si la arquitectura propuesta supera consistentemente a la línea base en continuidad útil y control bajo escenarios intermitentes definidos, sin costos operativos desproporcionados.|
+|H1|Buffer adaptativo reduce pérdida útil|alta|activa|B2, B4, B5, B6|Soportada si mejora la entrega útil y mantiene la edad de información dentro de umbrales definidos para variables críticas.|
+|H2|Topología híbrida mejora resiliencia|alta|activa|B2, B4, B5, B6, B7|Soportada si la topología híbrida conserva más funciones esenciales y recupera antes que la línea base centralizada.|
+|H3|Priorización contextual protege variables críticas|critica|activa|B2, B3, B4, B5, B6|Soportada si reduce latencia y pérdida de variables críticas bajo carga/intermitencia con impacto aceptable en tráfico secundario.|
+|H4|Control degradable mantiene estabilidad útil|alta|activa|B3, B4, B5, B6, B7|Soportada si el modo degradado mantiene variables dentro de una banda operativa segura más tiempo que la línea base.|
+|H5|Transferencia simulación a experimento es consistente|alta|activa|B4, B5, B6, B7|Soportada si las tendencias principales se conservan y la desviación entre simulación y experimento permanece dentro del margen acordado.|
+|H6|Perfil urbano de Pachuca aporta valor de diseño|media|activa|B1, B2, B4, B6, B7|Soportada si el contexto local modifica de manera explícita y trazable parámetros, escenarios o decisiones respecto de una formulación genérica.|
+</pre>
+  </main>
+</body>
+</html>

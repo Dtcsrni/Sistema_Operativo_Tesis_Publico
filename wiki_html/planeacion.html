@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Planeación</title>
+  <style>
+    body {
+      margin: 0;
+      background: #f6f3eb;
+      color: #1e293b;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+    header {
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      margin: 0 0 0.5rem;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+    }
+    .stamp {
+      color: #475569;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      font-size: 0.9rem;
+    }
+    pre {
+      white-space: pre-wrap;
+      background: #fff;
+      border: 1px solid #d6d3d1;
+      border-radius: 16px;
+      padding: 1rem;
+      overflow-wrap: anywhere;
+      line-height: 1.55;
+    }
+    a {
+      color: #0f766e;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Planeación</h1>
+      <p class="stamp">Artefacto derivado generado el [fecha_hora_redactada]</p>
+    </header>
+    <pre># Planeación
+
+Backlog, riesgos, roadmap y entregables del sistema.
+
+- **Tesista:** `Erick Renato Vega Ceron`
+- **Fecha:** `[fecha_hora_redactada]`
+- **Estado:** `OK`
+- **Fuentes:** `01_planeacion/backlog.csv`, `01_planeacion/riesgos.csv`, `01_planeacion/roadmap.csv`, `01_planeacion/entregables.csv`
+- **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
+
+## Visualización del Cronograma
+
+```mermaid
+gantt
+    title Hoja de Ruta de la Tesis
+    dateFormat  YYYY-MM-DD
+    section Fases
+    F0 : 2026-03-23, 2026-03-31
+    F1 : 2026-04-01, 2026-04-15
+    F2 : 2026-04-16, 2026-05-10
+    F3 : 2026-05-11, 2026-06-20
+    F4 : 2026-06-21, 2026-07-20
+    F5 : 2026-07-21, 2026-09-15
+    F6 : 2026-09-16, 2026-10-15
+```
+
+## Backlog prioritario
+
+|Task|Bloque|Tarea|Prioridad|Estado|Fecha objetivo|
+|---|---|---|---|---|---|
+|T-001|B0|Cerrar estructura canónica inicial del sistema operativo|critica|hecho|2026-03-23|
+|T-002|B0|Dejar README_INICIO orientado a retoma en menos de 3 minutos|alta|hecho|2026-03-23|
+|T-003|B0|Implementar generador de dashboard HTML estático|critica|hecho|2026-03-23|
+|T-004|B0|Implementar validaciones mínimas de consistencia entre YAML y CSV|critica|hecho|2026-03-23|
+|T-005|B0|Crear plantillas operativas de decisión bitácora y resumen semanal|alta|hecho|2026-03-23|
+|T-006|B0|Exportar hoja maestra consolidada desde fuentes canónicas|media|hecho|2026-03-23|
+|T-007|B1|Delimitar formalmente el caso de estudio en la Zona Metropolitana de Pachuca|critica|pendiente|2026-03-30|
+|T-008|B1|Definir taxonomía inicial de intermitencia urbana relevante para la tesis|alta|pendiente|2026-04-02|
+|T-009|B1|Identificar variables críticas y no críticas por escenario operativo|alta|pendiente|2026-04-04|
+|T-010|B2|Definir arquitectura base de comparación contra la propuesta|critica|pendiente|2026-04-05|
+
+## Riesgos abiertos
+
+|Risk|Riesgo|Probabilidad|Impacto|Estado|
+|---|---|---|---|---|
+|R-001|Deriva entre fuentes canónicas y artefactos generados|media|alto|abierto|
+|R-002|Ambigüedad en la línea base de comparación|alta|alto|abierto|
+|R-003|Escenarios de intermitencia poco representativos del caso de estudio|media|alto|abierto|
+|R-004|Sobrecarga operativa por exceso de documentación|media|medio| plantillas cortas y un solo punto de verdad por artefacto|
+|R-005|Dependencia excesiva de IA en tareas sustantivas|media|alto|abierto|
+|R-006|Desalineación entre simulación y experimento|media|alto|abierto|
+|R-007|Consumo ineficiente del presupuesto de uso por sobrerazonamiento o exploración redundante|media|medio|abierto|
+|R-008|Exposición pública sin sanitización suficiente|media|alto|abierto|
+|R-009|Complejidad documental por duplicación entre capa humana y automatización|media|medio|abierto|
+
+## Entregables
+
+|ID|Nombre|Estado|Artefacto canónico|
+|---|---|---|---|
+|ENT-001|Base operativa del sistema de tesis|listo|README_INICIO.md|
+|ENT-002|Automatización base y dashboard|listo|06_dashboard/generado/index.html|
+|ENT-003|Definición del caso de estudio y supuestos de intermitencia|pendiente|00_sistema_tesis/decisiones|
+|ENT-004|Arquitectura propuesta y línea base|pendiente|00_sistema_tesis/config/hipotesis.yaml|
+|ENT-005|Cuadro maestro de métricas y escenarios|pendiente|02_experimentos/simulacion|
+|ENT-006|Paquete de simulación reproducible|pendiente|02_experimentos/simulacion|
+|ENT-007|Prototipo instrumentado|pendiente|04_implementacion|
+|ENT-008|Evidencia experimental trazable|pendiente|02_experimentos/validacion_experimental|
+|ENT-009|Análisis integrado y discusión|pendiente|05_tesis/capitulos|
+|ENT-010|Manuscrito base de tesis|pendiente|05_tesis|
+|ENT-011|Paquete sanitizado reproducible|pendiente|06_dashboard/generado|
+|ENT-012|Cierre y defensa|pendiente|05_tesis|
+</pre>
+  </main>
+</body>
+</html>

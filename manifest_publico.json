@@ -1,0 +1,152 @@
+{
+  "generated_at": "2026-03-26",
+  "status": "ok",
+  "scope": "publico_sanitizado",
+  "notice": "Este bundle público es un artefacto derivado y sanitizado. No se corrige a mano; se reconstruye desde la base privada.",
+  "artifacts": [
+    {
+      "source": "README.md",
+      "output": "06_dashboard/publico/README_publico.md"
+    },
+    {
+      "source": "06_dashboard/wiki/bitacora.md",
+      "output": "06_dashboard/publico/wiki/bitacora.md"
+    },
+    {
+      "source": "06_dashboard/wiki/bloques.md",
+      "output": "06_dashboard/publico/wiki/bloques.md"
+    },
+    {
+      "source": "06_dashboard/wiki/decisiones.md",
+      "output": "06_dashboard/publico/wiki/decisiones.md"
+    },
+    {
+      "source": "06_dashboard/wiki/experimentos.md",
+      "output": "06_dashboard/publico/wiki/experimentos.md"
+    },
+    {
+      "source": "06_dashboard/wiki/gobernanza.md",
+      "output": "06_dashboard/publico/wiki/gobernanza.md"
+    },
+    {
+      "source": "06_dashboard/wiki/hipotesis.md",
+      "output": "06_dashboard/publico/wiki/hipotesis.md"
+    },
+    {
+      "source": "06_dashboard/wiki/implementacion.md",
+      "output": "06_dashboard/publico/wiki/implementacion.md"
+    },
+    {
+      "source": "06_dashboard/wiki/index.md",
+      "output": "06_dashboard/publico/wiki/index.md"
+    },
+    {
+      "source": "06_dashboard/wiki/planeacion.md",
+      "output": "06_dashboard/publico/wiki/planeacion.md"
+    },
+    {
+      "source": "06_dashboard/wiki/sistema.md",
+      "output": "06_dashboard/publico/wiki/sistema.md"
+    },
+    {
+      "source": "06_dashboard/wiki/tesis.md",
+      "output": "06_dashboard/publico/wiki/tesis.md"
+    },
+    {
+      "source": "06_dashboard/generado/wiki/bitacora.html",
+      "output": "06_dashboard/publico/wiki_html/bitacora.html"
+    },
+    {
+      "source": "06_dashboard/generado/wiki/bloques.html",
+      "output": "06_dashboard/publico/wiki_html/bloques.html"
+    },
+    {
+      "source": "06_dashboard/generado/wiki/decisiones.html",
+      "output": "06_dashboard/publico/wiki_html/decisiones.html"
+    },
+    {
+      "source": "06_dashboard/generado/wiki/experimentos.html",
+      "output": "06_dashboard/publico/wiki_html/experimentos.html"
+    },
+    {
+      "source": "06_dashboard/generado/wiki/gobernanza.html",
+      "output": "06_dashboard/publico/wiki_html/gobernanza.html"
+    },
+    {
+      "source": "06_dashboard/generado/wiki/hipotesis.html",
+      "output": "06_dashboard/publico/wiki_html/hipotesis.html"
+    },
+    {
+      "source": "06_dashboard/generado/wiki/implementacion.html",
+      "output": "06_dashboard/publico/wiki_html/implementacion.html"
+    },
+    {
+      "source": "06_dashboard/generado/wiki/index.html",
+      "output": "06_dashboard/publico/wiki_html/index.html"
+    },
+    {
+      "source": "06_dashboard/generado/wiki/planeacion.html",
+      "output": "06_dashboard/publico/wiki_html/planeacion.html"
+    },
+    {
+      "source": "06_dashboard/generado/wiki/sistema.html",
+      "output": "06_dashboard/publico/wiki_html/sistema.html"
+    },
+    {
+      "source": "06_dashboard/generado/wiki/tesis.html",
+      "output": "06_dashboard/publico/wiki_html/tesis.html"
+    },
+    {
+      "source": "06_dashboard/generado/index.html",
+      "output": "06_dashboard/publico/dashboard/index.html"
+    },
+    {
+      "source": "06_dashboard/generado/estilos.css",
+      "output": "06_dashboard/publico/dashboard/estilos.css"
+    },
+    {
+      "source": "06_dashboard/generado/app.js",
+      "output": "06_dashboard/publico/dashboard/app.js"
+    },
+    {
+      "source": "06_dashboard/generado/manifest.webmanifest",
+      "output": "06_dashboard/publico/dashboard/manifest.webmanifest"
+    },
+    {
+      "source": "06_dashboard/generado/sw.js",
+      "output": "06_dashboard/publico/dashboard/sw.js"
+    },
+    {
+      "source": "06_dashboard/generado/icon.svg",
+      "output": "06_dashboard/publico/dashboard/icon.svg"
+    },
+    {
+      "source": "06_dashboard/generado/badges/integrity.svg",
+      "output": "06_dashboard/publico/dashboard/badges/integrity.svg"
+    },
+    {
+      "source": "06_dashboard/generado/badges/ledger.svg",
+      "output": "06_dashboard/publico/dashboard/badges/ledger.svg"
+    },
+    {
+      "source": "06_dashboard/generado/badges/security_status.svg",
+      "output": "06_dashboard/publico/dashboard/badges/security_status.svg"
+    }
+  ],
+  "applied_rules": [
+    "rutas_locales_file_uri",
+    "rutas_locales_windows_repo",
+    "identificadores_validacion",
+    "hashes_sha256",
+    "curp_personal",
+    "06_dashboard/generado/reporte_consistencia.md",
+    "00_sistema_tesis/bitacora/",
+    "00_sistema_tesis/reportes_semanales/",
+    "file_uri_redaction",
+    "absolute_windows_path_redaction",
+    "val_step_redaction",
+    "sha256_redaction",
+    "private_canon_redaction",
+    "agent_identity_redaction"
+  ]
+}
