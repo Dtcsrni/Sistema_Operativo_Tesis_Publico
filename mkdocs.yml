@@ -1,0 +1,58 @@
+site_name: Sistema Operativo de Tesis - Zona Metropolitana de Pachuca
+site_description: Wiki verificable y base operativa de investigación para tesis de posgrado.
+site_author: Erick Vega
+
+theme:
+  name: material
+  language: es
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+repo_url: https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Posgrado
+edit_uri: edit/codex/bootstrap/
+
+docs_dir: 06_dashboard/wiki
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+  - tables
+
+nav:
+  - Inicio: index.md
+  - Sistema: sistema.md
+  - Gobernanza IA: gobernanza.md
+  - Hipótesis: hipotesis.md
+  - Bloques de Trabajo: bloques.md
+  - Planeación: planeacion.md
+  - Decisiones: decisiones.md
+  - Bitácoras: bitacora.md
+  - Cobertura:
+      - Experimentos: experimentos.md
+      - Implementación: implementacion.md
+      - Tesis: tesis.md

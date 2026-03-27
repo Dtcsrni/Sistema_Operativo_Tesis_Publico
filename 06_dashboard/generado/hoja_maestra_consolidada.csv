@@ -1,0 +1,66 @@
+tipo_registro,id,nombre,estado,prioridad,referencia_1,referencia_2,notas
+bloque,B0,Gobierno del sistema de tesis y base operativa,activo,critica,,ENT-001|ENT-002,"Define estructura canónica, políticas operativas, flujos de actualización, dashboard inicial y mecanismos de validación del repositorio."
+bloque,B1,Delimitación del problema y contexto de Pachuca,no_iniciado,alta,H6,ENT-003,"Acota el problema, define el caso de estudio, fija supuestos de intermitencia urbana y establece alcance espacial, funcional y metodológico."
+bloque,B2,Diseño de arquitectura y formulación de hipótesis,no_iniciado,critica,HG|H1|H2|H3,ENT-004,"Formaliza la arquitectura propuesta, la línea base de comparación, las hipótesis específicas y el mapa de decisiones técnicas."
+bloque,B3,Modelo de control y métricas de desempeño,no_iniciado,alta,HG|H3|H4,ENT-005,"Traduce objetivos de resiliencia y control a métricas medibles, escenarios de carga y restricciones operativas."
+bloque,B4,Simulación y escenarios de intermitencia,no_iniciado,critica,HG|H1|H2|H3|H4|H5|H6,ENT-006,"Construye el entorno de simulación, implementa escenarios de intermitencia y compara línea base contra arquitectura propuesta."
+bloque,B5,Implementación de prototipo y canal de continuidad,no_iniciado,alta,HG|H1|H2|H3|H4|H5,ENT-007,"Materializa nodos, gateway y lógica de priorización/control degradable para pruebas controladas."
+bloque,B6,Validación experimental,no_iniciado,critica,HG|H1|H2|H3|H4|H5|H6,ENT-008,"Ejecuta campañas controladas y, cuando aplique, pruebas contextualizadas para contrastar hipótesis y consistencia con simulación."
+bloque,B7,Análisis integrado y discusión,no_iniciado,alta,HG|H2|H4|H5|H6,ENT-009,"Integra evidencia teórica, simulada y experimental; consolida hallazgos, limitaciones y aportaciones."
+bloque,B8,Redacción de tesis y ensamblaje documental,no_iniciado,alta,HG,ENT-010,"Estructura capítulos, integra figuras, tablas, anexos y asegura consistencia narrativa con evidencia y decisiones registradas."
+bloque,B9,Reproducibilidad y versión sanitizada pública,no_iniciado,media,H5,ENT-011,"Prepara exportes, documentación y vistas públicas sanitizadas cuando sea pertinente, sin comprometer el carácter privado del repositorio base."
+bloque,B10,"Cierre, defensa y transferencia",no_iniciado,media,HG,ENT-012,"Consolida versión final, materiales de defensa, lecciones aprendidas y transferencia ordenada del sistema operativo de tesis."
+hipotesis,HG,Superioridad integrada de arquitectura resiliente,activa,critica,B2|B3|B4|B5|B6|B7,porcentaje_de_muestras_utiles_entregadas|latencia_p95_de_eventos_criticos|error_integral_de_control|tiempo_medio_de_recuperacion,"Una arquitectura IoT que combine tolerancia a intermitencia, priorización contextual y lazo de control degradable puede mantener utilidad operativa superior a un esquema convencional en escenarios urbanos intermitentes representativos de Pachuca."
+hipotesis,H1,Buffer adaptativo reduce pérdida útil,activa,alta,B2|B4|B5|B6,delivery_ratio_util|age_of_information_p95|reintentos_por_muestra,El uso de almacenamiento local con políticas adaptativas de cola y reintento reduce la pérdida útil de telemetría frente a cortes intermitentes respecto de un envío oportunista sin persistencia.
+hipotesis,H2,Topología híbrida mejora resiliencia,activa,alta,B2|B4|B5|B6|B7,porcentaje_de_funciones_preservadas|tiempo_medio_de_recuperacion|uptime_operativo_util,Una topología híbrida con nodos terminales y gateway con capacidades locales de continuidad ofrece mayor resiliencia de servicio que una topología exclusivamente centralizada ante fallas parciales de enlace.
+hipotesis,H3,Priorización contextual protege variables críticas,activa,critica,B2|B3|B4|B5|B6,latencia_p95_critica|delivery_ratio_critico|degradacion_relativa_no_critica,La priorización contextual de tráfico y comandos preserva latencia y continuidad de variables críticas sin degradar de forma inaceptable las variables no críticas.
+hipotesis,H4,Control degradable mantiene estabilidad útil,activa,alta,B3|B4|B5|B6|B7,IAE|overshoot|porcentaje_de_tiempo_en_region_segura,"Un esquema de control con modos nominal, degradado y seguro mantiene estabilidad útil del proceso mejor que un esquema sin degradación explícita bajo pérdida de conectividad."
+hipotesis,H5,Transferencia simulación a experimento es consistente,activa,alta,B4|B5|B6|B7,error_relativo_por_metrica|correlacion_de_ranking_de_escenarios|consistencia_direccional,"Las tendencias observadas en simulación para resiliencia, latencia crítica y recuperación pueden reproducirse experimentalmente con desviaciones aceptables para sostener validez de la arquitectura propuesta."
+hipotesis,H6,Perfil urbano de Pachuca aporta valor de diseño,activa,media,B1|B2|B4|B6|B7,numero_de_supuestos_reemplazados_por_contexto|cobertura_de_escenarios_contextuales|trazabilidad_contexto_a_diseno,La caracterización de patrones urbanos de intermitencia y despliegue en la Zona Metropolitana de Pachuca aporta restricciones y escenarios que cambian de forma relevante decisiones de arquitectura y priorización.
+tarea,T-001,Cerrar estructura canónica inicial del sistema operativo,hecho,critica,B0,ENT-001,Base habilitadora para el resto del proyecto
+tarea,T-002,Dejar README_INICIO orientado a retoma en menos de 3 minutos,hecho,alta,B0,ENT-001,Debe resistir semanas de alta carga
+tarea,T-003,Implementar generador de dashboard HTML estático,hecho,critica,B0,ENT-002,No se edita dashboard manualmente
+tarea,T-004,Implementar validaciones mínimas de consistencia entre YAML y CSV,hecho,critica,B0,ENT-002,Validaciones pedidas por criterio del sistema
+tarea,T-005,Crear plantillas operativas de decisión bitácora y resumen semanal,hecho,alta,B0,ENT-001,Reducir fricción de uso diario
+tarea,T-006,Exportar hoja maestra consolidada desde fuentes canónicas,hecho,media,B0,ENT-002,Útil para vistas derivadas y control cruzado
+tarea,T-007,Delimitar formalmente el caso de estudio en la Zona Metropolitana de Pachuca,pendiente,critica,B1,ENT-003,Debe dejar supuestos espaciales y funcionales claros
+tarea,T-008,Definir taxonomía inicial de intermitencia urbana relevante para la tesis,pendiente,alta,B1,ENT-003,Separar conectividad energía y disponibilidad de nodos
+tarea,T-009,Identificar variables críticas y no críticas por escenario operativo,pendiente,alta,B1,ENT-003,Base para priorización y control degradado
+tarea,T-010,Definir arquitectura base de comparación contra la propuesta,pendiente,critica,B2,ENT-004,Sin línea base clara no hay contraste riguroso
+tarea,T-011,Formalizar componentes flujos y modos de degradación de la arquitectura propuesta,pendiente,critica,B2,ENT-004,Incluir gateway persistente y políticas adaptativas
+tarea,T-012,Refinar hipótesis en variables métricas y criterios de soporte ejecutables,pendiente,alta,B2,ENT-004,Debe cerrar ambigüedades de medición
+tarea,T-013,Abrir primera decisión y primera bitácora como ejemplo operativo,hecho,media,B0,ENT-001,Permite poblar dashboard desde el arranque
+tarea,T-014,Generar reporte legible de consistencia del sistema,hecho,media,B0,ENT-002,Orientado a revisión rápida humana
+tarea,T-015,Definir cuadro maestro de métricas de resiliencia y control,pendiente,alta,B3,ENT-005,Debe servir tanto a simulación como a experimento
+tarea,T-016,Formalizar política operativa de economía de uso y selección de razonamiento,hecho,alta,B0,ENT-001,Debe volver explícita la relación entre presupuesto de uso y avance funcional
+tarea,T-017,Incorporar registro mínimo de economía de uso en bitácora y revisión semanal,hecho,media,B0,ENT-001,Permite aprender qué tipo de tareas consumen más y ajustar estrategia
+tarea,T-018,Preparar infraestructura y script de despliegue automatizado para clonar en entorno nativo Orange Pi 5 Plus,hecho,alta,B0,ENT-001,Asegura base operativa sin fricción cruzada de compiladores
+tarea,T-019,Implementar MkDocs Material y GitHub Pages para servir la documentación de forma gratuita y automática,hecho,alta,B0,ENT-001,Permite visualizar el avance del proyecto sin costo y en tiempo real
+tarea,T-020,"Implementar scripts de productividad (new_log, new_decision) y visualización Mermaid dinámica",hecho,alta,B0,ENT-001,Asegura fluidez en el registro y visualización de la tesis
+tarea,T-021,"Implementar infraestructura de auditoría, sign-off humano y Badges de verificación",hecho,alta,B0,ENT-001,Eleva el nivel de integridad científica y verifiabilidad de la tesis
+tarea,T-022,Integrar auto-reporte de IA agéntica y detección de conflictos con firmas humanas,hecho,alta,B0,ENT-001,Garantiza que el tesista humano tenga el control final sobre los cambios generados por IA
+tarea,T-023,"Implementar asistente de flujo de trabajo, escáner de secretos y Gantt de roadmap",hecho,alta,B0,ENT-001,Lleva la infraestructura a nivel profesional y seguro antes de la fase de datos
+tarea,T-024,Institucionalizar la operación humano-primero con manual CLI guiada y separación privado/público,hecho,alta,B0,ENT-001,Reduce dependencia operativa de IA y mejora legibilidad para colaboradores y jurado
+tarea,T-025,Implementar bundle público sanitizado reproducible y validable desde la base privada,hecho,alta,B0,ENT-001,Cierra la exposición pública sin duplicación manual del repositorio
+tarea,T-026,Verificar rutas mínimas de retoma auditoría y publicación sin IA obligatoria,hecho,media,B0,ENT-001,Introduce `doctor` `next` y chequeos de operabilidad humana
+riesgo,R-001,Deriva entre fuentes canónicas y artefactos generados,abierto,alto,proceso,media,Validar antes de generar y prohibir edición manual del dashboard
+riesgo,R-002,Ambigüedad en la línea base de comparación,abierto,alto,metodologico,alta,Definir arquitectura base explícita en B2 con criterios y supuestos auditables
+riesgo,R-003,Escenarios de intermitencia poco representativos del caso de estudio,abierto,alto,metodologico,media,Delimitar taxonomía contextual de Pachuca y registrar supuestos
+riesgo,R-004,Sobrecarga operativa por exceso de documentación, plantillas cortas y un solo punto de verdad por artefacto,medio,gestion,media,Mantener formatos mínimos
+riesgo,R-005,Dependencia excesiva de IA en tareas sustantivas,abierto,alto,etica_y_calidad,media,Aplicar doble vía humano+IA con manual operativo CLI guiada y revisión reforzada
+riesgo,R-006,Desalineación entre simulación y experimento,abierto,alto,tecnico,media,Definir equivalencias de escenario e instrumentación desde B3-B5
+riesgo,R-007,Consumo ineficiente del presupuesto de uso por sobrerazonamiento o exploración redundante,abierto,medio,gestion,media,Aplicar política de economía de uso y registrar relación entre consumo y avance funcional
+riesgo,R-008,Exposición pública sin sanitización suficiente,abierto,alto,seguridad,media,Publicar solo mediante bundle sanitario derivado y validado por `tesis.py publish --check`
+riesgo,R-009,Complejidad documental por duplicación entre capa humana y automatización,abierto,medio,gestion,media,Mantener una sola fuente privada y hacer que manual wiki y bundle público sean artefactos derivados o acoplados a fuentes canónicas
+entregable,ENT-001,Base operativa del sistema de tesis,listo,B0,README_INICIO.md,,Estructura del repositorio configuración canónica plantillas y README de entrada
+entregable,ENT-002,Automatización base y dashboard,listo,B0,06_dashboard/generado/index.html,,Validadores generador de dashboard exportador y reporte de consistencia
+entregable,ENT-003,Definición del caso de estudio y supuestos de intermitencia,pendiente,B1,00_sistema_tesis/decisiones,,Documento y backlog refinado para el contexto Pachuca
+entregable,ENT-004,Arquitectura propuesta y línea base,pendiente,B2,00_sistema_tesis/config/hipotesis.yaml,,Especificación operativa de arquitectura hipótesis y criterios de comparación
+entregable,ENT-005,Cuadro maestro de métricas y escenarios,pendiente,B3,02_experimentos/simulacion,,Definición operacional para simulación y validación
+entregable,ENT-006,Paquete de simulación reproducible,pendiente,B4,02_experimentos/simulacion,,Escenarios resultados base y trazabilidad de parámetros
+entregable,ENT-007,Prototipo instrumentado,pendiente,B5,04_implementacion,,Implementación verificable con persistencia y control degradable
+entregable,ENT-008,Evidencia experimental trazable,pendiente,B6,02_experimentos/validacion_experimental,,Resultados y registros de campaña experimental
+entregable,ENT-009,Análisis integrado y discusión,pendiente,B7,05_tesis/capitulos,,Síntesis de resultados limitaciones y aportaciones
+entregable,ENT-010,Manuscrito base de tesis,pendiente,B8,05_tesis,,Documento integral de tesis con capítulos y anexos
+entregable,ENT-011,Paquete sanitizado reproducible,pendiente,B9,06_dashboard/generado,,Versión pública controlada sin información sensible
+entregable,ENT-012,Cierre y defensa,pendiente,B10,05_tesis,,Versión final materiales de defensa y transferencia

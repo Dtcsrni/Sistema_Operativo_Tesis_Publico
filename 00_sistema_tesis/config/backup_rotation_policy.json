@@ -1,0 +1,47 @@
+{
+  "version": "1.0",
+  "backup_rotation": {
+    "enabled": true,
+    "retention_days": {
+      "critico": 180,
+      "alto": 90,
+      "operativo": 30
+    },
+    "limits": {
+      "max_files": 500,
+      "max_total_size_mb": 1024,
+      "min_protected_days": 7
+    },
+    "risk_patterns": {
+      "critico": [
+        "00_sistema_tesis_decisiones_",
+        "00_sistema_tesis_canon_events.jsonl",
+        "00_sistema_tesis_config_ia_gobernanza.yaml",
+        "00_sistema_tesis_config_integrity_manifest.json"
+      ],
+      "alto": [
+        "00_sistema_tesis_bitacora_log_conversaciones_ia.md",
+        "00_sistema_tesis_bitacora_matriz_trazabilidad.md",
+        "00_sistema_tesis_bitacora_"
+      ],
+      "operativo": []
+    },
+    "economia_tokens": {
+      "operacion_semanal": {
+        "accion": "dry_run_y_purga_controlada",
+        "modelo_recomendado": "GPT-5.1-Codex-Mini",
+        "nivel_razonamiento": "bajo"
+      },
+      "implementacion_script": {
+        "accion": "cambios_en_codigo_y_pruebas",
+        "modelo_recomendado": "GPT-5.3-Codex",
+        "nivel_razonamiento": "medio"
+      },
+      "cambios_politica": {
+        "accion": "actualizacion_de_gobernanza_y_decisiones",
+        "modelo_recomendado": "GPT-5.4",
+        "nivel_razonamiento": "alto"
+      }
+    }
+  }
+}

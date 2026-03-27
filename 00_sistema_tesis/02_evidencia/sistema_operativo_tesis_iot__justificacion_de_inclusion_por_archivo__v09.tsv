@@ -1,0 +1,57 @@
+package_rel_path	priority_code	byte_count	role	defense_components	verification_requirement	justification
+sotp_ctx__ai_governance_controls__v08.tsv	P1	3531	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__ai_use_register_template__v08.tsv	P1	1662	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__apa7_ai_declaration_template__v08.md	P1	1771	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__apa_sources__v08.tsv	P1	2552	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__artifact_catalog__v08.json	P1	2032	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__artifact_citation_register__v08.tsv	P1	140409	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__artifact_citation_register_v6__v08.tsv	P1	175852	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__artifact_profiles__v08.tsv	P1	393238	profiles	C1,C2,C3,C4,C5	interna	Perfiles semánticos por artefacto; reduce trabajo de clasificación futura.
+sotp_ctx__byte_justification_manifest__v08.tsv	P1	106	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__canonical_context__human__v08.md	P0	107019	canonical_context	C1,C2,C3,C4,C6	interna	Narrativa humana compacta del proyecto; acelera continuidad y evita reconstrucción manual.
+sotp_ctx__canonical_context__machine__v08.jsonl	P0	278287	canonical_context	C1,C2,C3,C4,C6	interna	Proyección máquina para ingestión programática y asistentes.
+sotp_ctx__defense_alignment_and_apa7__v08.md	P1	2999	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__defense_citation_matrix__apa7__v08.md	P1	1710	defense_alignment	C1,C2,C3,C4,C5,C6	interna	Matriz de uso en sustentación y citas APA 7.
+sotp_ctx__defense_citation_packets__v08.tsv	P1	1130	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__defense_component_map__v08.tsv	P1	54052	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__defense_packets__v08.tsv	P1	26419	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__defense_section_alignment__v08.tsv	P1	3454	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__evidence_bundle__v08/p0__current_abbrev_bibliography__v01.bib	P0	17395	bibliography	C1,C2,C3,C4,C5	manual_pre_citation	Abreviaturas bibliográficas activas del borrador visible.
+sotp_ctx__evidence_bundle__v08/p0__current_bibliography__v01.bib	P0	17203	bibliography	C1,C2,C3,C4,C5	manual_pre_citation	Bibliografía principal del último borrador visible; necesaria para depuración APA.
+sotp_ctx__evidence_bundle__v08/p0__current_bibliography_style__v01.bst	P0	59284	bibliography	C6	manual_pre_citation	Estilo bibliográfico histórico visible; útil para diagnóstico de inconsistencias.
+sotp_ctx__evidence_bundle__v08/p0__current_design_draft__v01.docx	P0	79361	draft_current	C1,C2,C3	manual_pre_citation	Borrador más cercano a la formulación vigente; útil para rescate selectivo y comparación.
+sotp_ctx__evidence_bundle__v08/p0__current_overleaf_main__v01.tex	P0	163124	draft_current	C3,C6	manual_pre_citation	Fuente LaTeX del último Overleaf visible; esencial para auditar estructura y reinicio controlado.
+sotp_ctx__evidence_bundle__v08/p0__current_uiux_draft__v01.pdf	P0	685161	draft_current	C1,C3,C5	manual_pre_citation	Último avance visual/narrativo conocido; evidencia del máximo nivel narrativo alcanzado.
+sotp_ctx__evidence_bundle__v08/p0__firmware_node_sensor_v_a__v01.ino	P0	3698	implementation	C3,C4,C5	manual_pre_citation	Implementación visible concreta del nodo; prueba de trabajo técnico real.
+sotp_ctx__evidence_bundle__v08/p0__project_context_human__v08.md	P0	107019	canonical_context	C1,C2,C3,C4,C6	interna	Archivo central para continuidad semántica del proyecto; evita reconstrucción conversacional.
+sotp_ctx__evidence_bundle__v08/p0__project_registry__v08.sqlite	P0	1359872	registry	C1,C2,C3,C4,C5,C6	interna	Registro estructurado maestro para ingestión, consultas y trazabilidad.
+sotp_ctx__evidence_bundle__v08/p0__stats_data_science_audit__v01.md	P0	64026	audit	C2,C4,C5	interna	Consolida capacidad cuantitativa y posibles métodos reutilizables para la tesis.
+sotp_ctx__evidence_bundle__v08/p1__antecedent_cahuitl__v01.pdf	P1	31938612	direct_antecedent	C1,C3	manual_pre_citation	Antecedente técnico directo: Orange Pi 5 Plus + ESP32 + backend IoT y vínculo con movilidad.
+sotp_ctx__evidence_bundle__v08/p1__antecedent_lora_transport_public__v01.pdf	P1	651739	direct_antecedent	C1,C3	manual_pre_citation	Puente claro hacia LoRa aplicado a transporte público.
+sotp_ctx__evidence_bundle__v08/p1__antecedent_project_proposal_xantli__v01.pdf	P1	1180982	historical_origin	C1	manual_pre_citation	Raíz remota del proyecto y evidencia de continuidad temática.
+sotp_ctx__evidence_bundle__v08/p1__antecedent_tesis_iot_2025__v01.pdf	P1	375930	historical_thesis	C1,C2,C3	manual_pre_citation	Muestra fase sobreambiciosa útil para podar y justificar enfoque actual.
+sotp_ctx__evidence_bundle__v08/p1__business_case_atzin_track__v01.pdf	P1	403560	business_support	C1,C5	manual_pre_citation	Justifica pertinencia, viabilidad y despliegue; no sustituye evidencia científica.
+sotp_ctx__evidence_bundle__v08/p1__hardware_gateway_ht_m7603_manual__v01.pdf	P1	651563	hardware_manual	C3,C4	manual_pre_citation	Especificación oficial del gateway declarado en la línea Atzin.
+sotp_ctx__evidence_bundle__v08/p1__hardware_heltec_wsl_v3_manual__v01.pdf	P1	1429865	hardware_manual	C3,C4	manual_pre_citation	Especificación oficial del hardware radio visible más consistente en el corpus.
+sotp_ctx__evidence_bundle__v08/p1__reference_citywan_sensys23__v01.pdf	P1	13820110	literature_core	C2,C4,C5	manual_pre_citation	Evidencia urbana actualizada para cobertura y medición a escala de ciudad.
+sotp_ctx__evidence_bundle__v08/p1__reference_lora_configuration_smart_cities__v01.pdf	P1	6809853	literature_core	C2,C3,C4,C5	manual_pre_citation	Referencia técnica prioritaria para configuración y desempeño LoRa en contexto urbano.
+sotp_ctx__evidence_bundle__v08/p1__reference_lora_mesh_routing__v01.pdf	P1	1889241	literature_core	C2,C3,C4	manual_pre_citation	Soporte directo para discusión de multihop y diseño mesh.
+sotp_ctx__evidence_bundle__v08/p1__reference_lora_survey__v01.pdf	P1	3044087	literature_core	C2,C3	manual_pre_citation	Survey base de LoRa/LoRaWAN para marco técnico y estado del arte.
+sotp_ctx__evidence_bundle__v08/p1__reference_lorawan_sensors2020__v01.pdf	P1	645055	literature_support	C2,C4,C5	manual_pre_citation	Respaldo secundario sobre desempeño LoRa/LoRaWAN útil para comparativas.
+sotp_ctx__evidence_bundle__v08/p1__reference_mesh_sensors2022__v01.pdf	P1	2084628	literature_support	C2,C4,C5	manual_pre_citation	Respaldo secundario reciente para redes y evaluación IoT/LoRa.
+sotp_ctx__evidence_bundle__v08/p1__reference_mqtt_proxy_lora__v01.pdf	P1	15467375	literature_core	C2,C3,C4	manual_pre_citation	Conecta directamente LoRa con MQTT, clave para la arquitectura híbrida.
+sotp_ctx__evidence_bundle__v08/p1__reference_thesis_methodology__v01.pdf	P1	12540176	methodology	C1,C2,C4,C6	manual_pre_citation	Soporte de organización metodológica para redactar desde cero con rigor.
+sotp_ctx__evidence_spine__v08.tsv	P0	6018	evidence_spine	C1,C2,C3,C4,C5,C6	interna	Columna vertebral de evidencia incluida con prioridad y justificación.
+sotp_ctx__export_coverage__v08.tsv	P1	254	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__ingest_readme__v08.md	P1	345	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__legacy_name_map__v08.tsv	P1	656	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__missing_verification_queue__v08.tsv	P1	176764	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__naming_manifest__v08.json	P1	1112	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__overleaf_status_policy__v08.md	P1	608	policy	C3,C6	interna	Fija el estatus no canónico del Overleaf actual.
+sotp_ctx__registry__v08.sqlite	P0	1359872	registry	C1,C2,C3,C4,C5,C6	interna	Registro estructurado maestro del corpus, decisiones y trazabilidad.
+sotp_ctx__traceability_and_ai_priorities__v08.md	P1	13514	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__traceability_priorities__v08.tsv	P1	1980	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.
+sotp_ctx__traceability_priority_map__v08.tsv	P1	233196	traceability	C1,C2,C3,C4,C5,C6	interna	Asigna prioridad operativa y ética por artefacto.
+sotp_ctx__value_amplification_policy__v08.md	P1	1043	policy	C6	interna	Explica por qué esta versión pesa más y cómo se justificó cada inclusión.
+sotp_ctx__verified_apa7_policy_notes__v08.md	P1	1026	governance	C6	manual_pre_citation	Notas verificadas sobre APA 7 y políticas de IA.
+sotp_ctx__verified_apa7_sources__v08.tsv	P1	3429	support_derivative	C1,C2,C3,C4,C5,C6	interna	Derivado curado o metadato de soporte que evita recomputar análisis previos y mejora ingestión.

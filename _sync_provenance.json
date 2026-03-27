@@ -1,6 +1,7 @@
 {
-  "synced_at": "2026-03-26 23:03:28",
-  "source_bundle_dir": "V:/Sistema_Operativo_Tesis_Posgrado/06_dashboard/publico",
+  "synced_at": "2026-03-26 23:11:22",
+  "sync_mode": "mirror",
+  "source_file_count": 219,
   "source_repo": {
     "remote_origin": "git@github.com:Dtcsrni/Sistema_Operativo_Tesis_Posgrado.git",
     "branch": "codex/bootstrap",
@@ -8,7 +9,21 @@
   },
   "public_repo": {
     "branch": "main",
-    "commit_before_sync": "7efd0e453ed3c57ea4668b4168c08d1650bd343b"
+    "commit_before_sync": "140294fbd151f78b952ca4a279c56b81cffe8937"
   },
-  "bundle_fingerprint": "c29ea7616db4313eb456145596c533769f317e4f53596c78b5f420603f2adf04"
+  "bundle_fingerprint": "9bdc22b55983116626315a66a4fd602b7b8e7bcea87dd05f03fd081c3bfac816",
+  "private_exclusions": {
+    "prefixes": [
+      "00_sistema_tesis/canon/",
+      "00_sistema_tesis/bitacora/",
+      "00_sistema_tesis/evidencia_privada/",
+      "config/backups/"
+    ],
+    "paths": [
+      ".env",
+      "00_sistema_tesis/config/agent_identity.json",
+      "00_sistema_tesis/config/sign_offs.json",
+      "00_sistema_tesis/ia_journal.json"
+    ]
+  }
 }

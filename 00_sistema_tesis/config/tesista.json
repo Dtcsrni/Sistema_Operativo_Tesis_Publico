@@ -1,0 +1,23 @@
+{
+  "tesista": {
+    "nombre_completo": "Erick Renato Vega Ceron",
+    "curp": "VECE930322HHGGRR01",
+    "cedula_profesional": "12761029",
+    "formacion_previa": "Ingeniería en Sistemas Computacionales (Centro Universitario Hidalguense)",
+    "rol": "Maestrante / Investigador Principal",
+    "institucion": "Universidad Autónoma del Estado de Hidalgo (UAEH)",
+    "programa": "Maestría en Internet de las Cosas (Área Sistemas)",
+    "numero_cuenta": "502295",
+    "estatus_academico": "Egresado (Fase de Tesis)",
+    "identidad_digital": {
+      "git_user": "Erick Renato Vega Ceron",
+      "emails_autorizados": [
+        "armsystechno@gmail.com",
+        "evega-12@hotmail.com",
+        "ve502295@uaeh.edu.mx"
+      ],
+      "gpg_status": "Vinculada: 3ED3E48CCCBF997E"
+    }
+  },
+  "declaracion_soberania": "Yo, Erick Renato Vega Ceron, declaro ser el autor intelectual y supervisor humano de todos los artefactos contenidos en este sistema operativo de tesis, utilizando la IA agéntica únicamente como herramienta de asistencia técnica y soporte operativo."
+}

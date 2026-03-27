@@ -1,0 +1,41 @@
+{
+  "generated_at": "2026-03-26 23:11:14",
+  "timezone": "America/Mexico_City",
+  "status": "degraded",
+  "message": "OPENAI_ADMIN_KEY no configurada. No se pudo sincronizar uso real desde la API.",
+  "source": {
+    "usage_endpoint": "https://api.openai.com/v1/organization/usage/completions",
+    "costs_endpoint": "https://api.openai.com/v1/organization/costs",
+    "lookback_days": 31
+  },
+  "budgets": {
+    "daily": {
+      "tokens": 40000,
+      "usd": 8.0
+    },
+    "weekly": {
+      "tokens": 240000,
+      "usd": 48.0
+    }
+  },
+  "windows": {
+    "daily": {
+      "tokens_used": 0,
+      "tokens_remaining": 40000,
+      "usd_used": 0.0,
+      "usd_remaining": 8.0,
+      "requests": 0
+    },
+    "weekly": {
+      "tokens_used": 0,
+      "tokens_remaining": 240000,
+      "usd_used": 0.0,
+      "usd_remaining": 48.0,
+      "requests": 0
+    }
+  },
+  "recommendations": [
+    "Configurar OPENAI_ADMIN_KEY para habilitar medicion exacta de consumo diario y semanal.",
+    "Mientras tanto, usar el overlay local como presupuesto operativo estimado."
+  ]
+}

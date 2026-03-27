@@ -1,0 +1,58 @@
+# Gobernanza
+
+Políticas del sistema, gobernanza de IA, trazabilidad y disciplina TDD.
+
+- **Tesista:** `Erick Renato Vega Ceron`
+- **Fecha:** `2026-03-26 23:11:14`
+- **Estado:** `OK`
+- **Fuentes:** `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/ia_gobernanza.yaml`, `00_sistema_tesis/config/publicacion.yaml`
+- **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
+
+## Políticas del sistema
+
+- El repositorio privado es la fuente de verdad del sistema operativo de tesis.
+- Los artefactos generados no se editan manualmente; se regeneran desde fuentes.
+- La wiki verificable es una guía derivada y trazable; no sustituye a las fuentes canónicas.
+- Los bloques macro se gobiernan en bloques.yaml y los subbloques/tareas operativas en backlog.csv.
+- Toda decisión de arquitectura, alcance, método o evidencia se registra como decisión o bitácora.
+- Los datos raw se preservan inmutables; las transformaciones se documentan y versionan.
+- Toda salida asistida por IA debe someterse a revisión humana proporcional al riesgo.
+- Todo flujo crítico debe poder ejecutarse por vía manual explícita; la IA es opcional y nunca requisito operativo.
+- La operación se separa en superficie privada canónica y superficie pública sanitizada, ambas regenerables desde fuentes.
+- Los cambios en automatización y software deben seguir TDD con evidencia de prueba ejecutada y resultado verificable.
+- Los metadatos operativos críticos y la identidad de agentes se definen en configuración versionada o entorno; nunca en scripts o plantillas hardcodeadas.
+
+## Principios de gobernanza de IA
+
+- La IA apoya el trabajo humano; no sustituye juicio metodológico, validación experimental ni autoría responsable.
+- Todo flujo crítico del sistema debe tener una vía manual explícita y operable sin depender de IA.
+- Toda salida de IA debe tratarse como borrador o insumo hasta su revisión humana proporcional al riesgo.
+- El uso de IA debe fortalecer aprendizaje, criterio técnico y capacidad de explicación del tesista.
+- El marco es agnóstico a herramientas y proveedores; se gobierna por función, riesgo y evidencia, no por marca.
+- Toda salida asistida por IA debe someterse a revisión humana proporcional al riesgo.
+- Se impone el protocolo de 'Human-Agent Handshake' (DEC-0014) para toda validación de infraestructura o método.
+
+## Política TDD operativa
+
+- Todo cambio en scripts, validadores, generadores y software nuevo debe iniciar con una prueba o contrato verificable que falle antes de implementar la solución.
+- No se acepta código nuevo en 04_implementacion sin pruebas asociadas o, si aún no es ejecutable, sin la especificación de prueba que lo gobernará.
+- Las automatizaciones documentales deben tener pruebas de estructura, regresión o snapshot suficiente para detectar deriva funcional.
+- Toda contribución asistida por IA en código o automatización debe dejar evidencia de prueba ejecutada y del resultado obtenido.
+
+## Flujo TDD obligatorio
+
+- escribir prueba o contrato verificable
+- ejecutar prueba y confirmar falla inicial
+- implementar el cambio mínimo necesario
+- refactorizar conservando comportamiento
+- regenerar artefactos derivados
+- ejecutar validaciones y pruebas completas
+- registrar resultado verificable en bitácora o evidencia de cambio
+
+## Regla de operación humana
+
+- Todo flujo crítico debe tener vía manual explícita y legible para el tesista y terceros humanos.
+- La IA es opcional y nunca sustituye validación, criterio metodológico ni publicación responsable.
+- La exposición pública solo ocurre mediante sanitización reproducible desde la base privada.
+- Bundle público: `06_dashboard/publico`
+

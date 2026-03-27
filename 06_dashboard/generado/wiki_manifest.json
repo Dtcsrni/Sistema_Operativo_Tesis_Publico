@@ -1,0 +1,248 @@
+{
+  "generated_at": "2026-03-26 23:11:14",
+  "verification": {
+    "status": "ok",
+    "required_page_fields": [
+      "Tesista",
+      "Fecha",
+      "Estado",
+      "Fuentes",
+      "Aviso"
+    ]
+  },
+  "pages": [
+    "index",
+    "sistema",
+    "gobernanza",
+    "hipotesis",
+    "bloques",
+    "planeacion",
+    "decisiones",
+    "bitacora",
+    "experimentos",
+    "implementacion",
+    "tesis"
+  ],
+  "page_records": [
+    {
+      "id": "sistema",
+      "title": "Sistema",
+      "markdown": "06_dashboard/wiki/sistema.md",
+      "html": "06_dashboard/generado/wiki/sistema.html",
+      "sources": [
+        "README_INICIO.md",
+        "00_sistema_tesis/manual_operacion_humana.md",
+        "00_sistema_tesis/config/sistema_tesis.yaml",
+        "00_sistema_tesis/config/publicacion.yaml"
+      ],
+      "verified": false
+    },
+    {
+      "id": "gobernanza",
+      "title": "Gobernanza",
+      "markdown": "06_dashboard/wiki/gobernanza.md",
+      "html": "06_dashboard/generado/wiki/gobernanza.html",
+      "sources": [
+        "00_sistema_tesis/config/sistema_tesis.yaml",
+        "00_sistema_tesis/config/ia_gobernanza.yaml",
+        "00_sistema_tesis/config/publicacion.yaml"
+      ],
+      "verified": false
+    },
+    {
+      "id": "hipotesis",
+      "title": "Hipótesis",
+      "markdown": "06_dashboard/wiki/hipotesis.md",
+      "html": "06_dashboard/generado/wiki/hipotesis.html",
+      "sources": [
+        "00_sistema_tesis/config/hipotesis.yaml",
+        "00_sistema_tesis/config/bloques.yaml"
+      ],
+      "verified": false
+    },
+    {
+      "id": "bloques",
+      "title": "Bloques",
+      "markdown": "06_dashboard/wiki/bloques.md",
+      "html": "06_dashboard/generado/wiki/bloques.html",
+      "sources": [
+        "00_sistema_tesis/config/bloques.yaml"
+      ],
+      "verified": false
+    },
+    {
+      "id": "planeacion",
+      "title": "Planeación",
+      "markdown": "06_dashboard/wiki/planeacion.md",
+      "html": "06_dashboard/generado/wiki/planeacion.html",
+      "sources": [
+        "01_planeacion/backlog.csv",
+        "01_planeacion/riesgos.csv",
+        "01_planeacion/roadmap.csv",
+        "01_planeacion/entregables.csv"
+      ],
+      "verified": false
+    },
+    {
+      "id": "decisiones",
+      "title": "Decisiones",
+      "markdown": "06_dashboard/wiki/decisiones.md",
+      "html": "06_dashboard/generado/wiki/decisiones.html",
+      "sources": [
+        "00_sistema_tesis/decisiones"
+      ],
+      "verified": false
+    },
+    {
+      "id": "bitacora",
+      "title": "Bitácora",
+      "markdown": "06_dashboard/wiki/bitacora.md",
+      "html": "06_dashboard/generado/wiki/bitacora.html",
+      "sources": [
+        "00_sistema_tesis/bitacora",
+        "00_sistema_tesis/reportes_semanales"
+      ],
+      "verified": false
+    },
+    {
+      "id": "experimentos",
+      "title": "Experimentos",
+      "markdown": "06_dashboard/wiki/experimentos.md",
+      "html": "06_dashboard/generado/wiki/experimentos.html",
+      "sources": [
+        "02_experimentos"
+      ],
+      "verified": false
+    },
+    {
+      "id": "implementacion",
+      "title": "Implementación",
+      "markdown": "06_dashboard/wiki/implementacion.md",
+      "html": "06_dashboard/generado/wiki/implementacion.html",
+      "sources": [
+        "04_implementacion"
+      ],
+      "verified": false
+    },
+    {
+      "id": "tesis",
+      "title": "Tesis",
+      "markdown": "06_dashboard/wiki/tesis.md",
+      "html": "06_dashboard/generado/wiki/tesis.html",
+      "sources": [
+        "05_tesis"
+      ],
+      "verified": false
+    }
+  ],
+  "sources": [
+    {
+      "path": "README_INICIO.md",
+      "sha256": "f9d88f3255c2cbfcf515527b367b89acfdd607a678b24636b72fd33a08c7317d",
+      "modified": "2026-03-26 16:48:48",
+      "kind": "file"
+    },
+    {
+      "path": "00_sistema_tesis/manual_operacion_humana.md",
+      "sha256": "a7c03f918c2f84af7592823805f17504d5c6f982d4aa9f203c6cd572ebd9b16b",
+      "modified": "2026-03-26 23:10:47",
+      "kind": "file"
+    },
+    {
+      "path": "00_sistema_tesis/config/sistema_tesis.yaml",
+      "sha256": "779c044c7f15d6febfac5ec52ca6312582c65dabc6c41055cef58ea569400b94",
+      "modified": "2026-03-26 15:34:48",
+      "kind": "file"
+    },
+    {
+      "path": "00_sistema_tesis/config/hipotesis.yaml",
+      "sha256": "d68fd6bd1de414556d633d7bb8dcbdab9f6650126490ff272b50c1486e57f1ea",
+      "modified": "2026-03-23 05:34:11",
+      "kind": "file"
+    },
+    {
+      "path": "00_sistema_tesis/config/bloques.yaml",
+      "sha256": "0cf8a4ff808d39a2b2f81499afe4c9b078e9b987b1b89799b069d7158c13a8e0",
+      "modified": "2026-03-23 05:35:13",
+      "kind": "file"
+    },
+    {
+      "path": "00_sistema_tesis/config/dashboard.yaml",
+      "sha256": "92fb2eeef153785016d00ace9e42dba27ed5e5f94a6f425e667c0ed342739f4d",
+      "modified": "2026-03-24 03:46:20",
+      "kind": "file"
+    },
+    {
+      "path": "00_sistema_tesis/config/ia_gobernanza.yaml",
+      "sha256": "c94d487ff52e47733d0d383f1deb073cd5fb1eb5b8359c716e0c1a2030be5660",
+      "modified": "2026-03-26 22:25:41",
+      "kind": "file"
+    },
+    {
+      "path": "00_sistema_tesis/config/publicacion.yaml",
+      "sha256": "a03463b95af231c4ddd85a2d9d0d1b10da1b73f504802c86bbda7d505fae0f22",
+      "modified": "2026-03-26 22:11:07",
+      "kind": "file"
+    },
+    {
+      "path": "01_planeacion/backlog.csv",
+      "sha256": "af2bad19b426f8fa87cee71d31a409795266d77501855e6aca23005b88fa9a56",
+      "modified": "2026-03-26 15:36:31",
+      "kind": "file"
+    },
+    {
+      "path": "01_planeacion/riesgos.csv",
+      "sha256": "bd717c8e1eacb9e01e0b8c7777a1dfcfe9397fef6d85a2b5261c183b40202cc0",
+      "modified": "2026-03-26 15:36:39",
+      "kind": "file"
+    },
+    {
+      "path": "01_planeacion/roadmap.csv",
+      "sha256": "8e8e7687ba43960d227c21db30b3bd92811dae6df67c9abdc448ca184d617712",
+      "modified": "2026-03-23 05:36:10",
+      "kind": "file"
+    },
+    {
+      "path": "01_planeacion/entregables.csv",
+      "sha256": "1d64e26718d0d218888b87669aae18b1627ced14d510baa7dc8bd538583b3d91",
+      "modified": "2026-03-23 05:36:10",
+      "kind": "file"
+    },
+    {
+      "path": "00_sistema_tesis/decisiones",
+      "sha256": null,
+      "modified": "2026-03-26 16:50:05",
+      "kind": "directory"
+    },
+    {
+      "path": "00_sistema_tesis/bitacora",
+      "sha256": null,
+      "modified": "2026-03-26 17:18:28",
+      "kind": "directory"
+    },
+    {
+      "path": "00_sistema_tesis/reportes_semanales",
+      "sha256": null,
+      "modified": "2026-03-23 05:35:44",
+      "kind": "directory"
+    },
+    {
+      "path": "02_experimentos",
+      "sha256": null,
+      "modified": "2026-03-23 05:28:17",
+      "kind": "directory"
+    },
+    {
+      "path": "04_implementacion",
+      "sha256": null,
+      "modified": "2026-03-23 05:28:17",
+      "kind": "directory"
+    },
+    {
+      "path": "05_tesis",
+      "sha256": null,
+      "modified": "2026-03-23 05:28:17",
+      "kind": "directory"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+# DEC-XXXX Título corto de la decisión
+
+- Fecha: AAAA-MM-DD
+- Estado: propuesta | aceptada | sustituida
+- Alcance: arquitectura | método | datos | redacción | operación
+- Relacionada con bloques: Bx
+- Relacionada con hipótesis: Hx
+
+## Contexto
+
+Describe el problema real que obliga a decidir. Evita justificar con preferencias vagas.
+
+## Decisión
+
+Indica qué se decidió, con lenguaje operativo y verificable.
+
+## Alternativas consideradas
+
+1. Alternativa A
+2. Alternativa B
+3. Alternativa elegida
+
+## Criterio de elección
+
+Explica por qué la alternativa elegida reduce riesgo, complejidad o ambigüedad.
+
+## Métricas de Éxito
+
+- Cómo verificaremos que la decisión fue correcta.
+- Umbrales o criterios cuantitativos/cualitativos.
+
+  - [ ] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - **Soporte:** [ID de Trazabilidad]
+  - **Integridad:** `sha256:[hash_respuesta]`
+  - **Fingerprint:** `sha256:[hash_prompt]`
+  - **Nivel de Auditoría:** [Crítico | Alto | Medio | Bajo]
+  - **Modo:** [Confirmación Verbal | Edición Directa | Firma GPG]
+  - **Fecha de Validación:** AAAA-MM-DD
+  - **Pregunta crítica o disparador:** [Pregunta del agente o instrucción humana directa]
+  - **Texto exacto de confirmación verbal:** "[Cita exacta del tesista]"
+  - **Hash de confirmación verbal:** `sha256:[hash_cita_verbal]`
+  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-XXX :: human_validation.confirmation_text`
+
+## Consecuencias
+
+- Qué habilita
+- Qué limita
+- Qué deuda deja
+
+## Trazabilidad de IA
+
+- **Agente/Rol:** [AGENTE_ROL_IA]
+- **Proveedor:** [PROVEEDOR_IA]
+- **Modelo/Versión:** [MODELO_VERSION_IA]
+- **Nivel de Razonamiento:** [bajo|medio|alto]
+- **Prompts/Contexto clave:** [Resumen o link a conversación]
+
+## Impacto en Presupuesto de Razonamiento
+
+- Estimación de consumo de tokens/tiempo de IA para implementar esta decisión.
+- Justificación del nivel de razonamiento requerido.
+
+## Implementación o seguimiento
+
+- [ ] Actualizar archivo fuente canónico afectado
+- [ ] Actualizar backlog si cambia trabajo operativo
+- [ ] Registrar en bitácora si hay impacto inmediato
+
+## Referencias
+
+Lista aquí normas, artículos, documentación o decisiones previas relevantes.
+
+[LID]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/bitacora/log_conversaciones_ia.md
+[GOV]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/config/ia_gobernanza.yaml
+[AUD]: file:///v:/Sistema_Operativo_Tesis_Posgrado/07_scripts/build_all.py

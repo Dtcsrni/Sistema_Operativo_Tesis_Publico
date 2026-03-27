@@ -1,0 +1,132 @@
+{
+  "version": "1.0",
+  "proposito": "Definir la wiki derivada, verificable y reconstruible del sistema operativo de tesis a partir de fuentes canónicas.",
+  "politica": {
+    "fuente_de_verdad": "La wiki es un artefacto derivado; las fuentes canónicas siguen viviendo en YAML, CSV y Markdown base.",
+    "editable_directamente": false,
+    "aviso_no_editar": "Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.",
+    "criterios_verificabilidad": [
+      "Toda página debe declarar sus fuentes canónicas.",
+      "Toda página debe exponer fecha de generación y estado de verificación.",
+      "La wiki debe reflejar directorios vacíos como cobertura pendiente, sin inventar contenido.",
+      "Toda salida debe poder regenerarse de forma determinista desde scripts versionados."
+    ]
+  },
+  "fuentes_base": [
+    "README_INICIO.md",
+    "00_sistema_tesis/manual_operacion_humana.md",
+    "00_sistema_tesis/config/sistema_tesis.yaml",
+    "00_sistema_tesis/config/hipotesis.yaml",
+    "00_sistema_tesis/config/bloques.yaml",
+    "00_sistema_tesis/config/dashboard.yaml",
+    "00_sistema_tesis/config/ia_gobernanza.yaml",
+    "00_sistema_tesis/config/publicacion.yaml",
+    "01_planeacion/backlog.csv",
+    "01_planeacion/riesgos.csv",
+    "01_planeacion/roadmap.csv",
+    "01_planeacion/entregables.csv",
+    "00_sistema_tesis/decisiones",
+    "00_sistema_tesis/bitacora",
+    "00_sistema_tesis/reportes_semanales",
+    "02_experimentos",
+    "04_implementacion",
+    "05_tesis"
+  ],
+  "salida": {
+    "markdown_dir": "06_dashboard/wiki",
+    "html_dir": "06_dashboard/generado/wiki",
+    "manifest": "06_dashboard/generado/wiki_manifest.json"
+  },
+  "secciones": [
+    {
+      "id": "sistema",
+      "titulo": "Sistema",
+      "descripcion": "Identidad, propósito, arquitectura base y reglas generales del sistema operativo de tesis.",
+      "fuentes": [
+        "README_INICIO.md",
+        "00_sistema_tesis/manual_operacion_humana.md",
+        "00_sistema_tesis/config/sistema_tesis.yaml",
+        "00_sistema_tesis/config/publicacion.yaml"
+      ]
+    },
+    {
+      "id": "gobernanza",
+      "titulo": "Gobernanza",
+      "descripcion": "Políticas del sistema, gobernanza de IA, trazabilidad y disciplina TDD.",
+      "fuentes": [
+        "00_sistema_tesis/config/sistema_tesis.yaml",
+        "00_sistema_tesis/config/ia_gobernanza.yaml",
+        "00_sistema_tesis/config/publicacion.yaml"
+      ]
+    },
+    {
+      "id": "hipotesis",
+      "titulo": "Hipótesis",
+      "descripcion": "Hipótesis activas, criterios de soporte, evidencia y relación con bloques.",
+      "fuentes": [
+        "00_sistema_tesis/config/hipotesis.yaml",
+        "00_sistema_tesis/config/bloques.yaml"
+      ]
+    },
+    {
+      "id": "bloques",
+      "titulo": "Bloques",
+      "descripcion": "Bloques macro del sistema y sus criterios de salida.",
+      "fuentes": [
+        "00_sistema_tesis/config/bloques.yaml"
+      ]
+    },
+    {
+      "id": "planeacion",
+      "titulo": "Planeación",
+      "descripcion": "Backlog, riesgos, roadmap y entregables del sistema.",
+      "fuentes": [
+        "01_planeacion/backlog.csv",
+        "01_planeacion/riesgos.csv",
+        "01_planeacion/roadmap.csv",
+        "01_planeacion/entregables.csv"
+      ]
+    },
+    {
+      "id": "decisiones",
+      "titulo": "Decisiones",
+      "descripcion": "Registro de decisiones de arquitectura, método y operación.",
+      "fuentes": [
+        "00_sistema_tesis/decisiones"
+      ]
+    },
+    {
+      "id": "bitacora",
+      "titulo": "Bitácora",
+      "descripcion": "Registro de sesiones, uso de IA y aprendizaje operativo.",
+      "fuentes": [
+        "00_sistema_tesis/bitacora",
+        "00_sistema_tesis/reportes_semanales"
+      ]
+    },
+    {
+      "id": "experimentos",
+      "titulo": "Experimentos",
+      "descripcion": "Estado de cobertura de simulación y validación experimental.",
+      "fuentes": [
+        "02_experimentos"
+      ]
+    },
+    {
+      "id": "implementacion",
+      "titulo": "Implementación",
+      "descripcion": "Estado de cobertura de firmware, gateway y analítica.",
+      "fuentes": [
+        "04_implementacion"
+      ]
+    },
+    {
+      "id": "tesis",
+      "titulo": "Tesis",
+      "descripcion": "Estado de cobertura de capítulos y figuras.",
+      "fuentes": [
+        "05_tesis"
+      ]
+    }
+  ]
+}

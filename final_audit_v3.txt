@@ -1,0 +1,10 @@
+Sincronizando evidencia tÚcnica...
+Sincronizaci¾n finalizada. Archivos actualizados: 0
+VALIDACION: OK
+Rutas revisadas: 12
+Reglas clave: bloque activo, referencias de hip¾tesis, prioridades, criterio de salida y dashboard derivado
+AUDITOR═A LEDGER: FALLË
+- [VAL-STEP-305] Quiebre de cadena: Siguiente esperado VAL-STEP-380, real FIN
+[RUN] Sincronizar evidencia tÚcnica -> 07_scripts/sync_evidence.py
+[RUN] Validar estructura -> 07_scripts/validate_structure.py
+[RUN] Auditar Ledger IA -> 07_scripts/verify_ledger.py

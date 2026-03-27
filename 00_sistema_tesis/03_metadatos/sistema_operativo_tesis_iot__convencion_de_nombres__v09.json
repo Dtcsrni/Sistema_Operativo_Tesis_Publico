@@ -1,0 +1,22 @@
+{
+  "package_name": "sistema_operativo_tesis_iot__paquete_contexto_canonico__v09",
+  "version": "v09",
+  "language": "es-MX",
+  "naming_objective": "Nombres autodescriptivos, legibles por humanos, estables para versionado e ingestión, evitando siglas opacas salvo que sean ampliamente reconocidas en el proyecto.",
+  "pattern": "{ambito}__{descripcion_del_contenido}__{forma_o_proposito}__{version}.{extension}",
+  "rules": [
+    "Usar minúsculas.",
+    "Usar palabras completas en español cuando sea posible.",
+    "Separar bloques semánticos con doble guion bajo (__).",
+    "Evitar siglas no explicadas; permitir solo IoT, APA, Overleaf y SQLite cuando el contexto ya sea inequívoco.",
+    "Conservar la versión al final antes de la extensión.",
+    "Preferir nombres orientados a función: archivo_de_contexto, registro_estructurado, catalogo_general_de_artefactos."
+  ],
+  "recommended_core_files": [
+    "sistema_operativo_tesis_iot__registro_estructurado_del_contexto__v09.sqlite",
+    "sistema_operativo_tesis_iot__archivo_de_contexto_canonico__lectura_humana__v09.md",
+    "sistema_operativo_tesis_iot__archivo_de_contexto_canonico__lectura_maquina__v09.jsonl",
+    "sistema_operativo_tesis_iot__catalogo_general_de_artefactos__v09.json",
+    "sistema_operativo_tesis_iot__columna_vertebral_de_evidencia__v09.tsv"
+  ]
+}

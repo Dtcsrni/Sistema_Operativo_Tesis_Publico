@@ -1,0 +1,106 @@
+[
+  {
+    "file_name": "sistema_operativo_tesis_iot__archivo_de_contexto_canonico__lectura_humana__v09.md",
+    "description": "Archivo maestro legible por humanos con el contexto consolidado, decisiones, contradicciones, hipótesis, riesgos y prioridades.",
+    "source_previous_name": "sotp_ctx__canonical_context__human__v08.md",
+    "size_bytes": 107019,
+    "sha256": "bd051c019d1aea90df01a763868d521dc27e8a7ed2fb9e0816d25c5666050610",
+    "role_priority": "nucleo"
+  },
+  {
+    "file_name": "sistema_operativo_tesis_iot__archivo_de_contexto_canonico__lectura_maquina__v09.jsonl",
+    "description": "Proyección del contexto canónico en formato JSONL para ingestión automatizada y recuperación programática.",
+    "source_previous_name": "sotp_ctx__canonical_context__machine__v08.jsonl",
+    "size_bytes": 278287,
+    "sha256": "2aa6d79707d6a551845edac87afde09d78db3e46458d69a6658c7c9e0dc67c42",
+    "role_priority": "nucleo"
+  },
+  {
+    "file_name": "sistema_operativo_tesis_iot__registro_estructurado_del_contexto__v09.sqlite",
+    "description": "Base SQLite con entidades, relaciones y registros del contexto del proyecto.",
+    "source_previous_name": "sotp_ctx__registry__v08.sqlite",
+    "size_bytes": 1404928,
+    "sha256": "46b3bae6a983cae0f6334eabc695a94a71b509c96facba8870382338b7560f25",
+    "role_priority": "nucleo"
+  },
+  {
+    "file_name": "sistema_operativo_tesis_iot__catalogo_general_de_artefactos__v09.json",
+    "description": "Inventario general de artefactos y metadatos asociados.",
+    "source_previous_name": "sotp_ctx__artifact_catalog__v08.json",
+    "size_bytes": 11326,
+    "sha256": "e5ccdfa1ea4c101a1f3cb2778e2fa96afbf862a2e7fc43560ca71cb1f0e0a114",
+    "role_priority": "nucleo"
+  },
+  {
+    "file_name": "sistema_operativo_tesis_iot__columna_vertebral_de_evidencia__v09.tsv",
+    "description": "Mapa compacto de la evidencia prioritaria para sustentación y trazabilidad.",
+    "source_previous_name": "sotp_ctx__evidence_spine__v08.tsv",
+    "size_bytes": 6018,
+    "sha256": "f561a19dff753e7b96a9f61fef46bafecdac947d8d4bc05c498c22d4f918170b",
+    "role_priority": "nucleo"
+  },
+  {
+    "file_name": "sistema_operativo_tesis_iot__justificacion_de_inclusion_por_archivo__v09.tsv",
+    "description": "Justificación por archivo del valor documental y la razón para conservar cada byte.",
+    "source_previous_name": "sotp_ctx__byte_justification_manifest__v08.tsv",
+    "size_bytes": 10745,
+    "sha256": "3ed39c40acc5401e28eafa8bc19ab9c9cb7d7ab19fccfdec52177d2a558f4581",
+    "role_priority": "soporte"
+  },
+  {
+    "file_name": "sistema_operativo_tesis_iot__justificacion_de_inclusion_por_archivo__v09.jsonl",
+    "description": "Versión JSONL de la justificación por archivo.",
+    "source_previous_name": "sotp_ctx__byte_justification_manifest__v08.jsonl",
+    "size_bytes": 18759,
+    "sha256": "408e72e4a52f040ea3a747ce22938d7533afb795938f06355788ebe53e2a1864",
+    "role_priority": "soporte"
+  },
+  {
+    "file_name": "sistema_operativo_tesis_iot__politica_de_valor_documental__v09.md",
+    "description": "Criterios para decidir qué conservar, priorizar o excluir del sistema.",
+    "source_previous_name": "sotp_ctx__value_amplification_policy__v08.md",
+    "size_bytes": 1043,
+    "sha256": "a20ae8b3d36c377c8b44d0340575e7439d08e0a0e318a566aa2850752dc9c7fb",
+    "role_priority": "soporte"
+  },
+  {
+    "file_name": "sistema_operativo_tesis_iot__politica_de_estatus_del_overleaf_actual__v09.md",
+    "description": "Documento que fija el estatus del Overleaf actual como borrador provisional no canónico.",
+    "source_previous_name": "sotp_ctx__overleaf_status_policy__v08.md",
+    "size_bytes": 608,
+    "sha256": "9e079a0aa3609b6bfb825fbf82534ba9b2830b495d3a7de8fe647057007dcea7",
+    "role_priority": "soporte"
+  },
+  {
+    "file_name": "sistema_operativo_tesis_iot__guia_de_ingestion__v09.md",
+    "description": "Instrucciones para descargar, ubicar e ingerir los archivos en el sistema operativo de tesis.",
+    "source_previous_name": "sotp_ctx__ingest_readme__v08.md",
+    "size_bytes": 656,
+    "sha256": "8ae411ab4136362b284f6572d71ea72158d94f0bc1bda07eaf3b961a6cae0252",
+    "role_priority": "soporte"
+  },
+  {
+    "file_name": "sistema_operativo_tesis_iot__resumen_del_paquete__v09.json",
+    "description": "Resumen ejecutivo del contenido, tamaños y propósito del paquete.",
+    "source_previous_name": "sotp_ctx__package_summary__v08.json",
+    "size_bytes": 3625,
+    "sha256": "41c6b5c31824baf498ee605324af2e3a6f10042bb78e2eacfd3b998065262868",
+    "role_priority": "soporte"
+  },
+  {
+    "file_name": "sistema_operativo_tesis_iot__convencion_de_nombres__v09.json",
+    "description": "",
+    "source_previous_name": "sotp_ctx__naming_manifest__v08.json",
+    "size_bytes": 448,
+    "sha256": "816c8db11a95d50411699bf531ebbf664d6c96fa07496b4bfb57b145966e665d",
+    "role_priority": "soporte"
+  },
+  {
+    "file_name": "sistema_operativo_tesis_iot__mapa_de_nombres_anteriores_a_nombres_actuales__v09.tsv",
+    "description": "Tabla de correspondencia entre nombres heredados y nombres autodescriptivos.",
+    "source_previous_name": "sotp_ctx__legacy_name_map__v08.tsv",
+    "size_bytes": 2595,
+    "sha256": "50288a21c3b2d36ffe47df4007747d5d562c219d5ac5fa085b4d4f8e4c47f0a0",
+    "role_priority": "soporte"
+  }
+]

@@ -1,0 +1,8 @@
+fase_id,periodo_tentativo,foco,bloques,criterio_de_avance
+F0,2026-03-23 a 2026-03-31,Instalación del sistema operativo de tesis,B0,Base canónica validada y dashboard generado
+F1,2026-04-01 a 2026-04-15,Delimitación del problema y arquitectura objetivo,B1|B2,Caso de estudio y línea base definidos con hipótesis operables
+F2,2026-04-16 a 2026-05-10,Modelo de métricas y escenarios de simulación,B3|B4,Cuadro de métricas y simulación reproducible inicial
+F3,2026-05-11 a 2026-06-20,Prototipo e instrumentación experimental,B5,Prototipo con persistencia local y telemetría priorizada
+F4,2026-06-21 a 2026-07-20,Campaña experimental y contraste con simulación,B6|B7,Evidencia experimental integrada y discutida
+F5,2026-07-21 a 2026-09-15,Redacción principal y cierre técnico,B8,Manuscrito completo con trazabilidad a evidencias
+F6,2026-09-16 a 2026-10-15,Sanitización y preparación de defensa,B9|B10,Materiales de defensa y paquete reproducible de cierre

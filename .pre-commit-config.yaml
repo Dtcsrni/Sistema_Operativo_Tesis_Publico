@@ -1,0 +1,32 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+        args: [--allow-multiple-documents]
+    -   id: check-added-large-files
+        args: ['--maxkb=5000'] # Previene commits de más de 5MB por error
+
+-   repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.39.0
+    hooks:
+    -   id: markdownlint
+        exclude: >
+            (?x)^(
+                __pycache__|
+                .venv|
+                06_dashboard/generado/|
+                README.md
+            )$
+        args: ["--disable", "MD013", "--disable", "MD033"] # Deshabilita máximo largo de línea y permite HTML crudo en markdown
+
+-   repo: local
+    hooks:
+    -   id: governance-gate
+        name: Governance Gate
+        entry: python 07_scripts/governance_gate.py --stage pre-commit
+        language: system
+        pass_filenames: false
+        always_run: true

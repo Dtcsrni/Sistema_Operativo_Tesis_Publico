@@ -1,0 +1,13 @@
+deliverable_id,nombre,descripcion,bloque_principal,estado,artefacto_canonico
+ENT-001,Base operativa del sistema de tesis,Estructura del repositorio configuración canónica plantillas y README de entrada,B0,listo,README_INICIO.md
+ENT-002,Automatización base y dashboard,Validadores generador de dashboard exportador y reporte de consistencia,B0,listo,06_dashboard/generado/index.html
+ENT-003,Definición del caso de estudio y supuestos de intermitencia,Documento y backlog refinado para el contexto Pachuca,B1,pendiente,00_sistema_tesis/decisiones
+ENT-004,Arquitectura propuesta y línea base,Especificación operativa de arquitectura hipótesis y criterios de comparación,B2,pendiente,00_sistema_tesis/config/hipotesis.yaml
+ENT-005,Cuadro maestro de métricas y escenarios,Definición operacional para simulación y validación,B3,pendiente,02_experimentos/simulacion
+ENT-006,Paquete de simulación reproducible,Escenarios resultados base y trazabilidad de parámetros,B4,pendiente,02_experimentos/simulacion
+ENT-007,Prototipo instrumentado,Implementación verificable con persistencia y control degradable,B5,pendiente,04_implementacion
+ENT-008,Evidencia experimental trazable,Resultados y registros de campaña experimental,B6,pendiente,02_experimentos/validacion_experimental
+ENT-009,Análisis integrado y discusión,Síntesis de resultados limitaciones y aportaciones,B7,pendiente,05_tesis/capitulos
+ENT-010,Manuscrito base de tesis,Documento integral de tesis con capítulos y anexos,B8,pendiente,05_tesis
+ENT-011,Paquete sanitizado reproducible,Versión pública controlada sin información sensible,B9,pendiente,06_dashboard/generado
+ENT-012,Cierre y defensa,Versión final materiales de defensa y transferencia,B10,pendiente,05_tesis

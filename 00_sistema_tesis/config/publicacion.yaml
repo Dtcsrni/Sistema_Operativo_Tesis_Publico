@@ -1,0 +1,116 @@
+{
+  "version": "1.0",
+  "proposito": "Definir la exportación pública sanitizada, legible y reproducible del sistema operativo de tesis sin exponer trazabilidad privada ni infraestructura sensible.",
+  "politica": {
+    "editable_directamente": false,
+    "aviso_no_editar": "Este bundle público es un artefacto derivado y sanitizado. No se corrige a mano; se reconstruye desde la base privada.",
+    "alcance": "divulgacion_evaluacion_externa"
+  },
+  "salida": {
+    "directorio": "06_dashboard/publico",
+    "manifest": "06_dashboard/publico/manifest_publico.json"
+  },
+  "artefactos": [
+    {
+      "source": "README.md",
+      "target": "README_publico.md"
+    },
+    {
+      "source": "06_dashboard/wiki",
+      "target": "wiki"
+    },
+    {
+      "source": "06_dashboard/generado/wiki",
+      "target": "wiki_html"
+    },
+    {
+      "source": "06_dashboard/generado/index.html",
+      "target": "dashboard/index.html"
+    },
+    {
+      "source": "06_dashboard/generado/estilos.css",
+      "target": "dashboard/estilos.css"
+    },
+    {
+      "source": "06_dashboard/generado/app.js",
+      "target": "dashboard/app.js"
+    },
+    {
+      "source": "06_dashboard/generado/manifest.webmanifest",
+      "target": "dashboard/manifest.webmanifest"
+    },
+    {
+      "source": "06_dashboard/generado/sw.js",
+      "target": "dashboard/sw.js"
+    },
+    {
+      "source": "06_dashboard/generado/icon.svg",
+      "target": "dashboard/icon.svg"
+    },
+    {
+      "source": "06_dashboard/generado/badges",
+      "target": "dashboard/badges"
+    }
+  ],
+  "sanitizacion": {
+    "prohibidos_en_salida": [
+      "file:///",
+      "00_sistema_tesis/evidencia_privada/",
+      "VAL-STEP-",
+      "EVT-",
+      "sha256:",
+      "CURP: `",
+      "00_sistema_tesis/canon/events.jsonl",
+      "00_sistema_tesis/bitacora/audit_history",
+      "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
+      "00_sistema_tesis/bitacora/indice_fuentes_conversacion.md",
+      "00_sistema_tesis/bitacora/",
+      "00_sistema_tesis/reportes_semanales/"
+    ],
+    "excluir_prefijos": [
+      "06_dashboard/generado/wiki_manifest.json",
+      "00_sistema_tesis/evidencia_privada/"
+    ],
+    "redacciones_regex": [
+      {
+        "nombre": "rutas_locales_file_uri",
+        "patron": "file:///[^\\s)\\]>`\\\"']+",
+        "reemplazo": "[ruta_local_redactada]"
+      },
+      {
+        "nombre": "rutas_locales_windows_repo",
+        "patron": "[A-Za-z]:\\\\[^\\s)\\]>`\\\"']+",
+        "reemplazo": "[ruta_local_redactada]"
+      },
+      {
+        "nombre": "identificadores_validacion",
+        "patron": "VAL-STEP-[A-Za-z0-9_-]+",
+        "reemplazo": "[validacion_humana_interna]"
+      },
+      {
+        "nombre": "hashes_sha256",
+        "patron": "sha256:[0-9a-fA-F]{8,64}",
+        "reemplazo": "sha256:[redactado]"
+      },
+      {
+        "nombre": "curp_personal",
+        "patron": "CURP:\\s*`?[A-Z0-9]{18}`?",
+        "reemplazo": "CURP: [redactada]"
+      }
+    ],
+    "redacciones_literales": [
+      {
+        "literal": "06_dashboard/generado/reporte_consistencia.md",
+        "reemplazo": "[reporte_interno_redactado]"
+      },
+      {
+        "literal": "00_sistema_tesis/bitacora/",
+        "reemplazo": "[bitacora_privada]/"
+      },
+      {
+        "literal": "00_sistema_tesis/reportes_semanales/",
+        "reemplazo": "[reportes_privados]/"
+      }
+    ]
+  }
+}

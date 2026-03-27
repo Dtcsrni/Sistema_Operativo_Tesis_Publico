@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.env
+00_sistema_tesis/evidencia_privada/conversaciones_codex/*
+!00_sistema_tesis/evidencia_privada/conversaciones_codex/.gitkeep
+00_sistema_tesis/evidencia_privada/staging_ingestion/*
+06_dashboard/generado/*.tmp
+*.asc
+mi_llave_secreta_backup.asc
+00_sistema_tesis/bitacora/audit_history/governance_gate/
+00_sistema_tesis/bitacora/audit_history/security_report_*.json
+config/backups/*.bak
+.env

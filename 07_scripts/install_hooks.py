@@ -1,0 +1,39 @@
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+
+PRE_COMMIT_HOOK = """#!/bin/sh
+python 07_scripts/governance_gate.py --stage pre-commit
+STATUS=$?
+if [ $STATUS -ne 0 ]; then
+  exit $STATUS
+fi
+
+if command -v pre-commit >/dev/null 2>&1; then
+  SKIP=governance-gate pre-commit run --hook-stage pre-commit
+  exit $?
+fi
+
+echo "[WARN] pre-commit no esta instalado; solo se ejecuto governance_gate."
+exit 0
+"""
+
+PRE_PUSH_HOOK = """#!/bin/sh
+python 07_scripts/governance_gate.py --stage pre-push
+"""
+
+def install_hook(name, content):
+    git_hook_dir = ROOT / ".git" / "hooks"
+    if not git_hook_dir.parent.exists():
+        print("[ERROR] No se detectó un repositorio Git.")
+        return
+
+    git_hook_path = git_hook_dir / name
+    with open(git_hook_path, "w", newline="\n") as f:
+        f.write(content)
+
+    print(f"[SUCCESS] Hook instalado en {git_hook_path}")
+
+if __name__ == "__main__":
+    install_hook("pre-commit", PRE_COMMIT_HOOK)
+    install_hook("pre-push", PRE_PUSH_HOOK)
