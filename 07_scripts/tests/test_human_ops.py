@@ -4,6 +4,7 @@ import sys
 import unittest
 from contextlib import redirect_stdout
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -31,6 +32,13 @@ class TestHumanOperationalLayer(unittest.TestCase):
         self.assertNotIn("00_sistema_tesis/bitacora", sanitized)
         self.assertNotIn("00_sistema_tesis/reportes_semanales", sanitized)
         self.assertNotIn("00_sistema_tesis/config/agent_identity.json", sanitized)
+
+    def test_sanitize_text_tolerates_missing_agent_identity(self):
+        config = load_publication_config()
+        text = "Texto sin identidad privada requerida."
+        with patch("publication.load_agent_identity", side_effect=FileNotFoundError("agent_identity.json")):
+            sanitized = sanitize_text(text, config)
+        self.assertEqual(sanitized, text)
 
     def test_status_mentions_guided_commands(self):
         buffer = io.StringIO()

@@ -59,7 +59,15 @@ def _regex_rules(config: dict) -> list[tuple[str, re.Pattern[str], str]]:
 
 
 def _literal_rules(config: dict) -> list[tuple[str, str]]:
-    identity = load_agent_identity()
+    try:
+        identity = load_agent_identity()
+    except (FileNotFoundError, KeyError, OSError):
+        identity = {
+            "agent_role": "",
+            "provider": "",
+            "model_version": "",
+            "runtime_label": "",
+        }
     rules = [
         (str(ROOT), "[ruta_local_redactada]"),
         (ROOT.as_posix(), "[ruta_local_redactada]"),
