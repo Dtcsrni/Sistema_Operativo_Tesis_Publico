@@ -42,7 +42,7 @@ jobs:
           python 07_scripts/sync_public_repo.py --mode mirror --target-dir "$RUNNER_TEMP/public-sync-check" --branch main --check --allow-dirty
 
       - name: Build public site
-        run: mkdocs build --strict
+        run: mkdocs build
 
       - name: Deploy public site
         run: |

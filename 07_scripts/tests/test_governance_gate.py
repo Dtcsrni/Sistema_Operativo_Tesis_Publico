@@ -1,6 +1,7 @@
 import sys
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -170,6 +171,13 @@ class TestGovernanceGate(unittest.TestCase):
         self.assertIn("07_scripts/sync_public_repo.py", sync_check[1][1:])
         self.assertIn("--check", sync_check[1])
         self.assertIn(public_sync_check_dir().replace("\\", "/"), [item.replace("\\", "/") for item in sync_check[1]])
+
+    def test_ci_checks_can_skip_gpg_when_environment_requests_it(self):
+        with patch.dict("os.environ", {"SISTEMA_TESIS_SKIP_GPG_CHECK": "1"}, clear=False):
+            checks = checks_for_stage("ci")
+        labels = [item[0] for item in checks]
+        self.assertNotIn("Verificar firma GPG", labels)
+        self.assertIn("Pruebas", labels)
 
 
 if __name__ == "__main__":

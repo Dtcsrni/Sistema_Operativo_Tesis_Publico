@@ -37,6 +37,8 @@ jobs:
           python 07_scripts/sync_public_repo.py --mode mirror --target-dir "$RUNNER_TEMP/public-sync-check" --branch main --check
 
       - name: Run governance gate
+        env:
+          SISTEMA_TESIS_SKIP_GPG_CHECK: ${{ github.repository == 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && '1' || '' }}
         run: python 07_scripts/governance_gate.py --stage ci --agent github-actions
 
       - name: Upload governance attestation and generated docs

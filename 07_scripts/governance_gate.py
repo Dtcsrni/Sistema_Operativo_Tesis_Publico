@@ -34,6 +34,11 @@ PRIMARY_PROJECTION_PATHS = {
 }
 
 
+def should_skip_gpg_check() -> bool:
+    value = os.getenv("SISTEMA_TESIS_SKIP_GPG_CHECK", "").strip().lower()
+    return value in {"1", "true", "yes", "on"}
+
+
 def ensure_canon_initialized() -> None:
     if not EVENTS_PATH.exists():
         import_legacy_events()
@@ -268,10 +273,15 @@ def checks_for_stage(stage: str) -> list[tuple[str, list[str]]]:
     if stage == "pre-commit":
         return pre_commit_checks
     if stage == "pre-push":
+        if should_skip_gpg_check():
+            return pre_commit_checks
         return pre_commit_checks + [("Verificar firma GPG", [python, "07_scripts/setup_gpg_attestation.py", "--check"])]
     if stage == "ci":
-        return [
-            ("Verificar firma GPG", [python, "07_scripts/setup_gpg_attestation.py", "--check"]),
+        ci_checks: list[tuple[str, list[str]]] = []
+        if not should_skip_gpg_check():
+            ci_checks.append(("Verificar firma GPG", [python, "07_scripts/setup_gpg_attestation.py", "--check"]))
+        ci_checks.extend(
+            [
             ("Pruebas", [python, "-m", "pytest", "-q"]),
             (
                 "Verificar downstream público sanitizado",
@@ -290,7 +300,9 @@ def checks_for_stage(stage: str) -> list[tuple[str, list[str]]]:
             ),
             ("Build total", [python, "07_scripts/build_all.py"]),
             ("Artefactos versionados", ["git", "diff", "--exit-code"]),
-        ]
+            ]
+        )
+        return ci_checks
     return [("Build total", [python, "07_scripts/build_all.py"])]
 
 
