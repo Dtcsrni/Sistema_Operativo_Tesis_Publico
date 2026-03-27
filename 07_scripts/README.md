@@ -60,6 +60,7 @@ python 07_scripts/tesis.py split-staged --commit
 - Verifica hash por archivo entre origen canónico y destino público antes de commit/push.
 - Emite `_sync_provenance.json` con commit/branch/fingerprint de sincronización.
 - Emite `NOTA_SEGURIDAD_Y_ACCESO.md` con políticas y contacto del tesista.
+- Requiere árbol privado limpio para garantizar sincronía exacta con el commit canónico (`--allow-dirty` solo bajo uso explícito).
 
 ## Scripts de soporte
 

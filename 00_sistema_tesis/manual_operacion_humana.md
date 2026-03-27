@@ -72,9 +72,10 @@ La evidencia fuente vive en `00_sistema_tesis/evidencia_privada/conversaciones_c
 
 1. Mantener este repositorio como fuente soberana privada.
 2. Crear o usar un repositorio GitHub público derivado (ejemplo: `Dtcsrni/Sistema_Operativo_Tesis_Publico`).
-3. Ejecutar sincronización derivada en modo clon filtrado:
+3. Confirmar árbol privado limpio (sin cambios sin commit) para conservar sincronía exacta por commit.
+4. Ejecutar sincronización derivada en modo clon filtrado:
    - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`
-4. Verificar en el repo público que existan:
+5. Verificar en el repo público que existan:
    - `index.md`
    - `manifest_publico.json`
    - `_sync_provenance.json`
@@ -82,9 +83,9 @@ La evidencia fuente vive en `00_sistema_tesis/evidencia_privada/conversaciones_c
    - `wiki/`
    - `wiki_html/`
    - `dashboard/`
-5. Verificar que `NOTA_SEGURIDAD_Y_ACCESO.md` indique política de seguridad y contacto al tesista para solicitudes de detalle no público.
-6. Validar que el clon filtrado no incluya rutas privadas (`canon/`, `bitacora/`, `evidencia_privada/`, secretos locales).
-7. Validar que ChatGPT use la URL del repositorio derivado público, no la del repo privado soberano.
+6. Verificar que `NOTA_SEGURIDAD_Y_ACCESO.md` indique política de seguridad y contacto al tesista para solicitudes de detalle no público.
+7. Validar que el clon filtrado no incluya rutas privadas (`canon/`, `bitacora/`, `evidencia_privada/`, secretos locales).
+8. Validar que ChatGPT use la URL del repositorio derivado público, no la del repo privado soberano.
 
 ## Rollback de publicación pública
 

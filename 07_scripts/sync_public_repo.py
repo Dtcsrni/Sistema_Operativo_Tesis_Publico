@@ -115,6 +115,13 @@ def _git_value(cwd: Path, args: list[str], default: str = "unknown") -> str:
     return value or default
 
 
+def _git_is_dirty(cwd: Path) -> bool:
+    result = run_command(["git", "status", "--porcelain"], cwd=cwd, check=False)
+    if result.returncode != 0:
+        return True
+    return bool(result.stdout.strip())
+
+
 def _target_inventory(target_dir: Path, allowed_files: set[str]) -> dict[str, str]:
     inventory: dict[str, str] = {}
     for path in sorted(target_dir.rglob("*")):
@@ -210,8 +217,15 @@ def main() -> int:
     parser.add_argument("--branch", default="main")
     parser.add_argument("--contact-email", default="")
     parser.add_argument("--commit-message", default="chore: actualizar proyeccion publica sanitizada")
+    parser.add_argument("--allow-dirty", action="store_true")
     parser.add_argument("--push", action="store_true")
     args = parser.parse_args()
+
+    if not args.allow_dirty and _git_is_dirty(ROOT):
+        raise SystemExit(
+            "SYNC-PUBLIC: árbol privado con cambios sin commit. "
+            "Confirma y commitea primero para preservar sincronía exacta (o usa --allow-dirty explícitamente)."
+        )
 
     target_dir = (ROOT / args.target_dir).resolve()
     if args.mode == "bundle":
