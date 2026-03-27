@@ -2,7 +2,7 @@
   "generated_at": "2026-03-26",
   "status": "ok",
   "scope": "publico_sanitizado",
-  "bundle_fingerprint": "0e53832a3817ff82ccd0d17e7317cee7610dc21a7156dcf2661a9091fdeaa9ea",
+  "bundle_fingerprint": "977c500b045f2d9a212705442c3f400a2831b9ef3e2a2f830cec3219914df375",
   "notice": "Este bundle público es un artefacto derivado y sanitizado. No se corrige a mano; se reconstruye desde la base privada.",
   "artifacts": [
     {
@@ -140,9 +140,11 @@
     "identificadores_validacion",
     "hashes_sha256",
     "curp_personal",
-    "06_dashboard/generado/reporte_consistencia.md",
-    "00_sistema_tesis/bitacora/",
-    "00_sistema_tesis/reportes_semanales/",
+    "literal_rule_1",
+    "literal_rule_2",
+    "literal_rule_3",
+    "literal_rule_4",
+    "literal_rule_5",
     "file_uri_redaction",
     "absolute_windows_path_redaction",
     "val_step_redaction",

@@ -183,4 +183,4 @@ python 07_scripts/report_consistency.py
 - [`06_dashboard/generado/hoja_maestra_consolidada.csv`](06_dashboard/generado/hoja_maestra_consolidada.csv)
 - [`06_dashboard/generado/reporte_consistencia.md`](06_dashboard/generado/reporte_consistencia.md)
 
-_Generado automáticamente el 2026-03-26 23:11:14._
+_Generado automáticamente el 2026-03-26 23:23:32._

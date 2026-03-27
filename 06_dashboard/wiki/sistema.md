@@ -3,7 +3,7 @@
 Identidad, propósito, arquitectura base y reglas generales del sistema operativo de tesis.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-03-26 23:11:14`
+- **Fecha:** `2026-03-26 23:23:32`
 - **Estado:** `OK`
 - **Fuentes:** `README_INICIO.md`, `00_sistema_tesis/manual_operacion_humana.md`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/publicacion.yaml`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -51,11 +51,11 @@ Identidad, propósito, arquitectura base y reglas generales del sistema operativ
 |hipotesis|00_sistema_tesis/config/hipotesis.yaml|sí|2026-03-23 05:34:11|
 |bloques|00_sistema_tesis/config/bloques.yaml|sí|2026-03-23 05:35:13|
 |dashboard|00_sistema_tesis/config/dashboard.yaml|sí|2026-03-24 03:46:20|
-|publicacion|00_sistema_tesis/config/publicacion.yaml|sí|2026-03-26 22:11:07|
+|publicacion|00_sistema_tesis/config/publicacion.yaml|sí|2026-03-26 23:22:12|
 |agent_identity|00_sistema_tesis/config/agent_identity.json|sí|2026-03-26 05:59:01|
 |gobernanza_ia|00_sistema_tesis/config/ia_gobernanza.yaml|sí|2026-03-26 22:25:41|
 |wiki|00_sistema_tesis/config/wiki.yaml|sí|2026-03-26 15:36:18|
-|manual_operacion_humana|00_sistema_tesis/manual_operacion_humana.md|sí|2026-03-26 23:10:47|
+|manual_operacion_humana|00_sistema_tesis/manual_operacion_humana.md|sí|2026-03-26 23:12:19|
 |backlog|01_planeacion/backlog.csv|sí|2026-03-26 15:36:31|
 |riesgos|01_planeacion/riesgos.csv|sí|2026-03-26 15:36:39|
 |roadmap|01_planeacion/roadmap.csv|sí|2026-03-23 05:36:10|
@@ -63,11 +63,11 @@ Identidad, propósito, arquitectura base y reglas generales del sistema operativ
 |decisiones|00_sistema_tesis/decisiones|sí|2026-03-26 16:50:05|
 |bitacora|00_sistema_tesis/bitacora|sí|2026-03-26 17:18:28|
 |reportes_semanales|00_sistema_tesis/reportes_semanales|sí|2026-03-23 05:35:44|
-|dashboard_generado|06_dashboard/generado/index.html|sí|2026-03-26 22:59:44|
-|bundle_publico|06_dashboard/publico/index.md|sí|2026-03-26 23:02:47|
-|bundle_publico_manifest|06_dashboard/publico/manifest_publico.json|sí|2026-03-26 23:02:47|
-|wiki_markdown_generada|06_dashboard/wiki/index.md|sí|2026-03-26 22:59:43|
-|wiki_html_generada|06_dashboard/generado/wiki/index.html|sí|2026-03-26 22:59:43|
-|wiki_manifest_generado|06_dashboard/generado/wiki_manifest.json|sí|2026-03-26 22:59:43|
-|readme_portada_generado|README.md|sí|2026-03-26 23:11:14|
+|dashboard_generado|06_dashboard/generado/index.html|sí|2026-03-26 23:11:14|
+|bundle_publico|06_dashboard/publico/index.md|sí|2026-03-26 23:22:55|
+|bundle_publico_manifest|06_dashboard/publico/manifest_publico.json|sí|2026-03-26 23:22:55|
+|wiki_markdown_generada|06_dashboard/wiki/index.md|sí|2026-03-26 23:11:14|
+|wiki_html_generada|06_dashboard/generado/wiki/index.html|sí|2026-03-26 23:11:14|
+|wiki_manifest_generado|06_dashboard/generado/wiki_manifest.json|sí|2026-03-26 23:11:14|
+|readme_portada_generado|README.md|sí|2026-03-26 23:23:32|
 

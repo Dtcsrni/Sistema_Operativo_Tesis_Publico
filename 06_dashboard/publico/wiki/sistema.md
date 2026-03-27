@@ -52,7 +52,7 @@ Identidad, propósito, arquitectura base y reglas generales del sistema operativ
 |bloques|00_sistema_tesis/config/bloques.yaml|sí|[fecha_hora_redactada]|
 |dashboard|00_sistema_tesis/config/dashboard.yaml|sí|[fecha_hora_redactada]|
 |publicacion|00_sistema_tesis/config/publicacion.yaml|sí|[fecha_hora_redactada]|
-|agent_identity|00_sistema_tesis/config/agent_identity.json|sí|[fecha_hora_redactada]|
+|agent_identity|[identidad_agente_privada]|sí|[fecha_hora_redactada]|
 |gobernanza_ia|00_sistema_tesis/config/ia_gobernanza.yaml|sí|[fecha_hora_redactada]|
 |wiki|00_sistema_tesis/config/wiki.yaml|sí|[fecha_hora_redactada]|
 |manual_operacion_humana|00_sistema_tesis/manual_operacion_humana.md|sí|[fecha_hora_redactada]|
@@ -61,8 +61,8 @@ Identidad, propósito, arquitectura base y reglas generales del sistema operativ
 |roadmap|01_planeacion/roadmap.csv|sí|[fecha_hora_redactada]|
 |entregables|01_planeacion/entregables.csv|sí|[fecha_hora_redactada]|
 |decisiones|00_sistema_tesis/decisiones|sí|[fecha_hora_redactada]|
-|bitacora|00_sistema_tesis/bitacora|sí|[fecha_hora_redactada]|
-|reportes_semanales|00_sistema_tesis/reportes_semanales|sí|[fecha_hora_redactada]|
+|bitacora|[bitacora_privada]|sí|[fecha_hora_redactada]|
+|reportes_semanales|[reportes_privados]|sí|[fecha_hora_redactada]|
 |dashboard_generado|06_dashboard/generado/index.html|sí|[fecha_hora_redactada]|
 |bundle_publico|06_dashboard/publico/index.md|sí|[fecha_hora_redactada]|
 |bundle_publico_manifest|06_dashboard/publico/manifest_publico.json|sí|[fecha_hora_redactada]|

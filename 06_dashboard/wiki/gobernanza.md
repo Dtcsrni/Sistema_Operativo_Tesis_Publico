@@ -3,7 +3,7 @@
 Políticas del sistema, gobernanza de IA, trazabilidad y disciplina TDD.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-03-26 23:11:14`
+- **Fecha:** `2026-03-26 23:23:32`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/ia_gobernanza.yaml`, `00_sistema_tesis/config/publicacion.yaml`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.

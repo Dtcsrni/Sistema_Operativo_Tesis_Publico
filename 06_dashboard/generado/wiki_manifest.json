@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-26 23:11:14",
+  "generated_at": "2026-03-26 23:23:32",
   "verification": {
     "status": "ok",
     "required_page_fields": [
@@ -144,8 +144,8 @@
     },
     {
       "path": "00_sistema_tesis/manual_operacion_humana.md",
-      "sha256": "a7c03f918c2f84af7592823805f17504d5c6f982d4aa9f203c6cd572ebd9b16b",
-      "modified": "2026-03-26 23:10:47",
+      "sha256": "9fff6d99eaec61207346bcedd0ac65e74833de0291297ce4aa34e945c87a12eb",
+      "modified": "2026-03-26 23:12:19",
       "kind": "file"
     },
     {
@@ -180,8 +180,8 @@
     },
     {
       "path": "00_sistema_tesis/config/publicacion.yaml",
-      "sha256": "a03463b95af231c4ddd85a2d9d0d1b10da1b73f504802c86bbda7d505fae0f22",
-      "modified": "2026-03-26 22:11:07",
+      "sha256": "8d261c21e0f136ed4f41eedb6a65bc1cb9184edd03325801c529d78c61b0f7f6",
+      "modified": "2026-03-26 23:22:12",
       "kind": "file"
     },
     {

@@ -64,11 +64,21 @@ def _literal_rules(config: dict) -> list[tuple[str, str]]:
         (str(ROOT), "[ruta_local_redactada]"),
         (ROOT.as_posix(), "[ruta_local_redactada]"),
         ("00_sistema_tesis/canon/events.jsonl", "[canon_privado]"),
+        ("00_sistema_tesis/canon/", "[canon_privado]/"),
+        ("00_sistema_tesis/canon", "[canon_privado]"),
         ("00_sistema_tesis/bitacora/log_conversaciones_ia.md", "[ledger_privado]"),
         ("00_sistema_tesis/bitacora/matriz_trazabilidad.md", "[matriz_privada]"),
         ("00_sistema_tesis/bitacora/indice_fuentes_conversacion.md", "[indice_fuentes_privado]"),
+        ("00_sistema_tesis/bitacora/", "[bitacora_privada]/"),
+        ("00_sistema_tesis/bitacora", "[bitacora_privada]"),
+        ("00_sistema_tesis/reportes_semanales/", "[reportes_privados]/"),
+        ("00_sistema_tesis/reportes_semanales", "[reportes_privados]"),
         ("00_sistema_tesis/evidencia_privada/", "[evidencia_privada_redactada]/"),
+        ("00_sistema_tesis/evidencia_privada", "[evidencia_privada_redactada]"),
         ("00_sistema_tesis/bitacora/audit_history", "[historial_interno_redactado]"),
+        ("00_sistema_tesis/config/agent_identity.json", "[identidad_agente_privada]"),
+        ("00_sistema_tesis/config/sign_offs.json", "[firmas_humanas_privadas]"),
+        ("00_sistema_tesis/ia_journal.json", "[journal_ia_privado]"),
         ("06_dashboard/generado/reporte_consistencia.md", "[reporte_interno_redactado]"),
         (identity["agent_role"], "[agente_ia_interno]"),
         (identity["provider"], "[proveedor_ia_interno]"),
@@ -185,7 +195,8 @@ def _render_manifest(
     bundle_fingerprint: str,
 ) -> dict:
     rules = [item["nombre"] for item in config.get("sanitizacion", {}).get("redacciones_regex", [])]
-    rules.extend(item["literal"] for item in config.get("sanitizacion", {}).get("redacciones_literales", []))
+    literal_rules = config.get("sanitizacion", {}).get("redacciones_literales", [])
+    rules.extend(f"literal_rule_{index + 1}" for index, _ in enumerate(literal_rules))
     rules.extend(
         [
             "file_uri_redaction",

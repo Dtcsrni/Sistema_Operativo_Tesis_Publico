@@ -20,7 +20,7 @@ from tesis import cmd_doctor, cmd_next, cmd_publish, cmd_source_status, cmd_stat
 class TestHumanOperationalLayer(unittest.TestCase):
     def test_sanitize_text_redacts_private_markers(self):
         config = load_publication_config()
-        text = "file:///V:/Sistema_Operativo_Tesis_Posgrado/README.md VAL-STEP-470 EVT-0001 sha256:abcdef12 00_sistema_tesis/canon/events.jsonl 00_sistema_tesis/evidencia_privada/conversaciones_codex/demo/transcripcion.md"
+        text = "file:///V:/Sistema_Operativo_Tesis_Posgrado/README.md VAL-STEP-470 EVT-0001 sha256:abcdef12 00_sistema_tesis/canon/events.jsonl 00_sistema_tesis/evidencia_privada/conversaciones_codex/demo/transcripcion.md 00_sistema_tesis/bitacora 00_sistema_tesis/reportes_semanales 00_sistema_tesis/config/agent_identity.json"
         sanitized = sanitize_text(text, config)
         self.assertNotIn("file:///", sanitized)
         self.assertNotIn("VAL-STEP-470", sanitized)
@@ -28,6 +28,9 @@ class TestHumanOperationalLayer(unittest.TestCase):
         self.assertNotIn("sha256:abcdef12", sanitized)
         self.assertNotIn("00_sistema_tesis/canon/events.jsonl", sanitized)
         self.assertNotIn("00_sistema_tesis/evidencia_privada/conversaciones_codex", sanitized)
+        self.assertNotIn("00_sistema_tesis/bitacora", sanitized)
+        self.assertNotIn("00_sistema_tesis/reportes_semanales", sanitized)
+        self.assertNotIn("00_sistema_tesis/config/agent_identity.json", sanitized)
 
     def test_status_mentions_guided_commands(self):
         buffer = io.StringIO()

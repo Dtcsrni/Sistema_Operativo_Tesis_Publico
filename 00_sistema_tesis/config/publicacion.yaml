@@ -56,16 +56,24 @@
     "prohibidos_en_salida": [
       "file:///",
       "00_sistema_tesis/evidencia_privada/",
+      "00_sistema_tesis/evidencia_privada",
       "VAL-STEP-",
       "EVT-",
       "sha256:",
       "CURP: `",
       "00_sistema_tesis/canon/events.jsonl",
+      "00_sistema_tesis/canon/",
+      "00_sistema_tesis/canon",
       "00_sistema_tesis/bitacora/audit_history",
       "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
       "00_sistema_tesis/bitacora/indice_fuentes_conversacion.md",
       "00_sistema_tesis/bitacora/",
-      "00_sistema_tesis/reportes_semanales/"
+      "00_sistema_tesis/bitacora",
+      "00_sistema_tesis/reportes_semanales/",
+      "00_sistema_tesis/reportes_semanales",
+      "00_sistema_tesis/config/agent_identity.json",
+      "00_sistema_tesis/config/sign_offs.json",
+      "00_sistema_tesis/ia_journal.json"
     ],
     "excluir_prefijos": [
       "06_dashboard/generado/wiki_manifest.json",
@@ -108,8 +116,16 @@
         "reemplazo": "[bitacora_privada]/"
       },
       {
+        "literal": "00_sistema_tesis/bitacora",
+        "reemplazo": "[bitacora_privada]"
+      },
+      {
         "literal": "00_sistema_tesis/reportes_semanales/",
         "reemplazo": "[reportes_privados]/"
+      },
+      {
+        "literal": "00_sistema_tesis/reportes_semanales",
+        "reemplazo": "[reportes_privados]"
       }
     ]
   }

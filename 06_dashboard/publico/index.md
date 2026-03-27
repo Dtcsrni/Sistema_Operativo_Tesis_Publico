@@ -4,7 +4,7 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 
 - **Generado:** `2026-03-26`
 - **Estado:** `ok`
-- **Fingerprint del bundle:** `0e53832a3817ff82ccd0d17e7317cee7610dc21a7156dcf2661a9091fdeaa9ea`
+- **Fingerprint del bundle:** `977c500b045f2d9a212705442c3f400a2831b9ef3e2a2f830cec3219914df375`
 - **Aviso:** Este bundle público es un artefacto derivado y sanitizado. No se corrige a mano; se reconstruye desde la base privada.
 
 ## Superficies
@@ -55,9 +55,11 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 - identificadores_validacion
 - hashes_sha256
 - curp_personal
-- [reporte_interno_redactado]
-- [bitacora_privada]/
-- [reportes_privados]/
+- literal_rule_1
+- literal_rule_2
+- literal_rule_3
+- literal_rule_4
+- literal_rule_5
 - file_uri_redaction
 - absolute_windows_path_redaction
 - val_step_redaction
