@@ -36,7 +36,13 @@ jobs:
         run: |
           python 07_scripts/sync_public_repo.py --mode mirror --target-dir "$RUNNER_TEMP/public-sync-check" --branch main --check
 
+      - name: Run public downstream smoke checks
+        if: github.repository == 'Dtcsrni/Sistema_Operativo_Tesis_Publico'
+        run: |
+          python -m pytest -q tests/test_sync_public_repo.py
+
       - name: Run governance gate
+        if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico'
         env:
           SISTEMA_TESIS_SKIP_GPG_CHECK: ${{ github.repository == 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && '1' || '' }}
         run: python 07_scripts/governance_gate.py --stage ci --agent github-actions
