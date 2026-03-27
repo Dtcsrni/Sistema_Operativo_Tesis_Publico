@@ -52,7 +52,7 @@ Use este flujo cuando una confirmación verbal de Codex deba sostener un `VAL-ST
 2. (Opcional) Agregar capturas si se desea evidencia visual adicional.
 3. Ejecución automática recomendada: `python 07_scripts/tesis.py source auto-register --session-id ...`.
 4. Alternativa manual: `python 07_scripts/tesis.py source register --session-id ... --transcript ... --quote "texto exacto"` (opcionalmente `--screenshots ...`).
-5. Conservar el `EVT-*` resultante como `source_event_id`.
+5. Conservar el `[evento_interno]` resultante como `source_event_id`.
 6. Crear o registrar el `VAL-STEP` enlazando ese `source_event_id`.
 7. Ejecutar `python 07_scripts/tesis.py source verify --step-id STEP_ID_REAL`.
 

@@ -23,7 +23,7 @@ Adoptar un **canon unificado append-only** en `[canon_privado]` como única fuen
 4. `ia_journal.json`
 5. `sign_offs.json`
 
-El `VAL-STEP-*` se conserva como identificador semántico oficial de validación humana, ahora registrado como evento canónico de tipo `human_validation`.
+El `[validacion_humana_interna]` se conserva como identificador semántico oficial de validación humana, ahora registrado como evento canónico de tipo `human_validation`.
 Cada evento `human_validation` debe contener además la cita exacta del enunciado humano relevante, su hash SHA-256 y una ruta explícita de fuente de verdad para que la confirmación verbal pueda ser auditada por humanos sin depender de reconstrucciones narrativas.
 
 ## Alternativas consideradas

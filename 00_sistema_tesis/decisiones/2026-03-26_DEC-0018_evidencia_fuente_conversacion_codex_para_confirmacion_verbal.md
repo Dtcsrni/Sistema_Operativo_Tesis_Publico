@@ -17,9 +17,9 @@ El canon ya preserva el texto exacto de confirmación verbal y su hash. Eso ofre
 
 Se adopta un modelo híbrido de evidencia:
 
-1. **Canon en repo:** el `VAL-STEP-*` conserva la cita exacta, su hash y el enlace a `source_event_id`.
+1. **Canon en repo:** el `[validacion_humana_interna]` conserva la cita exacta, su hash y el enlace a `source_event_id`.
 2. **Fuente privada local:** cada `conversation_source_registered` conserva `transcripción + captura` dentro de `[evidencia_privada_redactada]/conversaciones_codex/`.
-3. **Activación gradual:** el enforcement aplica a nuevos `VAL-STEP-*` a partir del umbral configurado en `ia_gobernanza.yaml`.
+3. **Activación gradual:** el enforcement aplica a nuevos `[validacion_humana_interna]` a partir del umbral configurado en `ia_gobernanza.yaml`.
 4. **Compatibilidad histórica:** el historial previo se mantiene como `legacy_unverified_source`; no se reescribe ni se invalida.
 5. **Publicación segura:** la evidencia fuente privada y sus hashes crudos quedan fuera de la superficie pública sanitizada.
 
@@ -39,12 +39,12 @@ La alternativa elegida maximiza trazabilidad práctica y verificable sin depende
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Existencia de comandos `tesis.py source register|verify|status`.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-- [x] Enforcement automático para `VAL-STEP-*` nuevos desde el umbral configurado.
+- [x] Enforcement automático para `[validacion_humana_interna]` nuevos desde el umbral configurado.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Criterio de Aceptación Humana
 
-- [x] El tesista autoriza implementar corroboración por fuente de conversación para futuros `VAL-STEP-*`.
+- [x] El tesista autoriza implementar corroboración por fuente de conversación para futuros `[validacion_humana_interna]`.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
   - **Soporte:** [[validacion_humana_interna]]
   - **Pregunta crítica o disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
