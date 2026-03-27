@@ -23,7 +23,7 @@
     "bloques": "00_sistema_tesis/config/bloques.yaml",
     "dashboard": "00_sistema_tesis/config/dashboard.yaml",
     "publicacion": "00_sistema_tesis/config/publicacion.yaml",
-    "agent_identity": "00_sistema_tesis/config/agent_identity.json",
+    "agent_identity": "[identidad_agente_privada]",
     "gobernanza_ia": "00_sistema_tesis/config/ia_gobernanza.yaml",
     "wiki": "00_sistema_tesis/config/wiki.yaml",
     "manual_operacion_humana": "00_sistema_tesis/manual_operacion_humana.md",
@@ -32,8 +32,8 @@
     "roadmap": "01_planeacion/roadmap.csv",
     "entregables": "01_planeacion/entregables.csv",
     "decisiones": "00_sistema_tesis/decisiones",
-    "bitacora": "00_sistema_tesis/bitacora",
-    "reportes_semanales": "00_sistema_tesis/reportes_semanales",
+    "bitacora": "[bitacora_privada]",
+    "reportes_semanales": "[reportes_privados]",
     "dashboard_generado": "06_dashboard/generado/index.html",
     "bundle_publico": "06_dashboard/publico/index.md",
     "bundle_publico_manifest": "06_dashboard/publico/manifest_publico.json",
@@ -81,17 +81,17 @@
     {
       "tema": "datos_fair",
       "fuente": "Wilkinson et al., The FAIR Guiding Principles for scientific data management and stewardship, Scientific Data, 2016",
-      "url": "https://www.nature.com/articles/sdata201618"
+      "url": "http[ruta_local_redactada]"
     },
     {
       "tema": "citacion_y_trazabilidad_de_software",
       "fuente": "Smith et al., Software citation principles, PeerJ Computer Science, FORCE11, 2016",
-      "url": "https://peerj.com/articles/cs-86/"
+      "url": "http[ruta_local_redactada]"
     },
     {
       "tema": "gobernanza_de_proyectos_reproducibles",
       "fuente": "The Turing Way, Guide for reproducible, ethical and collaborative data science",
-      "url": "https://book.the-turing-way.org/"
+      "url": "http[ruta_local_redactada]"
     }
   ]
 }

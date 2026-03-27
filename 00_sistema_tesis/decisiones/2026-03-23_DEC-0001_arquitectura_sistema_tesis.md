@@ -79,11 +79,11 @@ La opción elegida minimiza complejidad operativa, preserva trazabilidad bajo co
 
 ## Referencias
 
-- Wilkinson et al. plantean principios FAIR para hacer datos y metadatos más localizables, accesibles, interoperables y reutilizables: [Scientific Data](https://www.nature.com/articles/sdata201618)
-- Smith et al. establecen principios de citación de software útiles para trazabilidad de artefactos técnicos: [PeerJ Computer Science](https://peerj.com/articles/cs-86/)
-- The Turing Way documenta prácticas reales de reproducibilidad, colaboración y gobernanza en proyectos de investigación: [The Turing Way](https://book.the-turing-way.org/)
-- NASA Systems Engineering Handbook formaliza gestión de configuración, riesgos y trazabilidad en proyectos complejos: [NASA SP-2016-6105 Rev2](https://www.nasa.gov/reference/systems-engineering-handbook/)
+- Wilkinson et al. plantean principios FAIR para hacer datos y metadatos más localizables, accesibles, interoperables y reutilizables: [Scientific Data](http[ruta_local_redactada])
+- Smith et al. establecen principios de citación de software útiles para trazabilidad de artefactos técnicos: [PeerJ Computer Science](http[ruta_local_redactada])
+- The Turing Way documenta prácticas reales de reproducibilidad, colaboración y gobernanza en proyectos de investigación: [The Turing Way](http[ruta_local_redactada])
+- NASA Systems Engineering Handbook formaliza gestión de configuración, riesgos y trazabilidad en proyectos complejos: [NASA SP-2016-6105 Rev2](http[ruta_local_redactada])
 
-[LID]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/bitacora/log_conversaciones_ia.md
-[GOV]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/config/ia_gobernanza.yaml
-[AUD]: file:///v:/Sistema_Operativo_Tesis_Posgrado/07_scripts/build_all.py
+[LID]: [ruta_local_redactada]
+[GOV]: [ruta_local_redactada]
+[AUD]: [ruta_local_redactada]

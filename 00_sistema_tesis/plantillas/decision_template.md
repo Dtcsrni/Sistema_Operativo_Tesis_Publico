@@ -39,7 +39,7 @@ Explica por qué la alternativa elegida reduce riesgo, complejidad o ambigüedad
   - **Pregunta crítica o disparador:** [Pregunta del agente o instrucción humana directa]
   - **Texto exacto de confirmación verbal:** "[Cita exacta del tesista]"
   - **Hash de confirmación verbal:** `sha256:[hash_cita_verbal]`
-  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-XXX :: human_validation.confirmation_text`
+  - **Fuente de verdad de confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
 
 ## Consecuencias
 
@@ -70,6 +70,6 @@ Explica por qué la alternativa elegida reduce riesgo, complejidad o ambigüedad
 
 Lista aquí normas, artículos, documentación o decisiones previas relevantes.
 
-[LID]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/bitacora/log_conversaciones_ia.md
-[GOV]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/config/ia_gobernanza.yaml
-[AUD]: file:///v:/Sistema_Operativo_Tesis_Posgrado/07_scripts/build_all.py
+[LID]: [ruta_local_redactada]
+[GOV]: [ruta_local_redactada]
+[AUD]: [ruta_local_redactada]

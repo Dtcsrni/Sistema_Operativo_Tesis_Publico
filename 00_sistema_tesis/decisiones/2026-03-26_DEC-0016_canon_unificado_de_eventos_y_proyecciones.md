@@ -15,7 +15,7 @@ El sistema operativo de tesis acumuló varias fuentes operativas paralelas para 
 
 ## Decisión
 
-Adoptar un **canon unificado append-only** en `00_sistema_tesis/canon/events.jsonl` como única fuente operativa de trazabilidad humana y actividad agéntica. A partir de este canon, el sistema materializa como proyecciones derivadas:
+Adoptar un **canon unificado append-only** en `[canon_privado]` como única fuente operativa de trazabilidad humana y actividad agéntica. A partir de este canon, el sistema materializa como proyecciones derivadas:
 
 1. `log_conversaciones_ia.md`
 2. `matriz_trazabilidad.md`
@@ -38,7 +38,7 @@ La alternativa elegida reduce duplicidad operativa, baja el riesgo de inconsiste
 
 ## Métricas de Éxito
 
-- [x] Existencia de `00_sistema_tesis/canon/events.jsonl` como fuente única para trazabilidad humana, journal agéntico y firmas de artefactos.
+- [x] Existencia de `[canon_privado]` como fuente única para trazabilidad humana, journal agéntico y firmas de artefactos.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Materialización reproducible de ledger, matriz, bitácoras, `ia_journal.json` y `sign_offs.json` desde el canon.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
@@ -49,12 +49,12 @@ La alternativa elegida reduce duplicidad operativa, baja el riesgo de inconsiste
 
 - [x] El tesista instruye explícitamente implementar el rediseño v2 del sistema operativo de tesis.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-  - **Soporte:** [VAL-STEP-460]
+  - **Soporte:** [[validacion_humana_interna]]
   - **Pregunta crítica o disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
   - **Texto exacto de confirmación verbal:** "PLEASE IMPLEMENT THIS PLAN"
-  - **Hash de confirmación verbal:** `sha256:274116278cea4f1bb6d9548fd14972bf4c34dcccdaab9e90b9fd98bbbf406169`
-  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-460 :: human_validation.confirmation_text`
-  - **Integridad:** `sha256:b7bf9d4529aa720345fe22fefe8a7ea1b35b45f5b1d417ba18c6149b04d8551b`
+  - **Hash de confirmación verbal:** `sha256:[redactado]`
+  - **Fuente de verdad de confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+  - **Integridad:** `sha256:[redactado]`
   - **Fingerprint:** `sha256:manual_instruction_v2canon`
   - **Nivel de Auditoría:** Alto
   - **Modo:** Confirmación Verbal
@@ -68,8 +68,8 @@ La alternativa elegida reduce duplicidad operativa, baja el riesgo de inconsiste
 
 ## Trazabilidad de IA
 
-- **Proveedor:** OpenAI
-- **Modelo/Versión:** GPT-5 Codex
+- **Proveedor:** [proveedor_ia_interno]
+- **Modelo/Versión:** [modelo_ia_interno]
 - **Agente/Rol:** Codex
 - **Nivel de Razonamiento:** alto
 - **Prompts/Contexto clave:** Instrucción explícita del tesista para implementar el plan "Rediseño v2 del Sistema Operativo de Tesis" con canon unificado, CLI `tesis.py`, proyecciones derivadas y gate centrado en eventos.
@@ -81,7 +81,7 @@ La alternativa elegida reduce duplicidad operativa, baja el riesgo de inconsiste
 
 ## Implementación o seguimiento
 
-- [x] Crear el canon `00_sistema_tesis/canon/events.jsonl` y su `state.json`.
+- [x] Crear el canon `[canon_privado]` y su `state.json`.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Introducir la CLI `07_scripts/tesis.py` y wrappers de compatibilidad.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
@@ -96,6 +96,6 @@ La alternativa elegida reduce duplicidad operativa, baja el riesgo de inconsiste
 - Event sourcing y snapshots derivados para auditoría reproducible.
 - Prácticas FAIR y trazabilidad de artefactos reproducibles en investigación.
 
-[LID]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/bitacora/log_conversaciones_ia.md
-[GOV]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/config/ia_gobernanza.yaml
-[AUD]: file:///v:/Sistema_Operativo_Tesis_Posgrado/07_scripts/build_all.py
+[LID]: [ruta_local_redactada]
+[GOV]: [ruta_local_redactada]
+[AUD]: [ruta_local_redactada]

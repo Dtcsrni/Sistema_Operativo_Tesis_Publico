@@ -1,6 +1,6 @@
 # Reporte de consistencia
 
-- Fecha de generación: 2026-03-26 23:23:34
+- Fecha de generación: [fecha_hora_redactada]
 - Proyecto: Sistema Operativo de la Tesis IoT Pachuca
 - Versión del sistema: 0.1.0
 

@@ -77,10 +77,10 @@ El enfoque explícito reduce riesgos de alucinación, fuga de contexto y depende
 
 ## Referencias
 
-- NIST AI RMF 1.0 propone gobernanza, medición y gestión de riesgos de IA: [NIST](https://www.nist.gov/itl/ai-risk-management-framework)
-- UNESCO fija principios de supervisión humana, transparencia y responsabilidad para IA: [UNESCO](https://www.unesco.org/en/legal-affairs/recommendation-ethics-artificial-intelligence)
-- The Turing Way ofrece pautas prácticas de colaboración responsable y escritura asistida: [The Turing Way](https://book.the-turing-way.org/)
+- NIST AI RMF 1.0 propone gobernanza, medición y gestión de riesgos de IA: [NIST](http[ruta_local_redactada])
+- UNESCO fija principios de supervisión humana, transparencia y responsabilidad para IA: [UNESCO](http[ruta_local_redactada])
+- The Turing Way ofrece pautas prácticas de colaboración responsable y escritura asistida: [The Turing Way](http[ruta_local_redactada])
 
-[LID]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/bitacora/log_conversaciones_ia.md
-[GOV]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/config/ia_gobernanza.yaml
-[AUD]: file:///v:/Sistema_Operativo_Tesis_Posgrado/07_scripts/build_all.py
+[LID]: [ruta_local_redactada]
+[GOV]: [ruta_local_redactada]
+[AUD]: [ruta_local_redactada]

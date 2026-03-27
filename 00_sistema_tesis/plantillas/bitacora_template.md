@@ -43,7 +43,7 @@
 - **Respuesta Erick Vega:** [Resumen de respuesta]
 - **Criterio de Aceptación:** [ ] Validado.
   - [ ] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-  - **Soporte:** [VAL-STEP-XXX]
+  - **Soporte:** [[validacion_humana_interna]]
   - **Hash (Contenido):** `sha256:[hash_respuesta]`
   - **Fingerprint:** `sha256:[hash_prompt]`
   - **Nivel de Riesgo:** [Crítico | Alto | Medio | Bajo]
@@ -51,7 +51,7 @@
   - **Pregunta crítica o disparador:** [Pregunta del agente o instrucción humana directa]
   - **Texto exacto de confirmación verbal:** "[Cita exacta del tesista]"
   - **Hash de confirmación verbal:** `sha256:[hash_cita_verbal]`
-  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-XXX :: human_validation.confirmation_text`
+  - **Fuente de verdad de confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
 
 ## Economía de uso
 - Presupuesto vs Avance: [Análisis de consumo]
@@ -61,6 +61,6 @@
 ## Siguiente paso concreto
 (Acción inmediata para la próxima sesión)
 
-[LID]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/bitacora/log_conversaciones_ia.md
-[GOV]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/config/ia_gobernanza.yaml
-[AUD]: file:///v:/Sistema_Operativo_Tesis_Posgrado/07_scripts/build_all.py
+[LID]: [ruta_local_redactada]
+[GOV]: [ruta_local_redactada]
+[AUD]: [ruta_local_redactada]

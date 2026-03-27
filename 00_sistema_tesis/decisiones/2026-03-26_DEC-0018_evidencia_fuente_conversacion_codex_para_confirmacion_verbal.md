@@ -18,7 +18,7 @@ El canon ya preserva el texto exacto de confirmación verbal y su hash. Eso ofre
 Se adopta un modelo híbrido de evidencia:
 
 1. **Canon en repo:** el `VAL-STEP-*` conserva la cita exacta, su hash y el enlace a `source_event_id`.
-2. **Fuente privada local:** cada `conversation_source_registered` conserva `transcripción + captura` dentro de `00_sistema_tesis/evidencia_privada/conversaciones_codex/`.
+2. **Fuente privada local:** cada `conversation_source_registered` conserva `transcripción + captura` dentro de `[evidencia_privada_redactada]/conversaciones_codex/`.
 3. **Activación gradual:** el enforcement aplica a nuevos `VAL-STEP-*` a partir del umbral configurado en `ia_gobernanza.yaml`.
 4. **Compatibilidad histórica:** el historial previo se mantiene como `legacy_unverified_source`; no se reescribe ni se invalida.
 5. **Publicación segura:** la evidencia fuente privada y sus hashes crudos quedan fuera de la superficie pública sanitizada.
@@ -46,11 +46,11 @@ La alternativa elegida maximiza trazabilidad práctica y verificable sin depende
 
 - [x] El tesista autoriza implementar corroboración por fuente de conversación para futuros `VAL-STEP-*`.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-  - **Soporte:** [VAL-STEP-500]
+  - **Soporte:** [[validacion_humana_interna]]
   - **Pregunta crítica o disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
   - **Texto exacto de confirmación verbal:** "PLEASE IMPLEMENT THIS PLAN:"
-  - **Hash de confirmación verbal:** `sha256:3528bd6ca1a9d504ccbfc59a52692ce63c7b5d7ce1be8bbd33182438060e54ce`
-  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-500 :: human_validation.confirmation_text`
+  - **Hash de confirmación verbal:** `sha256:[redactado]`
+  - **Fuente de verdad de confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
   - **Nivel de Auditoría:** Alto
   - **Modo:** Confirmación Verbal
   - **Fecha de Validación:** 2026-03-26
@@ -77,6 +77,6 @@ La alternativa elegida maximiza trazabilidad práctica y verificable sin depende
 - [DEC-0016](2026-03-26_DEC-0016_canon_unificado_de_eventos_y_proyecciones.md)
 - [DEC-0017](2026-03-26_DEC-0017_operacion_humana_dual_y_superficies_privada_publica.md)
 
-[LID]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/bitacora/log_conversaciones_ia.md
-[GOV]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/config/ia_gobernanza.yaml
-[AUD]: file:///v:/Sistema_Operativo_Tesis_Posgrado/07_scripts/build_all.py
+[LID]: [ruta_local_redactada]
+[GOV]: [ruta_local_redactada]
+[AUD]: [ruta_local_redactada]

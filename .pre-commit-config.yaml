@@ -1,5 +1,5 @@
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
+-   repo: http[ruta_local_redactada]
     rev: v4.5.0
     hooks:
     -   id: trailing-whitespace
@@ -9,7 +9,7 @@ repos:
     -   id: check-added-large-files
         args: ['--maxkb=5000'] # Previene commits de más de 5MB por error
 
--   repo: https://github.com/igorshubovych/markdownlint-cli
+-   repo: http[ruta_local_redactada]
     rev: v0.39.0
     hooks:
     -   id: markdownlint

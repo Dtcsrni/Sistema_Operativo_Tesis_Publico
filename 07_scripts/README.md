@@ -21,7 +21,7 @@ python 07_scripts/build_all.py
 ```powershell
 python 07_scripts/tesis.py publish --check
 python 07_scripts/tesis.py publish --build
-python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push
+python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url http[ruta_local_redactada] --branch main --push
 ```
 
 ### 4. Corroborar confirmación verbal con evidencia fuente

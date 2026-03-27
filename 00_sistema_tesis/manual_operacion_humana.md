@@ -13,7 +13,7 @@ Este manual define la ruta de uso humano del sistema operativo de tesis. La IA e
 - `00_sistema_tesis/config/sistema_tesis.yaml`
 - `01_planeacion/backlog.csv`
 - `01_planeacion/riesgos.csv`
-- `00_sistema_tesis/bitacora/matriz_trazabilidad.md`
+- `[matriz_privada]`
 - `06_dashboard/wiki/index.md`
 - `06_dashboard/generado/index.html`
 - `06_dashboard/publico/index.md`
@@ -30,7 +30,7 @@ Este manual define la ruta de uso humano del sistema operativo de tesis. La IA e
 1. Editar primero la fuente canónica correspondiente.
 2. Si cambia arquitectura, método, evidencia o gobernanza, registrar decisión en `00_sistema_tesis/decisiones/`.
 3. Si cambia el trabajo diario o el seguimiento, registrar la bitácora o el backlog.
-4. Si la validación humana crea un `VAL-STEP` nuevo a partir de `VAL-STEP-501`, registrar primero la evidencia fuente con `python 07_scripts/tesis.py source register ...`.
+4. Si la validación humana crea un `VAL-STEP` nuevo a partir de `[validacion_humana_interna]`, registrar primero la evidencia fuente con `python 07_scripts/tesis.py source register ...`.
 5. Enlazar el `source_event_id` resultante al `VAL-STEP` y verificarlo con `python 07_scripts/tesis.py source verify --step-id STEP_ID_REAL`.
 4. Ejecutar `python 07_scripts/build_all.py`.
 5. Si habrá exposición pública, regenerar además `python 07_scripts/tesis.py publish --build`.
@@ -47,7 +47,7 @@ Este manual define la ruta de uso humano del sistema operativo de tesis. La IA e
 
 Use este flujo cuando una confirmación verbal de Codex deba sostener un `VAL-STEP` nuevo.
 
-0. Al abrir sesión con `python 07_scripts/tesis.py session open --session-id ...` se genera automáticamente un scaffold privado en `00_sistema_tesis/evidencia_privada/conversaciones_codex/<session_id>/`.
+0. Al abrir sesión con `python 07_scripts/tesis.py session open --session-id ...` se genera automáticamente un scaffold privado en `[evidencia_privada_redactada]/conversaciones_codex/<session_id>/`.
 1. Preparar `transcripcion.md` de la conversación.
 2. (Opcional) Agregar capturas si se desea evidencia visual adicional.
 3. Ejecución automática recomendada: `python 07_scripts/tesis.py source auto-register --session-id ...`.
@@ -59,7 +59,7 @@ Use este flujo cuando una confirmación verbal de Codex deba sostener un `VAL-ST
 Si se requiere regenerar el scaffold manualmente:
 - `python 07_scripts/tesis.py source scaffold --session-id ...`
 
-La evidencia fuente vive en `00_sistema_tesis/evidencia_privada/conversaciones_codex/`, es privada y no debe publicarse.
+La evidencia fuente vive en `[evidencia_privada_redactada]/conversaciones_codex/`, es privada y no debe publicarse.
 
 ## Publicación pública sanitizada
 
@@ -74,7 +74,7 @@ La evidencia fuente vive en `00_sistema_tesis/evidencia_privada/conversaciones_c
 2. Crear o usar un repositorio GitHub público derivado (ejemplo: `Dtcsrni/Sistema_Operativo_Tesis_Publico`).
 3. Confirmar árbol privado limpio (sin cambios sin commit) para conservar sincronía exacta por commit.
 4. Ejecutar sincronización derivada en modo clon filtrado:
-   - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`
+   - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url http[ruta_local_redactada] --branch main --push`
 5. Verificar en el repo público que existan:
    - `index.md`
    - `manifest_publico.json`
@@ -93,4 +93,4 @@ La evidencia fuente vive en `00_sistema_tesis/evidencia_privada/conversaciones_c
 2. Corregir la fuente privada o la política de sanitización.
 3. Ejecutar de nuevo:
    - `python 07_scripts/build_all.py`
-   - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`
+   - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url http[ruta_local_redactada] --branch main --push`

@@ -54,7 +54,7 @@ Empieza por estos archivos:
 - [`00_sistema_tesis/config/sistema_tesis.yaml`](00_sistema_tesis/config/sistema_tesis.yaml)
 - [`01_planeacion/backlog.csv`](01_planeacion/backlog.csv)
 - [`01_planeacion/riesgos.csv`](01_planeacion/riesgos.csv)
-- [`00_sistema_tesis/bitacora/matriz_trazabilidad.md`](00_sistema_tesis/bitacora/matriz_trazabilidad.md)
+- [`[matriz_privada]`]([matriz_privada])
 - [`06_dashboard/wiki/index.md`](06_dashboard/wiki/index.md)
 - [`06_dashboard/generado/index.html`](06_dashboard/generado/index.html)
 - [`06_dashboard/publico/index.md`](06_dashboard/publico/index.md)
@@ -181,6 +181,6 @@ python 07_scripts/report_consistency.py
 - [`06_dashboard/generado/wiki_manifest.json`](06_dashboard/generado/wiki_manifest.json)
 - [`06_dashboard/generado/index.html`](06_dashboard/generado/index.html)
 - [`06_dashboard/generado/hoja_maestra_consolidada.csv`](06_dashboard/generado/hoja_maestra_consolidada.csv)
-- [`06_dashboard/generado/reporte_consistencia.md`](06_dashboard/generado/reporte_consistencia.md)
+- [`[reporte_interno_redactado]`]([reporte_interno_redactado])
 
-_Generado automáticamente el 2026-03-26 23:23:32._
+_Generado automáticamente el [fecha_hora_redactada]._

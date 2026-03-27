@@ -385,13 +385,13 @@ Archivo canónico de contexto para ingestión operativa en `Sistema_Operativo_Te
 - Toda afirmación técnica o factual derivada de IA debe contrastarse con evidencia verificable.
 
 ## Fuentes normativas verificadas para APA 7 y gobernanza de IA
-- APA7_POWL | tipo=style_guide | url=Purdue Online Writing Lab. (n.d.). *APA formatting and style guide (7th edition).* Purdue University. https://owl.purdue.edu/owl/research_and_citation/apa_style/apa_formatting_and_style_guide/index.html | uso=https://owl.purdue.edu/owl/research_and_citation/apa_style/apa_formatting_and_style_guide/index.html
-- APA7_POWL_CHANGES | tipo=style_guide | url=Purdue Online Writing Lab. (n.d.). *Changes in the 7th edition.* Purdue University. https://owl.purdue.edu/owl/research_and_citation/apa_style/apa_formatting_and_style_guide/apa_changes_7th_edition.html | uso=https://owl.purdue.edu/owl/research_and_citation/apa_style/apa_formatting_and_style_guide/apa_changes_7th_edition.html
-- APA7_GENAI_PSU | tipo=library_guide | url=Penn State University Libraries. (2025, August 26). *Citing generative AI: APA quick citation guide.* https://guides.libraries.psu.edu/apaquickguide/generativeAI | uso=https://guides.libraries.psu.edu/apaquickguide/generativeAI
-- ELSEVIER_AI | tipo=publisher_policy | url=Elsevier. (2025, September). *Generative AI policies for journals.* https://www.elsevier.com/about/policies-and-standards/generative-ai-policies-for-journals | uso=https://www.elsevier.com/about/policies-and-standards/generative-ai-policies-for-journals
-- NATURE_AI | tipo=publisher_policy | url=Nature Portfolio. (n.d.). *Artificial intelligence (AI).* https://www.nature.com/nmat/editorial-policies/ai | uso=https://www.nature.com/nmat/editorial-policies/ai
-- UNESCO_GENAI | tipo=guidance | url=Miao, F., & Holmes, W. (2023). *Guidance for generative AI in education and research*. UNESCO. https://doi.org/10.54675/EWZM9535 | uso=https://doi.org/10.54675/EWZM9535
-- NHB_POLICIES | tipo=research_article | url=Stokel-Walker, C., et al. (2025). *Publisher policies on generative AI in academia.* *Nature Human Behaviour.* | uso=https://www.nature.com/articles/s41562-025-02124-6
+- APA7_POWL | tipo=style_guide | url=Purdue Online Writing Lab. (n.d.). *APA formatting and style guide (7th edition).* Purdue University. http[ruta_local_redactada] | uso=http[ruta_local_redactada]
+- APA7_POWL_CHANGES | tipo=style_guide | url=Purdue Online Writing Lab. (n.d.). *Changes in the 7th edition.* Purdue University. http[ruta_local_redactada] | uso=http[ruta_local_redactada]
+- APA7_GENAI_PSU | tipo=library_guide | url=Penn State University Libraries. (2025, August 26). *Citing generative AI: APA quick citation guide.* http[ruta_local_redactada] | uso=http[ruta_local_redactada]
+- ELSEVIER_AI | tipo=publisher_policy | url=Elsevier. (2025, September). *Generative AI policies for journals.* http[ruta_local_redactada] | uso=http[ruta_local_redactada]
+- NATURE_AI | tipo=publisher_policy | url=Nature Portfolio. (n.d.). *Artificial intelligence (AI).* http[ruta_local_redactada] | uso=http[ruta_local_redactada]
+- UNESCO_GENAI | tipo=guidance | url=Miao, F., & Holmes, W. (2023). *Guidance for generative AI in education and research*. UNESCO. http[ruta_local_redactada] | uso=http[ruta_local_redactada]
+- NHB_POLICIES | tipo=research_article | url=Stokel-Walker, C., et al. (2025). *Publisher policies on generative AI in academia.* *Nature Human Behaviour.* | uso=http[ruta_local_redactada]
 
 ## Uso del archivo
 1. Ingerir primero `sotp_ctx__registry__v07.sqlite`.

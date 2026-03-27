@@ -9,6 +9,7 @@ from datetime import datetime
 from pathlib import Path
 
 from common import ROOT, load_yaml_json
+from publication import load_publication_config, sanitize_text
 
 
 PRIVATE_EXCLUDE_PREFIXES = (
@@ -22,6 +23,22 @@ PRIVATE_EXCLUDE_PATHS = {
     "00_sistema_tesis/ia_journal.json",
     "00_sistema_tesis/config/agent_identity.json",
     "00_sistema_tesis/config/sign_offs.json",
+}
+TEXT_SUFFIXES = {
+    ".appcache",
+    ".css",
+    ".csv",
+    ".html",
+    ".js",
+    ".json",
+    ".manifest",
+    ".md",
+    ".svg",
+    ".txt",
+    ".webmanifest",
+    ".xml",
+    ".yml",
+    ".yaml",
 }
 
 
@@ -73,6 +90,12 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _sha256_bytes(payload: bytes) -> str:
+    digest = hashlib.sha256()
+    digest.update(payload)
+    return digest.hexdigest()
+
+
 def _source_map_bundle(source_dir: Path) -> dict[str, Path]:
     mapping: dict[str, Path] = {}
     for path in sorted(source_dir.rglob("*")):
@@ -100,11 +123,27 @@ def _source_map_mirror(root: Path) -> dict[str, Path]:
     return mapping
 
 
-def copy_selected_files(source_map: dict[str, Path], target_dir: Path) -> None:
+def _is_text_file(path: Path) -> bool:
+    return path.suffix.lower() in TEXT_SUFFIXES
+
+
+def _render_payloads(source_map: dict[str, Path], *, sanitize: bool) -> dict[str, bytes]:
+    payloads: dict[str, bytes] = {}
+    publication = load_publication_config() if sanitize else {}
     for rel_path, source_path in source_map.items():
+        if sanitize and _is_text_file(source_path):
+            payload = sanitize_text(source_path.read_text(encoding="utf-8"), publication).encode("utf-8")
+        else:
+            payload = source_path.read_bytes()
+        payloads[rel_path] = payload
+    return payloads
+
+
+def copy_selected_files(payloads: dict[str, bytes], target_dir: Path) -> None:
+    for rel_path, payload in payloads.items():
         destination = target_dir / rel_path
         destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source_path, destination)
+        destination.write_bytes(payload)
 
 
 def _git_value(cwd: Path, args: list[str], default: str = "unknown") -> str:
@@ -136,9 +175,9 @@ def _target_inventory(target_dir: Path, allowed_files: set[str]) -> dict[str, st
     return inventory
 
 
-def verify_sync(source_map: dict[str, Path], target_dir: Path) -> None:
-    source_inventory = {rel: _sha256(path) for rel, path in source_map.items()}
-    target_inventory = _target_inventory(target_dir, set(source_map))
+def verify_sync(payloads: dict[str, bytes], target_dir: Path) -> None:
+    source_inventory = {rel: _sha256_bytes(payload) for rel, payload in payloads.items()}
+    target_inventory = _target_inventory(target_dir, set(payloads))
     if source_inventory != target_inventory:
         missing = sorted(set(source_inventory) - set(target_inventory))
         extra = sorted(set(target_inventory) - set(source_inventory))
@@ -161,11 +200,11 @@ def _tesista_contact_default() -> str:
     return "contacto_no_configurado"
 
 
-def write_sync_provenance(source_map: dict[str, Path], target_dir: Path, branch: str, mode: str) -> None:
+def write_sync_provenance(payloads: dict[str, bytes], target_dir: Path, branch: str, mode: str) -> None:
     payload = {
         "synced_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "sync_mode": mode,
-        "source_file_count": len(source_map),
+        "source_file_count": len(payloads),
         "source_repo": {
             "remote_origin": _git_value(ROOT, ["remote", "get-url", "origin"]),
             "branch": _git_value(ROOT, ["branch", "--show-current"]),
@@ -176,11 +215,12 @@ def write_sync_provenance(source_map: dict[str, Path], target_dir: Path, branch:
             "commit_before_sync": _git_value(target_dir, ["rev-parse", "HEAD"]),
         },
         "bundle_fingerprint": hashlib.sha256(
-            json.dumps({rel: _sha256(path) for rel, path in source_map.items()}, ensure_ascii=False, sort_keys=True).encode("utf-8")
+            json.dumps({rel: _sha256_bytes(blob) for rel, blob in payloads.items()}, ensure_ascii=False, sort_keys=True).encode("utf-8")
         ).hexdigest(),
         "private_exclusions": {
-            "prefixes": list(PRIVATE_EXCLUDE_PREFIXES),
-            "paths": sorted(PRIVATE_EXCLUDE_PATHS),
+            "policy": "canonical_private_surfaces_filtered",
+            "prefix_rules_count": len(PRIVATE_EXCLUDE_PREFIXES),
+            "path_rules_count": len(PRIVATE_EXCLUDE_PATHS),
         },
     }
     (target_dir / "_sync_provenance.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -233,15 +273,17 @@ def main() -> int:
         if not source_dir.exists():
             raise SystemExit(f"No existe el directorio fuente: {source_dir}")
         source_map = _source_map_bundle(source_dir)
+        payloads = _render_payloads(source_map, sanitize=False)
     else:
         source_dir = ROOT
         source_map = _source_map_mirror(ROOT)
+        payloads = _render_payloads(source_map, sanitize=True)
 
     ensure_target_repo(target_dir, args.branch, args.repo_url)
     reset_content_dir(target_dir)
-    copy_selected_files(source_map, target_dir)
-    verify_sync(source_map, target_dir)
-    write_sync_provenance(source_map, target_dir, args.branch, args.mode)
+    copy_selected_files(payloads, target_dir)
+    verify_sync(payloads, target_dir)
+    write_sync_provenance(payloads, target_dir, args.branch, args.mode)
     write_security_notice(target_dir, contact_email=args.contact_email or _tesista_contact_default())
 
     run_command(["git", "add", "-A"], cwd=target_dir)

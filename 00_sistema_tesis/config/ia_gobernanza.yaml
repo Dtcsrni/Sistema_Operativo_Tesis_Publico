@@ -72,7 +72,7 @@
   },
   "registro_de_uso": {
     "obligatorio": true,
-    "donde_registrar": "00_sistema_tesis/bitacora",
+    "donde_registrar": "[bitacora_privada]",
     "minimo_requerido": [
       "fecha",
       "objetivo_del_uso",
@@ -90,7 +90,7 @@
       "00_sistema_tesis/plantillas",
       ".github"
     ],
-    "fuente_canonica_identidad_agente": "00_sistema_tesis/config/agent_identity.json",
+    "fuente_canonica_identidad_agente": "[identidad_agente_privada]",
     "fuente_canonica_identidad_humana": "00_sistema_tesis/config/tesista.json",
     "enforcement": [
       "validate_structure.py",
@@ -245,8 +245,8 @@
         "estandar": "NIST AI Risk Management Framework 1.0 (AI RMF 1.0)",
         "principios_mapeados": ["Gobernanza", "Transparencia", "Responsabilidad"],
         "aplicacion_en_sistema": "Soberanía humana estricta y Ledger inmutable con Hashes SHA-256.",
-        "url_oficial": "https://www.nist.gov/itl/ai-risk-management-framework",
-        "url_auditoria": "https://en.wikipedia.org/wiki/Risk_Management_Framework",
+        "url_oficial": "http[ruta_local_redactada]",
+        "url_auditoria": "http[ruta_local_redactada]",
         "descriptores_clave": ["NIST", "Risk Management Framework"],
         "ultima_consulta": "2026-03-24"
       },
@@ -254,8 +254,8 @@
         "estandar": "Recomendaciones de la UNESCO sobre la Ética de la IA",
         "principios_mapeados": ["Proporcionalidad", "Seguridad", "Privacidad"],
         "aplicacion_en_sistema": "Clasificación de riesgo en bitácoras y guardrails de inmutabilidad.",
-        "url_oficial": "https://www.unesco.org/en/legal-affairs/recommendation-ethics-artificial-intelligence",
-        "url_auditoria": "https://en.wikipedia.org/wiki/Ethics_of_artificial_intelligence",
+        "url_oficial": "http[ruta_local_redactada]",
+        "url_auditoria": "http[ruta_local_redactada]",
         "descriptores_clave": ["UNESCO", "Ethics"],
         "ultima_consulta": "2026-03-24"
       },
@@ -263,8 +263,8 @@
         "estandar": "COPE (Committee on Publication Ethics): Authorship and AI tools",
         "principios_mapeados": ["Transparencia de Autoría", "Responsabilidad de Integridad"],
         "aplicacion_en_sistema": "Documentación obligatoria de modelo/proveedor y prohibición de autoría IA.",
-        "url_oficial": "https://publicationethics.org/cope-position-statements/ai-author",
-        "url_auditoria": "https://en.wikipedia.org/wiki/Committee_on_Publication_Ethics",
+        "url_oficial": "http[ruta_local_redactada]",
+        "url_auditoria": "http[ruta_local_redactada]",
         "descriptores_clave": ["Committee", "Ethics", "COPE"],
         "ultima_consulta": "2026-03-24"
       },
@@ -272,8 +272,8 @@
         "estandar": "ISO/IEC 42001:2023 - Artificial intelligence — Management system",
         "principios_mapeados": ["Gestión de Sistemas", "Mejora Continua", "Evaluación de Impacto"],
         "aplicacion_en_sistema": "Módulo guardrails.py y política de backups automáticos.",
-        "url_oficial": "https://www.iso.org/standard/81230.html",
-        "url_auditoria": "https://www.iso.org/standard/81230.html",
+        "url_oficial": "http[ruta_local_redactada]",
+        "url_auditoria": "http[ruta_local_redactada]",
         "descriptores_clave": ["ISO/IEC 42001", "Artificial intelligence"],
         "ultima_consulta": "2026-03-24"
       },
@@ -281,8 +281,8 @@
         "estandar": "IEEE 7000-2021 - Value-Based Engineering",
         "principios_mapeados": ["Inclusión de Valores Éticos en Diseño"],
         "aplicacion_en_sistema": "Inyección de soberanía humana en el ADN del agente (Skill handshake_ledger).",
-        "url_oficial": "https://standards.ieee.org/ieee/7000/6744/",
-        "url_auditoria": "https://en.wikipedia.org/wiki/Value-based_engineering",
+        "url_oficial": "http[ruta_local_redactada]",
+        "url_auditoria": "http[ruta_local_redactada]",
         "descriptores_clave": ["Value-based engineering", "IEEE"],
         "ultima_consulta": "2026-03-24"
       },
@@ -290,8 +290,8 @@
         "estandar": "Principios FAIR (Findable, Accessible, Interoperable, Reusable)",
         "principios_mapeados": ["Datos Científicos Transparentes", "Interoperabilidad"],
         "aplicacion_en_sistema": "Estructura de Matriz de Trazabilidad y formatos agnósticos (YAML/Markdown).",
-        "url_oficial": "https://www.go-fair.org/fair-principles/",
-        "url_auditoria": "https://en.wikipedia.org/wiki/FAIR_data",
+        "url_oficial": "http[ruta_local_redactada]",
+        "url_auditoria": "http[ruta_local_redactada]",
         "descriptores_clave": ["Findability", "Accessibility", "Interoperability", "Reusability"],
         "ultima_consulta": "2026-03-24"
       }
@@ -307,8 +307,8 @@
     "captura_manual_requerida": false,
     "message_role_default": "human",
     "activacion": {
-      "desde_step_id": "VAL-STEP-501",
-      "justificacion": "VAL-STEP-500 implementa la migración. A partir del siguiente step, toda validación humana nueva debe quedar enlazada a evidencia fuente corroborable."
+      "desde_step_id": "[validacion_humana_interna]",
+      "justificacion": "[validacion_humana_interna] implementa la migración. A partir del siguiente step, toda validación humana nueva debe quedar enlazada a evidencia fuente corroborable."
     },
     "artefactos_minimos": [
       "transcripcion.md",
@@ -324,15 +324,15 @@
   "referencias_base": [
     {
       "fuente": "NIST AI Risk Management Framework 1.0",
-      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+      "url": "http[ruta_local_redactada]"
     },
     {
       "fuente": "UNESCO Recommendation on the Ethics of Artificial Intelligence",
-      "url": "https://www.unesco.org/en/legal-affairs/recommendation-ethics-artificial-intelligence"
+      "url": "http[ruta_local_redactada]"
     },
     {
       "fuente": "The Turing Way, AI-assisted writing and collaboration guidance",
-      "url": "https://book.the-turing-way.org/"
+      "url": "http[ruta_local_redactada]"
     }
   ]
 }

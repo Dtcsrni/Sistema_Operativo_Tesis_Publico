@@ -54,35 +54,35 @@
   ],
   "sanitizacion": {
     "prohibidos_en_salida": [
-      "file:///",
-      "00_sistema_tesis/evidencia_privada/",
-      "00_sistema_tesis/evidencia_privada",
+      "fil[ruta_local_redactada]",
+      "[evidencia_privada_redactada]/",
+      "[evidencia_privada_redactada]",
       "VAL-STEP-",
       "EVT-",
       "sha256:",
       "CURP: `",
-      "00_sistema_tesis/canon/events.jsonl",
-      "00_sistema_tesis/canon/",
-      "00_sistema_tesis/canon",
-      "00_sistema_tesis/bitacora/audit_history",
-      "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
-      "00_sistema_tesis/bitacora/indice_fuentes_conversacion.md",
-      "00_sistema_tesis/bitacora/",
-      "00_sistema_tesis/bitacora",
-      "00_sistema_tesis/reportes_semanales/",
-      "00_sistema_tesis/reportes_semanales",
-      "00_sistema_tesis/config/agent_identity.json",
-      "00_sistema_tesis/config/sign_offs.json",
-      "00_sistema_tesis/ia_journal.json"
+      "[canon_privado]",
+      "[canon_privado]/",
+      "[canon_privado]",
+      "[historial_interno_redactado]",
+      "[ledger_privado]",
+      "[indice_fuentes_privado]",
+      "[bitacora_privada]/",
+      "[bitacora_privada]",
+      "[reportes_privados]/",
+      "[reportes_privados]",
+      "[identidad_agente_privada]",
+      "[firmas_humanas_privadas]",
+      "[journal_ia_privado]"
     ],
     "excluir_prefijos": [
       "06_dashboard/generado/wiki_manifest.json",
-      "00_sistema_tesis/evidencia_privada/"
+      "[evidencia_privada_redactada]/"
     ],
     "redacciones_regex": [
       {
         "nombre": "rutas_locales_file_uri",
-        "patron": "file:///[^\\s)\\]>`\\\"']+",
+        "patron": "[ruta_local_redactada])\\]>`\\\"']+",
         "reemplazo": "[ruta_local_redactada]"
       },
       {
@@ -102,29 +102,29 @@
       },
       {
         "nombre": "curp_personal",
-        "patron": "CURP:\\s*`?[A-Z0-9]{18}`?",
+        "patron": "CUR[ruta_local_redactada]`?[A-Z0-9]{18}`?",
         "reemplazo": "CURP: [redactada]"
       }
     ],
     "redacciones_literales": [
       {
-        "literal": "06_dashboard/generado/reporte_consistencia.md",
+        "literal": "[reporte_interno_redactado]",
         "reemplazo": "[reporte_interno_redactado]"
       },
       {
-        "literal": "00_sistema_tesis/bitacora/",
+        "literal": "[bitacora_privada]/",
         "reemplazo": "[bitacora_privada]/"
       },
       {
-        "literal": "00_sistema_tesis/bitacora",
+        "literal": "[bitacora_privada]",
         "reemplazo": "[bitacora_privada]"
       },
       {
-        "literal": "00_sistema_tesis/reportes_semanales/",
+        "literal": "[reportes_privados]/",
         "reemplazo": "[reportes_privados]/"
       },
       {
-        "literal": "00_sistema_tesis/reportes_semanales",
+        "literal": "[reportes_privados]",
         "reemplazo": "[reportes_privados]"
       }
     ]

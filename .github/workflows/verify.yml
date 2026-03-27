@@ -32,7 +32,7 @@ jobs:
         with:
           name: governance-gate-artifacts
           path: |
-            00_sistema_tesis/bitacora/audit_history/governance_gate
+            [historial_interno_redactado]/governance_gate
             README.md
             06_dashboard/wiki
             06_dashboard/generado

@@ -3,7 +3,7 @@
 Estado de cobertura de capítulos y figuras.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-03-26 23:23:32`
+- **Fecha:** `[fecha_hora_redactada]`
 - **Estado:** `OK`
 - **Fuentes:** `05_tesis`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.

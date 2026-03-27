@@ -3,7 +3,7 @@
 Estado de cobertura de simulación y validación experimental.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-03-26 23:23:32`
+- **Fecha:** `[fecha_hora_redactada]`
 - **Estado:** `OK`
 - **Fuentes:** `02_experimentos`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.

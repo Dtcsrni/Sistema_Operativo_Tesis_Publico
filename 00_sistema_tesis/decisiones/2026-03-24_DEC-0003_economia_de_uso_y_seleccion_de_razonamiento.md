@@ -82,10 +82,10 @@ La política explícita reduce desperdicio de uso, mejora previsibilidad operati
 
 ## Referencias
 
-- OpenAI recomienda ajustar el esfuerzo de razonamiento al tipo de tarea y escalar solo cuando la dificultad lo justifique: [GPT-5.4](https://developers.openai.com/api/docs/models/gpt-5.4)
-- La guía de prompting para GPT-5 enfatiza instrucciones claras, contratos de salida y escalamiento de complejidad según necesidad real: [Prompt guidance](https://developers.openai.com/api/docs/guides/prompt-guidance)
-- The Turing Way favorece procesos reproducibles y decisiones explícitas sobre herramientas y flujos de trabajo: [The Turing Way](https://book.the-turing-way.org/)
+- [proveedor_ia_interno] recomienda ajustar el esfuerzo de razonamiento al tipo de tarea y escalar solo cuando la dificultad lo justifique: [GPT-5.4](http[ruta_local_redactada])
+- La guía de prompting para GPT-5 enfatiza instrucciones claras, contratos de salida y escalamiento de complejidad según necesidad real: [Prompt guidance](http[ruta_local_redactada])
+- The Turing Way favorece procesos reproducibles y decisiones explícitas sobre herramientas y flujos de trabajo: [The Turing Way](http[ruta_local_redactada])
 
-[LID]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/bitacora/log_conversaciones_ia.md
-[GOV]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/config/ia_gobernanza.yaml
-[AUD]: file:///v:/Sistema_Operativo_Tesis_Posgrado/07_scripts/build_all.py
+[LID]: [ruta_local_redactada]
+[GOV]: [ruta_local_redactada]
+[AUD]: [ruta_local_redactada]

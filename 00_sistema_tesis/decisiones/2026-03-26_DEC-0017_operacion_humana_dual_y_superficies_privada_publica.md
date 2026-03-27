@@ -46,12 +46,12 @@ La alternativa elegida reduce dependencia cognitiva de la IA, mejora legibilidad
 
 - [x] El tesista ordena implementar la capa humana dual, la publicación sanitizada y la simplificación operativa.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-  - **Soporte:** [VAL-STEP-470]
+  - **Soporte:** [[validacion_humana_interna]]
   - **Pregunta crítica o disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
   - **Texto exacto de confirmación verbal:** "PLEASE IMPLEMENT THIS PLAN"
-  - **Hash de confirmación verbal:** `sha256:274116278cea4f1bb6d9548fd14972bf4c34dcccdaab9e90b9fd98bbbf406169`
-  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-470 :: human_validation.confirmation_text`
-  - **Integridad:** `sha256:0f070845650e1c0fd0cf5168f65bd3547bf2708606452d7210328a612d2eeb2d`
+  - **Hash de confirmación verbal:** `sha256:[redactado]`
+  - **Fuente de verdad de confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+  - **Integridad:** `sha256:[redactado]`
   - **Fingerprint:** `sha256:manual_instruction_humanfirst_dual_surface`
   - **Nivel de Auditoría:** Alto
   - **Modo:** Confirmación Verbal
@@ -65,8 +65,8 @@ La alternativa elegida reduce dependencia cognitiva de la IA, mejora legibilidad
 
 ## Trazabilidad de IA
 
-- **Proveedor:** OpenAI
-- **Modelo/Versión:** GPT-5 Codex
+- **Proveedor:** [proveedor_ia_interno]
+- **Modelo/Versión:** [modelo_ia_interno]
 - **Agente/Rol:** Codex
 - **Nivel de Razonamiento:** alto
 - **Prompts/Contexto clave:** Implementación autorizada del plan de operación humana dual, publicación sanitizada y simplificación del sistema.
@@ -91,6 +91,6 @@ La alternativa elegida reduce dependencia cognitiva de la IA, mejora legibilidad
 - [DEC-0015](2026-03-24_DEC-0015_protocolo_de_sanitización_para_exposición_pública.md)
 - [DEC-0016](2026-03-26_DEC-0016_canon_unificado_de_eventos_y_proyecciones.md)
 
-[LID]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/bitacora/log_conversaciones_ia.md
-[GOV]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/config/ia_gobernanza.yaml
-[AUD]: file:///v:/Sistema_Operativo_Tesis_Posgrado/07_scripts/build_all.py
+[LID]: [ruta_local_redactada]
+[GOV]: [ruta_local_redactada]
+[AUD]: [ruta_local_redactada]
