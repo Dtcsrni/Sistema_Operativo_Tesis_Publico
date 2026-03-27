@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 from datetime import datetime
@@ -41,6 +42,9 @@ TEXT_SUFFIXES = {
     ".yaml",
 }
 PUBLIC_REPO_NAME = "Dtcsrni/Sistema_Operativo_Tesis_Publico"
+PUBLIC_OPERATIONAL_PASSTHROUGH_PATHS = {
+    "00_sistema_tesis/config/publicacion.yaml",
+}
 SEVERE_PRIVATE_LEAK_TOKENS = (
     "00_sistema_tesis/canon/events.jsonl",
     "00_sistema_tesis/canon/",
@@ -143,7 +147,9 @@ def _render_payloads(source_map: dict[str, Path], *, sanitize: bool) -> dict[str
     payloads: dict[str, bytes] = {}
     publication = load_publication_config() if sanitize else {}
     for rel_path, source_path in source_map.items():
-        if sanitize and _is_text_file(source_path):
+        if sanitize and rel_path in PUBLIC_OPERATIONAL_PASSTHROUGH_PATHS:
+            payload = source_path.read_bytes()
+        elif sanitize and _is_text_file(source_path):
             payload = sanitize_text(source_path.read_text(encoding="utf-8"), publication).encode("utf-8")
         else:
             payload = source_path.read_bytes()
@@ -165,6 +171,14 @@ def validate_sync_payloads(payloads: dict[str, bytes]) -> list[str]:
             continue
         if Path(rel_path).suffix.lower() in TEXT_SUFFIXES:
             text = payload.decode("utf-8", errors="ignore")
+            if rel_path in PUBLIC_OPERATIONAL_PASSTHROUGH_PATHS:
+                try:
+                    parsed = load_yaml_json(rel_path)
+                    for item in parsed.get("sanitizacion", {}).get("redacciones_regex", []):
+                        re.compile(item["patron"], re.IGNORECASE)
+                except Exception as exc:  # pragma: no cover - defensive validation
+                    errors.append(f"La configuración operativa pública es inválida en {rel_path}: {exc}")
+                continue
             if rel_path.startswith("06_dashboard/publico/"):
                 errors.extend(validate_publication_output(rel_path, payload, publication))
             else:
