@@ -1,6 +1,7 @@
 import subprocess
 import sys
 import json
+import unicodedata
 from pathlib import Path
 from datetime import datetime
 
@@ -71,6 +72,13 @@ def normalized_report(report):
         details.append(normalized)
     return {"summary": summary, "details": details}
 
+
+def stable_text(text: str) -> str:
+    base = (text or "").replace("\r\n", "\n").replace("\r", "\n")
+    # Evita drift por codificaciones de consola distintas entre Windows/Linux.
+    folded = unicodedata.normalize("NFKD", base).encode("ascii", "ignore").decode("ascii")
+    return folded
+
 def run_audit(audit):
     print(f"[RUNNING] {audit['name']}...")
     cmd = [preferred_python_executable(), str(ROOT / audit['script'])] + audit['args']
@@ -79,12 +87,17 @@ def run_audit(audit):
     success = result.returncode == 0
     stdout = result.stdout or ""
     stderr = result.stderr or ""
+
+    detail = "OK" if success else "FAIL"
+    if not success:
+        failure_hint = stable_text((stderr or stdout).strip().splitlines()[0] if (stderr or stdout).strip() else "sin detalle")
+        detail = f"FAIL: {failure_hint}"
     
     return {
         "name": audit['name'],
         "success": success,
         "critical": audit['critical'],
-        "output": f"{stdout.strip()}\n{stderr.strip()}".strip(),
+        "output": detail,
         "timestamp": datetime.now().isoformat()
     }
 
@@ -143,6 +156,17 @@ def main():
     print(f"Fallidos: {report['summary']['failed']}")
     print(f"FALLOS CRÍTICOS: {report['summary']['critical_failures']}")
     print("="*40)
+
+    failed_items = [item for item in report["details"] if not item["success"]]
+    if failed_items:
+        print("DETALLE DE FALLOS:")
+        for item in failed_items:
+            severity = "CRITICO" if item.get("critical") else "NO CRITICO"
+            print(f"- {item['name']} [{severity}]")
+            output = str(item.get("output", "")).strip()
+            if output:
+                print(output)
+        print("="*40)
     
     if report["summary"]["critical_failures"] > 0:
         print("[CRITICAL] Se detectaron violaciones de seguridad críticas. Build rechazado.")

@@ -1,17 +1,17 @@
 {
-  "synced_at": "2026-03-27 04:20:25",
+  "synced_at": "2026-04-01 12:35:48",
   "sync_mode": "mirror",
-  "source_file_count": 363,
+  "source_file_count": 364,
   "source_repo": {
-    "remote_origin": "git@github.com:Dtcsrni/Sistema_Operativo_Tesis_Posgrado.git",
-    "branch": "codex/bootstrap",
-    "commit": "2cd630f6e4918c840fe6a5358d8c621023245bce"
+    "remote_origin": "https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Posgrado",
+    "branch": "unknown",
+    "commit": "10c42e4536a88cf186b95d76aaaa0fbd28dc7b32"
   },
   "public_repo": {
     "branch": "main",
-    "commit_before_sync": "0fb93cc1b3b7cc76126548a5e7e320f17867edbd"
+    "commit_before_sync": "95e65473604c3e589b75253dc4c1c5336fc8deca"
   },
-  "bundle_fingerprint": "d85a166a975ff612a1d0d0c572e10e12392ed0f4f017c421c1fa0dcd66d2de85",
+  "bundle_fingerprint": "0d6bfc8b991ab9bf970f23a15b0ca9dbebfe9ec76730a1973badc1b784caa641",
   "private_exclusions": {
     "policy": "canonical_private_surfaces_filtered",
     "prefix_rules_count": 4,

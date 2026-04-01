@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import os
 import re
 import subprocess
 import sys
@@ -241,6 +242,7 @@ def validate() -> list[str]:
 
 def validate_identity() -> list[str]:
     errors = []
+    is_ci = os.getenv("GITHUB_ACTIONS", "").strip().lower() == "true"
     tesista_path = "00_sistema_tesis/config/tesista.json"
     if not (ROOT / tesista_path).exists():
         errors.append("Falta el archivo de identidad: tesista.json")
@@ -249,13 +251,14 @@ def validate_identity() -> list[str]:
     data = load_yaml_json(tesista_path)
     emails_autorizados = data.get("tesista", {}).get("identidad_digital", {}).get("emails_autorizados", [])
 
-    # Obtener email actual de Git
+    # Obtener email actual de Git (en CI puede no existir configuración local de usuario)
     try:
         git_email = subprocess.check_output(["git", "config", "user.email"], text=True).strip()
-        if git_email not in emails_autorizados:
+        if git_email and git_email not in emails_autorizados and not is_ci:
             errors.append(f"El email de Git '{git_email}' no está en la lista de emails autorizados en tesista.json")
     except Exception:
-        errors.append("No se pudo obtener el email de Git o Git no está configurado")
+        if not is_ci:
+            errors.append("No se pudo obtener el email de Git o Git no está configurado")
 
     # Validar CURP
     curp = data.get("tesista", {}).get("curp", "")

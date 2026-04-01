@@ -7,6 +7,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
 
+from common import preferred_python_executable  # noqa: E402
 from governance_gate import (  # noqa: E402
     auto_resolve_step_id,
     checks_for_stage,
@@ -162,7 +163,7 @@ class TestGovernanceGate(unittest.TestCase):
     def test_ci_checks_use_repo_preferred_python(self):
         checks = checks_for_stage("ci")
         test_check = next(item for item in checks if item[0] == "Pruebas")
-        self.assertIn(".venv", test_check[1][0].replace("\\", "/"))
+        self.assertEqual(test_check[1][0], preferred_python_executable())
         self.assertEqual(test_check[1][1:], ["-m", "pytest", "-q"])
 
     def test_ci_checks_include_public_downstream_verification(self):

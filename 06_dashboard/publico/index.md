@@ -2,9 +2,9 @@
 
 Definir la exportación pública sanitizada, legible y reproducible del sistema operativo de tesis sin exponer trazabilidad privada ni infraestructura sensible.
 
-- **Generado:** `2026-03-27`
+- **Generado:** `2026-04-01`
 - **Estado:** `ok`
-- **Fingerprint del bundle:** `22bf346c9169d82e041b9742804fce709a9d50e715059a1f6cb8be3fbbde5cb7`
+- **Fingerprint del bundle:** `a00ac9aeca79fef248f2ff648c659674f87949256c00ff91a1bf86bf1be6a967`
 - **Aviso:** Este bundle público es un artefacto derivado y sanitizado. No se corrige a mano; se reconstruye desde la base privada.
 
 ## Superficies

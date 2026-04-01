@@ -82,6 +82,13 @@ def ensure_target_repo(target_dir: Path, branch: str, repo_url: str = "") -> Non
         else:
             run_command(["git", "remote", "add", "origin", repo_url], cwd=target_dir)
 
+        # Mantener el clon temporal alineado con el remoto evita rechazos non-fast-forward.
+        fetched = run_command(["git", "fetch", "origin", branch], cwd=target_dir, check=False)
+        if fetched.returncode == 0:
+            remote_ref = run_command(["git", "rev-parse", f"origin/{branch}"], cwd=target_dir, check=False)
+            if remote_ref.returncode == 0:
+                run_command(["git", "checkout", "-B", branch, f"origin/{branch}"], cwd=target_dir)
+
 
 def reset_content_dir(target_dir: Path) -> None:
     for child in target_dir.iterdir():

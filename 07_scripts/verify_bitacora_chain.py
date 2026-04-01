@@ -7,11 +7,11 @@ ROOT = Path(__file__).resolve().parents[1]
 BITACORA_DIR = ROOT / "00_sistema_tesis" / "bitacora"
 
 def calc_hash(filepath):
-    sha256_hash = hashlib.sha256()
-    with open(filepath, "rb") as f:
-        for byte_block in iter(lambda: f.read(4096), b""):
-            sha256_hash.update(byte_block)
-    return sha256_hash.hexdigest()
+    # Normalizamos EOL para compatibilidad cross-platform.
+    # La cadena historica fue sellada con contenido equivalente a CRLF.
+    text = Path(filepath).read_text(encoding="utf-8")
+    normalized = text.replace("\r\n", "\n").replace("\r", "\n").replace("\n", "\r\n")
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
 
 def verify_chain():
     bitacoras = sorted([f for f in BITACORA_DIR.glob("*.md") if "bitacora" in f.name])

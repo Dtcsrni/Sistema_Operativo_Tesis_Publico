@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import os
+import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -177,8 +178,35 @@ def now_stamp() -> str:
 
 
 def stable_generated_at(relative_paths: list[str]) -> str:
+    normalized_paths = [path.replace("\\", "/") for path in relative_paths]
+    filtered_paths = [
+        path
+        for path in normalized_paths
+        if not any(path.startswith(prefix) for prefix in VOLATILE_PATH_PREFIXES)
+    ]
+
+    # En CI y checkouts frescos, los mtimes del filesystem son no deterministas.
+    # Priorizamos el timestamp del ultimo commit git que toco las rutas fuente.
+    if filtered_paths:
+        git_cmd = ["git", "log", "-1", "--format=%ct", "--", *filtered_paths]
+        try:
+            result = subprocess.run(
+                git_cmd,
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                check=False,
+            )
+            stamp = result.stdout.strip()
+            if result.returncode == 0 and stamp.isdigit():
+                return datetime.utcfromtimestamp(int(stamp)).strftime("%Y-%m-%d %H:%M:%S")
+        except Exception:
+            pass
+
     mtimes: list[float] = []
-    for relative_path in relative_paths:
+    for relative_path in normalized_paths:
         path = ROOT / relative_path
         if path.is_file():
             rel = relative_posix(path)
@@ -196,7 +224,7 @@ def stable_generated_at(relative_paths: list[str]) -> str:
                 mtimes.append(item.stat().st_mtime)
     if not mtimes:
         return now_stamp()
-    return datetime.fromtimestamp(max(mtimes)).strftime("%Y-%m-%d %H:%M:%S")
+    return datetime.utcfromtimestamp(max(mtimes)).strftime("%Y-%m-%d %H:%M:%S")
 
 
 def preferred_python_executable() -> str:
@@ -228,7 +256,16 @@ def relative_posix(path: Path) -> str:
 
 def file_sha256(relative_path: str) -> str:
     path = ROOT / relative_path
+    text_suffixes = {
+        ".md", ".markdown", ".txt", ".yaml", ".yml", ".json", ".jsonl", ".csv", ".html", ".py", ".sh", ".tex"
+    }
     digest = hashlib.sha256()
+    if path.suffix.lower() in text_suffixes:
+        content = path.read_text(encoding="utf-8", errors="replace")
+        normalized = content.replace("\r\n", "\n").replace("\r", "\n")
+        digest.update(normalized.encode("utf-8"))
+        return digest.hexdigest()
+
     with path.open("rb") as handle:
         for chunk in iter(lambda: handle.read(65536), b""):
             digest.update(chunk)
@@ -244,7 +281,7 @@ def path_timestamp(relative_path: str) -> str:
         return stable_generated_at([normalized])
     if path.is_dir():
         return stable_generated_at([relative_path])
-    return datetime.fromtimestamp(path.stat().st_mtime).strftime("%Y-%m-%d %H:%M:%S")
+    return stable_generated_at([relative_path])
 
 
 def dump_json(relative_path: str, payload: dict) -> Path:

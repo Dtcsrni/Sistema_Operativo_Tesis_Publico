@@ -3,6 +3,7 @@ import shutil
 import datetime
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,16 +32,42 @@ UNPROTECTED_DIR_PREFIXES = (
 )
 
 def get_file_hash(file_path):
+    path = Path(file_path)
+    text_suffixes = {
+        ".md", ".markdown", ".txt", ".yaml", ".yml", ".json", ".jsonl", ".csv", ".html", ".py", ".sh", ".tex"
+    }
     sha256_hash = hashlib.sha256()
-    with open(file_path, "rb") as f:
+    if path.suffix.lower() in text_suffixes:
+        content = path.read_text(encoding="utf-8", errors="replace")
+        normalized = content.replace("\r\n", "\n").replace("\r", "\n")
+        sha256_hash.update(normalized.encode("utf-8"))
+        return sha256_hash.hexdigest()
+
+    with open(path, "rb") as f:
         for byte_block in iter(lambda: f.read(4096), b""):
             sha256_hash.update(byte_block)
     return sha256_hash.hexdigest()
 
+
+def tracked_files() -> set[str]:
+    result = subprocess.run(
+        ["git", "ls-files"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
+    )
+    if result.returncode != 0:
+        return set()
+    return {line.strip().replace("\\", "/") for line in result.stdout.splitlines() if line.strip()}
+
 def relative_to_root(file_path):
     path = Path(file_path).resolve()
     try:
-        return path.relative_to(ROOT).as_posix()
+        rel = path.relative_to(ROOT).as_posix()
+        return rel
     except ValueError:
         return None
 
@@ -94,13 +121,18 @@ def backup_file(file_path):
 
 def update_manifest():
     manifest = {}
+    tracked = tracked_files()
     # Scan for protected files
     for p in ROOT.rglob("*"):
         if p.is_file() and not any(part.startswith(".") for part in p.parts):
             if p.resolve() == MANIFEST_PATH.resolve():
                 continue
+            rel_posix = p.relative_to(ROOT).as_posix()
+            if tracked and rel_posix not in tracked:
+                continue
             if is_protected_path(p):
-                manifest[str(p.relative_to(ROOT))] = get_file_hash(p)
+                # Normalizar rutas a forward slashes para compatibilidad cross-platform
+                manifest[rel_posix] = get_file_hash(p)
     
     if not MANIFEST_PATH.parent.exists():
         os.makedirs(MANIFEST_PATH.parent, exist_ok=True)
@@ -120,12 +152,22 @@ def verify_integrity():
     
     violations = []
     for rel_path, expected_hash in manifest.items():
-        if rel_path == str(MANIFEST_PATH.relative_to(ROOT)):
+        # Normalizar rutas: convertir backslashes a forward slashes para compatibilidad
+        normalized_rel_path = rel_path.replace("\\", "/")
+        
+        if normalized_rel_path == str(MANIFEST_PATH.relative_to(ROOT)).replace("\\", "/"):
             continue
-        abs_path = ROOT / rel_path
+        
+        # Intentar ambas formas (con \ y con /) por compatibilidad
+        abs_path = ROOT / normalized_rel_path
         if not abs_path.exists():
-            violations.append(f"ARCHIVO ELIMINADO: {rel_path}")
-            continue
+            # Intentar con backslashes por si acaso (Windows)
+            alt_path = ROOT / rel_path
+            if alt_path.exists():
+                abs_path = alt_path
+            else:
+                violations.append(f"ARCHIVO ELIMINADO: {rel_path}")
+                continue
         
         current_hash = get_file_hash(abs_path)
         if current_hash != expected_hash:

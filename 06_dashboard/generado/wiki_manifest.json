@@ -237,13 +237,13 @@
     },
     {
       "path": "00_sistema_tesis/config/publicacion.yaml",
-      "sha256": "8d261c21e0f136ed4f41eedb6a65bc1cb9184edd03325801c529d78c61b0f7f6",
+      "sha256": "59b48d148bf9fcaad6358669e40e078905bec42138a21b168f2a3d70268fd751",
       "modified": "[fecha_hora_redactada]",
       "kind": "file"
     },
     {
       "path": "01_planeacion/backlog.csv",
-      "sha256": "af2bad19b426f8fa87cee71d31a409795266d77501855e6aca23005b88fa9a56",
+      "sha256": "801b3e456448697994a526cfc2492ba262b2da7a50847336dc49c49f09c62639",
       "modified": "[fecha_hora_redactada]",
       "kind": "file"
     },

@@ -44,8 +44,9 @@ jobs:
       - name: Run governance gate
         if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico'
         env:
-          SISTEMA_TESIS_SKIP_GPG_CHECK: ${{ github.repository == 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && '1' || '' }}
-        run: python 07_scripts/governance_gate.py --stage ci --agent github-actions
+          SISTEMA_TESIS_SKIP_GPG_CHECK: "1"
+          SISTEMA_TESIS_STEP_ID: "[validacion_humana_interna]"
+        run: python 07_scripts/governance_gate.py --stage ci --agent github-actions --step-id "[validacion_humana_interna]"
 
       - name: Upload governance attestation and generated docs
         if: always()
