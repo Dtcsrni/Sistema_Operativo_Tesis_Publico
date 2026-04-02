@@ -864,6 +864,13 @@ def build_bitacora_page(section: dict, generated_at: str, notice: str) -> str:
     if bitacoras:
         for item in bitacoras:
             lines.append(f"- `{item['fecha']}` [{item['titulo']}](../{item['archivo']})")
+        
+        # Incrusta el contenido de log_conversaciones_ia.md directamente
+        log_path = ROOT / "00_sistema_tesis/bitacora/log_conversaciones_ia.md"
+        if log_path.exists():
+            lines.extend(["", "## Contenido de Bitácora de Conversaciones IA", ""])
+            with log_path.open("r", encoding="utf-8") as f:
+                lines.append(f.read())
     else:
         lines.append("Sin bitácoras registradas aún.")
     lines.extend(["", "## Reportes semanales", ""])

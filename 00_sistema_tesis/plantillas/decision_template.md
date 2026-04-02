@@ -31,14 +31,14 @@ Explica por qué la alternativa elegida reduce riesgo, complejidad o ambigüedad
 
   - [ ] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
   - **Soporte:** [ID de Trazabilidad]
-  - **Integridad:** `sha256:[hash_respuesta]`
-  - **Fingerprint:** `sha256:[hash_prompt]`
+  - **Integridad:** `[hash_redactado]:[hash_respuesta]`
+  - **Fingerprint:** `[hash_redactado]:[hash_prompt]`
   - **Nivel de Auditoría:** [Crítico | Alto | Medio | Bajo]
   - **Modo:** [Confirmación Verbal | Edición Directa | Firma GPG]
   - **Fecha de Validación:** AAAA-MM-DD
   - **Pregunta crítica o disparador:** [Pregunta del agente o instrucción humana directa]
   - **Texto exacto de confirmación verbal:** "[Cita exacta del tesista]"
-  - **Hash de confirmación verbal:** `sha256:[hash_cita_verbal]`
+  - **Hash de confirmación verbal:** `[hash_redactado]:[hash_cita_verbal]`
   - **Fuente de verdad de confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
 
 ## Consecuencias

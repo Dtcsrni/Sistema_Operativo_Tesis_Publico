@@ -48,6 +48,23 @@ jobs:
           SISTEMA_TESIS_STEP_ID: "[validacion_humana_interna]"
         run: python 07_scripts/governance_gate.py --stage ci --agent github-actions --step-id "[validacion_humana_interna]"
 
+      - name: Rebuild wiki after gates pass
+        if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && success()
+        run: python 07_scripts/build_wiki.py
+
+      - name: Commit wiki changes if gates pass
+        if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add 06_dashboard/wiki 06_dashboard/generado
+          if git diff --cached --quiet; then
+            echo "No wiki changes to commit."
+          else
+            git commit -m "citogates [[validacion_humana_interna]]: regenerate wiki and dashboard after verification passed"
+            git push origin HEAD:${GITHUB_REF#refs/heads/} || true
+          fi
+
       - name: Upload governance attestation and generated docs
         if: always()
         uses: actions/upload-artifact@v4

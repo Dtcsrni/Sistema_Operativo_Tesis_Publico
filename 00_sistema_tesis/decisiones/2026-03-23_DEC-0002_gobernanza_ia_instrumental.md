@@ -44,8 +44,8 @@ El enfoque explícito reduce riesgos de alucinación, fuga de contexto y depende
   - **Soporte:** [Retroactivo | Step ID]
   - **Modo:** [Retroactivo | Confirmación Verbal]
   - **Fecha de Validación:** 2026-03-24
-  - **Integridad:** `sha256:N/A` 
-  - **Fingerprint:** `sha256:Retroactivo` 
+  - **Integridad:** `[hash_redactado]` 
+  - **Fingerprint:** `[hash_redactado]` 
   - **Nivel de Auditoría:** Bajo
 ## Consecuencias
 

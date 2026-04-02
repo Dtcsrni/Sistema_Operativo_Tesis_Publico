@@ -111,7 +111,10 @@ def sanitize_text(text: str, config: dict) -> str:
     sanitized = re.sub(r"EVT-\*", "[evento_interno]", sanitized)
     sanitized = re.sub(r"VAL-STEP-[A-Za-z0-9_-]+", "[validacion_humana_interna]", sanitized)
     sanitized = re.sub(r"VAL-STEP-\*", "[validacion_humana_interna]", sanitized)
-    sanitized = re.sub(r"sha256:[0-9a-fA-F]{8,64}", "sha256:[redactado]", sanitized)
+    # El bundle publico no debe conservar el literal `sha256:` porque es un token prohibido en salida.
+    sanitized = re.sub(r"sha256:[0-9a-fA-F]{8,64}", "[hash_redactado]", sanitized, flags=re.IGNORECASE)
+    sanitized = re.sub(r"sha256:[^\s`<>()\]\[]+", "[hash_redactado]", sanitized, flags=re.IGNORECASE)
+    sanitized = re.sub(r"sha256:", "[hash_redactado]:", sanitized, flags=re.IGNORECASE)
     sanitized = re.sub(r'"(?:transcript_sha256|quoted_text_hash)"\s*:\s*"[0-9a-fA-F]{32,64}"', '"hash":"[redactado]"', sanitized)
     sanitized = re.sub(r'"screenshot_hashes"\s*:\s*\[[^\]]*\]', '"screenshot_hashes":["[redactado]"]', sanitized)
     sanitized = re.sub(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}", "[fecha_hora_redactada]", sanitized)

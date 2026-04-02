@@ -49,10 +49,10 @@ La alternativa elegida reduce dependencia cognitiva de la IA, mejora legibilidad
   - **Soporte:** [[validacion_humana_interna]]
   - **Pregunta crítica o disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
   - **Texto exacto de confirmación verbal:** "PLEASE IMPLEMENT THIS PLAN"
-  - **Hash de confirmación verbal:** `sha256:[redactado]`
+  - **Hash de confirmación verbal:** `[hash_redactado]:[redactado]`
   - **Fuente de verdad de confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
-  - **Integridad:** `sha256:[redactado]`
-  - **Fingerprint:** `sha256:manual_instruction_humanfirst_dual_surface`
+  - **Integridad:** `[hash_redactado]:[redactado]`
+  - **Fingerprint:** `[hash_redactado]`
   - **Nivel de Auditoría:** Alto
   - **Modo:** Confirmación Verbal
   - **Fecha de Validación:** 2026-03-26

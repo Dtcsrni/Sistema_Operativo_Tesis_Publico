@@ -49,7 +49,7 @@ La alternativa elegida maximiza trazabilidad práctica y verificable sin depende
   - **Soporte:** [[validacion_humana_interna]]
   - **Pregunta crítica o disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
   - **Texto exacto de confirmación verbal:** "PLEASE IMPLEMENT THIS PLAN:"
-  - **Hash de confirmación verbal:** `sha256:[redactado]`
+  - **Hash de confirmación verbal:** `[hash_redactado]:[redactado]`
   - **Fuente de verdad de confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
   - **Nivel de Auditoría:** Alto
   - **Modo:** Confirmación Verbal
