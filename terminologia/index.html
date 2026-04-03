@@ -1606,22 +1606,22 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="../nota_seguridad_y_acceso/"><code>00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md</code></a></td>
+<td><a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md"><code>00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md</code></a></td>
 <td>archivo</td>
 <td>sí</td>
 </tr>
 <tr>
-<td><a href="../nota_seguridad_y_acceso/"><code>00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json</code></a></td>
+<td><a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json"><code>00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json</code></a></td>
 <td>archivo</td>
 <td>sí</td>
 </tr>
 <tr>
-<td><a href="../nota_seguridad_y_acceso/"><code>01_planeacion/backlog_guia.md</code></a></td>
+<td><a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/01_planeacion/backlog_guia.md"><code>01_planeacion/backlog_guia.md</code></a></td>
 <td>archivo</td>
 <td>sí</td>
 </tr>
 <tr>
-<td><a href="../nota_seguridad_y_acceso/"><code>00_sistema_tesis/config/ia_gobernanza.yaml</code></a></td>
+<td><a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/ia_gobernanza.yaml"><code>00_sistema_tesis/config/ia_gobernanza.yaml</code></a></td>
 <td>archivo</td>
 <td>sí</td>
 </tr>
@@ -1732,7 +1732,7 @@
 <ul>
 <li><strong>Definicion:</strong> identificador visible de una validacion humana o instruccion humana critica registrada en el canon.</li>
 <li><strong>Uso operativo:</strong> vincular decisiones, implementaciones o cambios sustantivos a consentimiento humano verificable.</li>
-<li><strong>Fuente de verdad / modulo:</strong> <code>[canon_privado]</code> como evento de tipo <code>human_validation</code>; proyecciones en ledger y matriz.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>00_sistema_tesis/canon/events.jsonl</code> como evento de tipo <code>human_validation</code>; proyecciones en ledger y matriz.</li>
 <li><strong>Que no significa:</strong> no es una tarea, no es un commit, no es una evidencia por si mismo y no equivale a “verdad cientifica demostrada”.</li>
 <li><strong>Ejemplo:</strong> <code>[validacion_humana_interna]</code> identifica la validacion humana que autorizo cerrar pendientes secundarios de la reestructura documental.</li>
 </ul>
@@ -1749,7 +1749,7 @@
 <ul>
 <li><strong>Definicion:</strong> identificador de evento canonico general.</li>
 <li><strong>Uso operativo:</strong> registrar eventos que no son <code>VAL-STEP</code>, por ejemplo evidencia fuente de conversacion, actividad de agente o firmas de artefacto.</li>
-<li><strong>Fuente de verdad / modulo:</strong> <code>[canon_privado]</code>.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>00_sistema_tesis/canon/events.jsonl</code>.</li>
 <li><strong>Que no significa:</strong> no implica validacion humana por si mismo.</li>
 <li><strong>Ejemplo:</strong> <code>[evento_interno]</code> registra una fuente de conversacion corroborable.</li>
 </ul>
@@ -1847,7 +1847,7 @@
 <ul>
 <li><strong>Definicion:</strong> base de verdad estructurada del sistema.</li>
 <li><strong>Uso operativo:</strong> almacenar eventos, estado y relaciones primarias.</li>
-<li><strong>Fuente de verdad / modulo:</strong> <code>[canon_privado]/</code>.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>00_sistema_tesis/canon/</code>.</li>
 <li><strong>Que no significa:</strong> no es la wiki, ni el dashboard, ni el bundle publico.</li>
 <li><strong>Ejemplo:</strong> <code>events.jsonl</code> pertenece al canon.</li>
 </ul>
