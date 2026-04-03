@@ -1,6 +1,7 @@
-site_name: Sistema Operativo de Tesis - Zona Metropolitana de Pachuca
-site_description: Wiki verificable y base operativa de investigación para tesis de posgrado.
+site_name: Plataforma de Investigación para Tesis IoT
+site_description: Documentación técnica, trazabilidad y operación de una tesis de posgrado en IoT.
 site_author: Erick Vega
+repo_name: Repositorio del Proyecto
 
 theme:
   name: material
@@ -45,7 +46,7 @@ markdown_extensions:
 nav:
   - Inicio: index.md
   - Sistema: sistema.md
-  - Gobernanza IA: gobernanza.md
+  - Gobernanza: gobernanza.md
   - Hipótesis: hipotesis.md
   - Bloques de Trabajo: bloques.md
   - Planeación: planeacion.md
