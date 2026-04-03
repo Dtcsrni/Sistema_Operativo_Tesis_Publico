@@ -9,14 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
-          python-version: "3.12"
+          python-version: "3.14"
 
       - name: Install test dependencies
         run: |
@@ -64,6 +64,10 @@ jobs:
         if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && success()
         run: python 07_scripts/validate_links.py
 
+      - name: Validate public editorial quality
+        if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && success()
+        run: python 07_scripts/validate_public_text.py
+
       - name: Commit wiki changes if gates pass
         if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && success()
         run: |
@@ -79,7 +83,7 @@ jobs:
 
       - name: Upload governance attestation and generated docs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: governance-gate-artifacts
           path: |

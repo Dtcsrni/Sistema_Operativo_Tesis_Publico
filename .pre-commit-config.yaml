@@ -1,6 +1,6 @@
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v6.0.0
     hooks:
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
@@ -10,7 +10,7 @@ repos:
         args: ['--maxkb=5000'] # Previene commits de más de 5MB por error
 
 -   repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.39.0
+    rev: v0.48.0
     hooks:
     -   id: markdownlint
         exclude: >

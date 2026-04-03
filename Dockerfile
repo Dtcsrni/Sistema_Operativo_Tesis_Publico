@@ -1,7 +1,7 @@
 # Dockerfile para el Sistema Operativo de Tesis
-# Basado en Python 3.10-slim para ligereza y compatibilidad ARM64 nativa.
+# Basado en Python 3.14-slim para alinearlo con la versión estable actual del sistema.
 
-FROM python:3.10-slim
+FROM python:3.14-slim
 
 # Evita la generación de archivos .pyc y fuerza el log a stdout
 ENV PYTHONDONTWRITEBYTECODE 1
