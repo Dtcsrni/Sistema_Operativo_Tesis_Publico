@@ -36,9 +36,9 @@ Registro de decisiones de arquitectura, método y operación.
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/decisiones.md`](decisiones.md)
-- HTML interno: [`06_dashboard/generado/wiki/decisiones.html`](../wiki_html/decisiones.html)
+- HTML interno: [`06_dashboard/generado/wiki/decisiones.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/decisiones.md`](decisiones.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/decisiones.html`](../wiki_html/decisiones.html)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/decisiones.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Qué resuelve este subsistema
 

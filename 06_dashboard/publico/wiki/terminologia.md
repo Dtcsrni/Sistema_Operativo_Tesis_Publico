@@ -39,9 +39,9 @@ Glosario, familias de IDs, referencias globales y convenciones de nomenclatura d
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/terminologia.md`](terminologia.md)
-- HTML interno: [`06_dashboard/generado/wiki/terminologia.html`](../wiki_html/terminologia.html)
+- HTML interno: [`06_dashboard/generado/wiki/terminologia.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/terminologia.md`](terminologia.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/terminologia.html`](../wiki_html/terminologia.html)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/terminologia.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Lectura rápida
 

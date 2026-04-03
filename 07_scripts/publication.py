@@ -35,6 +35,7 @@ GITHUB_PATTERNS = (
 )
 CURP_PATTERN = re.compile(r"\b[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z0-9]\d\b", re.IGNORECASE)
 MARKDOWN_LINK_PATTERN = re.compile(r"(?<!\!)\[([^\]]+)\]\(([^)]+)\)")
+MARKDOWN_TARGET_PATTERN = re.compile(r"(?P<prefix>\]\()(?P<href>[^)]+)(?P<suffix>\))")
 HTML_HREF_PATTERN = re.compile(r'(?P<prefix>\bhref\s*=\s*)(?P<quote>["\'])(?P<href>[^"\']+)(?P=quote)', re.IGNORECASE)
 MARKDOWN_PLACEHOLDER_HREF_PATTERN = re.compile(r"(?P<prefix>\]\()(?P<href>\[[^)]+\])(?P<suffix>\))")
 ALLOWED_SCHEMES = ("http://", "https://", "mailto:", "tel:", "data:", "javascript:")
@@ -223,6 +224,17 @@ def _public_href_for_target(*, source_rel: str, public_rel: str, href: str, conf
     return relative
 
 
+def _extract_markdown_href(raw_href: str) -> str:
+    href = raw_href.strip()
+    if href.startswith("<") and href.endswith(">"):
+        href = href[1:-1].strip()
+    if not href:
+        return ""
+    if " " in href:
+        href = href.split(" ", 1)[0].strip()
+    return href
+
+
 def rewrite_public_links(text: str, *, source_rel: str, public_rel: str, config: dict) -> str:
     def replace_markdown(match: re.Match[str]) -> str:
         label, href = match.groups()
@@ -234,6 +246,14 @@ def rewrite_public_links(text: str, *, source_rel: str, public_rel: str, config:
         return f"{match.group('prefix')}{match.group('quote')}{rewritten}{match.group('quote')}"
 
     rewritten = MARKDOWN_LINK_PATTERN.sub(replace_markdown, text)
+    rewritten = MARKDOWN_TARGET_PATTERN.sub(
+        lambda match: (
+            f"{match.group('prefix')}"
+            f"{_public_href_for_target(source_rel=source_rel, public_rel=public_rel, href=_extract_markdown_href(match.group('href')), config=config)}"
+            f"{match.group('suffix')}"
+        ),
+        rewritten,
+    )
     rewritten = HTML_HREF_PATTERN.sub(replace_html, rewritten)
     note_rel = Path(posixpath.relpath(_public_note_relpath(), Path(public_rel).parent.as_posix())).as_posix()
     rewritten = MARKDOWN_PLACEHOLDER_HREF_PATTERN.sub(

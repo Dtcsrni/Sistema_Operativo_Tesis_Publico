@@ -29,6 +29,9 @@ UNPROTECTED_DIR_PREFIXES = (
     "00_sistema_tesis/bitacora/audit_history/",
     "00_sistema_tesis/bitacora/",
     "config/backups/",
+    "06_dashboard/wiki/",
+    "06_dashboard/generado/",
+    "06_dashboard/publico/",
 )
 
 def get_file_hash(file_path):

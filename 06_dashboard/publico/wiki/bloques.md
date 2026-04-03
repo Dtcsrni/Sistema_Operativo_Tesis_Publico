@@ -39,9 +39,9 @@ Bloques macro del sistema y sus criterios de salida.
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/bloques.md`](bloques.md)
-- HTML interno: [`06_dashboard/generado/wiki/bloques.html`](../wiki_html/bloques.html)
+- HTML interno: [`06_dashboard/generado/wiki/bloques.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/bloques.md`](bloques.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/bloques.html`](../wiki_html/bloques.html)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/bloques.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Qué resuelve este subsistema
 

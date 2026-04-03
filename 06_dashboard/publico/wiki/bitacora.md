@@ -31,15 +31,15 @@ Registro de sesiones, uso de IA y aprendizaje operativo.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`[bitacora_privada]`](../../[bitacora_privada])|directorio|sí|
-|[`[reportes_privados]`](../../[reportes_privados])|directorio|sí|
+|[`[bitacora_privada]`](../NOTA_SEGURIDAD_Y_ACCESO.md)|directorio|sí|
+|[`[reportes_privados]`](../NOTA_SEGURIDAD_Y_ACCESO.md)|directorio|sí|
 
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/bitacora.md`](bitacora.md)
-- HTML interno: [`06_dashboard/generado/wiki/bitacora.html`](../wiki_html/bitacora.html)
+- HTML interno: [`06_dashboard/generado/wiki/bitacora.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/bitacora.md`](bitacora.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/bitacora.html`](../wiki_html/bitacora.html)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/bitacora.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Qué resuelve este subsistema
 

@@ -1,5 +1,5 @@
 {
-  "synced_at": "2026-04-03 16:08:46",
+  "synced_at": "2026-04-03 16:16:20",
   "sync_mode": "mirror",
   "destination_label": "public_primary",
   "source_file_count": 373,
@@ -10,9 +10,9 @@
   },
   "public_repo": {
     "branch": "main",
-    "commit_before_sync": "71e814aeae6ee8d61c3277e908f8730ee121bdf6"
+    "commit_before_sync": "f9b005d20749756fb076eb7cad8dc2540c88ab15"
   },
-  "bundle_fingerprint": "878f00a5f23983a689bc42aca0e4da6b45e221697623e6816f8658b2b946ec88",
+  "bundle_fingerprint": "2084600d0818781939fbcb493d74ebaa8d76f535cde5be6cbf78abfacd2e80ae",
   "private_exclusions": {
     "policy": "canonical_private_surfaces_filtered",
     "prefix_rules_count": 4,

@@ -53,15 +53,20 @@ def test_internal_and_public_outputs_use_surface_specific_links(isolated_repo: P
     bitacora_page = (repo / "06_dashboard" / "wiki" / "bitacora.md").read_text(encoding="utf-8")
     public_dashboard = (repo / "06_dashboard" / "publico" / "dashboard" / "index.html").read_text(encoding="utf-8")
     public_readme = (repo / "06_dashboard" / "publico" / "README_publico.md").read_text(encoding="utf-8")
+    public_bitacora = (repo / "06_dashboard" / "publico" / "wiki" / "bitacora.md").read_text(encoding="utf-8")
 
     assert "(../../00_sistema_tesis/bitacora/matriz_trazabilidad.md)" in bitacora_page
     assert 'href="../wiki_html/index.html"' in public_dashboard
     assert 'href="../index.md"' in public_dashboard
     assert "NOTA_SEGURIDAD_Y_ACCESO.md" in public_dashboard
-    assert "(wiki/index.md)" in public_readme
-    assert "(wiki_html/index.html)" in public_readme
+    assert "(dashboard/badges/security_status.svg)" in public_readme
+    assert "(dashboard/badges/integrity.svg)" in public_readme
+    assert "(dashboard/badges/ledger.svg)" in public_readme
     assert "(NOTA_SEGURIDAD_Y_ACCESO.md)" in public_readme
     assert "]([reporte_interno_redactado])" not in public_readme
+    assert "../../[bitacora_privada]" not in public_bitacora
+    assert "../../[reportes_privados]" not in public_bitacora
+    assert "(../NOTA_SEGURIDAD_Y_ACCESO.md)" in public_bitacora
 
 
 def test_validate_links_reports_missing_target_and_anchor(tmp_path: Path) -> None:

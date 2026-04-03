@@ -36,9 +36,9 @@ Estado de cobertura de simulación y validación experimental.
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/experimentos.md`](experimentos.md)
-- HTML interno: [`06_dashboard/generado/wiki/experimentos.html`](../wiki_html/experimentos.html)
+- HTML interno: [`06_dashboard/generado/wiki/experimentos.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/experimentos.md`](experimentos.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/experimentos.html`](../wiki_html/experimentos.html)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/experimentos.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Cómo leer esta cobertura
 

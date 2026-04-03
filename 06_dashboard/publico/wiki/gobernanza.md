@@ -41,9 +41,9 @@ Políticas del sistema, soberanía humana, trazabilidad y disciplina de automati
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/gobernanza.md`](gobernanza.md)
-- HTML interno: [`06_dashboard/generado/wiki/gobernanza.html`](../wiki_html/gobernanza.html)
+- HTML interno: [`06_dashboard/generado/wiki/gobernanza.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/gobernanza.md`](gobernanza.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/gobernanza.html`](../wiki_html/gobernanza.html)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/gobernanza.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Qué resuelve este subsistema
 

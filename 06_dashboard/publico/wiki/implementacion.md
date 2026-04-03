@@ -36,9 +36,9 @@ Estado de cobertura de firmware, gateway y analítica.
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/implementacion.md`](implementacion.md)
-- HTML interno: [`06_dashboard/generado/wiki/implementacion.html`](../wiki_html/implementacion.html)
+- HTML interno: [`06_dashboard/generado/wiki/implementacion.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/implementacion.md`](implementacion.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/implementacion.html`](../wiki_html/implementacion.html)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/implementacion.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Cómo leer esta cobertura
 

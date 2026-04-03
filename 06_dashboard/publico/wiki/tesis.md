@@ -35,9 +35,9 @@ Estado de cobertura de capítulos y figuras.
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/tesis.md`](tesis.md)
-- HTML interno: [`06_dashboard/generado/wiki/tesis.html`](../wiki_html/tesis.html)
+- HTML interno: [`06_dashboard/generado/wiki/tesis.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/tesis.md`](tesis.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/tesis.html`](../wiki_html/tesis.html)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/tesis.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Cómo leer esta cobertura
 

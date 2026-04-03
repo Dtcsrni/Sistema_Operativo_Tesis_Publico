@@ -59,6 +59,7 @@ SEVERE_PRIVATE_LEAK_TOKENS = (
     "00_sistema_tesis/config/sign_offs.json",
 )
 MARKDOWN_LINK_PATTERN = re.compile(r"(?<!\!)\[([^\]]+)\]\(([^)]+)\)")
+MARKDOWN_TARGET_PATTERN = re.compile(r"\]\((?P<href>[^)]+)\)")
 HTML_HREF_PATTERN = re.compile(r'(?P<prefix>\bhref\s*=\s*)(?P<quote>["\'])(?P<href>[^"\']+)(?P=quote)', re.IGNORECASE)
 ALLOWED_HREF_SCHEMES = ("http://", "https://", "mailto:", "tel:", "data:", "javascript:")
 SYNC_PLACEHOLDER_HREF_PATTERN = re.compile(r"\[[^\]]+\]")
@@ -176,6 +177,7 @@ def _render_payloads(source_map: dict[str, Path], *, sanitize: bool) -> dict[str
                 public_rel=rel_path,
                 config=publication,
             )
+            sanitized_text = _rewrite_invalid_hrefs_to_public_note(sanitized_text, rel_path)
             payload = sanitized_text.encode("utf-8")
         else:
             payload = source_path.read_bytes()
@@ -185,9 +187,20 @@ def _render_payloads(source_map: dict[str, Path], *, sanitize: bool) -> dict[str
 
 def _iter_hrefs(text: str) -> list[str]:
     hrefs: list[str] = []
-    hrefs.extend(match.group(2).strip() for match in MARKDOWN_LINK_PATTERN.finditer(text))
+    hrefs.extend(_extract_markdown_href(match.group("href")) for match in MARKDOWN_TARGET_PATTERN.finditer(text))
     hrefs.extend(match.group("href").strip() for match in HTML_HREF_PATTERN.finditer(text))
-    return hrefs
+    return [href for href in hrefs if href]
+
+
+def _extract_markdown_href(raw_href: str) -> str:
+    href = raw_href.strip()
+    if href.startswith("<") and href.endswith(">"):
+        href = href[1:-1].strip()
+    if not href:
+        return ""
+    if " " in href:
+        href = href.split(" ", 1)[0].strip()
+    return href
 
 
 def _normalize_href_target(base_rel: str, href: str) -> str:
@@ -210,6 +223,32 @@ def _href_violates_public_policy(base_rel: str, href: str) -> bool:
     if any(normalized.startswith(prefix) for prefix in PRIVATE_EXCLUDE_PREFIXES):
         return True
     return normalized in PRIVATE_EXCLUDE_PATHS
+
+
+def _public_note_href_for_source(source_rel: str) -> str:
+    note_target = "NOTA_SEGURIDAD_Y_ACCESO.md"
+    return Path(posixpath.relpath(note_target, Path(source_rel).parent.as_posix())).as_posix()
+
+
+def _rewrite_invalid_hrefs_to_public_note(text: str, source_rel: str) -> str:
+    note_href = _public_note_href_for_source(source_rel)
+
+    def replace_markdown(match: re.Match[str]) -> str:
+        raw_href = match.group("href")
+        href = _extract_markdown_href(raw_href)
+        if href and _href_violates_public_policy(source_rel, href):
+            return match.group(0).replace(raw_href, note_href, 1)
+        return match.group(0)
+
+    def replace_html(match: re.Match[str]) -> str:
+        href = match.group("href").strip()
+        if _href_violates_public_policy(source_rel, href):
+            return f"{match.group('prefix')}{match.group('quote')}{note_href}{match.group('quote')}"
+        return match.group(0)
+
+    rewritten = MARKDOWN_TARGET_PATTERN.sub(replace_markdown, text)
+    rewritten = HTML_HREF_PATTERN.sub(replace_html, rewritten)
+    return rewritten
 
 
 def validate_sync_payloads(payloads: dict[str, bytes]) -> list[str]:

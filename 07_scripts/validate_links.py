@@ -10,6 +10,7 @@ from common import ROOT
 
 
 MARKDOWN_LINK_PATTERN = re.compile(r"(?<!\!)\[([^\]]+)\]\(([^)]+)\)")
+MARKDOWN_TARGET_PATTERN = re.compile(r"\]\(([^)]+)\)")
 HEADING_PATTERN = re.compile(r"^(#{1,6})\s+(.*)$")
 PLACEHOLDER_PATTERN = re.compile(
     r"\[(?:bitacora_privada|reportes_privados|ruta_local_redactada|identidad_agente_privada|canon_privado|matriz_privada|ledger_privado|indice_fuentes_privado)[^\]]*\]"
@@ -113,6 +114,14 @@ def extract_markdown_links(text: str) -> list[tuple[str, int]]:
     for lineno, line in enumerate(text.splitlines(), start=1):
         for match in MARKDOWN_LINK_PATTERN.finditer(line):
             links.append((match.group(2).strip(), lineno))
+        for match in MARKDOWN_TARGET_PATTERN.finditer(line):
+            href = match.group(1).strip()
+            if href.startswith("<") and href.endswith(">"):
+                href = href[1:-1].strip()
+            if " " in href:
+                href = href.split(" ", 1)[0].strip()
+            if href and (href, lineno) not in links:
+                links.append((href, lineno))
     return links
 
 

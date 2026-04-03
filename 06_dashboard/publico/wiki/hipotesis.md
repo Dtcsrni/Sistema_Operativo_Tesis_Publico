@@ -37,9 +37,9 @@ Hipótesis activas, criterios de soporte, evidencia y relación con bloques.
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/hipotesis.md`](hipotesis.md)
-- HTML interno: [`06_dashboard/generado/wiki/hipotesis.html`](../wiki_html/hipotesis.html)
+- HTML interno: [`06_dashboard/generado/wiki/hipotesis.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/hipotesis.md`](hipotesis.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/hipotesis.html`](../wiki_html/hipotesis.html)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/hipotesis.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Qué resuelve este subsistema
 

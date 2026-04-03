@@ -1,8 +1,8 @@
 # Sistema Operativo de la Tesis
 
-![Security Status](06_dashboard/generado/badges/security_status.svg)
-![Integrity Status](06_dashboard/generado/badges/integrity.svg)
-![Ledger Status](06_dashboard/generado/badges/ledger.svg)
+![Security Status](dashboard/badges/security_status.svg)
+![Integrity Status](dashboard/badges/integrity.svg)
+![Ledger Status](dashboard/badges/ledger.svg)
 
 > Este `README.md` es un artefacto generado. No lo edites manualmente.
 > Fuente de verdad: `README_INICIO.md` + `00_sistema_tesis/config/` + `01_planeacion/`.
@@ -60,8 +60,8 @@ Empieza por estos archivos:
 - [`docs/02_arquitectura/arquitectura-general.md`](NOTA_SEGURIDAD_Y_ACCESO.md)
 - [`manifests/storage_layout.yaml`](NOTA_SEGURIDAD_Y_ACCESO.md)
 - [`bootstrap/orangepi/10_primer-arranque.sh`](NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`06_dashboard/wiki/index.md`](wiki/index.md)
-- [`06_dashboard/generado/index.html`](dashboard/index.html)
+- [`06_dashboard/wiki/index.md`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`06_dashboard/generado/index.html`](NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Ruta de lectura
 
@@ -74,10 +74,10 @@ Empieza por estos archivos:
 
 ## Navegación y trazabilidad
 
-- La entrada navegable del sistema es [`06_dashboard/wiki/index.md`](wiki/index.md).
+- La entrada navegable del sistema es [`06_dashboard/wiki/index.md`](NOTA_SEGURIDAD_Y_ACCESO.md).
 - Cada página de la wiki debe declarar navegación local, fuentes canónicas y artefactos derivados relacionados.
 - Si una salida derivada necesita cambio, la intervención correcta es sobre la fuente canónica declarada, no sobre el derivado.
-- Para cerrar la cadena de rastreo revisa [`06_dashboard/generado/wiki_manifest.json`](manifest_publico.json) y [`06_dashboard/publico/manifest_publico.json`](manifest_publico.json).
+- Para cerrar la cadena de rastreo revisa [`06_dashboard/generado/wiki_manifest.json`](NOTA_SEGURIDAD_Y_ACCESO.md) y [`06_dashboard/publico/manifest_publico.json`](NOTA_SEGURIDAD_Y_ACCESO.md).
 - Para trazabilidad operativa interna revisa [`[matriz_privada]`](NOTA_SEGURIDAD_Y_ACCESO.md) y [`[ledger_privado]`](NOTA_SEGURIDAD_Y_ACCESO.md).
 
 ## Qué revisar siempre
@@ -87,9 +87,9 @@ Empieza por estos archivos:
 - [`01_planeacion/backlog.csv`](NOTA_SEGURIDAD_Y_ACCESO.md)
 - [`01_planeacion/riesgos.csv`](NOTA_SEGURIDAD_Y_ACCESO.md)
 - [`[matriz_privada]`](NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`06_dashboard/wiki/index.md`](wiki/index.md)
-- [`06_dashboard/generado/index.html`](dashboard/index.html)
-- [`06_dashboard/publico/index.md`](index.md)
+- [`06_dashboard/wiki/index.md`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`06_dashboard/generado/index.html`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`06_dashboard/publico/index.md`](NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Hipótesis activas prioritarias
 
@@ -208,11 +208,11 @@ python 07_scripts/report_consistency.py
 
 ## Artefactos derivados
 
-- [`README.md`](README_publico.md)
-- [`06_dashboard/wiki/index.md`](wiki/index.md)
-- [`06_dashboard/generado/wiki/index.html`](wiki_html/index.html)
-- [`06_dashboard/generado/wiki_manifest.json`](manifest_publico.json)
-- [`06_dashboard/generado/index.html`](dashboard/index.html)
+- [`README.md`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`06_dashboard/wiki/index.md`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`06_dashboard/generado/wiki/index.html`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`06_dashboard/generado/wiki_manifest.json`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`06_dashboard/generado/index.html`](NOTA_SEGURIDAD_Y_ACCESO.md)
 - [`06_dashboard/generado/hoja_maestra_consolidada.csv`](NOTA_SEGURIDAD_Y_ACCESO.md)
 - [`[reporte_interno_redactado]`](NOTA_SEGURIDAD_Y_ACCESO.md)
 

@@ -1,8 +1,8 @@
 # Sistema Operativo de la Tesis
 
-![Security Status](06_dashboard/generado/badges/security_status.svg)
-![Integrity Status](06_dashboard/generado/badges/integrity.svg)
-![Ledger Status](06_dashboard/generado/badges/ledger.svg)
+![Security Status](06_dashboard/publico/dashboard/badges/security_status.svg)
+![Integrity Status](06_dashboard/publico/dashboard/badges/integrity.svg)
+![Ledger Status](06_dashboard/publico/dashboard/badges/ledger.svg)
 
 > Este `README.md` es un artefacto generado. No lo edites manualmente.
 > Fuente de verdad: `README_INICIO.md` + `00_sistema_tesis/config/` + `01_planeacion/`.

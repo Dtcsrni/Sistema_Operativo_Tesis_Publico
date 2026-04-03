@@ -42,9 +42,9 @@ Propósito, alcance, módulos, flujos e interacción del sistema operativo de te
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/sistema.md`](sistema.md)
-- HTML interno: [`06_dashboard/generado/wiki/sistema.html`](../wiki_html/sistema.html)
+- HTML interno: [`06_dashboard/generado/wiki/sistema.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/sistema.md`](sistema.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/sistema.html`](../wiki_html/sistema.html)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/sistema.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Identidad del proyecto
 

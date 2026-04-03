@@ -39,9 +39,9 @@ Backlog, riesgos, roadmap y entregables del sistema.
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/planeacion.md`](planeacion.md)
-- HTML interno: [`06_dashboard/generado/wiki/planeacion.html`](../wiki_html/planeacion.html)
+- HTML interno: [`06_dashboard/generado/wiki/planeacion.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/planeacion.md`](planeacion.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/planeacion.html`](../wiki_html/planeacion.html)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/planeacion.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Qué resuelve este subsistema
 
