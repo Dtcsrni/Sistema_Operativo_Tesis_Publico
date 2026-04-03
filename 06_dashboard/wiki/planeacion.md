@@ -21,7 +21,7 @@ Backlog, riesgos, roadmap y entregables del sistema.
 
 ### Cómo rastrear esta página hasta su origen canónico
 
-1. Esta página derivada: `06_dashboard/wiki/planeacion.md`.
+1. Esta página derivada: [`06_dashboard/wiki/planeacion.md`](planeacion.md).
 2. Revisa la lista de fuentes canónicas que alimentan su contenido.
 3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
 4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
@@ -31,17 +31,17 @@ Backlog, riesgos, roadmap y entregables del sistema.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|`01_planeacion/backlog.csv`|archivo|sí|
-|`01_planeacion/riesgos.csv`|archivo|sí|
-|`01_planeacion/roadmap.csv`|archivo|sí|
-|`01_planeacion/entregables.csv`|archivo|sí|
+|[`01_planeacion/backlog.csv`](../../01_planeacion/backlog.csv)|archivo|sí|
+|[`01_planeacion/riesgos.csv`](../../01_planeacion/riesgos.csv)|archivo|sí|
+|[`01_planeacion/roadmap.csv`](../../01_planeacion/roadmap.csv)|archivo|sí|
+|[`01_planeacion/entregables.csv`](../../01_planeacion/entregables.csv)|archivo|sí|
 
 ### Artefactos derivados relacionados
 
-- Markdown interno: `06_dashboard/wiki/planeacion.md`
-- HTML interno: `06_dashboard/generado/wiki/planeacion.html`
-- Markdown público sanitizado: `06_dashboard/publico/wiki/planeacion.md`
-- HTML público sanitizado: `06_dashboard/publico/wiki_html/planeacion.html`
+- Markdown interno: [`06_dashboard/wiki/planeacion.md`](planeacion.md)
+- HTML interno: [`06_dashboard/generado/wiki/planeacion.html`](../generado/wiki/planeacion.html)
+- Markdown público sanitizado: [`06_dashboard/publico/wiki/planeacion.md`](../publico/wiki/planeacion.md)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/planeacion.html`](../publico/wiki_html/planeacion.html)
 
 ## Qué resuelve este subsistema
 

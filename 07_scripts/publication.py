@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import posixpath
 import re
 from datetime import datetime
 from pathlib import Path
@@ -33,6 +34,18 @@ GITHUB_PATTERNS = (
     re.compile(r"github_pat_[A-Za-z0-9_]{82}"),
 )
 CURP_PATTERN = re.compile(r"\b[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z0-9]\d\b", re.IGNORECASE)
+MARKDOWN_LINK_PATTERN = re.compile(r"(?<!\!)\[([^\]]+)\]\(([^)]+)\)")
+HTML_HREF_PATTERN = re.compile(r'(?P<prefix>\bhref\s*=\s*)(?P<quote>["\'])(?P<href>[^"\']+)(?P=quote)', re.IGNORECASE)
+MARKDOWN_PLACEHOLDER_HREF_PATTERN = re.compile(r"(?P<prefix>\]\()(?P<href>\[[^)]+\])(?P<suffix>\))")
+ALLOWED_SCHEMES = ("http://", "https://", "mailto:", "tel:", "data:", "javascript:")
+PRIVATE_PREFIXES = (
+    "00_sistema_tesis/",
+    "01_planeacion/",
+    "02_metodologia/",
+    "03_data/",
+    "04_experimentos/",
+    "05_resultados/",
+)
 
 
 def load_publication_config(relative_path: str = DEFAULT_PUBLICATION_CONFIG) -> dict:
@@ -124,6 +137,112 @@ def sanitize_text(text: str, config: dict) -> str:
     return sanitized
 
 
+def build_public_access_note(config: dict, generated_at: str) -> str:
+    lines = [
+        "# Nota de seguridad y acceso",
+        "",
+        "Esta referencia existe para mantener navegable la superficie pública sin exponer artefactos privados o no publicados.",
+        "",
+        f"- **Generado:** `{generated_at}`",
+        f"- **Aviso:** {config['politica']['aviso_no_editar']}",
+        "",
+        "## Qué significa este desvío",
+        "",
+        "- El enlace original apunta a un archivo interno, sensible o fuera del bundle público.",
+        "- La capa pública conserva contexto y trazabilidad general, pero no expone ledger, canon privado, bitácoras privadas ni superficies operativas internas.",
+        "",
+        "## Qué sí puedes consultar aquí",
+        "",
+        "- `README_publico.md`",
+        "- `index.md`",
+        "- `manifest_publico.json`",
+        "- `wiki/index.md`",
+        "- `wiki_html/index.html`",
+        "- `dashboard/index.html`",
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def _is_allowed_scheme(href: str) -> bool:
+    return href.startswith(ALLOWED_SCHEMES)
+
+
+def _normalize_relpath(base_rel: str, href: str) -> str:
+    base_dir = Path(base_rel).parent.as_posix()
+    return posixpath.normpath(posixpath.join(base_dir, href)).lstrip("./")
+
+
+def _public_note_relpath() -> str:
+    return "06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md"
+
+
+def _public_equivalent_for_source(target_rel: str, config: dict) -> str | None:
+    if target_rel == "06_dashboard/generado/wiki_manifest.json":
+        return "06_dashboard/publico/manifest_publico.json"
+    if target_rel in expected_publication_outputs(config):
+        return target_rel
+    for source_path, rel_target in _iter_artifact_outputs(config):
+        if source_path.relative_to(ROOT).as_posix() == target_rel:
+            return _relative_output_path(config, rel_target)
+    return None
+
+
+def _requires_public_note(target_rel: str) -> bool:
+    if "[" in target_rel and "]" in target_rel:
+        return True
+    if target_rel.startswith(PRIVATE_PREFIXES):
+        return True
+    private_tokens = (
+        "[bitacora_privada]",
+        "[reportes_privados]",
+        "[ruta_local_redactada]",
+        "[identidad_agente_privada]",
+        "[canon_privado]",
+        "[matriz_privada]",
+        "[ledger_privado]",
+        "[indice_fuentes_privado]",
+    )
+    return any(token in target_rel for token in private_tokens)
+
+
+def _public_href_for_target(*, source_rel: str, public_rel: str, href: str, config: dict) -> str:
+    if not href or href.startswith("#") or _is_allowed_scheme(href):
+        return href
+    target, separator, anchor = href.partition("#")
+    normalized = _normalize_relpath(source_rel, target)
+    if _requires_public_note(normalized):
+        mapped = _public_note_relpath()
+    else:
+        mapped = _public_equivalent_for_source(normalized, config)
+        if mapped is None:
+            mapped = _public_note_relpath()
+    relative = Path(posixpath.relpath(mapped, Path(public_rel).parent.as_posix())).as_posix()
+    if separator and mapped != _public_note_relpath():
+        return f"{relative}#{anchor}"
+    return relative
+
+
+def rewrite_public_links(text: str, *, source_rel: str, public_rel: str, config: dict) -> str:
+    def replace_markdown(match: re.Match[str]) -> str:
+        label, href = match.groups()
+        return f"[{label}]({_public_href_for_target(source_rel=source_rel, public_rel=public_rel, href=href.strip(), config=config)})"
+
+    def replace_html(match: re.Match[str]) -> str:
+        href = match.group("href").strip()
+        rewritten = _public_href_for_target(source_rel=source_rel, public_rel=public_rel, href=href, config=config)
+        return f"{match.group('prefix')}{match.group('quote')}{rewritten}{match.group('quote')}"
+
+    rewritten = MARKDOWN_LINK_PATTERN.sub(replace_markdown, text)
+    rewritten = HTML_HREF_PATTERN.sub(replace_html, rewritten)
+    note_rel = Path(posixpath.relpath(_public_note_relpath(), Path(public_rel).parent.as_posix())).as_posix()
+    rewritten = MARKDOWN_PLACEHOLDER_HREF_PATTERN.sub(
+        lambda match: f"{match.group('prefix')}{note_rel}{match.group('suffix')}",
+        rewritten,
+    )
+    return rewritten
+
+
 def _iter_artifact_outputs(config: dict) -> list[tuple[Path, str]]:
     outputs: list[tuple[Path, str]] = []
     excluded_prefixes = tuple(config.get("sanitizacion", {}).get("excluir_prefijos", []))
@@ -150,6 +269,7 @@ def expected_publication_outputs(config: dict | None = None) -> set[str]:
     expected = {_relative_output_path(publication, rel_path) for _, rel_path in _iter_artifact_outputs(publication)}
     expected.add(publication["salida"]["manifest"])
     expected.add(_relative_output_path(publication, "index.md"))
+    expected.add(_public_note_relpath())
     return expected
 
 
@@ -249,7 +369,13 @@ def _render_manifest(
 
 def _read_output_payload(path: Path, config: dict) -> bytes:
     if _is_text_file(path):
-        return sanitize_text(path.read_text(encoding="utf-8"), config).encode("utf-8")
+        text = sanitize_text(path.read_text(encoding="utf-8"), config)
+        source_rel = path.relative_to(ROOT).as_posix()
+        public_rel = _relative_output_path(
+            config,
+            next(rel_target for source_path, rel_target in _iter_artifact_outputs(config) if source_path == path),
+        )
+        return rewrite_public_links(text, source_rel=source_rel, public_rel=public_rel, config=config).encode("utf-8")
     return path.read_bytes()
 
 
@@ -318,6 +444,7 @@ def publication_bundle_status(*, build: bool = False, config: dict | None = None
     rendered[publication["salida"]["manifest"]] = (json.dumps(manifest_payload, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
     index_content = build_publication_index(publication, manifest_payload) + "\n"
     rendered[_relative_output_path(publication, "index.md")] = sanitize_text(index_content, publication).encode("utf-8")
+    rendered[_public_note_relpath()] = (build_public_access_note(publication, generated_at) + "\n").encode("utf-8")
 
     drift: list[str] = []
     validation_errors: list[str] = []

@@ -46,22 +46,22 @@ Este repositorio privado gobierna decisiones, hipótesis, backlog, riesgos, expe
 
 Empieza por estos archivos:
 
-- [`README_INICIO.md`](README_INICIO.md)
-- [`00_sistema_tesis/config/sistema_tesis.yaml`](00_sistema_tesis/config/sistema_tesis.yaml)
-- [`00_sistema_tesis/config/hipotesis.yaml`](00_sistema_tesis/config/hipotesis.yaml)
-- [`00_sistema_tesis/config/bloques.yaml`](00_sistema_tesis/config/bloques.yaml)
-- [`00_sistema_tesis/config/publicacion.yaml`](00_sistema_tesis/config/publicacion.yaml)
-- [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md)
-- [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md)
-- [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](00_sistema_tesis/documentacion_sistema/flujos_operativos.md)
-- [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md)
-- [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md)
-- [`01_planeacion/backlog.csv`](01_planeacion/backlog.csv)
-- [`docs/02_arquitectura/arquitectura-general.md`](docs/02_arquitectura/arquitectura-general.md)
-- [`manifests/storage_layout.yaml`](manifests/storage_layout.yaml)
-- [`bootstrap/orangepi/10_primer-arranque.sh`](bootstrap/orangepi/10_primer-arranque.sh)
-- [`06_dashboard/wiki/index.md`](06_dashboard/wiki/index.md)
-- [`06_dashboard/generado/index.html`](06_dashboard/generado/index.html)
+- [`README_INICIO.md`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/config/sistema_tesis.yaml`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/config/hipotesis.yaml`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/config/bloques.yaml`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/config/publicacion.yaml`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`01_planeacion/backlog.csv`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`docs/02_arquitectura/arquitectura-general.md`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`manifests/storage_layout.yaml`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`bootstrap/orangepi/10_primer-arranque.sh`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`06_dashboard/wiki/index.md`](wiki/index.md)
+- [`06_dashboard/generado/index.html`](dashboard/index.html)
 
 ## Ruta de lectura
 
@@ -74,22 +74,22 @@ Empieza por estos archivos:
 
 ## Navegación y trazabilidad
 
-- La entrada navegable del sistema es [`06_dashboard/wiki/index.md`](06_dashboard/wiki/index.md).
+- La entrada navegable del sistema es [`06_dashboard/wiki/index.md`](wiki/index.md).
 - Cada página de la wiki debe declarar navegación local, fuentes canónicas y artefactos derivados relacionados.
 - Si una salida derivada necesita cambio, la intervención correcta es sobre la fuente canónica declarada, no sobre el derivado.
-- Para cerrar la cadena de rastreo revisa [`06_dashboard/generado/wiki_manifest.json`](06_dashboard/generado/wiki_manifest.json) y [`06_dashboard/publico/manifest_publico.json`](06_dashboard/publico/manifest_publico.json).
-- Para trazabilidad operativa interna revisa [`[matriz_privada]`]([matriz_privada]) y [`[ledger_privado]`]([ledger_privado]).
+- Para cerrar la cadena de rastreo revisa [`06_dashboard/generado/wiki_manifest.json`](manifest_publico.json) y [`06_dashboard/publico/manifest_publico.json`](manifest_publico.json).
+- Para trazabilidad operativa interna revisa [`[matriz_privada]`](NOTA_SEGURIDAD_Y_ACCESO.md) y [`[ledger_privado]`](NOTA_SEGURIDAD_Y_ACCESO.md).
 
 ## Qué revisar siempre
 
-- [`00_sistema_tesis/manual_operacion_humana.md`](00_sistema_tesis/manual_operacion_humana.md)
-- [`00_sistema_tesis/config/sistema_tesis.yaml`](00_sistema_tesis/config/sistema_tesis.yaml)
-- [`01_planeacion/backlog.csv`](01_planeacion/backlog.csv)
-- [`01_planeacion/riesgos.csv`](01_planeacion/riesgos.csv)
-- [`[matriz_privada]`]([matriz_privada])
-- [`06_dashboard/wiki/index.md`](06_dashboard/wiki/index.md)
-- [`06_dashboard/generado/index.html`](06_dashboard/generado/index.html)
-- [`06_dashboard/publico/index.md`](06_dashboard/publico/index.md)
+- [`00_sistema_tesis/manual_operacion_humana.md`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/config/sistema_tesis.yaml`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`01_planeacion/backlog.csv`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`01_planeacion/riesgos.csv`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`[matriz_privada]`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`06_dashboard/wiki/index.md`](wiki/index.md)
+- [`06_dashboard/generado/index.html`](dashboard/index.html)
+- [`06_dashboard/publico/index.md`](index.md)
 
 ## Hipótesis activas prioritarias
 
@@ -120,9 +120,9 @@ Empieza por estos archivos:
 
 ## Decisiones recientes
 
-- **2026-03-27** · [DEC-0021 Publicacion desde Downstream Publico Sanitizado](00_sistema_tesis/decisiones/2026-03-27_DEC-0021_publicacion_desde_downstream_publico_sanitizado.md)
-- **2026-03-27** · [DEC-0020 OpenClaw como Capa Asistiva Opcional y Evaluable](00_sistema_tesis/decisiones/2026-03-27_DEC-0020_openclaw_como_capa_asistiva_opcional_y_evaluable.md)
-- **2026-03-27** · [DEC-0019 Reestructura Operativa y Despliegue Orange Pi](00_sistema_tesis/decisiones/2026-03-27_DEC-0019_reestructura_operativa_y_despliegue_orangepi.md)
+- **2026-03-27** · [DEC-0021 Publicacion desde Downstream Publico Sanitizado](NOTA_SEGURIDAD_Y_ACCESO.md)
+- **2026-03-27** · [DEC-0020 OpenClaw como Capa Asistiva Opcional y Evaluable](NOTA_SEGURIDAD_Y_ACCESO.md)
+- **2026-03-27** · [DEC-0019 Reestructura Operativa y Despliegue Orange Pi](NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Operación
 
@@ -208,12 +208,12 @@ python 07_scripts/report_consistency.py
 
 ## Artefactos derivados
 
-- [`README.md`](README.md)
-- [`06_dashboard/wiki/index.md`](06_dashboard/wiki/index.md)
-- [`06_dashboard/generado/wiki/index.html`](06_dashboard/generado/wiki/index.html)
-- [`06_dashboard/generado/wiki_manifest.json`](06_dashboard/generado/wiki_manifest.json)
-- [`06_dashboard/generado/index.html`](06_dashboard/generado/index.html)
-- [`06_dashboard/generado/hoja_maestra_consolidada.csv`](06_dashboard/generado/hoja_maestra_consolidada.csv)
-- [`[reporte_interno_redactado]`]([reporte_interno_redactado])
+- [`README.md`](README_publico.md)
+- [`06_dashboard/wiki/index.md`](wiki/index.md)
+- [`06_dashboard/generado/wiki/index.html`](wiki_html/index.html)
+- [`06_dashboard/generado/wiki_manifest.json`](manifest_publico.json)
+- [`06_dashboard/generado/index.html`](dashboard/index.html)
+- [`06_dashboard/generado/hoja_maestra_consolidada.csv`](NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`[reporte_interno_redactado]`](NOTA_SEGURIDAD_Y_ACCESO.md)
 
 _Generado automáticamente el [fecha_hora_redactada]._

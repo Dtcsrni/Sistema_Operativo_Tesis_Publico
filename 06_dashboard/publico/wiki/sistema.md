@@ -20,7 +20,7 @@ Propósito, alcance, módulos, flujos e interacción del sistema operativo de te
 
 ### Cómo rastrear esta página hasta su origen canónico
 
-1. Esta página derivada: `06_dashboard/wiki/sistema.md`.
+1. Esta página derivada: [`06_dashboard/wiki/sistema.md`](sistema.md).
 2. Revisa la lista de fuentes canónicas que alimentan su contenido.
 3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
 4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
@@ -30,21 +30,21 @@ Propósito, alcance, módulos, flujos e interacción del sistema operativo de te
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|`README_INICIO.md`|archivo|sí|
-|`00_sistema_tesis/manual_operacion_humana.md`|archivo|sí|
-|`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`|archivo|sí|
-|`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`|archivo|sí|
-|`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`|archivo|sí|
-|`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`|archivo|sí|
-|`00_sistema_tesis/config/sistema_tesis.yaml`|archivo|sí|
-|`00_sistema_tesis/config/publicacion.yaml`|archivo|sí|
+|[`README_INICIO.md`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/manual_operacion_humana.md`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/config/sistema_tesis.yaml`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/config/publicacion.yaml`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
 
 ### Artefactos derivados relacionados
 
-- Markdown interno: `06_dashboard/wiki/sistema.md`
-- HTML interno: `06_dashboard/generado/wiki/sistema.html`
-- Markdown público sanitizado: `06_dashboard/publico/wiki/sistema.md`
-- HTML público sanitizado: `06_dashboard/publico/wiki_html/sistema.html`
+- Markdown interno: [`06_dashboard/wiki/sistema.md`](sistema.md)
+- HTML interno: [`06_dashboard/generado/wiki/sistema.html`](../wiki_html/sistema.html)
+- Markdown público sanitizado: [`06_dashboard/publico/wiki/sistema.md`](sistema.md)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/sistema.html`](../wiki_html/sistema.html)
 
 ## Identidad del proyecto
 

@@ -21,7 +21,7 @@ Registro de sesiones, uso de IA y aprendizaje operativo.
 
 ### Cómo rastrear esta página hasta su origen canónico
 
-1. Esta página derivada: `06_dashboard/wiki/bitacora.md`.
+1. Esta página derivada: [`06_dashboard/wiki/bitacora.md`](bitacora.md).
 2. Revisa la lista de fuentes canónicas que alimentan su contenido.
 3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
 4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
@@ -31,15 +31,15 @@ Registro de sesiones, uso de IA y aprendizaje operativo.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|`[bitacora_privada]`|directorio|sí|
-|`[reportes_privados]`|directorio|sí|
+|[`[bitacora_privada]`](../../[bitacora_privada])|directorio|sí|
+|[`[reportes_privados]`](../../[reportes_privados])|directorio|sí|
 
 ### Artefactos derivados relacionados
 
-- Markdown interno: `06_dashboard/wiki/bitacora.md`
-- HTML interno: `06_dashboard/generado/wiki/bitacora.html`
-- Markdown público sanitizado: `06_dashboard/publico/wiki/bitacora.md`
-- HTML público sanitizado: `06_dashboard/publico/wiki_html/bitacora.html`
+- Markdown interno: [`06_dashboard/wiki/bitacora.md`](bitacora.md)
+- HTML interno: [`06_dashboard/generado/wiki/bitacora.html`](../wiki_html/bitacora.html)
+- Markdown público sanitizado: [`06_dashboard/publico/wiki/bitacora.md`](bitacora.md)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/bitacora.html`](../wiki_html/bitacora.html)
 
 ## Qué resuelve este subsistema
 
@@ -49,30 +49,30 @@ Registro de sesiones, uso de IA y aprendizaje operativo.
 
 ## Bitácoras
 
-- `matriz_tra` [Matriz de Trazabilidad Maestra (Índice de Integridad)](../[matriz_privada])
-- `log_conver` [Ledger de Conversaciones IA (Inmutable y Enlazado)](../[ledger_privado])
-- `indice_fue` [Índice Privado de Fuentes de Conversación](../[indice_fuentes_privado])
-- `2026-04-02` [Bitácora de sesión 2026-04-02](../[bitacora_privada]/2026-04-02_bitacora_sesion.md)
-- `2026-04-01` [Bitácora de sesión 2026-04-01](../[bitacora_privada]/2026-04-01_bitacora_sesion.md)
-- `2026-03-27` [Bitácora de sesión 2026-03-27](../[bitacora_privada]/2026-03-27_bitacora_sesion.md)
-- `2026-03-26` [Bitácora de sesión 2026-03-26](../[bitacora_privada]/2026-03-26_bitacora_sesion_2.md)
-- `2026-03-26` [Bitácora de sesión 2026-03-26](../[bitacora_privada]/2026-03-26_bitacora_sesion_1.md)
-- `2026-03-26` [Bitácora de sesión 2026-03-26](../[bitacora_privada]/2026-03-26_bitacora_sesion.md)
-- `2026-03-25` [Bitácora de sesión 2026-03-25](../[bitacora_privada]/2026-03-25_bitacora_sesion.md)
-- `2026-03-24` [Bitácora de sesión 2026-03-24](../[bitacora_privada]/2026-03-24_bitacora_sesion.md)
-- `2026-03-23` [Bitácora de sesión 2026-03-23](../[bitacora_privada]/2026-03-23_bitacora_base_operativa.md)
+- `matriz_tra` [Matriz de Trazabilidad Maestra (Índice de Integridad)](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- `log_conver` [Ledger de Conversaciones IA (Inmutable y Enlazado)](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- `indice_fue` [Índice Privado de Fuentes de Conversación](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-04-02` [Bitácora de sesión 2026-04-02](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-04-01` [Bitácora de sesión 2026-04-01](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-03-27` [Bitácora de sesión 2026-03-27](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-03-26` [Bitácora de sesión 2026-03-26](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-03-26` [Bitácora de sesión 2026-03-26](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-03-26` [Bitácora de sesión 2026-03-26](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-03-25` [Bitácora de sesión 2026-03-25](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-03-24` [Bitácora de sesión 2026-03-24](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-03-23` [Bitácora de sesión 2026-03-23](../NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Contenido de Bitácora de Conversaciones IA
 
 <!-- SISTEMA_TESIS:PROTEGIDO -->
-# Ledger de Conversaciones IA (Inmutable y Enlazado)
+## Ledger de Conversaciones IA (Inmutable y Enlazado)
 
 Este archivo es el **Libro Mayor** de las validaciones humanas. El contenido exacto está entre `<<<` y `>>>`. 
 Cada bloque forma parte de una **Cadena de Evidencia Vinculada**.
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0
 - **Fecha:** 2026-03-24
@@ -93,13 +93,13 @@ Objetivo de Sesión: Establecimiento de bases de soberanía humana.
 Contexto Operativo: Inicio de la fase de endurecimiento del sistema (B0). El tesista define la regla de oro para la interacción con agentes: nada se valida sin intervención humana explícita.
 Infraestructura: Python 3.14.3 | Windows 11 | Gemini 1.5 Pro v1.0.
 ID de Sesión: 128bceee
-Diferencial de Plan: [implementation_plan_v2.md]([ruta_local_redactada])
+Diferencial de Plan: `implementation_plan_v2.md`
 ---
 Tesista (Erick Renato Vega Ceron | Sesion: 128bceee): "asegurate de siempre preguntarme y vincular mis decisiones y respuestas a los elementos de trazabilidad, especialmente si requieren validación humana.">>>
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0
 - **Fecha:** 2026-03-24
@@ -120,14 +120,14 @@ Objetivo de Sesión: Validación del protocolo DEC-0014 y Defensa en Profundidad
 Contexto Operativo: El agente propone un método detallado de vinculación por Step ID y pre-checklists anidadas para robustecer la cadena de confianza. El tesista aprueba la implementación global.
 Infraestructura: Python 3.14.3 | Windows 11 | Gemini 1.5 Pro v1.0.
 ID de Sesión: 128bceee
-Diferencial de Plan: [implementation_plan_v13.md]([ruta_local_redactada])
+Diferencial de Plan: `implementation_plan_v13.md`
 ---
 Agente: "¿Este nivel de detalle y vinculación por Step ID te parece el método confiable que buscas?"
 Tesista (Erick Renato Vega Ceron | Sesion: 128bceee): "si. Implementa">>>
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0
 - **Fecha:** 2026-03-24
@@ -148,14 +148,14 @@ Objetivo de Sesión: Auditoría de estado y funcionalidad de la wiki.
 Contexto Operativo: El tesista consulta sobre el estado actual de la wiki. El agente audita la generación de MkDocs y los validadores internos, reportando éxito parcial (wiki interna OK, auditoría externa fallida).
 Infraestructura: Python 3.14.3 | Windows 11 | Gemini 1.5 Pro v1.0.
 ID de Sesión: 5819a70e
-Diferencial de Plan: No se requirió plan de cambio estructural; se utilizó [task.md]([ruta_local_redactada]) para guiar la auditoría de diagnóstico.
+Diferencial de Plan: No se requirió plan de cambio estructural; se utilizó `task.md` para guiar la auditoría de diagnóstico.
 ---
 Tesista (Erick Renato Vega Ceron | Sesion: 5819a70e): "funciona ya la wiki y está completa, y correcta?"
 Agente: "La wiki es funcional y correcta según sus validadores internos. La falta de completitud en secciones específicas es nominal y esperada. El fallo de auditoría externa es por red. Recomendación: Iniciar firmas de bloques.">>>
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0
 - **Fecha:** 2026-03-24
@@ -176,14 +176,14 @@ Objetivo de Sesión: Rectificación de diagnóstico de red y corrección de est�
 Contexto Operativo: Rectificación técnica tras descubrir que el sistema sí posee red pero las URLs de NIST eran incorrectas. Se propone corrección de `ia_gobernanza.yaml` y reconstrucción del Ledger.
 Infraestructura: Python 3.14.3 | Windows 11 | Gemini 1.5 Pro v1.0 | verify_standards.py.
 ID de Sesión: 5819a70e
-Diferencial de Plan: [implementation_plan.md]([ruta_local_redactada])
+Diferencial de Plan: `implementation_plan.md`
 ---
 Tesista (Erick Renato Vega Ceron | Step Id: 77): "\"sin éxito debido a la falta de conexión a red en este entorno.\"?\"
 Agente: "Rectificación de auditoría: El error previo atribuyó erróneamente el fallo a la falta de red. Se confirma conectividad (Google 200, Wikipedia Main 200). Los fallos en `verify_standards.py` se deben a URLs incorrectas (ej. NIST RMF 404) y fallos de validación de descriptores clave en el contenido de Wikipedia. La wiki sigue siendo funcional pero el audit de estándares requiere corrección de fuentes.">>>
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0
 - **Fecha:** 2026-03-24
@@ -204,14 +204,14 @@ Objetivo de Sesión: Mejora del sistema de bitácora y trazabilidad.
 Contexto Operativo: El tesista solicita mejorar el sistema de bitácora. El agente propone un sistema de cadena de confianza criptográfica entre sesiones, plantillas enriquecidas y scripts de automatización.
 Infraestructura: Python 3.14.3 | Windows 11 | Gemini 1.5 Pro v1.0.
 ID de Sesión: 5819a70e
-Diferencial de Plan: [implementation_plan.md]([ruta_local_redactada])
+Diferencial de Plan: `implementation_plan.md`
 ---
 Tesista (Erick Renato Vega Ceron | Step Id: 380): "mejora el sistema de bitácora"
 Agente: "Propongo un sistema de 'Cadena de Confianza' donde cada bitácora referencia el hash de la anterior. Además, automatizaremos la creación de sesiones y la validación de integridad.">>>
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0
 - **Fecha:** 2026-03-24
@@ -232,14 +232,14 @@ Objetivo de Sesión: Diagnóstico de completitud arquitectónica para inicio de 
 Contexto Operativo: El tesista consulta sobre los elementos faltantes en la arquitectura para iniciar el desarrollo. El agente analiza la brecha entre la infraestructura de gobernanza (B0) y el diseño técnico de la tesis (B1/B2), identificando la necesidad de delimitación formal, línea base y diseño detallado de componentes IoT.
 Infraestructura: Gemini 1.5 Pro | Sistema Operativo de Tesis v0.1.0.
 ID de Sesión: b4fee61f
-Diferencial de Plan: Análisis de brechas en [analysis_arch_readiness.md]([ruta_local_redactada])
+Diferencial de Plan: Análisis de brechas en `analysis_arch_readiness.md`
 ---
 Tesista (Erick Renato Vega Ceron | Sesion: b4fee61f): "¿que faltaria en la arquitectura para poder empezar el desarrollo de la tesis?"
 Agente: "La infraestructura de gestión está completa. Faltan la delimitación formal del caso de estudio (B1), la definición de la línea base de comparación (B2) y el diseño detallado de los componentes de resiliencia (B2) antes de la implementación física.">>>
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-26
@@ -267,7 +267,7 @@ Extracto contextual normalizado: "Implementación del Gate de Gobernanza Agnóst
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-26
@@ -294,7 +294,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260326-nohardcode): "na
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-26
@@ -322,7 +322,7 @@ Extracto contextual normalizado: "Autorización contextualizada para cierre estr
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-26
@@ -350,7 +350,7 @@ Agente: "Se corrige la heurística del gate para commits del ledger y se valida 
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-26
@@ -378,7 +378,7 @@ Agente: "Se ajusta la política del gate para rangos multi-commit y se valida co
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-26
@@ -406,7 +406,7 @@ Extracto contextual normalizado: "Rediseño v2 del Sistema Operativo de Tesis ha
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-26
@@ -434,7 +434,7 @@ Extracto contextual normalizado: "Implementación del modelo humano primero, pub
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-26
@@ -461,7 +461,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260326-convclose): "vam
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-26
@@ -488,7 +488,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260326-prechecks): "mej
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-26
@@ -512,7 +512,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260326-source-evidence)
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-26
@@ -521,7 +521,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260326-source-evidence)
 - **Audit Level:** ALTO
 - **Pregunta Crítica / Disparador:** Solicitud humana compuesta capturada en el panel de Codex de VS Code para implementar la ingestión canónica IoT v10 con contexto operativo explícito.
 - **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
-# Plan de Ingestión Canónica IoT v10 (staging + trazabilidad completa)
+## Plan de Ingestión Canónica IoT v10 (staging + trazabilidad completa)
 
 Objetivo operativo resumido:
 - staging aislado
@@ -545,7 +545,7 @@ ID de Sesión: codex-local-20260326-ingestion-iot-v10
 Diferencial de Plan: Implementar el plan titulado "Plan de Ingestión Canónica IoT v10 (staging + trazabilidad completa)" a partir de un prompt sustantivo contextualizado.
 ---
 Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260326-ingestion-iot-v10): "PLEASE IMPLEMENT THIS PLAN:
-# Plan de Ingestión Canónica IoT v10 (staging + trazabilidad completa)
+## Plan de Ingestión Canónica IoT v10 (staging + trazabilidad completa)
 
 Objetivo operativo resumido:
 - staging aislado
@@ -557,7 +557,7 @@ Objetivo operativo resumido:
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-26
@@ -566,7 +566,7 @@ Objetivo operativo resumido:
 - **Audit Level:** ALTO
 - **Pregunta Crítica / Disparador:** Solicitud humana compuesta capturada en el panel de Codex de VS Code para reestructurar integralmente la documentación del sistema.
 - **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
-# Reestructura integral de documentación del Sistema Operativo de Tesis
+## Reestructura integral de documentación del Sistema Operativo de Tesis
 
 Objetivo operativo resumido:
 - explicar con claridad para qué y por qué existe el sistema
@@ -589,7 +589,7 @@ ID de Sesión: codex-local-20260326-docs-restructure
 Diferencial de Plan: Implementar el plan titulado "Reestructura integral de documentación del Sistema Operativo de Tesis" a partir de un prompt sustantivo contextualizado.
 ---
 Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260326-docs-restructure): "PLEASE IMPLEMENT THIS PLAN:
-# Reestructura integral de documentación del Sistema Operativo de Tesis
+## Reestructura integral de documentación del Sistema Operativo de Tesis
 
 Objetivo operativo resumido:
 - explicar con claridad para qué y por qué existe el sistema
@@ -600,7 +600,7 @@ Objetivo operativo resumido:
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-26
@@ -637,7 +637,7 @@ Contexto autorizado:
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-27
@@ -646,9 +646,9 @@ Contexto autorizado:
 - **Audit Level:** ALTO
 - **Pregunta Crítica / Disparador:** Solicitud humana compuesta capturada en el panel de Codex de VS Code para implementar el sistema de terminología con contexto previo relacionado.
 - **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
-# Sistema de Terminología, Convenciones e Identificadores
+## Sistema de Terminología, Convenciones e Identificadores
 
-## Resumen
+### Resumen
 
 Se incorporará una arquitectura terminológica canónica, mixta y técnicamente explícita para que el sistema defina de manera estable:
 - términos del sistema operativo documental,
@@ -672,9 +672,9 @@ ID de Sesión: codex-local-20260327-terminologia
 Diferencial de Plan: Implementar el plan titulado "Sistema de Terminología, Convenciones e Identificadores" a partir de un prompt sustantivo contextualizado, no de un prefijo aislado.
 ---
 Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260327-terminologia): "PLEASE IMPLEMENT THIS PLAN:
-# Sistema de Terminología, Convenciones e Identificadores
+## Sistema de Terminología, Convenciones e Identificadores
 
-## Resumen
+### Resumen
 
 Se incorporará una arquitectura terminológica canónica, mixta y técnicamente explícita para que el sistema defina de manera estable:
 - términos del sistema operativo documental,
@@ -686,7 +686,7 @@ Se incorporará una arquitectura terminológica canónica, mixta y técnicamente
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-27
@@ -711,7 +711,7 @@ Diferencial de Plan: Añadir navegación transversal, bloques de origen canónic
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-27
@@ -736,7 +736,7 @@ Diferencial de Plan: Sustituir la cita débil por un extracto sustantivo del pro
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-27
@@ -761,7 +761,7 @@ Diferencial de Plan: Aplicar una regla uniforme de contextualización para legac
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-27
@@ -770,7 +770,7 @@ Diferencial de Plan: Aplicar una regla uniforme de contextualización para legac
 - **Audit Level:** ALTO
 - **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
 - **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
-# Plan de Migración del Sistema Operativo de Tesis
+## Plan de Migración del Sistema Operativo de Tesis
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
 - **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** prompt_de_implementacion_contextualizado | Fuente: campo_canonico_explicito
@@ -786,11 +786,11 @@ ID de Sesión: codex-local-20260327-migracion-sistema-tesis
 Diferencial de Plan: Implementar el plan titulado 'Plan de Migración del Sistema Operativo de Tesis' a partir de un prompt sustantivo contextualizado capturado en la interacción actual.
 ---
 Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260327-migracion-sistema-tesis): "PLEASE IMPLEMENT THIS PLAN:
-# Plan de Migración del Sistema Operativo de Tesis">>>
+## Plan de Migración del Sistema Operativo de Tesis">>>
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-03-27
@@ -815,7 +815,7 @@ Diferencial de Plan: Implementar el plan titulado 'Plan de Cierre de Pendientes 
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-04-01
@@ -841,7 +841,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: 735fa0a1-c29f-40a2-8c83-3e8ad8a2884d)
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-04-01
@@ -867,7 +867,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: 3e5f5319-f769-495b-8990-837fd6de57ab)
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-04-01
@@ -893,7 +893,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: 814db1d5-6b35-47d2-b7bd-7178a38c0ab6)
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-04-01
@@ -920,7 +920,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260401-trazabilidad-con
 
 ---
 
-## [[validacion_humana_interna]]
+### [[validacion_humana_interna]]
 - **Proveedor:** [proveedor_ia_interno]
 - **Modelo/Versión:** [modelo_ia_interno]
 - **Fecha:** 2026-04-02
@@ -940,10 +940,10 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260401-trazabilidad-con
 Objetivo de Sesión: Verificar y regularizar el registro de actividades recientes no registradas explícitamente como validación humana independiente. Contexto Operativo: Se identificaron commits recientes de automatización CI/wiki y sanitización pública posteriores al cierre [validacion_humana_interna]. Se registra validación humana explícita para dejar trazabilidad formal de estas actividades recientes y su estado de cumplimiento (verify en verde).>>>
 
 **Navegación:**
-- [Volver a la Matriz](matriz_trazabilidad.md)
+- [Volver a la Matriz](../NOTA_SEGURIDAD_Y_ACCESO.md)
 
 
 ## Reportes semanales
 
-- `2026-S13_r` [Resumen semanal 2026-S13](../[reportes_privados]/2026-S13_resumen_semanal.md)
+- `2026-S13_r` [Resumen semanal 2026-S13](../NOTA_SEGURIDAD_Y_ACCESO.md)
 

@@ -21,7 +21,7 @@ Glosario, familias de IDs, referencias globales y convenciones de nomenclatura d
 
 ### Cómo rastrear esta página hasta su origen canónico
 
-1. Esta página derivada: `06_dashboard/wiki/terminologia.md`.
+1. Esta página derivada: [`06_dashboard/wiki/terminologia.md`](terminologia.md).
 2. Revisa la lista de fuentes canónicas que alimentan su contenido.
 3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
 4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
@@ -31,17 +31,17 @@ Glosario, familias de IDs, referencias globales y convenciones de nomenclatura d
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`|archivo|sí|
-|`00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`|archivo|sí|
-|`01_planeacion/backlog_guia.md`|archivo|sí|
-|`00_sistema_tesis/config/ia_gobernanza.yaml`|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`01_planeacion/backlog_guia.md`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/config/ia_gobernanza.yaml`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
 
 ### Artefactos derivados relacionados
 
-- Markdown interno: `06_dashboard/wiki/terminologia.md`
-- HTML interno: `06_dashboard/generado/wiki/terminologia.html`
-- Markdown público sanitizado: `06_dashboard/publico/wiki/terminologia.md`
-- HTML público sanitizado: `06_dashboard/publico/wiki_html/terminologia.html`
+- Markdown interno: [`06_dashboard/wiki/terminologia.md`](terminologia.md)
+- HTML interno: [`06_dashboard/generado/wiki/terminologia.html`](../wiki_html/terminologia.html)
+- Markdown público sanitizado: [`06_dashboard/publico/wiki/terminologia.md`](terminologia.md)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/terminologia.html`](../wiki_html/terminologia.html)
 
 ## Lectura rápida
 

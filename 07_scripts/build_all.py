@@ -31,12 +31,14 @@ STEPS = [
     ("Validar wiki verificable", "07_scripts/validate_wiki.py", []),
     ("Generar dashboard", "07_scripts/build_dashboard.py", []),
     ("Sincronizar publicación pública sanitizada", "07_scripts/tesis.py", ["publish", "--build"]),
+    ("Validar enlaces derivados y públicos", "07_scripts/validate_links.py", []),
     ("Verificar evidencia fuente de conversación", "07_scripts/tesis.py", ["source", "status", "--check"]),
     ("Verificar operabilidad humana", "07_scripts/tesis.py", ["doctor", "--check"]),
     ("Exportar hoja maestra", "07_scripts/export_master_sheet.py", []),
     ("Generar reporte de consistencia", "07_scripts/report_consistency.py", []),
     ("Regenerar wiki verificable (post-dashboard)", "07_scripts/build_wiki.py", []),
     ("Revalidar wiki verificable (post-dashboard)", "07_scripts/validate_wiki.py", []),
+    ("Revalidar enlaces derivados y públicos (post-dashboard)", "07_scripts/validate_links.py", []),
     ("Validar publicación pública sanitizada", "07_scripts/tesis.py", ["publish", "--check"]),
 ]
 

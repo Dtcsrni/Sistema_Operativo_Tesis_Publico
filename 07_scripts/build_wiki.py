@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from html import escape
 from pathlib import Path
+import posixpath
 import re
 
 from common import (
@@ -84,9 +85,49 @@ REQUIRED_PAGE_FIELDS = [
     "Aviso",
 ]
 
+WIKI_MARKDOWN_DIR = Path("06_dashboard/wiki")
+WIKI_HTML_DIR = Path("06_dashboard/generado/wiki")
+PUBLIC_WIKI_MARKDOWN_DIR = Path("06_dashboard/publico/wiki")
+PUBLIC_WIKI_HTML_DIR = Path("06_dashboard/publico/wiki_html")
+
+MARKDOWN_LINK_PATTERN = re.compile(r"(?<!\!)\[([^\]]+)\]\(([^)]+)\)")
+SKIP_LINK_PREFIXES = ("http://", "https://", "mailto:", "tel:", "data:", "javascript:")
+NON_REPO_LINK_PREFIXES = ("file:",)
+
 
 def relative_wiki_link(page_id: str) -> str:
     return f"{page_id}.md"
+
+
+def _normalize_repo_relpath(base_rel: str, href: str) -> str:
+    base_dir = Path(base_rel).parent.as_posix()
+    normalized = posixpath.normpath(posixpath.join(base_dir, href))
+    return normalized.lstrip("./")
+
+
+def _relative_link(from_dir: Path, target_rel: str) -> str:
+    return Path(posixpath.relpath(target_rel, from_dir.as_posix())).as_posix()
+
+
+def _rewrite_embedded_markdown_links(text: str, source_rel: str) -> str:
+    def replace(match: re.Match[str]) -> str:
+        label, href = match.groups()
+        href = href.strip()
+        if not href or href.startswith("#") or href.startswith(SKIP_LINK_PREFIXES):
+            return match.group(0)
+        if href.startswith(NON_REPO_LINK_PREFIXES):
+            return f"`{label}`"
+        target, separator, anchor = href.partition("#")
+        normalized = _normalize_repo_relpath(source_rel, target)
+        relative = _relative_link(WIKI_MARKDOWN_DIR, normalized)
+        suffix = f"#{anchor}" if separator else ""
+        return f"[{label}]({relative}{suffix})"
+
+    return MARKDOWN_LINK_PATTERN.sub(replace, text)
+
+
+def repo_link_from_wiki(target_rel: str) -> str:
+    return _relative_link(WIKI_MARKDOWN_DIR, target_rel)
 
 
 def get_sign_off_badge(rel_path: str, current_hash: str, sign_offs: list[dict]) -> str:
@@ -136,6 +177,7 @@ def render_markdown_fragment(rel_path: str, *, demote_by: int = 1) -> list[str]:
         if match:
             hashes, title = match.groups()
             raw_line = f"{'#' * (len(hashes) + demote_by)} {title}"
+        raw_line = _rewrite_embedded_markdown_links(raw_line, rel_path)
         lines.append(raw_line)
     lines.append("")
     return lines
@@ -146,7 +188,7 @@ def render_source_links(sources: list[str]) -> list[str]:
     for path in sources:
         source = ROOT / path
         kind = "directorio" if source.is_dir() else "archivo"
-        rows.append([f"`{path}`", kind, "sí" if source.exists() else "no"])
+        rows.append([f"[`{path}`]({repo_link_from_wiki(path)})", kind, "sí" if source.exists() else "no"])
     return render_table(["Fuente canónica", "Tipo", "Existe"], rows)
 
 
@@ -176,7 +218,7 @@ def render_origin_block(page_id: str, sources: list[str]) -> list[str]:
         "",
         "### Cómo rastrear esta página hasta su origen canónico",
         "",
-        f"1. Esta página derivada: `06_dashboard/wiki/{page_id}.md`.",
+        f"1. Esta página derivada: [`06_dashboard/wiki/{page_id}.md`]({page_id}.md).",
         "2. Revisa la lista de fuentes canónicas que alimentan su contenido.",
         "3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.",
         "4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.",
@@ -190,10 +232,10 @@ def render_origin_block(page_id: str, sources: list[str]) -> list[str]:
         [
             "### Artefactos derivados relacionados",
             "",
-            f"- Markdown interno: `06_dashboard/wiki/{page_id}.md`",
-            f"- HTML interno: `06_dashboard/generado/wiki/{page_id}.html`",
-            f"- Markdown público sanitizado: `06_dashboard/publico/wiki/{page_id}.md`",
-            f"- HTML público sanitizado: `06_dashboard/publico/wiki_html/{page_id}.html`",
+            f"- Markdown interno: [`06_dashboard/wiki/{page_id}.md`]({page_id}.md)",
+            f"- HTML interno: [`06_dashboard/generado/wiki/{page_id}.html`]({_relative_link(WIKI_MARKDOWN_DIR, (WIKI_HTML_DIR / f'{page_id}.html').as_posix())})",
+            f"- Markdown público sanitizado: [`06_dashboard/publico/wiki/{page_id}.md`]({_relative_link(WIKI_MARKDOWN_DIR, (PUBLIC_WIKI_MARKDOWN_DIR / f'{page_id}.md').as_posix())})",
+            f"- HTML público sanitizado: [`06_dashboard/publico/wiki_html/{page_id}.html`]({_relative_link(WIKI_MARKDOWN_DIR, (PUBLIC_WIKI_HTML_DIR / f'{page_id}.html').as_posix())})",
             "",
         ]
     )
@@ -833,7 +875,7 @@ def build_decisiones_page(section: dict, generated_at: str, notice: str) -> str:
         return "\n".join(lines)
     lines.extend(["## Decisiones registradas", ""])
     for item in entries:
-        lines.append(f"- `{item['fecha']}` [{item['titulo']}](../{item['archivo']})")
+        lines.append(f"- `{item['fecha']}` [{item['titulo']}]({repo_link_from_wiki(item['archivo'])})")
     lines.append("")
     return "\n".join(lines)
 
@@ -863,20 +905,16 @@ def build_bitacora_page(section: dict, generated_at: str, notice: str) -> str:
     lines.extend(["## Bitácoras", ""])
     if bitacoras:
         for item in bitacoras:
-            lines.append(f"- `{item['fecha']}` [{item['titulo']}](../{item['archivo']})")
-        
-        # Incrusta el contenido de log_conversaciones_ia.md directamente
-        log_path = ROOT / "00_sistema_tesis/bitacora/log_conversaciones_ia.md"
-        if log_path.exists():
-            lines.extend(["", "## Contenido de Bitácora de Conversaciones IA", ""])
-            with log_path.open("r", encoding="utf-8") as f:
-                lines.append(f.read())
+            lines.append(f"- `{item['fecha']}` [{item['titulo']}]({repo_link_from_wiki(item['archivo'])})")
+
+        lines.extend(["", "## Contenido de Bitácora de Conversaciones IA", ""])
+        lines.extend(render_markdown_fragment("00_sistema_tesis/bitacora/log_conversaciones_ia.md", demote_by=1))
     else:
         lines.append("Sin bitácoras registradas aún.")
     lines.extend(["", "## Reportes semanales", ""])
     if reportes:
         for item in reportes:
-            lines.append(f"- `{item['fecha']}` [{item['titulo']}](../{item['archivo']})")
+            lines.append(f"- `{item['fecha']}` [{item['titulo']}]({repo_link_from_wiki(item['archivo'])})")
     else:
         lines.append("Sin reportes semanales registrados aún.")
     lines.append("")

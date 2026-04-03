@@ -21,7 +21,7 @@ Estado de cobertura de simulación y validación experimental.
 
 ### Cómo rastrear esta página hasta su origen canónico
 
-1. Esta página derivada: `06_dashboard/wiki/experimentos.md`.
+1. Esta página derivada: [`06_dashboard/wiki/experimentos.md`](experimentos.md).
 2. Revisa la lista de fuentes canónicas que alimentan su contenido.
 3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
 4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
@@ -31,14 +31,14 @@ Estado de cobertura de simulación y validación experimental.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|`02_experimentos`|directorio|sí|
+|[`02_experimentos`](../NOTA_SEGURIDAD_Y_ACCESO.md)|directorio|sí|
 
 ### Artefactos derivados relacionados
 
-- Markdown interno: `06_dashboard/wiki/experimentos.md`
-- HTML interno: `06_dashboard/generado/wiki/experimentos.html`
-- Markdown público sanitizado: `06_dashboard/publico/wiki/experimentos.md`
-- HTML público sanitizado: `06_dashboard/publico/wiki_html/experimentos.html`
+- Markdown interno: [`06_dashboard/wiki/experimentos.md`](experimentos.md)
+- HTML interno: [`06_dashboard/generado/wiki/experimentos.html`](../wiki_html/experimentos.html)
+- Markdown público sanitizado: [`06_dashboard/publico/wiki/experimentos.md`](experimentos.md)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/experimentos.html`](../wiki_html/experimentos.html)
 
 ## Cómo leer esta cobertura
 

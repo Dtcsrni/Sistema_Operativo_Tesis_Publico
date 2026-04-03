@@ -21,7 +21,7 @@ Hipótesis activas, criterios de soporte, evidencia y relación con bloques.
 
 ### Cómo rastrear esta página hasta su origen canónico
 
-1. Esta página derivada: `06_dashboard/wiki/hipotesis.md`.
+1. Esta página derivada: [`06_dashboard/wiki/hipotesis.md`](hipotesis.md).
 2. Revisa la lista de fuentes canónicas que alimentan su contenido.
 3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
 4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
@@ -31,15 +31,15 @@ Hipótesis activas, criterios de soporte, evidencia y relación con bloques.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|`00_sistema_tesis/config/hipotesis.yaml`|archivo|sí|
-|`00_sistema_tesis/config/bloques.yaml`|archivo|sí|
+|[`00_sistema_tesis/config/hipotesis.yaml`](../../00_sistema_tesis/config/hipotesis.yaml)|archivo|sí|
+|[`00_sistema_tesis/config/bloques.yaml`](../../00_sistema_tesis/config/bloques.yaml)|archivo|sí|
 
 ### Artefactos derivados relacionados
 
-- Markdown interno: `06_dashboard/wiki/hipotesis.md`
-- HTML interno: `06_dashboard/generado/wiki/hipotesis.html`
-- Markdown público sanitizado: `06_dashboard/publico/wiki/hipotesis.md`
-- HTML público sanitizado: `06_dashboard/publico/wiki_html/hipotesis.html`
+- Markdown interno: [`06_dashboard/wiki/hipotesis.md`](hipotesis.md)
+- HTML interno: [`06_dashboard/generado/wiki/hipotesis.html`](../generado/wiki/hipotesis.html)
+- Markdown público sanitizado: [`06_dashboard/publico/wiki/hipotesis.md`](../publico/wiki/hipotesis.md)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/hipotesis.html`](../publico/wiki_html/hipotesis.html)
 
 ## Qué resuelve este subsistema
 

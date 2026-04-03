@@ -20,7 +20,7 @@ Estado de cobertura de capítulos y figuras.
 
 ### Cómo rastrear esta página hasta su origen canónico
 
-1. Esta página derivada: `06_dashboard/wiki/tesis.md`.
+1. Esta página derivada: [`06_dashboard/wiki/tesis.md`](tesis.md).
 2. Revisa la lista de fuentes canónicas que alimentan su contenido.
 3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
 4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
@@ -30,14 +30,14 @@ Estado de cobertura de capítulos y figuras.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|`05_tesis`|directorio|sí|
+|[`05_tesis`](../../05_tesis)|directorio|sí|
 
 ### Artefactos derivados relacionados
 
-- Markdown interno: `06_dashboard/wiki/tesis.md`
-- HTML interno: `06_dashboard/generado/wiki/tesis.html`
-- Markdown público sanitizado: `06_dashboard/publico/wiki/tesis.md`
-- HTML público sanitizado: `06_dashboard/publico/wiki_html/tesis.html`
+- Markdown interno: [`06_dashboard/wiki/tesis.md`](tesis.md)
+- HTML interno: [`06_dashboard/generado/wiki/tesis.html`](../generado/wiki/tesis.html)
+- Markdown público sanitizado: [`06_dashboard/publico/wiki/tesis.md`](../publico/wiki/tesis.md)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/tesis.html`](../publico/wiki_html/tesis.html)
 
 ## Cómo leer esta cobertura
 

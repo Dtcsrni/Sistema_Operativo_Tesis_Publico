@@ -21,7 +21,7 @@ Estado de cobertura de firmware, gateway y analítica.
 
 ### Cómo rastrear esta página hasta su origen canónico
 
-1. Esta página derivada: `06_dashboard/wiki/implementacion.md`.
+1. Esta página derivada: [`06_dashboard/wiki/implementacion.md`](implementacion.md).
 2. Revisa la lista de fuentes canónicas que alimentan su contenido.
 3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
 4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
@@ -31,14 +31,14 @@ Estado de cobertura de firmware, gateway y analítica.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|`04_implementacion`|directorio|sí|
+|[`04_implementacion`](../NOTA_SEGURIDAD_Y_ACCESO.md)|directorio|sí|
 
 ### Artefactos derivados relacionados
 
-- Markdown interno: `06_dashboard/wiki/implementacion.md`
-- HTML interno: `06_dashboard/generado/wiki/implementacion.html`
-- Markdown público sanitizado: `06_dashboard/publico/wiki/implementacion.md`
-- HTML público sanitizado: `06_dashboard/publico/wiki_html/implementacion.html`
+- Markdown interno: [`06_dashboard/wiki/implementacion.md`](implementacion.md)
+- HTML interno: [`06_dashboard/generado/wiki/implementacion.html`](../wiki_html/implementacion.html)
+- Markdown público sanitizado: [`06_dashboard/publico/wiki/implementacion.md`](implementacion.md)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/implementacion.html`](../wiki_html/implementacion.html)
 
 ## Cómo leer esta cobertura
 
