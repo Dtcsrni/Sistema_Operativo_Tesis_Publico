@@ -102,9 +102,13 @@ Registro de sesiones, uso de IA y aprendizaje operativo.
 - `matriz_tra` [Matriz de Trazabilidad Maestra (Índice de Integridad)](../[matriz_privada])
 - `log_conver` [Ledger de Conversaciones IA (Inmutable y Enlazado)](../[ledger_privado])
 - `indice_fue` [Índice Privado de Fuentes de Conversación](../[indice_fuentes_privado])
+- `2026-04-02` [Bitácora de sesión 2026-04-02](../[bitacora_privada]/2026-04-02_bitacora_sesion.md)
+- `2026-04-01` [Bitácora de sesión 2026-04-01](../[bitacora_privada]/2026-04-01_bitacora_sesion.md)
+- `2026-03-27` [Bitácora de sesión 2026-03-27](../[bitacora_privada]/2026-03-27_bitacora_sesion.md)
 - `2026-03-26` [Bitácora de sesión 2026-03-26](../[bitacora_privada]/2026-03-26_bitacora_sesion_2.md)
 - `2026-03-26` [Bitácora de sesión 2026-03-26](../[bitacora_privada]/2026-03-26_bitacora_sesion_1.md)
 - `2026-03-26` [Bitácora de sesión 2026-03-26](../[bitacora_privada]/2026-03-26_bitacora_sesion.md)
+- `2026-03-25` [Bitácora de sesión 2026-03-25](../[bitacora_privada]/2026-03-25_bitacora_sesion.md)
 - `2026-03-24` [Bitácora de sesión 2026-03-24](../[bitacora_privada]/2026-03-24_bitacora_sesion.md)
 - `2026-03-23` [Bitácora de sesión 2026-03-23](../[bitacora_privada]/2026-03-23_bitacora_base_operativa.md)
 
@@ -953,7 +957,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: 814db1d5-6b35-47d2-b7bd-7178a38c0ab6)
 - **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
 - **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
 - **Fuente de Conversación Registrada:** `[evento_interno]` | Captura requerida: True
-- **Cadena:** [Anterior: [validacion_humana_interna]] | [Siguiente: FIN]
+- **Cadena:** [Anterior: [validacion_humana_interna]] | [Siguiente: [validacion_humana_interna]]
 - **Contenido:**
 &lt;&lt;&lt;
 Objetivo de Sesión: Completar la trazabilidad de la conversación actual.
@@ -963,6 +967,27 @@ ID de Sesión: codex-local-20260401-trazabilidad-conversacion-actual
 Diferencial de Plan: Registrar evidencia fuente, vincular un nuevo VAL-STEP y materializar proyecciones de trazabilidad.
 ---
 Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260401-trazabilidad-conversacion-actual): &quot;completa la trrazabilidad de esta conversación&quot;&gt;&gt;&gt;
+
+---
+
+## [[validacion_humana_interna]]
+- **Proveedor:** [proveedor_ia_interno]
+- **Modelo/Versión:** [modelo_ia_interno]
+- **Fecha:** 2026-04-02
+- **Vínculo:** [DEC-0014]
+- **Hash:** `[hash_redactado]:[redactado]`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Confirmas registrar formalmente la verificación y regularización de actividades recientes no registradas?
+- **Confirmación Verbal (Texto Exacto):** verifica que estén correctamente registradas las actividades recientes no registradas
+- **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
+- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `[evento_interno]` | Captura requerida: True
+- **Cadena:** [Anterior: [validacion_humana_interna]] | [Siguiente: FIN]
+- **Contenido:**
+&lt;&lt;&lt;
+Objetivo de Sesión: Verificar y regularizar el registro de actividades recientes no registradas explícitamente como validación humana independiente. Contexto Operativo: Se identificaron commits recientes de automatización CI/wiki y sanitización pública posteriores al cierre [validacion_humana_interna]. Se registra validación humana explícita para dejar trazabilidad formal de estas actividades recientes y su estado de cumplimiento (verify en verde).&gt;&gt;&gt;
 
 **Navegación:**
 - [Volver a la Matriz](matriz_trazabilidad.md)

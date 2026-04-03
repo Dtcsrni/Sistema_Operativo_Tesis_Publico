@@ -6,6 +6,7 @@ on:
     types: [completed]
     branches:
       - main
+      - codex/bootstrap
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
@@ -17,8 +18,7 @@ jobs:
   sync-public:
     if: >-
       github.event.workflow_run.conclusion == 'success' &&
-      github.repository == 'Dtcsrni/Sistema_Operativo_Tesis_Posgrado' &&
-      github.event.workflow_run.head_branch == 'main'
+      github.repository == 'Dtcsrni/Sistema_Operativo_Tesis_Posgrado'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout validated commit
@@ -55,5 +55,4 @@ jobs:
             --target-dir "$RUNNER_TEMP/Sistema_Operativo_Tesis_Publico" \
             --repo-url "https://x-access-token:${PUBLIC_REPO_PAT}@github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git" \
             --branch main \
-            --skip-local-mirror \
             --push

@@ -16,9 +16,10 @@ La IA es opcional: acelera trabajo, pero no es requisito para retomar, registrar
 
 1. Leer `README_INICIO.md`.
 2. Ejecutar `python 07_scripts/tesis.py status`.
-3. Ejecutar `python 07_scripts/tesis.py next`.
-4. Si hace falta un diagnóstico más fino, ejecutar `python 07_scripts/tesis.py doctor`.
-5. Si `doctor` muestra un `Python shell` distinto al `Python preferido repo`, seguir usando los wrappers oficiales; ellos fuerzan la `.venv` del proyecto.
+3. Ejecutar `python 07_scripts/tesis.py source status --check`.
+4. Ejecutar `python 07_scripts/tesis.py next`.
+5. Si hace falta un diagnóstico más fino, ejecutar `python 07_scripts/tesis.py doctor`.
+6. Si `doctor` muestra un `Python shell` distinto al `Python preferido repo`, seguir usando los wrappers oficiales; ellos fuerzan la `.venv` del proyecto.
 
 ### Registrar cambio o decisión
 
@@ -33,8 +34,8 @@ La IA es opcional: acelera trabajo, pero no es requisito para retomar, registrar
 ### Auditar
 
 1. Ejecutar `python 07_scripts/tesis.py doctor`.
-2. Ejecutar `python 07_scripts/tesis.py audit --check`.
-3. Ejecutar `python 07_scripts/tesis.py source status --check`.
+2. Ejecutar `python 07_scripts/tesis.py source status --check`.
+3. Ejecutar `python 07_scripts/tesis.py audit --check`.
 4. Ejecutar `python 07_scripts/build_all.py` antes de cerrar trabajo o proponer cambios.
 5. Revisar wiki y dashboard generados si se necesita lectura rápida humana.
 
@@ -52,8 +53,10 @@ La IA es opcional: acelera trabajo, pero no es requisito para retomar, registrar
 2. Ejecutar `python 07_scripts/tesis.py publish --build`.
 3. Revisar `06_dashboard/publico/index.md` y `06_dashboard/publico/manifest_publico.json`.
 4. Ejecutar `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --branch main --check` antes de publicar.
-5. Publicar el downstream con `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`.
-6. Nunca corregir a mano el bundle público ni usar GitHub Pages del repo privado; si algo está mal, ajustar la fuente privada o la política de sanitización y volver a generar.
+5. Instalar hooks locales con `python 07_scripts/install_hooks.py`; desde ahí, cada commit o merge en `main` resincroniza automáticamente el clon local hermano `../Sistema_Operativo_Tesis_Publico`.
+6. Publicar el downstream remoto con `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`.
+7. La actualización automática del repo público remoto ocurre solo desde `main` después de que `verify` termine en verde y requiere `PUBLIC_REPO_PAT` en GitHub Actions.
+8. Nunca corregir a mano el bundle público ni usar GitHub Pages del repo privado; si algo está mal, ajustar la fuente privada o la política de sanitización y volver a generar.
 
 ## Evidencia fuente de conversación
 
@@ -96,10 +99,11 @@ La firma humana no se autoemite desde IA. Si un artefacto requiere renovar super
 3. Confirmar árbol privado limpio para conservar sincronía exacta por commit.
 4. Ejecutar sincronización derivada en modo clon filtrado:
    - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`
-5. Verificar que el repo público incluya `index.md`, `manifest_publico.json`, `_sync_provenance.json`, `NOTA_SEGURIDAD_Y_ACCESO.md`, `wiki/`, `wiki_html/` y `dashboard/`.
-6. Validar que el clon filtrado no incluya rutas privadas (`canon/`, `bitacora/`, `evidencia_privada/`, secretos locales).
-7. Validar que cualquier consumidor externo use la URL del repositorio derivado público y no la del repo privado soberano.
-8. Confirmar que GitHub Pages quede deshabilitado en el repo privado y habilitado solo en el repo público derivado.
+5. Instalar `python 07_scripts/install_hooks.py` para que el espejo local se mantenga al día automáticamente cuando `main` cambie.
+6. Verificar que el repo público incluya `index.md`, `manifest_publico.json`, `_sync_provenance.json`, `NOTA_SEGURIDAD_Y_ACCESO.md`, `wiki/`, `wiki_html/` y `dashboard/`.
+7. Validar que el clon filtrado no incluya rutas privadas (`canon/`, `bitacora/`, `evidencia_privada/`, secretos locales).
+8. Validar que cualquier consumidor externo use la URL del repositorio derivado público y no la del repo privado soberano.
+9. Confirmar que GitHub Pages quede deshabilitado en el repo privado y habilitado solo en el repo público derivado.
 
 ## Rollback de publicación pública
 

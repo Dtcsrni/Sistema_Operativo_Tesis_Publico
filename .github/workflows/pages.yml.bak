@@ -39,7 +39,7 @@ jobs:
 
       - name: Validate public projection before deploy
         run: |
-          python 07_scripts/sync_public_repo.py --mode mirror --target-dir "$RUNNER_TEMP/public-sync-check" --branch main --skip-local-mirror --check --allow-dirty
+          python 07_scripts/sync_public_repo.py --mode mirror --target-dir "$RUNNER_TEMP/public-sync-check" --branch main --check --allow-dirty
 
       - name: Build public site
         run: mkdocs build

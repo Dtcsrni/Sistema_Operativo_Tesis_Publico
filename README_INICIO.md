@@ -62,52 +62,52 @@ La capa operativa para despliegue real y reproducibilidad ahora se organiza tamb
 Si retomas el proyecto o necesitas explicar el sistema desde cero:
 
 1. Lee este archivo completo.
-2. Lee [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](/[ruta_local_redactada]).
-3. Lee [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](/[ruta_local_redactada]).
-4. Lee [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](/[ruta_local_redactada]).
-5. Lee [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](/[ruta_local_redactada]) para entender IDs, términos y convenciones.
-6. Si vas a operar el sistema, continúa con [`00_sistema_tesis/manual_operacion_humana.md`](/[ruta_local_redactada]).
-7. Si vas a preparar despliegue, revisa [`docs/02_arquitectura/arquitectura-general.md`](/[ruta_local_redactada]), [`docs/02_arquitectura/topologia-de-almacenamiento.md`](/[ruta_local_redactada]) y `bootstrap/`.
+2. Lee [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md).
+3. Lee [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md).
+4. Lee [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/flujos_operativos.md).
+5. Lee [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md) para entender IDs, términos y convenciones.
+6. Si vas a operar el sistema, continúa con [`00_sistema_tesis/manual_operacion_humana.md`](/[ruta_local_redactada]/00_sistema_tesis/manual_operacion_humana.md).
+7. Si vas a preparar despliegue, revisa [`docs/02_arquitectura/arquitectura-general.md`](/[ruta_local_redactada]/docs/02_arquitectura/arquitectura-general.md), [`docs/02_arquitectura/topologia-de-almacenamiento.md`](/[ruta_local_redactada]/docs/02_arquitectura/topologia-de-almacenamiento.md) y `bootstrap/`.
 8. Si quieres diagnóstico inmediato, ejecuta `python 07_scripts/tesis.py status` y `python 07_scripts/tesis.py next`.
 
 ## Mapa de navegación y rastreo
 
 Si necesitas orientarte sin perder el origen canónico:
 
-1. Empieza en [`README_INICIO.md`](/[ruta_local_redactada]) y luego entra a [`06_dashboard/wiki/index.md`](/[ruta_local_redactada]).
+1. Empieza en [`README_INICIO.md`](/[ruta_local_redactada]/README_INICIO.md) y luego entra a [`06_dashboard/wiki/index.md`](/[ruta_local_redactada]/06_dashboard/wiki/index.md).
 2. Desde cada página de la wiki, usa el bloque `Origen canónico y artefactos relacionados`.
 3. Si necesitas cambiar contenido, salta de la página derivada a su fuente canónica declarada y edítala ahí.
-4. Si necesitas verificar publicación o sanitización, cruza [`06_dashboard/generado/wiki_manifest.json`](/[ruta_local_redactada]) con [`06_dashboard/publico/manifest_publico.json`](/[ruta_local_redactada]).
-5. Si necesitas trazabilidad operativa interna, revisa [`[matriz_privada]`](/[ruta_local_redactada]]) y [`[ledger_privado]`](/[ruta_local_redactada]]).
+4. Si necesitas verificar publicación o sanitización, cruza [`06_dashboard/generado/wiki_manifest.json`](/[ruta_local_redactada]/06_dashboard/generado/wiki_manifest.json) con [`06_dashboard/publico/manifest_publico.json`](/[ruta_local_redactada]/06_dashboard/publico/manifest_publico.json).
+5. Si necesitas trazabilidad operativa interna, revisa [`[matriz_privada]`](/[ruta_local_redactada]/[matriz_privada]) y [`[ledger_privado]`](/[ruta_local_redactada]/[ledger_privado]).
 
 ## Entradas por necesidad
 
-- Entender propósito, módulos y flujos: [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](/[ruta_local_redactada]), [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](/[ruta_local_redactada]) y [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](/[ruta_local_redactada]).
-- Entender reglas e interacción humana: [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](/[ruta_local_redactada]) y [`00_sistema_tesis/config/ia_gobernanza.yaml`](/[ruta_local_redactada]).
-- Entender términos, IDs y convenciones: [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](/[ruta_local_redactada]).
-- Entender trabajo en curso: [`01_planeacion/backlog.csv`](/[ruta_local_redactada]), [`01_planeacion/riesgos.csv`](/[ruta_local_redactada]) y [`06_dashboard/wiki/planeacion.md`](/[ruta_local_redactada]).
-- Entender decisiones y continuidad: [`00_sistema_tesis/decisiones`](/[ruta_local_redactada]) y [`[bitacora_privada]`](/[ruta_local_redactada]]).
+- Entender propósito, módulos y flujos: [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md), [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md) y [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/flujos_operativos.md).
+- Entender reglas e interacción humana: [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md) y [`00_sistema_tesis/config/ia_gobernanza.yaml`](/[ruta_local_redactada]/00_sistema_tesis/config/ia_gobernanza.yaml).
+- Entender términos, IDs y convenciones: [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md).
+- Entender trabajo en curso: [`01_planeacion/backlog.csv`](/[ruta_local_redactada]/01_planeacion/backlog.csv), [`01_planeacion/riesgos.csv`](/[ruta_local_redactada]/01_planeacion/riesgos.csv) y [`06_dashboard/wiki/planeacion.md`](/[ruta_local_redactada]/06_dashboard/wiki/planeacion.md).
+- Entender decisiones y continuidad: [`00_sistema_tesis/decisiones`](/[ruta_local_redactada]/00_sistema_tesis/decisiones) y [`[bitacora_privada]`](/[ruta_local_redactada]/[bitacora_privada]).
 
 ## Fuentes canónicas para entender el sistema
 
-- [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](/[ruta_local_redactada])
-- [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](/[ruta_local_redactada])
-- [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](/[ruta_local_redactada])
-- [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](/[ruta_local_redactada])
-- [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](/[ruta_local_redactada])
-- [`00_sistema_tesis/config/sistema_tesis.yaml`](/[ruta_local_redactada])
-- [`00_sistema_tesis/config/publicacion.yaml`](/[ruta_local_redactada])
-- [`00_sistema_tesis/config/ia_gobernanza.yaml`](/[ruta_local_redactada])
+- [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md)
+- [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md)
+- [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/flujos_operativos.md)
+- [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md)
+- [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](/[ruta_local_redactada]/00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md)
+- [`00_sistema_tesis/config/sistema_tesis.yaml`](/[ruta_local_redactada]/00_sistema_tesis/config/sistema_tesis.yaml)
+- [`00_sistema_tesis/config/publicacion.yaml`](/[ruta_local_redactada]/00_sistema_tesis/config/publicacion.yaml)
+- [`00_sistema_tesis/config/ia_gobernanza.yaml`](/[ruta_local_redactada]/00_sistema_tesis/config/ia_gobernanza.yaml)
 
 ## Qué revisar siempre
 
-- [`00_sistema_tesis/manual_operacion_humana.md`](/[ruta_local_redactada])
-- [`01_planeacion/backlog.csv`](/[ruta_local_redactada])
-- [`01_planeacion/riesgos.csv`](/[ruta_local_redactada])
-- [`[matriz_privada]`](/[ruta_local_redactada]])
-- [`06_dashboard/wiki/index.md`](/[ruta_local_redactada])
-- [`06_dashboard/generado/index.html`](/[ruta_local_redactada])
-- [`06_dashboard/publico/index.md`](/[ruta_local_redactada])
+- [`00_sistema_tesis/manual_operacion_humana.md`](/[ruta_local_redactada]/00_sistema_tesis/manual_operacion_humana.md)
+- [`01_planeacion/backlog.csv`](/[ruta_local_redactada]/01_planeacion/backlog.csv)
+- [`01_planeacion/riesgos.csv`](/[ruta_local_redactada]/01_planeacion/riesgos.csv)
+- [`[matriz_privada]`](/[ruta_local_redactada]/[matriz_privada])
+- [`06_dashboard/wiki/index.md`](/[ruta_local_redactada]/06_dashboard/wiki/index.md)
+- [`06_dashboard/generado/index.html`](/[ruta_local_redactada]/06_dashboard/generado/index.html)
+- [`06_dashboard/publico/index.md`](/[ruta_local_redactada]/06_dashboard/publico/index.md)
 
 ## Flujos operativos mínimos
 
@@ -115,15 +115,19 @@ Retomar estado:
 
 ```powershell
 python 07_scripts/tesis.py status
+python 07_scripts/tesis.py source status --check
 python 07_scripts/tesis.py next
 python 07_scripts/tesis.py doctor
 ```
 
 Si `doctor` reporta que el `python` del shell no coincide con la `.venv`, usa los wrappers oficiales del repo (`tesis.py`, `build_all.py`, `governance_gate.py`), porque ellos fuerzan el intérprete preferido del proyecto.
 
+Antes de cerrar una sesión larga, revisa también la evidencia fuente de conversación con `python 07_scripts/tesis.py source status --check`.
+
 Auditar y regenerar:
 
 ```powershell
+python 07_scripts/tesis.py source status --check
 python 07_scripts/tesis.py audit --check
 python 07_scripts/build_all.py
 ```
@@ -151,22 +155,22 @@ python 07_scripts/tesis.py source verify --step-id [validacion_humana_interna]
 
 ## Dónde registrar cada cosa
 
-- **Decisiones de arquitectura, gobernanza o método:** [`00_sistema_tesis/decisiones/`](/[ruta_local_redactada])
-- **Bitácora operativa o de sesión:** [`[bitacora_privada]/`](/[ruta_local_redactada]])
-- **Tareas y prioridades:** [`01_planeacion/backlog.csv`](/[ruta_local_redactada])
-- **Riesgos y mitigaciones:** [`01_planeacion/riesgos.csv`](/[ruta_local_redactada])
-- **Política pública sanitizada:** [`00_sistema_tesis/config/publicacion.yaml`](/[ruta_local_redactada])
+- **Decisiones de arquitectura, gobernanza o método:** [`00_sistema_tesis/decisiones/`](/[ruta_local_redactada]/00_sistema_tesis/decisiones)
+- **Bitácora operativa o de sesión:** [`[bitacora_privada]/`](/[ruta_local_redactada]/[bitacora_privada])
+- **Tareas y prioridades:** [`01_planeacion/backlog.csv`](/[ruta_local_redactada]/01_planeacion/backlog.csv)
+- **Riesgos y mitigaciones:** [`01_planeacion/riesgos.csv`](/[ruta_local_redactada]/01_planeacion/riesgos.csv)
+- **Política pública sanitizada:** [`00_sistema_tesis/config/publicacion.yaml`](/[ruta_local_redactada]/00_sistema_tesis/config/publicacion.yaml)
 - **Evidencia fuente privada de conversación:** `[evidencia_privada_redactada]/conversaciones_codex/`
 
 ## Qué no se edita a mano
 
 No se corrigen manualmente los artefactos derivados. Se regeneran.
 
-- [`README.md`](/[ruta_local_redactada])
-- [`06_dashboard/wiki/index.md`](/[ruta_local_redactada])
-- [`06_dashboard/generado/index.html`](/[ruta_local_redactada])
-- [`06_dashboard/publico/index.md`](/[ruta_local_redactada])
-- [`06_dashboard/publico/manifest_publico.json`](/[ruta_local_redactada])
+- [`README.md`](/[ruta_local_redactada]/README.md)
+- [`06_dashboard/wiki/index.md`](/[ruta_local_redactada]/06_dashboard/wiki/index.md)
+- [`06_dashboard/generado/index.html`](/[ruta_local_redactada]/06_dashboard/generado/index.html)
+- [`06_dashboard/publico/index.md`](/[ruta_local_redactada]/06_dashboard/publico/index.md)
+- [`06_dashboard/publico/manifest_publico.json`](/[ruta_local_redactada]/06_dashboard/publico/manifest_publico.json)
 
 ## Criterio de esta base
 

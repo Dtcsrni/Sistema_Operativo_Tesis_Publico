@@ -1011,7 +1011,7 @@ def render_session_files(events: list[dict[str, Any]]) -> dict[str, str]:
             continue
         path = normalize_path(str(event["payload"].get("path", "")))
         content = normalize_text(str(event["payload"].get("content", "")))
-        if path:
+        if path and not (path.startswith("00_sistema_tesis/bitacora/") and "bitacora_sesion" in path):
             sessions[path] = content
     return sessions
 

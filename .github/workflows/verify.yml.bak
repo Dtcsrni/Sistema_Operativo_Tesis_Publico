@@ -34,7 +34,7 @@ jobs:
 
       - name: Validate downstream public projection
         run: |
-          python 07_scripts/sync_public_repo.py --mode mirror --target-dir "$RUNNER_TEMP/public-sync-check" --branch main --skip-local-mirror --check
+          python 07_scripts/sync_public_repo.py --mode mirror --target-dir "$RUNNER_TEMP/public-sync-check" --branch main --check
 
       - name: Run public downstream smoke checks
         if: github.repository == 'Dtcsrni/Sistema_Operativo_Tesis_Publico'
@@ -45,8 +45,8 @@ jobs:
         if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico'
         env:
           SISTEMA_TESIS_SKIP_GPG_CHECK: "1"
-          SISTEMA_TESIS_STEP_ID: "[validacion_humana_interna]"
-        run: python 07_scripts/governance_gate.py --stage ci --agent github-actions --step-id "[validacion_humana_interna]"
+          SISTEMA_TESIS_STEP_ID: "VAL-STEP-430"
+        run: python 07_scripts/governance_gate.py --stage ci --agent github-actions --step-id "VAL-STEP-430"
 
       - name: Rebuild wiki after gates pass
         if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && success()
@@ -61,7 +61,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No wiki changes to commit."
           else
-            git commit -m "citogates [[validacion_humana_interna]]: regenerate wiki and dashboard after verification passed"
+            git commit -m "citogates [VAL-STEP-430]: regenerate wiki and dashboard after verification passed"
             git push origin HEAD:${GITHUB_REF#refs/heads/} || true
           fi
 
@@ -71,7 +71,7 @@ jobs:
         with:
           name: governance-gate-artifacts
           path: |
-            [historial_interno_redactado]/governance_gate
+            00_sistema_tesis/bitacora/audit_history/governance_gate
             README.md
             06_dashboard/wiki
             06_dashboard/generado

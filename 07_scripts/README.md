@@ -21,6 +21,7 @@ python 07_scripts/build_all.py
 ```powershell
 python 07_scripts/tesis.py publish --check
 python 07_scripts/tesis.py publish --build
+python 07_scripts/install_hooks.py
 python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push
 ```
 
@@ -58,9 +59,11 @@ python 07_scripts/tesis.py split-staged --commit
 - `sync`: separa commits operativos y derivados manteniendo enforcement del gate.
 - `sync_public_repo.py`: publica un clon filtrado (`--mode mirror`) o solo bundle (`--mode bundle`) hacia el repo público derivado.
 - Verifica hash por archivo entre origen canónico y destino público antes de commit/push.
+- Reutiliza un solo fingerprint por ejecución y puede actualizar en la misma corrida el destino principal y el espejo local hermano.
 - Emite `_sync_provenance.json` con commit/branch/fingerprint de sincronización.
 - Emite `NOTA_SEGURIDAD_Y_ACCESO.md` con políticas y contacto del tesista.
 - Requiere árbol privado limpio para garantizar sincronía exacta con el commit canónico (`--allow-dirty` solo bajo uso explícito).
+- `install_hooks.py`: instala hooks `pre-commit`, `pre-push`, `post-commit` y `post-merge`; los últimos resincronizan automáticamente el espejo local en `main`.
 
 ## Scripts de soporte
 

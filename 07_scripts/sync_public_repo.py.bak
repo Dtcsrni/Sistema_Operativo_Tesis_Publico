@@ -42,7 +42,6 @@ TEXT_SUFFIXES = {
     ".yaml",
 }
 PUBLIC_REPO_NAME = "Dtcsrni/Sistema_Operativo_Tesis_Publico"
-DEFAULT_LOCAL_MIRROR_DIR = "../Sistema_Operativo_Tesis_Publico"
 PUBLIC_OPERATIONAL_PASSTHROUGH_PATHS = {
     "00_sistema_tesis/config/publicacion.yaml",
 }
@@ -118,12 +117,6 @@ def _sha256_bytes(payload: bytes) -> str:
     digest = hashlib.sha256()
     digest.update(payload)
     return digest.hexdigest()
-
-
-def bundle_fingerprint(payloads: dict[str, bytes]) -> str:
-    return hashlib.sha256(
-        json.dumps({rel: _sha256_bytes(blob) for rel, blob in payloads.items()}, ensure_ascii=False, sort_keys=True).encode("utf-8")
-    ).hexdigest()
 
 
 def _source_map_bundle(source_dir: Path) -> dict[str, Path]:
@@ -286,19 +279,10 @@ def _tesista_contact_default() -> str:
     return "contacto_no_configurado"
 
 
-def write_sync_provenance(
-    payloads: dict[str, bytes],
-    target_dir: Path,
-    branch: str,
-    mode: str,
-    *,
-    bundle_hash: str,
-    destination_label: str,
-) -> None:
+def write_sync_provenance(payloads: dict[str, bytes], target_dir: Path, branch: str, mode: str) -> None:
     payload = {
         "synced_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "sync_mode": mode,
-        "destination_label": destination_label,
         "source_file_count": len(payloads),
         "source_repo": {
             "remote_origin": _git_value(ROOT, ["remote", "get-url", "origin"]),
@@ -309,7 +293,9 @@ def write_sync_provenance(
             "branch": branch,
             "commit_before_sync": _git_value(target_dir, ["rev-parse", "HEAD"]),
         },
-        "bundle_fingerprint": bundle_hash,
+        "bundle_fingerprint": hashlib.sha256(
+            json.dumps({rel: _sha256_bytes(blob) for rel, blob in payloads.items()}, ensure_ascii=False, sort_keys=True).encode("utf-8")
+        ).hexdigest(),
         "private_exclusions": {
             "policy": "canonical_private_surfaces_filtered",
             "prefix_rules_count": len(PRIVATE_EXCLUDE_PREFIXES),
@@ -341,73 +327,11 @@ def has_changes(target_dir: Path) -> bool:
     return bool(status.stdout.strip())
 
 
-def build_sync_payloads(mode: str, source_dir_value: str) -> tuple[Path, dict[str, bytes], str]:
-    if mode == "bundle":
-        source_dir = (ROOT / source_dir_value).resolve()
-        if not source_dir.exists():
-            raise SystemExit(f"No existe el directorio fuente: {source_dir}")
-        source_map = _source_map_bundle(source_dir)
-        payloads = _render_payloads(source_map, sanitize=False)
-    else:
-        source_dir = ROOT
-        source_map = _source_map_mirror(ROOT)
-        payloads = _render_payloads(source_map, sanitize=True)
-    return source_dir, payloads, bundle_fingerprint(payloads)
-
-
-def sync_target(
-    *,
-    target_dir: Path,
-    branch: str,
-    repo_url: str,
-    payloads: dict[str, bytes],
-    mode: str,
-    bundle_hash: str,
-    contact_email: str,
-    check: bool,
-    push: bool,
-    destination_label: str,
-    commit_message: str,
-) -> dict[str, object]:
-    ensure_target_repo(target_dir, branch, repo_url)
-    reset_content_dir(target_dir)
-    copy_selected_files(payloads, target_dir)
-    verify_sync(payloads, target_dir)
-    write_sync_provenance(
-        payloads,
-        target_dir,
-        branch,
-        mode,
-        bundle_hash=bundle_hash,
-        destination_label=destination_label,
-    )
-    write_security_notice(target_dir, contact_email=contact_email)
-
-    changed = has_changes(target_dir)
-    if not check:
-        run_command(["git", "add", "-A"], cwd=target_dir)
-        changed = has_changes(target_dir)
-    if not check and changed:
-        run_command(["git", "commit", "-m", commit_message], cwd=target_dir)
-    if not check and push:
-        push_result = run_command(["git", "push", "-u", "origin", branch], cwd=target_dir, check=False)
-        if push_result.returncode != 0:
-            print(push_result.stdout.strip())
-            print(push_result.stderr.strip())
-            raise SystemExit(f"No fue posible hacer push al destino público `{destination_label}`")
-    return {
-        "target": str(target_dir),
-        "changed": changed,
-        "bundle_fingerprint": bundle_hash,
-    }
-
-
 def main() -> int:
     parser = argparse.ArgumentParser(description="Sincroniza un clon filtrado o bundle público hacia un repositorio derivado.")
     parser.add_argument("--mode", choices=("bundle", "mirror"), default="mirror")
     parser.add_argument("--source-dir", default="06_dashboard/publico")
     parser.add_argument("--target-dir", default="../Sistema_Operativo_Tesis_Publico")
-    parser.add_argument("--local-mirror-dir", default=DEFAULT_LOCAL_MIRROR_DIR)
     parser.add_argument("--repo-url", default="")
     parser.add_argument("--branch", default="main")
     parser.add_argument("--contact-email", default="")
@@ -415,7 +339,6 @@ def main() -> int:
     parser.add_argument("--allow-dirty", action="store_true")
     parser.add_argument("--check", action="store_true", help="Verifica la proyección sin crear commit ni hacer push.")
     parser.add_argument("--push", action="store_true")
-    parser.add_argument("--skip-local-mirror", action="store_true")
     args = parser.parse_args()
 
     if not args.allow_dirty and _git_is_dirty(ROOT):
@@ -425,7 +348,16 @@ def main() -> int:
         )
 
     target_dir = (ROOT / args.target_dir).resolve()
-    source_dir, payloads, bundle_hash = build_sync_payloads(args.mode, args.source_dir)
+    if args.mode == "bundle":
+        source_dir = (ROOT / args.source_dir).resolve()
+        if not source_dir.exists():
+            raise SystemExit(f"No existe el directorio fuente: {source_dir}")
+        source_map = _source_map_bundle(source_dir)
+        payloads = _render_payloads(source_map, sanitize=False)
+    else:
+        source_dir = ROOT
+        source_map = _source_map_mirror(ROOT)
+        payloads = _render_payloads(source_map, sanitize=True)
 
     validation_errors = validate_sync_payloads(payloads)
     if validation_errors:
@@ -434,38 +366,12 @@ def main() -> int:
             + json.dumps(validation_errors, ensure_ascii=False, indent=2)
         )
 
-    contact_email = args.contact_email or _tesista_contact_default()
-    primary_result = sync_target(
-        target_dir=target_dir,
-        branch=args.branch,
-        repo_url=args.repo_url,
-        payloads=payloads,
-        mode=args.mode,
-        bundle_hash=bundle_hash,
-        contact_email=contact_email,
-        check=args.check,
-        push=args.push,
-        destination_label="public_remote" if args.repo_url else "public_primary",
-        commit_message=args.commit_message,
-    )
-
-    local_mirror_result: dict[str, object] | None = None
-    if not args.skip_local_mirror:
-        local_mirror_dir = (ROOT / args.local_mirror_dir).resolve()
-        if local_mirror_dir != target_dir:
-            local_mirror_result = sync_target(
-                target_dir=local_mirror_dir,
-                branch=args.branch,
-                repo_url="",
-                payloads=payloads,
-                mode=args.mode,
-                bundle_hash=bundle_hash,
-                contact_email=contact_email,
-                check=args.check,
-                push=False,
-                destination_label="public_local_mirror",
-                commit_message=args.commit_message,
-            )
+    ensure_target_repo(target_dir, args.branch, args.repo_url)
+    reset_content_dir(target_dir)
+    copy_selected_files(payloads, target_dir)
+    verify_sync(payloads, target_dir)
+    write_sync_provenance(payloads, target_dir, args.branch, args.mode)
+    write_security_notice(target_dir, contact_email=args.contact_email or _tesista_contact_default())
 
     if args.check:
         print("SYNC-PUBLIC: CHECK")
@@ -473,31 +379,26 @@ def main() -> int:
         print(f"MODE: {args.mode}")
         print(f"TARGET: {target_dir}")
         print(f"FILES: {len(payloads)}")
-        print(f"BUNDLE_FINGERPRINT: {bundle_hash}")
-        if local_mirror_result:
-            print(f"LOCAL_MIRROR: {local_mirror_result['target']}")
         return 0
 
-    if primary_result["changed"]:
+    run_command(["git", "add", "-A"], cwd=target_dir)
+    if has_changes(target_dir):
+        run_command(["git", "commit", "-m", args.commit_message], cwd=target_dir)
         print("SYNC-PUBLIC: commit creado")
     else:
         print("SYNC-PUBLIC: sin cambios")
 
-    if local_mirror_result:
-        if local_mirror_result["changed"]:
-            print("SYNC-PUBLIC: espejo local actualizado")
-        else:
-            print("SYNC-PUBLIC: espejo local sin cambios")
-
     if args.push:
+        push_result = run_command(["git", "push", "-u", "origin", args.branch], cwd=target_dir, check=False)
+        if push_result.returncode != 0:
+            print(push_result.stdout.strip())
+            print(push_result.stderr.strip())
+            raise SystemExit("No fue posible hacer push al remoto público")
         print(f"SYNC-PUBLIC: push completado -> origin/{args.branch}")
 
     print(f"SOURCE: {source_dir}")
     print(f"MODE: {args.mode}")
     print(f"TARGET: {target_dir}")
-    print(f"BUNDLE_FINGERPRINT: {bundle_hash}")
-    if local_mirror_result:
-        print(f"LOCAL_MIRROR: {local_mirror_result['target']}")
     return 0
 
 

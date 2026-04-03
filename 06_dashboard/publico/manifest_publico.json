@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-04-01",
+  "generated_at": "2026-04-03",
   "status": "ok",
   "scope": "publico_sanitizado",
-  "bundle_fingerprint": "a69a15639adb1f04db47535252f3af5a13231219e9645599b36a90cf2a866471",
+  "bundle_fingerprint": "3f142a6ec05ecadc662895ecf9f2c9516995b6e87b9b53400faf59aba6708490",
   "notice": "Este bundle público es un artefacto derivado y sanitizado. No se corrige a mano; se reconstruye desde la base privada.",
   "artifacts": [
     {

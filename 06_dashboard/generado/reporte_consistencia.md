@@ -15,7 +15,7 @@
 - Decisiones registradas: 21
 - Errores de validación de wiki: 0
 - Resúmenes semanales con economía de uso: 1/1
-- Bitácoras con economía de uso: 5/8
+- Bitácoras con economía de uso: 9/12
 - Semanas con oportunidad de desperdicio identificada: 1/1
 - Semanas con gasto ineficiente realmente registrado: 0/1
 

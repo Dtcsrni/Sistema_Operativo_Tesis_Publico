@@ -22,16 +22,6 @@ PRE_PUSH_HOOK = """#!/bin/sh
 python 07_scripts/governance_gate.py --stage pre-push
 """
 
-POST_COMMIT_SYNC_HOOK = """#!/bin/sh
-BRANCH="$(git branch --show-current 2>/dev/null)"
-if [ "$BRANCH" != "main" ]; then
-  exit 0
-fi
-
-PYTHON_BIN="${SISTEMA_TESIS_HOOK_PYTHON:-python}"
-"$PYTHON_BIN" 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --branch main --skip-local-mirror
-"""
-
 def install_hook(name, content):
     git_hook_dir = ROOT / ".git" / "hooks"
     if not git_hook_dir.parent.exists():
@@ -47,5 +37,3 @@ def install_hook(name, content):
 if __name__ == "__main__":
     install_hook("pre-commit", PRE_COMMIT_HOOK)
     install_hook("pre-push", PRE_PUSH_HOOK)
-    install_hook("post-commit", POST_COMMIT_SYNC_HOOK)
-    install_hook("post-merge", POST_COMMIT_SYNC_HOOK)

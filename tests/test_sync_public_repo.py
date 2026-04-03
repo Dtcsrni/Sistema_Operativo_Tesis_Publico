@@ -1,9 +1,17 @@
 from __future__ import annotations
 
 import re
+import tempfile
+from pathlib import Path
 
 from common import ROOT
-from sync_public_repo import _render_payloads, _source_map_mirror, validate_sync_payloads
+from sync_public_repo import (
+    _render_payloads,
+    _source_map_mirror,
+    bundle_fingerprint,
+    sync_target,
+    validate_sync_payloads,
+)
 
 
 def test_mirror_source_map_excludes_private_surfaces() -> None:
@@ -40,3 +48,38 @@ def test_public_sync_payloads_preserve_operational_publication_regexes() -> None
         r"CURP:\\s*`?[A-Z0-9]{18}`?",
     ):
         re.compile(pattern, re.IGNORECASE)
+
+
+def test_sync_public_workflow_only_publishes_from_main() -> None:
+    workflow_text = (ROOT / ".github" / "workflows" / "sync-public.yml").read_text(encoding="utf-8")
+    assert "- main" in workflow_text
+    assert "codex/bootstrap" not in workflow_text
+    assert "github.event.workflow_run.head_branch == 'main'" in workflow_text
+
+
+def test_bundle_fingerprint_is_stable_for_same_payloads() -> None:
+    payloads = _render_payloads(_source_map_mirror(ROOT), sanitize=True)
+    assert bundle_fingerprint(payloads) == bundle_fingerprint(payloads)
+
+
+def test_sync_target_writes_matching_provenance_fingerprint() -> None:
+    payloads = {"README.md": b"hola\n"}
+    expected_fingerprint = bundle_fingerprint(payloads)
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        result = sync_target(
+            target_dir=Path(tmp_dir) / "publico",
+            branch="main",
+            repo_url="",
+            payloads=payloads,
+            mode="mirror",
+            bundle_hash=expected_fingerprint,
+            contact_email="demo@example.com",
+            check=True,
+            push=False,
+            destination_label="public_local_mirror",
+            commit_message="chore: sync test",
+        )
+        provenance = Path(tmp_dir, "publico", "_sync_provenance.json").read_text(encoding="utf-8")
+        assert expected_fingerprint in provenance
+        assert "public_local_mirror" in provenance
+        assert result["bundle_fingerprint"] == expected_fingerprint

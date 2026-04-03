@@ -1,7 +1,9 @@
 {
     "AGENTS.md": "8601b80a2119ab67de28ed4bb65395b4cfdf9bde721505771eb30b21076379ef",
     "_agents/skills/handshake_ledger/SKILL.md": "9806fed4b458fa87546b242f7f0d43e27ba3e4627b47dd8ecdac9cb073c2ef46",
-    "[canon_privado]": "5e0292d22c21a08e6011de3a47fbdb96bc648f0480c0ed2381b9f280a906894f",
+    "06_dashboard/wiki/bitacora.md": "318b9718e37d893c2668681df13bf56a06cc0ebc3a366d50e5827dbc04050228",
+    "06_dashboard/publico/wiki/bitacora.md": "57f9b1db5a414133c9f98666d7ca84476628e57f01fee4086b60510b39818094",
+    "[canon_privado]": "c06b062643779c1c6f0d9c7f058b584796c613b2d9da8d311a53b7f206242d94",
     "[identidad_agente_privada]": "a533526689e9c74e24911b91b80d93390ae1c2b8c6c44c8c8434e0101a737fb4",
     "00_sistema_tesis/config/ia_gobernanza.yaml": "c94d487ff52e47733d0d383f1deb073cd5fb1eb5b8359c716e0c1a2030be5660",
     "00_sistema_tesis/decisiones/2026-03-23_DEC-0001_arquitectura_sistema_tesis.md": "870cbdc8e88d76dc3177396fb6a0d872a5e68aa54630376e3aeaaebebadd66a8",

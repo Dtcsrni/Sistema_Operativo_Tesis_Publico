@@ -159,13 +159,13 @@
   "sources": [
     {
       "path": "README_INICIO.md",
-      "sha256": "376e7d1b4caed9372389f54347a31bafcba3225c1c2dabe24e45534763f57441",
+      "sha256": "3d58b5b3e1004a132cdad2170e85477203f07728c2401bdd149433c31b7c58a1",
       "modified": "[fecha_hora_redactada]",
       "kind": "file"
     },
     {
       "path": "00_sistema_tesis/manual_operacion_humana.md",
-      "sha256": "ceb3f399b3608fba9035f04be88f3ae2d422bd1689c5f595e5684af374fcf6ca",
+      "sha256": "81b5f488a828f62c033f37a4255c0d160baa6203a35ae1b09beed8900dc58b6f",
       "modified": "[fecha_hora_redactada]",
       "kind": "file"
     },

@@ -582,7 +582,7 @@ def cmd_status(_: argparse.Namespace) -> int:
     if risks:
         print(f"- Riesgo abierto prioritario: {risks[0]['risk_id']} - {risks[0]['riesgo']}")
     print(f"- Evidencia fuente de conversación: {source_status['repo_status']} (desde {source_evidence_policy()['desde_step_id']})")
-    print("- Comandos sugeridos: `python 07_scripts/tesis.py doctor` y `python 07_scripts/tesis.py next`")
+    print("- Comandos sugeridos: `python 07_scripts/tesis.py source status --check`, `python 07_scripts/tesis.py doctor` y `python 07_scripts/tesis.py next`")
     return 0
 
 
