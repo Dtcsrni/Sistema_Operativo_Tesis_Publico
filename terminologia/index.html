@@ -998,10 +998,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#desglose-de-validacion_humana_interna" class="md-nav__link">
+  <a href="#validacion-humana-interna-no-publica" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Desglose de [validacion_humana_interna]
+        Validación humana interna no pública
       
     </span>
   </a>
@@ -1572,7 +1572,7 @@
 <p>Glosario, familias de IDs, referencias globales y convenciones de nomenclatura del sistema.</p>
 <ul>
 <li><strong>Tesista:</strong> <code>Erick Renato Vega Ceron</code></li>
-<li><strong>Fecha:</strong> <code>[fecha_hora_redactada]</code></li>
+<li><strong>Fecha:</strong> <code>2026-04-03</code></li>
 <li><strong>Estado:</strong> <code>OK</code></li>
 <li><strong>Fuentes:</strong> <code>00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md</code>, <code>00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json</code>, <code>01_planeacion/backlog_guia.md</code>, <code>00_sistema_tesis/config/ia_gobernanza.yaml</code></li>
 <li><strong>Aviso:</strong> Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.</li>
@@ -1637,7 +1637,7 @@
 <h2 id="lectura-rapida">Lectura rápida</h2>
 <ul>
 <li>Esta página es la referencia central para términos, familias de IDs y convenciones de nombre.</li>
-<li>La capa privada puede mostrar ejemplos concretos como <code>[validacion_humana_interna]</code> o <code>[evento_interno]</code>.</li>
+<li>La capa canónica no pública puede mostrar ejemplos concretos como validación humana interna no pública o evento interno no público.</li>
 <li>La capa pública explica la misma semántica usando formas seguras como <code>VAL_STEP_{nnn}</code> y <code>EVT_{nnnn}</code>.</li>
 </ul>
 <h2 id="familias-de-ids-mas-usadas">Familias de IDs más usadas</h2>
@@ -1734,9 +1734,9 @@
 <li><strong>Uso operativo:</strong> vincular decisiones, implementaciones o cambios sustantivos a consentimiento humano verificable.</li>
 <li><strong>Fuente de verdad / modulo:</strong> <code>00_sistema_tesis/canon/events.jsonl</code> como evento de tipo <code>human_validation</code>; proyecciones en ledger y matriz.</li>
 <li><strong>Que no significa:</strong> no es una tarea, no es un commit, no es una evidencia por si mismo y no equivale a “verdad cientifica demostrada”.</li>
-<li><strong>Ejemplo:</strong> <code>[validacion_humana_interna]</code> identifica la validacion humana que autorizo cerrar pendientes secundarios de la reestructura documental.</li>
+<li><strong>Ejemplo:</strong> validación humana interna no pública identifica la validacion humana que autorizo cerrar pendientes secundarios de la reestructura documental.</li>
 </ul>
-<h5 id="desglose-de-validacion_humana_interna">Desglose de <code>[validacion_humana_interna]</code></h5>
+<h5 id="validacion-humana-interna-no-publica">Validación humana interna no pública</h5>
 <ul>
 <li><code>VAL</code>: familia de validacion.</li>
 <li><code>STEP</code>: paso humano trazable dentro de la cadena de soberania.</li>
@@ -1751,7 +1751,7 @@
 <li><strong>Uso operativo:</strong> registrar eventos que no son <code>VAL-STEP</code>, por ejemplo evidencia fuente de conversacion, actividad de agente o firmas de artefacto.</li>
 <li><strong>Fuente de verdad / modulo:</strong> <code>00_sistema_tesis/canon/events.jsonl</code>.</li>
 <li><strong>Que no significa:</strong> no implica validacion humana por si mismo.</li>
-<li><strong>Ejemplo:</strong> <code>[evento_interno]</code> registra una fuente de conversacion corroborable.</li>
+<li><strong>Ejemplo:</strong> evento interno no público registra una fuente de conversacion corroborable.</li>
 </ul>
 <h4 id="dec-nnnn"><code>DEC-{nnnn}</code></h4>
 <ul>
@@ -1832,7 +1832,7 @@
 <li><strong>Uso operativo:</strong> corroborar que un <code>VAL-STEP</code> se apoya en transcripcion y metadatos de sesion.</li>
 <li><strong>Fuente de verdad / modulo:</strong> evento <code>human_validation</code> y evento <code>conversation_source_registered</code>.</li>
 <li><strong>Que no significa:</strong> no reemplaza el texto de confirmacion verbal; solo lo enlaza a su evidencia.</li>
-<li><strong>Ejemplo:</strong> <code>source_event_id = [evento_interno]</code>.</li>
+<li><strong>Ejemplo:</strong> <code>source_event_id = evento interno no público</code>.</li>
 </ul>
 <h4 id="human_validationconfirmation_text"><code>human_validation.confirmation_text</code></h4>
 <ul>
@@ -1871,7 +1871,7 @@
 <ul>
 <li><strong>Definicion:</strong> capa canonica completa del sistema.</li>
 <li><strong>Uso operativo:</strong> operar, registrar, auditar y conservar evidencia integra.</li>
-<li><strong>Fuente de verdad / modulo:</strong> repositorio privado soberano.</li>
+<li><strong>Fuente de verdad / modulo:</strong> repositorio canónico del proyecto.</li>
 <li><strong>Que no significa:</strong> no es publicable sin sanitizacion.</li>
 <li><strong>Ejemplo:</strong> canon, ledger, evidencia privada y bitacora interna.</li>
 </ul>
@@ -1897,7 +1897,7 @@
 <li><strong>Uso operativo:</strong> dar evidencia fuerte a confirmaciones verbales.</li>
 <li><strong>Fuente de verdad / modulo:</strong> eventos <code>conversation_source_registered</code> y directorio privado de conversaciones.</li>
 <li><strong>Que no significa:</strong> no es el <code>VAL-STEP</code> mismo.</li>
-<li><strong>Ejemplo:</strong> transcripcion asociada a <code>[evento_interno]</code>.</li>
+<li><strong>Ejemplo:</strong> transcripcion asociada a evento interno no público.</li>
 </ul>
 <h4 id="sign-off">Sign-off</h4>
 <ul>
@@ -2073,6 +2073,7 @@
 </ul>
 <h3 id="regla-publica">Regla publica</h3>
 <p>En la capa publica pueden explicarse familias y semantica de IDs, por ejemplo <code>VAL_STEP_{nnn}</code> o <code>EVT_{nnnn}</code>, pero no deben exponerse instancias privadas completas, hashes sensibles ni rutas internas no publicables.</p>
+<p><em>Última actualización: <code>2026-04-03</code>.</em></p>
 
 
 
