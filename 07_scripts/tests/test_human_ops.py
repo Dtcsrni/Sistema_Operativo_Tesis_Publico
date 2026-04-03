@@ -27,11 +27,11 @@ class TestHumanOperationalLayer(unittest.TestCase):
         self.assertNotIn("VAL-STEP-470", sanitized)
         self.assertNotIn("EVT-0001", sanitized)
         self.assertNotIn("sha256:abcdef12", sanitized)
-        self.assertNotIn("00_sistema_tesis/canon/events.jsonl", sanitized)
         self.assertNotIn("00_sistema_tesis/evidencia_privada/conversaciones_codex", sanitized)
-        self.assertNotIn("00_sistema_tesis/bitacora", sanitized)
-        self.assertNotIn("00_sistema_tesis/reportes_semanales", sanitized)
         self.assertNotIn("00_sistema_tesis/config/agent_identity.json", sanitized)
+        self.assertIn("00_sistema_tesis/canon/events.jsonl", sanitized)
+        self.assertIn("00_sistema_tesis/bitacora", sanitized)
+        self.assertIn("00_sistema_tesis/reportes_semanales", sanitized)
 
     def test_sanitize_text_tolerates_missing_agent_identity(self):
         config = load_publication_config()
