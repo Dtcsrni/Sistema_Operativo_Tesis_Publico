@@ -26,9 +26,9 @@ Completar la trazabilidad de la conversación actual, regularizar la fuente de c
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Trabajo realizado
-- Se registró `[evento_interno]` como fuente de conversación y se vinculó con `[validacion_humana_interna]` como validación humana de cierre.
+- Se registró evento interno no público como fuente de conversación y se vinculó con validación humana interna no pública como validación humana de cierre.
 - Se regeneró la wiki de bitácora para que el contenido de `log_conversaciones_ia.md` apareciera de forma directa y no solo por enlace.
-- Se endureció la sanitización de la publicación pública para retirar tokens `[hash_redactado]:` de los artefactos visibles.
+- Se endureció la sanitización de la publicación pública para retirar tokens `hash omitido:` de los artefactos visibles.
 - Se ejecutaron los flujos de verificación local hasta obtener estado verde sin drift ni errores en el bundle público.
 
 ## Evidencia Técnica e Integridad
@@ -38,8 +38,8 @@ Completar la trazabilidad de la conversación actual, regularizar la fuente de c
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Uso de IA y Gobernanza
-- **Proveedor:** [proveedor_ia_interno]
-- **Modelo/Versión:** [modelo_ia_interno]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
 - **Objetivo:** Capturar y cerrar la trazabilidad de la conversación actual con evidencia fuente y validación humana explícita.
 - **Nivel de Razonamiento:** alto
 - **Alineación Ética:**
@@ -53,11 +53,11 @@ Completar la trazabilidad de la conversación actual, regularizar la fuente de c
 ### Validación de Soberanía (Handshake)
 - **Pregunta Crítica:** "¿Autorizas registrar formalmente la trazabilidad de la conversación actual y su validación humana?"
 - **Respuesta Erick Vega:** "completa la trrazabilidad de esta conversación".
-- **Criterio de Aceptación:** [x] Validado con `[validacion_humana_interna]`.
+- **Criterio de Aceptación:** [x] Validado con validación humana interna no pública.
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-  - **Soporte:** `[evento_interno]`
+  - **Soporte:** evento interno no público
   - **Texto exacto de confirmación verbal:** "completa la trrazabilidad de esta conversación"
-  - **Hash de confirmación verbal:** `[hash_redactado]:[redactado]`
+  - **Hash de confirmación verbal:** `hash omitido:omitido`
   - **Nivel de Riesgo:** ALTO
   - **Modo:** Confirmación Verbal
 
@@ -68,6 +68,8 @@ Completar la trazabilidad de la conversación actual, regularizar la fuente de c
 ## Siguiente paso concreto
 Mantener sincronizada la wiki con la bitácora canónica y continuar con la siguiente fase del bloque operativo.
 
-[LID]: [ruta_local_redactada]
-[GOV]: [ruta_local_redactada]
-[AUD]: [ruta_local_redactada]
+[LID]: ruta local no pública
+[GOV]: ruta local no pública
+[AUD]: ruta local no pública
+
+_Última actualización: `2026-04-03`._

@@ -37,7 +37,7 @@
 ### Como interactua
 
 - entra por el bundle publico y la wiki derivada;
-- lee la narrativa tecnica del sistema, no el canon privado;
+- lee la narrativa tecnica del sistema, no el canon no público;
 - usa el dashboard para estado y la wiki para explicacion;
 - interpreta la salida publica como derivada, no como repositorio editable.
 
@@ -70,3 +70,5 @@ Toda documentacion mejorada del sistema debe responder implicitamente a estas pr
 - que puede hacer el tesista con esta pagina;
 - que puede entender un lector publico con esta pagina;
 - que limites de acceso o interpretacion siguen vigentes.
+
+_Última actualización: `2026-04-03`._

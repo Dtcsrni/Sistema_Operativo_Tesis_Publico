@@ -3,7 +3,7 @@
 Backlog, riesgos, roadmap y entregables del sistema.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `[fecha_hora_redactada]`
+- **Fecha:** `2026-04-03`
 - **Estado:** `OK`
 - **Fuentes:** `01_planeacion/backlog.csv`, `01_planeacion/riesgos.csv`, `01_planeacion/roadmap.csv`, `01_planeacion/entregables.csv`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -126,3 +126,4 @@ gantt
 |ENT-011|Paquete sanitizado reproducible|pendiente|06_dashboard/generado|
 |ENT-012|Cierre y defensa|pendiente|05_tesis|
 
+_Última actualización: `2026-04-03`._

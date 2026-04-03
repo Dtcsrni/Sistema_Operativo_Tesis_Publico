@@ -54,7 +54,7 @@ Dejar instalada la base operativa completa del sistema de tesis con fuentes can�
   - **Soporte:** [Retroactivo]
   - **Modo:** [Retroactivo]
   - **Fuerza de evidencia:** Registro histórico retroactivo; no equivale a confirmación verbal exacta preservada en canon.
-  - **Fuente de verdad de confirmación:** No existe `[validacion_humana_interna]` preservado para esta sesión; tratar como antecedente histórico de menor fuerza.
+  - **Fuente de verdad de confirmación:** No existe validación humana interna no pública preservado para esta sesión; tratar como antecedente histórico de menor fuerza.
 ## Economía de uso
 
 - Presupuesto o límite considerado: privilegiar instalación completa de la base operativa en una sola sesión, evitando refinamientos prematuros
@@ -66,6 +66,8 @@ Dejar instalada la base operativa completa del sistema de tesis con fuentes can�
 
 Abrir B1 y B2 con definición de línea base, escenarios urbanos de intermitencia y mapa de variables críticas.
 
-[LID]: [ruta_local_redactada]
-[GOV]: [ruta_local_redactada]
-[AUD]: [ruta_local_redactada]
+[LID]: ruta local no pública
+[GOV]: ruta local no pública
+[AUD]: ruta local no pública
+
+_Última actualización: `2026-04-03`._

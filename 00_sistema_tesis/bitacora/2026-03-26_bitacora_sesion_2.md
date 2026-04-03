@@ -29,7 +29,7 @@ Cerrar la conversación actual con toda la política de trazabilidad ya implanta
 - Se añadió el nuevo evento canónico `conversation_source_registered` y el índice privado `indice_fuentes_conversacion.md`.
 - Se extendió `tesis.py` con los comandos `source register`, `source verify` y `source status`, además de integrar el estado de evidencia fuente en `doctor` y `status`.
 - Se endurecieron `validate_structure.py`, `publication.py`, `build_all.py` y la documentación operativa para respetar el nuevo contrato de evidencia híbrida.
-- Se registró `[validacion_humana_interna]` como paso de migración y se dejó `[validacion_humana_interna]` como inicio del enforcement obligatorio con `source_event_id`.
+- Se registró validación humana interna no pública como paso de migración y se dejó validación humana interna no pública como inicio del enforcement obligatorio con `source_event_id`.
 - Se decidió no crear un `VAL-STEP` adicional de cierre en esta sesión porque no se capturó una fuente de conversación cruda conforme al nuevo estándar; el cierre actual queda como evento operacional y bitácora trazada, no como validación humana nueva.
 
 ## Evidencia Técnica e Integridad
@@ -43,8 +43,8 @@ Cerrar la conversación actual con toda la política de trazabilidad ya implanta
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Uso de IA y Gobernanza
-- **Proveedor:** [proveedor_ia_interno]
-- **Modelo/Versión:** [modelo_ia_interno]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
 - **Objetivo:** Formalizar la corroboración por fuente de conversación y cerrar la sesión sin dejar falsos positivos de soberanía humana.
 - **Nivel de Razonamiento:** alto
 - **Alineación Ética:**
@@ -57,16 +57,16 @@ Cerrar la conversación actual con toda la política de trazabilidad ya implanta
 
 ### Validación de Soberanía (Handshake)
 - **Pregunta Crítica:** "¿Cuál es el último soporte válido de soberanía humana para cerrar esta conversación sin violar el enforcement nuevo?"
-- **Respuesta Erick Vega:** El último soporte sustantivo validado en esta conversación es `[validacion_humana_interna]`; el cierre actual es operativo y no crea una validación humana nueva sin `source_event_id`.
+- **Respuesta Erick Vega:** El último soporte sustantivo validado en esta conversación es validación humana interna no pública; el cierre actual es operativo y no crea una validación humana nueva sin `source_event_id`.
 - **Criterio de Aceptación:** [x] Cierre operacional sustentado sin crear un `VAL-STEP` indebido.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-  - **Soporte:** [[validacion_humana_interna]]
+  - **Soporte:** [validación humana interna no pública]
   - **Pregunta crítica o disparador:** "¿Implemento el plan de evidencia fuente de conversación Codex para confirmación verbal?"
   - **Texto exacto de confirmación verbal:** "PLEASE IMPLEMENT THIS PLAN:"
-  - **Hash de confirmación verbal:** `[hash_redactado]:[redactado]`
-  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
-  - **Hash (Contenido):** `[hash_redactado]:[redactado]`
-  - **Fingerprint:** `[hash_redactado]`
+  - **Hash de confirmación verbal:** `hash omitido:omitido`
+  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+  - **Hash (Contenido):** `hash omitido:omitido`
+  - **Fingerprint:** `Hash omitido por seguridad`
   - **Nivel de Riesgo:** ALTO
   - **Modo:** Confirmación Verbal
 
@@ -78,6 +78,8 @@ Cerrar la conversación actual con toda la política de trazabilidad ya implanta
 ## Siguiente paso concreto
 La siguiente conversación puede iniciar desde `README_INICIO.md` y `00_sistema_tesis/manual_operacion_humana.md`, usando `python 07_scripts/tesis.py status`, `python 07_scripts/tesis.py next` y, si se requiere un `VAL-STEP` nuevo, capturando primero la fuente con `python 07_scripts/tesis.py source register`.
 
-[LID]: [ruta_local_redactada]
-[GOV]: [ruta_local_redactada]
-[AUD]: [ruta_local_redactada]
+[LID]: ruta local no pública
+[GOV]: ruta local no pública
+[AUD]: ruta local no pública
+
+_Última actualización: `2026-04-03`._

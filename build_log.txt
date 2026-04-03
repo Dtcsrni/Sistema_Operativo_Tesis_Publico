@@ -21,16 +21,16 @@ RESUMEN DE FALLOS:
 [RUN] Auditar Ledger IA -> 07_scripts/verify_ledger.py
 [RUN] Auditar Estßndares Externos -> 07_scripts/verify_standards.py
 Traceback (most recent call last):
-  File "[ruta_local_redactada]", line 46, in <module>
+  File "ruta local no pública", line 46, in <module>
     raise SystemExit(main())
                      ~~~~^^
-  File "[ruta_local_redactada]", line 40, in main
+  File "ruta local no pública", line 40, in main
     run_step(label, script, args)
     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
-  File "[ruta_local_redactada]", line 35, in run_step
+  File "ruta local no pública", line 35, in run_step
     subprocess.run(cmd, cwd=ROOT, check=check)
     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "[ruta_local_redactada]", line 577, in run
+  File "ruta local no pública", line 577, in run
     raise CalledProcessError(retcode, process.args,
                              output=stdout, stderr=stderr)
-subprocess.CalledProcessError: Command '['[ruta_local_redactada]', '[ruta_local_redactada]']' returned non-zero exit status 1.
+subprocess.CalledProcessError: Command '['ruta local no pública', 'ruta local no pública']' returned non-zero exit status 1.

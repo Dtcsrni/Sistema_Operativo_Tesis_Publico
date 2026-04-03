@@ -38,8 +38,8 @@ Endurecer la publicación downstream y estabilizar la cadena de CI/CD y páginas
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Uso de IA y Gobernanza
-- **Proveedor:** [proveedor_ia_interno]
-- **Modelo/Versión:** [modelo_ia_interno]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
 - **Objetivo:** Endurecer el flujo de publicación y la supervisión de artefactos públicos.
 - **Nivel de Razonamiento:** alto
 - **Alineación Ética:**
@@ -66,6 +66,8 @@ Endurecer la publicación downstream y estabilizar la cadena de CI/CD y páginas
 ## Siguiente paso concreto
 Continuar con la validación de la wiki y el bundle público sanitizado bajo el nuevo flujo de verify.
 
-[LID]: [ruta_local_redactada]
-[GOV]: [ruta_local_redactada]
-[AUD]: [ruta_local_redactada]
+[LID]: ruta local no pública
+[GOV]: ruta local no pública
+[AUD]: ruta local no pública
+
+_Última actualización: `2026-04-03`._

@@ -64,3 +64,5 @@ El sistema debe describir:
 - limites y pendientes canonicos todavia abiertos.
 
 El sistema no debe describir como cerrado lo que en planeacion o decisiones siga pendiente de formalizacion tecnica profunda.
+
+_Última actualización: `2026-04-03`._

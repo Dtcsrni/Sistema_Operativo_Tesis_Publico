@@ -5,7 +5,7 @@
 Este repositorio es un **Sistema Operativo de Tesis de Posgrado** gobernado por principios de soberanía humana estricta y trazabilidad inmutable. Si eres una inteligencia artificial o un agente asistido por LLM, DEBES seguir estas reglas incondicionalmente.
 
 ## 1. Contrato de Soberanía Humana
-- **Prohibición de Auto-Validación:** NUNCA marques una tarea o decisión como "validada" por tu cuenta. Toda validación requiere el consentimiento humano explícito vinculado a un **Step ID** (ej. `[[validacion_humana_interna]]`).
+- **Prohibición de Auto-Validación:** NUNCA marques una tarea o decisión como "validada" por tu cuenta. Toda validación requiere el consentimiento humano explícito vinculado a un **Step ID** (ej. `[validación humana interna no pública]`).
 - **Protocolo Handshake:** Sigue estrictamente el protocolo definido en [`DEC-0014`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md).
 
 ## 2. Trazabilidad de Evidencia
@@ -30,3 +30,5 @@ Este repositorio es un **Sistema Operativo de Tesis de Posgrado** gobernado por 
 **Firmado:**
 Erick Renato Vega Ceron (Tesista Soberano)
 2026-03-24
+
+_Última actualización: `2026-04-03`._

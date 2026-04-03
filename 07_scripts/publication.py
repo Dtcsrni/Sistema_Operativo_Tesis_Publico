@@ -44,6 +44,48 @@ PRIVATE_PREFIXES = (
     "config/backups/",
 )
 PUBLIC_REPO_NAME = "Dtcsrni/Sistema_Operativo_Tesis_Publico"
+PUBLIC_EDIT_PLACEHOLDER_PATTERN = re.compile(r"\[[A-Za-z0-9_]+(?:_redactad[ao]|_privad[ao]|_intern[ao])\]")
+PUBLIC_HASH_LINE_PATTERN = re.compile(r"^\s*-\s+\*\*Hash(?: de Confirmación Verbal)?:\*\*.*$", re.MULTILINE)
+PUBLIC_CONFIRMATION_SOURCE_PATTERN = re.compile(r"^\s*-\s+\*\*Fuente de Verdad de Confirmación:\*\*.*$", re.MULTILINE)
+PUBLIC_CHAIN_PATTERN = re.compile(r"^\s*-\s+\*\*Cadena:\*\*.*$", re.MULTILINE)
+PUBLIC_SESSION_HEADING_PATTERN = re.compile(r"^### \[{1,2}[^\]]+\]{1,2}\s*$", re.MULTILINE)
+PUBLIC_LAST_UPDATE_MARKDOWN = "_Última actualización: `{generated_at}`._"
+PUBLIC_LAST_UPDATE_HTML = '<footer class="public-update"><p>Última actualización: <strong>{generated_at}</strong></p></footer>'
+PUBLIC_TEXTUAL_REPLACEMENTS = (
+    ("[validacion_humana_interna]", "validación humana interna no pública"),
+    ("[evento_interno]", "evento interno no público"),
+    ("[hash_redactado]", "hash omitido"),
+    ("[redactado]", "omitido"),
+    ("[fecha_hora_redactada]", "{generated_at}"),
+    ("[identidad_agente_privada]", "identidad técnica no publicada por seguridad"),
+    ("[ruta_local_redactada]", "ruta local no pública"),
+    ("[canon_privado]", "canon no público"),
+    ("[matriz_privada]", "matriz interna no pública"),
+    ("[ledger_privado]", "ledger interno no público"),
+    ("[indice_fuentes_privado]", "índice interno de fuentes no público"),
+    ("[bitacora_privada]", "bitácora interna no pública"),
+    ("[reportes_privados]", "reportes internos no públicos"),
+    ("[firmas_humanas_privadas]", "firmas humanas no publicadas"),
+    ("[journal_ia_privado]", "journal de IA no público"),
+    ("[evidencia_privada_redactada]", "evidencia privada no publicada"),
+    ("[historial_interno_redactado]", "historial interno no público"),
+    ("[reporte_interno_redactado]", "reporte interno no publicado"),
+    ("[agente_ia_interno]", "agente de apoyo no publicado"),
+    ("[proveedor_ia_interno]", "proveedor de IA no publicado"),
+    ("[modelo_ia_interno]", "modelo de IA no publicado"),
+    ("[runtime_ia_interno]", "runtime de IA no publicado"),
+)
+PUBLIC_PHRASE_REPLACEMENTS = (
+    ("Este repositorio privado gobierna", "Este repositorio documenta"),
+    ("Este repositorio privado", "Este repositorio"),
+    ("repositorio privado soberano", "repositorio canónico del proyecto"),
+    ("repositorio privado", "repositorio canónico"),
+    ("bundle sanitizado", "bundle público curado"),
+    ("superficie privada", "superficie canónica no pública"),
+    ("capa privada", "capa canónica no pública"),
+    ("canon privado", "canon no público"),
+    ("trazabilidad operativa interna", "trazabilidad operativa"),
+)
 
 
 def load_publication_config(relative_path: str = DEFAULT_PUBLICATION_CONFIG) -> dict:
@@ -118,11 +160,75 @@ def sanitize_text(text: str, config: dict) -> str:
     sanitized = re.sub(r"sha256:", "[hash_redactado]:", sanitized, flags=re.IGNORECASE)
     sanitized = re.sub(r'"(?:transcript_sha256|quoted_text_hash)"\s*:\s*"[0-9a-fA-F]{32,64}"', '"hash":"[redactado]"', sanitized)
     sanitized = re.sub(r'"screenshot_hashes"\s*:\s*\[[^\]]*\]', '"screenshot_hashes":["[redactado]"]', sanitized)
-    sanitized = re.sub(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}", "[fecha_hora_redactada]", sanitized)
+    sanitized = re.sub(r"(\d{4}-\d{2}-\d{2}) \d{2}:\d{2}:\d{2}", r"\1", sanitized)
     sanitized = re.sub(r'"content_hash"\s*:\s*"[0-9a-fA-F]{16,}"', '"content_hash":"[redactado]"', sanitized)
     sanitized = re.sub(r'"prev_event_hash"\s*:\s*"[0-9a-fA-FA-FINICIO]{6,}"', '"prev_event_hash":"[redactado]"', sanitized)
     sanitized = CURP_PATTERN.sub("[curp_redactada]", sanitized)
     return sanitized
+
+
+def _replace_public_tokens(text: str, generated_at: str) -> str:
+    rewritten = text
+    for old, new in PUBLIC_TEXTUAL_REPLACEMENTS:
+        rewritten = rewritten.replace(old, new.format(generated_at=generated_at))
+    return rewritten.replace("[curp_redactada]", "CURP no publicada por seguridad")
+
+
+def _rewrite_public_phrases(text: str) -> str:
+    rewritten = text
+    for old, new in PUBLIC_PHRASE_REPLACEMENTS:
+        rewritten = rewritten.replace(old, new)
+    rewritten = rewritten.replace("La capa canónica no pública puede mostrar ejemplos concretos como validación humana interna no pública o evento interno no público.", "La capa canónica no pública utiliza identificadores internos que no se exponen textualmente en esta superficie pública.")
+    rewritten = rewritten.replace("##### Desglose de `validación humana interna no pública`", "##### Validación humana interna no pública")
+    rewritten = rewritten.replace("### `validación humana interna no pública`", "### Validación humana interna no pública")
+    rewritten = rewritten.replace("La superficie **pública** es un bundle público curado, derivado y reproducible para divulgación y evaluación externa.", "La superficie **pública** es un bundle editorialmente curado y reproducible para divulgación y evaluación externa.")
+    rewritten = rewritten.replace("La superficie **privada**", "La superficie **canónica no pública**")
+    return rewritten
+
+
+def _rewrite_public_bitacora(text: str) -> str:
+    rewritten = PUBLIC_SESSION_HEADING_PATTERN.sub("### Sesión con validación humana interna no pública", text)
+    rewritten = PUBLIC_HASH_LINE_PATTERN.sub("- **Hash:** `Hash omitido por seguridad`", rewritten)
+    rewritten = PUBLIC_CONFIRMATION_SOURCE_PATTERN.sub("- **Fuente de confirmación:** `Referencia interna no pública`", rewritten)
+    rewritten = PUBLIC_CHAIN_PATTERN.sub("- **Cadena de trazabilidad:** `Referencia interna no pública`", rewritten)
+    rewritten = rewritten.replace("Hash de Confirmación Verbal", "Confirmación verbal")
+    return rewritten
+
+
+def _rewrite_public_system_tables(text: str) -> str:
+    rewritten = text.replace("|agent_identity|identidad técnica no publicada por seguridad|sí|", "|agent_identity|Identidad técnica no publicada por seguridad|sí|")
+    rewritten = rewritten.replace(">agent_identity</td><td>identidad técnica no publicada por seguridad</td><td>sí</td>", ">agent_identity</td><td>Identidad técnica no publicada por seguridad</td><td>sí</td>")
+    return rewritten
+
+
+def _append_public_footer(text: str, public_rel: str, generated_at: str) -> str:
+    if public_rel.endswith(".json"):
+        return text
+    if public_rel.endswith(".html"):
+        if "Última actualización:" in text:
+            return text
+        footer = PUBLIC_LAST_UPDATE_HTML.format(generated_at=generated_at)
+        return text.replace("</main>", f"    {footer}\n  </main>") if "</main>" in text else text + footer
+    if public_rel.endswith(".md"):
+        if "Última actualización:" in text:
+            return text
+        return text.rstrip() + "\n\n" + PUBLIC_LAST_UPDATE_MARKDOWN.format(generated_at=generated_at) + "\n"
+    return text
+
+
+def render_public_text(*, text: str, source_rel: str, public_rel: str, config: dict, generated_at: str) -> str:
+    rewritten = sanitize_text(text, config)
+    rewritten = rewrite_public_links(rewritten, source_rel=source_rel, public_rel=public_rel, config=config)
+    rewritten = _replace_public_tokens(rewritten, generated_at)
+    rewritten = _rewrite_public_phrases(rewritten)
+    rewritten = _rewrite_public_system_tables(rewritten)
+    if "/bitacora." in public_rel or public_rel.endswith("bitacora.md") or public_rel.endswith("bitacora.html"):
+        rewritten = _rewrite_public_bitacora(rewritten)
+    rewritten = PUBLIC_EDIT_PLACEHOLDER_PATTERN.sub("referencia interna no pública", rewritten)
+    rewritten = re.sub(r"`validación humana interna no pública`", "validación humana interna no pública", rewritten)
+    rewritten = re.sub(r"`evento interno no público`", "evento interno no público", rewritten)
+    rewritten = re.sub(r"`hash omitido`(?::`omitido`)?", "`Hash omitido por seguridad`", rewritten)
+    return _append_public_footer(rewritten, public_rel, generated_at)
 
 
 def build_public_access_note(config: dict, generated_at: str) -> str:
@@ -284,7 +390,7 @@ def expected_publication_outputs(config: dict | None = None) -> set[str]:
 
 def build_publication_index(config: dict, manifest_payload: dict) -> str:
     lines = [
-        "# Bundle público sanitizado",
+        "# Bundle público editorial",
         "",
         config["proposito"],
         "",
@@ -296,7 +402,7 @@ def build_publication_index(config: dict, manifest_payload: dict) -> str:
         "## Superficies",
         "",
         "- **Privada:** canon, ledger, matriz, bitácoras, backlog y auditoría completa.",
-        "- **Pública:** derivado sanitizado para lectura humana, divulgación y evaluación externa.",
+        "- **Pública:** derivado curado editorialmente para lectura humana, divulgación y evaluación externa.",
         "- **IA:** apoyo opcional; la operación del bundle público no depende de IA.",
         "",
         "## Rutas de navegación pública",
@@ -311,7 +417,7 @@ def build_publication_index(config: dict, manifest_payload: dict) -> str:
         "## Cómo rastrear hacia el origen canónico",
         "",
         "- Cada página pública proviene de una página wiki derivada de la base privada.",
-        "- La wiki declara sus fuentes canónicas y el bundle conserva esa semántica con sanitización aplicada.",
+        "- La wiki declara sus fuentes canónicas y el bundle conserva esa semántica con curaduría editorial y resguardo de datos sensibles.",
         "- Si necesitas reconstruir o auditar, usa el par `wiki/index.md` + `manifest_publico.json` y compáralo con la wiki interna generada.",
         "- La capa pública explica el origen, pero no expone ledger privado, transcripciones ni canon sensible.",
         "",
@@ -378,13 +484,19 @@ def _render_manifest(
 
 def _read_output_payload(path: Path, config: dict) -> bytes:
     if _is_text_file(path):
-        text = sanitize_text(path.read_text(encoding="utf-8"), config)
         source_rel = path.relative_to(ROOT).as_posix()
         public_rel = _relative_output_path(
             config,
             next(rel_target for source_path, rel_target in _iter_artifact_outputs(config) if source_path == path),
         )
-        return rewrite_public_links(text, source_rel=source_rel, public_rel=public_rel, config=config).encode("utf-8")
+        generated_at = datetime.fromtimestamp(path.stat().st_mtime).strftime("%Y-%m-%d")
+        return render_public_text(
+            text=path.read_text(encoding="utf-8"),
+            source_rel=source_rel,
+            public_rel=public_rel,
+            config=config,
+            generated_at=generated_at,
+        ).encode("utf-8")
     return path.read_bytes()
 
 
@@ -451,9 +563,23 @@ def publication_bundle_status(*, build: bool = False, config: dict | None = None
         bundle_fingerprint=_bundle_fingerprint(rendered),
     )
     rendered[publication["salida"]["manifest"]] = (json.dumps(manifest_payload, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+    index_rel = _relative_output_path(publication, "index.md")
     index_content = build_publication_index(publication, manifest_payload) + "\n"
-    rendered[_relative_output_path(publication, "index.md")] = sanitize_text(index_content, publication).encode("utf-8")
-    rendered[_public_note_relpath()] = (build_public_access_note(publication, generated_at) + "\n").encode("utf-8")
+    rendered[index_rel] = render_public_text(
+        text=index_content,
+        source_rel=index_rel,
+        public_rel=index_rel,
+        config=publication,
+        generated_at=generated_at,
+    ).encode("utf-8")
+    note_rel = _public_note_relpath()
+    rendered[note_rel] = render_public_text(
+        text=build_public_access_note(publication, generated_at) + "\n",
+        source_rel=note_rel,
+        public_rel=note_rel,
+        config=publication,
+        generated_at=generated_at,
+    ).encode("utf-8")
 
     drift: list[str] = []
     validation_errors: list[str] = []

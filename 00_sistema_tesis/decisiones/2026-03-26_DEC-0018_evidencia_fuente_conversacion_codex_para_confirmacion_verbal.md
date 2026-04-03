@@ -17,9 +17,9 @@ El canon ya preserva el texto exacto de confirmación verbal y su hash. Eso ofre
 
 Se adopta un modelo híbrido de evidencia:
 
-1. **Canon en repo:** el `[validacion_humana_interna]` conserva la cita exacta, su hash y el enlace a `source_event_id`.
-2. **Fuente privada local:** cada `conversation_source_registered` conserva `transcripción + captura` dentro de `[evidencia_privada_redactada]/conversaciones_codex/`.
-3. **Activación gradual:** el enforcement aplica a nuevos `[validacion_humana_interna]` a partir del umbral configurado en `ia_gobernanza.yaml`.
+1. **Canon en repo:** el validación humana interna no pública conserva la cita exacta, su hash y el enlace a `source_event_id`.
+2. **Fuente privada local:** cada `conversation_source_registered` conserva `transcripción + captura` dentro de `evidencia privada no publicada/conversaciones_codex/`.
+3. **Activación gradual:** el enforcement aplica a nuevos validación humana interna no pública a partir del umbral configurado en `ia_gobernanza.yaml`.
 4. **Compatibilidad histórica:** el historial previo se mantiene como `legacy_unverified_source`; no se reescribe ni se invalida.
 5. **Publicación segura:** la evidencia fuente privada y sus hashes crudos quedan fuera de la superficie pública sanitizada.
 
@@ -39,18 +39,18 @@ La alternativa elegida maximiza trazabilidad práctica y verificable sin depende
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Existencia de comandos `tesis.py source register|verify|status`.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-- [x] Enforcement automático para `[validacion_humana_interna]` nuevos desde el umbral configurado.
+- [x] Enforcement automático para validación humana interna no pública nuevos desde el umbral configurado.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Criterio de Aceptación Humana
 
-- [x] El tesista autoriza implementar corroboración por fuente de conversación para futuros `[validacion_humana_interna]`.
+- [x] El tesista autoriza implementar corroboración por fuente de conversación para futuros validación humana interna no pública.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-  - **Soporte:** [[validacion_humana_interna]]
+  - **Soporte:** [validación humana interna no pública]
   - **Pregunta crítica o disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
   - **Texto exacto de confirmación verbal:** "PLEASE IMPLEMENT THIS PLAN:"
-  - **Hash de confirmación verbal:** `[hash_redactado]:[redactado]`
-  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
+  - **Hash de confirmación verbal:** `hash omitido:omitido`
+  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
   - **Nivel de Auditoría:** Alto
   - **Modo:** Confirmación Verbal
   - **Fecha de Validación:** 2026-03-26
@@ -77,6 +77,8 @@ La alternativa elegida maximiza trazabilidad práctica y verificable sin depende
 - [DEC-0016](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-26_DEC-0016_canon_unificado_de_eventos_y_proyecciones.md)
 - [DEC-0017](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-26_DEC-0017_operacion_humana_dual_y_superficies_privada_publica.md)
 
-[LID]: [ruta_local_redactada]
-[GOV]: [ruta_local_redactada]
-[AUD]: [ruta_local_redactada]
+[LID]: ruta local no pública
+[GOV]: ruta local no pública
+[AUD]: ruta local no pública
+
+_Última actualización: `2026-04-03`._

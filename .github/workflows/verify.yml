@@ -45,8 +45,8 @@ jobs:
         if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico'
         env:
           SISTEMA_TESIS_SKIP_GPG_CHECK: "1"
-          SISTEMA_TESIS_STEP_ID: "[validacion_humana_interna]"
-        run: python 07_scripts/governance_gate.py --stage ci --agent github-actions --step-id "[validacion_humana_interna]"
+          SISTEMA_TESIS_STEP_ID: "validación humana interna no pública"
+        run: python 07_scripts/governance_gate.py --stage ci --agent github-actions --step-id "validación humana interna no pública"
 
       - name: Rebuild wiki after gates pass
         if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && success()
@@ -64,6 +64,10 @@ jobs:
         if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && success()
         run: python 07_scripts/validate_links.py
 
+      - name: Validate public editorial quality
+        if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && success()
+        run: python 07_scripts/validate_public_text.py
+
       - name: Commit wiki changes if gates pass
         if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && success()
         run: |
@@ -73,7 +77,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No wiki changes to commit."
           else
-            git commit -m "citogates [[validacion_humana_interna]]: regenerate wiki and dashboard after verification passed"
+            git commit -m "citogates [validación humana interna no pública]: regenerate wiki and dashboard after verification passed"
             git push origin HEAD:${GITHUB_REF#refs/heads/} || true
           fi
 
@@ -83,7 +87,7 @@ jobs:
         with:
           name: governance-gate-artifacts
           path: |
-            [historial_interno_redactado]/governance_gate
+            historial interno no público/governance_gate
             README.md
             06_dashboard/wiki
             06_dashboard/generado

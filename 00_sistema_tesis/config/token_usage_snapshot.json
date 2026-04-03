@@ -1,5 +1,5 @@
 {
-  "generated_at": "[fecha_hora_redactada]",
+  "generated_at": "2026-03-27",
   "timezone": "America/Mexico_City",
   "status": "degraded",
   "message": "OPENAI_ADMIN_KEY no configurada. No se pudo sincronizar uso real desde la API.",

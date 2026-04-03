@@ -18,7 +18,7 @@ Cerrar estrictamente la conversación del 2026-03-26 con trazabilidad completa, 
 ## Tareas del día
 - [x] Crear la bitácora diaria del 2026-03-26.
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-- [x] Registrar `[validacion_humana_interna]` en ledger y matriz de trazabilidad.
+- [x] Registrar validación humana interna no pública en ledger y matriz de trazabilidad.
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Instalar hooks locales `pre-commit` y `pre-push`.
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
@@ -29,7 +29,7 @@ Cerrar estrictamente la conversación del 2026-03-26 con trazabilidad completa, 
 
 ## Trabajo realizado
 - Se consolidó el cierre documental de la sesión con una nueva bitácora diaria enlazada criptográficamente a la del 2026-03-24.
-- Se registró la instrucción humana de cierre como `[validacion_humana_interna]` en el ledger y se añadió su fila correspondiente a la matriz maestra.
+- Se registró la instrucción humana de cierre como validación humana interna no pública en el ledger y se añadió su fila correspondiente a la matriz maestra.
 - Se activaron localmente los hooks que delegan al `governance_gate.py` para `pre-commit` y `pre-push`.
 - Se auditó el repositorio con `build_all.py` antes del cierre Git y se dejó listo el commit firmado de la sesión.
 
@@ -40,8 +40,8 @@ Cerrar estrictamente la conversación del 2026-03-26 con trazabilidad completa, 
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Uso de IA y Gobernanza
-- **Proveedor:** [proveedor_ia_interno]
-- **Modelo/Versión:** [modelo_ia_interno]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
 - **Objetivo:** Ejecutar el cierre documental y operativo de la conversación con enforcement trazable y sin hardcodes operativos.
 - **Nivel de Razonamiento:** medio
 - **Alineación Ética:**
@@ -57,13 +57,13 @@ Cerrar estrictamente la conversación del 2026-03-26 con trazabilidad completa, 
 - **Respuesta Erick Vega:** "si hazlo" y posteriormente "PLEASE IMPLEMENT THIS PLAN".
 - **Criterio de Aceptación:** [x] Validado.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-  - **Soporte:** [[validacion_humana_interna]]
+  - **Soporte:** [validación humana interna no pública]
   - **Pregunta crítica o disparador:** "Se ejecuta el cierre documental, operativo y Git de la sesión, con trazabilidad completa y commit firmado, excluyendo `/.env`."
   - **Texto exacto de confirmación verbal:** "si hazlo" y posteriormente "PLEASE IMPLEMENT THIS PLAN".
-  - **Hash de confirmación verbal:** `[hash_redactado]:[redactado]`
-  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
-  - **Hash (Contenido):** `[hash_redactado]:[redactado]`
-  - **Fingerprint:** `[hash_redactado]:[redactado]`
+  - **Hash de confirmación verbal:** `hash omitido:omitido`
+  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+  - **Hash (Contenido):** `hash omitido:omitido`
+  - **Fingerprint:** `hash omitido:omitido`
   - **Nivel de Riesgo:** ALTO
   - **Modo:** Confirmación Verbal
 
@@ -75,6 +75,8 @@ Cerrar estrictamente la conversación del 2026-03-26 con trazabilidad completa, 
 ## Siguiente paso concreto
 Hacer `git push` del commit firmado y verificar que `pre-push` reproduzca el mismo resultado del `build_all.py` local.
 
-[LID]: [ruta_local_redactada]
-[GOV]: [ruta_local_redactada]
-[AUD]: [ruta_local_redactada]
+[LID]: ruta local no pública
+[GOV]: ruta local no pública
+[AUD]: ruta local no pública
+
+_Última actualización: `2026-04-03`._

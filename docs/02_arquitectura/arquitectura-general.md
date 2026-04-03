@@ -1,7 +1,7 @@
 # Arquitectura General
 
 ## Proposito
-El repositorio privado es la fuente de verdad operacional del Sistema Operativo de Tesis. Su funcion es gobernar instalacion, operacion, seguridad, trazabilidad, soporte cientifico y despliegue sobre Orange Pi 5 Plus.
+El repositorio canónico es la fuente de verdad operacional del Sistema Operativo de Tesis. Su funcion es gobernar instalacion, operacion, seguridad, trazabilidad, soporte cientifico y despliegue sobre Orange Pi 5 Plus.
 
 ## Capas
 - Canon soberano: `00_sistema_tesis/`.
@@ -22,3 +22,5 @@ El repositorio privado es la fuente de verdad operacional del Sistema Operativo 
 - `python 07_scripts/validate_structure.py`
 - `python 07_scripts/tesis.py doctor --check`
 - `python 07_scripts/build_all.py`
+
+_Última actualización: `2026-04-03`._

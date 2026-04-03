@@ -18,7 +18,7 @@ El sistema operativo de tesis ya contaba con canon fuerte, guardrails y auditor�
 Adoptar un modelo de **operación humana dual** con dos superficies explícitas:
 
 1. **Superficie privada:** canon, backlog, decisiones, bitácora, auditoría, evidencia y configuración íntegra.
-2. **Superficie pública:** bundle sanitizado, derivado y reproducible para divulgación y evaluación externa.
+2. **Superficie pública:** bundle público curado, derivado y reproducible para divulgación y evaluación externa.
 
 Como regla estructural, todo flujo crítico debe tener una **vía manual explícita** y la IA queda institucionalizada como apoyo opcional, nunca como requisito operativo.
 La capa humana visible del sistema debe mostrar también la cita exacta de la confirmación verbal relevante, su hash y la fuente canónica de verdad cuando un cambio o decisión dependa de autorización humana.
@@ -31,13 +31,13 @@ La capa humana visible del sistema debe mostrar también la cita exacta de la co
 
 ## Criterio de elección
 
-La alternativa elegida reduce dependencia cognitiva de la IA, mejora legibilidad para tesista, colaboradores y jurado, y ordena la exposición pública sin romper el canon privado.
+La alternativa elegida reduce dependencia cognitiva de la IA, mejora legibilidad para tesista, colaboradores y jurado, y ordena la exposición pública sin romper el canon no público.
 
 ## Métricas de Éxito
 
 - [x] Existencia de un manual operativo humano y comandos guiados (`status`, `doctor`, `next`, `publish`).
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-- [x] Separación explícita entre superficie privada y pública en documentación, wiki y dashboard.
+- [x] Separación explícita entre superficie canónica no pública y pública en documentación, wiki y dashboard.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Validación automática de operabilidad humana y publicación pública en `build_all.py`.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
@@ -46,13 +46,13 @@ La alternativa elegida reduce dependencia cognitiva de la IA, mejora legibilidad
 
 - [x] El tesista ordena implementar la capa humana dual, la publicación sanitizada y la simplificación operativa.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-  - **Soporte:** [[validacion_humana_interna]]
+  - **Soporte:** [validación humana interna no pública]
   - **Pregunta crítica o disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
   - **Texto exacto de confirmación verbal:** "PLEASE IMPLEMENT THIS PLAN"
-  - **Hash de confirmación verbal:** `[hash_redactado]:[redactado]`
-  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
-  - **Integridad:** `[hash_redactado]:[redactado]`
-  - **Fingerprint:** `[hash_redactado]`
+  - **Hash de confirmación verbal:** `hash omitido:omitido`
+  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+  - **Integridad:** `hash omitido:omitido`
+  - **Fingerprint:** `Hash omitido por seguridad`
   - **Nivel de Auditoría:** Alto
   - **Modo:** Confirmación Verbal
   - **Fecha de Validación:** 2026-03-26
@@ -65,8 +65,8 @@ La alternativa elegida reduce dependencia cognitiva de la IA, mejora legibilidad
 
 ## Trazabilidad de IA
 
-- **Proveedor:** [proveedor_ia_interno]
-- **Modelo/Versión:** [modelo_ia_interno]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
 - **Agente/Rol:** Codex
 - **Nivel de Razonamiento:** alto
 - **Prompts/Contexto clave:** Implementación autorizada del plan de operación humana dual, publicación sanitizada y simplificación del sistema.
@@ -91,6 +91,8 @@ La alternativa elegida reduce dependencia cognitiva de la IA, mejora legibilidad
 - [DEC-0015](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0015_protocolo_de_sanitización_para_exposición_pública.md)
 - [DEC-0016](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-26_DEC-0016_canon_unificado_de_eventos_y_proyecciones.md)
 
-[LID]: [ruta_local_redactada]
-[GOV]: [ruta_local_redactada]
-[AUD]: [ruta_local_redactada]
+[LID]: ruta local no pública
+[GOV]: ruta local no pública
+[AUD]: ruta local no pública
+
+_Última actualización: `2026-04-03`._

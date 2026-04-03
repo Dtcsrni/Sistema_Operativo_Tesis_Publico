@@ -54,12 +54,12 @@ Rectificar la auditoría de estándares externos y mejorar el rigor del sistema 
 - **Respuesta Erick Vega:** "mejora el sistema de bitácora"
 - **Criterio de Aceptación:** [x] Validado.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-  - **Soporte:** [[validacion_humana_interna]]
+  - **Soporte:** [validación humana interna no pública]
   - **Pregunta crítica o disparador:** "Propongo un sistema de 'Cadena de Confianza' donde cada bitácora referencia el hash de la anterior. Además, automatizaremos la creación de sesiones y la validación de integridad."
   - **Texto exacto de confirmación verbal:** "mejora el sistema de bitácora"
-  - **Hash de confirmación verbal:** `[hash_redactado]:[redactado]`
-  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
-  - **Hash (Contenido):** `[hash_redactado]:[redactado]`
+  - **Hash de confirmación verbal:** `hash omitido:omitido`
+  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+  - **Hash (Contenido):** `hash omitido:omitido`
   - **Nivel de Riesgo:** ALTO
   - **Modo:** Confirmación Verbal
 
@@ -70,6 +70,8 @@ Rectificar la auditoría de estándares externos y mejorar el rigor del sistema 
 ## Siguiente paso concreto
 Iniciar la firma GPG de los bloques de infraestructura validados para elevar la métrica de soberanía en la wiki.
 
-[LID]: [ruta_local_redactada]
-[GOV]: [ruta_local_redactada]
-[AUD]: [ruta_local_redactada]
+[LID]: ruta local no pública
+[GOV]: ruta local no pública
+[AUD]: ruta local no pública
+
+_Última actualización: `2026-04-03`._

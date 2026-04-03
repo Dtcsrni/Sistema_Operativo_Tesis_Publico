@@ -32,6 +32,7 @@ class TestHumanOperationalLayer(unittest.TestCase):
         self.assertIn("00_sistema_tesis/canon/events.jsonl", sanitized)
         self.assertIn("00_sistema_tesis/bitacora", sanitized)
         self.assertIn("00_sistema_tesis/reportes_semanales", sanitized)
+        self.assertIn("[validacion_humana_interna]", sanitized)
 
     def test_sanitize_text_tolerates_missing_agent_identity(self):
         config = load_publication_config()

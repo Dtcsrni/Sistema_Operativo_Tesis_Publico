@@ -15,7 +15,7 @@ La tesis requiere una infraestructura documental y técnica que pueda crecer sin
 
 ## Decisión
 
-Se adopta una arquitectura de **repositorio privado como fuente de verdad** con artefactos fuente en Markdown, YAML y CSV, más un **dashboard HTML estático generado automáticamente** como vista operativa.
+Se adopta una arquitectura de **repositorio canónico como fuente de verdad** con artefactos fuente en Markdown, YAML y CSV, más un **dashboard HTML estático generado automáticamente** como vista operativa.
 
 ## Alternativas consideradas
 
@@ -44,8 +44,8 @@ La opción elegida minimiza complejidad operativa, preserva trazabilidad bajo co
   - **Soporte:** [Retroactivo | Step ID]
   - **Modo:** [Retroactivo | Confirmación Verbal]
   - **Fecha de Validación:** 2026-03-24
-  - **Integridad:** `[hash_redactado]` 
-  - **Fingerprint:** `[hash_redactado]` 
+  - **Integridad:** `Hash omitido por seguridad` 
+  - **Fingerprint:** `Hash omitido por seguridad` 
   - **Nivel de Auditoría:** Bajo
 ## Consecuencias
 
@@ -84,6 +84,8 @@ La opción elegida minimiza complejidad operativa, preserva trazabilidad bajo co
 - The Turing Way documenta prácticas reales de reproducibilidad, colaboración y gobernanza en proyectos de investigación: [The Turing Way](https://book.the-turing-way.org/)
 - NASA Systems Engineering Handbook formaliza gestión de configuración, riesgos y trazabilidad en proyectos complejos: [NASA SP-2016-6105 Rev2](https://www.nasa.gov/reference/systems-engineering-handbook/)
 
-[LID]: [ruta_local_redactada]
-[GOV]: [ruta_local_redactada]
-[AUD]: [ruta_local_redactada]
+[LID]: ruta local no pública
+[GOV]: ruta local no pública
+[AUD]: ruta local no pública
+
+_Última actualización: `2026-04-03`._

@@ -3,7 +3,7 @@
 Propósito, alcance, módulos, flujos e interacción del sistema operativo de tesis.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `[fecha_hora_redactada]`
+- **Fecha:** `2026-04-03`
 - **Estado:** `OK`
 - **Fuentes:** `README_INICIO.md`, `00_sistema_tesis/manual_operacion_humana.md`, `00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`, `00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`, `00_sistema_tesis/documentacion_sistema/flujos_operativos.md`, `00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/publicacion.yaml`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -56,7 +56,7 @@ Propósito, alcance, módulos, flujos e interacción del sistema operativo de te
 ## Verificación de identidad humana
 
 - Tesista: `Erick Renato Vega Ceron`
-- CURP (único registro en wiki): `[curp_redactada]`
+- CURP (único registro en wiki): `CURP no publicada por seguridad`
 
 ## Estado operativo
 
@@ -319,7 +319,7 @@ Todo flujo del sistema debe cumplir tres condiciones:
 
 - tener una fuente canonica identificable;
 - tener una salida humana legible;
-- poder distinguir entre superficie privada y superficie publica.
+- poder distinguir entre superficie canónica no pública y superficie publica.
 
 ## Interaccion por actor
 
@@ -360,7 +360,7 @@ Todo flujo del sistema debe cumplir tres condiciones:
 #### Como interactua
 
 - entra por el bundle publico y la wiki derivada;
-- lee la narrativa tecnica del sistema, no el canon privado;
+- lee la narrativa tecnica del sistema, no el canon no público;
 - usa el dashboard para estado y la wiki para explicacion;
 - interpreta la salida publica como derivada, no como repositorio editable.
 
@@ -412,36 +412,37 @@ Toda documentacion mejorada del sistema debe responder implicitamente a estas pr
 ## Operación humana y superficies
 
 - **Superficie privada:** canon, backlog, decisiones, bitácora, auditoría y evidencia íntegra.
-- **Superficie pública:** bundle sanitizado en `06_dashboard/publico/`, siempre derivado y no editable a mano.
+- **Superficie pública:** bundle público curado en `06_dashboard/publico/`, siempre derivado y no editable a mano.
 - **Ruta humana principal:** `00_sistema_tesis/manual_operacion_humana.md`.
 - **IA opcional:** ningún flujo crítico depende de IA para ejecutarse.
-- **Aviso público:** Este bundle público es un artefacto derivado y sanitizado. No se corrige a mano; se reconstruye desde la base privada.
+- **Aviso público:** Este bundle público es un artefacto derivado y curado editorialmente. No se corrige a mano; se reconstruye desde la base canónica.
 
 ## Estado de archivos canónicos
 
 |Clave|Ruta|Existe|Última modificación|
 |---|---|---|---|
-|sistema|00_sistema_tesis/config/sistema_tesis.yaml|sí|[fecha_hora_redactada]|
-|hipotesis|00_sistema_tesis/config/hipotesis.yaml|sí|[fecha_hora_redactada]|
-|bloques|00_sistema_tesis/config/bloques.yaml|sí|[fecha_hora_redactada]|
-|dashboard|00_sistema_tesis/config/dashboard.yaml|sí|[fecha_hora_redactada]|
-|publicacion|00_sistema_tesis/config/publicacion.yaml|sí|[fecha_hora_redactada]|
-|agent_identity|[identidad_agente_privada]|sí|[fecha_hora_redactada]|
-|gobernanza_ia|00_sistema_tesis/config/ia_gobernanza.yaml|sí|[fecha_hora_redactada]|
-|wiki|00_sistema_tesis/config/wiki.yaml|sí|[fecha_hora_redactada]|
-|manual_operacion_humana|00_sistema_tesis/manual_operacion_humana.md|sí|[fecha_hora_redactada]|
-|backlog|01_planeacion/backlog.csv|sí|[fecha_hora_redactada]|
-|riesgos|01_planeacion/riesgos.csv|sí|[fecha_hora_redactada]|
-|roadmap|01_planeacion/roadmap.csv|sí|[fecha_hora_redactada]|
-|entregables|01_planeacion/entregables.csv|sí|[fecha_hora_redactada]|
-|decisiones|00_sistema_tesis/decisiones|sí|[fecha_hora_redactada]|
-|bitacora|00_sistema_tesis/bitacora|sí|[fecha_hora_redactada]|
-|reportes_semanales|00_sistema_tesis/reportes_semanales|sí|[fecha_hora_redactada]|
-|dashboard_generado|06_dashboard/generado/index.html|sí|[fecha_hora_redactada]|
-|bundle_publico|06_dashboard/publico/index.md|sí|[fecha_hora_redactada]|
-|bundle_publico_manifest|06_dashboard/publico/manifest_publico.json|sí|[fecha_hora_redactada]|
-|wiki_markdown_generada|06_dashboard/wiki/index.md|sí|[fecha_hora_redactada]|
-|wiki_html_generada|06_dashboard/generado/wiki/index.html|sí|[fecha_hora_redactada]|
-|wiki_manifest_generado|06_dashboard/generado/wiki_manifest.json|sí|[fecha_hora_redactada]|
-|readme_portada_generado|README.md|sí|[fecha_hora_redactada]|
+|sistema|00_sistema_tesis/config/sistema_tesis.yaml|sí|2026-03-26|
+|hipotesis|00_sistema_tesis/config/hipotesis.yaml|sí|2026-03-23|
+|bloques|00_sistema_tesis/config/bloques.yaml|sí|2026-03-23|
+|dashboard|00_sistema_tesis/config/dashboard.yaml|sí|2026-03-24|
+|publicacion|00_sistema_tesis/config/publicacion.yaml|sí|2026-04-03|
+|agent_identity|Identidad técnica no publicada por seguridad|sí|2026-03-26|
+|gobernanza_ia|00_sistema_tesis/config/ia_gobernanza.yaml|sí|2026-03-27|
+|wiki|00_sistema_tesis/config/wiki.yaml|sí|2026-03-27|
+|manual_operacion_humana|00_sistema_tesis/manual_operacion_humana.md|sí|2026-04-03|
+|backlog|01_planeacion/backlog.csv|sí|2026-03-26|
+|riesgos|01_planeacion/riesgos.csv|sí|2026-03-26|
+|roadmap|01_planeacion/roadmap.csv|sí|2026-03-23|
+|entregables|01_planeacion/entregables.csv|sí|2026-03-23|
+|decisiones|00_sistema_tesis/decisiones|sí|2026-03-27|
+|bitacora|00_sistema_tesis/bitacora|sí|2026-04-02|
+|reportes_semanales|00_sistema_tesis/reportes_semanales|sí|2026-03-24|
+|dashboard_generado|06_dashboard/generado/index.html|sí|2026-04-03|
+|bundle_publico|06_dashboard/publico/index.md|sí|2026-04-03|
+|bundle_publico_manifest|06_dashboard/publico/manifest_publico.json|sí|2026-04-03|
+|wiki_markdown_generada|06_dashboard/wiki/index.md|sí|2026-04-03|
+|wiki_html_generada|06_dashboard/generado/wiki/index.html|sí|2026-04-03|
+|wiki_manifest_generado|06_dashboard/generado/wiki_manifest.json|sí|2026-04-03|
+|readme_portada_generado|README.md|sí|2026-04-03|
 
+_Última actualización: `2026-04-03`._

@@ -3,7 +3,7 @@
 Estado de cobertura de capítulos y figuras.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `[fecha_hora_redactada]`
+- **Fecha:** `2026-04-03`
 - **Estado:** `OK`
 - **Fuentes:** `05_tesis`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -52,3 +52,4 @@ Estado de cobertura de capítulos y figuras.
 - Cobertura: `pendiente`
 - Mensaje: Sin contenido operativo aún. La wiki refleja el estado real del repositorio y no inventa artefactos.
 
+_Última actualización: `2026-04-03`._

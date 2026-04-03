@@ -43,8 +43,8 @@ Retroactivo: Decisión tomada durante la fase de infraestructura inicial.
   - **Soporte:** [Retroactivo | Step ID]
   - **Modo:** [Retroactivo | Confirmación Verbal]
   - **Fecha de Validación:** 2026-03-24
-  - **Integridad:** `[hash_redactado]` 
-  - **Fingerprint:** `[hash_redactado]` 
+  - **Integridad:** `Hash omitido por seguridad` 
+  - **Fingerprint:** `Hash omitido por seguridad` 
   - **Nivel de Auditoría:** Bajo
 ## Consecuencias
 
@@ -77,6 +77,8 @@ Retroactivo: Decisión tomada durante la fase de infraestructura inicial.
 
 N/A
 
-[LID]: [ruta_local_redactada]
-[GOV]: [ruta_local_redactada]
-[AUD]: [ruta_local_redactada]
+[LID]: ruta local no pública
+[GOV]: ruta local no pública
+[AUD]: ruta local no pública
+
+_Última actualización: `2026-04-03`._

@@ -6,3 +6,5 @@
 4. Ejecutar checklist pre-energizacion.
 5. Probar de forma incremental.
 6. Registrar resultado, evidencia y riesgo residual.
+
+_Última actualización: `2026-04-03`._

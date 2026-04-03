@@ -1,16 +1,16 @@
-# Bundle público sanitizado
+# Bundle público editorial
 
 Definir la exportación pública sanitizada, legible y reproducible del sistema operativo de tesis, exponiendo por defecto artefactos públicos y redirigiendo solo contenido verdaderamente sensible.
 
 - **Generado:** `2026-04-03`
 - **Estado:** `ok`
-- **Fingerprint del bundle:** `225b2c756b24c577948746aaa252e90ffcc9696a0b6b00639a630aa659ee154f`
-- **Aviso:** Este bundle público es un artefacto derivado y sanitizado. No se corrige a mano; se reconstruye desde la base privada.
+- **Fingerprint del bundle:** `577f514fa072673f66e5a3ced444cbbc13564c377b1dabfcc08079527490c0ab`
+- **Aviso:** Este bundle público es un artefacto derivado y curado editorialmente. No se corrige a mano; se reconstruye desde la base canónica.
 
 ## Superficies
 
 - **Privada:** canon, ledger, matriz, bitácoras, backlog y auditoría completa.
-- **Pública:** derivado sanitizado para lectura humana, divulgación y evaluación externa.
+- **Pública:** derivado curado editorialmente para lectura humana, divulgación y evaluación externa.
 - **IA:** apoyo opcional; la operación del bundle público no depende de IA.
 
 ## Rutas de navegación pública
@@ -25,7 +25,7 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 ## Cómo rastrear hacia el origen canónico
 
 - Cada página pública proviene de una página wiki derivada de la base privada.
-- La wiki declara sus fuentes canónicas y el bundle conserva esa semántica con sanitización aplicada.
+- La wiki declara sus fuentes canónicas y el bundle conserva esa semántica con curaduría editorial y resguardo de datos sensibles.
 - Si necesitas reconstruir o auditar, usa el par `wiki/index.md` + `manifest_publico.json` y compáralo con la wiki interna generada.
 - La capa pública explica el origen, pero no expone ledger privado, transcripciones ni canon sensible.
 
@@ -88,4 +88,4 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 - `wiki/index.md`
 - `manifest_publico.json`
 
-
+_Última actualización: `2026-04-03`._

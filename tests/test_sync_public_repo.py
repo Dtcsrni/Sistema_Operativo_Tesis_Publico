@@ -32,8 +32,11 @@ def test_public_sync_rewrites_links_to_public_targets() -> None:
     pages_note_text = payloads["06_dashboard/wiki/nota_seguridad_y_acceso.md"].decode("utf-8")
     assert "[bitacora_privada]" not in bitacora_text
     assert "[reportes_privados]" not in bitacora_text
+    assert "[validacion_humana_interna]" not in bitacora_text
+    assert "[hash_redactado]" not in bitacora_text
     assert "https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/" in bitacora_text
     assert "Nota de seguridad y acceso" in pages_note_text
+    assert "Última actualización:" in bitacora_text
 
 
 def test_validate_sync_payloads_rejects_placeholder_hrefs() -> None:
@@ -63,6 +66,17 @@ def test_public_sync_payloads_preserve_operational_publication_regexes() -> None
         r"CURP:\\s*`?[A-Z0-9]{18}`?",
     ):
         re.compile(pattern, re.IGNORECASE)
+
+
+def test_public_sync_payloads_are_editorially_clean() -> None:
+    payloads = _render_payloads(_source_map_mirror(ROOT), sanitize=True)
+    readme_text = payloads["README.md"].decode("utf-8")
+    dashboard_text = payloads["06_dashboard/publico/dashboard/index.html"].decode("utf-8")
+    assert "repositorio privado" not in readme_text.lower()
+    assert "[fecha_hora_redactada]" not in dashboard_text
+    assert "[identidad_agente_privada]" not in dashboard_text
+    assert "Última actualización:" in readme_text
+    assert "Última actualización:" in dashboard_text
 
 
 def test_sync_public_workflow_only_publishes_from_main() -> None:

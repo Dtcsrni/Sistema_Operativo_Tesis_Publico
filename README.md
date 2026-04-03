@@ -1,4 +1,4 @@
-# Sistema Operativo de la Tesis
+# Plataforma de Investigación para Tesis IoT
 
 ![Security Status](06_dashboard/publico/dashboard/badges/security_status.svg)
 ![Integrity Status](06_dashboard/publico/dashboard/badges/integrity.svg)
@@ -13,7 +13,7 @@ Arquitectura resiliente para telemetría y control adaptativo en entornos urbano
 
 La intermitencia urbana de conectividad y energía degrada la continuidad de telemetría y compromete acciones de control oportunas en despliegues IoT metropolitanos. El proyecto busca diseñar y validar una arquitectura que degrade con gracia, preserve variables críticas y sostenga operación útil bajo interrupciones parciales.
 
-Este repositorio privado gobierna decisiones, hipótesis, backlog, riesgos, experimentos, datos, implementación, redacción y gobernanza de IA para una tesis de posgrado en IoT enfocada en resiliencia operativa en entornos urbanos intermitentes.
+Este repositorio documenta decisiones, hipótesis, backlog, riesgos, experimentos, datos, implementación, redacción y gobernanza de IA para una tesis de posgrado en IoT enfocada en resiliencia operativa en entornos urbanos intermitentes.
 
 ## Estado actual
 
@@ -70,7 +70,7 @@ Empieza por estos archivos:
 - Para entender recorridos de trabajo: `flujos_operativos.md`.
 - Para entender identificadores, términos y convenciones: `glosario_terminologia_y_convenciones.md`.
 - Para operar como tesista: `manual_operacion_humana.md`.
-- Para exploración externa: wiki derivada y bundle público sanitizado.
+- Para exploración externa: wiki derivada y bundle público reproducible.
 
 ## Navegación y trazabilidad
 
@@ -78,7 +78,7 @@ Empieza por estos archivos:
 - Cada página de la wiki debe declarar navegación local, fuentes canónicas y artefactos derivados relacionados.
 - Si una salida derivada necesita cambio, la intervención correcta es sobre la fuente canónica declarada, no sobre el derivado.
 - Para cerrar la cadena de rastreo revisa [`06_dashboard/generado/wiki_manifest.json`](06_dashboard/publico/manifest_publico.json) y [`06_dashboard/publico/manifest_publico.json`](06_dashboard/publico/manifest_publico.json).
-- Para trazabilidad operativa interna revisa [`00_sistema_tesis/bitacora/matriz_trazabilidad.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/matriz_trazabilidad.md) y [`00_sistema_tesis/bitacora/log_conversaciones_ia.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md).
+- Para trazabilidad operativa del trabajo revisa [`00_sistema_tesis/bitacora/matriz_trazabilidad.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/matriz_trazabilidad.md) y [`00_sistema_tesis/bitacora/log_conversaciones_ia.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md).
 
 ## Qué revisar siempre
 
@@ -191,14 +191,14 @@ python 07_scripts/report_consistency.py
 
 ## Superficies
 
-- La superficie privada conserva canon, backlog, decisiones, bitácora y auditoría completa.
-- La superficie pública vive en `06_dashboard/publico/` como bundle sanitizado y derivado.
+- La superficie canónica conserva canon, backlog, decisiones, bitácora y auditoría completa.
+- La superficie pública vive en `06_dashboard/publico/` como bundle derivado y curado editorialmente.
 - La IA es opcional; el sistema debe poder operarse y explicarse siguiendo rutas humanas explícitas.
-- La capa pública existe para exploración y evaluación técnica, no para sustituir el canon privado.
+- La capa pública existe para exploración y evaluación técnica, no para sustituir el canon canónico.
 
 ## Criterios de gobierno
 
-- El repositorio es la fuente de verdad.
+- El repositorio canónico es la fuente de verdad.
 - Los artefactos generados no se corrigen a mano; se regeneran.
 - La wiki verificable es una guía derivada y trazable; no sustituye a las fuentes canónicas.
 - Los bloques macro viven en `bloques.yaml`; los subbloques y tareas en `backlog.csv`.
@@ -214,6 +214,8 @@ python 07_scripts/report_consistency.py
 - [`06_dashboard/generado/wiki_manifest.json`](06_dashboard/publico/manifest_publico.json)
 - [`06_dashboard/generado/index.html`](06_dashboard/publico/dashboard/index.html)
 - [`06_dashboard/generado/hoja_maestra_consolidada.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/hoja_maestra_consolidada.csv)
-- [`[reporte_interno_redactado]`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`reporte interno no publicado`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
 
-_Generado automáticamente el [fecha_hora_redactada]._
+_Generado automáticamente el 2026-04-03._
+
+_Última actualización: `2026-04-03`._

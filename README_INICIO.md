@@ -14,7 +14,7 @@ No existe para delegar la tesis a la IA. Existe para dejar una base:
 - trazable;
 - auditable;
 - explicable;
-- publicable sin exponer la superficie privada.
+- publicable sin exponer la superficie canónica no pública.
 
 ## Por qué existe
 
@@ -41,7 +41,7 @@ Los subsistemas principales son:
 ## Principio operativo
 
 - **Superficie privada:** canon, backlog, decisiones, bitácora, auditoría y evidencia completa.
-- **Superficie pública:** bundle sanitizado en `06_dashboard/publico/`, derivado y no editable a mano.
+- **Superficie pública:** bundle público curado en `06_dashboard/publico/`, derivado y no editable a mano.
 - **Publicación externa:** el sitio y la exposición pública salen del downstream `https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico`, no del repo privado canónico.
 - **IA opcional:** la IA acelera trabajo, pero no es requisito para operar el sistema.
 
@@ -78,7 +78,7 @@ Si necesitas orientarte sin perder el origen canónico:
 2. Desde cada página de la wiki, usa el bloque `Origen canónico y artefactos relacionados`.
 3. Si necesitas cambiar contenido, salta de la página derivada a su fuente canónica declarada y edítala ahí.
 4. Si necesitas verificar publicación o sanitización, cruza [`06_dashboard/generado/wiki_manifest.json`](06_dashboard/wiki/nota_seguridad_y_acceso.md) con [`06_dashboard/publico/manifest_publico.json`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
-5. Si necesitas trazabilidad operativa interna, revisa [`00_sistema_tesis/bitacora/matriz_trazabilidad.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y [`00_sistema_tesis/bitacora/log_conversaciones_ia.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
+5. Si necesitas trazabilidad operativa, revisa [`00_sistema_tesis/bitacora/matriz_trazabilidad.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y [`00_sistema_tesis/bitacora/log_conversaciones_ia.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
 
 ## Entradas por necesidad
 
@@ -150,7 +150,7 @@ Verificar evidencia fuente de conversación:
 
 ```powershell
 python 07_scripts/tesis.py source status --check
-python 07_scripts/tesis.py source verify --step-id [validacion_humana_interna]
+python 07_scripts/tesis.py source verify --step-id validación humana interna no pública
 ```
 
 ## Dónde registrar cada cosa
@@ -160,7 +160,7 @@ python 07_scripts/tesis.py source verify --step-id [validacion_humana_interna]
 - **Tareas y prioridades:** [`01_planeacion/backlog.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
 - **Riesgos y mitigaciones:** [`01_planeacion/riesgos.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
 - **Política pública sanitizada:** [`00_sistema_tesis/config/publicacion.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- **Evidencia fuente privada de conversación:** `[evidencia_privada_redactada]/conversaciones_codex/`
+- **Evidencia fuente privada de conversación:** `evidencia privada no publicada/conversaciones_codex/`
 
 ## Qué no se edita a mano
 
@@ -180,3 +180,5 @@ No se corrigen manualmente los artefactos derivados. Se regeneran.
 - público derivado y sanitizado antes que duplicación manual;
 - confirmación verbal corroborada con transcripción para `VAL-STEP` nuevos;
 - TDD para automatización, validadores y software nuevo.
+
+_Última actualización: `2026-04-03`._

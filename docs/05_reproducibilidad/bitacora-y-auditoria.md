@@ -1,5 +1,7 @@
 # Bitacora y Auditoria
 
-La bitacora operativa y la auditoria viven en el canon privado. El soporte documental de esta capa explica como auditar sin romper soberania.
+La bitacora operativa y la auditoria viven en el canon no público. El soporte documental de esta capa explica como auditar sin romper soberania.
 
 Comando base: `python 07_scripts/build_all.py`.
+
+_Última actualización: `2026-04-03`._

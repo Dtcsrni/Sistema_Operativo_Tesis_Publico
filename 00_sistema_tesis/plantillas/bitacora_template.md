@@ -43,15 +43,15 @@
 - **Respuesta Erick Vega:** [Resumen de respuesta]
 - **Criterio de Aceptación:** [ ] Validado.
   - [ ] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-  - **Soporte:** [[validacion_humana_interna]]
-  - **Hash (Contenido):** `[hash_redactado]:[hash_respuesta]`
-  - **Fingerprint:** `[hash_redactado]:[hash_prompt]`
+  - **Soporte:** [validación humana interna no pública]
+  - **Hash (Contenido):** `hash omitido:[hash_respuesta]`
+  - **Fingerprint:** `hash omitido:[hash_prompt]`
   - **Nivel de Riesgo:** [Crítico | Alto | Medio | Bajo]
   - **Modo:** [Confirmación Verbal | Edición Directa | Firma GPG]
   - **Pregunta crítica o disparador:** [Pregunta del agente o instrucción humana directa]
   - **Texto exacto de confirmación verbal:** "[Cita exacta del tesista]"
-  - **Hash de confirmación verbal:** `[hash_redactado]:[hash_cita_verbal]`
-  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
+  - **Hash de confirmación verbal:** `hash omitido:[hash_cita_verbal]`
+  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
 
 ## Economía de uso
 - Presupuesto vs Avance: [Análisis de consumo]
@@ -61,6 +61,8 @@
 ## Siguiente paso concreto
 (Acción inmediata para la próxima sesión)
 
-[LID]: [ruta_local_redactada]
-[GOV]: [ruta_local_redactada]
-[AUD]: [ruta_local_redactada]
+[LID]: ruta local no pública
+[GOV]: ruta local no pública
+[AUD]: ruta local no pública
+
+_Última actualización: `2026-04-03`._

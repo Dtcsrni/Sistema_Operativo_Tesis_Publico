@@ -44,8 +44,8 @@ La política explícita reduce desperdicio de uso, mejora previsibilidad operati
   - **Soporte:** [Retroactivo | Step ID]
   - **Modo:** [Retroactivo | Confirmación Verbal]
   - **Fecha de Validación:** 2026-03-24
-  - **Integridad:** `[hash_redactado]` 
-  - **Fingerprint:** `[hash_redactado]` 
+  - **Integridad:** `Hash omitido por seguridad` 
+  - **Fingerprint:** `Hash omitido por seguridad` 
   - **Nivel de Auditoría:** Bajo
 ## Consecuencias
 
@@ -82,10 +82,12 @@ La política explícita reduce desperdicio de uso, mejora previsibilidad operati
 
 ## Referencias
 
-- [proveedor_ia_interno] recomienda ajustar el esfuerzo de razonamiento al tipo de tarea y escalar solo cuando la dificultad lo justifique: [GPT-5.4](https://developers.openai.com/api/docs/models/gpt-5.4)
+- proveedor de IA no publicado recomienda ajustar el esfuerzo de razonamiento al tipo de tarea y escalar solo cuando la dificultad lo justifique: [GPT-5.4](https://developers.openai.com/api/docs/models/gpt-5.4)
 - La guía de prompting para GPT-5 enfatiza instrucciones claras, contratos de salida y escalamiento de complejidad según necesidad real: [Prompt guidance](https://developers.openai.com/api/docs/guides/prompt-guidance)
 - The Turing Way favorece procesos reproducibles y decisiones explícitas sobre herramientas y flujos de trabajo: [The Turing Way](https://book.the-turing-way.org/)
 
-[LID]: [ruta_local_redactada]
-[GOV]: [ruta_local_redactada]
-[AUD]: [ruta_local_redactada]
+[LID]: ruta local no pública
+[GOV]: ruta local no pública
+[AUD]: ruta local no pública
+
+_Última actualización: `2026-04-03`._

@@ -28,3 +28,5 @@ Si una tarea es demasiado compleja para describirse en la columna `notas`, se de
 - **Pendiente:** Definida con hipótesis y prioridad.
 - **Ejecutando:** Debe tener un autor asignado (en sistemas multi-usuario) y fecha de inicio en bitácora.
 - **Hecho:** Debe tener un enlace a la evidencia técnica en la bitácora correspondiente.
+
+_Última actualización: `2026-04-03`._

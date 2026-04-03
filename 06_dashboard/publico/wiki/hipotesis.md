@@ -3,7 +3,7 @@
 Hipótesis activas, criterios de soporte, evidencia y relación con bloques.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `[fecha_hora_redactada]`
+- **Fecha:** `2026-04-03`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/config/hipotesis.yaml`, `00_sistema_tesis/config/bloques.yaml`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -92,3 +92,4 @@ graph TD
 |H5|Transferencia simulación a experimento es consistente|alta|activa|B4, B5, B6, B7|Soportada si las tendencias principales se conservan y la desviación entre simulación y experimento permanece dentro del margen acordado.|
 |H6|Perfil urbano de Pachuca aporta valor de diseño|media|activa|B1, B2, B4, B6, B7|Soportada si el contexto local modifica de manera explícita y trazable parámetros, escenarios o decisiones respecto de una formulación genérica.|
 
+_Última actualización: `2026-04-03`._

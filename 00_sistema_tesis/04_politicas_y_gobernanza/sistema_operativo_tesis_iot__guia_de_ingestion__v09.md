@@ -12,3 +12,5 @@ Esta versión prioriza nombres autodescriptivos y metadatos legibles.
 
 ## Regla clave
 El Overleaf actual se mantiene como borrador provisional no canónico; el archivo de contexto sigue siendo la fuente rectora.
+
+_Última actualización: `2026-04-03`._

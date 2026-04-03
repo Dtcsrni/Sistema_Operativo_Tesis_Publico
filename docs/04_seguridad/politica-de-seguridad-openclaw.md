@@ -7,3 +7,5 @@ Instalacion oficial de referencia:
 - `npm install -g openclaw@latest` o instalador oficial.
 - `openclaw onboard --install-daemon`.
 - `openclaw doctor` y `openclaw gateway status` para verificacion.
+
+_Última actualización: `2026-04-03`._

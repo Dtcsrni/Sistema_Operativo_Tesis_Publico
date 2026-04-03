@@ -22,3 +22,5 @@ Este skill define las reglas inquebrantables para la colaboración humano-agente
 3.  El Tesista valida.
 4.  El Agente registra la validación en el Ledger, calcula el Hash y actualiza la Matriz de Trazabilidad.
 5.  El Agente vincula el registro de decisión (`DEC`) al Ledger mediante el Hash.
+
+_Última actualización: `2026-04-03`._

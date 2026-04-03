@@ -1,9 +1,9 @@
 {
-  "generated_at": "[fecha_hora_redactada]",
+  "generated_at": "2026-04-02",
   "canon": {
     "event_count": 94,
-    "latest_event_id": "[validacion_humana_interna]",
-    "latest_step_id": "[validacion_humana_interna]",
+    "latest_event_id": "validación humana interna no pública",
+    "latest_step_id": "validación humana interna no pública",
     "projection_paths": [
       "00_sistema_tesis/bitacora/2026-03-23_bitacora_base_operativa.md",
       "00_sistema_tesis/bitacora/2026-03-24_bitacora_sesion.md",
@@ -14,8 +14,8 @@
       "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
       "00_sistema_tesis/bitacora/matriz_trazabilidad.md",
       "00_sistema_tesis/canon/state.json",
-      "[firmas_humanas_privadas]",
-      "[journal_ia_privado]"
+      "firmas humanas no publicadas",
+      "journal de IA no público"
     ]
   },
   "counts_by_type": {
@@ -26,7 +26,7 @@
     "session_recorded": 22
   },
   "source_evidence": {
-    "enforcement_from_step_id": "[validacion_humana_interna]",
+    "enforcement_from_step_id": "validación humana interna no pública",
     "registered_sources": 14,
     "human_validations_with_source": 14,
     "human_validations_requiring_source": 14,

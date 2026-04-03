@@ -36,8 +36,8 @@ Añadir el sistema de generación de dashboard y wiki verificable, junto con la 
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Uso de IA y Gobernanza
-- **Proveedor:** [proveedor_ia_interno]
-- **Modelo/Versión:** [modelo_ia_interno]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
 - **Objetivo:** Estructurar la generación del dashboard y la wiki como parte del sistema operativo de tesis.
 - **Nivel de Razonamiento:** medio
 - **Alineación Ética:**
@@ -64,6 +64,8 @@ Añadir el sistema de generación de dashboard y wiki verificable, junto con la 
 ## Siguiente paso concreto
 Consolidar la bitácora canónica diaria y la matriz de trazabilidad sobre el nuevo sistema de dashboard/wiki.
 
-[LID]: [ruta_local_redactada]
-[GOV]: [ruta_local_redactada]
-[AUD]: [ruta_local_redactada]
+[LID]: ruta local no pública
+[GOV]: ruta local no pública
+[AUD]: ruta local no pública
+
+_Última actualización: `2026-04-03`._

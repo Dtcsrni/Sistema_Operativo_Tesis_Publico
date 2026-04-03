@@ -23,7 +23,7 @@ Adoptar un **canon unificado append-only** en `00_sistema_tesis/canon/events.jso
 4. `ia_journal.json`
 5. `sign_offs.json`
 
-El `[validacion_humana_interna]` se conserva como identificador semántico oficial de validación humana, ahora registrado como evento canónico de tipo `human_validation`.
+El validación humana interna no pública se conserva como identificador semántico oficial de validación humana, ahora registrado como evento canónico de tipo `human_validation`.
 Cada evento `human_validation` debe contener además la cita exacta del enunciado humano relevante, su hash SHA-256 y una ruta explícita de fuente de verdad para que la confirmación verbal pueda ser auditada por humanos sin depender de reconstrucciones narrativas.
 
 ## Alternativas consideradas
@@ -49,13 +49,13 @@ La alternativa elegida reduce duplicidad operativa, baja el riesgo de inconsiste
 
 - [x] El tesista instruye explícitamente implementar el rediseño v2 del sistema operativo de tesis.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-  - **Soporte:** [[validacion_humana_interna]]
+  - **Soporte:** [validación humana interna no pública]
   - **Pregunta crítica o disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
   - **Texto exacto de confirmación verbal:** "PLEASE IMPLEMENT THIS PLAN"
-  - **Hash de confirmación verbal:** `[hash_redactado]:[redactado]`
-  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
-  - **Integridad:** `[hash_redactado]:[redactado]`
-  - **Fingerprint:** `[hash_redactado]`
+  - **Hash de confirmación verbal:** `hash omitido:omitido`
+  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+  - **Integridad:** `hash omitido:omitido`
+  - **Fingerprint:** `Hash omitido por seguridad`
   - **Nivel de Auditoría:** Alto
   - **Modo:** Confirmación Verbal
   - **Fecha de Validación:** 2026-03-26
@@ -68,8 +68,8 @@ La alternativa elegida reduce duplicidad operativa, baja el riesgo de inconsiste
 
 ## Trazabilidad de IA
 
-- **Proveedor:** [proveedor_ia_interno]
-- **Modelo/Versión:** [modelo_ia_interno]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
 - **Agente/Rol:** Codex
 - **Nivel de Razonamiento:** alto
 - **Prompts/Contexto clave:** Instrucción explícita del tesista para implementar el plan "Rediseño v2 del Sistema Operativo de Tesis" con canon unificado, CLI `tesis.py`, proyecciones derivadas y gate centrado en eventos.
@@ -96,6 +96,8 @@ La alternativa elegida reduce duplicidad operativa, baja el riesgo de inconsiste
 - Event sourcing y snapshots derivados para auditoría reproducible.
 - Prácticas FAIR y trazabilidad de artefactos reproducibles en investigación.
 
-[LID]: [ruta_local_redactada]
-[GOV]: [ruta_local_redactada]
-[AUD]: [ruta_local_redactada]
+[LID]: ruta local no pública
+[GOV]: ruta local no pública
+[AUD]: ruta local no pública
+
+_Última actualización: `2026-04-03`._

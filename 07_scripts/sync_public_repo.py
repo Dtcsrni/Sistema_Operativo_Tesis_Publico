@@ -11,7 +11,8 @@ from datetime import datetime
 from pathlib import Path
 
 from common import ROOT, load_yaml_json
-from publication import build_public_access_note, load_publication_config, rewrite_public_links, sanitize_text, validate_publication_output
+from publication import build_public_access_note, load_publication_config, render_public_text, validate_publication_output
+from validate_public_text import validate_public_text_payloads
 
 
 PRIVATE_EXCLUDE_PREFIXES = (
@@ -161,16 +162,17 @@ def _is_text_file(path: Path) -> bool:
 def _render_payloads(source_map: dict[str, Path], *, sanitize: bool) -> dict[str, bytes]:
     payloads: dict[str, bytes] = {}
     publication = load_publication_config() if sanitize else {}
+    generated_at = datetime.now().strftime("%Y-%m-%d")
     for rel_path, source_path in source_map.items():
         if sanitize and rel_path in PUBLIC_OPERATIONAL_PASSTHROUGH_PATHS:
             payload = source_path.read_bytes()
         elif sanitize and _is_text_file(source_path):
-            sanitized_text = sanitize_text(source_path.read_text(encoding="utf-8"), publication)
-            sanitized_text = rewrite_public_links(
-                sanitized_text,
+            sanitized_text = render_public_text(
+                text=source_path.read_text(encoding="utf-8"),
                 source_rel=rel_path,
                 public_rel=rel_path,
                 config=publication,
+                generated_at=generated_at,
             )
             sanitized_text = _rewrite_invalid_hrefs_to_public_note(sanitized_text, rel_path)
             payload = sanitized_text.encode("utf-8")
@@ -178,8 +180,13 @@ def _render_payloads(source_map: dict[str, Path], *, sanitize: bool) -> dict[str
             payload = source_path.read_bytes()
         payloads[rel_path] = payload
     if sanitize:
-        generated_at = datetime.now().strftime("%Y-%m-%d")
-        note_body = (build_public_access_note(publication, generated_at) + "\n").encode("utf-8")
+        note_body = render_public_text(
+            text=build_public_access_note(publication, generated_at) + "\n",
+            source_rel=PUBLIC_PAGES_NOTE_PATH,
+            public_rel=PUBLIC_PAGES_NOTE_PATH,
+            config=publication,
+            generated_at=generated_at,
+        ).encode("utf-8")
         payloads[PUBLIC_PAGES_NOTE_PATH] = note_body
     return payloads
 
@@ -290,6 +297,8 @@ def validate_sync_payloads(payloads: dict[str, bytes]) -> list[str]:
                 for token in SEVERE_PRIVATE_LEAK_TOKENS:
                     if token in text:
                         errors.append(f"La proyección pública filtró una referencia privada en {rel_path}: {token}")
+
+    errors.extend(validate_public_text_payloads(payloads))
 
     pages_payload = payloads.get(".github/workflows/pages.yml")
     if not pages_payload:

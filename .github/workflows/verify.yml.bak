@@ -34,7 +34,7 @@ jobs:
 
       - name: Validate downstream public projection
         run: |
-          python 07_scripts/sync_public_repo.py --mode mirror --target-dir "$RUNNER_TEMP/public-sync-check" --branch main --check
+          python 07_scripts/sync_public_repo.py --mode mirror --target-dir "$RUNNER_TEMP/public-sync-check" --branch main --skip-local-mirror --check
 
       - name: Run public downstream smoke checks
         if: github.repository == 'Dtcsrni/Sistema_Operativo_Tesis_Publico'
@@ -52,12 +52,24 @@ jobs:
         if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && success()
         run: python 07_scripts/build_wiki.py
 
+      - name: Rebuild dashboard after gates pass
+        if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && success()
+        run: python 07_scripts/build_dashboard.py
+
+      - name: Rebuild public bundle after gates pass
+        if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && success()
+        run: python 07_scripts/tesis.py publish --build
+
+      - name: Validate derived and public links
+        if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && success()
+        run: python 07_scripts/validate_links.py
+
       - name: Commit wiki changes if gates pass
         if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && success()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add 06_dashboard/wiki 06_dashboard/generado
+          git add 06_dashboard/wiki 06_dashboard/generado 06_dashboard/publico
           if git diff --cached --quiet; then
             echo "No wiki changes to commit."
           else

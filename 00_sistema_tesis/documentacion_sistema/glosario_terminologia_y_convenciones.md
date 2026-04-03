@@ -30,9 +30,9 @@ Cada entrada de este glosario indica:
 - **Uso operativo:** vincular decisiones, implementaciones o cambios sustantivos a consentimiento humano verificable.
 - **Fuente de verdad / modulo:** `00_sistema_tesis/canon/events.jsonl` como evento de tipo `human_validation`; proyecciones en ledger y matriz.
 - **Que no significa:** no es una tarea, no es un commit, no es una evidencia por si mismo y no equivale a “verdad cientifica demostrada”.
-- **Ejemplo:** `[validacion_humana_interna]` identifica la validacion humana que autorizo cerrar pendientes secundarios de la reestructura documental.
+- **Ejemplo:** validación humana interna no pública identifica la validacion humana que autorizo cerrar pendientes secundarios de la reestructura documental.
 
-#### Desglose de `[validacion_humana_interna]`
+#### Desglose de validación humana interna no pública
 
 - `VAL`: familia de validacion.
 - `STEP`: paso humano trazable dentro de la cadena de soberania.
@@ -47,7 +47,7 @@ Cada entrada de este glosario indica:
 - **Uso operativo:** registrar eventos que no son `VAL-STEP`, por ejemplo evidencia fuente de conversacion, actividad de agente o firmas de artefacto.
 - **Fuente de verdad / modulo:** `00_sistema_tesis/canon/events.jsonl`.
 - **Que no significa:** no implica validacion humana por si mismo.
-- **Ejemplo:** `[evento_interno]` registra una fuente de conversacion corroborable.
+- **Ejemplo:** evento interno no público registra una fuente de conversacion corroborable.
 
 ### `DEC-{nnnn}`
 
@@ -129,7 +129,7 @@ Cada entrada de este glosario indica:
 - **Uso operativo:** corroborar que un `VAL-STEP` se apoya en transcripcion y metadatos de sesion.
 - **Fuente de verdad / modulo:** evento `human_validation` y evento `conversation_source_registered`.
 - **Que no significa:** no reemplaza el texto de confirmacion verbal; solo lo enlaza a su evidencia.
-- **Ejemplo:** `source_event_id = [evento_interno]`.
+- **Ejemplo:** `source_event_id = evento interno no público`.
 
 ### `human_validation.confirmation_text`
 
@@ -169,7 +169,7 @@ Cada entrada de este glosario indica:
 
 - **Definicion:** capa canonica completa del sistema.
 - **Uso operativo:** operar, registrar, auditar y conservar evidencia integra.
-- **Fuente de verdad / modulo:** repositorio privado soberano.
+- **Fuente de verdad / modulo:** repositorio canónico del proyecto.
 - **Que no significa:** no es publicable sin sanitizacion.
 - **Ejemplo:** canon, ledger, evidencia privada y bitacora interna.
 
@@ -195,7 +195,7 @@ Cada entrada de este glosario indica:
 - **Uso operativo:** dar evidencia fuerte a confirmaciones verbales.
 - **Fuente de verdad / modulo:** eventos `conversation_source_registered` y directorio privado de conversaciones.
 - **Que no significa:** no es el `VAL-STEP` mismo.
-- **Ejemplo:** transcripcion asociada a `[evento_interno]`.
+- **Ejemplo:** transcripcion asociada a evento interno no público.
 
 ### Sign-off
 
@@ -374,3 +374,5 @@ Cada entrada de este glosario indica:
 ## Regla publica
 
 En la capa publica pueden explicarse familias y semantica de IDs, por ejemplo `VAL_STEP_{nnn}` o `EVT_{nnnn}`, pero no deben exponerse instancias privadas completas, hashes sensibles ni rutas internas no publicables.
+
+_Última actualización: `2026-04-03`._

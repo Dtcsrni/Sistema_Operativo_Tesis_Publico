@@ -44,8 +44,8 @@ El enfoque explícito reduce riesgos de alucinación, fuga de contexto y depende
   - **Soporte:** [Retroactivo | Step ID]
   - **Modo:** [Retroactivo | Confirmación Verbal]
   - **Fecha de Validación:** 2026-03-24
-  - **Integridad:** `[hash_redactado]` 
-  - **Fingerprint:** `[hash_redactado]` 
+  - **Integridad:** `Hash omitido por seguridad` 
+  - **Fingerprint:** `Hash omitido por seguridad` 
   - **Nivel de Auditoría:** Bajo
 ## Consecuencias
 
@@ -81,6 +81,8 @@ El enfoque explícito reduce riesgos de alucinación, fuga de contexto y depende
 - UNESCO fija principios de supervisión humana, transparencia y responsabilidad para IA: [UNESCO](https://www.unesco.org/en/legal-affairs/recommendation-ethics-artificial-intelligence)
 - The Turing Way ofrece pautas prácticas de colaboración responsable y escritura asistida: [The Turing Way](https://book.the-turing-way.org/)
 
-[LID]: [ruta_local_redactada]
-[GOV]: [ruta_local_redactada]
-[AUD]: [ruta_local_redactada]
+[LID]: ruta local no pública
+[GOV]: ruta local no pública
+[AUD]: ruta local no pública
+
+_Última actualización: `2026-04-03`._

@@ -7,7 +7,7 @@ La IA es opcional: acelera trabajo, pero no es requisito para retomar, registrar
 ## Superficies
 
 - **Superficie privada:** canon, backlog, decisiones, bitácora, auditoría, evidencia y configuración completa.
-- **Superficie pública:** clon filtrado y bundle sanitizado derivados desde la base privada.
+- **Superficie pública:** clon filtrado y bundle público curado derivados desde la base privada.
 - **IA opcional:** si no hay IA disponible, el sistema sigue siendo legible y operable mediante Markdown, CSV, YAML y CLI.
 
 ## Ruta mínima de operación
@@ -26,7 +26,7 @@ La IA es opcional: acelera trabajo, pero no es requisito para retomar, registrar
 1. Editar primero la fuente canónica correspondiente.
 2. Si cambia arquitectura, método, evidencia o gobernanza, registrar decisión en `00_sistema_tesis/decisiones/`.
 3. Si cambia trabajo diario, seguimiento o cierre de sesión, registrar la bitácora o el backlog.
-4. Si la validación humana crea un `VAL-STEP` nuevo a partir de `[validacion_humana_interna]`, registrar primero la evidencia fuente con `python 07_scripts/tesis.py source register ...` o `source auto-register`.
+4. Si la validación humana crea un `VAL-STEP` nuevo a partir de validación humana interna no pública, registrar primero la evidencia fuente con `python 07_scripts/tesis.py source register ...` o `source auto-register`.
 5. Enlazar el `source_event_id` resultante al `VAL-STEP` y verificarlo con `python 07_scripts/tesis.py source verify --step-id STEP_ID_REAL`.
 6. Ejecutar `python 07_scripts/build_all.py`.
 7. Si habrá exposición pública, regenerar además `python 07_scripts/tesis.py publish --build`.
@@ -62,10 +62,10 @@ La IA es opcional: acelera trabajo, pero no es requisito para retomar, registrar
 
 Use este flujo cuando una confirmación verbal de Codex deba sostener un `VAL-STEP` nuevo.
 
-1. Abrir o preparar sesión de evidencia en `[evidencia_privada_redactada]/conversaciones_codex/<session_id>/`.
+1. Abrir o preparar sesión de evidencia en `evidencia privada no publicada/conversaciones_codex/<session_id>/`.
 2. Preparar `transcripcion.md` de la conversación.
 3. Registrar la fuente con `python 07_scripts/tesis.py source auto-register --session-id ...` o `source register`.
-4. Conservar el `[evento_interno]` resultante como `source_event_id`.
+4. Conservar el evento interno no público resultante como `source_event_id`.
 5. Registrar el `VAL-STEP` enlazando ese `source_event_id`.
 6. Ejecutar `python 07_scripts/tesis.py source verify --step-id STEP_ID_REAL`.
 
@@ -73,7 +73,7 @@ Si se requiere scaffold manual:
 
 - `python 07_scripts/tesis.py source scaffold --session-id ...`
 
-La evidencia fuente vive en `[evidencia_privada_redactada]/conversaciones_codex/`, es privada y no debe publicarse.
+La evidencia fuente vive en `evidencia privada no publicada/conversaciones_codex/`, es privada y no debe publicarse.
 
 ## Firma humana de artefactos
 
@@ -112,3 +112,5 @@ La firma humana no se autoemite desde IA. Si un artefacto requiere renovar super
 3. Ejecutar de nuevo:
    - `python 07_scripts/build_all.py`
    - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`
+
+_Última actualización: `2026-04-03`._

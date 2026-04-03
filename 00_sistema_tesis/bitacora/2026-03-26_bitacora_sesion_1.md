@@ -16,7 +16,7 @@
 Cerrar trazablemente la conversación del 2026-03-26, consolidando el trabajo realizado en canon, bitácora, superficies derivadas y auditoría final para habilitar una siguiente conversación sin pendientes abiertos sobre lo tratado aquí.
 
 ## Tareas del día
-- [x] Registrar la instrucción humana de cierre como `[validacion_humana_interna]`.
+- [x] Registrar la instrucción humana de cierre como validación humana interna no pública.
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Consolidar la bitácora de sesión de cierre con el estado real del sistema.
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
@@ -27,9 +27,9 @@ Cerrar trazablemente la conversación del 2026-03-26, consolidando el trabajo re
 
 ## Trabajo realizado
 - Se implementó y consolidó la operación humano-primero con CLI guiada (`status`, `doctor`, `next`, `publish`) y manual humano explícito.
-- Se institucionalizó la separación entre superficie privada canónica y superficie pública sanitizada, incluyendo bundle reproducible en `06_dashboard/publico/`.
+- Se institucionalizó la separación entre superficie canónica no pública canónica y superficie pública sanitizada, incluyendo bundle reproducible en `06_dashboard/publico/`.
 - Se mejoró la legibilidad humana del sistema con README reorientado, wiki verificable y dashboard con rail de revisión rápida, dock lateral persistente y enlaces directos a artefactos críticos.
-- Se registró la instrucción humana de cierre como `[validacion_humana_interna]` y se preparó esta bitácora como punto de traspaso a la siguiente conversación.
+- Se registró la instrucción humana de cierre como validación humana interna no pública y se preparó esta bitácora como punto de traspaso a la siguiente conversación.
 
 ## Evidencia Técnica e Integridad
 - **Commit actual de referencia:** `2e2a15f`
@@ -40,8 +40,8 @@ Cerrar trazablemente la conversación del 2026-03-26, consolidando el trabajo re
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Uso de IA y Gobernanza
-- **Proveedor:** [proveedor_ia_interno]
-- **Modelo/Versión:** [modelo_ia_interno]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
 - **Objetivo:** Implementar la capa humana dual, la publicación sanitizada, los refinamientos de UX/UI y el cierre trazable de la conversación.
 - **Nivel de Razonamiento:** alto
 - **Alineación Ética:**
@@ -57,13 +57,13 @@ Cerrar trazablemente la conversación del 2026-03-26, consolidando el trabajo re
 - **Respuesta Erick Vega:** "vamos a cerrar con esta conversación, implementa toda la política de trazabilidad (incluyendo bitácora, etc) para pasar a otra conversación si consideras que ya no hay pendientes de lo tratado en esta"
 - **Criterio de Aceptación:** [x] Validado.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-  - **Soporte:** [[validacion_humana_interna]]
+  - **Soporte:** [validación humana interna no pública]
   - **Pregunta crítica o disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
   - **Texto exacto de confirmación verbal:** "vamos a cerrar con esta conversación, implementa toda la política de trazabilidad (incluyendo bitácora, etc) para pasar a otra conversación si consideras que ya no hay pendientes de lo tratado en esta"
-  - **Hash de confirmación verbal:** `[hash_redactado]:[redactado]`
-  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
-  - **Hash (Contenido):** `[hash_redactado]:[redactado]`
-  - **Fingerprint:** `[hash_redactado]`
+  - **Hash de confirmación verbal:** `hash omitido:omitido`
+  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+  - **Hash (Contenido):** `hash omitido:omitido`
+  - **Fingerprint:** `Hash omitido por seguridad`
   - **Nivel de Riesgo:** ALTO
   - **Modo:** Confirmación Verbal
 
@@ -75,6 +75,8 @@ Cerrar trazablemente la conversación del 2026-03-26, consolidando el trabajo re
 ## Siguiente paso concreto
 Iniciar la siguiente conversación leyendo `00_sistema_tesis/manual_operacion_humana.md`, ejecutando `python 07_scripts/tesis.py status`, `python 07_scripts/tesis.py next` y tomando como punto de entrada el backlog y riesgos abiertos, no esta conversación.
 
-[LID]: [ruta_local_redactada]
-[GOV]: [ruta_local_redactada]
-[AUD]: [ruta_local_redactada]
+[LID]: ruta local no pública
+[GOV]: ruta local no pública
+[AUD]: ruta local no pública
+
+_Última actualización: `2026-04-03`._

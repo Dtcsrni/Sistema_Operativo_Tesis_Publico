@@ -3,10 +3,8 @@
   "proposito": "Definir la exportación pública sanitizada, legible y reproducible del sistema operativo de tesis, exponiendo por defecto artefactos públicos y redirigiendo solo contenido verdaderamente sensible.",
   "politica": {
     "editable_directamente": false,
-    "aviso_no_editar": "Este bundle público es un artefacto derivado y curado editorialmente. No se corrige a mano; se reconstruye desde la base canónica.",
-    "alcance": "divulgacion_evaluacion_externa",
-    "modo_publicacion": "publico_editorial",
-    "tono_publico": "academico_institucional"
+    "aviso_no_editar": "Este bundle público es un artefacto derivado y sanitizado. No se corrige a mano; se reconstruye desde la base privada.",
+    "alcance": "divulgacion_evaluacion_externa"
   },
   "salida": {
     "directorio": "06_dashboard/publico",

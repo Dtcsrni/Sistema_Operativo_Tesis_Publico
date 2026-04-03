@@ -8,3 +8,5 @@ Registro de backend, contexto resumido, criterio de seleccion, Step ID, riesgo y
 
 ## Cientifico
 Ademas de lo anterior, clasificacion de afirmacion, fuente y nivel de evidencia.
+
+_Última actualización: `2026-04-03`._

@@ -11,3 +11,5 @@ Fuente maquina-legible: `manifests/storage_layout.yaml`.
 - Evitar escrituras intensivas en microSD.
 - Mantener rollback manual documentado antes de migrar rootfs.
 - Usar eMMC como almacenamiento templado/frio y no como rootfs principal.
+
+_Última actualización: `2026-04-03`._

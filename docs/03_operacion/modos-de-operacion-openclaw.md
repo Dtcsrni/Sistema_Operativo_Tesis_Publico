@@ -13,3 +13,5 @@
 - Trazabilidad alta
 
 Cada modo debe definir permisos, backend preferente, riesgo y trazabilidad.
+
+_Última actualización: `2026-04-03`._

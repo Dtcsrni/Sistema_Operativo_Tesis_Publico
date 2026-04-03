@@ -12,3 +12,5 @@ Sistema base mas capa OpenClaw para orquestacion y apoyo documental/operativo.
 - calidad documental
 - costo en recursos y tokens
 - riesgo metodologico
+
+_Última actualización: `2026-04-03`._

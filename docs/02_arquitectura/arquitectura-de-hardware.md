@@ -11,3 +11,5 @@
 
 ## Criterio
 Se prioriza Debian oficial con GUI, instalacion final en NVMe, eMMC como respaldo inteligente y microSD como rescate.
+
+_Última actualización: `2026-04-03`._

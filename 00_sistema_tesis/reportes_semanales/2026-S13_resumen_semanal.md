@@ -35,3 +35,5 @@
 1. Consolidar B1 con alcance y supuestos urbanos.
 2. Consolidar B2 con arquitectura propuesta y línea base.
 3. Traducir hipótesis a métricas y escenarios de prueba.
+
+_Última actualización: `2026-04-03`._

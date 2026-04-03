@@ -31,15 +31,15 @@ Explica por qué la alternativa elegida reduce riesgo, complejidad o ambigüedad
 
   - [ ] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
   - **Soporte:** [ID de Trazabilidad]
-  - **Integridad:** `[hash_redactado]:[hash_respuesta]`
-  - **Fingerprint:** `[hash_redactado]:[hash_prompt]`
+  - **Integridad:** `hash omitido:[hash_respuesta]`
+  - **Fingerprint:** `hash omitido:[hash_prompt]`
   - **Nivel de Auditoría:** [Crítico | Alto | Medio | Bajo]
   - **Modo:** [Confirmación Verbal | Edición Directa | Firma GPG]
   - **Fecha de Validación:** AAAA-MM-DD
   - **Pregunta crítica o disparador:** [Pregunta del agente o instrucción humana directa]
   - **Texto exacto de confirmación verbal:** "[Cita exacta del tesista]"
-  - **Hash de confirmación verbal:** `[hash_redactado]:[hash_cita_verbal]`
-  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
+  - **Hash de confirmación verbal:** `hash omitido:[hash_cita_verbal]`
+  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
 
 ## Consecuencias
 
@@ -70,6 +70,8 @@ Explica por qué la alternativa elegida reduce riesgo, complejidad o ambigüedad
 
 Lista aquí normas, artículos, documentación o decisiones previas relevantes.
 
-[LID]: [ruta_local_redactada]
-[GOV]: [ruta_local_redactada]
-[AUD]: [ruta_local_redactada]
+[LID]: ruta local no pública
+[GOV]: ruta local no pública
+[AUD]: ruta local no pública
+
+_Última actualización: `2026-04-03`._

@@ -269,6 +269,7 @@ def checks_for_stage(stage: str) -> list[tuple[str, list[str]]]:
         ("Auditar canon", [python, "07_scripts/tesis.py", "audit", "--check"]),
         ("Validar estructura", [python, "07_scripts/validate_structure.py"]),
         ("Validar publicación pública", [python, "07_scripts/tesis.py", "publish", "--check"]),
+        ("Validar calidad editorial pública", [python, "07_scripts/validate_public_text.py"]),
         ("Escaneo de secretos", [python, "07_scripts/secret_scanner.py"]),
         ("Auditar Ledger IA", [python, "07_scripts/verify_ledger.py"]),
         ("Auditar Cadena de Bitacoras", [python, "07_scripts/verify_bitacora_chain.py"]),

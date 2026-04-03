@@ -90,7 +90,7 @@
       "00_sistema_tesis/plantillas",
       ".github"
     ],
-    "fuente_canonica_identidad_agente": "[identidad_agente_privada]",
+    "fuente_canonica_identidad_agente": "identidad técnica no publicada por seguridad",
     "fuente_canonica_identidad_humana": "00_sistema_tesis/config/tesista.json",
     "enforcement": [
       "validate_structure.py",
@@ -307,8 +307,8 @@
     "captura_manual_requerida": false,
     "message_role_default": "human",
     "activacion": {
-      "desde_step_id": "[validacion_humana_interna]",
-      "justificacion": "[validacion_humana_interna] implementa la migración. A partir del siguiente step, toda validación humana nueva debe quedar enlazada a evidencia fuente corroborable."
+      "desde_step_id": "validación humana interna no pública",
+      "justificacion": "validación humana interna no pública implementa la migración. A partir del siguiente step, toda validación humana nueva debe quedar enlazada a evidencia fuente corroborable."
     },
     "artefactos_minimos": [
       "transcripcion.md",
