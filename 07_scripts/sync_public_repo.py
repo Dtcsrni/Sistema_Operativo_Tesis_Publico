@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import posixpath
 import re
 import shutil
 import subprocess
@@ -10,7 +11,7 @@ from datetime import datetime
 from pathlib import Path
 
 from common import ROOT, load_yaml_json
-from publication import load_publication_config, sanitize_text, validate_publication_output
+from publication import load_publication_config, rewrite_public_links, sanitize_text, validate_publication_output
 
 
 PRIVATE_EXCLUDE_PREFIXES = (
@@ -57,6 +58,10 @@ SEVERE_PRIVATE_LEAK_TOKENS = (
     "00_sistema_tesis/config/agent_identity.json",
     "00_sistema_tesis/config/sign_offs.json",
 )
+MARKDOWN_LINK_PATTERN = re.compile(r"(?<!\!)\[([^\]]+)\]\(([^)]+)\)")
+HTML_HREF_PATTERN = re.compile(r'(?P<prefix>\bhref\s*=\s*)(?P<quote>["\'])(?P<href>[^"\']+)(?P=quote)', re.IGNORECASE)
+ALLOWED_HREF_SCHEMES = ("http://", "https://", "mailto:", "tel:", "data:", "javascript:")
+SYNC_PLACEHOLDER_HREF_PATTERN = re.compile(r"\[[^\]]+\]")
 
 
 def run_command(cmd: list[str], cwd: Path, *, check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -164,11 +169,47 @@ def _render_payloads(source_map: dict[str, Path], *, sanitize: bool) -> dict[str
         if sanitize and rel_path in PUBLIC_OPERATIONAL_PASSTHROUGH_PATHS:
             payload = source_path.read_bytes()
         elif sanitize and _is_text_file(source_path):
-            payload = sanitize_text(source_path.read_text(encoding="utf-8"), publication).encode("utf-8")
+            sanitized_text = sanitize_text(source_path.read_text(encoding="utf-8"), publication)
+            sanitized_text = rewrite_public_links(
+                sanitized_text,
+                source_rel=rel_path,
+                public_rel=rel_path,
+                config=publication,
+            )
+            payload = sanitized_text.encode("utf-8")
         else:
             payload = source_path.read_bytes()
         payloads[rel_path] = payload
     return payloads
+
+
+def _iter_hrefs(text: str) -> list[str]:
+    hrefs: list[str] = []
+    hrefs.extend(match.group(2).strip() for match in MARKDOWN_LINK_PATTERN.finditer(text))
+    hrefs.extend(match.group("href").strip() for match in HTML_HREF_PATTERN.finditer(text))
+    return hrefs
+
+
+def _normalize_href_target(base_rel: str, href: str) -> str:
+    target, _, _ = href.partition("#")
+    if not target:
+        return ""
+    return posixpath.normpath(posixpath.join(Path(base_rel).parent.as_posix(), target)).lstrip("./")
+
+
+def _href_violates_public_policy(base_rel: str, href: str) -> bool:
+    if not href or href.startswith("#") or href.startswith(ALLOWED_HREF_SCHEMES):
+        return False
+    if SYNC_PLACEHOLDER_HREF_PATTERN.search(href):
+        return True
+    normalized = _normalize_href_target(base_rel, href)
+    if not normalized:
+        return False
+    if SYNC_PLACEHOLDER_HREF_PATTERN.search(normalized):
+        return True
+    if any(normalized.startswith(prefix) for prefix in PRIVATE_EXCLUDE_PREFIXES):
+        return True
+    return normalized in PRIVATE_EXCLUDE_PATHS
 
 
 def validate_sync_payloads(payloads: dict[str, bytes]) -> list[str]:
@@ -193,6 +234,11 @@ def validate_sync_payloads(payloads: dict[str, bytes]) -> list[str]:
                 except Exception as exc:  # pragma: no cover - defensive validation
                     errors.append(f"La configuración operativa pública es inválida en {rel_path}: {exc}")
                 continue
+            for href in _iter_hrefs(text):
+                if _href_violates_public_policy(rel_path, href):
+                    errors.append(
+                        f"La proyección pública contiene href inválido en {rel_path}: {href}"
+                    )
             if rel_path.startswith("06_dashboard/publico/"):
                 errors.extend(validate_publication_output(rel_path, payload, publication))
             else:

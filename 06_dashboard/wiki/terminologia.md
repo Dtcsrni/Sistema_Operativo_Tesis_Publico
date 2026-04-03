@@ -10,18 +10,18 @@ Glosario, familias de IDs, referencias globales y convenciones de nomenclatura d
 
 ## Navegación de esta página
 
-- [Volver al índice](index.md).
-- Página anterior en la ruta base: [Gobernanza](gobernanza.md).
-- Página siguiente en la ruta base: [Planeación](planeacion.md).
-- Relacionada: [Sistema](sistema.md).
-- Relacionada: [Gobernanza](gobernanza.md).
-- Relacionada: [Planeación](planeacion.md).
+- [Volver al índice](../publico/wiki/index.md).
+- Página anterior en la ruta base: [Gobernanza](../publico/wiki/gobernanza.md).
+- Página siguiente en la ruta base: [Planeación](../publico/wiki/planeacion.md).
+- Relacionada: [Sistema](../publico/wiki/sistema.md).
+- Relacionada: [Gobernanza](../publico/wiki/gobernanza.md).
+- Relacionada: [Planeación](../publico/wiki/planeacion.md).
 
 ## Origen canónico y artefactos relacionados
 
 ### Cómo rastrear esta página hasta su origen canónico
 
-1. Esta página derivada: [`06_dashboard/wiki/terminologia.md`](terminologia.md).
+1. Esta página derivada: [`06_dashboard/wiki/terminologia.md`](../publico/wiki/terminologia.md).
 2. Revisa la lista de fuentes canónicas que alimentan su contenido.
 3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
 4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
@@ -31,15 +31,15 @@ Glosario, familias de IDs, referencias globales y convenciones de nomenclatura d
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](../../00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md)|archivo|sí|
-|[`00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`](../../00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json)|archivo|sí|
-|[`01_planeacion/backlog_guia.md`](../../01_planeacion/backlog_guia.md)|archivo|sí|
-|[`00_sistema_tesis/config/ia_gobernanza.yaml`](../../00_sistema_tesis/config/ia_gobernanza.yaml)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`01_planeacion/backlog_guia.md`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/config/ia_gobernanza.yaml`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
 
 ### Artefactos derivados relacionados
 
-- Markdown interno: [`06_dashboard/wiki/terminologia.md`](terminologia.md)
-- HTML interno: [`06_dashboard/generado/wiki/terminologia.html`](../generado/wiki/terminologia.html)
+- Markdown interno: [`06_dashboard/wiki/terminologia.md`](../publico/wiki/terminologia.md)
+- HTML interno: [`06_dashboard/generado/wiki/terminologia.html`](../publico/wiki_html/terminologia.html)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/terminologia.md`](../publico/wiki/terminologia.md)
 - HTML público sanitizado: [`06_dashboard/publico/wiki_html/terminologia.html`](../publico/wiki_html/terminologia.html)
 

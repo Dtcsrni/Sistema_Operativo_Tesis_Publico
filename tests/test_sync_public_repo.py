@@ -26,6 +26,19 @@ def test_public_sync_payloads_pass_current_policy() -> None:
     assert validate_sync_payloads(payloads) == []
 
 
+def test_public_sync_rewrites_private_hrefs_to_public_note() -> None:
+    payloads = _render_payloads(_source_map_mirror(ROOT), sanitize=True)
+    bitacora_text = payloads["06_dashboard/wiki/bitacora.md"].decode("utf-8")
+    assert "](../../[bitacora_privada]/" not in bitacora_text
+    assert "](../../[reportes_privados]/" not in bitacora_text
+    assert "../publico/NOTA_SEGURIDAD_Y_ACCESO.md" in bitacora_text
+
+
+def test_validate_sync_payloads_rejects_placeholder_hrefs() -> None:
+    errors = validate_sync_payloads({"README.md": b"[enlace](./[bitacora_privada]/archivo.md)\n"})
+    assert any("href inválido" in error for error in errors)
+
+
 def test_public_sync_payloads_keep_pages_guarded_to_public_repo() -> None:
     payloads = _render_payloads(_source_map_mirror(ROOT), sanitize=True)
     pages_text = payloads[".github/workflows/pages.yml"].decode("utf-8")

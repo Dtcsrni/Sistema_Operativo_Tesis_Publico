@@ -13,18 +13,18 @@ Bloques macro del sistema y sus criterios de salida.
 
 ## Navegación de esta página
 
-- [Volver al índice](index.md).
-- Página anterior en la ruta base: [Hipótesis](hipotesis.md).
-- Página siguiente en la ruta base: [Decisiones](decisiones.md).
-- Relacionada: [Planeación](planeacion.md).
-- Relacionada: [Hipótesis](hipotesis.md).
-- Relacionada: [Implementación](implementacion.md).
+- [Volver al índice](../publico/wiki/index.md).
+- Página anterior en la ruta base: [Hipótesis](../publico/wiki/hipotesis.md).
+- Página siguiente en la ruta base: [Decisiones](../publico/wiki/decisiones.md).
+- Relacionada: [Planeación](../publico/wiki/planeacion.md).
+- Relacionada: [Hipótesis](../publico/wiki/hipotesis.md).
+- Relacionada: [Implementación](../publico/wiki/implementacion.md).
 
 ## Origen canónico y artefactos relacionados
 
 ### Cómo rastrear esta página hasta su origen canónico
 
-1. Esta página derivada: [`06_dashboard/wiki/bloques.md`](bloques.md).
+1. Esta página derivada: [`06_dashboard/wiki/bloques.md`](../publico/wiki/bloques.md).
 2. Revisa la lista de fuentes canónicas que alimentan su contenido.
 3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
 4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
@@ -34,12 +34,12 @@ Bloques macro del sistema y sus criterios de salida.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`00_sistema_tesis/config/bloques.yaml`](../../00_sistema_tesis/config/bloques.yaml)|archivo|sí|
+|[`00_sistema_tesis/config/bloques.yaml`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
 
 ### Artefactos derivados relacionados
 
-- Markdown interno: [`06_dashboard/wiki/bloques.md`](bloques.md)
-- HTML interno: [`06_dashboard/generado/wiki/bloques.html`](../generado/wiki/bloques.html)
+- Markdown interno: [`06_dashboard/wiki/bloques.md`](../publico/wiki/bloques.md)
+- HTML interno: [`06_dashboard/generado/wiki/bloques.html`](../publico/wiki_html/bloques.html)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/bloques.md`](../publico/wiki/bloques.md)
 - HTML público sanitizado: [`06_dashboard/publico/wiki_html/bloques.html`](../publico/wiki_html/bloques.html)
 

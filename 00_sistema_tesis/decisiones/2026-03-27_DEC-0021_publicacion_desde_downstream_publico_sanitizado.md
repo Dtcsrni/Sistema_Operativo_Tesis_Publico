@@ -18,8 +18,8 @@ Fijar como objetivo operativo que el sitio y la exposicion externa salgan del re
 
 ## Referencias
 
-- [DEC-0015](2026-03-24_DEC-0015_protocolo_de_sanitización_para_exposición_pública.md)
-- [DEC-0017](2026-03-26_DEC-0017_operacion_humana_dual_y_superficies_privada_publica.md)
+- [DEC-0015](../../06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [DEC-0017](../../06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 
 [LID]: [ruta_local_redactada]
 [GOV]: [ruta_local_redactada]

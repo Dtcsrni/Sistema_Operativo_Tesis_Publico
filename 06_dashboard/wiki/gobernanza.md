@@ -10,18 +10,18 @@ Políticas del sistema, soberanía humana, trazabilidad y disciplina de automati
 
 ## Navegación de esta página
 
-- [Volver al índice](index.md).
-- Página anterior en la ruta base: [Sistema](sistema.md).
-- Página siguiente en la ruta base: [Terminología](terminologia.md).
-- Relacionada: [Sistema](sistema.md).
-- Relacionada: [Terminología](terminologia.md).
-- Relacionada: [Bitácora](bitacora.md).
+- [Volver al índice](../publico/wiki/index.md).
+- Página anterior en la ruta base: [Sistema](../publico/wiki/sistema.md).
+- Página siguiente en la ruta base: [Terminología](../publico/wiki/terminologia.md).
+- Relacionada: [Sistema](../publico/wiki/sistema.md).
+- Relacionada: [Terminología](../publico/wiki/terminologia.md).
+- Relacionada: [Bitácora](../publico/wiki/bitacora.md).
 
 ## Origen canónico y artefactos relacionados
 
 ### Cómo rastrear esta página hasta su origen canónico
 
-1. Esta página derivada: [`06_dashboard/wiki/gobernanza.md`](gobernanza.md).
+1. Esta página derivada: [`06_dashboard/wiki/gobernanza.md`](../publico/wiki/gobernanza.md).
 2. Revisa la lista de fuentes canónicas que alimentan su contenido.
 3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
 4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
@@ -31,17 +31,17 @@ Políticas del sistema, soberanía humana, trazabilidad y disciplina de automati
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](../../00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md)|archivo|sí|
-|[`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](../../00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md)|archivo|sí|
-|[`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](../../00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md)|archivo|sí|
-|[`00_sistema_tesis/config/sistema_tesis.yaml`](../../00_sistema_tesis/config/sistema_tesis.yaml)|archivo|sí|
-|[`00_sistema_tesis/config/ia_gobernanza.yaml`](../../00_sistema_tesis/config/ia_gobernanza.yaml)|archivo|sí|
-|[`00_sistema_tesis/config/publicacion.yaml`](../../00_sistema_tesis/config/publicacion.yaml)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/config/sistema_tesis.yaml`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/config/ia_gobernanza.yaml`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/config/publicacion.yaml`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
 
 ### Artefactos derivados relacionados
 
-- Markdown interno: [`06_dashboard/wiki/gobernanza.md`](gobernanza.md)
-- HTML interno: [`06_dashboard/generado/wiki/gobernanza.html`](../generado/wiki/gobernanza.html)
+- Markdown interno: [`06_dashboard/wiki/gobernanza.md`](../publico/wiki/gobernanza.md)
+- HTML interno: [`06_dashboard/generado/wiki/gobernanza.html`](../publico/wiki_html/gobernanza.html)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/gobernanza.md`](../publico/wiki/gobernanza.md)
 - HTML público sanitizado: [`06_dashboard/publico/wiki_html/gobernanza.html`](../publico/wiki_html/gobernanza.html)
 

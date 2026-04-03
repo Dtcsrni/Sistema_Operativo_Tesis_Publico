@@ -26,17 +26,17 @@ graph LR
 
 ## Índice
 
-- [Sistema](sistema.md)
-- [Gobernanza](gobernanza.md)
-- [Terminología](terminologia.md)
-- [Hipótesis](hipotesis.md)
-- [Bloques](bloques.md)
-- [Planeación](planeacion.md)
-- [Decisiones](decisiones.md)
-- [Bitácora](bitacora.md)
-- [Experimentos](experimentos.md)
-- [Implementación](implementacion.md)
-- [Tesis](tesis.md)
+- [Sistema](../publico/wiki/sistema.md)
+- [Gobernanza](../publico/wiki/gobernanza.md)
+- [Terminología](../publico/wiki/terminologia.md)
+- [Hipótesis](../publico/wiki/hipotesis.md)
+- [Bloques](../publico/wiki/bloques.md)
+- [Planeación](../publico/wiki/planeacion.md)
+- [Decisiones](../publico/wiki/decisiones.md)
+- [Bitácora](../publico/wiki/bitacora.md)
+- [Experimentos](../publico/wiki/experimentos.md)
+- [Implementación](../publico/wiki/implementacion.md)
+- [Tesis](../publico/wiki/tesis.md)
 
 ## Qué explica esta documentación
 
@@ -48,18 +48,18 @@ graph LR
 
 ## Ruta de lectura
 
-- Si necesitas entender el sistema completo, empieza por [Sistema](sistema.md).
-- Si necesitas reglas y límites, continúa con [Gobernanza](gobernanza.md).
-- Si necesitas lenguaje, familias de IDs y convenciones, pasa por [Terminología](terminologia.md).
-- Si necesitas estado del trabajo, revisa [Planeación](planeacion.md), [Hipótesis](hipotesis.md) y [Bloques](bloques.md).
-- Si necesitas evidencia de avance o cobertura, revisa [Decisiones](decisiones.md), [Bitácora](bitacora.md), [Implementación](implementacion.md), [Experimentos](experimentos.md) y [Tesis](tesis.md).
+- Si necesitas entender el sistema completo, empieza por [Sistema](../publico/wiki/sistema.md).
+- Si necesitas reglas y límites, continúa con [Gobernanza](../publico/wiki/gobernanza.md).
+- Si necesitas lenguaje, familias de IDs y convenciones, pasa por [Terminología](../publico/wiki/terminologia.md).
+- Si necesitas estado del trabajo, revisa [Planeación](../publico/wiki/planeacion.md), [Hipótesis](../publico/wiki/hipotesis.md) y [Bloques](../publico/wiki/bloques.md).
+- Si necesitas evidencia de avance o cobertura, revisa [Decisiones](../publico/wiki/decisiones.md), [Bitácora](../publico/wiki/bitacora.md), [Implementación](../publico/wiki/implementacion.md), [Experimentos](../publico/wiki/experimentos.md) y [Tesis](../publico/wiki/tesis.md).
 
 ## Mapa de navegación por intención
 
-- Entender el sistema: [Sistema](sistema.md) -> [Gobernanza](gobernanza.md) -> [Terminología](terminologia.md).
-- Retomar ejecución: [Planeación](planeacion.md) -> [Bloques](bloques.md) -> [Hipótesis](hipotesis.md).
-- Rastrear decisiones y sesiones: [Decisiones](decisiones.md) -> [Bitácora](bitacora.md).
-- Revisar madurez técnica: [Experimentos](experimentos.md) -> [Implementación](implementacion.md) -> [Tesis](tesis.md).
+- Entender el sistema: [Sistema](../publico/wiki/sistema.md) -> [Gobernanza](../publico/wiki/gobernanza.md) -> [Terminología](../publico/wiki/terminologia.md).
+- Retomar ejecución: [Planeación](../publico/wiki/planeacion.md) -> [Bloques](../publico/wiki/bloques.md) -> [Hipótesis](../publico/wiki/hipotesis.md).
+- Rastrear decisiones y sesiones: [Decisiones](../publico/wiki/decisiones.md) -> [Bitácora](../publico/wiki/bitacora.md).
+- Revisar madurez técnica: [Experimentos](../publico/wiki/experimentos.md) -> [Implementación](../publico/wiki/implementacion.md) -> [Tesis](../publico/wiki/tesis.md).
 
 ## Cómo rastrear un artefacto derivado hasta su origen canónico
 

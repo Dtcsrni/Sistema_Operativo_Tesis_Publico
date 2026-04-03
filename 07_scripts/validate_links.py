@@ -19,6 +19,11 @@ PRIVATE_TARGET_PATTERNS = (
     "00_sistema_tesis/reportes_semanales/",
     "00_sistema_tesis/canon/",
 )
+PLACEHOLDER_SURFACES = (
+    "06_dashboard/wiki/",
+    "06_dashboard/generado/wiki/",
+    "06_dashboard/publico/",
+)
 SKIP_SCHEMES = ("http://", "https://", "mailto:", "tel:", "data:", "javascript:")
 ABSOLUTE_DRIVE_PATTERN = re.compile(r"^/?[A-Za-z]:/")
 SCAN_TARGETS = [
@@ -131,12 +136,14 @@ def validate_links(root: Path = ROOT) -> list[str]:
         html_links, _ = html_anchors(text) if path.suffix.lower() == ".html" else ([], set())
         all_links = markdown_links + html_links
 
-        if rel.startswith("06_dashboard/publico/"):
+        if rel.startswith(PLACEHOLDER_SURFACES):
             for href, lineno in all_links:
                 if "[" in href and "]" in href:
                     errors.append(f"{rel}:{lineno} mantiene un href con placeholder redactado: {href}")
                 if PLACEHOLDER_PATTERN.search(href):
                     errors.append(f"{rel}:{lineno} mantiene un href con placeholder redactado: {href}")
+        if rel.startswith("06_dashboard/publico/"):
+            for href, lineno in all_links:
                 if any(token in href for token in PRIVATE_TARGET_PATTERNS):
                     errors.append(f"{rel}:{lineno} mantiene un href hacia superficie privada: {href}")
 

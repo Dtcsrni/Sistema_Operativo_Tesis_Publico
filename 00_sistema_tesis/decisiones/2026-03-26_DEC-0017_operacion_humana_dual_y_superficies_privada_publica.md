@@ -87,9 +87,9 @@ La alternativa elegida reduce dependencia cognitiva de la IA, mejora legibilidad
 
 ## Referencias
 
-- [DEC-0014](2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
-- [DEC-0015](2026-03-24_DEC-0015_protocolo_de_sanitización_para_exposición_pública.md)
-- [DEC-0016](2026-03-26_DEC-0016_canon_unificado_de_eventos_y_proyecciones.md)
+- [DEC-0014](../../06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [DEC-0015](../../06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [DEC-0016](../../06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 
 [LID]: [ruta_local_redactada]
 [GOV]: [ruta_local_redactada]

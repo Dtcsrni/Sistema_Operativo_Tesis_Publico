@@ -10,17 +10,17 @@ Propósito, alcance, módulos, flujos e interacción del sistema operativo de te
 
 ## Navegación de esta página
 
-- [Volver al índice](index.md).
-- Página siguiente en la ruta base: [Gobernanza](gobernanza.md).
-- Relacionada: [Gobernanza](gobernanza.md).
-- Relacionada: [Terminología](terminologia.md).
-- Relacionada: [Planeación](planeacion.md).
+- [Volver al índice](../publico/wiki/index.md).
+- Página siguiente en la ruta base: [Gobernanza](../publico/wiki/gobernanza.md).
+- Relacionada: [Gobernanza](../publico/wiki/gobernanza.md).
+- Relacionada: [Terminología](../publico/wiki/terminologia.md).
+- Relacionada: [Planeación](../publico/wiki/planeacion.md).
 
 ## Origen canónico y artefactos relacionados
 
 ### Cómo rastrear esta página hasta su origen canónico
 
-1. Esta página derivada: [`06_dashboard/wiki/sistema.md`](sistema.md).
+1. Esta página derivada: [`06_dashboard/wiki/sistema.md`](../publico/wiki/sistema.md).
 2. Revisa la lista de fuentes canónicas que alimentan su contenido.
 3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
 4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
@@ -30,19 +30,19 @@ Propósito, alcance, módulos, flujos e interacción del sistema operativo de te
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`README_INICIO.md`](../../README_INICIO.md)|archivo|sí|
-|[`00_sistema_tesis/manual_operacion_humana.md`](../../00_sistema_tesis/manual_operacion_humana.md)|archivo|sí|
-|[`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](../../00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md)|archivo|sí|
-|[`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](../../00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md)|archivo|sí|
-|[`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](../../00_sistema_tesis/documentacion_sistema/flujos_operativos.md)|archivo|sí|
-|[`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](../../00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md)|archivo|sí|
-|[`00_sistema_tesis/config/sistema_tesis.yaml`](../../00_sistema_tesis/config/sistema_tesis.yaml)|archivo|sí|
-|[`00_sistema_tesis/config/publicacion.yaml`](../../00_sistema_tesis/config/publicacion.yaml)|archivo|sí|
+|[`README_INICIO.md`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/manual_operacion_humana.md`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/config/sistema_tesis.yaml`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/config/publicacion.yaml`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
 
 ### Artefactos derivados relacionados
 
-- Markdown interno: [`06_dashboard/wiki/sistema.md`](sistema.md)
-- HTML interno: [`06_dashboard/generado/wiki/sistema.html`](../generado/wiki/sistema.html)
+- Markdown interno: [`06_dashboard/wiki/sistema.md`](../publico/wiki/sistema.md)
+- HTML interno: [`06_dashboard/generado/wiki/sistema.html`](../publico/wiki_html/sistema.html)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/sistema.md`](../publico/wiki/sistema.md)
 - HTML público sanitizado: [`06_dashboard/publico/wiki_html/sistema.html`](../publico/wiki_html/sistema.html)
 

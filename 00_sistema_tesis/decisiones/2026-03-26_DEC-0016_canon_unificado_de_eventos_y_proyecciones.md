@@ -92,7 +92,7 @@ La alternativa elegida reduce duplicidad operativa, baja el riesgo de inconsiste
 
 ## Referencias
 
-- [DEC-0014](2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+- [DEC-0014](../../06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 - Event sourcing y snapshots derivados para auditoría reproducible.
 - Prácticas FAIR y trazabilidad de artefactos reproducibles en investigación.
 

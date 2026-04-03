@@ -19,9 +19,9 @@ Adoptar una reestructura operativa profunda, conservando el canon soberano en `0
 
 ## Referencias
 
-- [DEC-0005](2026-03-24_DEC-0005_orangepi_como_base.md)
-- [DEC-0014](2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
-- [DEC-0017](2026-03-26_DEC-0017_operacion_humana_dual_y_superficies_privada_publica.md)
+- [DEC-0005](../../06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [DEC-0014](../../06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [DEC-0017](../../06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 
 [LID]: [ruta_local_redactada]
 [GOV]: [ruta_local_redactada]

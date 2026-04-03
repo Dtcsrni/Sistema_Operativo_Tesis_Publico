@@ -76,3 +76,20 @@ def test_validate_links_reports_missing_target_and_anchor(tmp_path: Path) -> Non
 
     assert any("destino inexistente" in error for error in errors)
     assert any("ancla inexistente" in error for error in errors)
+
+
+def test_validate_links_reports_placeholder_href_in_wiki_surface(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    (repo / "06_dashboard" / "wiki").mkdir(parents=True)
+    (repo / "06_dashboard" / "generado").mkdir(parents=True)
+    (repo / "06_dashboard" / "publico").mkdir(parents=True)
+    (repo / "README.md").write_text("# Root\n", encoding="utf-8")
+    (repo / "README_INICIO.md").write_text("# Inicio\n", encoding="utf-8")
+    (repo / "06_dashboard" / "wiki" / "bitacora.md").write_text(
+        "[privado](../../[bitacora_privada]/2026-04-02_bitacora_sesion.md)\n",
+        encoding="utf-8",
+    )
+
+    errors = validate_links(repo)
+
+    assert any("placeholder redactado" in error for error in errors)

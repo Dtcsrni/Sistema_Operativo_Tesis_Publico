@@ -10,18 +10,18 @@ Registro de sesiones, uso de IA y aprendizaje operativo.
 
 ## Navegación de esta página
 
-- [Volver al índice](index.md).
-- Página anterior en la ruta base: [Decisiones](decisiones.md).
-- Página siguiente en la ruta base: [Experimentos](experimentos.md).
-- Relacionada: [Decisiones](decisiones.md).
-- Relacionada: [Gobernanza](gobernanza.md).
-- Relacionada: [Planeación](planeacion.md).
+- [Volver al índice](../publico/wiki/index.md).
+- Página anterior en la ruta base: [Decisiones](../publico/wiki/decisiones.md).
+- Página siguiente en la ruta base: [Experimentos](../publico/wiki/experimentos.md).
+- Relacionada: [Decisiones](../publico/wiki/decisiones.md).
+- Relacionada: [Gobernanza](../publico/wiki/gobernanza.md).
+- Relacionada: [Planeación](../publico/wiki/planeacion.md).
 
 ## Origen canónico y artefactos relacionados
 
 ### Cómo rastrear esta página hasta su origen canónico
 
-1. Esta página derivada: [`06_dashboard/wiki/bitacora.md`](bitacora.md).
+1. Esta página derivada: [`06_dashboard/wiki/bitacora.md`](../publico/wiki/bitacora.md).
 2. Revisa la lista de fuentes canónicas que alimentan su contenido.
 3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
 4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
@@ -36,8 +36,8 @@ Registro de sesiones, uso de IA y aprendizaje operativo.
 
 ### Artefactos derivados relacionados
 
-- Markdown interno: [`06_dashboard/wiki/bitacora.md`](bitacora.md)
-- HTML interno: [`06_dashboard/generado/wiki/bitacora.html`](../generado/wiki/bitacora.html)
+- Markdown interno: [`06_dashboard/wiki/bitacora.md`](../publico/wiki/bitacora.md)
+- HTML interno: [`06_dashboard/generado/wiki/bitacora.html`](../publico/wiki_html/bitacora.html)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/bitacora.md`](../publico/wiki/bitacora.md)
 - HTML público sanitizado: [`06_dashboard/publico/wiki_html/bitacora.html`](../publico/wiki_html/bitacora.html)
 
@@ -49,18 +49,18 @@ Registro de sesiones, uso de IA y aprendizaje operativo.
 
 ## Bitácoras
 
-- `matriz_tra` [Matriz de Trazabilidad Maestra (Índice de Integridad)](../../[matriz_privada])
-- `log_conver` [Ledger de Conversaciones IA (Inmutable y Enlazado)](../../[ledger_privado])
-- `indice_fue` [Índice Privado de Fuentes de Conversación](../../[indice_fuentes_privado])
-- `2026-04-02` [Bitácora de sesión 2026-04-02](../../[bitacora_privada]/2026-04-02_bitacora_sesion.md)
-- `2026-04-01` [Bitácora de sesión 2026-04-01](../../[bitacora_privada]/2026-04-01_bitacora_sesion.md)
-- `2026-03-27` [Bitácora de sesión 2026-03-27](../../[bitacora_privada]/2026-03-27_bitacora_sesion.md)
-- `2026-03-26` [Bitácora de sesión 2026-03-26](../../[bitacora_privada]/2026-03-26_bitacora_sesion_2.md)
-- `2026-03-26` [Bitácora de sesión 2026-03-26](../../[bitacora_privada]/2026-03-26_bitacora_sesion_1.md)
-- `2026-03-26` [Bitácora de sesión 2026-03-26](../../[bitacora_privada]/2026-03-26_bitacora_sesion.md)
-- `2026-03-25` [Bitácora de sesión 2026-03-25](../../[bitacora_privada]/2026-03-25_bitacora_sesion.md)
-- `2026-03-24` [Bitácora de sesión 2026-03-24](../../[bitacora_privada]/2026-03-24_bitacora_sesion.md)
-- `2026-03-23` [Bitácora de sesión 2026-03-23](../../[bitacora_privada]/2026-03-23_bitacora_base_operativa.md)
+- `matriz_tra` [Matriz de Trazabilidad Maestra (Índice de Integridad)](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- `log_conver` [Ledger de Conversaciones IA (Inmutable y Enlazado)](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- `indice_fue` [Índice Privado de Fuentes de Conversación](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-04-02` [Bitácora de sesión 2026-04-02](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-04-01` [Bitácora de sesión 2026-04-01](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-03-27` [Bitácora de sesión 2026-03-27](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-03-26` [Bitácora de sesión 2026-03-26](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-03-26` [Bitácora de sesión 2026-03-26](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-03-26` [Bitácora de sesión 2026-03-26](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-03-25` [Bitácora de sesión 2026-03-25](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-03-24` [Bitácora de sesión 2026-03-24](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-03-23` [Bitácora de sesión 2026-03-23](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Contenido de Bitácora de Conversaciones IA
 
@@ -940,10 +940,10 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260401-trazabilidad-con
 Objetivo de Sesión: Verificar y regularizar el registro de actividades recientes no registradas explícitamente como validación humana independiente. Contexto Operativo: Se identificaron commits recientes de automatización CI/wiki y sanitización pública posteriores al cierre [validacion_humana_interna]. Se registra validación humana explícita para dejar trazabilidad formal de estas actividades recientes y su estado de cumplimiento (verify en verde).>>>
 
 **Navegación:**
-- [Volver a la Matriz](../../[matriz_privada])
+- [Volver a la Matriz](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 
 
 ## Reportes semanales
 
-- `2026-S13_r` [Resumen semanal 2026-S13](../../[reportes_privados]/2026-S13_resumen_semanal.md)
+- `2026-S13_r` [Resumen semanal 2026-S13](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 
