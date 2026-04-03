@@ -3,7 +3,18 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 PRE_COMMIT_HOOK = """#!/bin/sh
-python 07_scripts/governance_gate.py --stage pre-commit
+PYTHON_BIN="${SISTEMA_TESIS_HOOK_PYTHON:-}"
+if [ -z "$PYTHON_BIN" ]; then
+  if [ -x "./.venv/bin/python.exe" ]; then
+    PYTHON_BIN="./.venv/bin/python.exe"
+  elif [ -x "./.venv/Scripts/python.exe" ]; then
+    PYTHON_BIN="./.venv/Scripts/python.exe"
+  else
+    PYTHON_BIN="python"
+  fi
+fi
+
+"$PYTHON_BIN" 07_scripts/governance_gate.py --stage pre-commit
 STATUS=$?
 if [ $STATUS -ne 0 ]; then
   exit $STATUS
@@ -19,7 +30,18 @@ exit 0
 """
 
 PRE_PUSH_HOOK = """#!/bin/sh
-python 07_scripts/governance_gate.py --stage pre-push
+PYTHON_BIN="${SISTEMA_TESIS_HOOK_PYTHON:-}"
+if [ -z "$PYTHON_BIN" ]; then
+  if [ -x "./.venv/bin/python.exe" ]; then
+    PYTHON_BIN="./.venv/bin/python.exe"
+  elif [ -x "./.venv/Scripts/python.exe" ]; then
+    PYTHON_BIN="./.venv/Scripts/python.exe"
+  else
+    PYTHON_BIN="python"
+  fi
+fi
+
+"$PYTHON_BIN" 07_scripts/governance_gate.py --stage pre-push
 """
 
 POST_COMMIT_SYNC_HOOK = """#!/bin/sh
@@ -28,7 +50,17 @@ if [ "$BRANCH" != "main" ]; then
   exit 0
 fi
 
-PYTHON_BIN="${SISTEMA_TESIS_HOOK_PYTHON:-python}"
+PYTHON_BIN="${SISTEMA_TESIS_HOOK_PYTHON:-}"
+if [ -z "$PYTHON_BIN" ]; then
+  if [ -x "./.venv/bin/python.exe" ]; then
+    PYTHON_BIN="./.venv/bin/python.exe"
+  elif [ -x "./.venv/Scripts/python.exe" ]; then
+    PYTHON_BIN="./.venv/Scripts/python.exe"
+  else
+    PYTHON_BIN="python"
+  fi
+fi
+
 "$PYTHON_BIN" 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --branch main --skip-local-mirror
 """
 
