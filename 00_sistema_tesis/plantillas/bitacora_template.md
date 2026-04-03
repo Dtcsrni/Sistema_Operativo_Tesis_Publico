@@ -51,7 +51,7 @@
   - **Pregunta crítica o disparador:** [Pregunta del agente o instrucción humana directa]
   - **Texto exacto de confirmación verbal:** "[Cita exacta del tesista]"
   - **Hash de confirmación verbal:** `[hash_redactado]:[hash_cita_verbal]`
-  - **Fuente de verdad de confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 
 ## Economía de uso
 - Presupuesto vs Avance: [Análisis de consumo]

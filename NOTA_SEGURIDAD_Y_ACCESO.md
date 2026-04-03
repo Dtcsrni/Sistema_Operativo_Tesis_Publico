@@ -4,8 +4,8 @@ Este repositorio es una **proyección pública controlada** del repositorio can�
 
 ## Política de seguridad aplicada
 
-- Se excluyen superficies privadas: `canon/`, `bitacora/` y `evidencia_privada/`.
-- Se omiten artefactos de identidad/operación interna y secretos locales.
+- Se excluyen únicamente superficies sensibles: `.env`, `evidencia_privada/`, respaldos y artefactos de identidad.
+- El resto del contenido se publica con sanitización de hashes, identificadores internos y rutas locales.
 - La sincronización se valida por hash antes de publicar.
 
 ## Solicitud de detalles adicionales

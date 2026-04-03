@@ -32,8 +32,8 @@
     "01_planeacion/roadmap.csv",
     "01_planeacion/entregables.csv",
     "00_sistema_tesis/decisiones",
-    "[bitacora_privada]",
-    "[reportes_privados]",
+    "00_sistema_tesis/bitacora",
+    "00_sistema_tesis/reportes_semanales",
     "02_experimentos",
     "04_implementacion",
     "05_tesis"
@@ -124,8 +124,8 @@
       "titulo": "Bitácora",
       "descripcion": "Registro de sesiones, uso de IA y aprendizaje operativo.",
       "fuentes": [
-        "[bitacora_privada]",
-        "[reportes_privados]"
+        "00_sistema_tesis/bitacora",
+        "00_sistema_tesis/reportes_semanales"
       ]
     },
     {

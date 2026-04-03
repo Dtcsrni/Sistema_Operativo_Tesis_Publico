@@ -5,7 +5,7 @@ Registro de sesiones, uso de IA y aprendizaje operativo.
 - **Tesista:** `Erick Renato Vega Ceron`
 - **Fecha:** `[fecha_hora_redactada]`
 - **Estado:** `OK`
-- **Fuentes:** `[bitacora_privada]`, `[reportes_privados]`
+- **Fuentes:** `00_sistema_tesis/bitacora`, `00_sistema_tesis/reportes_semanales`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
 
 ## Navegación de esta página
@@ -31,8 +31,8 @@ Registro de sesiones, uso de IA y aprendizaje operativo.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`[bitacora_privada]`](nota_seguridad_y_acceso.md)|directorio|sí|
-|[`[reportes_privados]`](nota_seguridad_y_acceso.md)|directorio|sí|
+|[`00_sistema_tesis/bitacora`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora)|directorio|sí|
+|[`00_sistema_tesis/reportes_semanales`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/reportes_semanales)|directorio|sí|
 
 ### Artefactos derivados relacionados
 
@@ -49,18 +49,18 @@ Registro de sesiones, uso de IA y aprendizaje operativo.
 
 ## Bitácoras
 
-- `matriz_tra` [Matriz de Trazabilidad Maestra (Índice de Integridad)](nota_seguridad_y_acceso.md)
-- `log_conver` [Ledger de Conversaciones IA (Inmutable y Enlazado)](nota_seguridad_y_acceso.md)
-- `indice_fue` [Índice Privado de Fuentes de Conversación](nota_seguridad_y_acceso.md)
-- `2026-04-02` [Bitácora de sesión 2026-04-02](nota_seguridad_y_acceso.md)
-- `2026-04-01` [Bitácora de sesión 2026-04-01](nota_seguridad_y_acceso.md)
-- `2026-03-27` [Bitácora de sesión 2026-03-27](nota_seguridad_y_acceso.md)
-- `2026-03-26` [Bitácora de sesión 2026-03-26](nota_seguridad_y_acceso.md)
-- `2026-03-26` [Bitácora de sesión 2026-03-26](nota_seguridad_y_acceso.md)
-- `2026-03-26` [Bitácora de sesión 2026-03-26](nota_seguridad_y_acceso.md)
-- `2026-03-25` [Bitácora de sesión 2026-03-25](nota_seguridad_y_acceso.md)
-- `2026-03-24` [Bitácora de sesión 2026-03-24](nota_seguridad_y_acceso.md)
-- `2026-03-23` [Bitácora de sesión 2026-03-23](nota_seguridad_y_acceso.md)
+- `matriz_tra` [Matriz de Trazabilidad Maestra (Índice de Integridad)](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/matriz_trazabilidad.md)
+- `log_conver` [Ledger de Conversaciones IA (Inmutable y Enlazado)](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md)
+- `indice_fue` [Índice Privado de Fuentes de Conversación](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/indice_fuentes_conversacion.md)
+- `2026-04-02` [Bitácora de sesión 2026-04-02](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-04-02_bitacora_sesion.md)
+- `2026-04-01` [Bitácora de sesión 2026-04-01](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-04-01_bitacora_sesion.md)
+- `2026-03-27` [Bitácora de sesión 2026-03-27](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-03-27_bitacora_sesion.md)
+- `2026-03-26` [Bitácora de sesión 2026-03-26](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-03-26_bitacora_sesion_2.md)
+- `2026-03-26` [Bitácora de sesión 2026-03-26](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-03-26_bitacora_sesion_1.md)
+- `2026-03-26` [Bitácora de sesión 2026-03-26](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-03-26_bitacora_sesion.md)
+- `2026-03-25` [Bitácora de sesión 2026-03-25](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-03-25_bitacora_sesion.md)
+- `2026-03-24` [Bitácora de sesión 2026-03-24](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-03-24_bitacora_sesion.md)
+- `2026-03-23` [Bitácora de sesión 2026-03-23](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-03-23_bitacora_base_operativa.md)
 
 ## Contenido de Bitácora de Conversaciones IA
 
@@ -82,7 +82,7 @@ Cada bloque forma parte de una **Cadena de Evidencia Vinculada**.
 - **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
 - **Confirmación Verbal (Texto Exacto):** "asegurate de siempre preguntarme y vincular mis decisiones y respuestas a los elementos de trazabilidad, especialmente si requieren validación humana."
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** instruccion_directa | Fuente: derivada_de_content_text
 - **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
 - **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
@@ -109,7 +109,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: 128bceee): "asegurate de siempre preg
 - **Pregunta Crítica / Disparador:** "¿Este nivel de detalle y vinculación por Step ID te parece el método confiable que buscas?"
 - **Confirmación Verbal (Texto Exacto):** "si. Implementa"
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** respuesta_afirmativa | Fuente: derivada_de_content_text
 - **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
 - **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
@@ -137,7 +137,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: 128bceee): "si. Implementa">>>
 - **Pregunta Crítica / Disparador:** "La wiki es funcional y correcta según sus validadores internos. La falta de completitud en secciones específicas es nominal y esperada. El fallo de auditoría externa es por red. Recomendación: Iniciar firmas de bloques."
 - **Confirmación Verbal (Texto Exacto):** "funciona ya la wiki y está completa, y correcta?"
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** enunciado_humano | Fuente: derivada_de_content_text
 - **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
 - **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
@@ -165,7 +165,7 @@ Agente: "La wiki es funcional y correcta según sus validadores internos. La fal
 - **Pregunta Crítica / Disparador:** "Rectificación de auditoría: El error previo atribuyó erróneamente el fallo a la falta de red. Se confirma conectividad (Google 200, Wikipedia Main 200). Los fallos en `verify_standards.py` se deben a URLs incorrectas (ej. NIST RMF 404) y fallos de validación de descriptores clave en el contenido de Wikipedia. La wiki sigue siendo funcional pero el audit de estándares requiere corrección de fuentes."
 - **Confirmación Verbal (Texto Exacto):** "\"sin éxito debido a la falta de conexión a red en este entorno.\"?\"
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** enunciado_humano | Fuente: derivada_de_content_text
 - **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
 - **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
@@ -193,7 +193,7 @@ Agente: "Rectificación de auditoría: El error previo atribuyó erróneamente e
 - **Pregunta Crítica / Disparador:** "Propongo un sistema de 'Cadena de Confianza' donde cada bitácora referencia el hash de la anterior. Además, automatizaremos la creación de sesiones y la validación de integridad."
 - **Confirmación Verbal (Texto Exacto):** "mejora el sistema de bitácora"
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** enunciado_humano | Fuente: derivada_de_content_text
 - **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
 - **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
@@ -221,7 +221,7 @@ Agente: "Propongo un sistema de 'Cadena de Confianza' donde cada bitácora refer
 - **Pregunta Crítica / Disparador:** "La infraestructura de gestión está completa. Faltan la delimitación formal del caso de estudio (B1), la definición de la línea base de comparación (B2) y el diseño detallado de los componentes de resiliencia (B2) antes de la implementación física."
 - **Confirmación Verbal (Texto Exacto):** "¿que faltaria en la arquitectura para poder empezar el desarrollo de la tesis?"
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** enunciado_humano | Fuente: derivada_de_content_text
 - **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
 - **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
@@ -249,7 +249,7 @@ Agente: "La infraestructura de gestión está completa. Faltan la delimitación 
 - **Pregunta Crítica / Disparador:** Solicitud humana contextualizada para implementar el Gate de Gobernanza Agnóstico de Agente en la sesión codex-local-20260326.
 - **Confirmación Verbal (Texto Exacto):** Implementación del Gate de Gobernanza Agnóstico de Agente con hooks, CI, escritura segura y attestations.
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** prompt_de_implementacion_legacy_contextualizado | Fuente: extracto_contextual_derivado_del_canon_privado
 - **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
 - **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
@@ -277,7 +277,7 @@ Extracto contextual normalizado: "Implementación del Gate de Gobernanza Agnóst
 - **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
 - **Confirmación Verbal (Texto Exacto):** "nada debe ser hardcodeado nunca. Implementa eso como política general del proyecto e implementalo"
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** instruccion_directa | Fuente: derivada_de_content_text
 - **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
 - **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
@@ -304,7 +304,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260326-nohardcode): "na
 - **Pregunta Crítica / Disparador:** ¿Autorizas cerrar estrictamente esta conversación con bitácora del día, ledger, matriz, hooks, auditoría final y commit firmado?
 - **Confirmación Verbal (Texto Exacto):** Autorización contextualizada para cierre estricto de la conversación del 2026-03-26 con bitácora diaria, ledger, matriz, hooks, auditoría final y commit firmado.
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** respuesta_contextual_legacy_derivada | Fuente: extracto_contextual_derivado_del_canon_privado
 - **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
 - **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
@@ -332,7 +332,7 @@ Extracto contextual normalizado: "Autorización contextualizada para cierre estr
 - **Pregunta Crítica / Disparador:** "Se corrige la heurística del gate para commits del ledger y se valida con pruebas y build completo."
 - **Confirmación Verbal (Texto Exacto):** "revisa y corrige el error del gate que detecta múltiples Step IDs en el diff protegido".
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** enunciado_humano | Fuente: derivada_de_content_text
 - **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
 - **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
@@ -360,7 +360,7 @@ Agente: "Se corrige la heurística del gate para commits del ledger y se valida 
 - **Pregunta Crítica / Disparador:** "Se ajusta la política del gate para rangos multi-commit y se valida con push dry-run, pruebas y build completo."
 - **Confirmación Verbal (Texto Exacto):** "corrige tambien el caso pre-push porque VS Code bloquea sincronizar cambios".
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** enunciado_humano | Fuente: derivada_de_content_text
 - **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
 - **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
@@ -388,7 +388,7 @@ Agente: "Se ajusta la política del gate para rangos multi-commit y se valida co
 - **Pregunta Crítica / Disparador:** Solicitud humana contextualizada para ejecutar el rediseño v2 del sistema operativo de tesis hacia canon unificado.
 - **Confirmación Verbal (Texto Exacto):** Rediseño v2 del Sistema Operativo de Tesis hacia un canon unificado de eventos append-only, proyecciones derivadas y CLI canónica.
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** prompt_de_implementacion_legacy_contextualizado | Fuente: extracto_contextual_derivado_del_canon_privado
 - **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
 - **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
@@ -416,7 +416,7 @@ Extracto contextual normalizado: "Rediseño v2 del Sistema Operativo de Tesis ha
 - **Pregunta Crítica / Disparador:** Solicitud humana contextualizada para implementar el modelo humano primero y la publicación sanitizada.
 - **Confirmación Verbal (Texto Exacto):** Implementación del modelo humano primero, publicación sanitizada y simplificación operativa.
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** prompt_de_implementacion_legacy_contextualizado | Fuente: extracto_contextual_derivado_del_canon_privado
 - **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
 - **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
@@ -444,7 +444,7 @@ Extracto contextual normalizado: "Implementación del modelo humano primero, pub
 - **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
 - **Confirmación Verbal (Texto Exacto):** "vamos a cerrar con esta conversación, implementa toda la política de trazabilidad (incluyendo bitácora, etc) para pasar a otra conversación si consideras que ya no hay pendientes de lo tratado en esta"
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** instruccion_directa | Fuente: derivada_de_content_text
 - **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
 - **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
@@ -471,7 +471,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260326-convclose): "vam
 - **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
 - **Confirmación Verbal (Texto Exacto):** "mejora los prechecks, agrega más si es conveniente. Mejora el contexto en todos los registros de conversación, especialmente si están relacionados a decisiones o cambios (agrega explícitamente el texto con el que el usuario implementó la 'confirmación verbal' y solidifica esa fuente de verdad de confirmación verbal para que sea más confiable para la filosofía de la investigación, la ciencia, la tesis, y el sistema operativo de tesis"
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
 - **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
 - **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
@@ -498,7 +498,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260326-prechecks): "mej
 - **Pregunta Crítica / Disparador:** ¿Implemento el plan de evidencia fuente de conversación Codex para confirmación verbal?
 - **Confirmación Verbal (Texto Exacto):** Implementación del plan de evidencia fuente de conversación Codex para confirmación verbal.
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** prompt_de_implementacion_legacy_contextualizado | Fuente: extracto_contextual_derivado_del_canon_privado
 - **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
 - **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
@@ -531,7 +531,7 @@ Objetivo operativo resumido:
 - reporte de consistencia
 - Overleaf actual como borrador provisional no canónico
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** prompt_de_implementacion_contextualizado | Fuente: transcripcion_contextual_del_panel_codex
 - **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
 - **Fuente de Conversación Registrada:** `[evento_interno]` | Captura requerida: True
@@ -575,7 +575,7 @@ Objetivo operativo resumido:
 - explicar interacción del tesista y del lector público
 - mantener la frontera privado/público sin inventar arquitectura IoT no canónica
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** prompt_de_implementacion_contextualizado | Fuente: transcripcion_contextual_del_panel_codex
 - **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
 - **Fuente de Conversación Registrada:** `[evento_interno]` | Captura requerida: False
@@ -615,7 +615,7 @@ Contexto autorizado:
 - cerrar pendientes secundarios de la reestructura documental
 - no autoemitir una firma humana desactualizada
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** respuesta_afirmativa_contextualizada | Fuente: transcripcion_contextual_del_panel_codex
 - **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
 - **Fuente de Conversación Registrada:** `[evento_interno]` | Captura requerida: False
@@ -658,7 +658,7 @@ Se incorporará una arquitectura terminológica canónica, mixta y técnicamente
 - definiciones locales resumidas en páginas clave,
 - una versión pública sanitizada pero detallada.
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** prompt_de_implementacion_contextualizado | Fuente: transcripcion_contextual_del_panel_codex
 - **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
 - **Fuente de Conversación Registrada:** `[evento_interno]` | Captura requerida: False
@@ -696,7 +696,7 @@ Se incorporará una arquitectura terminológica canónica, mixta y técnicamente
 - **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
 - **Confirmación Verbal (Texto Exacto):** mejora la navegación de todo el sistema de documentación y trazabilidad que se puedan rastrear hasta sus origenes canónicos
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
 - **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
 - **Fuente de Conversación Registrada:** `[evento_interno]` | Captura requerida: False
@@ -721,7 +721,7 @@ Diferencial de Plan: Añadir navegación transversal, bloques de origen canónic
 - **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
 - **Confirmación Verbal (Texto Exacto):** "PLEASE IMPLEMENT THIS PLAN", ¿cuando dije eso? eso no es una evidencia real. Mapealo en todo caso a mi interacción con los distintos sistemas (como el panel de codex en vs studio code), e incluso los prompts anteriores si están relacionados
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
 - **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
 - **Fuente de Conversación Registrada:** `[evento_interno]` | Captura requerida: False
@@ -746,7 +746,7 @@ Diferencial de Plan: Sustituir la cita débil por un extracto sustantivo del pro
 - **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
 - **Confirmación Verbal (Texto Exacto):** si, normaliza todo
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
 - **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
 - **Fuente de Conversación Registrada:** `[evento_interno]` | Captura requerida: False
@@ -772,7 +772,7 @@ Diferencial de Plan: Aplicar una regla uniforme de contextualización para legac
 - **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
 ## Plan de Migración del Sistema Operativo de Tesis
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** prompt_de_implementacion_contextualizado | Fuente: campo_canonico_explicito
 - **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
 - **Fuente de Conversación Registrada:** `[evento_interno]` | Captura requerida: True
@@ -800,7 +800,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260327-migracion-sistem
 - **Pregunta Crítica / Disparador:** Solicitud humana directa para implementar el plan de cierre de pendientes y errores restantes del sistema.
 - **Confirmación Verbal (Texto Exacto):** "PLEASE IMPLEMENT THIS PLAN:
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** prompt_de_implementacion_contextualizado | Fuente: campo_canonico_explicito
 - **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
 - **Fuente de Conversación Registrada:** `[evento_interno]` | Captura requerida: True
@@ -825,7 +825,7 @@ Diferencial de Plan: Implementar el plan titulado 'Plan de Cierre de Pendientes 
 - **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
 - **Confirmación Verbal (Texto Exacto):** "si procede con la modernización de la wiki y los guardrails de trazabilidad. Asegúrate de que el build falle si no hay registros."
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** respuesta_afirmativa | Fuente: campo_canonico_explicito
 - **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
 - **Fuente de Conversación Registrada:** `[evento_interno]` | Captura requerida: True
@@ -851,7 +851,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: 735fa0a1-c29f-40a2-8c83-3e8ad8a2884d)
 - **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
 - **Confirmación Verbal (Texto Exacto):** "excelente. Procede con el cierre de B0 y la preparación de la Orange Pi 5 Plus con el stack de IA."
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
 - **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
 - **Fuente de Conversación Registrada:** `[evento_interno]` | Captura requerida: True
@@ -877,7 +877,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: 3e5f5319-f769-495b-8990-837fd6de57ab)
 - **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
 - **Confirmación Verbal (Texto Exacto):** "procede con el análisis inicial y la formalización de la transición a B1."
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
 - **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
 - **Fuente de Conversación Registrada:** `[evento_interno]` | Captura requerida: True
@@ -903,7 +903,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: 814db1d5-6b35-47d2-b7bd-7178a38c0ab6)
 - **Pregunta Crítica / Disparador:** Instrucción humana directa para completar la trazabilidad de la conversación actual.
 - **Confirmación Verbal (Texto Exacto):** completa la trrazabilidad de esta conversación
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
 - **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
 - **Fuente de Conversación Registrada:** `[evento_interno]` | Captura requerida: True
@@ -930,7 +930,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260401-trazabilidad-con
 - **Pregunta Crítica / Disparador:** ¿Confirmas registrar formalmente la verificación y regularización de actividades recientes no registradas?
 - **Confirmación Verbal (Texto Exacto):** verifica que estén correctamente registradas las actividades recientes no registradas
 - **Hash de Confirmación Verbal:** `[hash_redactado]:[redactado]`
-- **Fuente de Verdad de Confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
 - **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
 - **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
 - **Fuente de Conversación Registrada:** `[evento_interno]` | Captura requerida: True
@@ -940,10 +940,10 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260401-trazabilidad-con
 Objetivo de Sesión: Verificar y regularizar el registro de actividades recientes no registradas explícitamente como validación humana independiente. Contexto Operativo: Se identificaron commits recientes de automatización CI/wiki y sanitización pública posteriores al cierre [validacion_humana_interna]. Se registra validación humana explícita para dejar trazabilidad formal de estas actividades recientes y su estado de cumplimiento (verify en verde).>>>
 
 **Navegación:**
-- [Volver a la Matriz](nota_seguridad_y_acceso.md)
+- [Volver a la Matriz](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/matriz_trazabilidad.md)
 
 
 ## Reportes semanales
 
-- `2026-S13_r` [Resumen semanal 2026-S13](nota_seguridad_y_acceso.md)
+- `2026-S13_r` [Resumen semanal 2026-S13](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/reportes_semanales/2026-S13_resumen_semanal.md)
 

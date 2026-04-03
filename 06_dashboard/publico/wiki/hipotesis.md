@@ -31,15 +31,15 @@ Hipótesis activas, criterios de soporte, evidencia y relación con bloques.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`00_sistema_tesis/config/hipotesis.yaml`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`00_sistema_tesis/config/bloques.yaml`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/config/hipotesis.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/hipotesis.yaml)|archivo|sí|
+|[`00_sistema_tesis/config/bloques.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/bloques.yaml)|archivo|sí|
 
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/hipotesis.md`](hipotesis.md)
-- HTML interno: [`06_dashboard/generado/wiki/hipotesis.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- HTML interno: [`06_dashboard/generado/wiki/hipotesis.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/wiki_html/hipotesis.html)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/hipotesis.md`](hipotesis.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/hipotesis.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/hipotesis.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/wiki_html/hipotesis.html)
 
 ## Qué resuelve este subsistema
 

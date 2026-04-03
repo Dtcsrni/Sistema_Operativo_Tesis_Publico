@@ -1,10 +1,10 @@
 # Bundle público sanitizado
 
-Definir la exportación pública sanitizada, legible y reproducible del sistema operativo de tesis sin exponer trazabilidad privada ni infraestructura sensible.
+Definir la exportación pública sanitizada, legible y reproducible del sistema operativo de tesis, exponiendo por defecto artefactos públicos y redirigiendo solo contenido verdaderamente sensible.
 
 - **Generado:** `2026-04-03`
 - **Estado:** `ok`
-- **Fingerprint del bundle:** `d0e6e22903fbfb06be3d186f8a2b019b35613b602dad85c163de3899af3c10f3`
+- **Fingerprint del bundle:** `225b2c756b24c577948746aaa252e90ffcc9696a0b6b00639a630aa659ee154f`
 - **Aviso:** Este bundle público es un artefacto derivado y sanitizado. No se corrige a mano; se reconstruye desde la base privada.
 
 ## Superficies
@@ -74,10 +74,6 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 - hashes_sha256
 - curp_personal
 - literal_rule_1
-- literal_rule_2
-- literal_rule_3
-- literal_rule_4
-- literal_rule_5
 - file_uri_redaction
 - absolute_windows_path_redaction
 - val_step_redaction

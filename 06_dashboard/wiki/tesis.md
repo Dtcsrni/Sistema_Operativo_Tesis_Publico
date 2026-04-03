@@ -30,7 +30,7 @@ Estado de cobertura de capítulos y figuras.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`05_tesis`](nota_seguridad_y_acceso.md)|directorio|sí|
+|[`05_tesis`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/05_tesis)|directorio|sí|
 
 ### Artefactos derivados relacionados
 

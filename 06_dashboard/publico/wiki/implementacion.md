@@ -31,14 +31,14 @@ Estado de cobertura de firmware, gateway y analítica.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`04_implementacion`](../NOTA_SEGURIDAD_Y_ACCESO.md)|directorio|sí|
+|[`04_implementacion`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/04_implementacion)|directorio|sí|
 
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/implementacion.md`](implementacion.md)
-- HTML interno: [`06_dashboard/generado/wiki/implementacion.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- HTML interno: [`06_dashboard/generado/wiki/implementacion.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/wiki_html/implementacion.html)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/implementacion.md`](implementacion.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/implementacion.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/implementacion.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/wiki_html/implementacion.html)
 
 ## Cómo leer esta cobertura
 

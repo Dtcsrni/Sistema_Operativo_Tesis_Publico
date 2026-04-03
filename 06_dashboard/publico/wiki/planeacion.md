@@ -31,17 +31,17 @@ Backlog, riesgos, roadmap y entregables del sistema.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`01_planeacion/backlog.csv`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`01_planeacion/riesgos.csv`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`01_planeacion/roadmap.csv`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`01_planeacion/entregables.csv`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`01_planeacion/backlog.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/01_planeacion/backlog.csv)|archivo|sí|
+|[`01_planeacion/riesgos.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/01_planeacion/riesgos.csv)|archivo|sí|
+|[`01_planeacion/roadmap.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/01_planeacion/roadmap.csv)|archivo|sí|
+|[`01_planeacion/entregables.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/01_planeacion/entregables.csv)|archivo|sí|
 
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/planeacion.md`](planeacion.md)
-- HTML interno: [`06_dashboard/generado/wiki/planeacion.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- HTML interno: [`06_dashboard/generado/wiki/planeacion.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/wiki_html/planeacion.html)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/planeacion.md`](planeacion.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/planeacion.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/planeacion.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/wiki_html/planeacion.html)
 
 ## Qué resuelve este subsistema
 

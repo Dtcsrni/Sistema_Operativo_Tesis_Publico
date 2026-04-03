@@ -30,14 +30,14 @@ Propósito, alcance, módulos, flujos e interacción del sistema operativo de te
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`README_INICIO.md`](nota_seguridad_y_acceso.md)|archivo|sí|
-|[`00_sistema_tesis/manual_operacion_humana.md`](nota_seguridad_y_acceso.md)|archivo|sí|
-|[`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](nota_seguridad_y_acceso.md)|archivo|sí|
-|[`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](nota_seguridad_y_acceso.md)|archivo|sí|
-|[`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](nota_seguridad_y_acceso.md)|archivo|sí|
-|[`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](nota_seguridad_y_acceso.md)|archivo|sí|
-|[`00_sistema_tesis/config/sistema_tesis.yaml`](nota_seguridad_y_acceso.md)|archivo|sí|
-|[`00_sistema_tesis/config/publicacion.yaml`](nota_seguridad_y_acceso.md)|archivo|sí|
+|[`README_INICIO.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/README_INICIO.md)|archivo|sí|
+|[`00_sistema_tesis/manual_operacion_humana.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/manual_operacion_humana.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/flujos_operativos.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md)|archivo|sí|
+|[`00_sistema_tesis/config/sistema_tesis.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/sistema_tesis.yaml)|archivo|sí|
+|[`00_sistema_tesis/config/publicacion.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/publicacion.yaml)|archivo|sí|
 
 ### Artefactos derivados relacionados
 
@@ -435,8 +435,8 @@ Toda documentacion mejorada del sistema debe responder implicitamente a estas pr
 |roadmap|01_planeacion/roadmap.csv|sí|[fecha_hora_redactada]|
 |entregables|01_planeacion/entregables.csv|sí|[fecha_hora_redactada]|
 |decisiones|00_sistema_tesis/decisiones|sí|[fecha_hora_redactada]|
-|bitacora|[bitacora_privada]|sí|[fecha_hora_redactada]|
-|reportes_semanales|[reportes_privados]|sí|[fecha_hora_redactada]|
+|bitacora|00_sistema_tesis/bitacora|sí|[fecha_hora_redactada]|
+|reportes_semanales|00_sistema_tesis/reportes_semanales|sí|[fecha_hora_redactada]|
 |dashboard_generado|06_dashboard/generado/index.html|sí|[fecha_hora_redactada]|
 |bundle_publico|06_dashboard/publico/index.md|sí|[fecha_hora_redactada]|
 |bundle_publico_manifest|06_dashboard/publico/manifest_publico.json|sí|[fecha_hora_redactada]|

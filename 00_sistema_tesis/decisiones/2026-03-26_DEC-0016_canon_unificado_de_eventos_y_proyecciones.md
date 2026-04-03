@@ -15,7 +15,7 @@ El sistema operativo de tesis acumuló varias fuentes operativas paralelas para 
 
 ## Decisión
 
-Adoptar un **canon unificado append-only** en `[canon_privado]` como única fuente operativa de trazabilidad humana y actividad agéntica. A partir de este canon, el sistema materializa como proyecciones derivadas:
+Adoptar un **canon unificado append-only** en `00_sistema_tesis/canon/events.jsonl` como única fuente operativa de trazabilidad humana y actividad agéntica. A partir de este canon, el sistema materializa como proyecciones derivadas:
 
 1. `log_conversaciones_ia.md`
 2. `matriz_trazabilidad.md`
@@ -38,7 +38,7 @@ La alternativa elegida reduce duplicidad operativa, baja el riesgo de inconsiste
 
 ## Métricas de Éxito
 
-- [x] Existencia de `[canon_privado]` como fuente única para trazabilidad humana, journal agéntico y firmas de artefactos.
+- [x] Existencia de `00_sistema_tesis/canon/events.jsonl` como fuente única para trazabilidad humana, journal agéntico y firmas de artefactos.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Materialización reproducible de ledger, matriz, bitácoras, `ia_journal.json` y `sign_offs.json` desde el canon.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
@@ -53,7 +53,7 @@ La alternativa elegida reduce duplicidad operativa, baja el riesgo de inconsiste
   - **Pregunta crítica o disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
   - **Texto exacto de confirmación verbal:** "PLEASE IMPLEMENT THIS PLAN"
   - **Hash de confirmación verbal:** `[hash_redactado]:[redactado]`
-  - **Fuente de verdad de confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
   - **Integridad:** `[hash_redactado]:[redactado]`
   - **Fingerprint:** `[hash_redactado]`
   - **Nivel de Auditoría:** Alto
@@ -81,7 +81,7 @@ La alternativa elegida reduce duplicidad operativa, baja el riesgo de inconsiste
 
 ## Implementación o seguimiento
 
-- [x] Crear el canon `[canon_privado]` y su `state.json`.
+- [x] Crear el canon `00_sistema_tesis/canon/events.jsonl` y su `state.json`.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Introducir la CLI `07_scripts/tesis.py` y wrappers de compatibilidad.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
@@ -92,7 +92,7 @@ La alternativa elegida reduce duplicidad operativa, baja el riesgo de inconsiste
 
 ## Referencias
 
-- [DEC-0014](../../06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
 - Event sourcing y snapshots derivados para auditoría reproducible.
 - Prácticas FAIR y trazabilidad de artefactos reproducibles en investigación.
 

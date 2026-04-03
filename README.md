@@ -46,20 +46,20 @@ Este repositorio privado gobierna decisiones, hipótesis, backlog, riesgos, expe
 
 Empieza por estos archivos:
 
-- [`README_INICIO.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`00_sistema_tesis/config/sistema_tesis.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`00_sistema_tesis/config/hipotesis.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`00_sistema_tesis/config/bloques.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`00_sistema_tesis/config/publicacion.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`01_planeacion/backlog.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`docs/02_arquitectura/arquitectura-general.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`manifests/storage_layout.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`bootstrap/orangepi/10_primer-arranque.sh`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`README_INICIO.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/README_INICIO.md)
+- [`00_sistema_tesis/config/sistema_tesis.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/sistema_tesis.yaml)
+- [`00_sistema_tesis/config/hipotesis.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/hipotesis.yaml)
+- [`00_sistema_tesis/config/bloques.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/bloques.yaml)
+- [`00_sistema_tesis/config/publicacion.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/publicacion.yaml)
+- [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md)
+- [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md)
+- [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/flujos_operativos.md)
+- [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md)
+- [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md)
+- [`01_planeacion/backlog.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/01_planeacion/backlog.csv)
+- [`docs/02_arquitectura/arquitectura-general.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/docs/02_arquitectura/arquitectura-general.md)
+- [`manifests/storage_layout.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/manifests/storage_layout.yaml)
+- [`bootstrap/orangepi/10_primer-arranque.sh`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/bootstrap/orangepi/10_primer-arranque.sh)
 - [`06_dashboard/wiki/index.md`](06_dashboard/publico/wiki/index.md)
 - [`06_dashboard/generado/index.html`](06_dashboard/publico/dashboard/index.html)
 
@@ -78,15 +78,15 @@ Empieza por estos archivos:
 - Cada página de la wiki debe declarar navegación local, fuentes canónicas y artefactos derivados relacionados.
 - Si una salida derivada necesita cambio, la intervención correcta es sobre la fuente canónica declarada, no sobre el derivado.
 - Para cerrar la cadena de rastreo revisa [`06_dashboard/generado/wiki_manifest.json`](06_dashboard/publico/manifest_publico.json) y [`06_dashboard/publico/manifest_publico.json`](06_dashboard/publico/manifest_publico.json).
-- Para trazabilidad operativa interna revisa [`[matriz_privada]`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y [`[ledger_privado]`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
+- Para trazabilidad operativa interna revisa [`00_sistema_tesis/bitacora/matriz_trazabilidad.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/matriz_trazabilidad.md) y [`00_sistema_tesis/bitacora/log_conversaciones_ia.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md).
 
 ## Qué revisar siempre
 
-- [`00_sistema_tesis/manual_operacion_humana.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`00_sistema_tesis/config/sistema_tesis.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`01_planeacion/backlog.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`01_planeacion/riesgos.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`[matriz_privada]`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/manual_operacion_humana.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/manual_operacion_humana.md)
+- [`00_sistema_tesis/config/sistema_tesis.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/sistema_tesis.yaml)
+- [`01_planeacion/backlog.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/01_planeacion/backlog.csv)
+- [`01_planeacion/riesgos.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/01_planeacion/riesgos.csv)
+- [`00_sistema_tesis/bitacora/matriz_trazabilidad.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/matriz_trazabilidad.md)
 - [`06_dashboard/wiki/index.md`](06_dashboard/publico/wiki/index.md)
 - [`06_dashboard/generado/index.html`](06_dashboard/publico/dashboard/index.html)
 - [`06_dashboard/publico/index.md`](06_dashboard/publico/index.md)
@@ -120,9 +120,9 @@ Empieza por estos archivos:
 
 ## Decisiones recientes
 
-- **2026-03-27** · [DEC-0021 Publicacion desde Downstream Publico Sanitizado](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- **2026-03-27** · [DEC-0020 OpenClaw como Capa Asistiva Opcional y Evaluable](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- **2026-03-27** · [DEC-0019 Reestructura Operativa y Despliegue Orange Pi](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- **2026-03-27** · [DEC-0021 Publicacion desde Downstream Publico Sanitizado](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0021_publicacion_desde_downstream_publico_sanitizado.md)
+- **2026-03-27** · [DEC-0020 OpenClaw como Capa Asistiva Opcional y Evaluable](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0020_openclaw_como_capa_asistiva_opcional_y_evaluable.md)
+- **2026-03-27** · [DEC-0019 Reestructura Operativa y Despliegue Orange Pi](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0019_reestructura_operativa_y_despliegue_orangepi.md)
 
 ## Operación
 
@@ -213,7 +213,7 @@ python 07_scripts/report_consistency.py
 - [`06_dashboard/generado/wiki/index.html`](06_dashboard/publico/wiki_html/index.html)
 - [`06_dashboard/generado/wiki_manifest.json`](06_dashboard/publico/manifest_publico.json)
 - [`06_dashboard/generado/index.html`](06_dashboard/publico/dashboard/index.html)
-- [`06_dashboard/generado/hoja_maestra_consolidada.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`06_dashboard/generado/hoja_maestra_consolidada.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/hoja_maestra_consolidada.csv)
 - [`[reporte_interno_redactado]`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
 
 _Generado automáticamente el [fecha_hora_redactada]._

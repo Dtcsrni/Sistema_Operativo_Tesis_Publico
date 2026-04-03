@@ -31,10 +31,10 @@ Backlog, riesgos, roadmap y entregables del sistema.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`01_planeacion/backlog.csv`](nota_seguridad_y_acceso.md)|archivo|sí|
-|[`01_planeacion/riesgos.csv`](nota_seguridad_y_acceso.md)|archivo|sí|
-|[`01_planeacion/roadmap.csv`](nota_seguridad_y_acceso.md)|archivo|sí|
-|[`01_planeacion/entregables.csv`](nota_seguridad_y_acceso.md)|archivo|sí|
+|[`01_planeacion/backlog.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/01_planeacion/backlog.csv)|archivo|sí|
+|[`01_planeacion/riesgos.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/01_planeacion/riesgos.csv)|archivo|sí|
+|[`01_planeacion/roadmap.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/01_planeacion/roadmap.csv)|archivo|sí|
+|[`01_planeacion/entregables.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/01_planeacion/entregables.csv)|archivo|sí|
 
 ### Artefactos derivados relacionados
 

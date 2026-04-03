@@ -58,15 +58,14 @@ def test_internal_and_public_outputs_use_surface_specific_links(isolated_repo: P
     assert "(../../00_sistema_tesis/bitacora/matriz_trazabilidad.md)" in bitacora_page
     assert 'href="../wiki_html/index.html"' in public_dashboard
     assert 'href="../index.md"' in public_dashboard
-    assert "NOTA_SEGURIDAD_Y_ACCESO.md" in public_dashboard
     assert "(dashboard/badges/security_status.svg)" in public_readme
     assert "(dashboard/badges/integrity.svg)" in public_readme
     assert "(dashboard/badges/ledger.svg)" in public_readme
-    assert "(NOTA_SEGURIDAD_Y_ACCESO.md)" in public_readme
+    assert "https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/" in public_readme
     assert "]([reporte_interno_redactado])" not in public_readme
-    assert "../../[bitacora_privada]" not in public_bitacora
-    assert "../../[reportes_privados]" not in public_bitacora
-    assert "(../NOTA_SEGURIDAD_Y_ACCESO.md)" in public_bitacora
+    assert "[bitacora_privada]" not in public_bitacora
+    assert "[reportes_privados]" not in public_bitacora
+    assert "https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/" in public_bitacora
 
 
 def test_validate_links_reports_missing_target_and_anchor(tmp_path: Path) -> None:

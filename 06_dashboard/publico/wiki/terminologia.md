@@ -31,17 +31,17 @@ Glosario, familias de IDs, referencias globales y convenciones de nomenclatura d
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`01_planeacion/backlog_guia.md`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`00_sistema_tesis/config/ia_gobernanza.yaml`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md)|archivo|sí|
+|[`00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json)|archivo|sí|
+|[`01_planeacion/backlog_guia.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/01_planeacion/backlog_guia.md)|archivo|sí|
+|[`00_sistema_tesis/config/ia_gobernanza.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/ia_gobernanza.yaml)|archivo|sí|
 
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/terminologia.md`](terminologia.md)
-- HTML interno: [`06_dashboard/generado/wiki/terminologia.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- HTML interno: [`06_dashboard/generado/wiki/terminologia.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/wiki_html/terminologia.html)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/terminologia.md`](terminologia.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/terminologia.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/terminologia.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/wiki_html/terminologia.html)
 
 ## Lectura rápida
 
@@ -108,7 +108,7 @@ Cada entrada de este glosario indica:
 
 - **Definicion:** identificador visible de una validacion humana o instruccion humana critica registrada en el canon.
 - **Uso operativo:** vincular decisiones, implementaciones o cambios sustantivos a consentimiento humano verificable.
-- **Fuente de verdad / modulo:** `[canon_privado]` como evento de tipo `human_validation`; proyecciones en ledger y matriz.
+- **Fuente de verdad / modulo:** `00_sistema_tesis/canon/events.jsonl` como evento de tipo `human_validation`; proyecciones en ledger y matriz.
 - **Que no significa:** no es una tarea, no es un commit, no es una evidencia por si mismo y no equivale a “verdad cientifica demostrada”.
 - **Ejemplo:** `[validacion_humana_interna]` identifica la validacion humana que autorizo cerrar pendientes secundarios de la reestructura documental.
 
@@ -125,7 +125,7 @@ Cada entrada de este glosario indica:
 
 - **Definicion:** identificador de evento canonico general.
 - **Uso operativo:** registrar eventos que no son `VAL-STEP`, por ejemplo evidencia fuente de conversacion, actividad de agente o firmas de artefacto.
-- **Fuente de verdad / modulo:** `[canon_privado]`.
+- **Fuente de verdad / modulo:** `00_sistema_tesis/canon/events.jsonl`.
 - **Que no significa:** no implica validacion humana por si mismo.
 - **Ejemplo:** `[evento_interno]` registra una fuente de conversacion corroborable.
 
@@ -225,7 +225,7 @@ Cada entrada de este glosario indica:
 
 - **Definicion:** base de verdad estructurada del sistema.
 - **Uso operativo:** almacenar eventos, estado y relaciones primarias.
-- **Fuente de verdad / modulo:** `[canon_privado]/`.
+- **Fuente de verdad / modulo:** `00_sistema_tesis/canon/`.
 - **Que no significa:** no es la wiki, ni el dashboard, ni el bundle publico.
 - **Ejemplo:** `events.jsonl` pertenece al canon.
 

@@ -15,8 +15,6 @@ from publication import build_public_access_note, load_publication_config, rewri
 
 
 PRIVATE_EXCLUDE_PREFIXES = (
-    "00_sistema_tesis/canon/",
-    "00_sistema_tesis/bitacora/",
     "00_sistema_tesis/evidencia_privada/",
     "config/backups/",
 )
@@ -50,11 +48,6 @@ PUBLIC_OPERATIONAL_PASSTHROUGH_PATHS = {
     "00_sistema_tesis/config/publicacion.yaml",
 }
 SEVERE_PRIVATE_LEAK_TOKENS = (
-    "00_sistema_tesis/canon/events.jsonl",
-    "00_sistema_tesis/canon/",
-    "00_sistema_tesis/canon",
-    "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
-    "00_sistema_tesis/bitacora/indice_fuentes_conversacion.md",
     "00_sistema_tesis/evidencia_privada/",
     "00_sistema_tesis/evidencia_privada",
     "00_sistema_tesis/config/agent_identity.json",
@@ -423,8 +416,8 @@ def write_security_notice(target_dir: Path, *, contact_email: str) -> None:
         "# Nota de Seguridad y Acceso\n\n"
         "Este repositorio es una **proyección pública controlada** del repositorio canónico privado.\n\n"
         "## Política de seguridad aplicada\n\n"
-        "- Se excluyen superficies privadas: `canon/`, `bitacora/` y `evidencia_privada/`.\n"
-        "- Se omiten artefactos de identidad/operación interna y secretos locales.\n"
+        "- Se excluyen únicamente superficies sensibles: `.env`, `evidencia_privada/`, respaldos y artefactos de identidad.\n"
+        "- El resto del contenido se publica con sanitización de hashes, identificadores internos y rutas locales.\n"
         "- La sincronización se valida por hash antes de publicar.\n\n"
         "## Solicitud de detalles adicionales\n\n"
         "Si necesitas acceso a evidencia o contexto no público, solicita revisión directa al tesista:\n\n"

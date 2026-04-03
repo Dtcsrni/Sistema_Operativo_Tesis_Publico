@@ -30,14 +30,14 @@ Estado de cobertura de capítulos y figuras.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`05_tesis`](../NOTA_SEGURIDAD_Y_ACCESO.md)|directorio|sí|
+|[`05_tesis`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/05_tesis)|directorio|sí|
 
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/tesis.md`](tesis.md)
-- HTML interno: [`06_dashboard/generado/wiki/tesis.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- HTML interno: [`06_dashboard/generado/wiki/tesis.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/wiki_html/tesis.html)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/tesis.md`](tesis.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/tesis.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/tesis.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/wiki_html/tesis.html)
 
 ## Cómo leer esta cobertura
 

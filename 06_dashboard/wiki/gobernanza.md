@@ -31,12 +31,12 @@ Políticas del sistema, soberanía humana, trazabilidad y disciplina de automati
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](nota_seguridad_y_acceso.md)|archivo|sí|
-|[`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](nota_seguridad_y_acceso.md)|archivo|sí|
-|[`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](nota_seguridad_y_acceso.md)|archivo|sí|
-|[`00_sistema_tesis/config/sistema_tesis.yaml`](nota_seguridad_y_acceso.md)|archivo|sí|
-|[`00_sistema_tesis/config/ia_gobernanza.yaml`](nota_seguridad_y_acceso.md)|archivo|sí|
-|[`00_sistema_tesis/config/publicacion.yaml`](nota_seguridad_y_acceso.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md)|archivo|sí|
+|[`00_sistema_tesis/config/sistema_tesis.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/sistema_tesis.yaml)|archivo|sí|
+|[`00_sistema_tesis/config/ia_gobernanza.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/ia_gobernanza.yaml)|archivo|sí|
+|[`00_sistema_tesis/config/publicacion.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/publicacion.yaml)|archivo|sí|
 
 ### Artefactos derivados relacionados
 

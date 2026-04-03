@@ -31,7 +31,7 @@ Estado de cobertura de simulación y validación experimental.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`02_experimentos`](nota_seguridad_y_acceso.md)|directorio|sí|
+|[`02_experimentos`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/02_experimentos)|directorio|sí|
 
 ### Artefactos derivados relacionados
 

@@ -34,14 +34,14 @@ Bloques macro del sistema y sus criterios de salida.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`00_sistema_tesis/config/bloques.yaml`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/config/bloques.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/bloques.yaml)|archivo|sí|
 
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/bloques.md`](bloques.md)
-- HTML interno: [`06_dashboard/generado/wiki/bloques.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- HTML interno: [`06_dashboard/generado/wiki/bloques.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/wiki_html/bloques.html)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/bloques.md`](bloques.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/bloques.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/bloques.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/wiki_html/bloques.html)
 
 ## Qué resuelve este subsistema
 

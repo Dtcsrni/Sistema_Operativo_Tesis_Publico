@@ -50,7 +50,7 @@ La alternativa elegida reduce dependencia cognitiva de la IA, mejora legibilidad
   - **Pregunta crítica o disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
   - **Texto exacto de confirmación verbal:** "PLEASE IMPLEMENT THIS PLAN"
   - **Hash de confirmación verbal:** `[hash_redactado]:[redactado]`
-  - **Fuente de verdad de confirmación:** `[canon_privado] :: [validacion_humana_interna] :: human_validation.confirmation_text`
+  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: [validacion_humana_interna] :: human_validation.confirmation_text`
   - **Integridad:** `[hash_redactado]:[redactado]`
   - **Fingerprint:** `[hash_redactado]`
   - **Nivel de Auditoría:** Alto
@@ -87,9 +87,9 @@ La alternativa elegida reduce dependencia cognitiva de la IA, mejora legibilidad
 
 ## Referencias
 
-- [DEC-0014](../../06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [DEC-0015](../../06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [DEC-0016](../../06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+- [DEC-0015](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0015_protocolo_de_sanitización_para_exposición_pública.md)
+- [DEC-0016](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-26_DEC-0016_canon_unificado_de_eventos_y_proyecciones.md)
 
 [LID]: [ruta_local_redactada]
 [GOV]: [ruta_local_redactada]

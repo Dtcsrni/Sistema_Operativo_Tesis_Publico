@@ -40,13 +40,10 @@ HTML_HREF_PATTERN = re.compile(r'(?P<prefix>\bhref\s*=\s*)(?P<quote>["\'])(?P<hr
 MARKDOWN_PLACEHOLDER_HREF_PATTERN = re.compile(r"(?P<prefix>\]\()(?P<href>\[[^)]+\])(?P<suffix>\))")
 ALLOWED_SCHEMES = ("http://", "https://", "mailto:", "tel:", "data:", "javascript:")
 PRIVATE_PREFIXES = (
-    "00_sistema_tesis/",
-    "01_planeacion/",
-    "02_metodologia/",
-    "03_data/",
-    "04_experimentos/",
-    "05_resultados/",
+    "00_sistema_tesis/evidencia_privada/",
+    "config/backups/",
 )
+PUBLIC_REPO_NAME = "Dtcsrni/Sistema_Operativo_Tesis_Publico"
 
 
 def load_publication_config(relative_path: str = DEFAULT_PUBLICATION_CONFIG) -> dict:
@@ -85,16 +82,6 @@ def _literal_rules(config: dict) -> list[tuple[str, str]]:
     rules = [
         (str(ROOT), "[ruta_local_redactada]"),
         (ROOT.as_posix(), "[ruta_local_redactada]"),
-        ("00_sistema_tesis/canon/events.jsonl", "[canon_privado]"),
-        ("00_sistema_tesis/canon/", "[canon_privado]/"),
-        ("00_sistema_tesis/canon", "[canon_privado]"),
-        ("00_sistema_tesis/bitacora/log_conversaciones_ia.md", "[ledger_privado]"),
-        ("00_sistema_tesis/bitacora/matriz_trazabilidad.md", "[matriz_privada]"),
-        ("00_sistema_tesis/bitacora/indice_fuentes_conversacion.md", "[indice_fuentes_privado]"),
-        ("00_sistema_tesis/bitacora/", "[bitacora_privada]/"),
-        ("00_sistema_tesis/bitacora", "[bitacora_privada]"),
-        ("00_sistema_tesis/reportes_semanales/", "[reportes_privados]/"),
-        ("00_sistema_tesis/reportes_semanales", "[reportes_privados]"),
         ("00_sistema_tesis/evidencia_privada/", "[evidencia_privada_redactada]/"),
         ("00_sistema_tesis/evidencia_privada", "[evidencia_privada_redactada]"),
         ("00_sistema_tesis/bitacora/audit_history", "[historial_interno_redactado]"),
@@ -178,6 +165,10 @@ def _public_note_relpath() -> str:
     return "06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md"
 
 
+def _public_repo_blob_href(target_rel: str) -> str:
+    return f"https://github.com/{PUBLIC_REPO_NAME}/blob/main/{target_rel}"
+
+
 def _public_equivalent_for_source(target_rel: str, config: dict) -> str | None:
     if target_rel == "06_dashboard/generado/wiki_manifest.json":
         return "06_dashboard/publico/manifest_publico.json"
@@ -195,8 +186,6 @@ def _requires_public_note(target_rel: str) -> bool:
     if target_rel.startswith(PRIVATE_PREFIXES):
         return True
     private_tokens = (
-        "[bitacora_privada]",
-        "[reportes_privados]",
         "[ruta_local_redactada]",
         "[identidad_agente_privada]",
         "[canon_privado]",
@@ -217,7 +206,7 @@ def _public_href_for_target(*, source_rel: str, public_rel: str, href: str, conf
     else:
         mapped = _public_equivalent_for_source(normalized, config)
         if mapped is None:
-            mapped = _public_note_relpath()
+            return _public_repo_blob_href(normalized)
     relative = Path(posixpath.relpath(mapped, Path(public_rel).parent.as_posix())).as_posix()
     if separator and mapped != _public_note_relpath():
         return f"{relative}#{anchor}"

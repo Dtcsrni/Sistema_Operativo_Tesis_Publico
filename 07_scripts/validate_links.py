@@ -16,9 +16,8 @@ PLACEHOLDER_PATTERN = re.compile(
     r"\[(?:bitacora_privada|reportes_privados|ruta_local_redactada|identidad_agente_privada|canon_privado|matriz_privada|ledger_privado|indice_fuentes_privado)[^\]]*\]"
 )
 PRIVATE_TARGET_PATTERNS = (
-    "00_sistema_tesis/bitacora/",
-    "00_sistema_tesis/reportes_semanales/",
-    "00_sistema_tesis/canon/",
+    "00_sistema_tesis/evidencia_privada/",
+    "config/backups/",
 )
 PLACEHOLDER_SURFACES = (
     "06_dashboard/wiki/",

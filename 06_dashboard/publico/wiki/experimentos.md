@@ -31,14 +31,14 @@ Estado de cobertura de simulación y validación experimental.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`02_experimentos`](../NOTA_SEGURIDAD_Y_ACCESO.md)|directorio|sí|
+|[`02_experimentos`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/02_experimentos)|directorio|sí|
 
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/experimentos.md`](experimentos.md)
-- HTML interno: [`06_dashboard/generado/wiki/experimentos.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- HTML interno: [`06_dashboard/generado/wiki/experimentos.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/wiki_html/experimentos.html)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/experimentos.md`](experimentos.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/experimentos.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/experimentos.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/wiki_html/experimentos.html)
 
 ## Cómo leer esta cobertura
 

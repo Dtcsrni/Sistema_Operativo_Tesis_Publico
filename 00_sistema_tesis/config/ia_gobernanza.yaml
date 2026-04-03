@@ -72,7 +72,7 @@
   },
   "registro_de_uso": {
     "obligatorio": true,
-    "donde_registrar": "[bitacora_privada]",
+    "donde_registrar": "00_sistema_tesis/bitacora",
     "minimo_requerido": [
       "fecha",
       "objetivo_del_uso",

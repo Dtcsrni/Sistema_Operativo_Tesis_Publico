@@ -87,7 +87,7 @@ La firma humana no se autoemite desde IA. Si un artefacto requiere renovar super
 - `00_sistema_tesis/config/sistema_tesis.yaml`
 - `01_planeacion/backlog.csv`
 - `01_planeacion/riesgos.csv`
-- `[matriz_privada]`
+- `00_sistema_tesis/bitacora/matriz_trazabilidad.md`
 - `06_dashboard/wiki/index.md`
 - `06_dashboard/generado/index.html`
 - `06_dashboard/publico/index.md`

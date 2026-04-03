@@ -31,19 +31,19 @@ Políticas del sistema, soberanía humana, trazabilidad y disciplina de automati
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`00_sistema_tesis/config/sistema_tesis.yaml`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`00_sistema_tesis/config/ia_gobernanza.yaml`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`00_sistema_tesis/config/publicacion.yaml`](../NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md)|archivo|sí|
+|[`00_sistema_tesis/config/sistema_tesis.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/sistema_tesis.yaml)|archivo|sí|
+|[`00_sistema_tesis/config/ia_gobernanza.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/ia_gobernanza.yaml)|archivo|sí|
+|[`00_sistema_tesis/config/publicacion.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/publicacion.yaml)|archivo|sí|
 
 ### Artefactos derivados relacionados
 
 - Markdown interno: [`06_dashboard/wiki/gobernanza.md`](gobernanza.md)
-- HTML interno: [`06_dashboard/generado/wiki/gobernanza.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- HTML interno: [`06_dashboard/generado/wiki/gobernanza.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/wiki_html/gobernanza.html)
 - Markdown público sanitizado: [`06_dashboard/publico/wiki/gobernanza.md`](gobernanza.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/gobernanza.html`](../NOTA_SEGURIDAD_Y_ACCESO.md)
+- HTML público sanitizado: [`06_dashboard/publico/wiki_html/gobernanza.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/wiki_html/gobernanza.html)
 
 ## Qué resuelve este subsistema
 

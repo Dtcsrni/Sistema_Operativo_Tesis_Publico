@@ -31,7 +31,7 @@ Estado de cobertura de firmware, gateway y analítica.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`04_implementacion`](nota_seguridad_y_acceso.md)|directorio|sí|
+|[`04_implementacion`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/04_implementacion)|directorio|sí|
 
 ### Artefactos derivados relacionados
 

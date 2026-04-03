@@ -18,8 +18,8 @@ Modelar OpenClaw como capa local-first opcional con conectividad hibrida, desaco
 
 ## Referencias
 
-- [DEC-0014](../../06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [DEC-0017](../../06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+- [DEC-0017](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-26_DEC-0017_operacion_humana_dual_y_superficies_privada_publica.md)
 
 [LID]: [ruta_local_redactada]
 [GOV]: [ruta_local_redactada]

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "proposito": "Definir la exportación pública sanitizada, legible y reproducible del sistema operativo de tesis sin exponer trazabilidad privada ni infraestructura sensible.",
+  "proposito": "Definir la exportación pública sanitizada, legible y reproducible del sistema operativo de tesis, exponiendo por defecto artefactos públicos y redirigiendo solo contenido verdaderamente sensible.",
   "politica": {
     "editable_directamente": false,
     "aviso_no_editar": "Este bundle público es un artefacto derivado y sanitizado. No se corrige a mano; se reconstruye desde la base privada.",
@@ -61,16 +61,6 @@
       "EVT-",
       "sha256:",
       "CURP: `",
-      "00_sistema_tesis/canon/events.jsonl",
-      "00_sistema_tesis/canon/",
-      "00_sistema_tesis/canon",
-      "00_sistema_tesis/bitacora/audit_history",
-      "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
-      "00_sistema_tesis/bitacora/indice_fuentes_conversacion.md",
-      "00_sistema_tesis/bitacora/",
-      "00_sistema_tesis/bitacora",
-      "00_sistema_tesis/reportes_semanales/",
-      "00_sistema_tesis/reportes_semanales",
       "00_sistema_tesis/config/agent_identity.json",
       "00_sistema_tesis/config/sign_offs.json",
       "00_sistema_tesis/ia_journal.json"
@@ -110,22 +100,6 @@
       {
         "literal": "06_dashboard/generado/reporte_consistencia.md",
         "reemplazo": "[reporte_interno_redactado]"
-      },
-      {
-        "literal": "00_sistema_tesis/bitacora/",
-        "reemplazo": "[bitacora_privada]/"
-      },
-      {
-        "literal": "00_sistema_tesis/bitacora",
-        "reemplazo": "[bitacora_privada]"
-      },
-      {
-        "literal": "00_sistema_tesis/reportes_semanales/",
-        "reemplazo": "[reportes_privados]/"
-      },
-      {
-        "literal": "00_sistema_tesis/reportes_semanales",
-        "reemplazo": "[reportes_privados]"
       }
     ]
   }

@@ -120,8 +120,8 @@
       "markdown": "06_dashboard/wiki/bitacora.md",
       "html": "06_dashboard/generado/wiki/bitacora.html",
       "sources": [
-        "[bitacora_privada]",
-        "[reportes_privados]"
+        "00_sistema_tesis/bitacora",
+        "00_sistema_tesis/reportes_semanales"
       ],
       "verified": false
     },
@@ -237,7 +237,7 @@
     },
     {
       "path": "00_sistema_tesis/config/publicacion.yaml",
-      "sha256": "59b48d148bf9fcaad6358669e40e078905bec42138a21b168f2a3d70268fd751",
+      "sha256": "63c31cf6c0e169f2494b302404f0d2eb6a126513f165036b2fa0dbbcb9e928d5",
       "modified": "[fecha_hora_redactada]",
       "kind": "file"
     },
@@ -272,13 +272,13 @@
       "kind": "directory"
     },
     {
-      "path": "[bitacora_privada]",
+      "path": "00_sistema_tesis/bitacora",
       "sha256": null,
       "modified": "[fecha_hora_redactada]",
       "kind": "directory"
     },
     {
-      "path": "[reportes_privados]",
+      "path": "00_sistema_tesis/reportes_semanales",
       "sha256": null,
       "modified": "[fecha_hora_redactada]",
       "kind": "directory"

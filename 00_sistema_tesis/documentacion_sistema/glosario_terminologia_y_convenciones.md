@@ -28,7 +28,7 @@ Cada entrada de este glosario indica:
 
 - **Definicion:** identificador visible de una validacion humana o instruccion humana critica registrada en el canon.
 - **Uso operativo:** vincular decisiones, implementaciones o cambios sustantivos a consentimiento humano verificable.
-- **Fuente de verdad / modulo:** `[canon_privado]` como evento de tipo `human_validation`; proyecciones en ledger y matriz.
+- **Fuente de verdad / modulo:** `00_sistema_tesis/canon/events.jsonl` como evento de tipo `human_validation`; proyecciones en ledger y matriz.
 - **Que no significa:** no es una tarea, no es un commit, no es una evidencia por si mismo y no equivale a “verdad cientifica demostrada”.
 - **Ejemplo:** `[validacion_humana_interna]` identifica la validacion humana que autorizo cerrar pendientes secundarios de la reestructura documental.
 
@@ -45,7 +45,7 @@ Cada entrada de este glosario indica:
 
 - **Definicion:** identificador de evento canonico general.
 - **Uso operativo:** registrar eventos que no son `VAL-STEP`, por ejemplo evidencia fuente de conversacion, actividad de agente o firmas de artefacto.
-- **Fuente de verdad / modulo:** `[canon_privado]`.
+- **Fuente de verdad / modulo:** `00_sistema_tesis/canon/events.jsonl`.
 - **Que no significa:** no implica validacion humana por si mismo.
 - **Ejemplo:** `[evento_interno]` registra una fuente de conversacion corroborable.
 
@@ -145,7 +145,7 @@ Cada entrada de este glosario indica:
 
 - **Definicion:** base de verdad estructurada del sistema.
 - **Uso operativo:** almacenar eventos, estado y relaciones primarias.
-- **Fuente de verdad / modulo:** `[canon_privado]/`.
+- **Fuente de verdad / modulo:** `00_sistema_tesis/canon/`.
 - **Que no significa:** no es la wiki, ni el dashboard, ni el bundle publico.
 - **Ejemplo:** `events.jsonl` pertenece al canon.
 

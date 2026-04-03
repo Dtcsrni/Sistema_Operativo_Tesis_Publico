@@ -16,8 +16,8 @@ from sync_public_repo import (
 
 def test_mirror_source_map_excludes_private_surfaces() -> None:
     source_map = _source_map_mirror(ROOT)
-    assert "00_sistema_tesis/canon/events.jsonl" not in source_map
-    assert "00_sistema_tesis/bitacora/log_conversaciones_ia.md" not in source_map
+    assert "00_sistema_tesis/canon/events.jsonl" in source_map
+    assert "00_sistema_tesis/bitacora/log_conversaciones_ia.md" in source_map
     assert "00_sistema_tesis/config/sign_offs.json" not in source_map
 
 
@@ -26,13 +26,13 @@ def test_public_sync_payloads_pass_current_policy() -> None:
     assert validate_sync_payloads(payloads) == []
 
 
-def test_public_sync_rewrites_private_hrefs_to_public_note() -> None:
+def test_public_sync_rewrites_links_to_public_targets() -> None:
     payloads = _render_payloads(_source_map_mirror(ROOT), sanitize=True)
     bitacora_text = payloads["06_dashboard/wiki/bitacora.md"].decode("utf-8")
     pages_note_text = payloads["06_dashboard/wiki/nota_seguridad_y_acceso.md"].decode("utf-8")
-    assert "](../../[bitacora_privada]/" not in bitacora_text
-    assert "](../../[reportes_privados]/" not in bitacora_text
-    assert "nota_seguridad_y_acceso.md" in bitacora_text
+    assert "[bitacora_privada]" not in bitacora_text
+    assert "[reportes_privados]" not in bitacora_text
+    assert "https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/" in bitacora_text
     assert "Nota de seguridad y acceso" in pages_note_text
 
 
