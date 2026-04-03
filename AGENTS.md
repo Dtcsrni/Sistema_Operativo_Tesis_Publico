@@ -6,14 +6,14 @@ Este repositorio es un **Sistema Operativo de Tesis de Posgrado** gobernado por 
 
 ## 1. Contrato de Soberanía Humana
 - **Prohibición de Auto-Validación:** NUNCA marques una tarea o decisión como "validada" por tu cuenta. Toda validación requiere el consentimiento humano explícito vinculado a un **Step ID** (ej. `[[validacion_humana_interna]]`).
-- **Protocolo Handshake:** Sigue estrictamente el protocolo definido en [`DEC-0014`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
+- **Protocolo Handshake:** Sigue estrictamente el protocolo definido en [`DEC-0014`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
 
 ## 2. Trazabilidad de Evidencia
-- **Libro Mayor (Ledger):** Registra cada instrucción humana crítica en [`log_conversaciones_ia.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
+- **Libro Mayor (Ledger):** Registra cada instrucción humana crítica en [`log_conversaciones_ia.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
 - **Integridad SHA-256:** Cada entrada en el Ledger debe incluir campos de Hash SHA-256 calculados sobre el contenido exacto entre delimitadores `<<< >>>`.
 - **Jerarquía de Validación:** NUNCA marques una tarea principal como completada (`[x]`) si sus sub-tareas de pre-requisitos técnicos están pendientes (`[ ]`).
 - **Autoauditoría Documental:** Cada documento de trazabilidad debe ser autoportante; esto incluye el uso de **Referencias Globales** (`[LID]`, `[GOV]`, `[AUD]`) y bloques de autoauditoría compactos para demostrar evidencia inmediata.
-- **Matriz de Trazabilidad:** Mantén actualizada la [`matriz_trazabilidad.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
+- **Matriz de Trazabilidad:** Mantén actualizada la [`matriz_trazabilidad.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
 
 ## 3. Seguridad de Infraestructura (Guardrails)
 - **Archivos Protegidos:** Si detectas la marca `<!-- SISTEMA_TESIS:PROTEGIDO -->`, NO edites el archivo sin autorización específica y el uso de los mecanismos de respaldo definidos en `07_scripts/guardrails.py`.

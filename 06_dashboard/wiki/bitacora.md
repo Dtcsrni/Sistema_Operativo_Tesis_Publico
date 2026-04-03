@@ -31,8 +31,8 @@ Registro de sesiones, uso de IA y aprendizaje operativo.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`[bitacora_privada]`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|directorio|sí|
-|[`[reportes_privados]`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|directorio|sí|
+|[`[bitacora_privada]`](nota_seguridad_y_acceso.md)|directorio|sí|
+|[`[reportes_privados]`](nota_seguridad_y_acceso.md)|directorio|sí|
 
 ### Artefactos derivados relacionados
 
@@ -49,18 +49,18 @@ Registro de sesiones, uso de IA y aprendizaje operativo.
 
 ## Bitácoras
 
-- `matriz_tra` [Matriz de Trazabilidad Maestra (Índice de Integridad)](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `log_conver` [Ledger de Conversaciones IA (Inmutable y Enlazado)](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `indice_fue` [Índice Privado de Fuentes de Conversación](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-04-02` [Bitácora de sesión 2026-04-02](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-04-01` [Bitácora de sesión 2026-04-01](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-27` [Bitácora de sesión 2026-03-27](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-26` [Bitácora de sesión 2026-03-26](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-26` [Bitácora de sesión 2026-03-26](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-26` [Bitácora de sesión 2026-03-26](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-25` [Bitácora de sesión 2026-03-25](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-24` [Bitácora de sesión 2026-03-24](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-23` [Bitácora de sesión 2026-03-23](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- `matriz_tra` [Matriz de Trazabilidad Maestra (Índice de Integridad)](nota_seguridad_y_acceso.md)
+- `log_conver` [Ledger de Conversaciones IA (Inmutable y Enlazado)](nota_seguridad_y_acceso.md)
+- `indice_fue` [Índice Privado de Fuentes de Conversación](nota_seguridad_y_acceso.md)
+- `2026-04-02` [Bitácora de sesión 2026-04-02](nota_seguridad_y_acceso.md)
+- `2026-04-01` [Bitácora de sesión 2026-04-01](nota_seguridad_y_acceso.md)
+- `2026-03-27` [Bitácora de sesión 2026-03-27](nota_seguridad_y_acceso.md)
+- `2026-03-26` [Bitácora de sesión 2026-03-26](nota_seguridad_y_acceso.md)
+- `2026-03-26` [Bitácora de sesión 2026-03-26](nota_seguridad_y_acceso.md)
+- `2026-03-26` [Bitácora de sesión 2026-03-26](nota_seguridad_y_acceso.md)
+- `2026-03-25` [Bitácora de sesión 2026-03-25](nota_seguridad_y_acceso.md)
+- `2026-03-24` [Bitácora de sesión 2026-03-24](nota_seguridad_y_acceso.md)
+- `2026-03-23` [Bitácora de sesión 2026-03-23](nota_seguridad_y_acceso.md)
 
 ## Contenido de Bitácora de Conversaciones IA
 
@@ -940,10 +940,10 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260401-trazabilidad-con
 Objetivo de Sesión: Verificar y regularizar el registro de actividades recientes no registradas explícitamente como validación humana independiente. Contexto Operativo: Se identificaron commits recientes de automatización CI/wiki y sanitización pública posteriores al cierre [validacion_humana_interna]. Se registra validación humana explícita para dejar trazabilidad formal de estas actividades recientes y su estado de cumplimiento (verify en verde).>>>
 
 **Navegación:**
-- [Volver a la Matriz](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [Volver a la Matriz](nota_seguridad_y_acceso.md)
 
 
 ## Reportes semanales
 
-- `2026-S13_r` [Resumen semanal 2026-S13](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-S13_r` [Resumen semanal 2026-S13](nota_seguridad_y_acceso.md)
 

@@ -31,10 +31,10 @@ Backlog, riesgos, roadmap y entregables del sistema.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`01_planeacion/backlog.csv`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`01_planeacion/riesgos.csv`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`01_planeacion/roadmap.csv`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`01_planeacion/entregables.csv`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`01_planeacion/backlog.csv`](nota_seguridad_y_acceso.md)|archivo|sí|
+|[`01_planeacion/riesgos.csv`](nota_seguridad_y_acceso.md)|archivo|sí|
+|[`01_planeacion/roadmap.csv`](nota_seguridad_y_acceso.md)|archivo|sí|
+|[`01_planeacion/entregables.csv`](nota_seguridad_y_acceso.md)|archivo|sí|
 
 ### Artefactos derivados relacionados
 

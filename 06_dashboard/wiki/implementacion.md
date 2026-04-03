@@ -31,7 +31,7 @@ Estado de cobertura de firmware, gateway y analítica.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`04_implementacion`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|directorio|sí|
+|[`04_implementacion`](nota_seguridad_y_acceso.md)|directorio|sí|
 
 ### Artefactos derivados relacionados
 

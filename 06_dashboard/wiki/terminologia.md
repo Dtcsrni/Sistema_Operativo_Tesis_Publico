@@ -31,10 +31,10 @@ Glosario, familias de IDs, referencias globales y convenciones de nomenclatura d
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`01_planeacion/backlog_guia.md`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`00_sistema_tesis/config/ia_gobernanza.yaml`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](nota_seguridad_y_acceso.md)|archivo|sí|
+|[`00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`](nota_seguridad_y_acceso.md)|archivo|sí|
+|[`01_planeacion/backlog_guia.md`](nota_seguridad_y_acceso.md)|archivo|sí|
+|[`00_sistema_tesis/config/ia_gobernanza.yaml`](nota_seguridad_y_acceso.md)|archivo|sí|
 
 ### Artefactos derivados relacionados
 

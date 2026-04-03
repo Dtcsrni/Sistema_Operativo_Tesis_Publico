@@ -62,52 +62,52 @@ La capa operativa para despliegue real y reproducibilidad ahora se organiza tamb
 Si retomas el proyecto o necesitas explicar el sistema desde cero:
 
 1. Lee este archivo completo.
-2. Lee [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
-3. Lee [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
-4. Lee [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
-5. Lee [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) para entender IDs, términos y convenciones.
-6. Si vas a operar el sistema, continúa con [`00_sistema_tesis/manual_operacion_humana.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
-7. Si vas a preparar despliegue, revisa [`docs/02_arquitectura/arquitectura-general.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md), [`docs/02_arquitectura/topologia-de-almacenamiento.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y `bootstrap/`.
+2. Lee [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
+3. Lee [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
+4. Lee [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
+5. Lee [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md) para entender IDs, términos y convenciones.
+6. Si vas a operar el sistema, continúa con [`00_sistema_tesis/manual_operacion_humana.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
+7. Si vas a preparar despliegue, revisa [`docs/02_arquitectura/arquitectura-general.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md), [`docs/02_arquitectura/topologia-de-almacenamiento.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y `bootstrap/`.
 8. Si quieres diagnóstico inmediato, ejecuta `python 07_scripts/tesis.py status` y `python 07_scripts/tesis.py next`.
 
 ## Mapa de navegación y rastreo
 
 Si necesitas orientarte sin perder el origen canónico:
 
-1. Empieza en [`README_INICIO.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y luego entra a [`06_dashboard/wiki/index.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
+1. Empieza en [`README_INICIO.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y luego entra a [`06_dashboard/wiki/index.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
 2. Desde cada página de la wiki, usa el bloque `Origen canónico y artefactos relacionados`.
 3. Si necesitas cambiar contenido, salta de la página derivada a su fuente canónica declarada y edítala ahí.
-4. Si necesitas verificar publicación o sanitización, cruza [`06_dashboard/generado/wiki_manifest.json`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) con [`06_dashboard/publico/manifest_publico.json`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
-5. Si necesitas trazabilidad operativa interna, revisa [`[matriz_privada]`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y [`[ledger_privado]`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
+4. Si necesitas verificar publicación o sanitización, cruza [`06_dashboard/generado/wiki_manifest.json`](06_dashboard/wiki/nota_seguridad_y_acceso.md) con [`06_dashboard/publico/manifest_publico.json`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
+5. Si necesitas trazabilidad operativa interna, revisa [`[matriz_privada]`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y [`[ledger_privado]`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
 
 ## Entradas por necesidad
 
-- Entender propósito, módulos y flujos: [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md), [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
-- Entender reglas e interacción humana: [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y [`00_sistema_tesis/config/ia_gobernanza.yaml`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
-- Entender términos, IDs y convenciones: [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
-- Entender trabajo en curso: [`01_planeacion/backlog.csv`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md), [`01_planeacion/riesgos.csv`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y [`06_dashboard/wiki/planeacion.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
-- Entender decisiones y continuidad: [`00_sistema_tesis/decisiones`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y [`[bitacora_privada]`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
+- Entender propósito, módulos y flujos: [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md), [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
+- Entender reglas e interacción humana: [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y [`00_sistema_tesis/config/ia_gobernanza.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
+- Entender términos, IDs y convenciones: [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
+- Entender trabajo en curso: [`01_planeacion/backlog.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md), [`01_planeacion/riesgos.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y [`06_dashboard/wiki/planeacion.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
+- Entender decisiones y continuidad: [`00_sistema_tesis/decisiones`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y [`[bitacora_privada]`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
 
 ## Fuentes canónicas para entender el sistema
 
-- [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`00_sistema_tesis/config/sistema_tesis.yaml`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`00_sistema_tesis/config/publicacion.yaml`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`00_sistema_tesis/config/ia_gobernanza.yaml`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/config/sistema_tesis.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/config/publicacion.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/config/ia_gobernanza.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
 
 ## Qué revisar siempre
 
-- [`00_sistema_tesis/manual_operacion_humana.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`01_planeacion/backlog.csv`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`01_planeacion/riesgos.csv`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`[matriz_privada]`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`06_dashboard/wiki/index.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`06_dashboard/generado/index.html`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`06_dashboard/publico/index.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/manual_operacion_humana.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`01_planeacion/backlog.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`01_planeacion/riesgos.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`[matriz_privada]`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`06_dashboard/wiki/index.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`06_dashboard/generado/index.html`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`06_dashboard/publico/index.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
 
 ## Flujos operativos mínimos
 
@@ -155,22 +155,22 @@ python 07_scripts/tesis.py source verify --step-id [validacion_humana_interna]
 
 ## Dónde registrar cada cosa
 
-- **Decisiones de arquitectura, gobernanza o método:** [`00_sistema_tesis/decisiones/`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- **Bitácora operativa o de sesión:** [`[bitacora_privada]/`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- **Tareas y prioridades:** [`01_planeacion/backlog.csv`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- **Riesgos y mitigaciones:** [`01_planeacion/riesgos.csv`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- **Política pública sanitizada:** [`00_sistema_tesis/config/publicacion.yaml`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- **Decisiones de arquitectura, gobernanza o método:** [`00_sistema_tesis/decisiones/`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- **Bitácora operativa o de sesión:** [`[bitacora_privada]/`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- **Tareas y prioridades:** [`01_planeacion/backlog.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- **Riesgos y mitigaciones:** [`01_planeacion/riesgos.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- **Política pública sanitizada:** [`00_sistema_tesis/config/publicacion.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
 - **Evidencia fuente privada de conversación:** `[evidencia_privada_redactada]/conversaciones_codex/`
 
 ## Qué no se edita a mano
 
 No se corrigen manualmente los artefactos derivados. Se regeneran.
 
-- [`README.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`06_dashboard/wiki/index.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`06_dashboard/generado/index.html`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`06_dashboard/publico/index.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`06_dashboard/publico/manifest_publico.json`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`README.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`06_dashboard/wiki/index.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`06_dashboard/generado/index.html`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`06_dashboard/publico/index.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`06_dashboard/publico/manifest_publico.json`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
 
 ## Criterio de esta base
 

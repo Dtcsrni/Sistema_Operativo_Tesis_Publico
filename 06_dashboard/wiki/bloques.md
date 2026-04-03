@@ -34,7 +34,7 @@ Bloques macro del sistema y sus criterios de salida.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`00_sistema_tesis/config/bloques.yaml`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/config/bloques.yaml`](nota_seguridad_y_acceso.md)|archivo|sí|
 
 ### Artefactos derivados relacionados
 

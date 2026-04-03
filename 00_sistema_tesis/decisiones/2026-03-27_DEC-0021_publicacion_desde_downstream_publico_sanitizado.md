@@ -18,8 +18,8 @@ Fijar como objetivo operativo que el sitio y la exposicion externa salgan del re
 
 ## Referencias
 
-- [DEC-0015](../../06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [DEC-0017](../../06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [DEC-0015](../../06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [DEC-0017](../../06_dashboard/wiki/nota_seguridad_y_acceso.md)
 
 [LID]: [ruta_local_redactada]
 [GOV]: [ruta_local_redactada]

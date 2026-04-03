@@ -31,7 +31,7 @@ Estado de cobertura de simulación y validación experimental.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`02_experimentos`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|directorio|sí|
+|[`02_experimentos`](nota_seguridad_y_acceso.md)|directorio|sí|
 
 ### Artefactos derivados relacionados
 

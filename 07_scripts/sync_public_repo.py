@@ -11,7 +11,7 @@ from datetime import datetime
 from pathlib import Path
 
 from common import ROOT, load_yaml_json
-from publication import load_publication_config, rewrite_public_links, sanitize_text, validate_publication_output
+from publication import build_public_access_note, load_publication_config, rewrite_public_links, sanitize_text, validate_publication_output
 
 
 PRIVATE_EXCLUDE_PREFIXES = (
@@ -44,6 +44,8 @@ TEXT_SUFFIXES = {
 }
 PUBLIC_REPO_NAME = "Dtcsrni/Sistema_Operativo_Tesis_Publico"
 DEFAULT_LOCAL_MIRROR_DIR = "../Sistema_Operativo_Tesis_Publico"
+PUBLIC_PAGES_NOTE_PATH = "06_dashboard/wiki/nota_seguridad_y_acceso.md"
+PUBLIC_BUNDLE_NOTE_PATH = "06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md"
 PUBLIC_OPERATIONAL_PASSTHROUGH_PATHS = {
     "00_sistema_tesis/config/publicacion.yaml",
 }
@@ -182,6 +184,10 @@ def _render_payloads(source_map: dict[str, Path], *, sanitize: bool) -> dict[str
         else:
             payload = source_path.read_bytes()
         payloads[rel_path] = payload
+    if sanitize:
+        generated_at = datetime.now().strftime("%Y-%m-%d")
+        note_body = (build_public_access_note(publication, generated_at) + "\n").encode("utf-8")
+        payloads[PUBLIC_PAGES_NOTE_PATH] = note_body
     return payloads
 
 
@@ -220,13 +226,18 @@ def _href_violates_public_policy(base_rel: str, href: str) -> bool:
         return False
     if SYNC_PLACEHOLDER_HREF_PATTERN.search(normalized):
         return True
+    if not base_rel.startswith("06_dashboard/publico/") and normalized == PUBLIC_BUNDLE_NOTE_PATH:
+        return True
     if any(normalized.startswith(prefix) for prefix in PRIVATE_EXCLUDE_PREFIXES):
         return True
     return normalized in PRIVATE_EXCLUDE_PATHS
 
 
 def _public_note_href_for_source(source_rel: str) -> str:
-    note_target = "NOTA_SEGURIDAD_Y_ACCESO.md"
+    if source_rel.startswith("06_dashboard/publico/"):
+        note_target = PUBLIC_BUNDLE_NOTE_PATH
+    else:
+        note_target = PUBLIC_PAGES_NOTE_PATH
     return Path(posixpath.relpath(note_target, Path(source_rel).parent.as_posix())).as_posix()
 
 
@@ -254,6 +265,8 @@ def _rewrite_invalid_hrefs_to_public_note(text: str, source_rel: str) -> str:
 def validate_sync_payloads(payloads: dict[str, bytes]) -> list[str]:
     errors: list[str] = []
     publication = load_publication_config()
+    if PUBLIC_PAGES_NOTE_PATH not in payloads:
+        errors.append(f"Falta la nota pública renderizable para Pages: {PUBLIC_PAGES_NOTE_PATH}")
 
     leaked_private_paths = sorted(rel_path for rel_path in payloads if _is_private_path(rel_path))
     for rel_path in leaked_private_paths:

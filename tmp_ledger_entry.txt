@@ -2,7 +2,7 @@
 Contexto Operativo: El tesista consulta sobre los elementos faltantes en la arquitectura para iniciar el desarrollo. El agente analiza la brecha entre la infraestructura de gobernanza (B0) y el diseño técnico de la tesis (B1/B2), identificando la necesidad de delimitación formal, línea base y diseño detallado de componentes IoT.
 Infraestructura: Gemini 1.5 Pro | Sistema Operativo de Tesis v0.1.0.
 ID de Sesión: b4fee61f
-Diferencial de Plan: Análisis de brechas en [analysis_arch_readiness.md](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+Diferencial de Plan: Análisis de brechas en [analysis_arch_readiness.md](06_dashboard/wiki/nota_seguridad_y_acceso.md)
 ---
 Tesista (Erick Renato Vega Ceron | Sesion: b4fee61f): "¿que faltaria en la arquitectura para poder empezar el desarrollo de la tesis?"
 Agente: "La infraestructura de gestión está completa. Faltan la delimitación formal del caso de estudio (B1), la definición de la línea base de comparación (B2) y el diseño detallado de los componentes de resiliencia (B2) antes de la implementación física."

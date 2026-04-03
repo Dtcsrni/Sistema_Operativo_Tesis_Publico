@@ -31,8 +31,8 @@ Hipótesis activas, criterios de soporte, evidencia y relación con bloques.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`00_sistema_tesis/config/hipotesis.yaml`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`00_sistema_tesis/config/bloques.yaml`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/config/hipotesis.yaml`](nota_seguridad_y_acceso.md)|archivo|sí|
+|[`00_sistema_tesis/config/bloques.yaml`](nota_seguridad_y_acceso.md)|archivo|sí|
 
 ### Artefactos derivados relacionados
 

@@ -46,20 +46,20 @@ Este repositorio privado gobierna decisiones, hipótesis, backlog, riesgos, expe
 
 Empieza por estos archivos:
 
-- [`README_INICIO.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`00_sistema_tesis/config/sistema_tesis.yaml`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`00_sistema_tesis/config/hipotesis.yaml`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`00_sistema_tesis/config/bloques.yaml`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`00_sistema_tesis/config/publicacion.yaml`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`01_planeacion/backlog.csv`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`docs/02_arquitectura/arquitectura-general.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`manifests/storage_layout.yaml`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`bootstrap/orangepi/10_primer-arranque.sh`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`README_INICIO.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/config/sistema_tesis.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/config/hipotesis.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/config/bloques.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/config/publicacion.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`01_planeacion/backlog.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`docs/02_arquitectura/arquitectura-general.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`manifests/storage_layout.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`bootstrap/orangepi/10_primer-arranque.sh`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
 - [`06_dashboard/wiki/index.md`](06_dashboard/publico/wiki/index.md)
 - [`06_dashboard/generado/index.html`](06_dashboard/publico/dashboard/index.html)
 
@@ -78,15 +78,15 @@ Empieza por estos archivos:
 - Cada página de la wiki debe declarar navegación local, fuentes canónicas y artefactos derivados relacionados.
 - Si una salida derivada necesita cambio, la intervención correcta es sobre la fuente canónica declarada, no sobre el derivado.
 - Para cerrar la cadena de rastreo revisa [`06_dashboard/generado/wiki_manifest.json`](06_dashboard/publico/manifest_publico.json) y [`06_dashboard/publico/manifest_publico.json`](06_dashboard/publico/manifest_publico.json).
-- Para trazabilidad operativa interna revisa [`[matriz_privada]`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y [`[ledger_privado]`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
+- Para trazabilidad operativa interna revisa [`[matriz_privada]`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y [`[ledger_privado]`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
 
 ## Qué revisar siempre
 
-- [`00_sistema_tesis/manual_operacion_humana.md`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`00_sistema_tesis/config/sistema_tesis.yaml`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`01_planeacion/backlog.csv`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`01_planeacion/riesgos.csv`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`[matriz_privada]`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/manual_operacion_humana.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/config/sistema_tesis.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`01_planeacion/backlog.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`01_planeacion/riesgos.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`[matriz_privada]`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
 - [`06_dashboard/wiki/index.md`](06_dashboard/publico/wiki/index.md)
 - [`06_dashboard/generado/index.html`](06_dashboard/publico/dashboard/index.html)
 - [`06_dashboard/publico/index.md`](06_dashboard/publico/index.md)
@@ -120,9 +120,9 @@ Empieza por estos archivos:
 
 ## Decisiones recientes
 
-- **2026-03-27** · [DEC-0021 Publicacion desde Downstream Publico Sanitizado](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- **2026-03-27** · [DEC-0020 OpenClaw como Capa Asistiva Opcional y Evaluable](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- **2026-03-27** · [DEC-0019 Reestructura Operativa y Despliegue Orange Pi](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- **2026-03-27** · [DEC-0021 Publicacion desde Downstream Publico Sanitizado](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- **2026-03-27** · [DEC-0020 OpenClaw como Capa Asistiva Opcional y Evaluable](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- **2026-03-27** · [DEC-0019 Reestructura Operativa y Despliegue Orange Pi](06_dashboard/wiki/nota_seguridad_y_acceso.md)
 
 ## Operación
 
@@ -213,7 +213,7 @@ python 07_scripts/report_consistency.py
 - [`06_dashboard/generado/wiki/index.html`](06_dashboard/publico/wiki_html/index.html)
 - [`06_dashboard/generado/wiki_manifest.json`](06_dashboard/publico/manifest_publico.json)
 - [`06_dashboard/generado/index.html`](06_dashboard/publico/dashboard/index.html)
-- [`06_dashboard/generado/hoja_maestra_consolidada.csv`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- [`[reporte_interno_redactado]`](06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`06_dashboard/generado/hoja_maestra_consolidada.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`[reporte_interno_redactado]`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
 
 _Generado automáticamente el [fecha_hora_redactada]._

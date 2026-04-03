@@ -29,9 +29,11 @@ def test_public_sync_payloads_pass_current_policy() -> None:
 def test_public_sync_rewrites_private_hrefs_to_public_note() -> None:
     payloads = _render_payloads(_source_map_mirror(ROOT), sanitize=True)
     bitacora_text = payloads["06_dashboard/wiki/bitacora.md"].decode("utf-8")
+    pages_note_text = payloads["06_dashboard/wiki/nota_seguridad_y_acceso.md"].decode("utf-8")
     assert "](../../[bitacora_privada]/" not in bitacora_text
     assert "](../../[reportes_privados]/" not in bitacora_text
-    assert "../publico/NOTA_SEGURIDAD_Y_ACCESO.md" in bitacora_text
+    assert "nota_seguridad_y_acceso.md" in bitacora_text
+    assert "Nota de seguridad y acceso" in pages_note_text
 
 
 def test_validate_sync_payloads_rejects_placeholder_hrefs() -> None:

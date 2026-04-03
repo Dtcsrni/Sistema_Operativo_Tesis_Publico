@@ -31,7 +31,7 @@ Registro de decisiones de arquitectura, método y operación.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`00_sistema_tesis/decisiones`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|directorio|sí|
+|[`00_sistema_tesis/decisiones`](nota_seguridad_y_acceso.md)|directorio|sí|
 
 ### Artefactos derivados relacionados
 
@@ -48,25 +48,25 @@ Registro de decisiones de arquitectura, método y operación.
 
 ## Decisiones registradas
 
-- `2026-03-27` [DEC-0021 Publicacion desde Downstream Publico Sanitizado](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-27` [DEC-0020 OpenClaw como Capa Asistiva Opcional y Evaluable](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-27` [DEC-0019 Reestructura Operativa y Despliegue Orange Pi](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-26` [DEC-0018 Evidencia Fuente de Conversación Codex para Confirmación Verbal](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-26` [DEC-0017 Operación Humana Dual y Superficies Privada/Pública](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-26` [DEC-0016 Canon unificado de eventos y proyecciones derivadas](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-24` [DEC-0015 Protocolo de Sanitización para Exposición Pública](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-24` [DEC-0014 Protocolo de Colaboración Humano-Agente](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-24` [Decisión Arq: Integración Nativa con LaTeX (DEC-0013)](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-24` [Decisión Arq: Gestión de Referencias (DEC-0012)](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-24` [DEC-0011: Soberanía Biométrica e Integración de Firma GPG](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-24` [DEC-0010: Excelencia Operativa y Seguridad Preventiva (Cierre de B0)](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-24` [DEC-0009: Integración de Agencia Auditada (Cierre de B0)](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-24` [DEC-0008: Infraestructura de Trazabilidad y Auditoría (Sign-off)](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-24` [DEC-0007: Refuerzo QoL y Estandarización Final de B0](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-24` [DEC-0006: Integración de MkDocs Material y GitHub Pages](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-24` [DEC-0005: Orange Pi 5 Plus como base experimental y operativa](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-24` [DEC-0004: Endurecimiento de la infraestructura del Bloque 0](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-24` [DEC-0003 Economía de uso y selección de razonamiento](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-23` [DEC-0002 Gobernanza de IA instrumental y registro de uso](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
-- `2026-03-23` [DEC-0001 Arquitectura base del sistema operativo de tesis](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- `2026-03-27` [DEC-0021 Publicacion desde Downstream Publico Sanitizado](nota_seguridad_y_acceso.md)
+- `2026-03-27` [DEC-0020 OpenClaw como Capa Asistiva Opcional y Evaluable](nota_seguridad_y_acceso.md)
+- `2026-03-27` [DEC-0019 Reestructura Operativa y Despliegue Orange Pi](nota_seguridad_y_acceso.md)
+- `2026-03-26` [DEC-0018 Evidencia Fuente de Conversación Codex para Confirmación Verbal](nota_seguridad_y_acceso.md)
+- `2026-03-26` [DEC-0017 Operación Humana Dual y Superficies Privada/Pública](nota_seguridad_y_acceso.md)
+- `2026-03-26` [DEC-0016 Canon unificado de eventos y proyecciones derivadas](nota_seguridad_y_acceso.md)
+- `2026-03-24` [DEC-0015 Protocolo de Sanitización para Exposición Pública](nota_seguridad_y_acceso.md)
+- `2026-03-24` [DEC-0014 Protocolo de Colaboración Humano-Agente](nota_seguridad_y_acceso.md)
+- `2026-03-24` [Decisión Arq: Integración Nativa con LaTeX (DEC-0013)](nota_seguridad_y_acceso.md)
+- `2026-03-24` [Decisión Arq: Gestión de Referencias (DEC-0012)](nota_seguridad_y_acceso.md)
+- `2026-03-24` [DEC-0011: Soberanía Biométrica e Integración de Firma GPG](nota_seguridad_y_acceso.md)
+- `2026-03-24` [DEC-0010: Excelencia Operativa y Seguridad Preventiva (Cierre de B0)](nota_seguridad_y_acceso.md)
+- `2026-03-24` [DEC-0009: Integración de Agencia Auditada (Cierre de B0)](nota_seguridad_y_acceso.md)
+- `2026-03-24` [DEC-0008: Infraestructura de Trazabilidad y Auditoría (Sign-off)](nota_seguridad_y_acceso.md)
+- `2026-03-24` [DEC-0007: Refuerzo QoL y Estandarización Final de B0](nota_seguridad_y_acceso.md)
+- `2026-03-24` [DEC-0006: Integración de MkDocs Material y GitHub Pages](nota_seguridad_y_acceso.md)
+- `2026-03-24` [DEC-0005: Orange Pi 5 Plus como base experimental y operativa](nota_seguridad_y_acceso.md)
+- `2026-03-24` [DEC-0004: Endurecimiento de la infraestructura del Bloque 0](nota_seguridad_y_acceso.md)
+- `2026-03-24` [DEC-0003 Economía de uso y selección de razonamiento](nota_seguridad_y_acceso.md)
+- `2026-03-23` [DEC-0002 Gobernanza de IA instrumental y registro de uso](nota_seguridad_y_acceso.md)
+- `2026-03-23` [DEC-0001 Arquitectura base del sistema operativo de tesis](nota_seguridad_y_acceso.md)
 

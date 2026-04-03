@@ -31,12 +31,12 @@ Políticas del sistema, soberanía humana, trazabilidad y disciplina de automati
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`00_sistema_tesis/config/sistema_tesis.yaml`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`00_sistema_tesis/config/ia_gobernanza.yaml`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
-|[`00_sistema_tesis/config/publicacion.yaml`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](nota_seguridad_y_acceso.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](nota_seguridad_y_acceso.md)|archivo|sí|
+|[`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](nota_seguridad_y_acceso.md)|archivo|sí|
+|[`00_sistema_tesis/config/sistema_tesis.yaml`](nota_seguridad_y_acceso.md)|archivo|sí|
+|[`00_sistema_tesis/config/ia_gobernanza.yaml`](nota_seguridad_y_acceso.md)|archivo|sí|
+|[`00_sistema_tesis/config/publicacion.yaml`](nota_seguridad_y_acceso.md)|archivo|sí|
 
 ### Artefactos derivados relacionados
 

@@ -30,7 +30,7 @@ Estado de cobertura de capítulos y figuras.
 
 |Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`05_tesis`](../publico/NOTA_SEGURIDAD_Y_ACCESO.md)|directorio|sí|
+|[`05_tesis`](nota_seguridad_y_acceso.md)|directorio|sí|
 
 ### Artefactos derivados relacionados
 

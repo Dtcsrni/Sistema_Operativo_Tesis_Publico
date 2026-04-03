@@ -92,7 +92,7 @@ La alternativa elegida reduce duplicidad operativa, baja el riesgo de inconsiste
 
 ## Referencias
 
-- [DEC-0014](../../06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [DEC-0014](../../06_dashboard/wiki/nota_seguridad_y_acceso.md)
 - Event sourcing y snapshots derivados para auditoría reproducible.
 - Prácticas FAIR y trazabilidad de artefactos reproducibles en investigación.
 
