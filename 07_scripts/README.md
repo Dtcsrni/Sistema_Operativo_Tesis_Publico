@@ -41,6 +41,7 @@ python 07_scripts/tesis.py source status --check
 $env:SISTEMA_TESIS_STEP_ID="validación humana interna no pública"
 $env:SISTEMA_TESIS_SOURCE_EVENT_ID="EVT-XXXX"
 $env:SISTEMA_TESIS_SESSION_ID="codex-YYYYMMDD"
+$env:PUBLIC_REPO_PAT="<token>"
 python 07_scripts/tesis.py signoff sync --step-id $env:SISTEMA_TESIS_STEP_ID --source-event-id $env:SISTEMA_TESIS_SOURCE_EVENT_ID --session-id $env:SISTEMA_TESIS_SESSION_ID --check
 ```
 
@@ -72,7 +73,7 @@ python 07_scripts/tesis.py split-staged --commit
 - Emite `_sync_provenance.json` con commit/branch/fingerprint de sincronización.
 - Emite `NOTA_SEGURIDAD_Y_ACCESO.md` con políticas y contacto del tesista.
 - Requiere árbol privado limpio para garantizar sincronía exacta con el commit canónico (`--allow-dirty` solo bajo uso explícito).
-- `install_hooks.py`: instala hooks `pre-commit`, `pre-push`, `post-commit` y `post-merge`; `pre-push` corre gate y luego `signoff sync` con `SISTEMA_TESIS_STEP_ID` y `SISTEMA_TESIS_SOURCE_EVENT_ID`; los últimos resincronizan automáticamente el espejo local en `main`.
+- `install_hooks.py`: instala hooks `pre-commit`, `pre-push`, `post-commit` y `post-merge`; `pre-push` corre gate, luego `signoff sync` y después sincroniza automáticamente el repo público (`sync_public_repo.py --push`) usando `PUBLIC_REPO_PAT`; los últimos resincronizan automáticamente el espejo local en `main`.
 
 ## Scripts de soporte
 

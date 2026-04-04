@@ -43,6 +43,7 @@ Este archivo es el índice central de todas las validaciones de soberanía human
 | 2026-04-01 | [validación humana interna no pública] | [B1-INIT] | Transición formal a fase B1 y análisis inicial | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
 | 2026-04-01 | [validación humana interna no pública] | [DEC-0014] | Cierre de trazabilidad de la conversación actual solicitado por el tesista | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
 | 2026-04-02 | [validación humana interna no pública] | [DEC-0014] | Regularización de trazabilidad para actividades recientes posteriores a validación humana interna no pública | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-04 | [validación humana interna no pública] | [DEC-0014] | Registro integral de avances pendientes con trazabilidad canónica y evidencia fuente. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
 
 ---
 **Navegación:**
@@ -50,6 +51,7 @@ Este archivo es el índice central de todas las validaciones de soberanía human
 - [Consultar Libro Mayor](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md)
 - [Auditoría del Sistema](../../06_dashboard/wiki/nota_seguridad_y_acceso.md)
 
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
 [validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
 [validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
 [validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública

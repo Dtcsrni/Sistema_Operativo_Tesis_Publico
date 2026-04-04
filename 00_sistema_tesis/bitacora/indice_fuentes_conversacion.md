@@ -39,6 +39,7 @@ La evidencia cruda vive en `evidencia privada no publicada/conversaciones_codex/
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 814db1d5-6b35-47d2-b7bd-7178a38c0ab6 | ok |
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260401-trazabilidad-conversacion-actual | ok |
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260402-verificacion-registro-reciente | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260404-register-untracked-advances | ok |
 
 **Navegación:**
 - [Volver al Ledger](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md)

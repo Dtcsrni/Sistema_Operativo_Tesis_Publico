@@ -64,6 +64,29 @@ if [ -z "$SOURCE_EVENT_ID" ]; then
 fi
 
 "$PYTHON_BIN" 07_scripts/tesis.py signoff sync --step-id "$STEP_ID" --source-event-id "$SOURCE_EVENT_ID" --session-id "$SESSION_ID"
+STATUS=$?
+if [ $STATUS -ne 0 ]; then
+  exit $STATUS
+fi
+
+PUBLIC_REPO_PAT="${PUBLIC_REPO_PAT:-}"
+PUBLIC_TARGET_DIR="${SISTEMA_TESIS_PUBLIC_TARGET_DIR:-../Sistema_Operativo_Tesis_Publico}"
+PUBLIC_REPO_URL="${SISTEMA_TESIS_PUBLIC_REPO_URL:-https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git}"
+PUBLIC_BRANCH="${SISTEMA_TESIS_PUBLIC_BRANCH:-main}"
+
+if [ -z "$PUBLIC_REPO_PAT" ]; then
+  echo "[ERROR] Falta PUBLIC_REPO_PAT para sincronizar automáticamente el repo público en pre-push."
+  echo "        Exporta: PUBLIC_REPO_PAT=<token>"
+  exit 1
+fi
+
+"$PYTHON_BIN" 07_scripts/sync_public_repo.py \
+  --mode mirror \
+  --target-dir "$PUBLIC_TARGET_DIR" \
+  --repo-url "https://x-access-token:${PUBLIC_REPO_PAT}@${PUBLIC_REPO_URL#https://}" \
+  --branch "$PUBLIC_BRANCH" \
+  --push \
+  --allow-dirty
 """
 
 POST_COMMIT_SYNC_HOOK = """#!/bin/sh

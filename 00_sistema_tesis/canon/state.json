@@ -1,7 +1,7 @@
 {
   "generated_at": "2026-04-04",
   "canon": {
-    "event_count": 97,
+    "event_count": 102,
     "latest_event_id": "evento interno no público",
     "latest_step_id": "validación humana interna no pública",
     "projection_paths": [
@@ -10,6 +10,8 @@
       "00_sistema_tesis/bitacora/2026-03-26_bitacora_sesion.md",
       "00_sistema_tesis/bitacora/2026-03-26_bitacora_sesion_1.md",
       "00_sistema_tesis/bitacora/2026-03-26_bitacora_sesion_2.md",
+      "00_sistema_tesis/bitacora/2026-03-31_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-04-04_bitacora_sesion.md",
       "00_sistema_tesis/bitacora/indice_fuentes_conversacion.md",
       "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
       "00_sistema_tesis/bitacora/matriz_trazabilidad.md",
@@ -19,17 +21,17 @@
     ]
   },
   "counts_by_type": {
-    "agent_activity": 27,
+    "agent_activity": 28,
     "artifact_signed": 4,
-    "conversation_source_registered": 14,
-    "human_validation": 30,
-    "session_recorded": 22
+    "conversation_source_registered": 15,
+    "human_validation": 31,
+    "session_recorded": 24
   },
   "source_evidence": {
     "enforcement_from_step_id": "validación humana interna no pública",
-    "registered_sources": 14,
-    "human_validations_with_source": 14,
-    "human_validations_requiring_source": 14,
+    "registered_sources": 15,
+    "human_validations_with_source": 15,
+    "human_validations_requiring_source": 15,
     "legacy_without_source": 16
   }
 }

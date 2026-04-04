@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-01
 
 - **ID de Sesión:** codex-local-20260401-trazabilidad-conversacion-actual
-- **Cadena de Confianza (Anterior):** `sha256/fef14807765da75a490cb6ad1d21fba49445e6228f295a257afcb254668231f5`
+- **Cadena de Confianza (Anterior):** `sha256/3ca7426ffbcee879ddd88b521a694aec88449decea75754faa90ce09bf71c903`
 - **Bloque principal:** B0
 - **Tipo de sesión:** validación | documentación | integración | automatización
 

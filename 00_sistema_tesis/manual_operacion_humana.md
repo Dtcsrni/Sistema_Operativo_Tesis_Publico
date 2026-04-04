@@ -87,6 +87,8 @@ La firma humana no se autoemite desde IA sin contexto trazable. Si un artefacto 
   - `SISTEMA_TESIS_STEP_ID=validación humana interna no pública`
   - `SISTEMA_TESIS_SOURCE_EVENT_ID=EVT-XXXX`
   - `SISTEMA_TESIS_SESSION_ID=<session_id_opcional>`
+  - `PUBLIC_REPO_PAT=<token>`
+- Con esas variables, `pre-push` ejecuta automáticamente: gate -> auto-firma controlada -> sincronización al repo público derivado.
 - Verificación: `python 07_scripts/tesis.py doctor --check`
 
 ## Qué revisar siempre

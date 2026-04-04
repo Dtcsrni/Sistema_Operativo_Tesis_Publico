@@ -4,7 +4,7 @@
         "passed": 7,
         "failed": 0,
         "critical_failures": 0,
-        "timestamp": "2026-04-03T21:40:48.616935"
+        "timestamp": "2026-04-04T01:22:04.377094"
     },
     "details": [
         {
@@ -12,49 +12,49 @@
             "success": true,
             "critical": true,
             "output": "OK",
-            "timestamp": "2026-04-03T21:40:48.712297"
+            "timestamp": "2026-04-04T01:22:04.487077"
         },
         {
             "name": "Audit Ledger IA",
             "success": true,
             "critical": true,
             "output": "OK",
-            "timestamp": "2026-04-03T21:40:48.802039"
+            "timestamp": "2026-04-04T01:22:04.589829"
         },
         {
             "name": "Cadena de Bit\u00e1coras",
             "success": true,
             "critical": true,
             "output": "OK",
-            "timestamp": "2026-04-03T21:40:48.921964"
+            "timestamp": "2026-04-04T01:22:04.669223"
         },
         {
             "name": "Escaneo de Secretos",
             "success": true,
             "critical": true,
             "output": "OK",
-            "timestamp": "2026-04-03T21:40:49.696381"
+            "timestamp": "2026-04-04T01:22:05.212706"
         },
         {
             "name": "Jerarqu\u00eda de Tareas",
             "success": true,
             "critical": false,
             "output": "OK",
-            "timestamp": "2026-04-03T21:40:49.768417"
+            "timestamp": "2026-04-04T01:22:05.298895"
         },
         {
             "name": "Autoauditor\u00eda Documental",
             "success": true,
             "critical": false,
             "output": "OK",
-            "timestamp": "2026-04-03T21:40:49.842403"
+            "timestamp": "2026-04-04T01:22:05.378929"
         },
         {
             "name": "Est\u00e1ndares Externos",
             "success": true,
             "critical": false,
             "output": "OK",
-            "timestamp": "2026-04-03T21:40:52.271833"
+            "timestamp": "2026-04-04T01:22:07.553444"
         }
     ]
 }
