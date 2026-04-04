@@ -9,4 +9,4 @@
 ## Campos recomendados
 `componente`, `voltaje`, `corriente`, `nivel_logico`, `interfaz`, `riesgo`, `datasheet`.
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

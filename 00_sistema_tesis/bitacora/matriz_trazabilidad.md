@@ -81,4 +81,4 @@ Este archivo es el índice central de todas las validaciones de soberanía human
 [validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
 [validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

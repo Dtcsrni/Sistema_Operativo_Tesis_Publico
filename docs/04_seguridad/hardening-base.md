@@ -6,4 +6,4 @@
 - Separar secretos en `config/env` o vault.
 - No ejecutar automatizaciones privilegiadas sin justificacion.
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

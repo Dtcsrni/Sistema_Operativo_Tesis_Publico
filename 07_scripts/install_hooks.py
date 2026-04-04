@@ -42,6 +42,28 @@ if [ -z "$PYTHON_BIN" ]; then
 fi
 
 "$PYTHON_BIN" 07_scripts/governance_gate.py --stage pre-push
+STATUS=$?
+if [ $STATUS -ne 0 ]; then
+  exit $STATUS
+fi
+
+STEP_ID="${SISTEMA_TESIS_STEP_ID:-}"
+SOURCE_EVENT_ID="${SISTEMA_TESIS_SOURCE_EVENT_ID:-}"
+SESSION_ID="${SISTEMA_TESIS_SESSION_ID:-hook-pre-push-autosignoff}"
+
+if [ -z "$STEP_ID" ]; then
+  echo "[ERROR] Falta SISTEMA_TESIS_STEP_ID para auto-firma en pre-push."
+  echo "        Exporta: SISTEMA_TESIS_STEP_ID=VAL-STEP-XXX"
+  exit 1
+fi
+
+if [ -z "$SOURCE_EVENT_ID" ]; then
+  echo "[ERROR] Falta SISTEMA_TESIS_SOURCE_EVENT_ID para auto-firma en pre-push."
+  echo "        Exporta: SISTEMA_TESIS_SOURCE_EVENT_ID=EVT-XXX"
+  exit 1
+fi
+
+"$PYTHON_BIN" 07_scripts/tesis.py signoff sync --step-id "$STEP_ID" --source-event-id "$SOURCE_EVENT_ID" --session-id "$SESSION_ID"
 """
 
 POST_COMMIT_SYNC_HOOK = """#!/bin/sh

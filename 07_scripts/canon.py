@@ -977,9 +977,9 @@ def render_conversation_source_index(events: list[dict[str, Any]]) -> str:
             "- [Volver al Ledger](log_conversaciones_ia.md)",
             "- [Volver a la Matriz](matriz_trazabilidad.md)",
             "",
-            "[LID]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/bitacora/log_conversaciones_ia.md",
-            "[GOV]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/config/ia_gobernanza.yaml",
-            "[AUD]: file:///v:/Sistema_Operativo_Tesis_Posgrado/07_scripts/build_all.py",
+            "[LID]: log_conversaciones_ia.md",
+            "[GOV]: ../config/ia_gobernanza.yaml",
+            "[AUD]: ../../07_scripts/build_all.py",
             "",
         ]
     )

@@ -9,4 +9,4 @@
 ## Regla
 Toda conexion electrica y de datos debe validarse contra datasheet y checklist pre-energizacion.
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

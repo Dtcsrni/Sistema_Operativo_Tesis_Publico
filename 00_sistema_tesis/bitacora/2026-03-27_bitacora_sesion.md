@@ -1,9 +1,7 @@
 # Bitácora de sesión 2026-03-27
 
 - **ID de Sesión:** 2026-03-27_bitacora_sesion
-- **Cadena de Confianza (Anterior):** `sha256/68007dd1c5973774411f81e258367fba8c9cdc31f1a1f94405d888b3fe8be779`
-- **Hora de inicio:** 08:30
-- **Hora de cierre:** 19:10
+- **Cadena de Confianza (Anterior):** `sha256/7159b2cb36c6bf0a0a2ac1084d1b69b2790bf2328bc4903c45d0553c79c0ab37`
 - **Bloque principal:** B0
 - **Tipo de sesión:** publicación | ci/cd | documentación
 
@@ -66,8 +64,8 @@ Endurecer la publicación downstream y estabilizar la cadena de CI/CD y páginas
 ## Siguiente paso concreto
 Continuar con la validación de la wiki y el bundle público sanitizado bajo el nuevo flujo de verify.
 
-[LID]: ruta local no pública
-[GOV]: ruta local no pública
-[AUD]: ruta local no pública
+[LID]: log_conversaciones_ia.md
+[GOV]: ../config/ia_gobernanza.yaml
+[AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

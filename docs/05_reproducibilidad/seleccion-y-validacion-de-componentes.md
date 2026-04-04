@@ -2,4 +2,4 @@
 
 La seleccion debe justificar compatibilidad electrica, disponibilidad, costo, riesgo y evidencia de datasheet.
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

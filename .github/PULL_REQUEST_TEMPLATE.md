@@ -19,4 +19,4 @@ Describe brevemente qué cambias o agregas en este PR.
 
 Adjunta una captura de pantalla, tabla o resultado que documente que tu cambio funciona tal y como se diseñó.
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

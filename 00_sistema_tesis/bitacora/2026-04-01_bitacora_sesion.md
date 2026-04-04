@@ -1,9 +1,7 @@
 # Bitácora de sesión 2026-04-01
 
 - **ID de Sesión:** codex-local-20260401-trazabilidad-conversacion-actual
-- **Cadena de Confianza (Anterior):** `sha256/a8f7a8ddbd19463b3d8d2ba87b76c65af75f8de30cd28035288da70ec8f546c8`
-- **Hora de inicio:** 21:31
-- **Hora de cierre:** 23:48
+- **Cadena de Confianza (Anterior):** `sha256/fef14807765da75a490cb6ad1d21fba49445e6228f295a257afcb254668231f5`
 - **Bloque principal:** B0
 - **Tipo de sesión:** validación | documentación | integración | automatización
 
@@ -68,8 +66,8 @@ Completar la trazabilidad de la conversación actual, regularizar la fuente de c
 ## Siguiente paso concreto
 Mantener sincronizada la wiki con la bitácora canónica y continuar con la siguiente fase del bloque operativo.
 
-[LID]: ruta local no pública
-[GOV]: ruta local no pública
-[AUD]: ruta local no pública
+[LID]: log_conversaciones_ia.md
+[GOV]: ../config/ia_gobernanza.yaml
+[AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

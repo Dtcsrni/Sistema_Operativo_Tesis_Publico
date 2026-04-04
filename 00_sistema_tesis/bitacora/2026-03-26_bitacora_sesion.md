@@ -1,9 +1,7 @@
 # Bitácora de sesión 2026-03-26
 
 - **ID de Sesión:** codex-local-20260326-close
-- **Cadena de Confianza (Anterior):** `sha256/b860c61cf97c75d8f5b9ba4486f8a41e33ef403fda541904e6eb66e96f6364f7`
-- **Hora de inicio:** 06:19
-- **Hora de cierre:** 06:25
+- **Cadena de Confianza (Anterior):** `sha256/add6bd7930a2a53a5e8d3f989f641c904e68de0fe5430f774dc36c5ef49437b0`
 - **Bloque principal:** B0
 - **Tipo de sesión:** administración | implementación | validación
 
@@ -75,8 +73,8 @@ Cerrar estrictamente la conversación del 2026-03-26 con trazabilidad completa, 
 ## Siguiente paso concreto
 Hacer `git push` del commit firmado y verificar que `pre-push` reproduzca el mismo resultado del `build_all.py` local.
 
-[LID]: ruta local no pública
-[GOV]: ruta local no pública
-[AUD]: ruta local no pública
+[LID]: log_conversaciones_ia.md
+[GOV]: ../config/ia_gobernanza.yaml
+[AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

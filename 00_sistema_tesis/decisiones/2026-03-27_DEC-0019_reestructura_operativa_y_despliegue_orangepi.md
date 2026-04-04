@@ -27,4 +27,4 @@ Adoptar una reestructura operativa profunda, conservando el canon soberano en `0
 [GOV]: ruta local no pública
 [AUD]: ruta local no pública
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

@@ -26,11 +26,10 @@ def apply_metadata_header(content, file_name):
 
 def ensure_global_references(content):
     """Garantiza que el archivo tenga las referencias LID, GOV, AUD al final."""
-    base_url = "file:///v:/Sistema_Operativo_Tesis_Posgrado"
     refs = [
-        f"[LID]: {base_url}/00_sistema_tesis/bitacora/log_conversaciones_ia.md",
-        f"[GOV]: {base_url}/00_sistema_tesis/config/ia_gobernanza.yaml",
-        f"[AUD]: {base_url}/07_scripts/build_all.py"
+        "[LID]: log_conversaciones_ia.md",
+        "[GOV]: ../config/ia_gobernanza.yaml",
+        "[AUD]: ../../07_scripts/build_all.py",
     ]
     
     for ref in refs:

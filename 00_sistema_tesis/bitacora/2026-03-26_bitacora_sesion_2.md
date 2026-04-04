@@ -1,9 +1,7 @@
 # Bitácora de sesión 2026-03-26
 
 - **ID de Sesión:** codex-local-20260326-final-close
-- **Cadena de Confianza (Anterior):** `sha256/b3ce8f01ed57246f115599c8fa704345785c87443df9a51703729d902efe4ef0`
-- **Hora de inicio:** 16:40
-- **Hora de cierre:** 16:56
+- **Cadena de Confianza (Anterior):** `sha256/b65a4b8939cf8824f7f32a9b7bffedfa1233337c598f65c94e4aec56634f5cfa`
 - **Bloque principal:** B0
 - **Tipo de sesión:** administración | implementación | validación | documentación
 
@@ -78,8 +76,8 @@ Cerrar la conversación actual con toda la política de trazabilidad ya implanta
 ## Siguiente paso concreto
 La siguiente conversación puede iniciar desde `README_INICIO.md` y `00_sistema_tesis/manual_operacion_humana.md`, usando `python 07_scripts/tesis.py status`, `python 07_scripts/tesis.py next` y, si se requiere un `VAL-STEP` nuevo, capturando primero la fuente con `python 07_scripts/tesis.py source register`.
 
-[LID]: ruta local no pública
-[GOV]: ruta local no pública
-[AUD]: ruta local no pública
+[LID]: log_conversaciones_ia.md
+[GOV]: ../config/ia_gobernanza.yaml
+[AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

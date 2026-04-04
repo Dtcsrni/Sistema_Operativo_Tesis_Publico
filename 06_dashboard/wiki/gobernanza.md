@@ -114,4 +114,4 @@ Políticas del sistema, soberanía humana, trazabilidad y disciplina de automati
 - El ledger detallado, la matriz interna completa, las transcripciones y la evidencia fuente permanecen fuera de la superficie pública.
 - La arquitectura IoT se describe hasta el marco canónico vigente; los pendientes abiertos deben mostrarse como pendientes y no como diseño cerrado.
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

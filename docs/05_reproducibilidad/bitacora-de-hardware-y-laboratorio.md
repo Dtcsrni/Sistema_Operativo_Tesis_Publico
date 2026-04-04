@@ -2,4 +2,4 @@
 
 Campos minimos: componente, montaje, prueba, falla, hipotesis, correccion, riesgo fisico, evidencia asociada.
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

@@ -1,9 +1,7 @@
 # Bitácora de sesión 2026-03-25
 
 - **ID de Sesión:** 1dff8c6a-2026-03-25
-- **Cadena de Confianza (Anterior):** `sha256/8aeb997a21399d93e46601b69c424b0529a5b0c3134f34567074aa6d4d5b436e`
-- **Hora de inicio:** 09:00
-- **Hora de cierre:** 18:00
+- **Cadena de Confianza (Anterior):** `sha256/b8976333756e8b74a75eb66e489f3f7c38bb332d8a93c924b0a09ffd3f18431e`
 - **Bloque principal:** B0
 - **Tipo de sesión:** implementación | documentación | automatización
 
@@ -64,8 +62,8 @@ Añadir el sistema de generación de dashboard y wiki verificable, junto con la 
 ## Siguiente paso concreto
 Consolidar la bitácora canónica diaria y la matriz de trazabilidad sobre el nuevo sistema de dashboard/wiki.
 
-[LID]: ruta local no pública
-[GOV]: ruta local no pública
-[AUD]: ruta local no pública
+[LID]: log_conversaciones_ia.md
+[GOV]: ../config/ia_gobernanza.yaml
+[AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

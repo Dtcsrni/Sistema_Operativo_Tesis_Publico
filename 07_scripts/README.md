@@ -36,7 +36,15 @@ python 07_scripts/tesis.py source verify --step-id STEP_ID_REAL
 python 07_scripts/tesis.py source status --check
 ```
 
-### 5. Separar commits staged por Step ID automáticamente
+### 5. Auto-firma controlada en pre-push
+```powershell
+$env:SISTEMA_TESIS_STEP_ID="validación humana interna no pública"
+$env:SISTEMA_TESIS_SOURCE_EVENT_ID="EVT-XXXX"
+$env:SISTEMA_TESIS_SESSION_ID="codex-YYYYMMDD"
+python 07_scripts/tesis.py signoff sync --step-id $env:SISTEMA_TESIS_STEP_ID --source-event-id $env:SISTEMA_TESIS_SOURCE_EVENT_ID --session-id $env:SISTEMA_TESIS_SESSION_ID --check
+```
+
+### 6. Separar commits staged por Step ID automáticamente
 ```powershell
 python 07_scripts/tesis.py split-staged
 python 07_scripts/tesis.py split-staged --commit
@@ -52,6 +60,7 @@ python 07_scripts/tesis.py split-staged --commit
 - `source auto-register`: registra evidencia usando automáticamente `transcripcion.md` del scaffold de sesión.
 - `source verify`: comprueba que un `VAL-STEP` coincide con su `source_event_id` y con la evidencia local.
 - `source status`: resume el estado repo/local de la evidencia fuente de conversación.
+- `signoff sync`: firma automáticamente solo fuentes wiki directas (una fuente archivo por sección) que estén en drift, exigiendo `--step-id`, `--source-event-id` y `--session-id`.
 - `split-staged`: separa automáticamente el índice actual en commits por `VAL-STEP`, preservando cambios unstaged.
 - `audit --check`: consistencia del canon y proyecciones primarias.
 - `materialize`: materializa ledger, matriz y proyecciones desde el canon.
@@ -63,7 +72,7 @@ python 07_scripts/tesis.py split-staged --commit
 - Emite `_sync_provenance.json` con commit/branch/fingerprint de sincronización.
 - Emite `NOTA_SEGURIDAD_Y_ACCESO.md` con políticas y contacto del tesista.
 - Requiere árbol privado limpio para garantizar sincronía exacta con el commit canónico (`--allow-dirty` solo bajo uso explícito).
-- `install_hooks.py`: instala hooks `pre-commit`, `pre-push`, `post-commit` y `post-merge`; los últimos resincronizan automáticamente el espejo local en `main`.
+- `install_hooks.py`: instala hooks `pre-commit`, `pre-push`, `post-commit` y `post-merge`; `pre-push` corre gate y luego `signoff sync` con `SISTEMA_TESIS_STEP_ID` y `SISTEMA_TESIS_SOURCE_EVENT_ID`; los últimos resincronizan automáticamente el espejo local en `main`.
 
 ## Scripts de soporte
 
@@ -90,4 +99,4 @@ python 07_scripts/tesis.py split-staged --commit
 - La IA es opcional; la operación principal debe seguir siendo legible para humanos.
 - Si un cambio afecta gobernanza, arquitectura o método, registra decisión y vuelve a auditar.
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

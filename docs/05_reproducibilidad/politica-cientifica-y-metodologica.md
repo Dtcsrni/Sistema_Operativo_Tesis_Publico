@@ -2,4 +2,4 @@
 
 Principios: evidencia primero, DOI verificable, estado del arte vivo, reproducibilidad y contraste critico.
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

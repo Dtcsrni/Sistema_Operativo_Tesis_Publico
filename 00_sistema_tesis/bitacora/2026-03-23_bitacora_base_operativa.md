@@ -2,9 +2,6 @@
 <!-- GID: 2026-03-23_ | Versión: 1.3.0 | Estado: Validado | Auditoría: [x] -->
 
 # Bitácora de sesión 2026-03-23
-
-- Hora de inicio: 09:00
-- Hora de cierre: 13:15
 - Bloque principal: B0
 - Tipo de sesión: administración
 
@@ -66,8 +63,8 @@ Dejar instalada la base operativa completa del sistema de tesis con fuentes can�
 
 Abrir B1 y B2 con definición de línea base, escenarios urbanos de intermitencia y mapa de variables críticas.
 
-[LID]: ruta local no pública
-[GOV]: ruta local no pública
-[AUD]: ruta local no pública
+[LID]: log_conversaciones_ia.md
+[GOV]: ../config/ia_gobernanza.yaml
+[AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

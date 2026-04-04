@@ -6,7 +6,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
 
-from tesis import classify_patches_by_step, classify_sync_paths, parse_porcelain_paths  # noqa: E402
+from tesis import (  # noqa: E402
+    build_signoff_hash_index,
+    classify_patches_by_step,
+    classify_signoff_sync_targets,
+    classify_sync_paths,
+    discover_wiki_direct_source_files,
+    parse_porcelain_paths,
+    validate_signoff_sync_context,
+)
 
 
 class TestTesisSync(unittest.TestCase):
@@ -90,6 +98,80 @@ diff --git a/a b/b
         self.assertEqual([bundle["step_id"] for bundle in bundles], ["VAL-STEP-470", "VAL-STEP-500"])
         self.assertIn("07_scripts/canon.py", bundles[1]["auto_assigned_paths"])
         self.assertEqual(derived, ["06_dashboard/publico/index.md"])
+
+    def test_discover_wiki_direct_source_files_uses_single_file_sections(self):
+        wiki = {
+            "secciones": [
+                {"id": "a", "fuentes": ["07_scripts/README.md"]},
+                {"id": "b", "fuentes": ["00_sistema_tesis/decisiones", "01_planeacion/backlog.csv"]},
+                {"id": "c", "fuentes": ["00_sistema_tesis/decisiones"]},
+            ]
+        }
+        discovered = discover_wiki_direct_source_files(wiki)
+        self.assertIn("07_scripts/README.md", discovered)
+        self.assertNotIn("00_sistema_tesis/decisiones", discovered)
+
+    def test_classify_signoff_sync_targets_detects_drift(self):
+        signoff_index = build_signoff_hash_index(
+            [
+                {"archivo": "a.md", "hash_verificado": "h1"},
+                {"archivo": "b.md", "hash_verificado": "hX"},
+            ]
+        )
+        to_sign, up_to_date = classify_signoff_sync_targets(
+            ["a.md", "b.md", "c.md"],
+            signoff_index,
+            {"a.md": "h1", "b.md": "h2", "c.md": "h3"},
+        )
+        self.assertEqual(to_sign, ["b.md", "c.md"])
+        self.assertEqual(up_to_date, ["a.md"])
+
+    def test_validate_signoff_sync_context_rejects_invalid_source(self):
+        events = [
+            {
+                "event_id": "VAL-STEP-640",
+                "event_type": "human_validation",
+                "human_validation": {
+                    "step_id": "VAL-STEP-640",
+                    "confirmation_text": "PLEASE IMPLEMENT THIS PLAN",
+                    "source_event_id": "EVT-0099",
+                },
+            },
+            {
+                "event_id": "EVT-0099",
+                "event_type": "conversation_source_registered",
+                "payload": {
+                    "quoted_text": "PLEASE IMPLEMENT THIS PLAN",
+                    "transcript_path": "00_sistema_tesis/evidencia_privada/conversaciones_codex/demo/transcripcion.md",
+                    "transcript_sha256": "abc123",
+                },
+            },
+        ]
+        with self.assertRaises(ValueError):
+            validate_signoff_sync_context(step_id="VAL-STEP-640", source_event_id="EVT-0000", events=events)
+
+    def test_validate_signoff_sync_context_accepts_consistent_step_and_source(self):
+        events = [
+            {
+                "event_id": "VAL-STEP-640",
+                "event_type": "human_validation",
+                "human_validation": {
+                    "step_id": "VAL-STEP-640",
+                    "confirmation_text": "PLEASE IMPLEMENT THIS PLAN",
+                    "source_event_id": "EVT-0099",
+                },
+            },
+            {
+                "event_id": "EVT-0099",
+                "event_type": "conversation_source_registered",
+                "payload": {
+                    "quoted_text": "PLEASE IMPLEMENT THIS PLAN",
+                    "transcript_path": "00_sistema_tesis/evidencia_privada/conversaciones_codex/demo/transcripcion.md",
+                    "transcript_sha256": "abc123",
+                },
+            },
+        ]
+        validate_signoff_sync_context(step_id="VAL-STEP-640", source_event_id="EVT-0099", events=events)
 
 
 if __name__ == "__main__":

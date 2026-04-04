@@ -7,4 +7,4 @@ OpenClaw se posiciona como herramienta de apoyo y objeto de evaluacion secundari
 - Debe existir baseline sin OpenClaw.
 - Su integracion debe ser modular, reversible y desacoplada.
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

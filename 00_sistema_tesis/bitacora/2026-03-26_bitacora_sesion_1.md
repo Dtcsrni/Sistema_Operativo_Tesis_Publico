@@ -1,9 +1,7 @@
 # Bitácora de sesión 2026-03-26
 
 - **ID de Sesión:** codex-local-20260326-convclose
-- **Cadena de Confianza (Anterior):** `sha256/93ac588b111c13b9c0f8b3578dd4bdee84bdb64524dc83db4dd3c68bb6f5d7e6`
-- **Hora de inicio:** 15:29
-- **Hora de cierre:** 15:58
+- **Cadena de Confianza (Anterior):** `sha256/82425eac9e7f9855b0df38f3f9bd3582565158d907820a504eeb8800a3f7fa4b`
 - **Bloque principal:** B0
 - **Tipo de sesión:** administración | implementación | validación | documentación
 
@@ -75,8 +73,8 @@ Cerrar trazablemente la conversación del 2026-03-26, consolidando el trabajo re
 ## Siguiente paso concreto
 Iniciar la siguiente conversación leyendo `00_sistema_tesis/manual_operacion_humana.md`, ejecutando `python 07_scripts/tesis.py status`, `python 07_scripts/tesis.py next` y tomando como punto de entrada el backlog y riesgos abiertos, no esta conversación.
 
-[LID]: ruta local no pública
-[GOV]: ruta local no pública
-[AUD]: ruta local no pública
+[LID]: log_conversaciones_ia.md
+[GOV]: ../config/ia_gobernanza.yaml
+[AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

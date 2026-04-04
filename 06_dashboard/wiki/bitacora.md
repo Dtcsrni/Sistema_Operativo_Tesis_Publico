@@ -947,4 +947,4 @@ Objetivo de Sesión: Verificar y regularizar el registro de actividades reciente
 
 - `2026-S13_r` [Resumen semanal 2026-S13](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/reportes_semanales/2026-S13_resumen_semanal.md)
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

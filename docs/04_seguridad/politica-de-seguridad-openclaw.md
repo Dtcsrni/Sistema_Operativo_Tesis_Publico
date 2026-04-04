@@ -8,4 +8,4 @@ Instalacion oficial de referencia:
 - `openclaw onboard --install-daemon`.
 - `openclaw doctor` y `openclaw gateway status` para verificacion.
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

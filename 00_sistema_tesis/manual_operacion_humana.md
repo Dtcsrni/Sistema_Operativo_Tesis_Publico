@@ -77,9 +77,16 @@ La evidencia fuente vive en `evidencia privada no publicada/conversaciones_codex
 
 ## Firma humana de artefactos
 
-La firma humana no se autoemite desde IA. Si un artefacto requiere renovar supervisión humana, el tesista debe revisarlo y registrar la firma explícitamente.
+La firma humana no se autoemite desde IA sin contexto trazable. Si un artefacto requiere renovar supervisión humana, el tesista debe registrar la firma explícitamente o usar la auto-firma controlada con `VAL-STEP` y evidencia fuente válida.
 
 - Comando base: `python 07_scripts/sign_off.py 07_scripts/README.md "Revisado y aprobado por tesista humano." --session-id <session_id>`
+- Auto-firma controlada (solo drift en fuentes wiki directas):
+  - `python 07_scripts/tesis.py signoff sync --step-id validación humana interna no pública --source-event-id EVT-XXXX --session-id <session_id> --check`
+  - `python 07_scripts/tesis.py signoff sync --step-id validación humana interna no pública --source-event-id EVT-XXXX --session-id <session_id>`
+- En `pre-push` (hook instalado), exportar antes:
+  - `SISTEMA_TESIS_STEP_ID=validación humana interna no pública`
+  - `SISTEMA_TESIS_SOURCE_EVENT_ID=EVT-XXXX`
+  - `SISTEMA_TESIS_SESSION_ID=<session_id_opcional>`
 - Verificación: `python 07_scripts/tesis.py doctor --check`
 
 ## Qué revisar siempre
@@ -113,4 +120,4 @@ La firma humana no se autoemite desde IA. Si un artefacto requiere renovar super
    - `python 07_scripts/build_all.py`
    - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

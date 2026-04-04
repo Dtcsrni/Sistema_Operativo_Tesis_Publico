@@ -6,6 +6,7 @@ from pathlib import Path
 BASE_PRECHECK_MARKERS = ["[Integridad][LID]", "[Ética][GOV]", "[Auditoría][AUD]"]
 RICH_PRECHECK_MARKERS = ["Contexto explícito", "Confirmación verificable", "Reproducibilidad mínima"]
 REQUIRED_REFS = ["[LID]:", "[GOV]:", "[AUD]:"]
+REF_LINK_PATTERN = re.compile(r"^\[(LID|GOV|AUD)\]:\s+(.+?)\s*$")
 
 
 def _window(lines: list[str], index: int, before: int = 0, after: int = 0) -> list[str]:
@@ -31,6 +32,21 @@ def audit_document(file_path):
     for ref in REQUIRED_REFS:
         if ref not in content:
             errors.append(f"Falta definición de referencia global: {ref}")
+
+    ref_targets: dict[str, str] = {}
+    for raw_line in lines:
+        match = REF_LINK_PATTERN.match(raw_line.strip())
+        if not match:
+            continue
+        ref_targets[match.group(1)] = match.group(2).strip()
+
+    rel_hint = str(Path(file_path)).replace("\\", "/")
+    enforce_traceable_refs = "/bitacora/" in rel_hint
+    if enforce_traceable_refs:
+        for ref_name in ("LID", "GOV", "AUD"):
+            target = ref_targets.get(ref_name, "")
+            if target.startswith("file:///"):
+                errors.append(f"Referencia [{ref_name}] no trazable en GitHub: usa ruta relativa en lugar de file:///")
 
     for i, line in enumerate(lines):
         stripped = line.strip()

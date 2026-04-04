@@ -92,4 +92,4 @@ graph TD
 |H5|Transferencia simulación a experimento es consistente|alta|activa|B4, B5, B6, B7|Soportada si las tendencias principales se conservan y la desviación entre simulación y experimento permanece dentro del margen acordado.|
 |H6|Perfil urbano de Pachuca aporta valor de diseño|media|activa|B1, B2, B4, B6, B7|Soportada si el contexto local modifica de manera explícita y trazable parámetros, escenarios o decisiones respecto de una formulación genérica.|
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

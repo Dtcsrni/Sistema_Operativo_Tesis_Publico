@@ -51,12 +51,11 @@ def process_file(file_path):
             final_lines.append(f"{sub_indent}- [{status}] {PRECHECK_LINE}")
             
     # 3. Definiciones de Referencia al Final
-    base_url = "file:///v:/Sistema_Operativo_Tesis_Posgrado"
     final_lines.extend([
         "",
-        f"[LID]: {base_url}/00_sistema_tesis/bitacora/log_conversaciones_ia.md",
-        f"[GOV]: {base_url}/00_sistema_tesis/config/ia_gobernanza.yaml",
-        f"[AUD]: {base_url}/07_scripts/build_all.py"
+        "[LID]: log_conversaciones_ia.md",
+        "[GOV]: ../config/ia_gobernanza.yaml",
+        "[AUD]: ../../07_scripts/build_all.py",
     ])
     
     new_content = "\n".join(final_lines) + "\n"

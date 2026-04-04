@@ -126,4 +126,4 @@ gantt
 |ENT-011|Paquete sanitizado reproducible|pendiente|06_dashboard/generado|
 |ENT-012|Cierre y defensa|pendiente|05_tesis|
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

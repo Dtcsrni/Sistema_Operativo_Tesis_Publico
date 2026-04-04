@@ -1,9 +1,7 @@
 # Bitácora de sesión 2026-03-24
 
 - **ID de Sesión:** 5819a70e-7d5a-432a-9082-fad45c1cf2e7
-- **Cadena de Confianza (Anterior):** `sha256/6c66a850d90a2c5ef180b02b5d6bcf4a106fad8da4d4f27396f95a7b1eb1058d`
-- **Hora de inicio:** 19:30
-- **Hora de cierre:** 20:00
+- **Cadena de Confianza (Anterior):** `sha256/2c056d09b483665b6d7faf261b55a2e0af3df7bafd37c5e2e4e131e8dc950364`
 - **Bloque principal:** B0
 - **Tipo de sesión:** administración | infraestructura | validación
 
@@ -70,8 +68,8 @@ Rectificar la auditoría de estándares externos y mejorar el rigor del sistema 
 ## Siguiente paso concreto
 Iniciar la firma GPG de los bloques de infraestructura validados para elevar la métrica de soberanía en la wiki.
 
-[LID]: ruta local no pública
-[GOV]: ruta local no pública
-[AUD]: ruta local no pública
+[LID]: log_conversaciones_ia.md
+[GOV]: ../config/ia_gobernanza.yaml
+[AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

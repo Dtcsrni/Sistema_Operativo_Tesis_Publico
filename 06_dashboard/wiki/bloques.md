@@ -1,5 +1,5 @@
-!!! danger "Validación Humana: AUSENTE"
-    No se ha registrado firma de supervisión para este artefacto en `sign_offs.yaml`.
+!!! success "Validación Humana: VERIFICADA"
+    Este contenido ha sido supervisado y firmado por el tesista humano. (hash omitido: `0cf8a4ff...`)
 
 # Bloques
 
@@ -102,4 +102,4 @@ graph LR
 |B9|Reproducibilidad y versión sanitizada pública|no_iniciado|media|B0, B7, B8|Se cuenta con una ruta reproducible para publicar materiales sanitizados sin romper la canonicidad privada del repositorio.|
 |B10|Cierre, defensa y transferencia|no_iniciado|media|B8, B9|La tesis, la defensa y los artefactos de cierre quedan completos, versionados y listos para consulta futura.|
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

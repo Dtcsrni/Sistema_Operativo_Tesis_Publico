@@ -7,4 +7,4 @@
 5. Probar de forma incremental.
 6. Registrar resultado, evidencia y riesgo residual.
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

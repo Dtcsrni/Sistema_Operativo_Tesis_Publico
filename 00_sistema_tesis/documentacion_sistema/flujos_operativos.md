@@ -94,4 +94,4 @@ Todo flujo del sistema debe cumplir tres condiciones:
 - tener una salida humana legible;
 - poder distinguir entre superficie canónica no pública y superficie publica.
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

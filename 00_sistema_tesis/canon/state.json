@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-04-02",
+  "generated_at": "2026-04-04",
   "canon": {
-    "event_count": 94,
-    "latest_event_id": "validación humana interna no pública",
+    "event_count": 97,
+    "latest_event_id": "evento interno no público",
     "latest_step_id": "validación humana interna no pública",
     "projection_paths": [
       "00_sistema_tesis/bitacora/2026-03-23_bitacora_base_operativa.md",
@@ -20,7 +20,7 @@
   },
   "counts_by_type": {
     "agent_activity": 27,
-    "artifact_signed": 1,
+    "artifact_signed": 4,
     "conversation_source_registered": 14,
     "human_validation": 30,
     "session_recorded": 22

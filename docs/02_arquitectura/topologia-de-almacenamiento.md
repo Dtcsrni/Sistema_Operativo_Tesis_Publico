@@ -12,4 +12,4 @@ Fuente maquina-legible: `manifests/storage_layout.yaml`.
 - Mantener rollback manual documentado antes de migrar rootfs.
 - Usar eMMC como almacenamiento templado/frio y no como rootfs principal.
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._

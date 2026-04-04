@@ -85,6 +85,85 @@ def current_signoff_status() -> tuple[int, int]:
     return total, stale
 
 
+def discover_wiki_direct_source_files(wiki_config: dict) -> list[str]:
+    candidates: list[str] = []
+    seen: set[str] = set()
+    for section in wiki_config.get("secciones", []):
+        sources = section.get("fuentes", [])
+        if len(sources) != 1:
+            continue
+        rel_path = normalize_path(str(sources[0]).strip())
+        if not rel_path or rel_path in seen:
+            continue
+        target = ROOT / rel_path
+        if not target.exists() or not target.is_file():
+            continue
+        seen.add(rel_path)
+        candidates.append(rel_path)
+    return candidates
+
+
+def build_signoff_hash_index(signoffs: list[dict]) -> dict[str, str]:
+    index: dict[str, str] = {}
+    for record in signoffs:
+        rel_path = normalize_path(str(record.get("archivo", "")).strip())
+        expected_hash = str(record.get("hash_verificado", "")).strip()
+        if rel_path and expected_hash:
+            index[rel_path] = expected_hash
+    return index
+
+
+def classify_signoff_sync_targets(
+    candidate_paths: list[str],
+    signoff_hash_index: dict[str, str],
+    current_hashes: dict[str, str],
+) -> tuple[list[str], list[str]]:
+    to_sign: list[str] = []
+    up_to_date: list[str] = []
+    for rel_path in candidate_paths:
+        current_hash = current_hashes.get(rel_path, "")
+        if not current_hash:
+            continue
+        if signoff_hash_index.get(rel_path) == current_hash:
+            up_to_date.append(rel_path)
+            continue
+        to_sign.append(rel_path)
+    return to_sign, up_to_date
+
+
+def validate_signoff_sync_context(*, step_id: str, source_event_id: str, events: list[dict]) -> None:
+    normalized_step = step_id.strip()
+    normalized_source = source_event_id.strip()
+    if not re.match(r"^VAL-STEP-[A-Za-z0-9_-]+$", normalized_step):
+        raise ValueError("`--step-id` debe cumplir el formato VAL-STEP-XXX.")
+    if not re.match(r"^EVT-[A-Za-z0-9_-]+$", normalized_source):
+        raise ValueError("`--source-event-id` debe cumplir el formato EVT-XXX.")
+
+    event_index = {str(event.get("event_id", "")).strip(): event for event in events}
+    if normalized_step not in event_index:
+        raise ValueError(f"El Step ID `{normalized_step}` no existe en el canon.")
+
+    source_event = event_index.get(normalized_source)
+    if not source_event or str(source_event.get("event_type", "")).strip() != "conversation_source_registered":
+        raise ValueError(f"`{normalized_source}` no existe como evento `conversation_source_registered` en el canon.")
+    payload = source_event.get("payload", {})
+    transcript_path = str(payload.get("transcript_path", "")).strip()
+    transcript_hash = str(payload.get("transcript_sha256", "")).strip()
+    quoted_text = str(payload.get("quoted_text", "")).strip()
+    if not transcript_path or not transcript_hash or not quoted_text:
+        raise ValueError(f"`{normalized_source}` no está corroborado: faltan campos de evidencia fuente.")
+
+    verification = verify_conversation_source_for_step(normalized_step, events, require_local=False)
+    if verification["repo_errors"]:
+        details = "; ".join(verification["repo_errors"])
+        raise ValueError(f"El Step ID `{normalized_step}` no pasa verificación repo: {details}")
+    linked_source = str(verification.get("source_event_id", "")).strip()
+    if linked_source != normalized_source:
+        raise ValueError(
+            f"El Step ID `{normalized_step}` está enlazado a `{linked_source or 'N/A'}` y no a `{normalized_source}`."
+        )
+
+
 def human_operability_errors() -> list[str]:
     errors: list[str] = []
     for rel_path, markers in HUMAN_OPERATION_MARKERS.items():
@@ -819,6 +898,40 @@ def cmd_source_status(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_signoff_sync(args: argparse.Namespace) -> int:
+    events = ensure_canon_initialized()
+    try:
+        validate_signoff_sync_context(step_id=args.step_id, source_event_id=args.source_event_id, events=events)
+    except ValueError as exc:
+        print(f"[ERROR] {exc}")
+        return 1
+
+    wiki = load_yaml_json("00_sistema_tesis/config/wiki.yaml")
+    candidates = discover_wiki_direct_source_files(wiki)
+    signoffs = load_yaml_json("00_sistema_tesis/config/sign_offs.json").get("sign_offs", [])
+    signoff_index = build_signoff_hash_index(signoffs)
+    current_hashes = {path: file_sha256(path) for path in candidates}
+    to_sign, up_to_date = classify_signoff_sync_targets(candidates, signoff_index, current_hashes)
+
+    print("SIGNOFF: SYNC")
+    print(f"- Step ID: {args.step_id}")
+    print(f"- Source EVT: {args.source_event_id}")
+    print(f"- Session ID: {args.session_id}")
+    print(f"- Candidatos directos: {len(candidates)}")
+    print(f"- Vigentes: {len(up_to_date)}")
+    print(f"- Drift a firmar: {len(to_sign)}")
+
+    if args.check:
+        for rel_path in to_sign:
+            print(f"- Drift: {rel_path}")
+        return 0
+
+    for rel_path in to_sign:
+        append_artifact_signed(rel_path=rel_path, comment=args.comment, session_id=args.session_id)
+        print(f"- Firmado: {rel_path}")
+    return 0
+
+
 def cmd_session_open(args: argparse.Namespace) -> int:
     ensure_canon_initialized()
     path, content = create_session_content(args.session_id)
@@ -980,6 +1093,19 @@ def build_parser() -> argparse.ArgumentParser:
     source_status.add_argument("--check", action="store_true")
     source_status.add_argument("--repo-only", action="store_true")
     source_status.set_defaults(func=cmd_source_status)
+
+    signoff = subparsers.add_parser("signoff")
+    signoff_subparsers = signoff.add_subparsers(dest="signoff_command", required=True)
+    signoff_sync = signoff_subparsers.add_parser("sync")
+    signoff_sync.add_argument("--step-id", required=True)
+    signoff_sync.add_argument("--source-event-id", required=True)
+    signoff_sync.add_argument("--session-id", required=True)
+    signoff_sync.add_argument("--check", action="store_true")
+    signoff_sync.add_argument(
+        "--comment",
+        default="Firma automática controlada en pre-push para fuente wiki directa con drift.",
+    )
+    signoff_sync.set_defaults(func=cmd_signoff_sync)
 
     session = subparsers.add_parser("session")
     session_subparsers = session.add_subparsers(dest="session_command", required=True)

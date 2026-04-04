@@ -81,4 +81,4 @@ Si una persona necesita entender rapidamente el sistema:
 3. Despues revisa el flujo operativo asociado.
 4. Finalmente distingue que partes son privadas y cuales son publicas.
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-04`._
