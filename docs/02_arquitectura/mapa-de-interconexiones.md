@@ -9,7 +9,7 @@
 ## Canales de datos
 - `desktop_workspace -> /srv/tesis/repo`: sincronizacion Git del repo canonico con `pull --ff-only`.
 - `desktop_workspace -> edge_iot`: contratos y artefactos explicitamente necesarios para despliegue o validacion.
-- `orange_pi_edge -> desktop_workspace`: logs, metricas, `outbox` y `spool` del dominio `edge_iot`.
+- `orange_pi_edge -> desktop_workspace`: logs, metricas, `outbox` y `spool` del dominio `edge_iot`, especialmente desde `/srv/tesis/intercambio/edge`.
 - Entre dominios locales de Orange Pi, el intercambio sigue limitado a `/srv/tesis/intercambio/...`.
 
 ## Perfiles operativos edge

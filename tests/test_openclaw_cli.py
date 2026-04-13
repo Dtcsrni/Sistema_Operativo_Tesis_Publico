@@ -5,9 +5,12 @@ import os
 import subprocess
 from pathlib import Path
 
+from common import preferred_python_executable
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CLI = ROOT / "runtime" / "openclaw" / "bin" / "openclaw_local.py"
+PYTHON_BIN = preferred_python_executable()
 
 
 def _write_domain_envs(tmp_path: Path) -> Path:
@@ -38,7 +41,7 @@ def test_openclaw_doctor_reports_domains_and_store(tmp_path: Path) -> None:
     Path(env["OPENCLAW_LOG_DIR"]).mkdir()
     Path(env["OPENCLAW_ENV_FILE"]).write_text("OPENCLAW_PORT=18789\n", encoding="utf-8")
     result = subprocess.run(
-        [".venv/bin/python.exe", str(CLI), "doctor"],
+        [PYTHON_BIN, str(CLI), "doctor"],
         cwd=ROOT,
         check=True,
         capture_output=True,
@@ -62,7 +65,7 @@ def test_openclaw_run_dry_run_creates_approval_for_mutation(tmp_path: Path) -> N
     env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
     result = subprocess.run(
         [
-            ".venv/bin/python.exe",
+            PYTHON_BIN,
             str(CLI),
             "ejecutar",
             "--simulacion",
@@ -111,7 +114,7 @@ def test_openclaw_run_blocks_when_serena_is_required_and_unavailable(tmp_path: P
     env["OPENCLAW_SERENA_TIMEOUT_MS"] = "300"
     result = subprocess.run(
         [
-            ".venv/bin/python.exe",
+            PYTHON_BIN,
             str(CLI),
             "ejecutar",
             "--id-tarea",
@@ -150,7 +153,7 @@ def test_openclaw_proposal_export_writes_draft_to_canon(tmp_path: Path) -> None:
     env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
     result_run = subprocess.run(
         [
-            ".venv/bin/python.exe",
+            PYTHON_BIN,
             str(CLI),
             "ejecutar",
             "--simulacion",
@@ -183,7 +186,7 @@ def test_openclaw_proposal_export_writes_draft_to_canon(tmp_path: Path) -> None:
 
     result_export = subprocess.run(
         [
-            ".venv/bin/python.exe",
+            PYTHON_BIN,
             str(CLI),
             "propuesta",
             "exportar",
@@ -214,7 +217,7 @@ def test_openclaw_prepare_validation_package_contains_canonical_commands(tmp_pat
     env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
     subprocess.run(
         [
-            ".venv/bin/python.exe",
+            PYTHON_BIN,
             str(CLI),
             "ejecutar",
             "--simulacion",
@@ -246,7 +249,7 @@ def test_openclaw_prepare_validation_package_contains_canonical_commands(tmp_pat
 
     result = subprocess.run(
         [
-            ".venv/bin/python.exe",
+            PYTHON_BIN,
             str(CLI),
             "propuesta",
             "preparar-validacion",
@@ -314,7 +317,7 @@ def test_openclaw_academic_literature_builds_packet_and_cache(tmp_path: Path) ->
 
     result = subprocess.run(
         [
-            ".venv/bin/python.exe",
+            PYTHON_BIN,
             str(CLI),
             "academico",
             "estado-del-arte",
@@ -395,7 +398,7 @@ def test_openclaw_academic_writing_materializes_parallel_outputs(tmp_path: Path)
 
     result = subprocess.run(
         [
-            ".venv/bin/python.exe",
+            PYTHON_BIN,
             str(CLI),
             "academico",
             "redaccion",
@@ -469,7 +472,7 @@ def test_openclaw_academic_export_proposal_includes_academic_metadata(tmp_path: 
     )
     subprocess.run(
         [
-            ".venv/bin/python.exe",
+            PYTHON_BIN,
             str(CLI),
             "academico",
             "metodologia",
@@ -500,7 +503,7 @@ def test_openclaw_academic_export_proposal_includes_academic_metadata(tmp_path: 
 
     result = subprocess.run(
         [
-            ".venv/bin/python.exe",
+            PYTHON_BIN,
             str(CLI),
             "academico",
             "exportar-propuesta",
@@ -537,7 +540,7 @@ def test_openclaw_provider_status_and_benchmark_reflect_local_runtimes(tmp_path:
     Path(env["OPENCLAW_ENV_FILE"]).write_text("OPENCLAW_PORT=18789\n", encoding="utf-8")
 
     status = subprocess.run(
-        [".venv/bin/python.exe", str(CLI), "proveedor", "estado"],
+        [PYTHON_BIN, str(CLI), "proveedor", "estado"],
         cwd=ROOT,
         check=True,
         capture_output=True,
@@ -545,7 +548,7 @@ def test_openclaw_provider_status_and_benchmark_reflect_local_runtimes(tmp_path:
         env=env,
     )
     benchmark = subprocess.run(
-        [".venv/bin/python.exe", str(CLI), "proveedor", "medir"],
+        [PYTHON_BIN, str(CLI), "proveedor", "medir"],
         cwd=ROOT,
         check=True,
         capture_output=True,
@@ -570,7 +573,7 @@ def test_openclaw_gateway_preflight_fails_without_env_file(tmp_path: Path) -> No
     Path(env["OPENCLAW_DATA_DIR"]).mkdir(parents=True)
 
     result = subprocess.run(
-        [".venv/bin/python.exe", str(CLI), "pasarela", "preflight"],
+        [PYTHON_BIN, str(CLI), "pasarela", "preflight"],
         cwd=ROOT,
         capture_output=True,
         text=True,
@@ -588,7 +591,7 @@ def test_openclaw_secretos_estado_hides_values(tmp_path: Path) -> None:
     env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
 
     result = subprocess.run(
-        [".venv/bin/python.exe", str(CLI), "secretos", "estado"],
+        [PYTHON_BIN, str(CLI), "secretos", "estado"],
         cwd=ROOT,
         check=True,
         capture_output=True,
@@ -608,7 +611,7 @@ def test_openclaw_presupuesto_estado_y_simulacion(tmp_path: Path) -> None:
     env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
 
     status = subprocess.run(
-        [".venv/bin/python.exe", str(CLI), "presupuesto", "estado"],
+        [PYTHON_BIN, str(CLI), "presupuesto", "estado"],
         cwd=ROOT,
         check=True,
         capture_output=True,
@@ -617,7 +620,7 @@ def test_openclaw_presupuesto_estado_y_simulacion(tmp_path: Path) -> None:
     )
     simulate = subprocess.run(
         [
-            ".venv/bin/python.exe",
+            PYTHON_BIN,
             str(CLI),
             "presupuesto",
             "simular",
