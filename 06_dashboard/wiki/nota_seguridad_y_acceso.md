@@ -2,7 +2,7 @@
 
 Esta referencia existe para mantener navegable la superficie pública sin exponer artefactos privados o no publicados.
 
-- **Generado:** `2026-04-04`
+- **Generado:** `2026-04-13`
 - **Aviso:** Este bundle público es un artefacto derivado y curado editorialmente. No se corrige a mano; se reconstruye desde la base canónica.
 
 ## Qué significa este desvío
@@ -19,4 +19,4 @@ Esta referencia existe para mantener navegable la superficie pública sin expone
 - `wiki_html/index.html`
 - `dashboard/index.html`
 
-_Última actualización: `2026-04-04`._
+_Última actualización: `2026-04-13`._

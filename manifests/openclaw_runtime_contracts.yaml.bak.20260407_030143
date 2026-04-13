@@ -1,0 +1,49 @@
+{
+  "version": "1.0",
+  "contracts": [
+    {
+      "id": "TaskEnvelope",
+      "description": "Unidad mínima de intención operativa para enrutar, auditar y ejecutar una tarea."
+    },
+    {
+      "id": "ProviderDecision",
+      "description": "Resultado de ruteo con backend, clase de modelo, costo estimado y fallback."
+    },
+    {
+      "id": "EvidenceRecord",
+      "description": "Registro local de prompt, respuesta, contexto, costo y hash auditable."
+    },
+    {
+      "id": "ApprovalRequest",
+      "description": "Solicitud de gate humano antes de mutar estado, publicar o ejecutar acciones de riesgo."
+    },
+    {
+      "id": "DomainPolicy",
+      "description": "Política por dominio para backends permitidos, publicación y workspace."
+    },
+    {
+      "id": "AcademicWorkPacket",
+      "description": "Paquete académico común para estado del arte, metodología y redacción con trazabilidad."
+    },
+    {
+      "id": "LiteratureRecord",
+      "description": "Registro de literatura alineado al contrato mínimo de la matriz de estado del arte."
+    },
+    {
+      "id": "ClaimRecord",
+      "description": "Afirmación clasificada con fuentes, nivel de confianza, verificación e impacto en la tesis."
+    },
+    {
+      "id": "WritingDraft",
+      "description": "Borrador paralelo Markdown y LaTeX derivado de la misma estructura trazable."
+    },
+    {
+      "id": "RuntimeProbe",
+      "description": "Sondeo persistido del host, readiness de runtime y estado de despliegue local."
+    },
+    {
+      "id": "BenchmarkRecord",
+      "description": "Resultado persistido de benchmark local para Ollama y la vía NPU experimental."
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+HTTP START host=127.0.0.1 port=8766 endpoint=/mcp
+HTTP IN {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-11-25"}}
+HANDLE method=initialize id=1
+HTTP OUT {"jsonrpc": "2.0", "id": 1, "result": {"protocolVersion": "2025-11-25", "capabilities": {"tools": {}, "resources": {}}, "serverInfo": {"name": "serena-local", "version": "1.0.0"}, "instructions": "Serena MCP expone herramientas compactas y gobernadas para contexto, artefactos y cambios controlados."}}

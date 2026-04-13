@@ -1,0 +1,207 @@
+import json
+import sys
+import tempfile
+import unittest.mock as mock
+import unittest
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "07_scripts"))
+
+from serena_core import apply_controlled_change  # noqa: E402
+from serena_policy import classify_write_scope, preflight, validate_step_and_source  # noqa: E402
+
+
+def write_json(path: Path, payload: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def write_jsonl(path: Path, rows: list[dict]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("\n".join(json.dumps(row, ensure_ascii=False) for row in rows) + "\n", encoding="utf-8")
+
+
+def minimal_repo(repo: Path) -> None:
+    write_json(
+        repo / "00_sistema_tesis" / "config" / "agent_identity.json",
+        {
+            "agent_identity": {
+                "agent_role": "Codex (Assistant)",
+                "provider": "OpenAI",
+                "model_version": "GPT-5 Codex",
+                "runtime_label": "OpenAI Codex GPT-5",
+            }
+        },
+    )
+    write_json(
+        repo / "00_sistema_tesis" / "config" / "ia_gobernanza.yaml",
+        {
+            "evidencia_fuente_conversacion": {
+                "obligatoria_para_val_step_nuevo": True,
+                "activacion": {"desde_step_id": "VAL-STEP-501"},
+            }
+        },
+    )
+    write_json(
+        repo / "00_sistema_tesis" / "config" / "serena_mcp.json",
+        {
+            "server": {"name": "serena-local", "version": "1.0.0"},
+            "trace": {"path": "00_sistema_tesis/bitacora/audit_history/serena_mcp_operations.jsonl"},
+            "paths": {
+                "read_roots": ["00_sistema_tesis", "07_scripts", "docs"],
+                "derived_write_roots": ["06_dashboard/generado/", "00_sistema_tesis/bitacora/audit_history/"],
+                "derived_write_allowlist": ["00_sistema_tesis/config/ab_pilot_report.json"],
+                "controlled_write_roots": [".vscode/", "00_sistema_tesis/", "07_scripts/", "docs/"],
+            },
+            "tools": {
+                "governance.preflight": {
+                    "enabled": True,
+                    "description": "preflight",
+                    "risk_level": "ALTO",
+                    "write_scope": "read_only",
+                    "requires_step_id": False,
+                },
+                "canon.apply_controlled_change": {
+                    "enabled": True,
+                    "description": "apply",
+                    "risk_level": "ALTO",
+                    "write_scope": "controlled",
+                    "requires_step_id": True,
+                },
+                "canon.prepare_change": {
+                    "enabled": True,
+                    "description": "prepare",
+                    "risk_level": "ALTO",
+                    "write_scope": "controlled",
+                    "requires_step_id": False,
+                },
+            },
+        },
+    )
+    write_jsonl(
+        repo / "00_sistema_tesis" / "canon" / "events.jsonl",
+        [
+            {
+                "event_id": "EVT-0001",
+                "event_type": "conversation_source_registered",
+                "occurred_at": "2026-04-07 00:00:00",
+                "actor": {"type": "system", "id": "tesis-cli", "display_name": "tesis-cli"},
+                "session_id": "session-1",
+                "risk_level": "ALTO",
+                "links": {},
+                "payload": {"quoted_text": "PLEASE IMPLEMENT THIS PLAN:"},
+                "affected_files": [],
+                "human_validation": {"required": False},
+                "prev_event_hash": "INICIO",
+                "content_hash": "hash-1",
+            },
+            {
+                "event_id": "VAL-STEP-660",
+                "event_type": "human_validation",
+                "occurred_at": "2026-04-07 00:00:01",
+                "actor": {"type": "ai", "id": "OpenAI", "display_name": "OpenAI"},
+                "session_id": "session-1",
+                "risk_level": "ALTO",
+                "links": {},
+                "payload": {},
+                "affected_files": [],
+                "human_validation": {
+                    "required": True,
+                    "step_id": "VAL-STEP-660",
+                    "source_event_id": "EVT-0001",
+                },
+                "prev_event_hash": "hash-1",
+                "content_hash": "hash-2",
+            },
+        ],
+    )
+    write_json(repo / "00_sistema_tesis" / "config" / "integrity_manifest.json", {})
+
+
+class TestSerenaPolicy(unittest.TestCase):
+    def test_classify_write_scope(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            repo = Path(tmp_dir)
+            minimal_repo(repo)
+            protected = repo / "docs" / "protegido.md"
+            protected.parent.mkdir(parents=True, exist_ok=True)
+            protected.write_text("<!-- SISTEMA_TESIS:PROTEGIDO -->\ntexto\n", encoding="utf-8")
+
+            self.assertEqual(classify_write_scope("06_dashboard/generado/demo.md", repo), "derived")
+            self.assertEqual(classify_write_scope("docs/protegido.md", repo), "protected")
+            self.assertEqual(classify_write_scope("07_scripts/demo.py", repo), "controlled")
+            self.assertEqual(classify_write_scope("tmp/demo.txt", repo), "blocked")
+
+    def test_validate_step_and_source(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            repo = Path(tmp_dir)
+            minimal_repo(repo)
+            self.assertEqual(
+                validate_step_and_source(step_id="VAL-STEP-660", source_event_id="EVT-0001", root=repo),
+                [],
+            )
+            self.assertTrue(
+                validate_step_and_source(step_id="VAL-STEP-660", source_event_id="", root=repo)
+            )
+
+    def test_preflight_blocks_protected_without_step(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            repo = Path(tmp_dir)
+            minimal_repo(repo)
+            protected = repo / "docs" / "protegido.md"
+            protected.parent.mkdir(parents=True, exist_ok=True)
+            protected.write_text("<!-- SISTEMA_TESIS:PROTEGIDO -->\ntexto\n", encoding="utf-8")
+
+            result = preflight(
+                tool_name="canon.apply_controlled_change",
+                target_paths=["docs/protegido.md"],
+                root=repo,
+            )
+            self.assertEqual(result["status"], "blocked")
+
+    def test_apply_controlled_change_creates_backup(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            repo = Path(tmp_dir)
+            minimal_repo(repo)
+            target = repo / "00_sistema_tesis" / "config" / "demo.json"
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text('{"ok": false}\n', encoding="utf-8")
+
+            result = apply_controlled_change(
+                path="00_sistema_tesis/config/demo.json",
+                new_content='{"ok": true}\n',
+                step_id="VAL-STEP-660",
+                source_event_id="EVT-0001",
+                intent="Actualizar configuración de prueba",
+                root=repo,
+            )
+
+            self.assertEqual(result["path"], "00_sistema_tesis/config/demo.json")
+            backup_dir = repo / "config" / "backups"
+            self.assertTrue(any(backup_dir.iterdir()))
+
+    def test_apply_controlled_change_uses_incremental_manifest_update(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            repo = Path(tmp_dir)
+            minimal_repo(repo)
+            target = repo / "00_sistema_tesis" / "config" / "demo.json"
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text('{"ok": false}\n', encoding="utf-8")
+
+            with mock.patch("serena_core.update_manifest_for_path") as incremental:
+                apply_controlled_change(
+                    path="00_sistema_tesis/config/demo.json",
+                    new_content='{"ok": true}\n',
+                    step_id="VAL-STEP-660",
+                    source_event_id="EVT-0001",
+                    intent="Actualizar configuración de prueba",
+                    root=repo,
+                )
+
+            incremental.assert_called_once_with("00_sistema_tesis/config/demo.json", repo)
+
+
+if __name__ == "__main__":
+    unittest.main()

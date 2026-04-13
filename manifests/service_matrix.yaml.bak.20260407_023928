@@ -1,0 +1,41 @@
+{
+  "version": "1.0",
+  "servicios": [
+    {
+      "id": "tesis-healthcheck",
+      "tipo": "systemd_timer",
+      "criticidad": "media",
+      "comando": "systemctl start tesis-healthcheck.service",
+      "dependencias": [
+        "network-online.target"
+      ]
+    },
+    {
+      "id": "tesis-backup",
+      "tipo": "systemd_timer",
+      "criticidad": "alta",
+      "comando": "systemctl start tesis-backup.service",
+      "dependencias": [
+        "mnt-emmc.mount"
+      ]
+    },
+    {
+      "id": "tesis-sync",
+      "tipo": "systemd_timer",
+      "criticidad": "media",
+      "comando": "systemctl start tesis-sync.service",
+      "dependencias": [
+        "network-online.target"
+      ]
+    },
+    {
+      "id": "openclaw-gateway",
+      "tipo": "systemd_service",
+      "criticidad": "opcional",
+      "comando": "systemctl start openclaw-gateway.service",
+      "dependencias": [
+        "network-online.target"
+      ]
+    }
+  ]
+}

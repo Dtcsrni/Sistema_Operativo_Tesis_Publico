@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_ROOT="${REPO_ROOT:-/srv/tesis/repo}"
+SYNC_REMOTE="${SYNC_REMOTE:-origin}"
+SYNC_BRANCH="${SYNC_BRANCH:-main}"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
+
+git -C "${REPO_ROOT}" fetch "${SYNC_REMOTE}" "${SYNC_BRANCH}" --prune
+git -C "${REPO_ROOT}" checkout "${SYNC_BRANCH}"
+git -C "${REPO_ROOT}" pull --ff-only "${SYNC_REMOTE}" "${SYNC_BRANCH}"
+
+"${PYTHON_BIN}" "${REPO_ROOT}/07_scripts/tesis.py" audit --check
+bash "${REPO_ROOT}/bootstrap/orangepi/90_postcheck.sh"
+
+echo "EDGE_REPO_SYNC_OK:${SYNC_BRANCH}"

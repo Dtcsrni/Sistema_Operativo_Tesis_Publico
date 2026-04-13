@@ -164,7 +164,7 @@ class TestGovernanceGate(unittest.TestCase):
         checks = checks_for_stage("ci")
         test_check = next(item for item in checks if item[0] == "Pruebas")
         self.assertEqual(test_check[1][0], preferred_python_executable())
-        self.assertEqual(test_check[1][1:], ["-m", "pytest", "-q"])
+        self.assertEqual(test_check[1][1:], ["-m", "pytest", "-q", "-s"])
 
     def test_ci_checks_include_public_downstream_verification(self):
         checks = checks_for_stage("ci")

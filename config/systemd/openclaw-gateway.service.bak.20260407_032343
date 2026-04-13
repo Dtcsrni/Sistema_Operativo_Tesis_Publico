@@ -1,0 +1,19 @@
+[Unit]
+Description=OpenClaw Gateway opcional del Sistema Operativo de Tesis
+After=network-online.target
+Wants=network-online.target
+ConditionPathExists=/srv/tesis/repo/runtime/openclaw/wrappers/openclaw-gateway.sh
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/tesis-os/openclaw.env
+ExecStartPre=/bin/bash -lc '/srv/tesis/repo/runtime/openclaw/wrappers/openclaw-preflight.sh'
+ExecStart=/bin/bash -lc '/srv/tesis/repo/runtime/openclaw/wrappers/openclaw-gateway.sh'
+Restart=always
+RestartSec=5
+User=tesis
+Group=tesis
+WorkingDirectory=/srv/tesis/repo
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=Backup operacional del Sistema Operativo de Tesis
+After=mnt-emmc.mount
+RequiresMountsFor=/mnt/emmc/backups
+
+[Service]
+Type=oneshot
+WorkingDirectory=/srv/tesis/repo
+ExecStart=/bin/bash /srv/tesis/repo/ops/respaldo/ejecutar_respaldo.sh

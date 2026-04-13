@@ -1,0 +1,22 @@
+# Hardening de edge_iot
+
+Fuente maquina-legible: `manifests/edge_iot_hardening_policy.yaml`.
+
+## Objetivo
+Endurecer el host Orange Pi para el dominio `edge_iot` sin afectar `sistema_tesis` ni `openclaw`.
+
+## Controles base
+- `ufw` activo con `deny incoming` y `allow outgoing`.
+- `ssh` permitido como único ingreso por default en esta fase.
+- `fail2ban` activo con `sshd`.
+- `bluetooth.service` deshabilitado.
+- `root login` deshabilitado.
+- `PasswordAuthentication` deshabilitado.
+- `AllowTcpForwarding` y `AllowAgentForwarding` deshabilitados.
+
+## Límites
+- Este corte no crea todavía servicios `edge_iot`; eso corresponde a `T-032`.
+- Este corte no abre puertos de aplicación ni define unidades propias de `edge_iot`.
+- La comunicación con otros dominios sigue limitada a rutas de intercambio y CLI explícita.
+
+_Última actualización: `2026-04-13`._

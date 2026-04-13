@@ -1,0 +1,70 @@
+{
+  "version": "1.0",
+  "enforcement": "ownership_permissions_paths",
+  "allowed_channels": [
+    {
+      "id": "openclaw_drafts",
+      "source_domain": "openclaw",
+      "target_domain": "sistema_tesis",
+      "mechanism": "archivo_draft",
+      "verification": "filesystem_write_to_outbox"
+    },
+    {
+      "id": "openclaw_cli",
+      "source_domain": "sistema_tesis",
+      "target_domain": "openclaw",
+      "mechanism": "cli_explicita",
+      "verification": "cli_help_invocation"
+    },
+    {
+      "id": "edge_spool",
+      "source_domain": "edge_iot",
+      "target_domain": "sistema_tesis",
+      "mechanism": "spool_local",
+      "verification": "filesystem_write_to_spool"
+    }
+  ],
+  "denied_access": [
+    {
+      "id": "edge_to_openclaw_db",
+      "source_domain": "edge_iot",
+      "target_path": "/var/lib/herramientas/openclaw/openclaw.db",
+      "expected_result": "permission_denied_or_unreadable"
+    },
+    {
+      "id": "openclaw_to_edge_runtime",
+      "source_domain": "openclaw",
+      "target_path": "/var/lib/edge-iot/runtime",
+      "expected_result": "permission_denied_or_unreadable"
+    },
+    {
+      "id": "cross_workspace_reads",
+      "source_domain": "openclaw",
+      "target_path": "/srv/tesis/workspace/edge",
+      "expected_result": "permission_denied_or_unreadable"
+    },
+    {
+      "id": "cross_secret_read",
+      "source_domain": "edge_iot",
+      "target_path": "/etc/tesis-os/domains/academico.env",
+      "expected_result": "permission_denied_or_unreadable"
+    },
+    {
+      "id": "interdomain_http",
+      "source_domain": "edge_iot",
+      "target_path": "http://127.0.0.1:18789",
+      "expected_result": "http_denied_or_unavailable"
+    },
+    {
+      "id": "cross_domain_restore",
+      "source_domain": "administrativo",
+      "target_path": "restore_manifest_domain_mismatch",
+      "expected_result": "explicit_failure"
+    }
+  ],
+  "defaults": {
+    "allow_interdomain_http": false,
+    "allow_cross_workspace_reads": false,
+    "allow_cross_domain_sqlite": false
+  }
+}

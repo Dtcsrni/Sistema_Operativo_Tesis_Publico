@@ -4,3 +4,10 @@ python 07_scripts/tesis.py doctor --check
 bash tests/smoke/test_boot.sh
 bash tests/smoke/test_nvme.sh
 bash tests/smoke/test_emmc.sh
+bash tests/smoke/test_domain_isolation.sh
+bash tests/smoke/test_edge_hardening.sh
+bash tests/smoke/test_edge_service.sh
+bash tests/smoke/test_edge_resilience.sh
+bash tests/smoke/test_domain_backup.sh
+bash ops/seguridad/validar_integracion_entre_dominios.sh
+bash tests/smoke/test_observability_stack.sh

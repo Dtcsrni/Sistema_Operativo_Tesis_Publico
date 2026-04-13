@@ -1,0 +1,17 @@
+[Unit]
+Description=Sincronizacion publica sanitizada del Sistema Operativo de Tesis
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/srv/tesis/repo
+ExecStart=/bin/bash /srv/tesis/repo/ops/actualizacion/sync_publico.sh
+User=tesis
+Group=tesis
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+ReadOnlyPaths=/srv/tesis/repo
+ReadWritePaths=/srv/tesis/outputs /var/log/tesis-os

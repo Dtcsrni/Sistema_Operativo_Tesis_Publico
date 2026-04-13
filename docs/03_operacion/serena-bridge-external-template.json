@@ -1,0 +1,16 @@
+{
+  "servers": {
+    "serena-local-bridge": {
+      "type": "http",
+      "url": "https://<host>/mcp/serena",
+      "headers": {
+        "Authorization": "Bearer ${SERENA_BRIDGE_BEARER_TOKEN}",
+        "X-Sistema-Tesis-Agent-Role": "Compatible Host (Assistant)",
+        "X-Sistema-Tesis-Agent-Provider": "External Host",
+        "X-Sistema-Tesis-Agent-Model-Version": "Model Version",
+        "X-Sistema-Tesis-Agent-Runtime": "External MCP Runtime",
+        "X-Sistema-Tesis-Host-Kind": "external_runtime"
+      }
+    }
+  }
+}

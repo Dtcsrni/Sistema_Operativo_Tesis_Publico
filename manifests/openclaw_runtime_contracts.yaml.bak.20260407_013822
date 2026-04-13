@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "contracts": [
+    {
+      "id": "TaskEnvelope",
+      "description": "Unidad mínima de intención operativa para enrutar, auditar y ejecutar una tarea."
+    },
+    {
+      "id": "ProviderDecision",
+      "description": "Resultado de ruteo con backend, clase de modelo, costo estimado y fallback."
+    },
+    {
+      "id": "EvidenceRecord",
+      "description": "Registro local de prompt, respuesta, contexto, costo y hash auditable."
+    },
+    {
+      "id": "ApprovalRequest",
+      "description": "Solicitud de gate humano antes de mutar estado, publicar o ejecutar acciones de riesgo."
+    },
+    {
+      "id": "DomainPolicy",
+      "description": "Política por dominio para backends permitidos, publicación y workspace."
+    }
+  ]
+}

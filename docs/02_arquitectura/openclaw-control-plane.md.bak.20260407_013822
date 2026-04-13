@@ -1,0 +1,34 @@
+# OpenClaw Control Plane Local
+
+## Propósito
+`openclaw` opera como plano de control asistivo de `tesis-os`. No sustituye el canon ni los scripts oficiales del sistema de tesis.
+
+## Subsistemas
+- `control-plane`: CLI local, API del workspace y panel web.
+- `policy-engine`: ruteo por dominio, riesgo, sensibilidad y costo.
+- `evidence-engine`: persistencia local auditable con hashes SHA-256.
+- `provider-gateway`: adaptadores para local, web asistida y APIs formales.
+- `hardware-broker`: lectura controlada del host y de las capacidades de Orange Pi.
+
+## Límites duros
+- `openclaw` no valida por sí mismo decisiones ni `VAL-STEP-*`.
+- `openclaw` no publica directamente a superficies públicas.
+- `edge` y `administrativo` quedan local-first y sin nube por defecto.
+- El fallo de `openclaw` no detiene `tesis-os`.
+
+## Persistencia
+- Estado operativo local: SQLite.
+- Fuente de verdad canónica: archivos versionados del repositorio.
+- Evidencia: registros locales hashables y exportables para integración posterior al ledger en modo draft.
+
+## Interfaz inicial
+- CLI: `doctor`, `task new`, `task route`, `run --dry-run`, `approve`, `audit`, `session close`, `provider status`.
+- Web local: tablero de tareas, aprobaciones, costos, trazabilidad y estado del host.
+
+## Promoción a validación humana
+- `openclaw` puede exportar `openclaw_proposal` al canon.
+- `openclaw` puede preparar un paquete técnico de validación con pregunta crítica, `session_id`, `step_id` sugerido y comandos canónicos.
+- La promoción final a `VAL-STEP-*` ocurre únicamente mediante:
+  - evidencia fuente registrada (`conversation_source_registered`),
+  - coincidencia exacta entre `quoted_text` y `confirmation_text`,
+  - ejecución explícita de `tesis.py proposal finalize-openclaw`.

@@ -26,8 +26,18 @@
     "academico": {
       "preferencia": [
         "reglas_y_scripts_locales",
+        "modelos_locales_ligeros",
+        "proveedores_gratuitos",
         "proveedores_costo_intermedio",
         "modelos_premium"
+      ]
+    },
+    "profesional": {
+      "preferencia": [
+        "reglas_y_scripts_locales",
+        "modelos_locales_ligeros",
+        "proveedores_gratuitos",
+        "proveedores_costo_intermedio"
       ]
     },
     "hardware": {

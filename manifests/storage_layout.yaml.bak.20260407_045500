@@ -1,0 +1,113 @@
+{
+  "version": "1.0",
+  "objetivo": "Topologia NVMe/eMMC/microSD para Orange Pi 5 Plus",
+  "medios": {
+    "nvme": {
+      "rol": "rootfs_principal",
+      "montajes": [
+        "/",
+        "/home",
+        "/opt",
+        "/srv",
+        "/var"
+      ],
+      "contenido": [
+        "runtime",
+        "workspace_activo",
+        "logs_operativos",
+        "caches",
+        "openclaw_env",
+        "openclaw_cache",
+        "openclaw_logs"
+      ]
+    },
+    "emmc": {
+      "rol": "almacenamiento_secundario_inteligente",
+      "montajes": [
+        "/mnt/emmc/archive",
+        "/mnt/emmc/backups",
+        "/mnt/emmc/corpus",
+        "/mnt/emmc/datasets",
+        "/mnt/emmc/exports",
+        "/mnt/emmc/models",
+        "/mnt/emmc/snapshots"
+      ],
+      "contenido": [
+        "backups",
+        "corpus",
+        "datasets",
+        "historico",
+        "snapshots",
+        "modelos_locales"
+      ]
+    },
+    "microsd": {
+      "rol": "bootstrap_y_rescate",
+      "montajes": [
+        "/boot",
+        "medio_extraible_instalacion"
+      ],
+      "contenido": [
+        "imagen_instalacion",
+        "rescate",
+        "recovery"
+      ]
+    }
+  },
+  "politicas": {
+    "rootfs_en_nvme": true,
+    "escrituras_pesadas_fuera_de_microsd": true,
+    "datos_frios_preferentemente_en_emmc": true,
+    "rollback_manual_documentado": true,
+    "openclaw_namespace_separado": true,
+    "intercambio_interdominio_solo_por_rutas_explicitas": true
+  },
+  "dominios": {
+    "sistema_tesis": {
+      "workspace": "/srv/tesis/repo",
+      "estado": "/var/lib/tesis-os",
+      "logs": "/var/log/tesis-os"
+    },
+    "openclaw": {
+      "workspace": "/srv/tesis/workspace/openclaw",
+      "estado": "/var/lib/herramientas/openclaw",
+      "cache": "/var/cache/herramientas/openclaw",
+      "logs": "/var/log/openclaw",
+      "intercambio": "/srv/tesis/intercambio/openclaw"
+    },
+    "edge_iot": {
+      "workspace": "/srv/tesis/workspace/edge",
+      "estado": "/var/lib/edge-iot",
+      "logs": "/var/log/edge-iot",
+      "intercambio": "/srv/tesis/intercambio/edge"
+    },
+    "administrativo": {
+      "workspace": "/srv/tesis/workspace/admin",
+      "estado": "/var/lib/tesis-admin",
+      "logs": "/var/log/tesis-admin"
+    },
+    "personal": {
+      "workspace": "/srv/tesis/workspace/personal",
+      "persistente_como_servicio": false
+    }
+  },
+  "intercambio": {
+    "root": "/srv/tesis/intercambio",
+    "canales": [
+      "/srv/tesis/intercambio/openclaw/inbox",
+      "/srv/tesis/intercambio/openclaw/outbox",
+      "/srv/tesis/intercambio/openclaw/spool",
+      "/srv/tesis/intercambio/edge/inbox",
+      "/srv/tesis/intercambio/edge/outbox",
+      "/srv/tesis/intercambio/edge/spool"
+    ]
+  },
+  "openclaw": {
+    "estado": "/var/lib/herramientas/openclaw",
+    "cache": "/var/cache/herramientas/openclaw",
+    "logs": "/var/log/openclaw",
+    "env": "/etc/tesis-os/openclaw.env",
+    "ollama_models": "/mnt/emmc/models/ollama",
+    "rknn_llm_root": "/opt/tesis-os/vendor/rknn-llm"
+  }
+}

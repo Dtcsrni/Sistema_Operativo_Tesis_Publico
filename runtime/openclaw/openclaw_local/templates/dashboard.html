@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <style>
+    :root {
+      --bg: #f3efe6;
+      --surface: #fffaf2;
+      --ink: #1f2421;
+      --accent: #8a3b12;
+      --accent-soft: #e7c6b8;
+      --line: #d8c9b8;
+    }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: radial-gradient(circle at top right, #fce3d7, var(--bg) 40%);
+      color: var(--ink);
+    }
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    header {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .lead {
+      font-size: 1.05rem;
+      max-width: 72ch;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(31, 36, 33, 0.06);
+    }
+    h1, h2, h3 {
+      margin: 0;
+    }
+    ul {
+      padding-left: 18px;
+      margin: 12px 0 0;
+    }
+    .metric {
+      font-size: 1.75rem;
+      color: var(--accent);
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>{{ title }}</h1>
+      <p class="lead">
+        Panel local para auditoría, ruteo, aprobaciones y observabilidad de `openclaw`
+        como capa asistiva opcional del Sistema Operativo de Tesis.
+      </p>
+    </header>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Cola Operativa</h2>
+        <div class="metric">{{ store.tasks }}</div>
+        <p>Tareas registradas en la base local.</p>
+      </article>
+      <article class="card">
+        <h2>Aprobaciones</h2>
+        <div class="metric">{{ store.pending_approvals }}</div>
+        <p>Acciones pendientes de validación humana.</p>
+      </article>
+      <article class="card">
+        <h2>Evidencia</h2>
+        <div class="metric">{{ store.evidence_records }}</div>
+        <p>Registros auditables con hash persistidos.</p>
+      </article>
+      <article class="card">
+        <h2>Host</h2>
+        <div class="metric">{{ host.cpu_count }}</div>
+        <p>CPUs visibles para el broker de hardware.</p>
+      </article>
+      <article class="card">
+        <h2>Académico</h2>
+        <div class="metric">{{ store.academic_packets }}</div>
+        <p>Paquetes académicos persistidos para estado del arte, metodología y redacción.</p>
+      </article>
+      <article class="card">
+        <h2>Secretos</h2>
+        <div class="metric">{{ secret_status.missing_total or 0 }}</div>
+        <p>Faltantes detectados sin exponer valores sensibles.</p>
+      </article>
+      <article class="card">
+        <h2>Despliegue</h2>
+        <div class="metric">{{ runtime_status.state or "sin_dato" }}</div>
+        <p>Estado operativo actual del host Orange Pi y su runtime local.</p>
+      </article>
+      <article class="card">
+        <h2>Presupuesto</h2>
+        <div class="metric">{{ budget_status.global.daily.status or "sin_dato" }}</div>
+        <p>Estado diario del presupuesto global de nube.</p>
+      </article>
+    </section>
+
+    <section class="grid" style="margin-top: 16px;">
+      <article class="card">
+        <h3>Paneles previstos</h3>
+        <ul>
+          {% for panel in panels %}
+          <li>{{ panel }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+      <article class="card">
+        <h3>Proveedores</h3>
+        <ul>
+          {% for provider in providers %}
+          <li>{{ provider.id }} · {{ provider.mode }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+      <article class="card">
+        <h3>Memoria</h3>
+        <p>Total detectado: {{ host.memory.total_bytes }}</p>
+        <p>Ruta DB: {{ store.db_path }}</p>
+        <p>Runtime activo: {{ runtime_status.active_runtime or "local" }}</p>
+      </article>
+      <article class="card">
+        <h3>Secretos por dominio</h3>
+        <ul>
+          {% for domain, payload in secret_status.domains.items() %}
+          <li>{{ domain }} · red={{ payload.network_mode }} · proveedores={{ payload.providers | length }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+      <article class="card">
+        <h3>Paquetes recientes</h3>
+        <ul>
+          {% for packet in academic_packets %}
+          <li>{{ packet.mode }} · {{ packet.task_id }} · {{ packet.summary }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+      <article class="card">
+        <h3>Aprobaciones pendientes</h3>
+        <ul>
+          {% for approval in approvals %}
+          <li>{{ approval.task_id }} · {{ approval.step_id_expected }} · {{ approval.diff_summary }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+      <article class="card">
+        <h3>Preflight</h3>
+        <p>{{ preflight.status or "sin_dato" }}</p>
+      </article>
+      <article class="card">
+        <h3>Presupuesto global</h3>
+        <p>Acción: {{ budget_status.global.action or "sin_dato" }}</p>
+        <p>Diario: {{ budget_status.global.daily.status or "sin_dato" }}</p>
+        <p>Semanal: {{ budget_status.global.weekly.status or "sin_dato" }}</p>
+      </article>
+      <article class="card">
+        <h3>Presupuesto por dominio</h3>
+        <ul>
+          {% for domain, payload in budget_status.domains.items() %}
+          <li>{{ domain }} · {{ payload.action }} · diario={{ payload.daily.status }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+      <article class="card">
+        <h3>Costos recientes</h3>
+        <ul>
+          {% for item in billing_history %}
+          <li>{{ item.domain }} · {{ item.provider }} · {{ item.estimated_cost_usd }} USD · {{ item.billing_mode }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+    </section>
+      <footer class="public-update"><p>Última actualización: <strong>2026-04-13</strong></p></footer>
+  </main>
+</body>
+</html>

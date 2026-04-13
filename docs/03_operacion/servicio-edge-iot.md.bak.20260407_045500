@@ -1,0 +1,27 @@
+# Servicio `edge_iot`
+
+## Objetivo
+Operar un servicio genérico del dominio `edge_iot` sin acoplarlo todavía a una app específica.
+
+## Archivos operativos
+- Unidad: `config/systemd/edge-iot-worker.service`
+- Entorno: `/etc/tesis-os/edge-iot.env`
+- Wrapper de ejecución: `ops/edge/edge-iot-run.sh`
+- Preflight: `ops/edge/edge-iot-preflight.sh`
+- Healthcheck: `ops/edge/edge-iot-healthcheck.sh`
+
+## Operación mínima
+- Arranque: `systemctl start edge-iot-worker.service`
+- Estado: `systemctl status edge-iot-worker.service`
+- Healthcheck: `bash /srv/tesis/repo/ops/edge/edge-iot-healthcheck.sh`
+
+## Rutas permitidas
+- Estado: `/var/lib/edge-iot`
+- Logs: `/var/log/edge-iot`
+- Workspace: `/srv/tesis/workspace/edge`
+- Intercambio: `/srv/tesis/intercambio/edge`
+
+## Límites
+- No puede escribir en canon ni publicación.
+- No depende de `openclaw`, `ollama` ni timers del sistema base.
+- El healthcheck es por script local; no hay endpoint HTTP.

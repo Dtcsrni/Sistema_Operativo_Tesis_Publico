@@ -402,4 +402,4 @@ Archivo canónico de contexto para ingestión operativa en `Sistema_Operativo_Te
 ## Nota de integridad
 Este archivo resume contexto exhaustivamente consolidado, pero no sustituye la verificación manual de P0/P1 antes de sustentación ni la validación de citas APA 7 sobre las fuentes efectivamente usadas en el manuscrito final.
 
-_Última actualización: `2026-04-04`._
+_Última actualización: `2026-04-13`._

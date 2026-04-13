@@ -1,0 +1,22 @@
+@echo off
+setlocal
+
+set "WORKSPACE_DIR=%~dp0.."
+set "PYTHON_EXE=%WORKSPACE_DIR%\.venv\bin\python.exe"
+set "SERVER_SCRIPT=%WORKSPACE_DIR%\07_scripts\serena_mcp.py"
+
+if not exist "%PYTHON_EXE%" (
+  >&2 echo [serena-local] Python no encontrado: %PYTHON_EXE%
+  exit /b 1
+)
+
+if not exist "%SERVER_SCRIPT%" (
+  >&2 echo [serena-local] Script no encontrado: %SERVER_SCRIPT%
+  exit /b 1
+)
+
+set "SISTEMA_TESIS_ROOT=%WORKSPACE_DIR%"
+set "PYTHONUNBUFFERED=1"
+set "PYTHONUTF8=1"
+
+"%PYTHON_EXE%" -u "%SERVER_SCRIPT%"

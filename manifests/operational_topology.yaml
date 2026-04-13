@@ -1,0 +1,43 @@
+{
+  "version": "1.0",
+  "topology_id": "desktop_first_orange_pi_edge",
+  "primary_authoring_node": "desktop_vscode",
+  "edge_execution_node": "orange_pi",
+  "integration_mode": "git_and_artifacts",
+  "allowed_remote_operations": [
+    "git_sync",
+    "artefactos_generados",
+    "contratos_de_datos",
+    "logs_evidencia_edge",
+    "diagnostico_operativo_edge",
+    "hotfix_operativo_edge_trazado"
+  ],
+  "forbidden_remote_operations": [
+    "autoria_principal_tesis_en_orange_pi",
+    "edicion_arquitectonica_primaria_en_orange_pi",
+    "workspace_montado_por_red_como_flujo_normal"
+  ],
+  "node_roles": {
+    "desktop_workspace": {
+      "platform": "pc_escritorio",
+      "interface": "visual_studio_code",
+      "responsibilities": [
+        "autoria",
+        "diseno",
+        "analisis",
+        "construccion_documental",
+        "mantenimiento_repositorio_soberano"
+      ]
+    },
+    "orange_pi_edge": {
+      "platform": "orange_pi_5_plus",
+      "responsibilities": [
+        "edge_iot",
+        "observabilidad_local",
+        "pruebas_tecnicas_locales",
+        "control_stack_iot",
+        "diagnostico_en_campo"
+      ]
+    }
+  }
+}

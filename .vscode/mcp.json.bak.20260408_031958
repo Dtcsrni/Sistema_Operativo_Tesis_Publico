@@ -1,0 +1,28 @@
+{
+  "servers": {
+    "serena-local": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "${workspaceFolder}\\.vscode\\serena-local.cmd"
+      ],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "SERENA_MCP_DEBUG_LOG": "${workspaceFolder}/00_sistema_tesis/bitacora/audit_history/serena_mcp_debug.log",
+        "SISTEMA_TESIS_ROOT": "${workspaceFolder}"
+      },
+      "dev": {
+        "watch": [
+          ".vscode/mcp.json",
+          ".vscode/serena-local.cmd",
+          "07_scripts/**/*.py",
+          "00_sistema_tesis/config/**/*.json",
+          "00_sistema_tesis/config/**/*.yaml",
+          "00_sistema_tesis/documentacion_sistema/**/*.md",
+          "docs/**/*.md"
+        ]
+      }
+    }
+  }
+}

@@ -68,4 +68,4 @@ Continuar con la validación de la wiki y el bundle público sanitizado bajo el 
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-04`._
+_Última actualización: `2026-04-13`._

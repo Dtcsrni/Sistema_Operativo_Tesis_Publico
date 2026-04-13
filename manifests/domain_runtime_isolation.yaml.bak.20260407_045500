@@ -1,0 +1,56 @@
+{
+  "version": "1.0",
+  "baseline": "mixto_fuerte",
+  "dominios": {
+    "sistema_tesis": {
+      "usuario": "tesis",
+      "grupo": "tesis",
+      "servicios": ["tesis-healthcheck", "tesis-sync"],
+      "rutas_read_only": ["/srv/tesis/repo"],
+      "rutas_read_write": ["/var/log/tesis-os", "/srv/tesis/outputs"],
+      "secretos": ["/etc/tesis-os/openclaw.env"],
+      "network_profile": "salida_minima"
+    },
+    "openclaw": {
+      "usuario": "openclaw",
+      "grupo": "openclaw",
+      "servicios": ["openclaw-gateway", "ollama", "rknn-llm-experimental"],
+      "rutas_read_only": ["/srv/tesis/repo", "/etc/tesis-os/openclaw.env", "/etc/tesis-os/domains"],
+      "rutas_read_write": [
+        "/var/lib/herramientas/openclaw",
+        "/var/cache/herramientas/openclaw",
+        "/var/log/openclaw",
+        "/srv/tesis/intercambio/openclaw"
+      ],
+      "secretos": ["/etc/tesis-os/openclaw.env", "/etc/tesis-os/domains/academico.env", "/etc/tesis-os/domains/profesional.env"],
+      "network_profile": "egress_controlado_localhost_in"
+    },
+    "edge_iot": {
+      "usuario": "edgeiot",
+      "grupo": "edgeiot",
+      "servicios": ["edge-iot-worker"],
+      "rutas_read_only": [],
+      "rutas_read_write": ["/var/lib/edge-iot", "/var/log/edge-iot", "/srv/tesis/workspace/edge", "/srv/tesis/intercambio/edge"],
+      "secretos": ["/etc/tesis-os/domains/edge.env"],
+      "network_profile": "edge_restringido"
+    },
+    "administrativo": {
+      "usuario": "tesisadmin",
+      "grupo": "tesisadmin",
+      "servicios": ["tesis-backup"],
+      "rutas_read_only": ["/srv/tesis/repo", "/var/lib/tesis-os", "/var/lib/herramientas/openclaw"],
+      "rutas_read_write": ["/mnt/emmc/backups", "/var/log/tesis-admin"],
+      "secretos": ["/etc/tesis-os/domains/administrativo.env"],
+      "network_profile": "sin_nube"
+    },
+    "personal": {
+      "usuario": "personal",
+      "grupo": "personal",
+      "servicios": [],
+      "rutas_read_only": [],
+      "rutas_read_write": ["/srv/tesis/workspace/personal"],
+      "secretos": ["/etc/tesis-os/domains/personal.env"],
+      "network_profile": "offline_logico"
+    }
+  }
+}

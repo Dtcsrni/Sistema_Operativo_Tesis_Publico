@@ -1,0 +1,84 @@
+<!-- SISTEMA_TESIS:PROTEGIDO -->
+# Matriz de Trazabilidad Maestra (Índice de Integridad)
+
+Este archivo es el índice central de todas las validaciones de soberanía humana y trazabilidad técnica en el sistema operativo de la tesis.
+
+## Estado General de Integridad
+- [x] Firma GPG de Infraestructura
+- [x] Verificación de Ledger (Libro Mayor)
+- [x] Consistencia de Matriz
+- [/] Cadena de Bitácoras (En proceso de mejora)
+
+## Registro de Validaciones de Soberanía (Handshake)
+
+| Fecha | Step ID | Referencia | Intención / Resumen del Cambio | Nivel de Riesgo | Alineación Ética | Estado | Evidencia (Ledger) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 2026-03-24 | [VAL-STEP-210] | [DEC-0014] | Definición de soberanía humana estricta | CRÍTICO | Transparencia (NIST) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-210) |
+| 2026-03-24 | [VAL-STEP-278] | [DEC-0014] | Aprobación de pre-checklists y handshakes | ALTO | Responsabilidad (UNESCO) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-278) |
+| 2026-03-24 | [VAL-STEP-300] | [WIKI-AUD] | Auditoría de funcionalidad y estado de wiki | MEDIO | Transparencia (NIST) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-300) |
+| 2026-03-24 | [VAL-STEP-305] | [GOV-FIX] | Rectificación de diagnóstico de red y audit | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-305) |
+| 2026-03-24 | [VAL-STEP-380] | [BIT-IMP] | Mejora del sistema de bitácora y cadena | ALTO | Integridad (UNESCO) | [/] En curso | [Log](log_conversaciones_ia.md#val-step-380) |
+| 2026-03-24 | [VAL-STEP-400] | [BIT-DIAG] | Análisis de preparación arquitectónica | MEDIO | Transparencia (NIST) | [/] Producido | [Log](log_conversaciones_ia.md#val-step-400) |
+| 2026-03-26 | [VAL-STEP-410] | [DEC-0014] | Instrucción explícita para implementar el governance gate agnóstico de agente | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-410) |
+| 2026-03-26 | [VAL-STEP-420] | [DEC-0014] | Política general para prohibir hardcodes operativos y de trazabilidad | ALTO | Integridad (UNESCO) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-420) |
+| 2026-03-26 | [VAL-STEP-430] | [DEC-0014] | Cierre estricto de la conversación con bitácora diaria, hooks locales, auditoría final y commit firmado | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-430) |
+| 2026-03-26 | [VAL-STEP-440] | [DEC-0014] | Corrección del governance gate para no confundir referencias de cadena con el Step ID principal del diff protegido | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-440) |
+| 2026-03-26 | [VAL-STEP-450] | [DEC-0014] | Corrección de política del governance gate para permitir múltiples Step IDs válidos en `pre-push` y `ci` | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-450) |
+| 2026-03-26 | [VAL-STEP-460] | [DEC-0016] | Implementación autorizada del rediseño v2 con canon unificado, CLI canónica y gate centrado en eventos | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-460) |
+| 2026-03-26 | [VAL-STEP-470] | [DEC-0017] | Implementación autorizada del modelo humano primero, publicación sanitizada y simplificación operativa | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-470) |
+| 2026-03-26 | [VAL-STEP-480] | [DEC-0017] | Cierre trazable de la conversación con bitácora, auditoría final y relevo preparado para siguiente sesión | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-480) |
+| 2026-03-26 | [VAL-STEP-490] | [DEC-0014] | Refuerzo de prechecks y confirmación verbal canónica | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-490) |
+| 2026-03-26 | [VAL-STEP-500] | [DEC-0018] | Implementación de evidencia fuente de conversación Codex para confirmación verbal | ALTO | Responsabilidad (ISO 42001) + trazabilidad científica fuerte | [x] Validado | [Log](log_conversaciones_ia.md#val-step-500) |
+| 2026-03-26 | [VAL-STEP-510] | [DEC-0018] | Ingestión canónica del paquete IoT v10 ejecutada con staging, trazabilidad y registro maestro. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-510) |
+| 2026-03-26 | [VAL-STEP-520] | [DEC-0014] | Implementación autorizada de la reestructura integral de documentación del Sistema Operativo de Tesis | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-520) |
+| 2026-03-26 | [VAL-STEP-530] | [DEC-0014] | Implementación autorizada del cierre de pendientes secundarios de la reestructura documental | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-530) |
+| 2026-03-27 | [VAL-STEP-540] | [DEC-0014] | Implementación autorizada del sistema de terminología, convenciones e identificadores | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-540) |
+| 2026-03-27 | [VAL-STEP-550] | [DEC-0014] | Mejora de navegación y trazabilidad hacia orígenes canónicos | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-550) |
+| 2026-03-27 | [VAL-STEP-560] | [DEC-0018] | Corrección autorizada del mapeo de evidencia para VAL-STEP-540 hacia interacción real y prompts relacionados | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-560) |
+| 2026-03-27 | [VAL-STEP-570] | [DEC-0018] | Normalización global autorizada de evidencias mínimas o descontextualizadas | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-570) |
+| 2026-03-27 | [VAL-STEP-580] | [DEC-0017] | Implementación autorizada de la migración arquitectónica integral del Sistema Operativo de Tesis | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-580) |
+| 2026-03-27 | [VAL-STEP-590] | [DEC-0021] | Implementación autorizada del cierre de pendientes de publicación downstream, gobernanza Git y CI/CD | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-590) |
+| 2026-04-01 | [VAL-STEP-600] | [WIKI-MOD] | Modernización visual y guardrails de trazabilidad | ALTO | Transparencia (NIST) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-600) |
+| 2026-04-01 | [VAL-STEP-610] | [B0-CLOSE] | Cierre de B0 y habilitación de IA en hardware | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-610) |
+| 2026-04-01 | [VAL-STEP-620] | [B1-INIT] | Transición formal a fase B1 y análisis inicial | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-620) |
+| 2026-04-01 | [VAL-STEP-630] | [DEC-0014] | Cierre de trazabilidad de la conversación actual solicitado por el tesista | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-630) |
+| 2026-04-02 | [VAL-STEP-640] | [DEC-0014] | Regularización de trazabilidad para actividades recientes posteriores a VAL-STEP-630 | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-640) |
+| 2026-04-04 | [VAL-STEP-650] | [DEC-0014] | Registro integral de avances pendientes con trazabilidad canónica y evidencia fuente. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-650) |
+
+---
+**Navegación:**
+- [Volver al Inicio](../../README.md)
+- [Consultar Libro Mayor](log_conversaciones_ia.md)
+- [Auditoría del Sistema](../../06_dashboard/generado/reporte_consistencia.md)
+
+[VAL-STEP-210]: log_conversaciones_ia.md#val-step-210
+[VAL-STEP-278]: log_conversaciones_ia.md#val-step-278
+[VAL-STEP-300]: log_conversaciones_ia.md#val-step-300
+[VAL-STEP-305]: log_conversaciones_ia.md#val-step-305
+[VAL-STEP-380]: log_conversaciones_ia.md#val-step-380
+[VAL-STEP-400]: log_conversaciones_ia.md#val-step-400
+[VAL-STEP-410]: log_conversaciones_ia.md#val-step-410
+[VAL-STEP-420]: log_conversaciones_ia.md#val-step-420
+[VAL-STEP-430]: log_conversaciones_ia.md#val-step-430
+[VAL-STEP-440]: log_conversaciones_ia.md#val-step-440
+[VAL-STEP-450]: log_conversaciones_ia.md#val-step-450
+[VAL-STEP-460]: log_conversaciones_ia.md#val-step-460
+[VAL-STEP-470]: log_conversaciones_ia.md#val-step-470
+[VAL-STEP-480]: log_conversaciones_ia.md#val-step-480
+[VAL-STEP-490]: log_conversaciones_ia.md#val-step-490
+[VAL-STEP-500]: log_conversaciones_ia.md#val-step-500
+[VAL-STEP-510]: log_conversaciones_ia.md#val-step-510
+[VAL-STEP-520]: log_conversaciones_ia.md#val-step-520
+[VAL-STEP-530]: log_conversaciones_ia.md#val-step-530
+[VAL-STEP-540]: log_conversaciones_ia.md#val-step-540
+[VAL-STEP-550]: log_conversaciones_ia.md#val-step-550
+[VAL-STEP-560]: log_conversaciones_ia.md#val-step-560
+[VAL-STEP-570]: log_conversaciones_ia.md#val-step-570
+[VAL-STEP-580]: log_conversaciones_ia.md#val-step-580
+[VAL-STEP-590]: log_conversaciones_ia.md#val-step-590
+[VAL-STEP-600]: log_conversaciones_ia.md#val-step-600
+[VAL-STEP-610]: log_conversaciones_ia.md#val-step-610
+[VAL-STEP-620]: log_conversaciones_ia.md#val-step-620
+[VAL-STEP-630]: log_conversaciones_ia.md#val-step-630
+[VAL-STEP-640]: log_conversaciones_ia.md#val-step-640
+[VAL-STEP-650]: log_conversaciones_ia.md#val-step-650

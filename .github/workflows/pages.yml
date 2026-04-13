@@ -1,4 +1,4 @@
-name: deploy-public-site
+name: desplegar-sitio-publico
 
 on:
   push:
@@ -12,11 +12,11 @@ permissions:
   id-token: write
 
 jobs:
-  upstream-disabled:
+  publicacion-desactivada-en-origen:
     if: github.repository != 'Dtcsrni/Sistema_Operativo_Tesis_Publico'
     runs-on: ubuntu-latest
     steps:
-      - name: Confirm upstream publication is disabled
+      - name: Confirmar que la publicación en origen está desactivada
         run: echo "GitHub Pages solo se despliega desde Dtcsrni/Sistema_Operativo_Tesis_Publico."
 
   deploy:
@@ -27,24 +27,24 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Python
+      - name: Configurar Python
         uses: actions/setup-python@v6
         with:
           python-version: "3.14"
 
-      - name: Install dependencies
+      - name: Instalar dependencias
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
 
-      - name: Validate public projection before deploy
+      - name: Validar proyección pública antes del despliegue
         run: |
           python 07_scripts/sync_public_repo.py --mode mirror --target-dir "$RUNNER_TEMP/public-sync-check" --branch main --skip-local-mirror --check --allow-dirty
 
-      - name: Build public site
+      - name: Construir sitio público
         run: mkdocs build
 
-      - name: Deploy public site
+      - name: Desplegar sitio público
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

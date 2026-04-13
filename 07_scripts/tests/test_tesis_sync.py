@@ -7,12 +7,14 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
 
 from tesis import (  # noqa: E402
+    build_openclaw_validation_package,
     build_signoff_hash_index,
     classify_patches_by_step,
     classify_signoff_sync_targets,
     classify_sync_paths,
     discover_wiki_direct_source_files,
     parse_porcelain_paths,
+    resolve_openclaw_validation_context,
     validate_signoff_sync_context,
 )
 
@@ -172,6 +174,63 @@ diff --git a/a b/b
             },
         ]
         validate_signoff_sync_context(step_id="VAL-STEP-640", source_event_id="EVT-0099", events=events)
+
+    def test_build_openclaw_validation_package_uses_expected_step(self):
+        events = [
+            {
+                "event_id": "EVT-0200",
+                "event_type": "openclaw_proposal",
+                "session_id": "openclaw-proposal-session",
+                "links": {"reference": "[DEC-0020]"},
+                "payload": {
+                    "proposal_id": "OCP-0200",
+                    "task_id": "TASK-0200",
+                    "title": "Arquitectura OpenClaw",
+                    "domain": "academico",
+                    "objective": "Proponer flujo validable",
+                    "approval": {"step_id_expected": "VAL-STEP-910"},
+                },
+            }
+        ]
+        package = build_openclaw_validation_package("EVT-0200", session_id="openclaw-validate-1", events=events)
+        self.assertEqual(package["step_id"], "VAL-STEP-910")
+        self.assertIn("source scaffold", package["commands"]["scaffold"])
+        self.assertIn("finalize-openclaw", package["commands"]["finalize"])
+
+    def test_resolve_openclaw_validation_context_rejects_mismatched_quote(self):
+        events = [
+            {
+                "event_id": "EVT-0200",
+                "event_type": "openclaw_proposal",
+                "session_id": "openclaw-proposal-session",
+                "links": {"reference": "[DEC-0020]"},
+                "payload": {
+                    "proposal_id": "OCP-0200",
+                    "task_id": "TASK-0200",
+                    "title": "Arquitectura OpenClaw",
+                    "domain": "academico",
+                    "objective": "Proponer flujo validable",
+                    "approval": {"step_id_expected": "VAL-STEP-910"},
+                },
+            },
+            {
+                "event_id": "EVT-0300",
+                "event_type": "conversation_source_registered",
+                "payload": {
+                    "quoted_text": "si autorizo",
+                    "transcript_path": "00_sistema_tesis/evidencia_privada/conversaciones_codex/demo/transcripcion.md",
+                    "transcript_sha256": "abc123",
+                },
+            },
+        ]
+        with self.assertRaises(ValueError):
+            resolve_openclaw_validation_context(
+                proposal_event_id="EVT-0200",
+                source_event_id="EVT-0300",
+                step_id="VAL-STEP-910",
+                confirmation_text="texto distinto",
+                events=events,
+            )
 
 
 if __name__ == "__main__":

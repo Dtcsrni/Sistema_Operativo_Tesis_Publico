@@ -1,0 +1,340 @@
+{
+  "catalogos_meta": {
+    "estados": [
+      "no_iniciado",
+      "activo",
+      "en_revision",
+      "bloqueado",
+      "cerrado"
+    ],
+    "prioridades": [
+      "baja",
+      "media",
+      "alta",
+      "critica"
+    ],
+    "tipos": [
+      "gobernanza",
+      "marco",
+      "diseno",
+      "modelado",
+      "simulacion",
+      "implementacion",
+      "experimental",
+      "analisis",
+      "redaccion",
+      "publicacion",
+      "cierre"
+    ],
+    "riesgo_cualitativo": [
+      "bajo",
+      "medio",
+      "alto"
+    ],
+    "nota_subbloques": "Los subbloques y tareas operativas se gestionan en 01_planeacion/backlog.csv"
+  },
+  "bloques": [
+    {
+      "id": "B0",
+      "nombre": "Gobierno del sistema de tesis y base operativa",
+      "descripcion": "Define estructura canónica, políticas operativas, flujos de actualización, dashboard inicial y mecanismos de validación del repositorio.",
+      "estado": "activo",
+      "prioridad": "critica",
+      "tipo": "gobernanza",
+      "dependencias": [],
+      "hipotesis_relacionadas": [],
+      "subbloques_en_backlog": true,
+      "entregables": [
+        "ENT-001",
+        "ENT-002",
+        "ENT-013"
+      ],
+      "criterio_salida": "Existe una base operativa funcional con validadores, dashboard generado, plantillas y README de retoma rápida, además de separación verificable entre sistema_tesis edge_iot y openclaw en Orange Pi.",
+      "riesgo_principal": "alto",
+      "notas": "Bloque habilitador. Su cierre reduce fricción cognitiva y desalineación documental.",
+      "catalogos_meta": {
+        "foco": "trazabilidad_y_bajo_rozamiento"
+      }
+    },
+    {
+      "id": "B1",
+      "nombre": "Delimitación del problema y contexto de Pachuca",
+      "descripcion": "Acota el problema, define el caso de estudio, fija supuestos de intermitencia urbana y establece alcance espacial, funcional y metodológico.",
+      "estado": "no_iniciado",
+      "prioridad": "alta",
+      "tipo": "marco",
+      "dependencias": [
+        "B0"
+      ],
+      "hipotesis_relacionadas": [
+        "H6"
+      ],
+      "subbloques_en_backlog": true,
+      "entregables": [
+        "ENT-003"
+      ],
+      "criterio_salida": "Existe una definición trazable del caso de estudio y de los supuestos urbanos/intermitentes que alimentan diseño y simulación.",
+      "riesgo_principal": "medio",
+      "notas": "Evitar sobreprometer representatividad urbana total; centrarse en escenarios relevantes.",
+      "catalogos_meta": {
+        "foco": "alcance_y_contexto"
+      }
+    },
+    {
+      "id": "B2",
+      "nombre": "Diseño de arquitectura y formulación de hipótesis",
+      "descripcion": "Formaliza la arquitectura propuesta, la línea base de comparación, las hipótesis específicas y el mapa de decisiones técnicas.",
+      "estado": "no_iniciado",
+      "prioridad": "critica",
+      "tipo": "diseno",
+      "dependencias": [
+        "B0",
+        "B1"
+      ],
+      "hipotesis_relacionadas": [
+        "HG",
+        "H1",
+        "H2",
+        "H3"
+      ],
+      "subbloques_en_backlog": true,
+      "entregables": [
+        "ENT-004"
+      ],
+      "criterio_salida": "La arquitectura objetivo, la línea base, los flujos críticos y las hipótesis quedan definidos con métricas y criterios de soporte.",
+      "riesgo_principal": "alto",
+      "notas": "Bloque central para evitar ambigüedad entre innovación real y ensamblaje de prácticas conocidas.",
+      "catalogos_meta": {
+        "foco": "arquitectura_y_variables"
+      }
+    },
+    {
+      "id": "B3",
+      "nombre": "Modelo de control y métricas de desempeño",
+      "descripcion": "Traduce objetivos de resiliencia y control a métricas medibles, escenarios de carga y restricciones operativas.",
+      "estado": "no_iniciado",
+      "prioridad": "alta",
+      "tipo": "modelado",
+      "dependencias": [
+        "B2"
+      ],
+      "hipotesis_relacionadas": [
+        "HG",
+        "H3",
+        "H4"
+      ],
+      "subbloques_en_backlog": true,
+      "entregables": [
+        "ENT-005"
+      ],
+      "criterio_salida": "Se cuenta con definición operacional de métricas, escenarios y umbrales de comparación para simulación y experimento.",
+      "riesgo_principal": "medio",
+      "notas": "La claridad métrica condiciona toda la validez posterior.",
+      "catalogos_meta": {
+        "foco": "operacionalizacion"
+      }
+    },
+    {
+      "id": "B4",
+      "nombre": "Simulación y escenarios de intermitencia",
+      "descripcion": "Construye el entorno de simulación, implementa escenarios de intermitencia y compara línea base contra arquitectura propuesta.",
+      "estado": "no_iniciado",
+      "prioridad": "critica",
+      "tipo": "simulacion",
+      "dependencias": [
+        "B2",
+        "B3"
+      ],
+      "hipotesis_relacionadas": [
+        "HG",
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "H6"
+      ],
+      "subbloques_en_backlog": true,
+      "entregables": [
+        "ENT-006"
+      ],
+      "criterio_salida": "La simulación reproduce escenarios definidos, genera métricas comparables y deja trazabilidad de parámetros y semillas.",
+      "riesgo_principal": "alto",
+      "notas": "Evitar simuladores opacos sin trazabilidad de configuración.",
+      "catalogos_meta": {
+        "foco": "evidencia_por_simulacion"
+      }
+    },
+    {
+      "id": "B5",
+      "nombre": "Implementación de prototipo y canal de continuidad",
+      "descripcion": "Materializa nodos, gateway y lógica de priorización/control degradable para pruebas controladas.",
+      "estado": "no_iniciado",
+      "prioridad": "alta",
+      "tipo": "implementacion",
+      "dependencias": [
+        "B2",
+        "B3",
+        "B4"
+      ],
+      "hipotesis_relacionadas": [
+        "HG",
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5"
+      ],
+      "subbloques_en_backlog": true,
+      "entregables": [
+        "ENT-007"
+      ],
+      "criterio_salida": "Existe un prototipo verificable con instrumentación suficiente para comparar comportamiento con la simulación.",
+      "riesgo_principal": "alto",
+      "notas": "Acotar tempranamente el alcance de hardware para no absorber tiempo de tesis en integración periférica.",
+      "catalogos_meta": {
+        "foco": "prototipo_y_telemetria"
+      }
+    },
+    {
+      "id": "B6",
+      "nombre": "Validación experimental",
+      "descripcion": "Ejecuta campañas controladas y, cuando aplique, pruebas contextualizadas para contrastar hipótesis y consistencia con simulación.",
+      "estado": "no_iniciado",
+      "prioridad": "critica",
+      "tipo": "experimental",
+      "dependencias": [
+        "B4",
+        "B5"
+      ],
+      "hipotesis_relacionadas": [
+        "HG",
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "H6"
+      ],
+      "subbloques_en_backlog": true,
+      "entregables": [
+        "ENT-008"
+      ],
+      "criterio_salida": "Se cuenta con evidencia experimental trazable, repetible y suficiente para contrastar resultados simulados y soportar o rechazar hipótesis.",
+      "riesgo_principal": "alto",
+      "notas": "La disponibilidad de equipo y tiempo de instrumentación es un riesgo material.",
+      "catalogos_meta": {
+        "foco": "evidencia_experimental"
+      }
+    },
+    {
+      "id": "B7",
+      "nombre": "Análisis integrado y discusión",
+      "descripcion": "Integra evidencia teórica, simulada y experimental; consolida hallazgos, limitaciones y aportaciones.",
+      "estado": "no_iniciado",
+      "prioridad": "alta",
+      "tipo": "analisis",
+      "dependencias": [
+        "B4",
+        "B6"
+      ],
+      "hipotesis_relacionadas": [
+        "HG",
+        "H2",
+        "H4",
+        "H5",
+        "H6"
+      ],
+      "subbloques_en_backlog": true,
+      "entregables": [
+        "ENT-009"
+      ],
+      "criterio_salida": "Queda una narrativa coherente de soporte, límites y transferencia de resultados con trazabilidad a evidencias primarias.",
+      "riesgo_principal": "medio",
+      "notas": "Evitar sobreinterpretar diferencias que provengan de instrumentación o contexto no controlado.",
+      "catalogos_meta": {
+        "foco": "sintesis_y_validez"
+      }
+    },
+    {
+      "id": "B8",
+      "nombre": "Redacción de tesis y ensamblaje documental",
+      "descripcion": "Estructura capítulos, integra figuras, tablas, anexos y asegura consistencia narrativa con evidencia y decisiones registradas.",
+      "estado": "no_iniciado",
+      "prioridad": "alta",
+      "tipo": "redaccion",
+      "dependencias": [
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "B6",
+        "B7"
+      ],
+      "hipotesis_relacionadas": [
+        "HG"
+      ],
+      "subbloques_en_backlog": true,
+      "entregables": [
+        "ENT-010"
+      ],
+      "criterio_salida": "Existe un manuscrito completo, consistente y alineado con aportaciones, limitaciones y evidencia disponible.",
+      "riesgo_principal": "medio",
+      "notas": "Apoyarse en la estructura documental para no redactar desde cero bajo presión.",
+      "catalogos_meta": {
+        "foco": "integracion_documental"
+      }
+    },
+    {
+      "id": "B9",
+      "nombre": "Reproducibilidad y versión sanitizada pública",
+      "descripcion": "Prepara exportes, documentación y vistas públicas sanitizadas cuando sea pertinente, sin comprometer el carácter privado del repositorio base.",
+      "estado": "no_iniciado",
+      "prioridad": "media",
+      "tipo": "publicacion",
+      "dependencias": [
+        "B0",
+        "B7",
+        "B8"
+      ],
+      "hipotesis_relacionadas": [
+        "H5"
+      ],
+      "subbloques_en_backlog": true,
+      "entregables": [
+        "ENT-011"
+      ],
+      "criterio_salida": "Se cuenta con una ruta reproducible para publicar materiales sanitizados sin romper la canonicidad privada del repositorio.",
+      "riesgo_principal": "medio",
+      "notas": "Pensado para crecimiento futuro, no como prioridad inmediata.",
+      "catalogos_meta": {
+        "foco": "apertura_controlada"
+      }
+    },
+    {
+      "id": "B10",
+      "nombre": "Cierre, defensa y transferencia",
+      "descripcion": "Consolida versión final, materiales de defensa, lecciones aprendidas y transferencia ordenada del sistema operativo de tesis.",
+      "estado": "no_iniciado",
+      "prioridad": "media",
+      "tipo": "cierre",
+      "dependencias": [
+        "B8",
+        "B9"
+      ],
+      "hipotesis_relacionadas": [
+        "HG"
+      ],
+      "subbloques_en_backlog": true,
+      "entregables": [
+        "ENT-012"
+      ],
+      "criterio_salida": "La tesis, la defensa y los artefactos de cierre quedan completos, versionados y listos para consulta futura.",
+      "riesgo_principal": "medio",
+      "notas": "Cerrar con orden evita pérdida de conocimiento útil posterior a la graduación.",
+      "catalogos_meta": {
+        "foco": "cierre_y_transferencia"
+      }
+    }
+  ]
+}

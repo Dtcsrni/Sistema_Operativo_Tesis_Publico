@@ -1,0 +1,330 @@
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+from pathlib import Path
+from typing import Any
+from urllib import error as urllib_error
+from urllib import request as urllib_request
+
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from runtime.openclaw.openclaw_local.serena_adapter import SerenaClient  # noqa: E402
+from runtime.serena_bridge.bridge import load_bridge_config  # noqa: E402
+
+
+EXPECTED_TOOLS = [
+    "context.fetch_compact",
+    "governance.preflight",
+    "artifacts.evaluate_serena",
+    "artifacts.write_derived",
+    "canon.prepare_change",
+    "canon.apply_controlled_change",
+    "trace.append_operation",
+]
+
+DEFAULT_QUERY = "DEC-0022"
+DEFAULT_PATH = "00_sistema_tesis/decisiones/2026-04-08_DEC-0022_arquitectura_operativa_escritorio_primario_y_orange_pi_edge.md"
+
+
+def detect_python_bin(root: Path) -> str:
+    if os.name == "nt":
+        candidates = [
+            root / ".venv" / "Scripts" / "python.exe",
+            root / ".venv" / "bin" / "python.exe",
+        ]
+    else:
+        candidates = [
+            root / ".venv" / "bin" / "python",
+            Path(sys.executable) if sys.executable else Path("python3"),
+            root / ".venv" / "bin" / "python.exe",
+        ]
+    for candidate in candidates:
+        if candidate.exists():
+            return str(candidate)
+    return sys.executable or "python3"
+
+
+def make_client(root: Path, transport: str) -> SerenaClient:
+    os.environ["OPENCLAW_SERENA_TRANSPORT"] = transport
+    os.environ["OPENCLAW_SERENA_TIMEOUT_MS"] = "4000"
+    if transport == "stdio":
+        os.environ["OPENCLAW_SERENA_PYTHON"] = detect_python_bin(root)
+        os.environ["OPENCLAW_SERENA_SCRIPT"] = str((root / "07_scripts" / "serena_mcp.py").resolve())
+    else:
+        os.environ["OPENCLAW_SERENA_URL"] = "http://127.0.0.1:8765/mcp"
+    return SerenaClient.from_repo(root)
+
+
+def read_mcp_config(root: Path) -> dict[str, Any]:
+    path = root / ".vscode" / "mcp.json"
+    if not path.exists():
+        return {"exists": False, "profiles": {}}
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    servers = payload.get("servers", {})
+    return {
+        "exists": True,
+        "profiles": {
+            "serena-local": "serena-local" in servers,
+            "serena-local-py": "serena-local-py" in servers,
+        },
+    }
+
+
+def recommended_mode_today(workspace_profiles: dict[str, bool]) -> str:
+    if workspace_profiles.get("serena-local", False):
+        return "use_serena_local_http_as_the_default_auto_started_workspace_route_and_use_filesystem_help_in_this_conversation_when_no_serena_namespace_is_exposed"
+    if workspace_profiles.get("serena-local-py", False):
+        return "use_serena_local_py_only_when_the_workspace_explicitly_exposes_it_and_use_filesystem_help_in_this_conversation_when_no_serena_namespace_is_exposed"
+    return "use_filesystem_help_in_this_conversation_and_treat_serena_as_unavailable_until_a_workspace_profile_or_bridge_is_exposed"
+
+
+def build_effective_access(report: dict[str, Any]) -> dict[str, Any]:
+    workspace_profiles = dict(report.get("mcp_workspace_config", {}).get("profiles", {}))
+    profiles = dict(report.get("profiles", {}))
+    effective: dict[str, Any] = {}
+    for profile_name in ("serena-local", "serena-local-py"):
+        health = dict(profiles.get(profile_name, {}).get("healthcheck", {}))
+        workspace_enabled = bool(workspace_profiles.get(profile_name, False))
+        health_ok = health.get("status") == "ok"
+        effective[profile_name] = {
+            "workspace_enabled": workspace_enabled,
+            "health_status": health.get("status", "unknown"),
+            "transport": health.get("transport", profiles.get(profile_name, {}).get("transport", "")),
+            "available_and_recommended": workspace_enabled and health_ok,
+            "healthy_but_not_exposed": (not workspace_enabled) and health_ok,
+        }
+    return effective
+
+
+def inspect_log(root: Path) -> dict[str, Any]:
+    path = root / "00_sistema_tesis" / "bitacora" / "audit_history" / "serena_mcp_debug.log"
+    if not path.exists():
+        return {"exists": False}
+    text = path.read_text(encoding="utf-8", errors="replace")
+    return {
+        "exists": True,
+        "path": str(path),
+        "has_initialize": '"method":"initialize"' in text or "HANDLE method=initialize" in text,
+        "has_tools_list": '"method":"tools/list"' in text or "HANDLE method=tools/list" in text,
+        "has_canonical_tools": all(tool in text for tool in EXPECTED_TOOLS),
+        "has_vscode_client": "Visual Studio Code" in text,
+    }
+
+
+def bridge_report(root: Path) -> dict[str, Any]:
+    config = load_bridge_config(root)
+    endpoint = f"http://{config['bind_host']}:{config['port']}{config['endpoint']}"
+    report: dict[str, Any] = {
+        "configured": bool(config.get("enabled", True)),
+        "url": endpoint,
+        "auth_enabled": bool(config.get("auth", {}).get("enabled", True)),
+        "reachable": False,
+        "status": "unavailable",
+    }
+    token_env = str(config.get("auth", {}).get("env_var", "SERENA_BRIDGE_BEARER_TOKEN"))
+    token = os.getenv(token_env, "").strip()
+    if not token:
+        report["error"] = f"Falta {token_env}"
+        return report
+    try:
+        req = urllib_request.Request(
+            endpoint,
+            data=json.dumps(
+                {"jsonrpc": "2.0", "id": 90, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}
+            ).encode("utf-8"),
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {token}",
+                "X-Sistema-Tesis-Agent-Role": "Compatible Host (Assistant)",
+                "X-Sistema-Tesis-Agent-Provider": "External Host",
+                "X-Sistema-Tesis-Agent-Model-Version": "check_serena_access.py",
+                "X-Sistema-Tesis-Agent-Runtime": "External MCP Runtime",
+                "X-Sistema-Tesis-Host-Kind": "external_runtime",
+            },
+            method="POST",
+        )
+        with urllib_request.urlopen(req, timeout=5) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+        report["reachable"] = True
+        report["status"] = "ok"
+        report["server"] = dict(payload.get("result", {}).get("serverInfo", {}))
+    except urllib_error.URLError as exc:
+        report["error"] = str(exc)
+    return report
+
+
+def exercise_tools(client: SerenaClient) -> dict[str, Any]:
+    fetch_result = client.fetch_compact(
+        query=DEFAULT_QUERY,
+        paths=[DEFAULT_PATH],
+        limit=1,
+        context_lines=0,
+    )
+    preflight_result = client.preflight(
+        tool_name="canon.apply_controlled_change",
+        target_paths=[DEFAULT_PATH],
+        intent="diagnostico de acceso serena",
+    )
+    return {
+        "fetch_compact": {
+            "status": fetch_result.get("status", ""),
+            "tool_name": fetch_result.get("tool_name", ""),
+            "match_count": len(fetch_result.get("matches", [])),
+            "write_scope": fetch_result.get("write_scope", ""),
+        },
+        "governance_preflight": {
+            "status": preflight_result.get("status", ""),
+            "tool_name": preflight_result.get("tool_name", ""),
+            "risk_level": preflight_result.get("risk_level", ""),
+            "write_scope": preflight_result.get("write_scope", ""),
+            "next_required_action": preflight_result.get("next_required_action", ""),
+        },
+    }
+
+
+def profile_report(root: Path, transport: str) -> dict[str, Any]:
+    client = make_client(root, transport)
+    health = client.healthcheck()
+    report: dict[str, Any] = {
+        "transport": transport,
+        "healthcheck": health,
+        "tools_exercised": {},
+    }
+    if health.get("status") == "ok":
+        report["tools_exercised"] = exercise_tools(client)
+    return report
+
+
+def build_runtime_boundary(workspace_profiles: dict[str, bool]) -> dict[str, Any]:
+    return {
+        "vscode_host_access": "supported_via_.vscode/mcp.json_and_host_trust",
+        "conversation_runtime_access": "not_inherited_automatically_by_this_chat_runtime",
+        "required_for_chat_side_access": [
+            "the_chat_runtime_must_support_registering_external_mcp_servers",
+            "or_a_bridge_service_must_reexport_the_local_serena_server",
+        ],
+        "recommended_mode_today": recommended_mode_today(workspace_profiles),
+    }
+
+
+def recommendations(report: dict[str, Any]) -> list[str]:
+    advice: list[str] = []
+    workspace_profiles = dict(report.get("mcp_workspace_config", {}).get("profiles", {}))
+    profiles = report.get("profiles", {})
+    http_health = profiles.get("serena-local", {}).get("healthcheck", {})
+    stdio_health = profiles.get("serena-local-py", {}).get("healthcheck", {})
+    if workspace_profiles.get("serena-local", False):
+        if http_health.get("status") != "ok":
+            advice.append("El perfil activo recomendado del workspace es `serena-local` por HTTP con autoarranque esperado. Si no esta arriba, recarga la ventana de VS Code o relanza la tarea `Serena MCP HTTP`.")
+        else:
+            advice.append("El perfil activo recomendado del workspace es `serena-local`; usalo como ruta HTTP normal del workspace para contexto compacto, preflight y cambio controlado.")
+    elif http_health.get("status") != "ok":
+        advice.append("No hay un perfil HTTP activo y Serena HTTP no esta disponible en este shell.")
+    if workspace_profiles.get("serena-local-py", False):
+        if stdio_health.get("status") == "ok":
+            advice.append("`serena-local-py` esta expuesto en el workspace y puede usarse como diagnóstico o fallback explícito por `stdio`.")
+    elif stdio_health.get("status") == "ok":
+        advice.append("El backend `stdio` de Serena sigue sano localmente, pero `serena-local-py` no esta expuesto en `.vscode/mcp.json`; no lo tomes como ruta operativa normal.")
+    if report.get("log", {}).get("exists"):
+        advice.append("Si VS Code muestra errores intermitentes, revisa `00_sistema_tesis/bitacora/audit_history/serena_mcp_debug.log` para confirmar `initialize` y `tools/list`.")
+    bridge = report.get("bridge", {})
+    if bridge.get("status") != "ok":
+        advice.append("Si quieres exponer Serena a runtimes externos, arranca `python runtime/serena_bridge/bin/serena_bridge.py` con `SERENA_BRIDGE_BEARER_TOKEN` configurado.")
+    advice.append("Esta conversacion no puede invocar `serena-local-py` como tool nativa sin soporte MCP explicito del runtime o un bridge.")
+    return advice
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Verifica acceso local a Serena y aclara la frontera entre VS Code y este runtime.")
+    parser.add_argument("--json", action="store_true", help="Emite el reporte completo como JSON.")
+    return parser.parse_args()
+
+
+def main() -> int:
+    args = parse_args()
+    workspace_config = read_mcp_config(ROOT)
+    report = {
+        "repo_root": str(ROOT),
+        "mcp_workspace_config": workspace_config,
+        "profiles": {
+            "serena-local-py": profile_report(ROOT, "stdio"),
+            "serena-local": profile_report(ROOT, "http"),
+        },
+        "log": inspect_log(ROOT),
+        "bridge": bridge_report(ROOT),
+        "runtime_boundary": build_runtime_boundary(workspace_config.get("profiles", {})),
+    }
+    report["effective_access"] = build_effective_access(report)
+    report["recommendations"] = recommendations(report)
+    if args.json:
+        print(json.dumps(report, ensure_ascii=False, indent=2))
+        return 0
+
+    print("SERENA ACCESS REPORT")
+    print(f"- Repo root: {report['repo_root']}")
+    print(
+        "- Workspace MCP config: "
+        f"exists={report['mcp_workspace_config']['exists']} "
+        f"serena-local={report['mcp_workspace_config']['profiles'].get('serena-local', False)} "
+        f"serena-local-py={report['mcp_workspace_config']['profiles'].get('serena-local-py', False)}"
+    )
+    for profile_name in ("serena-local-py", "serena-local"):
+        profile = report["profiles"][profile_name]
+        health = profile["healthcheck"]
+        print(
+            f"- {profile_name}: status={health.get('status', 'unknown')} "
+            f"transport={health.get('transport', profile['transport'])} "
+            f"missing_tools={health.get('missing_tools', [])} "
+            f"workspace_enabled={report['effective_access'][profile_name]['workspace_enabled']} "
+            f"recommended={report['effective_access'][profile_name]['available_and_recommended']}"
+        )
+        if report["effective_access"][profile_name]["healthy_but_not_exposed"]:
+            print("  note: backend saludable localmente, pero no expuesto en el workspace activo")
+        if profile["tools_exercised"]:
+            fetch_payload = profile["tools_exercised"]["fetch_compact"]
+            preflight_payload = profile["tools_exercised"]["governance_preflight"]
+            print(
+                f"  fetch_compact: status={fetch_payload['status']} "
+                f"matches={fetch_payload['match_count']} write_scope={fetch_payload['write_scope']}"
+            )
+            print(
+                f"  governance.preflight: status={preflight_payload['status']} "
+                f"risk={preflight_payload['risk_level']} write_scope={preflight_payload['write_scope']}"
+            )
+        elif health.get("error"):
+            print(f"  error: {health['error']}")
+    log = report["log"]
+    print(
+        "- Debug log: "
+        f"exists={log.get('exists', False)} "
+        f"initialize={log.get('has_initialize', False)} "
+        f"tools_list={log.get('has_tools_list', False)} "
+        f"canonical_tools={log.get('has_canonical_tools', False)} "
+        f"vscode_client={log.get('has_vscode_client', False)}"
+    )
+    bridge = report["bridge"]
+    print(
+        "- Bridge: "
+        f"configured={bridge.get('configured', False)} "
+        f"status={bridge.get('status', 'unknown')} "
+        f"url={bridge.get('url', '')}"
+    )
+    if bridge.get("error"):
+        print(f"  error: {bridge['error']}")
+    print("- Runtime boundary:")
+    print(f"  vscode_host_access={report['runtime_boundary']['vscode_host_access']}")
+    print(f"  conversation_runtime_access={report['runtime_boundary']['conversation_runtime_access']}")
+    print("- Recommendations:")
+    for item in report["recommendations"]:
+        print(f"  - {item}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

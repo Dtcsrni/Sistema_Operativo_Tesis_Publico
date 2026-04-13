@@ -1,0 +1,10 @@
+{
+  "sign_offs": [
+    {
+      "archivo": "07_scripts/README.md",
+      "comentario": "Documentación final de scripts de infraestructura de excelencia",
+      "fecha": "2026-03-24 07:11:37",
+      "hash_verificado": "b48eb7a760cc01dc7e177d8110a88e6251fbb26c0b552265ec3929ab7845bac6"
+    }
+  ]
+}

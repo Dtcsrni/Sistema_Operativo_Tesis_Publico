@@ -1,0 +1,299 @@
+from __future__ import annotations
+
+import difflib
+import json
+from contextlib import contextmanager
+from pathlib import Path
+from typing import Any
+
+import ab_pilot
+import common
+from data_io import dump_jsonl_path, load_jsonl_path
+from serena_policy import (
+    backup_file,
+    classify_write_scope,
+    file_sha256_text,
+    load_serena_config,
+    normalize_rel_path,
+    preflight,
+    resolve_root,
+    update_manifest,
+)
+
+
+TEXT_EXTENSIONS = {
+    ".md",
+    ".markdown",
+    ".txt",
+    ".yaml",
+    ".yml",
+    ".json",
+    ".jsonl",
+    ".csv",
+    ".py",
+    ".html",
+}
+
+
+def _is_text_file(path: Path) -> bool:
+    return path.suffix.lower() in TEXT_EXTENSIONS
+
+
+def _clip(value: str, limit: int = 240) -> str:
+    compact = value.strip().replace("\n", " ")
+    if len(compact) <= limit:
+        return compact
+    return compact[: limit - 3] + "..."
+
+
+def fetch_compact(
+    *,
+    query: str = "",
+    paths: list[str] | None = None,
+    limit: int = 5,
+    context_lines: int = 1,
+    root: Path | None = None,
+) -> dict[str, Any]:
+    resolved_root = resolve_root(root)
+    config = load_serena_config(resolved_root)
+    read_roots = [resolved_root / item for item in config.get("paths", {}).get("read_roots", [])]
+    requested_paths = [normalize_rel_path(item) for item in (paths or []) if str(item).strip()]
+    candidates: list[Path] = []
+
+    if requested_paths:
+        for rel_path in requested_paths:
+            target = resolved_root / rel_path
+            if target.exists() and target.is_file() and _is_text_file(target):
+                candidates.append(target)
+    else:
+        for base in read_roots:
+            if not base.exists():
+                continue
+            for target in base.rglob("*"):
+                if target.is_file() and _is_text_file(target):
+                    candidates.append(target)
+
+    normalized_query = query.strip().lower()
+    matches: list[dict[str, Any]] = []
+
+    for target in candidates:
+        rel_path = normalize_rel_path(str(target.relative_to(resolved_root)))
+        lines = target.read_text(encoding="utf-8", errors="replace").splitlines()
+        if normalized_query:
+            for index, line in enumerate(lines, start=1):
+                if normalized_query not in line.lower():
+                    continue
+                start = max(index - context_lines - 1, 0)
+                end = min(index + context_lines, len(lines))
+                excerpt = "\n".join(lines[start:end])
+                matches.append(
+                    {
+                        "path": rel_path,
+                        "line": index,
+                        "snippet": _clip(excerpt, limit=320),
+                    }
+                )
+                if len(matches) >= max(limit, 1):
+                    break
+        else:
+            preview = "\n".join(line for line in lines if line.strip()[:1])[:320]
+            matches.append(
+                {
+                    "path": rel_path,
+                    "line": 1,
+                    "snippet": _clip(preview, limit=320),
+                }
+            )
+        if len(matches) >= max(limit, 1):
+            break
+
+    summary = f"{len(matches)} coincidencias compactas"
+    if normalized_query:
+        summary += f" para `{query.strip()}`"
+    return {
+        "summary": summary,
+        "matches": matches,
+        "references": [item["path"] for item in matches],
+    }
+
+
+@contextmanager
+def _patched_ab_pilot_root(root: Path):
+    previous_common_root = common.ROOT
+    previous_ab_root = ab_pilot.ROOT
+    common.ROOT = root
+    ab_pilot.ROOT = root
+    try:
+        yield
+    finally:
+        common.ROOT = previous_common_root
+        ab_pilot.ROOT = previous_ab_root
+
+
+def evaluate_serena_artifact(
+    *,
+    plan_path: str,
+    report_path: str = "00_sistema_tesis/config/ab_pilot_report.json",
+    markdown_path: str = "06_dashboard/generado/ab_pilot_report.md",
+    trace_path: str = "00_sistema_tesis/bitacora/audit_history/ab_pilot_runs.jsonl",
+    session_id: str = "",
+    step_id: str = "",
+    source_event_id: str = "",
+    root: Path | None = None,
+) -> dict[str, Any]:
+    resolved_root = resolve_root(root)
+    for rel_path in (report_path, markdown_path, trace_path):
+        scope = classify_write_scope(rel_path, resolved_root)
+        if scope not in {"derived", "controlled"}:
+            raise ValueError(f"La salida `{rel_path}` no está permitida para artefactos Serena.")
+        backup_file(rel_path, resolved_root)
+
+    context = ab_pilot.ExecutionContext(
+        session_id=session_id.strip() or "serena-mcp",
+        step_id=step_id.strip(),
+        source_event_id=source_event_id.strip(),
+    )
+    with _patched_ab_pilot_root(resolved_root):
+        report, markdown, trace, payload = ab_pilot.evaluate_plan(
+            plan_relative_path=normalize_rel_path(plan_path),
+            report_relative_path=normalize_rel_path(report_path),
+            markdown_relative_path=normalize_rel_path(markdown_path),
+            trace_relative_path=normalize_rel_path(trace_path),
+            context=context,
+        )
+    return {
+        "report_path": normalize_rel_path(str(report.relative_to(resolved_root))),
+        "markdown_path": normalize_rel_path(str(markdown.relative_to(resolved_root))),
+        "trace_path": normalize_rel_path(str(trace.relative_to(resolved_root))),
+        "summary": payload.get("summary", {}),
+    }
+
+
+def write_derived_artifact(
+    *,
+    path: str,
+    content: str,
+    root: Path | None = None,
+) -> dict[str, Any]:
+    resolved_root = resolve_root(root)
+    normalized = normalize_rel_path(path)
+    scope = classify_write_scope(normalized, resolved_root)
+    if scope != "derived":
+        raise ValueError(f"La ruta `{normalized}` no es un artefacto derivado permitido.")
+    target = resolved_root / normalized
+    backup_file(normalized, resolved_root)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(content, encoding="utf-8")
+    return {
+        "path": normalized,
+        "sha256": file_sha256_text(content),
+    }
+
+
+def prepare_change(
+    *,
+    path: str,
+    new_content: str,
+    intent: str = "",
+    root: Path | None = None,
+) -> dict[str, Any]:
+    resolved_root = resolve_root(root)
+    normalized = normalize_rel_path(path)
+    target = resolved_root / normalized
+    current = target.read_text(encoding="utf-8") if target.exists() else ""
+    diff_lines = list(
+        difflib.unified_diff(
+            current.splitlines(),
+            new_content.splitlines(),
+            fromfile=f"a/{normalized}",
+            tofile=f"b/{normalized}",
+            lineterm="",
+        )
+    )
+    preview = "\n".join(diff_lines[:200])
+    return {
+        "path": normalized,
+        "intent": intent.strip(),
+        "current_sha256": file_sha256_text(current),
+        "proposed_sha256": file_sha256_text(new_content),
+        "diff_preview": preview,
+        "preflight": preflight(tool_name="canon.prepare_change", target_paths=[normalized], intent=intent, root=resolved_root),
+    }
+
+
+def apply_controlled_change(
+    *,
+    path: str,
+    new_content: str,
+    step_id: str,
+    source_event_id: str,
+    intent: str = "",
+    root: Path | None = None,
+) -> dict[str, Any]:
+    resolved_root = resolve_root(root)
+    normalized = normalize_rel_path(path)
+    assessment = preflight(
+        tool_name="canon.apply_controlled_change",
+        target_paths=[normalized],
+        step_id=step_id,
+        source_event_id=source_event_id,
+        intent=intent,
+        root=resolved_root,
+    )
+    if assessment["errors"]:
+        raise ValueError("; ".join(assessment["errors"]))
+
+    target = resolved_root / normalized
+    backup_file(normalized, resolved_root)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(new_content, encoding="utf-8")
+    if assessment["write_scope"] in {"controlled", "protected"}:
+        update_manifest(resolved_root)
+    return {
+        "path": normalized,
+        "sha256": file_sha256_text(new_content),
+        "preflight": assessment,
+    }
+
+
+def append_trace_record(
+    *,
+    tool_name: str,
+    intent: str,
+    minimized_inputs: dict[str, Any],
+    result: dict[str, Any],
+    read_paths: list[str] | None = None,
+    write_paths: list[str] | None = None,
+    step_id: str = "",
+    source_event_id: str = "",
+    identity: dict[str, Any] | None = None,
+    root: Path | None = None,
+) -> dict[str, Any]:
+    resolved_root = resolve_root(root)
+    config = load_serena_config(resolved_root)
+    trace_rel_path = normalize_rel_path(str(config.get("trace", {}).get("path", "")))
+    if not trace_rel_path:
+        raise ValueError("La configuración Serena MCP no define trace.path")
+    target = resolved_root / trace_rel_path
+    rows = load_jsonl_path(target)
+    record = {
+        "timestamp": common.now_stamp(),
+        "tool": tool_name,
+        "intent": intent.strip(),
+        "inputs": minimized_inputs,
+        "read_paths": [normalize_rel_path(item) for item in (read_paths or [])],
+        "write_paths": [normalize_rel_path(item) for item in (write_paths or [])],
+        "result_hash": file_sha256_text(json.dumps(result, ensure_ascii=False, sort_keys=True)),
+        "step_id": step_id.strip(),
+        "source_event_id": source_event_id.strip(),
+    }
+    if identity:
+        sanitized_identity = {str(key): str(value).strip() for key, value in identity.items() if str(value).strip()}
+        if sanitized_identity:
+            record["identity"] = sanitized_identity
+    rows.append(record)
+    dump_jsonl_path(target, rows)
+    return {
+        "path": trace_rel_path,
+        "record": record,
+    }

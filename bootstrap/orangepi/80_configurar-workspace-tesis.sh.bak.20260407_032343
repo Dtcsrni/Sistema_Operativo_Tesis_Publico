@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! getent group tesis >/dev/null; then
+  sudo groupadd --system tesis
+fi
+if ! id -u tesis >/dev/null 2>&1; then
+  sudo useradd --system --gid tesis --home-dir /srv/tesis --create-home --shell /usr/sbin/nologin tesis
+fi
+
+sudo mkdir -p \
+  /opt/tesis-os \
+  /opt/tesis-os/venvs \
+  /srv/tesis/repo \
+  /srv/tesis/workspace \
+  /srv/tesis/outputs \
+  /var/log/tesis-os \
+  /var/lib/tesis-os \
+  /var/lib/herramientas/openclaw \
+  /var/cache/herramientas/openclaw \
+  /var/log/openclaw
+sudo chown -R tesis:tesis /srv/tesis /opt/tesis-os /var/log/tesis-os /var/lib/tesis-os /var/lib/herramientas/openclaw /var/cache/herramientas/openclaw /var/log/openclaw

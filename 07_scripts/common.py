@@ -235,7 +235,12 @@ def preferred_python_executable() -> str:
         ROOT / ".venv" / "Scripts" / "python",
     ]
     for candidate in candidates:
-        if candidate.exists() and candidate.is_file():
+        if not candidate.exists() or not candidate.is_file():
+            continue
+        # On POSIX, a Windows .exe inside WSL-mounted workspaces is not executable.
+        if os.name != "nt" and candidate.suffix.lower() == ".exe":
+            continue
+        if os.access(candidate, os.X_OK):
             return str(candidate)
     return sys.executable
 

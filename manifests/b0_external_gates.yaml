@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "context": "cierre_b0_desde_escritorio",
+  "gates": [
+    {
+      "id": "host_runtime_isolation_validation",
+      "status": "pendiente_host_real",
+      "task_ids": ["T-030", "T-036"],
+      "evidence_expected": "pruebas negativas reales de permisos y HTTP interdominio"
+    },
+    {
+      "id": "host_restore_validation",
+      "status": "pendiente_host_real",
+      "task_ids": ["T-035"],
+      "evidence_expected": "restore por dominio ejecutado en Orange Pi"
+    },
+    {
+      "id": "host_benchmark_edge_iot",
+      "status": "pendiente_host_real",
+      "task_ids": ["T-037"],
+      "evidence_expected": "latencia throughput CPU RAM temperatura energia"
+    },
+    {
+      "id": "host_go_no_go_orange_pi",
+      "status": "pendiente_host_real",
+      "task_ids": ["T-038"],
+      "evidence_expected": "checklist final de aceptacion con evidencia edge"
+    }
+  ]
+}

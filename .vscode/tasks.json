@@ -1,0 +1,31 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Serena MCP HTTP",
+      "type": "shell",
+      "command": "${workspaceFolder}\\.vscode\\serena-http.cmd",
+      "isBackground": true,
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "problemMatcher": {
+        "owner": "serena-http",
+        "pattern": {
+          "regexp": "^(.*)$",
+          "message": 1
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".",
+          "endsPattern": "HTTP_READY"
+        }
+      },
+      "presentation": {
+        "reveal": "never",
+        "panel": "dedicated",
+        "clear": false
+      }
+    }
+  ]
+}

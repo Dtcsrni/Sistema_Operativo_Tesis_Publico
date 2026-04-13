@@ -1,8 +1,8 @@
 # README de entrada rápida
 
-![Security Status](06_dashboard/publico/dashboard/badges/security_status.svg)
-![Integrity Status](06_dashboard/publico/dashboard/badges/integrity.svg)
-![Ledger Status](06_dashboard/publico/dashboard/badges/ledger.svg)
+![Estado de seguridad](06_dashboard/publico/dashboard/badges/security_status.svg)
+![Estado de integridad](06_dashboard/publico/dashboard/badges/integrity.svg)
+![Estado del ledger](06_dashboard/publico/dashboard/badges/ledger.svg)
 
 ## Qué es este repositorio
 
@@ -53,7 +53,7 @@ La capa operativa para despliegue real y reproducibilidad ahora se organiza tamb
 - `manifests/`: contratos máquina-legibles de almacenamiento, servicios, dominios, routing y publicación.
 - `bootstrap/`: instalación por fases para host Windows y Orange Pi.
 - `runtime/openclaw/`: integración opcional de OpenClaw, wrappers y políticas.
-- `config/systemd/` y `config/env/`: units y variables de entorno de referencia.
+- `config/systemd/` y `config/env/`: unidades y variables de entorno de referencia.
 - `tests/smoke/` y `tests/integration/`: pruebas operativas pensadas para el sistema objetivo.
 - `benchmarks/` y `ops/`: medición, respaldo, recuperación y actualización.
 
@@ -87,6 +87,7 @@ Si necesitas orientarte sin perder el origen canónico:
 - Entender términos, IDs y convenciones: [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
 - Entender trabajo en curso: [`01_planeacion/backlog.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md), [`01_planeacion/riesgos.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y [`06_dashboard/wiki/planeacion.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
 - Entender decisiones y continuidad: [`00_sistema_tesis/decisiones`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y [`00_sistema_tesis/bitacora`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
+- Entender la politica de trazabilidad: [`docs/03_operacion/modos-de-trazabilidad.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y [`docs/05_reproducibilidad/matriz-de-trazabilidad-cientifica.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
 
 ## Fuentes canónicas para entender el sistema
 
@@ -181,4 +182,4 @@ No se corrigen manualmente los artefactos derivados. Se regeneran.
 - confirmación verbal corroborada con transcripción para `VAL-STEP` nuevos;
 - TDD para automatización, validadores y software nuevo.
 
-_Última actualización: `2026-04-04`._
+_Última actualización: `2026-04-13`._

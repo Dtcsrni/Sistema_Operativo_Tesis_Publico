@@ -25,6 +25,7 @@ SIGN_OFFS_PATH = ROOT / "00_sistema_tesis" / "config" / "sign_offs.json"
 BITACORA_TEMPLATE_PATH = ROOT / "00_sistema_tesis" / "plantillas" / "bitacora_template.md"
 SOURCE_INDEX_PATH = ROOT / "00_sistema_tesis" / "bitacora" / "indice_fuentes_conversacion.md"
 SOURCE_EVIDENCE_DIR = ROOT / "00_sistema_tesis" / "evidencia_privada" / "conversaciones_codex"
+OPENCLAW_PROPOSALS_PATH = ROOT / "00_sistema_tesis" / "bitacora" / "openclaw_proposals.md"
 
 STEP_ID_PATTERN = re.compile(r"^VAL-STEP-[A-Za-z0-9_-]+$")
 EVENT_ID_PATTERN = re.compile(r"^EVT-(\d+)$")
@@ -236,6 +237,7 @@ def projection_paths(events: list[dict[str, Any]] | None = None) -> list[str]:
         "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
         "00_sistema_tesis/bitacora/matriz_trazabilidad.md",
         "00_sistema_tesis/bitacora/indice_fuentes_conversacion.md",
+        "00_sistema_tesis/bitacora/openclaw_proposals.md",
         "00_sistema_tesis/ia_journal.json",
         "00_sistema_tesis/config/sign_offs.json",
         "00_sistema_tesis/canon/state.json",
@@ -273,6 +275,15 @@ def build_state(events: list[dict[str, Any]]) -> dict[str, Any]:
             "human_validations_with_source": source_linked,
             "human_validations_requiring_source": required_steps,
             "legacy_without_source": len(human_events) - source_linked,
+        },
+        "openclaw": {
+            "proposal_count": sum(1 for event in events if event["event_type"] == "openclaw_proposal"),
+            "pending_human_review": sum(
+                1
+                for event in events
+                if event["event_type"] == "openclaw_proposal"
+                and str(event.get("payload", {}).get("proposal_status", "")).strip() == "draft_pending_human_review"
+            ),
         },
     }
 
@@ -600,6 +611,39 @@ def validate_events(events: list[dict[str, Any]] | None = None) -> list[str]:
                         errors.append(
                             f"El hash de cita de {event_id} no coincide con la fuente {source_meta['source_event_id']}."
                         )
+        if event.get("event_type") == "openclaw_proposal":
+            payload = dict(event.get("payload", {}))
+            required_payload = {
+                "proposal_id",
+                "task_id",
+                "title",
+                "domain",
+                "objective",
+                "decision",
+                "evidence",
+                "approval",
+                "proposal_status",
+            }
+            missing_payload = [key for key in sorted(required_payload) if key not in payload]
+            if missing_payload:
+                errors.append(f"Propuesta OpenClaw incompleta en {event_id}: {', '.join(missing_payload)}")
+            if dict(event.get("human_validation", {})).get("required") is not False:
+                errors.append(f"Propuesta OpenClaw {event_id} no puede declarar validación humana requerida.")
+            decision = payload.get("decision", {})
+            evidence = payload.get("evidence", {})
+            approval = payload.get("approval", {})
+            if not isinstance(decision, dict):
+                errors.append(f"Propuesta OpenClaw con decision inválida en {event_id}")
+            if not isinstance(evidence, dict):
+                errors.append(f"Propuesta OpenClaw con evidence inválida en {event_id}")
+            if not isinstance(approval, dict):
+                errors.append(f"Propuesta OpenClaw con approval inválida en {event_id}")
+            if not str(payload.get("proposal_status", "")).strip():
+                errors.append(f"Propuesta OpenClaw sin proposal_status en {event_id}")
+            if isinstance(evidence, dict) and not str(evidence.get("payload_hash", "")).strip():
+                errors.append(f"Propuesta OpenClaw sin payload_hash de evidencia en {event_id}")
+            if isinstance(approval, dict) and not str(approval.get("status", "")).strip():
+                errors.append(f"Propuesta OpenClaw sin estado de aprobación en {event_id}")
     return errors
 
 
@@ -986,6 +1030,51 @@ def render_conversation_source_index(events: list[dict[str, Any]]) -> str:
     return "\n".join(lines)
 
 
+def render_openclaw_proposals(events: list[dict[str, Any]]) -> str:
+    lines = [
+        "<!-- SISTEMA_TESIS:PROTEGIDO -->",
+        "# Borradores y Propuestas de OpenClaw",
+        "",
+        "Este índice registra propuestas de `openclaw` exportadas al canon en modo draft.",
+        "No equivalen a validación humana ni sustituyen `VAL-STEP-*`.",
+        "",
+        "| Proposal ID | Event ID | Dominio | Tarea | Estado draft | Gate humano | Step esperado | Evidencia |",
+        "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
+    ]
+    for event in [item for item in events if item["event_type"] == "openclaw_proposal"]:
+        payload = dict(event.get("payload", {}))
+        decision = dict(payload.get("decision", {}))
+        approval = dict(payload.get("approval", {}))
+        evidence = dict(payload.get("evidence", {}))
+        lines.append(
+            "| {proposal} | {event_id} | {domain} | {task} | {status} | {gate} | {step} | `{hash_}` |".format(
+                proposal=str(payload.get("proposal_id", "N/A")),
+                event_id=str(event.get("event_id", "")),
+                domain=str(payload.get("domain", "N/A")),
+                task=str(payload.get("task_id", "N/A")),
+                status=str(payload.get("proposal_status", "N/A")),
+                gate=str(decision.get("requires_human_gate", True)),
+                step=str(approval.get("step_id_expected", "N/A")),
+                hash_=str(evidence.get("payload_hash", "N/A")),
+            )
+        )
+    lines.extend(
+        [
+            "",
+            "**Navegación:**",
+            "- [Volver al Ledger](log_conversaciones_ia.md)",
+            "- [Volver a la Matriz](matriz_trazabilidad.md)",
+            "- [Volver al Índice de Fuentes](indice_fuentes_conversacion.md)",
+            "",
+            "[LID]: log_conversaciones_ia.md",
+            "[GOV]: ../config/ia_gobernanza.yaml",
+            "[AUD]: ../../07_scripts/build_all.py",
+            "",
+        ]
+    )
+    return "\n".join(lines) + "\n"
+
+
 def render_journal(events: list[dict[str, Any]]) -> dict[str, Any]:
     records = [dict(event["payload"]["record"]) for event in events if event["event_type"] == "agent_activity"]
     return {"journal": records}
@@ -1021,6 +1110,7 @@ def projected_payloads(events: list[dict[str, Any]]) -> dict[str, str]:
         "00_sistema_tesis/bitacora/log_conversaciones_ia.md": render_ledger(events),
         "00_sistema_tesis/bitacora/matriz_trazabilidad.md": render_matrix(events),
         "00_sistema_tesis/bitacora/indice_fuentes_conversacion.md": render_conversation_source_index(events),
+        "00_sistema_tesis/bitacora/openclaw_proposals.md": render_openclaw_proposals(events),
         "00_sistema_tesis/ia_journal.json": json.dumps(render_journal(events), ensure_ascii=False, indent=2) + "\n",
         "00_sistema_tesis/config/sign_offs.json": json.dumps(render_signoffs(events), ensure_ascii=False, indent=2) + "\n",
         "00_sistema_tesis/canon/state.json": json.dumps(build_state(events), ensure_ascii=False, indent=2) + "\n",
@@ -1266,6 +1356,51 @@ def append_human_validation(
             "quote_verification_status": resolved_quote_status,
             "source_capture_required": resolved_source_capture_required,
         },
+    }
+    return append_event(event)
+
+
+def append_openclaw_proposal(
+    *,
+    task_payload: dict[str, Any],
+    decision_payload: dict[str, Any],
+    evidence_payload: dict[str, Any],
+    approval_payload: dict[str, Any],
+    academic_payload: dict[str, Any] | None = None,
+    session_id: str = "",
+    linked_reference: str = "[DEC-0020]",
+    risk_level: str = "ALTO",
+    proposal_status: str = "draft_pending_human_review",
+) -> dict[str, Any]:
+    proposal_id = str(task_payload.get("proposal_id", "")).strip() or f"OCP-{next_evt_id(load_events()).replace('EVT-', '')}"
+    payload = {
+        "proposal_id": proposal_id,
+        "task_id": str(task_payload.get("task_id", "")).strip(),
+        "title": str(task_payload.get("title", "")).strip(),
+        "domain": str(task_payload.get("domain", "")).strip(),
+        "objective": str(task_payload.get("objective", "")).strip(),
+        "decision": dict(decision_payload),
+        "evidence": dict(evidence_payload),
+        "approval": dict(approval_payload),
+        "academic_mode": str((academic_payload or {}).get("academic_mode", "")).strip(),
+        "target_artifacts": list((academic_payload or {}).get("target_artifacts", [])),
+        "scientific_support_summary": str((academic_payload or {}).get("scientific_support_summary", "")).strip(),
+        "academic_packet": dict((academic_payload or {}).get("academic_packet", {})),
+        "proposal_status": proposal_status,
+    }
+    event = {
+        "event_type": "openclaw_proposal",
+        "occurred_at": now_stamp(),
+        "actor": {"type": "ai", "id": "openclaw", "display_name": "openclaw"},
+        "session_id": session_id,
+        "risk_level": risk_level,
+        "links": {"reference": linked_reference},
+        "payload": payload,
+        "affected_files": [
+            "00_sistema_tesis/canon/events.jsonl",
+            "00_sistema_tesis/bitacora/openclaw_proposals.md",
+        ],
+        "human_validation": {"required": False},
     }
     return append_event(event)
 

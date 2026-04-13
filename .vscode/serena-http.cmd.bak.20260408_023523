@@ -1,0 +1,23 @@
+@echo off
+setlocal
+
+set "WORKSPACE_DIR=%~dp0.."
+set "PYTHON_EXE=%WORKSPACE_DIR%\.venv\bin\python.exe"
+set "SERVER_SCRIPT=%WORKSPACE_DIR%\07_scripts\serena_mcp.py"
+
+if not exist "%PYTHON_EXE%" (
+  >&2 echo [serena-http] Python no encontrado: %PYTHON_EXE%
+  exit /b 1
+)
+
+if not exist "%SERVER_SCRIPT%" (
+  >&2 echo [serena-http] Script no encontrado: %SERVER_SCRIPT%
+  exit /b 1
+)
+
+set "SISTEMA_TESIS_ROOT=%WORKSPACE_DIR%"
+set "PYTHONUNBUFFERED=1"
+set "PYTHONUTF8=1"
+if not defined SERENA_MCP_DEBUG_LOG set "SERENA_MCP_DEBUG_LOG=%WORKSPACE_DIR%\00_sistema_tesis\bitacora\audit_history\serena_mcp_debug.log"
+
+"%PYTHON_EXE%" -u "%SERVER_SCRIPT%" --transport http --host 127.0.0.1 --port 8765

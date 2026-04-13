@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+: "${TESIS_EMMC_ROOT:=/mnt/emmc}"
+: "${TESIS_REPO_DIR:=/srv/tesis/repo}"
+
+ts=$(date +%Y%m%d_%H%M%S)
+dest="${TESIS_EMMC_ROOT}/backups/tesis_${ts}.tar.gz"
+mkdir -p "${TESIS_EMMC_ROOT}/backups"
+tar -czf "$dest" -C "$(dirname "$TESIS_REPO_DIR")" "$(basename "$TESIS_REPO_DIR")"
+echo "BACKUP_OK:$dest"

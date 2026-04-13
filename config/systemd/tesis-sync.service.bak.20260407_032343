@@ -1,0 +1,8 @@
+[Unit]
+Description=Sincronizacion publica sanitizada del Sistema Operativo de Tesis
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/srv/tesis/repo
+ExecStart=/bin/bash /srv/tesis/repo/ops/actualizacion/sync_publico.sh
