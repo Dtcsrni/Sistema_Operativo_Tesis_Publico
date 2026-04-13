@@ -1,8 +1,8 @@
 # Plataforma de Investigación para Tesis IoT
 
-![Security Status](dashboard/badges/security_status.svg)
-![Integrity Status](dashboard/badges/integrity.svg)
-![Ledger Status](dashboard/badges/ledger.svg)
+![Estado de seguridad](dashboard/badges/security_status.svg)
+![Estado de integridad](dashboard/badges/integrity.svg)
+![Estado del ledger](dashboard/badges/ledger.svg)
 
 > Este `README.md` es un artefacto generado. No lo edites manualmente.
 > Fuente de verdad: `README_INICIO.md` + `00_sistema_tesis/config/` + `01_planeacion/`.
@@ -30,8 +30,8 @@ Este repositorio documenta decisiones, hipótesis, backlog, riesgos, experimento
 - `00_sistema_tesis/documentacion_sistema/`: narrativa canónica del propósito, módulos, flujos e interacción.
 - `01_planeacion/`: backlog, riesgos, roadmap y entregables canónicos.
 - `02_experimentos/`: simulación y validación experimental.
-- `03_datos/`: datos raw, procesados y catálogos.
-- `04_implementacion/`: firmware, gateway y analítica.
+- `03_datos/`: datos en bruto, procesados y catálogos.
+- `04_implementacion/`: firmware, pasarela y analítica.
 - `05_tesis/`: capítulos, figuras y ensamblaje de tesis.
 - `06_dashboard/`: dashboard HTML y exportables derivados.
 - `07_scripts/`: validación, generación y consolidación.
@@ -39,7 +39,7 @@ Este repositorio documenta decisiones, hipótesis, backlog, riesgos, experimento
 - `manifests/`: contratos máquina-legibles de almacenamiento, dominios, servicios y publicación.
 - `bootstrap/`: instalación por fases para host Windows y Orange Pi.
 - `runtime/openclaw/`: integración opcional, wrappers y políticas de OpenClaw.
-- `config/systemd/` y `config/env/`: servicios, timers y variables de entorno de referencia.
+- `config/systemd/` y `config/env/`: servicios, temporizadores y variables de entorno de referencia.
 - `tests/smoke/`, `tests/integration/`, `benchmarks/` y `ops/`: verificación, medición y operación de campo.
 
 ## Retoma rápida
@@ -106,10 +106,10 @@ Empieza por estos archivos:
 
 - **T-007** · `B1` · Delimitar formalmente el caso de estudio en la Zona Metropolitana de Pachuca · prioridad `critica` · objetivo `2026-03-30`
 - **T-010** · `B2` · Definir arquitectura base de comparación contra la propuesta · prioridad `critica` · objetivo `2026-04-05`
+- **T-027** · `B0` · Definir arquitectura de separación obligatoria entre sistema_tesis edge_iot y openclaw con contratos de interfaz · prioridad `critica` · objetivo `2026-04-06`
 - **T-011** · `B2` · Formalizar componentes flujos y modos de degradación de la arquitectura propuesta · prioridad `critica` · objetivo `2026-04-08`
-- **T-008** · `B1` · Definir taxonomía inicial de intermitencia urbana relevante para la tesis · prioridad `alta` · objetivo `2026-04-02`
-- **T-009** · `B1` · Identificar variables críticas y no críticas por escenario operativo · prioridad `alta` · objetivo `2026-04-04`
-- **T-012** · `B2` · Refinar hipótesis en variables métricas y criterios de soporte ejecutables · prioridad `alta` · objetivo `2026-04-10`
+- **T-029** · `B0` · Separar gestión de secretos y variables por dominio con rutas y políticas independientes · prioridad `critica` · objetivo `2026-04-08`
+- **T-039** · `B0` · Definir arquitectura modular del sistema operativo de tesis con límites entre canon proyecciones auditoría y publicación · prioridad `critica` · objetivo `2026-04-08`
 
 ## Riesgos abiertos
 
@@ -120,9 +120,9 @@ Empieza por estos archivos:
 
 ## Decisiones recientes
 
+- **2026-04-08** · [DEC-0023 Serena MCP como Capa Comun para Agentes](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-08_DEC-0023_serena_mcp_como_capa_comun_para_agentes.md)
+- **2026-04-08** · [DEC-0022 Arquitectura Operativa Escritorio Primario y Orange Pi Edge](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-08_DEC-0022_arquitectura_operativa_escritorio_primario_y_orange_pi_edge.md)
 - **2026-03-27** · [DEC-0021 Publicacion desde Downstream Publico Sanitizado](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0021_publicacion_desde_downstream_publico_sanitizado.md)
-- **2026-03-27** · [DEC-0020 OpenClaw como Capa Asistiva Opcional y Evaluable](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0020_openclaw_como_capa_asistiva_opcional_y_evaluable.md)
-- **2026-03-27** · [DEC-0019 Reestructura Operativa y Despliegue Orange Pi](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0019_reestructura_operativa_y_despliegue_orangepi.md)
 
 ## Operación
 
@@ -216,6 +216,6 @@ python 07_scripts/report_consistency.py
 - [`06_dashboard/generado/hoja_maestra_consolidada.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/hoja_maestra_consolidada.csv)
 - [`reporte interno no publicado`](NOTA_SEGURIDAD_Y_ACCESO.md)
 
-_Generado automáticamente el 2026-04-03._
+_Generado automáticamente el 2026-04-11._
 
-_Última actualización: `2026-04-03`._
+_Última actualización: `2026-04-11`._

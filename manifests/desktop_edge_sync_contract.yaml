@@ -1,0 +1,98 @@
+{
+  "version": "1.0",
+  "flow_id": "desktop_to_orange_pi_edge",
+  "source_node": "desktop_vscode",
+  "target_node": "orange_pi",
+  "sync_strategy": "git_pull_ff_only_plus_explicit_artifacts",
+  "repo_target_on_edge": "/srv/tesis/repo",
+  "edge_workspace": "/srv/tesis/workspace/edge",
+  "sync_profiles": [
+    {
+      "id": "repo-only",
+      "description": "Actualiza el clon operativo edge sin validacion adicional ni reinicio de servicios."
+    },
+    {
+      "id": "repo+postcheck",
+      "description": "Actualiza el clon operativo y ejecuta audit --check mas 90_postcheck.sh."
+    },
+    {
+      "id": "repo+restart-edge",
+      "description": "Actualiza el clon operativo, valida el edge y reinicia edge-iot-worker.service."
+    }
+  ],
+  "edge_evidence_paths": [
+    "/srv/tesis/intercambio/edge/outbox",
+    "/srv/tesis/intercambio/edge/spool",
+    "/var/log/edge-iot"
+  ],
+  "desktop_to_edge_payloads": [
+    "commits_canonicos",
+    "scripts_y_manifests",
+    "contratos_de_datos",
+    "artefactos_generados_para_despliegue"
+  ],
+  "edge_to_desktop_payloads": [
+    "logs_edge",
+    "metricas_edge",
+    "evidencia_spool",
+    "resultados_de_pruebas_y_benchmarks"
+  ],
+  "forbidden_flows": [
+    "edicion_primaria_en_orange_pi",
+    "workspace_compartido_por_red_como_flujo_normal",
+    "git_pull_no_fast_forward_en_edge",
+    "correccion_manual_de_artefactos_generados_en_edge"
+  ],
+  "stages": [
+    {
+      "id": "desktop_authoring",
+      "actor": "tesista",
+      "location": "desktop_vscode",
+      "action": "editar_y_validar_cambio_canonico",
+      "commands": [
+        "python3 07_scripts/build_all.py"
+      ]
+    },
+    {
+      "id": "desktop_commit_sync",
+      "actor": "tesista",
+      "location": "desktop_vscode",
+      "action": "sincronizar_repo_canonico",
+      "commands": [
+        "python3 07_scripts/tesis.py sync --message \"...\" --step-id validación humana interna no pública"
+      ]
+    },
+    {
+      "id": "edge_repo_update",
+      "actor": "orange_pi",
+      "location": "/srv/tesis/repo",
+      "action": "actualizar_clon_operativo_en_edge",
+      "commands": [
+        "bash /srv/tesis/repo/ops/actualizacion/sync_repo_desde_desktop.sh repo-only",
+        "bash /srv/tesis/repo/ops/actualizacion/sync_repo_desde_desktop.sh repo+postcheck",
+        "bash /srv/tesis/repo/ops/actualizacion/sync_repo_desde_desktop.sh repo+restart-edge"
+      ]
+    },
+    {
+      "id": "edge_runtime_validation",
+      "actor": "orange_pi",
+      "location": "orange_pi_edge",
+      "action": "ejecutar_postcheck_validacion_edge_y_reinicio_controlado",
+      "commands": [
+        "bash /srv/tesis/repo/bootstrap/orangepi/90_postcheck.sh",
+        "systemctl restart edge-iot-worker.service"
+      ]
+    },
+    {
+      "id": "edge_evidence_return",
+      "actor": "tesista",
+      "location": "desktop_vscode",
+      "action": "recuperar_logs_y_evidencia_para_analisis",
+      "commands": [
+        "recolectar /srv/tesis/intercambio/edge/outbox",
+        "recolectar /srv/tesis/intercambio/edge/spool",
+        "recolectar /var/log/edge-iot"
+      ]
+    }
+  ]
+}

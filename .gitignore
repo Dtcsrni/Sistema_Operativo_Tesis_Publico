@@ -13,3 +13,4 @@ mi_llave_secreta_backup.asc
 00_sistema_tesis/bitacora/audit_history/security_report_*.json
 config/backups/*.bak
 .env
+runtime/openclaw/state/

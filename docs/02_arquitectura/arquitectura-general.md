@@ -1,7 +1,14 @@
 # Arquitectura General
 
 ## Proposito
-El repositorio canónico es la fuente de verdad operacional del Sistema Operativo de Tesis. Su funcion es gobernar instalacion, operacion, seguridad, trazabilidad, soporte cientifico y despliegue sobre Orange Pi 5 Plus.
+El repositorio canónico es la fuente de verdad operacional del Sistema Operativo de Tesis. Su funcion es gobernar instalacion, operacion, seguridad, trazabilidad, soporte cientifico y despliegue sobre una topologia de trabajo con escritorio primario y nodo edge en Orange Pi 5 Plus.
+
+## Topologia operativa
+- `desktop_workspace`: PC de escritorio con Visual Studio Code como estacion principal de autoria, diseno, analisis, construccion documental y mantenimiento del repositorio soberano.
+- `orange_pi_edge`: Orange Pi como nodo edge operativo para `edge_iot`, observabilidad local, servicios del stack IoT y capacidades que deban vivir cerca del hardware o del entorno fisico.
+- Integracion principal: `git_sync` + artefactos y contratos explicitos.
+- Retorno desde Orange Pi: logs operativos, evidencia edge, metricas y artefactos locales derivados.
+- No es flujo normal usar un workspace remoto montado por red ni convertir la Orange Pi en la superficie principal de redaccion o decisiones arquitectonicas.
 
 ## Capas
 - Canon soberano: `00_sistema_tesis/`.
@@ -14,6 +21,9 @@ El repositorio canónico es la fuente de verdad operacional del Sistema Operativ
 - Superficie derivada: `06_dashboard/` y repo publico sanitizado.
 
 ## Reglas
+- El trabajo principal de tesis ocurre en `desktop_workspace`.
+- `orange_pi_edge` ejecuta edge, pruebas tecnicas locales, diagnostico operativo y control del stack IoT sin sustituir la autoria principal del escritorio.
+- La sincronizacion entre nodos debe pasar por Git, artefactos generados, contratos de datos o evidencia edge explicitamente intercambiada.
 - El sistema base debe operar sin OpenClaw.
 - Toda exposicion externa sale del downstream publico sanitizado.
 - Hardware, edge, tesis y administracion se separan por dominio.
@@ -23,4 +33,4 @@ El repositorio canónico es la fuente de verdad operacional del Sistema Operativ
 - `python 07_scripts/tesis.py doctor --check`
 - `python 07_scripts/build_all.py`
 
-_Última actualización: `2026-04-04`._
+_Última actualización: `2026-04-13`._

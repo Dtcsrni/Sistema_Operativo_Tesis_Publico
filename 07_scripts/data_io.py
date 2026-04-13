@@ -67,3 +67,11 @@ def dump_jsonl_path(path: Path, rows: list[dict[str, Any]]) -> Path:
     content = "\n".join(json.dumps(row, ensure_ascii=False, sort_keys=True) for row in rows) + "\n"
     path.write_text(content, encoding="utf-8")
     return path
+
+
+def append_jsonl_path(path: Path, row: dict[str, Any]) -> Path:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    line = json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n"
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(line)
+    return path

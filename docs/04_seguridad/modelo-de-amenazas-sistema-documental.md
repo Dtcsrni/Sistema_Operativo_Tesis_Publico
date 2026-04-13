@@ -1,0 +1,29 @@
+# Modelo de Amenazas del Sistema Documental
+
+## Superficies
+- Canon privado en `00_sistema_tesis/`.
+- Proyecciones derivadas en `06_dashboard/wiki/`, `06_dashboard/generado/` y `README.md`.
+- Bundle publico sanitizado.
+- Puente operativo escritorio -> Orange Pi por Git y artefactos explicitos.
+
+## Amenazas prioritarias
+- Escritura cruzada desde runtime edge o asistivo hacia el canon no público.
+- Uso de artefactos derivados como si fueran fuente de verdad.
+- Exposicion accidental de evidencia privada o secretos en publicacion.
+- Deriva entre manifests, docs y scripts criticos.
+- Tratar el clon de Orange Pi como repositorio principal de autoria.
+
+## Controles
+- Guardrails y archivos protegidos para superficies criticas.
+- Sanitizacion obligatoria antes de publicacion.
+- Contratos maquina-legibles de red, runtime, backups e intercambio.
+- Suite de conformidad que falle ante mezcla de dominios o drift contractual.
+- Gates externos explicitos para lo que solo puede validarse en host real.
+
+## Criterio de aceptacion
+- El canon no público permanece separado.
+- El bundle publico no contiene evidencia privada ni secretos.
+- Las reglas de no HTTP interdominio, no lectura cruzada y no restore cruzado estan declaradas y validadas.
+- Orange Pi aparece solo como clon operativo y nodo de validacion local.
+
+_Última actualización: `2026-04-13`._

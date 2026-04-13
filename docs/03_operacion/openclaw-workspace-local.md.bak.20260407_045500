@@ -1,0 +1,78 @@
+# Espacio de Trabajo Local de OpenClaw
+
+## Objetivo
+Ofrecer una superficie híbrida CLI + web para operar `openclaw` en Orange Pi sin convertirlo en prerrequisito del sistema.
+
+## Flujo mínimo
+1. Ejecutar `python runtime/openclaw/bin/openclaw_local.py doctor`.
+2. Registrar una tarea con `tarea nueva` o evaluarla con `tarea enrutar`.
+3. Correr `ejecutar --simulacion` para generar evidencia y, si corresponde, solicitud de aprobación.
+4. Revisar aprobaciones pendientes.
+5. Levantar la pasarela local con `pasarela servir` cuando existan dependencias web instaladas.
+6. Verificar readiness local con `proveedor estado`, `proveedor medir`, `secretos estado`, `presupuesto estado`, `pasarela preflight` y `pasarela estado`.
+
+## Flujos académicos v1
+- `python runtime/openclaw/bin/openclaw_local.py academico estado-del-arte --id-tarea ... --archivo-entrada-json <archivo.json>`
+- `python runtime/openclaw/bin/openclaw_local.py academico metodologia --id-tarea ... --archivo-entrada-json <archivo.json>`
+- `python runtime/openclaw/bin/openclaw_local.py academico redaccion --id-tarea ... --archivo-entrada-json <archivo.json> --escribir-artefactos`
+- `python runtime/openclaw/bin/openclaw_local.py academico exportar-propuesta --id-tarea ...`
+
+## Entradas estructuradas
+- `academico estado-del-arte` espera `sources`, `claims`, `literature_records`, `traceability_links`.
+- `academico metodologia` espera `sources`, `claims`, `traceability_links` y `summary` opcional.
+- `academico redaccion` espera `sources`, `claims`, `traceability_links` y `writing_draft.paragraphs`.
+- `writing_draft.paragraphs` debe marcar `source_refs` o `non_factual`; si no, el sistema deja el párrafo como `pendiente_de_respaldo`.
+
+## Salidas académicas
+- Estado del arte: propuesta para `matriz-de-literatura`, `matriz-de-afirmaciones-y-evidencia` y nota crítica de contraste.
+- Metodología: ficha/nota metodológica y matriz de exploración propuesta.
+- Redacción: borrador Markdown en `runtime/openclaw/state/academico/drafts/` y fragmento LaTeX en `05_tesis_latex/sections/`.
+- Todo flujo genera evidencia local, paquete académico persistido y, si aplica, cola de aprobación humana.
+
+## Despliegue local en Orange Pi
+- El entorno efectivo se instala en `/etc/tesis-os/openclaw.env`.
+- Los secretos por dominio viven en `/etc/tesis-os/domains/`.
+- El estado local vive en `/var/lib/herramientas/openclaw`.
+- El cache local vive en `/var/cache/herramientas/openclaw`.
+- Los logs operativos viven en `/var/log/openclaw`.
+- El intercambio con otros dominios vive solo en `/srv/tesis/intercambio/openclaw`.
+- El runtime principal es `Ollama`; la vía `RKLLM`/`RKNN-LLM` se instala como carril experimental secundario.
+- `pasarela preflight` debe pasar antes de habilitar `openclaw-gateway.service`.
+
+## Aislamiento T-030
+- `openclaw-gateway.service` corre bajo `openclaw:openclaw`.
+- `openclaw` no comparte SQLite, cache ni logs con `sistema_tesis` ni `edge_iot`.
+- `openclaw` no expone API interdominio; solo escucha en `localhost`.
+- Toda entrega a `sistema_tesis` sale por drafts, spool local o CLI explícita.
+
+## Secretos y presupuesto
+- `python runtime/openclaw/bin/openclaw_local.py secretos estado` reporta dominios, proveedores permitidos y faltantes sin exponer valores.
+- `python runtime/openclaw/bin/openclaw_local.py presupuesto estado` consolida snapshot global y gasto local de `openclaw`.
+- `python runtime/openclaw/bin/openclaw_local.py presupuesto simular --dominio academico --proveedor gemini_api` permite validar degradación antes de ejecutar una tarea.
+- Las sesiones `gemini_web_assisted` y `chatgpt_plus_web_assisted` se clasifican como supervisadas por humano y usan costo estimado/manual.
+
+## Gate humano
+- Toda mutación de estado, publicación o cambio de arquitectura exige aprobación humana.
+- La salida de `openclaw` se considera propuesta operativa hasta revisión humana.
+- La evidencia fuente y el `Step ID` se preservan fuera de la cola automática.
+
+## Confirmación explícita técnica
+Flujo canónico para promover una propuesta OpenClaw a `VAL-STEP-*`:
+
+1. Exportar la propuesta draft al canon o identificar su `proposal_event_id`.
+2. Preparar el paquete de validación humana:
+   - `python runtime/openclaw/bin/openclaw_local.py propuesta preparar-validacion --id-tarea TASK_ID --id-sesion SESSION_ID`
+   - o `python 07_scripts/tesis.py proposal package-openclaw --proposal-event-id EVT-XXXX --session-id SESSION_ID`
+3. Formular al tesista la `critical_question` exacta generada por el paquete.
+4. Registrar la respuesta humana exacta como evidencia fuente:
+   - `python 07_scripts/tesis.py source scaffold --session-id SESSION_ID`
+   - capturar `transcripcion.md`
+   - `python 07_scripts/tesis.py source register --session-id SESSION_ID --transcript <RUTA_TRANSCRIPCION> --quote "<CONFIRMACION_EXACTA>"`
+5. Finalizar la propuesta OpenClaw en validación humana real:
+   - `python 07_scripts/tesis.py proposal finalize-openclaw --proposal-event-id EVT-XXXX --source-event-id EVT-YYYY --step-id VAL-STEP-ZZZ --session-id SESSION_ID --confirmation-text "<CONFIRMACION_EXACTA>"`
+
+## Requisitos duros de confirmación
+- La confirmación explícita debe ser texto humano exacto.
+- `quoted_text` en `conversation_source_registered` debe coincidir exactamente con `confirmation_text`.
+- No se permite inferir, resumir o parafrasear la autorización humana.
+- `openclaw_proposal` es draft; solo `human_validation` crea el `VAL-STEP-*` válido.

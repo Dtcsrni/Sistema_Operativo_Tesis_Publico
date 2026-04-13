@@ -7,7 +7,6 @@ import os
 import re
 import subprocess
 import sys
-import tempfile
 from datetime import datetime
 from pathlib import Path
 
@@ -17,6 +16,7 @@ from guardrails import is_protected_path
 
 
 DEFAULT_OUTPUT_DIR = ROOT / "00_sistema_tesis" / "bitacora" / "audit_history" / "governance_gate"
+SAFE_TMP_DIR = ROOT / ".tmp" / "governance_gate"
 STAGES = ("pre-commit", "pre-push", "ci", "manual")
 STEP_ID_PATTERN = re.compile(r"^VAL-STEP-[A-Za-z0-9_-]+$")
 STEP_ID_TOKEN_PATTERN = re.compile(r"VAL-STEP-[A-Za-z0-9_-]+")
@@ -44,8 +44,26 @@ def ensure_canon_initialized() -> None:
         import_legacy_events()
 
 
+def safe_temp_env() -> dict[str, str]:
+    SAFE_TMP_DIR.mkdir(parents=True, exist_ok=True)
+    env = os.environ.copy()
+    safe_tmp = str(SAFE_TMP_DIR)
+    env["TMPDIR"] = safe_tmp
+    env["TMP"] = safe_tmp
+    env["TEMP"] = safe_tmp
+    return env
+
+
 def run_command(cmd: list[str]) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    return subprocess.run(
+        cmd,
+        cwd=ROOT,
+        env=safe_temp_env(),
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
 
 
 def emit_text(text: str, *, stream) -> None:
@@ -260,7 +278,7 @@ def file_hashes(paths: list[str]) -> dict[str, str]:
 
 
 def public_sync_check_dir() -> str:
-    return str(Path(tempfile.gettempdir()) / "sistema_tesis_public_sync_check")
+    return str(SAFE_TMP_DIR / "public_sync_check")
 
 
 def checks_for_stage(stage: str) -> list[tuple[str, list[str]]]:
@@ -288,7 +306,7 @@ def checks_for_stage(stage: str) -> list[tuple[str, list[str]]]:
             ci_checks.append(("Verificar firma GPG", [python, "07_scripts/setup_gpg_attestation.py", "--check"]))
         ci_checks.extend(
             [
-            ("Pruebas", [python, "-m", "pytest", "-q"]),
+            ("Pruebas", [python, "-m", "pytest", "-q", "-s"]),
             (
                 "Verificar downstream público sanitizado",
                 [

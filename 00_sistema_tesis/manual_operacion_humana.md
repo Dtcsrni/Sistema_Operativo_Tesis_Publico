@@ -10,6 +10,13 @@ La IA es opcional: acelera trabajo, pero no es requisito para retomar, registrar
 - **Superficie pública:** clon filtrado y bundle público curado derivados desde la base privada.
 - **IA opcional:** si no hay IA disponible, el sistema sigue siendo legible y operable mediante Markdown, CSV, YAML y CLI.
 
+## Nodos operativos
+
+- **Escritorio primario (`desktop_workspace`):** Visual Studio Code en el PC como estación principal de autoría, diseño, análisis, construcción documental y mantenimiento del repositorio soberano.
+- **Nodo edge (`orange_pi_edge`):** Orange Pi para `edge_iot`, observabilidad local, diagnóstico técnico, pruebas en campo y control del stack IoT.
+- **Integración oficial:** `git_sync` más artefactos, contratos de datos y evidencia edge explícita.
+- **No es flujo normal:** editar la arquitectura principal desde Orange Pi ni depender de un workspace remoto montado por red.
+
 ## Ruta mínima de operación
 
 ### Retomar
@@ -20,6 +27,16 @@ La IA es opcional: acelera trabajo, pero no es requisito para retomar, registrar
 4. Ejecutar `python 07_scripts/tesis.py next`.
 5. Si hace falta un diagnóstico más fino, ejecutar `python 07_scripts/tesis.py doctor`.
 6. Si `doctor` muestra un `Python shell` distinto al `Python preferido repo`, seguir usando los wrappers oficiales; ellos fuerzan la `.venv` del proyecto.
+
+### Flujo normal escritorio -> Orange Pi
+
+1. Trabajar el cambio principal en el escritorio.
+2. Ejecutar `python 07_scripts/build_all.py` en el workspace soberano antes de promoverlo.
+3. Sincronizar hacia la Orange Pi por Git y, cuando aplique, por artefactos o contratos explícitos.
+4. En Orange Pi operar, diagnosticar o validar `edge_iot` y recuperar logs, métricas o evidencia técnica.
+5. Devolver al escritorio cualquier hallazgo relevante para su registro formal en decisión, bitácora o backlog.
+6. Usar [docs/03_operacion/flujo-escritorio-orange-pi.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/docs/03_operacion/flujo-escritorio-orange-pi.md) como procedimiento operativo base entre ambos nodos.
+7. Elegir el perfil de sincronización edge según el cambio: `repo-only`, `repo+postcheck` o `repo+restart-edge`.
 
 ### Registrar cambio o decisión
 
@@ -45,7 +62,17 @@ La IA es opcional: acelera trabajo, pero no es requisito para retomar, registrar
 2. Validar descargas e imagen base desde `bootstrap/host/`.
 3. Ejecutar por fases `bootstrap/orangepi/` en lugar de depender de un script monolítico.
 4. Correr `bash bootstrap/orangepi/90_postcheck.sh` al finalizar.
-5. Registrar cualquier desviación real de hardware, almacenamiento o servicios en bitácora/decisión.
+5. Tratar `/srv/tesis/repo` como clon operativo local de despliegue y supervisión, no como repositorio principal de autoría.
+6. Registrar cualquier desviación real de hardware, almacenamiento o servicios en bitácora/decisión.
+7. Para actualizar el clon operativo desde el escritorio, preferir `bash /srv/tesis/repo/ops/actualizacion/sync_repo_desde_desktop.sh repo+postcheck`.
+8. Usar `repo-only` si solo se alineará el clon local, y `repo+restart-edge` si el cambio exige reiniciar `edge-iot-worker.service`.
+
+### Operación permitida en Orange Pi
+
+1. Ejecutar servicios `edge_iot`, healthchecks, watchdogs, observabilidad y pruebas técnicas del stack IoT.
+2. Aplicar hotfixes operativos del dominio edge cuando sean necesarios y queden trazados en el repositorio soberano.
+3. Recuperar logs, evidencias de runtime, métricas y artefactos locales para su análisis posterior en el escritorio.
+4. No usar la Orange Pi como superficie principal de redacción de tesis ni de decisiones arquitectónicas.
 
 ### Publicación pública
 
@@ -122,4 +149,4 @@ La firma humana no se autoemite desde IA sin contexto trazable. Si un artefacto 
    - `python 07_scripts/build_all.py`
    - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`
 
-_Última actualización: `2026-04-04`._
+_Última actualización: `2026-04-13`._

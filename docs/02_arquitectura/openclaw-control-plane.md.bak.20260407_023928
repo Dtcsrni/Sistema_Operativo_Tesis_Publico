@@ -1,0 +1,46 @@
+# OpenClaw Control Plane Local
+
+## Propósito
+`openclaw` opera como plano de control asistivo de `tesis-os`. No sustituye el canon ni los scripts oficiales del sistema de tesis.
+
+## Subsistemas
+- `control-plane`: CLI local, API del workspace y panel web.
+- `policy-engine`: ruteo por dominio, riesgo, sensibilidad y costo.
+- `evidence-engine`: persistencia local auditable con hashes SHA-256.
+- `provider-gateway`: adaptadores para local, web asistida y APIs formales.
+- `hardware-broker`: lectura controlada del host y de las capacidades de Orange Pi.
+
+## Límites duros
+- `openclaw` no valida por sí mismo decisiones ni `VAL-STEP-*`.
+- `openclaw` no publica directamente a superficies públicas.
+- `edge` y `administrativo` quedan local-first y sin nube por defecto.
+- El fallo de `openclaw` no detiene `tesis-os`.
+
+## Persistencia
+- Estado operativo local: SQLite.
+- Fuente de verdad canónica: archivos versionados del repositorio.
+- Evidencia: registros locales hashables y exportables para integración posterior al ledger en modo draft.
+
+## Interfaz inicial
+- CLI: `doctor`, `tarea nueva`, `tarea enrutar`, `ejecutar --simulacion`, `aprobar`, `auditar`, `sesion cerrar`, `proveedor estado`.
+- Web local: tablero de tareas, aprobaciones, costos, trazabilidad y estado del host.
+- CLI académica: `academico estado-del-arte`, `academico metodologia`, `academico redaccion`, `academico exportar-propuesta`.
+
+## Casos de uso académicos v1
+- `estado_del_arte`: triage de literatura, matriz de literatura, matriz de afirmaciones y nota crítica de contraste.
+- `metodologia`: ficha de estudio, matriz de exploración, nota metodológica y propuesta de decisión o pendiente.
+- `redaccion_tesis`: borrador Markdown trazable y fragmento LaTeX derivado desde la misma estructura de párrafos.
+
+## Contratos académicos
+- `AcademicWorkPacket`: paquete común con `mode`, `question`, `scope`, `sources`, `claims`, `outputs` y `traceability_links`.
+- `LiteratureRecord`: contrato alineado a la matriz de literatura del repositorio.
+- `ClaimRecord`: afirmación clasificada con verificación, fuentes e impacto sobre la tesis.
+- `WritingDraft`: borrador paralelo Markdown/LaTeX para secciones de tesis.
+
+## Promoción a validación humana
+- `openclaw` puede exportar `openclaw_proposal` al canon.
+- `openclaw` puede preparar un paquete técnico de validación con pregunta crítica, `session_id`, `step_id` sugerido y comandos canónicos.
+- La promoción final a `VAL-STEP-*` ocurre únicamente mediante:
+  - evidencia fuente registrada (`conversation_source_registered`),
+  - coincidencia exacta entre `quoted_text` y `confirmation_text`,
+  - ejecución explícita de `tesis.py proposal finalize-openclaw`.

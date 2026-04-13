@@ -1,40 +1,340 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "servicios": [
     {
       "id": "tesis-healthcheck",
+      "dominio": "sistema_tesis",
       "tipo": "systemd_timer",
       "criticidad": "media",
       "comando": "systemctl start tesis-healthcheck.service",
+      "usuario": "tesis",
+      "grupo": "tesis",
+      "network_profile": "salida_minima",
+      "read_only_paths": [
+        "/srv/tesis/repo"
+      ],
+      "read_write_paths": [
+        "/var/log/tesis-os"
+      ],
+      "canales_interdominio": [
+        "cli_explicita"
+      ],
+      "hardening": {
+        "no_new_privileges": true,
+        "private_tmp": true,
+        "protect_system": "strict"
+      },
       "dependencias": [
         "network-online.target"
       ]
     },
     {
       "id": "tesis-backup",
+      "dominio": "administrativo",
       "tipo": "systemd_timer",
       "criticidad": "alta",
       "comando": "systemctl start tesis-backup.service",
+      "usuario": "tesisadmin",
+      "grupo": "tesisadmin",
+      "network_profile": "sin_nube",
+      "read_only_paths": [
+        "/srv/tesis/repo",
+        "/var/lib/tesis-os",
+        "/var/lib/herramientas/openclaw"
+      ],
+      "read_write_paths": [
+        "/mnt/emmc/backups",
+        "/mnt/emmc/snapshots",
+        "/var/log/tesis-admin"
+      ],
+      "canales_interdominio": [
+        "spool_backup"
+      ],
+      "hardening": {
+        "no_new_privileges": true,
+        "private_tmp": true,
+        "protect_system": "strict"
+      },
       "dependencias": [
         "mnt-emmc.mount"
       ]
     },
     {
       "id": "tesis-sync",
+      "dominio": "sistema_tesis",
       "tipo": "systemd_timer",
       "criticidad": "media",
       "comando": "systemctl start tesis-sync.service",
+      "usuario": "tesis",
+      "grupo": "tesis",
+      "network_profile": "salida_publicacion",
+      "read_only_paths": [
+        "/srv/tesis/repo"
+      ],
+      "read_write_paths": [
+        "/srv/tesis/outputs",
+        "/var/log/tesis-os"
+      ],
+      "canales_interdominio": [
+        "cli_explicita"
+      ],
+      "hardening": {
+        "no_new_privileges": true,
+        "private_tmp": true,
+        "protect_system": "strict"
+      },
       "dependencias": [
         "network-online.target"
       ]
     },
     {
       "id": "openclaw-gateway",
+      "dominio": "openclaw",
       "tipo": "systemd_service",
       "criticidad": "opcional",
       "comando": "systemctl start openclaw-gateway.service",
+      "usuario": "openclaw",
+      "grupo": "openclaw",
+      "network_profile": "egress_controlado_localhost_in",
+      "read_only_paths": [
+        "/srv/tesis/repo"
+      ],
+      "read_write_paths": [
+        "/var/lib/herramientas/openclaw",
+        "/var/cache/herramientas/openclaw",
+        "/var/log/openclaw",
+        "/srv/tesis/intercambio/openclaw"
+      ],
+      "canales_interdominio": [
+        "archivo_draft",
+        "cli_explicita",
+        "socket_local"
+      ],
+      "hardening": {
+        "no_new_privileges": true,
+        "private_tmp": true,
+        "protect_system": "strict"
+      },
       "dependencias": [
         "network-online.target"
+      ]
+    },
+    {
+      "id": "ollama",
+      "dominio": "openclaw",
+      "tipo": "systemd_service",
+      "criticidad": "opcional",
+      "comando": "systemctl start ollama.service",
+      "usuario": "openclaw",
+      "grupo": "openclaw",
+      "network_profile": "solo_localhost",
+      "read_only_paths": [
+        "/etc/tesis-os/openclaw.env"
+      ],
+      "read_write_paths": [
+        "/mnt/emmc/models/ollama",
+        "/var/lib/herramientas/openclaw"
+      ],
+      "canales_interdominio": [
+        "socket_local"
+      ],
+      "hardening": {
+        "no_new_privileges": true,
+        "private_tmp": true,
+        "protect_system": "strict"
+      },
+      "dependencias": [
+        "network-online.target"
+      ]
+    },
+    {
+      "id": "rknn-llm-experimental",
+      "dominio": "openclaw",
+      "tipo": "runtime_local",
+      "criticidad": "experimental",
+      "comando": "bootstrap/orangepi/73_instalar-rknpu.sh",
+      "usuario": "openclaw",
+      "grupo": "openclaw",
+      "network_profile": "sin_nube",
+      "read_only_paths": [
+        "/opt/tesis-os/vendor/rknn-llm"
+      ],
+      "read_write_paths": [
+        "/var/lib/herramientas/openclaw"
+      ],
+      "canales_interdominio": [
+        "socket_local"
+      ],
+      "hardening": {
+        "no_new_privileges": true,
+        "private_tmp": true,
+        "protect_system": "strict"
+      },
+      "dependencias": [
+        "openclaw-gateway"
+      ]
+    },
+    {
+      "id": "edge-iot-worker",
+      "dominio": "edge_iot",
+      "tipo": "systemd_service",
+      "criticidad": "alta",
+      "comando": "systemctl start edge-iot-worker.service",
+      "usuario": "edgeiot",
+      "grupo": "edgeiot",
+      "network_profile": "edge_restringido",
+      "read_only_paths": [
+        "/srv/tesis/repo",
+        "/etc/tesis-os/edge-iot.env"
+      ],
+      "read_write_paths": [
+        "/var/lib/edge-iot",
+        "/var/log/edge-iot",
+        "/srv/tesis/workspace/edge",
+        "/srv/tesis/intercambio/edge"
+      ],
+      "canales_interdominio": [
+        "spool_local",
+        "cli_explicita"
+      ],
+      "healthcheck": {
+        "type": "script",
+        "command": "/srv/tesis/repo/ops/edge/edge-iot-healthcheck.sh"
+      },
+      "hardening": {
+        "no_new_privileges": true,
+        "private_tmp": true,
+        "protect_system": "strict"
+      },
+      "dependencias": [
+        "network-online.target"
+      ]
+    },
+    {
+      "id": "edge-iot-watchdog",
+      "dominio": "edge_iot",
+      "tipo": "systemd_timer",
+      "criticidad": "alta",
+      "comando": "systemctl start edge-iot-watchdog.service",
+      "usuario": "edgeiot",
+      "grupo": "edgeiot",
+      "network_profile": "edge_restringido",
+      "read_only_paths": [
+        "/srv/tesis/repo",
+        "/etc/tesis-os/edge-iot.env"
+      ],
+      "read_write_paths": [
+        "/var/lib/edge-iot",
+        "/var/log/edge-iot",
+        "/srv/tesis/intercambio/edge"
+      ],
+      "canales_interdominio": [
+        "spool_local",
+        "cli_explicita"
+      ],
+      "healthcheck": {
+        "type": "script",
+        "command": "/srv/tesis/repo/ops/edge/edge-iot-watchdog.sh"
+      },
+      "hardening": {
+        "no_new_privileges": true,
+        "private_tmp": true,
+        "protect_system": "strict"
+      },
+      "dependencias": [
+        "edge-iot-worker"
+      ]
+    },
+    {
+      "id": "prometheus",
+      "dominio": "administrativo",
+      "tipo": "systemd_service",
+      "criticidad": "media",
+      "comando": "systemctl start prometheus.service",
+      "usuario": "prometheus",
+      "grupo": "prometheus",
+      "network_profile": "solo_localhost_observabilidad",
+      "read_only_paths": [
+        "/etc/prometheus/prometheus.yml"
+      ],
+      "read_write_paths": [
+        "/var/lib/prometheus",
+        "/var/log/tesis-admin"
+      ],
+      "canales_interdominio": [
+        "scrape_local"
+      ],
+      "hardening": {
+        "no_new_privileges": true,
+        "private_tmp": true,
+        "protect_system": "full"
+      },
+      "dependencias": [
+        "prometheus-node-exporter"
+      ]
+    },
+    {
+      "id": "prometheus-node-exporter",
+      "dominio": "administrativo",
+      "tipo": "systemd_service",
+      "criticidad": "media",
+      "comando": "systemctl start prometheus-node-exporter.service",
+      "usuario": "prometheus",
+      "grupo": "prometheus",
+      "network_profile": "solo_localhost_observabilidad",
+      "read_only_paths": [
+        "/proc",
+        "/sys"
+      ],
+      "read_write_paths": [
+        "/var/lib/node_exporter/textfile_collector",
+        "/var/log/tesis-admin"
+      ],
+      "canales_interdominio": [
+        "scrape_local"
+      ],
+      "hardening": {
+        "no_new_privileges": true,
+        "private_tmp": true,
+        "protect_system": "full"
+      },
+      "dependencias": [
+        "network-online.target"
+      ]
+    },
+    {
+      "id": "tesis-observabilidad-collector",
+      "dominio": "administrativo",
+      "tipo": "systemd_timer",
+      "criticidad": "media",
+      "comando": "systemctl start tesis-observabilidad-collector.service",
+      "usuario": "tesisadmin",
+      "grupo": "tesisadmin",
+      "network_profile": "sin_nube",
+      "read_only_paths": [
+        "/srv/tesis/repo",
+        "/var/log/tesis-os",
+        "/var/log/openclaw",
+        "/var/log/edge-iot",
+        "/var/log/tesis-admin",
+        "/var/lib/tesis-os",
+        "/var/lib/herramientas/openclaw",
+        "/var/lib/edge-iot"
+      ],
+      "read_write_paths": [
+        "/var/lib/node_exporter/textfile_collector",
+        "/var/log/tesis-admin"
+      ],
+      "canales_interdominio": [
+        "scrape_local"
+      ],
+      "hardening": {
+        "no_new_privileges": true,
+        "private_tmp": true,
+        "protect_system": "strict"
+      },
+      "dependencias": [
+        "prometheus-node-exporter"
       ]
     }
   ]

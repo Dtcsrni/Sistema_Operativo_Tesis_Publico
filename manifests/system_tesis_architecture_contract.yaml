@@ -1,0 +1,67 @@
+{
+  "version": "1.0",
+  "contract_id": "system_tesis_architecture_contract",
+  "desktop_first": true,
+  "authoring_node": "desktop_vscode",
+  "edge_node_role": "clon_operativo_y_validacion_local",
+  "layers": [
+    {
+      "id": "canon",
+      "description": "Fuente soberana de eventos, estado, ledger y configuracion protegida.",
+      "write_scope": "controlado"
+    },
+    {
+      "id": "proyecciones",
+      "description": "Artefactos derivados materializados desde el canon sin edicion manual.",
+      "write_scope": "derivado"
+    },
+    {
+      "id": "auditoria_guardrails",
+      "description": "Validadores, chequeos, handshakes y enforcement de estructura.",
+      "write_scope": "controlado"
+    },
+    {
+      "id": "publicacion",
+      "description": "Bundle publico sanitizado y superficies derivadas publicables.",
+      "write_scope": "derivado"
+    }
+  ],
+  "interfaces": [
+    {
+      "id": "canon_to_proyecciones",
+      "source": "canon",
+      "target": "proyecciones",
+      "mechanism": "materializacion_controlada"
+    },
+    {
+      "id": "canon_to_auditoria",
+      "source": "canon",
+      "target": "auditoria_guardrails",
+      "mechanism": "lectura_controlada"
+    },
+    {
+      "id": "canon_to_publicacion",
+      "source": "canon",
+      "target": "publicacion",
+      "mechanism": "sanitizacion_y_build"
+    },
+    {
+      "id": "auditoria_to_publicacion",
+      "source": "auditoria_guardrails",
+      "target": "publicacion",
+      "mechanism": "gate_previo_a_publicar"
+    }
+  ],
+  "forbidden_couplings": [
+    "edge_iot_to_canon_write",
+    "publicacion_to_canon_write",
+    "proyecciones_as_source_of_truth",
+    "orange_pi_as_primary_authoring_node"
+  ],
+  "critical_scripts": [
+    "07_scripts/tesis.py",
+    "07_scripts/build_all.py",
+    "07_scripts/validate_structure.py",
+    "07_scripts/validate_b0_architecture.py"
+  ]
+}

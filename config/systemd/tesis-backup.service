@@ -6,4 +6,16 @@ RequiresMountsFor=/mnt/emmc/backups
 [Service]
 Type=oneshot
 WorkingDirectory=/srv/tesis/repo
+EnvironmentFile=/etc/tesis-os/backup.env
 ExecStart=/bin/bash /srv/tesis/repo/ops/respaldo/ejecutar_respaldo.sh
+User=tesisadmin
+Group=tesisadmin
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+RestrictAddressFamilies=AF_UNIX
+ReadOnlyPaths=/srv/tesis/repo /var/lib/tesis-os /var/lib/herramientas/openclaw
+ReadWritePaths=/mnt/emmc/backups /mnt/emmc/snapshots /var/log/tesis-admin
+StandardOutput=append:/var/log/tesis-admin/tesis-backup.log
+StandardError=append:/var/log/tesis-admin/tesis-backup.log

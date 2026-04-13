@@ -544,7 +544,7 @@ def main() -> int:
         <strong>{escape(sistema["estado_global"])}</strong>
       </div>
       <div class="meta-card">
-        <span class="meta-label">Build</span>
+        <span class="meta-label">Generado</span>
         <strong>{escape(generated_at)}</strong>
       </div>
     </div>
@@ -671,16 +671,16 @@ def main() -> int:
     <section id="seguridad-integridad" class="panel" data-group="ia">
       <h2>Seguridad e Integridad</h2>
       <div class="stats">
-        <article><span>Trust Score</span><strong>{trust_score}%</strong></article>
+        <article><span>Índice de confianza</span><strong>{trust_score}%</strong></article>
         <article><span>Auditadas</span><strong>{sec_summary.get("total", 0)}</strong></article>
         <article><span>Exitosas</span><strong>{sec_summary.get("passed", 0)}</strong></article>
         <article><span>Críticas</span><strong>{sec_summary.get("critical_failures", 0)}</strong></article>
       </div>
       {render_table_html(["Auditoría", "Resultado", "Nivel", "Detalle"], security_rows)}
       <p class="trace-row">Insignias: 
-        <img src="badges/security_status.svg" alt="Security Status">
-        <img src="badges/integrity.svg" alt="Integrity Status">
-        <img src="badges/ledger.svg" alt="Ledger Status">
+        <img src="badges/security_status.svg" alt="Estado de seguridad">
+        <img src="badges/integrity.svg" alt="Estado de integridad">
+        <img src="badges/ledger.svg" alt="Estado del ledger">
       </p>
       <p class="trace-row">Fuentes: {source_link("security_report.json", "00_sistema_tesis/config/security_report.json")} {source_link("integrity_manifest.json", "00_sistema_tesis/config/integrity_manifest.json")}</p>
     </section>
@@ -831,7 +831,7 @@ def main() -> int:
     <section id="backlog-prioritario" class="panel" data-group="planeacion">
       <h2>Backlog prioritario</h2>
       {render_table(
-          ["Task", "Bloque", "Tarea", "Prioridad", "Estado", "Fecha objetivo"],
+          ["Tarea", "Bloque", "Descripción", "Prioridad", "Estado", "Fecha objetivo"],
           [
               [item["task_id"], item["bloque"], item["tarea"], item["prioridad"], item["estado"], item["fecha_objetivo"]]
               for item in top_backlog[:8]
@@ -843,7 +843,7 @@ def main() -> int:
     <section id="riesgos-abiertos" class="panel" data-group="planeacion">
       <h2>Riesgos abiertos</h2>
       {render_table(
-          ["Risk", "Tipo", "Probabilidad", "Impacto", "Mitigación"],
+          ["Riesgo", "Tipo", "Probabilidad", "Impacto", "Mitigación"],
           [
               [item["risk_id"], item["tipo"], item["probabilidad"], item["impacto"], item["mitigacion"]]
               for item in open_risks[:6]

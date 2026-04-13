@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! getent group tesis >/dev/null; then
+  sudo groupadd --system tesis
+fi
+if ! id -u tesis >/dev/null 2>&1; then
+  sudo useradd --system --gid tesis --home-dir /srv/tesis --create-home --shell /usr/sbin/nologin tesis
+fi
+if ! getent group openclaw >/dev/null; then
+  sudo groupadd --system openclaw
+fi
+if ! id -u openclaw >/dev/null 2>&1; then
+  sudo useradd --system --gid openclaw --groups tesis --home-dir /var/lib/herramientas/openclaw --no-create-home --shell /usr/sbin/nologin openclaw
+fi
+if ! getent group edgeiot >/dev/null; then
+  sudo groupadd --system edgeiot
+fi
+if ! id -u edgeiot >/dev/null 2>&1; then
+  sudo useradd --system --gid edgeiot --home-dir /var/lib/edge-iot --no-create-home --shell /usr/sbin/nologin edgeiot
+fi
+if ! getent group tesisadmin >/dev/null; then
+  sudo groupadd --system tesisadmin
+fi
+if ! id -u tesisadmin >/dev/null 2>&1; then
+  sudo useradd --system --gid tesisadmin --groups tesis --home-dir /var/lib/tesis-admin --no-create-home --shell /usr/sbin/nologin tesisadmin
+fi
+if ! getent group personal >/dev/null; then
+  sudo groupadd --system personal
+fi
+
+sudo mkdir -p \
+  /opt/tesis-os \
+  /opt/tesis-os/venvs \
+  /srv/tesis/repo \
+  /srv/tesis/workspace \
+  /srv/tesis/workspace/openclaw \
+  /srv/tesis/outputs \
+  /srv/tesis/intercambio/openclaw/inbox \
+  /srv/tesis/intercambio/openclaw/outbox \
+  /srv/tesis/intercambio/openclaw/spool \
+  /srv/tesis/intercambio/edge/inbox \
+  /srv/tesis/intercambio/edge/outbox \
+  /srv/tesis/intercambio/edge/spool \
+  /var/log/tesis-os \
+  /var/lib/tesis-os \
+  /var/lib/edge-iot \
+  /var/log/edge-iot \
+  /var/lib/tesis-admin \
+  /var/log/tesis-admin \
+  /var/lib/herramientas/openclaw \
+  /var/cache/herramientas/openclaw \
+  /var/log/openclaw
+sudo chown -R tesis:tesis /srv/tesis/repo /srv/tesis/workspace /srv/tesis/outputs /opt/tesis-os /var/log/tesis-os /var/lib/tesis-os
+sudo chown -R openclaw:openclaw /var/lib/herramientas/openclaw /var/cache/herramientas/openclaw /var/log/openclaw /srv/tesis/workspace/openclaw /srv/tesis/intercambio/openclaw
+sudo chown -R edgeiot:edgeiot /var/lib/edge-iot /var/log/edge-iot /srv/tesis/intercambio/edge
+sudo chown -R tesisadmin:tesisadmin /var/lib/tesis-admin /var/log/tesis-admin
+sudo chmod 0750 /var/lib/herramientas/openclaw /var/cache/herramientas/openclaw /var/log/openclaw /srv/tesis/intercambio/openclaw /srv/tesis/intercambio/edge

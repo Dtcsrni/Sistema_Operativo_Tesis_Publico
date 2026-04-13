@@ -44,6 +44,26 @@ Este archivo es el índice central de todas las validaciones de soberanía human
 | 2026-04-01 | [validación humana interna no pública] | [DEC-0014] | Cierre de trazabilidad de la conversación actual solicitado por el tesista | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
 | 2026-04-02 | [validación humana interna no pública] | [DEC-0014] | Regularización de trazabilidad para actividades recientes posteriores a validación humana interna no pública | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
 | 2026-04-04 | [validación humana interna no pública] | [DEC-0014] | Registro integral de avances pendientes con trazabilidad canónica y evidencia fuente. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-07 | [validación humana interna no pública] | [DEC-0014] | Implementación autorizada de Serena MCP v1 proveedor-agnóstico para el Sistema Operativo de Tesis | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-08 | [validación humana interna no pública] | [DEC-0022] | Implementación autorizada de la arquitectura operativa escritorio primario y Orange Pi edge integrado | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-08 | [validación humana interna no pública] | [DEC-0014] | Implementación autorizada de Serena MCP v1.1 para cierre E2E en VS Code con Codex | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-08 | [validación humana interna no pública] | [DEC-0023] | Autorización de DEC-0023 para formalizar Serena MCP como capa común agéntica | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-08 | [validación humana interna no pública] | [DEC-0023] | Regularización documental de la implementación Serena MCP común para OpenClaw y hosts compatibles | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-10 | [validación humana interna no pública] | [DEC-0023] | Implementación autorizada de la habilitación dual de Serena MCP para VS Code/Codex con `serena-local` HTTP y `serena-local-py` stdio. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-10 | [validación humana interna no pública] | [DEC-0014] | Autorizacion humana para consolidar serena-local y serena-local-py en VS Code y documentar la frontera con este runtime. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-10 | [validación humana interna no pública] | [DEC-0014] | Autorizacion humana para exponer Serena por bridge HTTP autenticado, conservar stdio como fallback local y documentar el acceso desde runtimes externos. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-11 | [validación humana interna no pública] | [DEC-0014] | Completar la política de trazabilidad, registrar la instrucción humana y publicar el cambio con commit y push | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-12 | [validación humana interna no pública] | [DEC-0014] | Autorización humana para registrar el cierre B0 desde escritorio con Step ID asignado por el agente e instalar pytest local | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-12 | [validación humana interna no pública] | [DEC-0014] | Autorización humana para regularizar todas las bitácoras faltantes detectadas contra la actividad real de Git | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-12 | [validación humana interna no pública] | [DEC-0014] | Política operativa Serena por capas y deshabilitado temporal de serena-local-py en el workspace activo | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-12 | [validación humana interna no pública] | [DEC-0014] | Alineación operativa de Serena para autoarranque HTTP y disponibilidad esperada durante trabajo agéntico | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-12 | [validación humana interna no pública] | [DEC-0014] | Habilitar auto tareas VS Code para autoarranque Serena HTTP | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-12 | [validación humana interna no pública] | [DEC-0014] | Comparativa autorizada entre escritura derivada y cambio controlado Serena sobre la misma ruta | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-12 | [validación humana interna no pública] | [DEC-0014] | Optimización incremental exacta del manifest de integridad con alcance global en guardrails | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-12 | [validación humana interna no pública] | [DEC-0014] | Optimización de traza Serena MCP por append JSONL en lugar de rewrite completo | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-12 | [validación humana interna no pública] | [DEC-0014] | Cierre de trazabilidad final y preparación de publicación de Serena | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-13 | [validación humana interna no pública] | [DEC-0014] | Política operativa para activar Serena primero cuando no esté disponible | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
+| 2026-04-13 | [validación humana interna no pública] | [DEC-0014] | Autorización humana para asignar automáticamente el Step ID y cerrar verificación CI/publicación pública | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md) |
 
 ---
 **Navegación:**
@@ -82,5 +102,25 @@ Este archivo es el índice central de todas las validaciones de soberanía human
 [validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
 [validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
 [validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
+[validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
 
-_Última actualización: `2026-04-04`._
+_Última actualización: `2026-04-13`._

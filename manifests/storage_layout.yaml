@@ -15,7 +15,11 @@
         "runtime",
         "workspace_activo",
         "logs_operativos",
-        "caches"
+        "caches",
+        "openclaw_env",
+        "openclaw_cache",
+        "openclaw_logs",
+        "prometheus_local"
       ]
     },
     "emmc": {
@@ -34,7 +38,8 @@
         "corpus",
         "datasets",
         "historico",
-        "snapshots"
+        "snapshots",
+        "modelos_locales"
       ]
     },
     "microsd": {
@@ -54,6 +59,79 @@
     "rootfs_en_nvme": true,
     "escrituras_pesadas_fuera_de_microsd": true,
     "datos_frios_preferentemente_en_emmc": true,
-    "rollback_manual_documentado": true
+    "rollback_manual_documentado": true,
+    "desktop_first": true,
+    "openclaw_namespace_separado": true,
+    "intercambio_interdominio_solo_por_rutas_explicitas": true,
+    "observabilidad_local_por_dominio": true,
+    "backups_por_dominio": true
+  },
+  "topologia_operativa": {
+    "primary_authoring_node": "desktop_vscode",
+    "edge_execution_node": "orange_pi",
+    "integration_mode": "git_and_artifacts",
+    "repo_on_orange_pi_role": "clon_operativo_despliegue_supervision_local",
+    "forbid_network_mounted_workspace_as_primary_flow": true
+  },
+  "dominios": {
+    "sistema_tesis": {
+      "workspace": "/srv/tesis/repo",
+      "estado": "/var/lib/tesis-os",
+      "logs": "/var/log/tesis-os"
+    },
+    "openclaw": {
+      "workspace": "/srv/tesis/workspace/openclaw",
+      "estado": "/var/lib/herramientas/openclaw",
+      "cache": "/var/cache/herramientas/openclaw",
+      "logs": "/var/log/openclaw",
+      "intercambio": "/srv/tesis/intercambio/openclaw"
+    },
+    "edge_iot": {
+      "workspace": "/srv/tesis/workspace/edge",
+      "estado": "/var/lib/edge-iot",
+      "runtime": "/var/lib/edge-iot/runtime",
+      "logs": "/var/log/edge-iot",
+      "intercambio": "/srv/tesis/intercambio/edge"
+    },
+    "administrativo": {
+      "workspace": "/srv/tesis/workspace/admin",
+      "estado": "/var/lib/tesis-admin",
+      "logs": "/var/log/tesis-admin"
+    },
+    "personal": {
+      "workspace": "/srv/tesis/workspace/personal",
+      "persistente_como_servicio": false
+    }
+  },
+  "intercambio": {
+    "root": "/srv/tesis/intercambio",
+    "canales": [
+      "/srv/tesis/intercambio/openclaw/inbox",
+      "/srv/tesis/intercambio/openclaw/outbox",
+      "/srv/tesis/intercambio/openclaw/spool",
+      "/srv/tesis/intercambio/edge/inbox",
+      "/srv/tesis/intercambio/edge/outbox",
+      "/srv/tesis/intercambio/edge/spool"
+    ]
+  },
+  "observabilidad": {
+    "prometheus_storage": "/var/lib/prometheus",
+    "node_exporter_textfile": "/var/lib/node_exporter/textfile_collector",
+    "collector_state": "/var/lib/tesis-observabilidad",
+    "logrotate_policy": "/etc/logrotate.d/tesis-observabilidad"
+  },
+  "respaldo": {
+    "policy": "/etc/tesis-os/policies/domain_backup_policy.yaml",
+    "backup_env": "/etc/tesis-os/backup.env",
+    "backup_reports": "/mnt/emmc/backups/reports",
+    "snapshots_root": "/mnt/emmc/snapshots"
+  },
+  "openclaw": {
+    "estado": "/var/lib/herramientas/openclaw",
+    "cache": "/var/cache/herramientas/openclaw",
+    "logs": "/var/log/openclaw",
+    "env": "/etc/tesis-os/openclaw.env",
+    "ollama_models": "/mnt/emmc/models/ollama",
+    "rknn_llm_root": "/opt/tesis-os/vendor/rknn-llm"
   }
 }

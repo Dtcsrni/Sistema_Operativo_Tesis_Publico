@@ -1,0 +1,91 @@
+# Operación Serena MCP con Codex en VS Code
+
+## Proposito
+
+Definir como operar Serena MCP desde VS Code con Codex sin perder soberania humana, trazabilidad ni claridad sobre la raiz real del workspace.
+
+## Arquitectura operativa
+
+- **Host:** VS Code con Codex.
+- **Transporte recomendado en Windows local:** MCP por Streamable HTTP sobre `http://127.0.0.1:8765/mcp`.
+- **Transporte alterno:** `stdio`, conservado para pruebas y otros hosts.
+- **Raiz efectiva:** `${workspaceFolder}`.
+- **Adaptador MCP:** `07_scripts/serena_mcp.py`.
+- **Gobernanza y permisos:** `07_scripts/serena_policy.py`.
+- **Ejecucion de operaciones:** `07_scripts/serena_core.py`.
+- **Configuracion del servidor:** `00_sistema_tesis/config/serena_mcp.json`.
+- **Integracion del workspace:** `.vscode/mcp.json`.
+- **Wrapper local Windows:** `.vscode/serena-http.cmd`.
+
+Serena MCP no reemplaza `tesis.py` ni `ab_pilot.py`. Su funcion es exponer herramientas compactas y auditables para que Codex opere con menos contexto repetido y con enforcement explicito.
+
+## Herramientas visibles en el host
+
+El host debe ver exactamente estas herramientas:
+
+1. `context.fetch_compact`
+2. `governance.preflight`
+3. `artifacts.evaluate_serena`
+4. `artifacts.write_derived`
+5. `canon.prepare_change`
+6. `canon.apply_controlled_change`
+7. `trace.append_operation`
+
+## Checklist E2E de aceptacion humana
+
+1. Abrir el repositorio en la raiz correcta del workspace.
+2. Confirmar que `.vscode/mcp.json` exista y que `SISTEMA_TESIS_ROOT` apunte a `${workspaceFolder}`.
+3. Confirmar que la tarea `Serena MCP HTTP` arranque el servidor local en `127.0.0.1:8765`.
+4. Confirmar que `.vscode/mcp.json` apunte a `http://127.0.0.1:8765/mcp`.
+5. Ejecutar `Developer: Reload Window` en VS Code.
+6. Aceptar la ejecución automática de tareas del workspace si VS Code la solicita.
+7. Abrir el panel MCP o la superficie de herramientas del host Codex.
+8. Confirmar que aparezca el servidor `serena-local` sin error de arranque.
+9. Confirmar que el host liste las 7 herramientas visibles.
+10. Ejecutar `context.fetch_compact` con una consulta de solo lectura.
+11. Ejecutar `governance.preflight` sobre una ruta canónica o protegida.
+12. Confirmar que exista o se actualice `00_sistema_tesis/bitacora/audit_history/serena_mcp_operations.jsonl`.
+13. Si el servidor no responde al `initialize`, revisar `00_sistema_tesis/bitacora/audit_history/serena_mcp_debug.log`.
+
+## Prueba minima recomendada
+
+### Consulta compacta
+
+- Tool: `context.fetch_compact`
+- `query`: `DEC-0022`
+- `paths`:
+  - `00_sistema_tesis/decisiones/2026-04-08_DEC-0022_arquitectura_operativa_escritorio_primario_y_orange_pi_edge.md`
+
+Resultado esperado:
+
+- `status: ok`
+- `write_scope: read_only`
+- al menos una coincidencia en `matches`
+- referencia explicita al archivo consultado
+
+### Preflight de gobernanza
+
+- Tool: `governance.preflight`
+- `tool_name`: `canon.apply_controlled_change`
+- `target_paths`:
+  - `00_sistema_tesis/decisiones/2026-04-08_DEC-0022_arquitectura_operativa_escritorio_primario_y_orange_pi_edge.md`
+
+Resultado esperado:
+
+- respuesta estructurada con `status`, `risk_level`, `write_scope`, `evidence` y `next_required_action`
+- si no se incluye `step_id`, la respuesta debe bloquear el cambio o marcarlo como pendiente de validacion humana
+
+## Flujo corto Codex + Serena MCP
+
+1. `context.fetch_compact` para ubicar contexto relevante sin abrir documentos completos.
+2. `governance.preflight` para validar intencion, riesgo y requisitos.
+3. `canon.prepare_change` para revisar diff y hashes antes de tocar canon.
+4. `canon.apply_controlled_change` solo cuando exista `VAL-STEP-*` vigente y evidencia fuente corroborada si aplica.
+5. `python 07_scripts/build_all.py` para auditoria posterior.
+
+## Regla de interpretacion
+
+- Si VS Code muestra `serena-local`, las 7 tools y una traza nueva en JSONL, la integracion E2E se considera operativa.
+- Si solo existe `.vscode/mcp.json`, la integracion esta declarada pero no validada en uso real.
+- En Windows con host local, el launcher recomendado es una tarea de VS Code que ejecute `.vscode/serena-http.cmd`.
+- Si hay espera infinita durante `initialize`, el archivo `serena_mcp_debug.log` debe indicar si el proceso arrancó, leyó el mensaje y escribió respuesta.

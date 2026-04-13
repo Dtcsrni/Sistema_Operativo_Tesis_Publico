@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+sudo install -d /etc/tesis-os
+sudo install -m 0644 "${REPO_ROOT}"/config/systemd/*.service /etc/systemd/system/
+sudo install -m 0644 "${REPO_ROOT}"/config/systemd/*.timer /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable tesis-healthcheck.timer tesis-backup.timer tesis-sync.timer

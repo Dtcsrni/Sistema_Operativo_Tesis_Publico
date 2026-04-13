@@ -1,0 +1,35 @@
+{
+  "version": "1.0",
+  "contract_id": "system_tesis_canonical_schema",
+  "schema_version": "1.0.0",
+  "compatibility": {
+    "policy": "backward_compatible_additive_until_major",
+    "breaking_change_requires_major_bump": true,
+    "migration_record_path": "docs/05_reproducibilidad/migraciones-canonicas.md"
+  },
+  "entities": {
+    "events": {
+      "path": "00_sistema_tesis/canon/events.jsonl",
+      "format": "jsonl",
+      "required_fields": ["event_id", "event_type", "occurred_at", "payload"]
+    },
+    "state": {
+      "path": "00_sistema_tesis/canon/state.json",
+      "format": "json",
+      "required_fields": ["current_block", "last_event_id", "derived_artifacts"]
+    },
+    "projections": {
+      "path_globs": [
+        "06_dashboard/wiki/*.md",
+        "06_dashboard/generado/**/*",
+        "README.md"
+      ],
+      "source_of_truth": "canon"
+    }
+  },
+  "migration_policy": {
+    "requires_explicit_record": true,
+    "requires_schema_review": true,
+    "allows_additive_fields_without_data_rewrite": true
+  }
+}

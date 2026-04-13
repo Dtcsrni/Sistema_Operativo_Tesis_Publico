@@ -1,0 +1,31 @@
+{
+  "metadata": {
+    "experiment_id": "ab-2026-04-template",
+    "owner": "tesista",
+    "created_at": "2026-04-07",
+    "notes": "Reemplazar datos de ejemplo con resultados reales del piloto."
+  },
+  "criteria": {
+    "primary_objective": "reduce_tokens_cost",
+    "min_cost_reduction_pct": 25.0,
+    "min_token_reduction_pct": 20.0,
+    "min_acceptance_rate": 0.9,
+    "max_gate_failures": 0
+  },
+  "tasks": [
+    {
+      "task_id": "T-001",
+      "task_type": "resumen_capitulo",
+      "baseline_complexity": "media",
+      "serena": {
+        "input_tokens": 1800,
+        "output_tokens": 700,
+        "cost_usd": 0.045,
+        "latency_ms": 4200,
+        "accepted": true,
+        "gate_failures": 0,
+        "rework": false
+      }
+    }
+  ]
+}

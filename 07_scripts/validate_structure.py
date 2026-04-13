@@ -49,14 +49,28 @@ REQUIRED_PATHS = [
     "README_INICIO.md",
     "README.md",
     "docs/02_arquitectura/arquitectura-general.md",
+    "docs/02_arquitectura/contrato-maestro-de-dominios.md",
+    "docs/02_arquitectura/arquitectura-interna-sistema-tesis.md",
+    "docs/02_arquitectura/arquitectura-objetivo-b0-desktop-first.md",
+    "docs/03_operacion/flujo-escritorio-orange-pi.md",
     "docs/03_operacion/rol-de-openclaw-en-la-tesis.md",
     "docs/04_seguridad/politica-de-sanitizacion-y-publicacion.md",
+    "docs/04_seguridad/modelo-de-amenazas-sistema-documental.md",
     "docs/05_reproducibilidad/relacion-entre-repo-privado-y-publico.md",
+    "docs/05_reproducibilidad/migraciones-canonicas.md",
     "manifests/storage_layout.yaml",
+    "manifests/desktop_edge_sync_contract.yaml",
     "manifests/service_matrix.yaml",
     "manifests/domain_boundaries.yaml",
+    "manifests/domain_runtime_isolation.yaml",
+    "manifests/domain_network_policy.yaml",
+    "manifests/domain_backup_policy.yaml",
     "manifests/public_private_sync_policy.yaml",
     "manifests/openclaw_evaluation_policy.yaml",
+    "manifests/system_tesis_architecture_contract.yaml",
+    "manifests/system_tesis_canonical_schema.yaml",
+    "manifests/system_tesis_cli_contracts.yaml",
+    "manifests/b0_external_gates.yaml",
     "bootstrap/host/00_validar-descargas.ps1",
     "bootstrap/orangepi/10_primer-arranque.sh",
     "bootstrap/orangepi/90_postcheck.sh",
@@ -65,6 +79,7 @@ REQUIRED_PATHS = [
     "config/systemd/tesis-sync.service",
     "config/env/tesis-os.env.example",
     "runtime/openclaw/policies/ethics-policy.md",
+    "ops/actualizacion/sync_repo_desde_desktop.sh",
     "runtime/openclaw/wrappers/healthcheck.sh",
     "data_contracts/literature_matrix_schema.md",
     "tests/smoke/test_boot.sh",
@@ -72,6 +87,7 @@ REQUIRED_PATHS = [
     "benchmarks/scripts/bench_repo_ops.sh",
     "07_scripts/tesis.py",
     "07_scripts/rotate_backups.py",
+    "07_scripts/validate_b0_architecture.py",
 ]
 
 
@@ -94,7 +110,15 @@ def validate() -> list[str]:
     storage_layout = load_yaml_json("manifests/storage_layout.yaml")
     service_matrix = load_yaml_json("manifests/service_matrix.yaml")
     domain_boundaries = load_yaml_json("manifests/domain_boundaries.yaml")
+    domain_runtime_isolation = load_yaml_json("manifests/domain_runtime_isolation.yaml")
+    domain_network_policy = load_yaml_json("manifests/domain_network_policy.yaml")
+    domain_backup_policy = load_yaml_json("manifests/domain_backup_policy.yaml")
+    architecture_contract = load_yaml_json("manifests/system_tesis_architecture_contract.yaml")
+    schema_contract = load_yaml_json("manifests/system_tesis_canonical_schema.yaml")
+    cli_contracts = load_yaml_json("manifests/system_tesis_cli_contracts.yaml")
+    b0_external_gates = load_yaml_json("manifests/b0_external_gates.yaml")
     public_sync = load_yaml_json("manifests/public_private_sync_policy.yaml")
+    desktop_edge_sync = load_yaml_json("manifests/desktop_edge_sync_contract.yaml")
     openclaw_eval = load_yaml_json("manifests/openclaw_evaluation_policy.yaml")
 
     bloque_ids = {item["id"] for item in bloques_doc["bloques"]}
@@ -162,6 +186,31 @@ def validate() -> list[str]:
         if service_id not in service_ids:
             errors.append(f"service_matrix.yaml no contiene el servicio requerido: {service_id}")
 
+    isolation_domain_ids = set(domain_runtime_isolation["dominios"].keys())
+    for domain_id in {"sistema_tesis", "openclaw", "edge_iot", "administrativo", "personal"}:
+        if domain_id not in isolation_domain_ids:
+            errors.append(f"domain_runtime_isolation.yaml no contiene el dominio requerido: {domain_id}")
+
+    profile_ids = set(domain_network_policy["profiles"].keys())
+    for service in service_matrix["servicios"]:
+        if service["network_profile"] not in profile_ids:
+            errors.append(
+                f"service_matrix.yaml referencia un network_profile inexistente para {service['id']}: {service['network_profile']}"
+            )
+
+    if domain_backup_policy["domains"]["edge_iot"].get("validation_gate") != "host_real_requerido":
+        errors.append("domain_backup_policy.yaml debe dejar edge_iot como host_real_requerido en desktop-first")
+
+    if architecture_contract.get("desktop_first") is not True:
+        errors.append("system_tesis_architecture_contract.yaml debe declarar desktop_first=true")
+    if schema_contract.get("schema_version") != "1.0.0":
+        errors.append("system_tesis_canonical_schema.yaml debe fijar schema_version=1.0.0")
+    if cli_contracts.get("entrypoint") != "07_scripts/tesis.py":
+        errors.append("system_tesis_cli_contracts.yaml debe apuntar a 07_scripts/tesis.py")
+    for item in b0_external_gates.get("gates", []):
+        if item.get("status") != "pendiente_host_real":
+            errors.append(f"b0_external_gates.yaml debe mantener pendiente_host_real para {item.get('id', 'N/A')}")
+
     domain_ids = {item["id"] for item in domain_boundaries["dominios"]}
     for domain_id in {"personal", "profesional", "academico", "edge", "administrativo"}:
         if domain_id not in domain_ids:
@@ -169,6 +218,21 @@ def validate() -> list[str]:
 
     if public_sync["modelo"] != "upstream_privado_downstream_publico":
         errors.append("public_private_sync_policy.yaml debe declarar el modelo upstream_privado_downstream_publico")
+
+    if desktop_edge_sync["source_node"] != "desktop_vscode":
+        errors.append("desktop_edge_sync_contract.yaml debe fijar desktop_vscode como nodo origen")
+    if desktop_edge_sync["target_node"] != "orange_pi":
+        errors.append("desktop_edge_sync_contract.yaml debe fijar orange_pi como nodo destino")
+    if desktop_edge_sync["sync_strategy"] != "git_pull_ff_only_plus_explicit_artifacts":
+        errors.append("desktop_edge_sync_contract.yaml debe declarar git_pull_ff_only_plus_explicit_artifacts")
+    if "/srv/tesis/repo" != desktop_edge_sync["repo_target_on_edge"]:
+        errors.append("desktop_edge_sync_contract.yaml debe apuntar a /srv/tesis/repo como clon operativo edge")
+    if "edicion_primaria_en_orange_pi" not in set(desktop_edge_sync.get("forbidden_flows", [])):
+        errors.append("desktop_edge_sync_contract.yaml debe prohibir la edición primaria en Orange Pi")
+    sync_profile_ids = {profile.get("id") for profile in desktop_edge_sync.get("sync_profiles", [])}
+    for profile_id in {"repo-only", "repo+postcheck", "repo+restart-edge"}:
+        if profile_id not in sync_profile_ids:
+            errors.append(f"desktop_edge_sync_contract.yaml debe declarar el perfil requerido: {profile_id}")
 
     if openclaw_eval["posicion"] != "capa_asistiva_opcional":
         errors.append("openclaw_evaluation_policy.yaml debe mantener a OpenClaw como capa asistiva opcional")
@@ -198,6 +262,28 @@ def validate() -> list[str]:
     for marker in ("source register", "source verify", "evidencia fuente"):
         if marker not in manual_humano:
             errors.append(f"manual_operacion_humana.md no documenta el flujo requerido: {marker}")
+
+    desktop_edge_flow = (ROOT / "docs/03_operacion/flujo-escritorio-orange-pi.md").read_text(encoding="utf-8")
+    for marker in (
+        "sync_repo_desde_desktop.sh",
+        "pull --ff-only",
+        "/srv/tesis/repo",
+        "/srv/tesis/intercambio/edge/spool",
+        "repo+postcheck",
+        "repo+restart-edge",
+    ):
+        if marker not in desktop_edge_flow:
+            errors.append(f"flujo-escritorio-orange-pi.md no contiene el marcador requerido: {marker}")
+
+    domain_contract = (ROOT / "docs/02_arquitectura/contrato-maestro-de-dominios.md").read_text(encoding="utf-8")
+    for marker in ("No HTTP interdominio", "Orange Pi es clon operativo", "archivo_draft"):
+        if marker not in domain_contract:
+            errors.append(f"contrato-maestro-de-dominios.md no contiene el marcador requerido: {marker}")
+
+    internal_arch = (ROOT / "docs/02_arquitectura/arquitectura-interna-sistema-tesis.md").read_text(encoding="utf-8")
+    for marker in ("canon", "proyecciones", "auditoria_guardrails", "publicacion"):
+        if marker not in internal_arch:
+            errors.append(f"arquitectura-interna-sistema-tesis.md no contiene el marcador requerido: {marker}")
 
     section_ids = {section["id"] for section in wiki["secciones"]}
     required_wiki_sections = {

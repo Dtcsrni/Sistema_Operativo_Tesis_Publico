@@ -1,0 +1,43 @@
+{
+  "version": "1.0",
+  "default_policy": {
+    "allow_interdomain_http": false,
+    "allow_cross_workspace_reads": false,
+    "allow_cross_domain_sqlite": false
+  },
+  "profiles": {
+    "salida_minima": {
+      "incoming": ["ssh"],
+      "outgoing": ["dns", "https_publicacion"],
+      "bind_localhost_only": false
+    },
+    "egress_controlado_localhost_in": {
+      "incoming": ["localhost:18789"],
+      "outgoing": ["dns", "https_proveedores", "https_publicacion"],
+      "bind_localhost_only": true
+    },
+    "edge_restringido": {
+      "incoming": [],
+      "outgoing": ["dns", "ntp", "mqtt_explicito"],
+      "bind_localhost_only": false,
+      "http_healthcheck_local": false
+    },
+    "sin_nube": {
+      "incoming": [],
+      "outgoing": [],
+      "bind_localhost_only": true
+    },
+    "offline_logico": {
+      "incoming": [],
+      "outgoing": [],
+      "bind_localhost_only": true
+    }
+  },
+  "dominios": {
+    "sistema_tesis": "salida_minima",
+    "openclaw": "egress_controlado_localhost_in",
+    "edge_iot": "edge_restringido",
+    "administrativo": "sin_nube",
+    "personal": "offline_logico"
+  }
+}

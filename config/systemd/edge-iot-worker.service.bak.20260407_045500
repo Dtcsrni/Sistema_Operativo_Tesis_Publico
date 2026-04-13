@@ -1,0 +1,29 @@
+[Unit]
+Description=Worker genérico del dominio edge_iot
+After=network-online.target
+Wants=network-online.target
+ConditionPathExists=/srv/tesis/repo/ops/edge/edge-iot-run.sh
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/tesis-os/edge-iot.env
+ExecStartPre=/bin/bash -lc '/srv/tesis/repo/ops/edge/edge-iot-preflight.sh'
+ExecStart=/bin/bash -lc '/srv/tesis/repo/ops/edge/edge-iot-run.sh'
+Restart=always
+RestartSec=5
+User=edgeiot
+Group=edgeiot
+WorkingDirectory=/srv/tesis/workspace/edge
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectControlGroups=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+ReadOnlyPaths=/srv/tesis/repo /etc/tesis-os/edge-iot.env
+ReadWritePaths=/var/lib/edge-iot /var/log/edge-iot /srv/tesis/workspace/edge /srv/tesis/intercambio/edge
+
+[Install]
+WantedBy=multi-user.target

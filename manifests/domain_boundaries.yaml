@@ -2,18 +2,21 @@
   "version": "1.0",
   "dominios": [
     {
+      "runtime_user": "personal",
+      "runtime_group": "personal",
       "id": "personal",
       "descripcion": "Contexto personal y reflexiones no publicables",
       "rutas": [
         "/srv/tesis/workspace/personal"
       ],
       "backends": [
-        "local",
-        "manual"
+        "local"
       ],
       "publicable": false
     },
     {
+      "runtime_user": "tesis",
+      "runtime_group": "tesis",
       "id": "profesional",
       "descripcion": "Trabajo tecnico reutilizable y operativo",
       "rutas": [
@@ -21,12 +24,16 @@
       ],
       "backends": [
         "local",
-        "openai",
-        "ollama"
+        "ollama_local",
+        "rknn_llm_experimental",
+        "groq_api",
+        "openai_api"
       ],
       "publicable": "parcial"
     },
     {
+      "runtime_user": "tesis",
+      "runtime_group": "tesis",
       "id": "academico",
       "descripcion": "Tesis, estado del arte y metodologia",
       "rutas": [
@@ -34,13 +41,19 @@
       ],
       "backends": [
         "local",
-        "openai",
-        "anthropic",
-        "gemini"
+        "ollama_local",
+        "rknn_llm_experimental",
+        "groq_api",
+        "gemini_api",
+        "gemini_web_assisted",
+        "openai_api",
+        "chatgpt_plus_web_assisted"
       ],
       "publicable": "sanitizado"
     },
     {
+      "runtime_user": "edgeiot",
+      "runtime_group": "edgeiot",
       "id": "edge",
       "descripcion": "Nodo edge y pipeline IoT",
       "rutas": [
@@ -52,6 +65,8 @@
       "publicable": "tecnico_controlado"
     },
     {
+      "runtime_user": "tesisadmin",
+      "runtime_group": "tesisadmin",
       "id": "administrativo",
       "descripcion": "Operacion del sistema, secretos y seguridad",
       "rutas": [

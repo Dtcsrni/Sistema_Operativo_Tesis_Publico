@@ -1,0 +1,58 @@
+# Contrato Serena MCP para Agentes Compatibles
+
+## Propósito
+Definir a `serena-local` como contrato MCP común del proyecto para hosts externos compatibles y para consumidores internos como `OpenClaw`.
+
+## Servidor estándar
+- **Nombre lógico:** `serena-local`
+- **Transporte preferido:** Streamable HTTP local en `http://127.0.0.1:8765/mcp`
+- **Transporte alterno:** `stdio`
+- **Raíz efectiva:** `${workspaceFolder}` o la raíz real del repositorio
+
+## Herramientas expuestas
+1. `context.fetch_compact`
+2. `governance.preflight`
+3. `artifacts.evaluate_serena`
+4. `artifacts.write_derived`
+5. `canon.prepare_change`
+6. `canon.apply_controlled_change`
+7. `trace.append_operation`
+
+El servidor anuncia estos nombres canónicos en `tools/list`. Por compatibilidad retroactiva también acepta aliases equivalentes con `_` en `tools/call` si un host legacy normaliza nombres.
+
+## Requisitos mínimos de identidad y entorno
+- `SISTEMA_TESIS_ROOT`: raíz efectiva del repositorio.
+- `SERENA_MCP_DEBUG_LOG`: ruta del log técnico de arranque/JSON-RPC.
+- `SISTEMA_TESIS_AGENT_ROLE`
+- `SISTEMA_TESIS_AGENT_PROVIDER`
+- `SISTEMA_TESIS_AGENT_MODEL_VERSION`
+- `SISTEMA_TESIS_AGENT_RUNTIME`
+
+## Consumidores objetivo en esta fase
+- **Codex en VS Code:** integración MCP directa sobre host externo.
+- **OpenClaw:** adapter interno que consume el contrato MCP sin entrar al `provider_registry`.
+- **Hosts compatibles adicionales:** Copilot, Antigravity u otros clientes MCP pueden reutilizar el mismo contrato sin requerir cambios de negocio en `serena_mcp.py`.
+
+## Frontera entre host y runtime
+
+- El contrato `serena-local` describe el servidor y sus herramientas, no garantiza que cualquier runtime de chat herede automaticamente el acceso del host.
+- VS Code puede descubrir el servidor por `.vscode/mcp.json`, iniciar el transporte configurado y presentar las tools en su UI.
+- Un runtime de chat separado solo podra invocarlo si soporta registrar MCP externos o si recibe un bridge que reexporte el servidor.
+- `serena-local-py` se considera un alias operativo del host para `stdio`; no es un segundo contrato de negocio ni cambia `serverInfo.name`.
+- En el estado actual del workspace (`2026-04-12`), `serena-local-py` no esta publicado en `.vscode/mcp.json`; su backend puede seguir sano localmente, pero eso no lo vuelve automaticamente disponible ni recomendado para los agentes del host activo.
+- La politica operativa debe distinguir entre perfil expuesto y backend saludable: los agentes deben usar Serena a traves del perfil realmente publicado y recomendado por `check_serena_access.py`.
+- La verificacion operativa recomendada del repo es `python 07_scripts/check_serena_access.py`.
+- Cuando un runtime externo necesite consumir Serena sin vivir dentro del host VS Code, la via oficial es el bridge HTTP autenticado en `runtime/serena_bridge/bin/serena_bridge.py`.
+
+## Criterios E2E
+- El host descubre `serena-local`.
+- El host ve las 7 herramientas esperadas.
+- `context.fetch_compact` responde en lectura con `status: ok`.
+- `governance.preflight` reporta bloqueo cuando falta `step_id` en cambios controlados.
+- La traza de operación queda registrada en `00_sistema_tesis/bitacora/audit_history/serena_mcp_operations.jsonl`.
+- Si el acceso llega por bridge, la traza incluye identidad del host y `host_kind=external_runtime`.
+
+## Referencias
+- `00_sistema_tesis/documentacion_sistema/operacion_serena_mcp_codex.md`
+- `docs/03_operacion/openclaw-workspace-local.md`
+- `docs/03_operacion/serena-mcp-host-template.json`

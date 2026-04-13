@@ -1,0 +1,14 @@
+# Mapa de Servicios
+
+Fuente maquina-legible: `manifests/service_matrix.yaml`.
+
+## Servicios previstos
+- `tesis-healthcheck.service` + timer.
+- `tesis-backup.service` + timer.
+- `tesis-sync.service` + timer.
+- `openclaw-gateway.service` como servicio opcional.
+- `ollama.service` como runtime principal local opcional.
+- Carril NPU experimental instalado por bootstrap, sin convertirse en servicio base obligatorio.
+
+## Nota
+OpenClaw no es prerequisito del sistema base ni del pipeline edge.

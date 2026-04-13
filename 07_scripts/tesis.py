@@ -16,6 +16,7 @@ from canon import (
     append_artifact_signed,
     append_event,
     append_human_validation,
+    append_openclaw_proposal,
     append_session_record,
     create_session_content,
     import_legacy_events,
@@ -276,6 +277,133 @@ def step_sequence_value(step_id: str) -> tuple[int, str]:
         if suffix.isdigit():
             return int(suffix), step_id
     return -1, step_id
+
+
+def next_numeric_step_id(events: list[dict]) -> str:
+    numeric_values = [
+        value
+        for value, step_id in (step_sequence_value(str(event.get("event_id", ""))) for event in events)
+        if value >= 0
+    ]
+    next_value = (max(numeric_values) + 1) if numeric_values else 1
+    return f"VAL-STEP-{next_value}"
+
+
+def openclaw_proposal_event(proposal_event_id: str, events: list[dict]) -> dict:
+    normalized = proposal_event_id.strip()
+    for event in events:
+        if str(event.get("event_id", "")).strip() == normalized and str(event.get("event_type", "")).strip() == "openclaw_proposal":
+            return event
+    raise ValueError(f"No existe propuesta OpenClaw con event_id {proposal_event_id}.")
+
+
+def build_openclaw_validation_package(
+    proposal_event_id: str,
+    *,
+    session_id: str,
+    events: list[dict] | None = None,
+    step_id: str = "",
+) -> dict[str, object]:
+    items = ensure_canon_initialized() if events is None else events
+    proposal = openclaw_proposal_event(proposal_event_id, items)
+    payload = dict(proposal.get("payload", {}))
+    approval = dict(payload.get("approval", {}))
+    resolved_step_id = step_id.strip() or str(approval.get("step_id_expected", "")).strip() or next_numeric_step_id(items)
+    reference = str(proposal.get("links", {}).get("reference", "[DEC-0020]")).strip() or "[DEC-0020]"
+    question = (
+        f"¿Autorizas aprobar la propuesta OpenClaw {payload.get('proposal_id', proposal_event_id)} "
+        f"para `{payload.get('title', payload.get('task_id', 'sin_titulo'))}` y registrarla como {resolved_step_id}?"
+    )
+    finalize_command = (
+        "python 07_scripts/tesis.py proposal finalize-openclaw "
+        f"--proposal-event-id {proposal_event_id} "
+        "--source-event-id EVT-XXXX "
+        f"--step-id {resolved_step_id} "
+        f"--session-id {session_id} "
+        "--confirmation-text \"<CONFIRMACION_EXACTA>\""
+    )
+    return {
+        "proposal_event_id": proposal_event_id,
+        "proposal_id": str(payload.get("proposal_id", proposal_event_id)),
+        "task_id": str(payload.get("task_id", "")),
+        "step_id": resolved_step_id,
+        "session_id": session_id,
+        "linked_reference": reference,
+        "critical_question": question,
+        "technical_requirements": [
+            "La confirmación debe ser texto humano exacto, no inferido ni parafraseado.",
+            "La confirmación debe registrarse como conversation_source_registered con transcript_path y quoted_text.",
+            "El quoted_text de la fuente debe coincidir exactamente con confirmation_text.",
+            "Solo después de eso puede emitirse el human_validation VAL-STEP correspondiente.",
+        ],
+        "commands": {
+            "scaffold": f"python 07_scripts/tesis.py source scaffold --session-id {session_id}",
+            "register_template": (
+                "python 07_scripts/tesis.py source register "
+                f"--session-id {session_id} "
+                "--transcript <RUTA_TRANSCRIPCION> "
+                "--quote \"<CONFIRMACION_EXACTA>\""
+            ),
+            "finalize": finalize_command,
+        },
+    }
+
+
+def resolve_openclaw_validation_context(
+    *,
+    proposal_event_id: str,
+    source_event_id: str,
+    step_id: str,
+    confirmation_text: str,
+    events: list[dict] | None = None,
+) -> dict[str, object]:
+    items = ensure_canon_initialized() if events is None else events
+    proposal = openclaw_proposal_event(proposal_event_id, items)
+    source_index = {str(event.get("event_id", "")).strip(): event for event in items}
+    source_event = source_index.get(source_event_id.strip())
+    if not source_event or str(source_event.get("event_type", "")).strip() != "conversation_source_registered":
+        raise ValueError(f"No existe fuente de conversación válida con id {source_event_id}.")
+
+    payload = dict(proposal.get("payload", {}))
+    approval = dict(payload.get("approval", {}))
+    expected_step = str(approval.get("step_id_expected", "")).strip()
+    if expected_step and step_id.strip() != expected_step:
+        raise ValueError(f"La propuesta espera {expected_step} y no {step_id}.")
+
+    source_payload = dict(source_event.get("payload", {}))
+    quoted_text = str(source_payload.get("quoted_text", "")).strip()
+    if quoted_text != confirmation_text.strip():
+        raise ValueError("El confirmation_text no coincide exactamente con quoted_text de la fuente registrada.")
+
+    reference = str(proposal.get("links", {}).get("reference", "[DEC-0020]")).strip() or "[DEC-0020]"
+    question = (
+        f"¿Autorizas aprobar la propuesta OpenClaw {payload.get('proposal_id', proposal_event_id)} "
+        f"para `{payload.get('title', payload.get('task_id', 'sin_titulo'))}` y registrarla como {step_id}?"
+    )
+    matrix_summary = (
+        f"Aprobación humana de propuesta OpenClaw {payload.get('proposal_id', proposal_event_id)}: "
+        f"{payload.get('title', payload.get('task_id', 'sin_titulo'))}"
+    )
+    content_text = (
+        f"Propuesta OpenClaw: {payload.get('proposal_id', proposal_event_id)}\n"
+        f"Tarea: {payload.get('task_id', '')}\n"
+        f"Dominio: {payload.get('domain', '')}\n"
+        f"Objetivo: {payload.get('objective', '')}\n"
+        f"Question: {question}\n"
+        f"Human confirmation: {confirmation_text.strip()}\n"
+        f"Source event: {source_event_id.strip()}\n"
+        f"Proposal event: {proposal_event_id.strip()}\n"
+    )
+    return {
+        "proposal": proposal,
+        "source_event": source_event,
+        "step_id": step_id.strip(),
+        "linked_reference": reference,
+        "question": question,
+        "confirmation_text": confirmation_text.strip(),
+        "matrix_summary": matrix_summary,
+        "content_text": content_text,
+    }
 
 
 def latest_step_id_value(step_ids: list[str]) -> str:
@@ -932,6 +1060,49 @@ def cmd_signoff_sync(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_proposal_package_openclaw(args: argparse.Namespace) -> int:
+    package = build_openclaw_validation_package(
+        args.proposal_event_id,
+        session_id=args.session_id,
+        step_id=args.step_id,
+    )
+    print("PROPOSAL: OPENCLAW PACKAGE")
+    print(json.dumps(package, ensure_ascii=False, indent=2))
+    return 0
+
+
+def cmd_proposal_finalize_openclaw(args: argparse.Namespace) -> int:
+    context = resolve_openclaw_validation_context(
+        proposal_event_id=args.proposal_event_id,
+        source_event_id=args.source_event_id,
+        step_id=args.step_id,
+        confirmation_text=args.confirmation_text,
+    )
+    event = append_human_validation(
+        step_id=str(context["step_id"]),
+        audit_level=args.audit_level,
+        content_text=str(context["content_text"]),
+        linked_reference=str(context["linked_reference"]),
+        matrix_summary=str(context["matrix_summary"]),
+        matrix_reference=args.matrix_reference,
+        ethical_alignment=args.ethical_alignment,
+        state_label=args.state_label,
+        session_id=args.session_id,
+        confirmation_question=str(context["question"]),
+        confirmation_text=str(context["confirmation_text"]),
+        confirmation_kind="respuesta_afirmativa_explicita_openclaw",
+        source_event_id=args.source_event_id,
+        provenance_status="corroborated_conversation_source",
+        quote_verification_status="verified_against_source",
+        source_capture_required=True,
+    )
+    print("PROPOSAL: OPENCLAW FINALIZED")
+    print(f"- Proposal event: {args.proposal_event_id}")
+    print(f"- Step ID: {event['event_id']}")
+    print(f"- Source EVT: {args.source_event_id}")
+    return 0
+
+
 def cmd_session_open(args: argparse.Namespace) -> int:
     ensure_canon_initialized()
     path, content = create_session_content(args.session_id)
@@ -979,6 +1150,17 @@ def cmd_event_append(args: argparse.Namespace) -> int:
         append_agent_activity(session_id=args.session_id, task_summary=args.task_summary, files_touched=files_touched, agent_name=args.agent_name)
     elif args.event_type == "session_recorded":
         append_session_record(rel_path=args.path, content=(ROOT / normalize_path(args.path)).read_text(encoding="utf-8"), session_id=args.session_id)
+    elif args.event_type == "openclaw_proposal":
+        append_openclaw_proposal(
+            task_payload=json.loads(args.task_payload),
+            decision_payload=json.loads(args.decision_payload),
+            evidence_payload=json.loads(args.evidence_payload),
+            approval_payload=json.loads(args.approval_payload),
+            session_id=args.session_id,
+            linked_reference=args.linked_reference,
+            risk_level=args.audit_level,
+            proposal_status=args.proposal_status,
+        )
     else:
         payload = json.loads(args.payload) if args.payload else {}
         append_event(
@@ -1107,6 +1289,26 @@ def build_parser() -> argparse.ArgumentParser:
     )
     signoff_sync.set_defaults(func=cmd_signoff_sync)
 
+    proposal = subparsers.add_parser("proposal")
+    proposal_subparsers = proposal.add_subparsers(dest="proposal_command", required=True)
+    proposal_package = proposal_subparsers.add_parser("package-openclaw")
+    proposal_package.add_argument("--proposal-event-id", required=True)
+    proposal_package.add_argument("--session-id", required=True)
+    proposal_package.add_argument("--step-id", default="")
+    proposal_package.set_defaults(func=cmd_proposal_package_openclaw)
+
+    proposal_finalize = proposal_subparsers.add_parser("finalize-openclaw")
+    proposal_finalize.add_argument("--proposal-event-id", required=True)
+    proposal_finalize.add_argument("--source-event-id", required=True)
+    proposal_finalize.add_argument("--step-id", required=True)
+    proposal_finalize.add_argument("--confirmation-text", required=True)
+    proposal_finalize.add_argument("--session-id", required=True)
+    proposal_finalize.add_argument("--audit-level", default="ALTO")
+    proposal_finalize.add_argument("--matrix-reference", default="")
+    proposal_finalize.add_argument("--ethical-alignment", default="Soberanía Humana (UNESCO)")
+    proposal_finalize.add_argument("--state-label", default="[x] Validado")
+    proposal_finalize.set_defaults(func=cmd_proposal_finalize_openclaw)
+
     session = subparsers.add_parser("session")
     session_subparsers = session.add_subparsers(dest="session_command", required=True)
     session_open = session_subparsers.add_parser("open")
@@ -1144,6 +1346,11 @@ def build_parser() -> argparse.ArgumentParser:
     event_append.add_argument("--agent-name", default="")
     event_append.add_argument("--occurred-at", default="")
     event_append.add_argument("--payload", default="")
+    event_append.add_argument("--task-payload", default="{}")
+    event_append.add_argument("--decision-payload", default="{}")
+    event_append.add_argument("--evidence-payload", default="{}")
+    event_append.add_argument("--approval-payload", default="{}")
+    event_append.add_argument("--proposal-status", default="draft_pending_human_review")
     event_append.set_defaults(func=cmd_event_append)
 
     task = subparsers.add_parser("task")

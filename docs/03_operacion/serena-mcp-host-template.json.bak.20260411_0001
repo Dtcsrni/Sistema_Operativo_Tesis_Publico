@@ -1,0 +1,35 @@
+{
+  "servers": {
+    "serena-local": {
+      "type": "http",
+      "url": "http://127.0.0.1:8765/mcp",
+      "env": {
+        "SISTEMA_TESIS_ROOT": "${workspaceFolder}",
+        "SERENA_MCP_DEBUG_LOG": "${workspaceFolder}/00_sistema_tesis/bitacora/audit_history/serena_mcp_debug.log",
+        "SISTEMA_TESIS_AGENT_ROLE": "Compatible Host (Assistant)",
+        "SISTEMA_TESIS_AGENT_PROVIDER": "Host Provider",
+        "SISTEMA_TESIS_AGENT_MODEL_VERSION": "Model Version",
+        "SISTEMA_TESIS_AGENT_RUNTIME": "Host Runtime",
+        "SISTEMA_TESIS_MCP_HOST_KIND": "vscode"
+      }
+    },
+    "serena-local-py": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "${workspaceFolder}\\.vscode\\serena-local-py.cmd"
+      ],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "SISTEMA_TESIS_ROOT": "${workspaceFolder}",
+        "SERENA_MCP_DEBUG_LOG": "${workspaceFolder}/00_sistema_tesis/bitacora/audit_history/serena_mcp_debug.log",
+        "SISTEMA_TESIS_AGENT_ROLE": "Compatible Host (Assistant)",
+        "SISTEMA_TESIS_AGENT_PROVIDER": "Host Provider",
+        "SISTEMA_TESIS_AGENT_MODEL_VERSION": "Model Version",
+        "SISTEMA_TESIS_AGENT_RUNTIME": "Host Runtime",
+        "SISTEMA_TESIS_MCP_HOST_KIND": "vscode"
+      }
+    }
+  }
+}

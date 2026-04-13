@@ -46,9 +46,12 @@
       "subbloques_en_backlog": true,
       "entregables": [
         "ENT-001",
-        "ENT-002"
+        "ENT-002",
+        "ENT-013",
+        "ENT-014",
+        "ENT-015"
       ],
-      "criterio_salida": "Existe una base operativa funcional con validadores, dashboard generado, plantillas y README de retoma rápida.",
+      "criterio_salida": "Existe una base operativa funcional con validadores, dashboard generado, plantillas y README de retoma rápida, además de separación verificable entre sistema_tesis edge_iot y openclaw en Orange Pi y una arquitectura interna formalizada con pruebas de conformidad.",
       "riesgo_principal": "alto",
       "notas": "Bloque habilitador. Su cierre reduce fricción cognitiva y desalineación documental.",
       "catalogos_meta": {

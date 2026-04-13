@@ -46,14 +46,14 @@
   <main>
     <header>
       <h1>Sistema</h1>
-      <p class="stamp">Artefacto derivado generado el 2026-04-03</p>
+      <p class="stamp">Artefacto derivado generado el 2026-04-13</p>
     </header>
     <pre># Sistema
 
 Propósito, alcance, módulos, flujos e interacción del sistema operativo de tesis.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-03`
+- **Fecha:** `2026-04-13`
 - **Estado:** `OK`
 - **Fuentes:** `README_INICIO.md`, `00_sistema_tesis/manual_operacion_humana.md`, `00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`, `00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`, `00_sistema_tesis/documentacion_sistema/flujos_operativos.md`, `00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/publicacion.yaml`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -363,6 +363,141 @@ Salida esperada:
 - comprension tecnica suficiente para evaluacion externa;
 - claridad sobre que informacion es publica y que informacion permanece interna.
 
+### Flujo 6. Operar por dominios aislados
+
+Objetivo: ejecutar tareas en Orange Pi sin mezclar permisos, red ni datos entre `sistema_tesis`, `openclaw` y `edge_iot`.
+
+Secuencia:
+
+1. Verificar identidad y servicio del dominio objetivo.
+2. Confirmar rutas permitidas de lectura y escritura.
+3. Confirmar si el dominio tiene red local, salida controlada o modo sin nube.
+4. Si hay intercambio con otro dominio, usar solo `inbox`, `outbox`, `spool` o CLI explícita.
+5. Ejecutar chequeos del dominio antes de operar componentes opcionales.
+
+Salida esperada:
+
+- servicio corriendo bajo la identidad correcta;
+- sin acceso cruzado a workspaces ni secretos;
+- intercambio trazable y reproducible.
+
+### Flujo 7. Observar salud y métricas por dominio
+
+Objetivo: revisar salud operativa sin mezclar logs ni métricas entre dominios.
+
+Secuencia:
+
+1. Verificar `prometheus.service`, `prometheus-node-exporter.service` y `tesis-observabilidad-collector.timer`.
+2. Confirmar que cada dominio escribe en su ruta de logs propia.
+3. Validar los archivos `.prom` en `/var/lib/node_exporter/textfile_collector`.
+4. Ejecutar `bash tests/smoke/test_observability_stack.sh` cuando se requiera postcheck manual.
+5. Revisar rotación y compresión en `/etc/logrotate.d/tesis-observabilidad`.
+
+Salida esperada:
+
+- observabilidad local funcional;
+- métricas separadas por dominio;
+- retención larga operable;
+- sin exposición fuera de `localhost`.
+
+### Flujo 8. Recuperar `edge_iot` tras degradación o cuarentena
+
+Objetivo: inspeccionar y recuperar el dominio `edge_iot` sin romper el aislamiento.
+
+Secuencia:
+
+1. Verificar `systemctl status edge-iot-worker.service` y `systemctl status edge-iot-watchdog.timer`.
+2. Revisar `bash /srv/tesis/repo/ops/edge/edge-iot-resilience.sh status`.
+3. Leer `edge-iot-worker.log`, `edge-iot-watchdog.log` y `edge-iot-resilience.log`.
+4. Si el dominio está en `degraded_offline`, revisar causa externa y esperar o forzar reintento según criterio humano.
+5. Si el dominio está en `quarantined`, corregir la causa y ejecutar limpieza explícita de cuarentena.
+
+Salida esperada:
+
+- causa de degradación identificada;
+- reintento o desbloqueo humano trazable;
+- sin bucles infinitos de reinicio.
+
+### Flujo 9. Respaldar y restaurar por dominio
+
+Objetivo: proteger y validar recuperación de `sistema_tesis`, `openclaw` y `edge_iot` sin mezclar sus rutas.
+
+Secuencia:
+
+1. Ejecutar `bash /srv/tesis/repo/ops/respaldo/ejecutar_respaldo.sh`.
+2. Verificar checksum y manifiestos con `bash /srv/tesis/repo/ops/respaldo/verificar_respaldos.sh`.
+3. Restaurar cada dominio a sandbox con `ops/recuperacion/restaurar_desde_emmc.sh --mode sandbox`.
+4. Revisar el reporte consolidado de restauración.
+5. Usar `in_place` solo con bandera explícita y durante ventana controlada.
+
+Salida esperada:
+
+- artefactos independientes por dominio;
+- snapshots locales por dominio;
+- restore validado sin tocar el runtime activo;
+- procedimiento in-place trazable y controlado.
+
+### Flujo 10. Auditar integración segura entre dominios
+
+Objetivo: demostrar que los canales declarados funcionan y que los accesos internos no autorizados fallan.
+
+Secuencia:
+
+1. Ejecutar `bash tests/smoke/test_domain_integration_security.sh`.
+2. Ejecutar `bash ops/seguridad/validar_integracion_entre_dominios.sh` para consolidar evidencia administrativa.
+3. Confirmar que `archivo_draft`, `spool_local` y `cli_explicita` pasan.
+4. Confirmar que fallan accesos a rutas, secretos y SQLite de otros dominios.
+5. Confirmar que cualquier intento de HTTP interdominio falla.
+6. Revisar `/var/log/tesis-admin/domain_integration_security_report_&lt;timestamp&gt;.log` como evidencia operativa.
+
+Salida esperada:
+
+- canales permitidos funcionando;
+- accesos cruzados bloqueados;
+- evidencia reproducible de enforcement real.
+
+### Flujo 11. Trabajar con Codex asistido por Serena MCP
+
+Objetivo: operar tareas de tesis con contexto compacto y acciones auditables desde VS Code sin sustituir la validacion humana ni la via CLI.
+
+Secuencia:
+
+1. Abrir el repositorio en la raiz correcta del workspace.
+2. Recargar VS Code y confirmar que `serena-local` aparezca como servidor MCP activo.
+3. Usar `context.fetch_compact` para recuperar solo el contexto minimo necesario.
+4. Usar `governance.preflight` antes de preparar o aplicar cambios sobre canon o rutas protegidas.
+5. Usar `canon.prepare_change` para revisar diff, riesgo y requisitos antes de tocar la fuente canonica.
+6. Usar `canon.apply_controlled_change` solo con `VAL-STEP` valido y evidencia fuente corroborada cuando la politica lo exija.
+7. Ejecutar `python 07_scripts/build_all.py` despues de cambios relevantes.
+
+Salida esperada:
+
+- contexto reducido sin perder referencias de origen;
+- cambios guiados por gobernanza y no por memoria implicita del agente;
+- traza MCP visible en `historial interno no público/serena_mcp_operations.jsonl`.
+
+Referencia operativa: `00_sistema_tesis/documentacion_sistema/operacion_serena_mcp_codex.md`
+
+### Flujo 12. Registrar Serena para un runtime externo
+
+Objetivo: exponer Serena como MCP HTTP autenticado para un host separado de VS Code sin duplicar reglas de negocio.
+
+Secuencia:
+
+1. Definir `SERENA_BRIDGE_BEARER_TOKEN` en el entorno del host.
+2. Arrancar `python runtime/serena_bridge/bin/serena_bridge.py`.
+3. Verificar con `python 07_scripts/check_serena_access.py` que el bridge sea alcanzable.
+4. Registrar la URL del bridge en el host externo con auth `Bearer` y headers de identidad.
+5. Ejecutar `initialize`, `tools/list`, `context.fetch_compact` y `governance.preflight`.
+6. Confirmar que la traza MCP incluya identidad del host y `host_kind=external_runtime`.
+
+Salida esperada:
+
+- runtime externo consumiendo el mismo contrato `serena-local`;
+- auth minima activa;
+- misma gobernanza que el MCP local;
+- traza diferenciada del host llamador.
+
 ### Regla transversal
 
 Todo flujo del sistema debe cumplir tres condiciones:
@@ -457,7 +592,7 @@ Toda documentacion mejorada del sistema debe responder implicitamente a estas pr
 - `paquete`: conjunto versionado de contexto o evidencia a integrar.
 - `staging`: zona temporal de verificación antes de integrar al canon.
 - `indice maestro`: registro consolidado de ingreso y destino de artefactos.
-- `evidencia`, `soporte`, `politica`, `modulo`, `rol`, `tier`, `status`, `accion`: etiquetas de clasificación que no deben confundirse entre sí.
+- `evidencia`, `soporte`, `politica`, `modulo`, `rol`, `nivel`, `estado`, `accion`: etiquetas de clasificación que no deben confundirse entre sí.
 
 ## Operación humana y superficies
 
@@ -473,29 +608,29 @@ Toda documentacion mejorada del sistema debe responder implicitamente a estas pr
 |---|---|---|---|
 |sistema|00_sistema_tesis/config/sistema_tesis.yaml|sí|2026-03-26|
 |hipotesis|00_sistema_tesis/config/hipotesis.yaml|sí|2026-03-23|
-|bloques|00_sistema_tesis/config/bloques.yaml|sí|2026-03-23|
+|bloques|00_sistema_tesis/config/bloques.yaml|sí|2026-04-11|
 |dashboard|00_sistema_tesis/config/dashboard.yaml|sí|2026-03-24|
-|publicacion|00_sistema_tesis/config/publicacion.yaml|sí|2026-04-03|
+|publicacion|00_sistema_tesis/config/publicacion.yaml|sí|2026-04-11|
 |agent_identity|Identidad técnica no publicada por seguridad|sí|2026-03-26|
-|gobernanza_ia|00_sistema_tesis/config/ia_gobernanza.yaml|sí|2026-03-27|
+|gobernanza_ia|00_sistema_tesis/config/ia_gobernanza.yaml|sí|2026-04-11|
 |wiki|00_sistema_tesis/config/wiki.yaml|sí|2026-03-27|
-|manual_operacion_humana|00_sistema_tesis/manual_operacion_humana.md|sí|2026-04-03|
-|backlog|01_planeacion/backlog.csv|sí|2026-03-26|
+|manual_operacion_humana|00_sistema_tesis/manual_operacion_humana.md|sí|2026-04-11|
+|backlog|01_planeacion/backlog.csv|sí|2026-04-11|
 |riesgos|01_planeacion/riesgos.csv|sí|2026-03-26|
 |roadmap|01_planeacion/roadmap.csv|sí|2026-03-23|
-|entregables|01_planeacion/entregables.csv|sí|2026-03-23|
-|decisiones|00_sistema_tesis/decisiones|sí|2026-03-27|
-|bitacora|00_sistema_tesis/bitacora|sí|2026-04-02|
+|entregables|01_planeacion/entregables.csv|sí|2026-04-07|
+|decisiones|00_sistema_tesis/decisiones|sí|2026-04-11|
+|bitacora|00_sistema_tesis/bitacora|sí|2026-04-13|
 |reportes_semanales|00_sistema_tesis/reportes_semanales|sí|2026-03-24|
-|dashboard_generado|06_dashboard/generado/index.html|sí|2026-04-03|
-|bundle_publico|06_dashboard/publico/index.md|sí|2026-04-03|
-|bundle_publico_manifest|06_dashboard/publico/manifest_publico.json|sí|2026-04-03|
-|wiki_markdown_generada|06_dashboard/wiki/index.md|sí|2026-04-03|
-|wiki_html_generada|06_dashboard/generado/wiki/index.html|sí|2026-04-03|
-|wiki_manifest_generado|06_dashboard/generado/wiki_manifest.json|sí|2026-04-03|
-|readme_portada_generado|README.md|sí|2026-04-03|
+|dashboard_generado|06_dashboard/generado/index.html|sí|2026-04-13|
+|bundle_publico|06_dashboard/publico/index.md|sí|2026-04-13|
+|bundle_publico_manifest|06_dashboard/publico/manifest_publico.json|sí|2026-04-13|
+|wiki_markdown_generada|06_dashboard/wiki/index.md|sí|2026-04-13|
+|wiki_html_generada|06_dashboard/generado/wiki/index.html|sí|2026-04-13|
+|wiki_manifest_generado|06_dashboard/generado/wiki_manifest.json|sí|2026-04-13|
+|readme_portada_generado|README.md|sí|2026-04-13|
 </pre>
-      <footer class="public-update"><p>Última actualización: <strong>2026-04-04</strong></p></footer>
+      <footer class="public-update"><p>Última actualización: <strong>2026-04-13</strong></p></footer>
   </main>
 </body>
 </html>

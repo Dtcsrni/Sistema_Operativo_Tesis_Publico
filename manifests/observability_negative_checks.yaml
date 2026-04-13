@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "checks": [
+    "ningun_dominio_escribe_logs_en_ruta_ajena",
+    "ningun_exporter_usa_http_interdominio",
+    "ningun_exporter_lee_sqlite_de_otro_dominio",
+    "ningun_servicio_expone_metricas_fuera_de_localhost",
+    "toda_retencion_usa_rotacion_y_compresion"
+  ]
+}

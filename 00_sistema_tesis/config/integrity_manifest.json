@@ -1,7 +1,11 @@
 {
-    "AGENTS.md": "8601b80a2119ab67de28ed4bb65395b4cfdf9bde721505771eb30b21076379ef",
-    "_agents/skills/handshake_ledger/SKILL.md": "9806fed4b458fa87546b242f7f0d43e27ba3e4627b47dd8ecdac9cb073c2ef46",
-    "00_sistema_tesis/canon/events.jsonl": "d6f59544200ae8c8e0d72943b0475a0b0f9dc8bd9222f159457c39ad7adc9d31",
+    "00_sistema_tesis/canon/events.jsonl": "5dc53284dbafe813bcae5ba8d885f38d657804a3df020d19b32ff6ee1e594da1",
+    "00_sistema_tesis/canon/events.jsonl.bak": "a5f09744c5877232e70e8ef14d02c04beaced9e3021496200203953adcd8afa8",
+    "00_sistema_tesis/canon/events.jsonl.bak.20260412_1521": "92a49c833a96c4857208be0bf6f106b4a5d70adc295224e0971999cb32e7f507",
+    "00_sistema_tesis/canon/events.jsonl.bak.20260412_1602": "232c34d011f5b91a756810c402621a46192b702af0f090f68089e5b1841e746a",
+    "00_sistema_tesis/canon/events.jsonl.bak.20260412_1800": "232c34d011f5b91a756810c402621a46192b702af0f090f68089e5b1841e746a",
+    "00_sistema_tesis/canon/events.jsonl.bak.20260412_1828": "2629b6b8f84d098ef1610dca54e3414f581d236ee413f8d1973a80993ede72d5",
+    "00_sistema_tesis/canon/events.jsonl.bak.20260412_1845": "abe5bed6a6bfa147e16eff885edac30e96bf63c27696282826efd3a44b3f39ca",
     "identidad técnica no publicada por seguridad": "a533526689e9c74e24911b91b80d93390ae1c2b8c6c44c8c8434e0101a737fb4",
     "00_sistema_tesis/config/ia_gobernanza.yaml": "c94d487ff52e47733d0d383f1deb073cd5fb1eb5b8359c716e0c1a2030be5660",
     "00_sistema_tesis/decisiones/2026-03-23_DEC-0001_arquitectura_sistema_tesis.md": "870cbdc8e88d76dc3177396fb6a0d872a5e68aa54630376e3aeaaebebadd66a8",
@@ -22,5 +26,9 @@
     "00_sistema_tesis/decisiones/2026-03-26_DEC-0018_evidencia_fuente_conversacion_codex_para_confirmacion_verbal.md": "981a5e3ebaecb65cc0ef070aef3204e5caaf86fb7023db73823cda5a2aebee49",
     "00_sistema_tesis/decisiones/2026-03-27_DEC-0019_reestructura_operativa_y_despliegue_orangepi.md": "39c13c7e698398e0558b0fba0adf1749af7179d77aa278b88e094c2b113378db",
     "00_sistema_tesis/decisiones/2026-03-27_DEC-0020_openclaw_como_capa_asistiva_opcional_y_evaluable.md": "c06462d33d14ebf629c41e8ee541981f47ce94415dbecb45a3f9a9d9775f415d",
-    "00_sistema_tesis/decisiones/2026-03-27_DEC-0021_publicacion_desde_downstream_publico_sanitizado.md": "36d7cba881f4a3673e4fd08fb42c54cb5988cfc2c3dcb2a7c1f91f9cb46deec2"
+    "00_sistema_tesis/decisiones/2026-03-27_DEC-0021_publicacion_desde_downstream_publico_sanitizado.md": "36d7cba881f4a3673e4fd08fb42c54cb5988cfc2c3dcb2a7c1f91f9cb46deec2",
+    "00_sistema_tesis/decisiones/2026-04-08_DEC-0022_arquitectura_operativa_escritorio_primario_y_orange_pi_edge.md": "c8c1ab0839b574e2144ee25573b19d52bb7aab04e409939b7a42d54cb46d7ef2",
+    "00_sistema_tesis/decisiones/2026-04-08_DEC-0023_serena_mcp_como_capa_comun_para_agentes.md": "adaab57b913b58f4ee8295e9b1a63d007feb59d82047548907956d5259151c21",
+    "AGENTS.md": "044950661f01817ff4c04280d58fb4f0e316199c8d75687a3ba6d41b77990eda",
+    "_agents/skills/handshake_ledger/SKILL.md": "9806fed4b458fa87546b242f7f0d43e27ba3e4627b47dd8ecdac9cb073c2ef46"
 }

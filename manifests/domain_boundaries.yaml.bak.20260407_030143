@@ -1,0 +1,66 @@
+{
+  "version": "1.0",
+  "dominios": [
+    {
+      "id": "personal",
+      "descripcion": "Contexto personal y reflexiones no publicables",
+      "rutas": [
+        "/srv/tesis/workspace/personal"
+      ],
+      "backends": [
+        "local",
+        "manual"
+      ],
+      "publicable": false
+    },
+    {
+      "id": "profesional",
+      "descripcion": "Trabajo tecnico reutilizable y operativo",
+      "rutas": [
+        "/srv/tesis/workspace/profesional"
+      ],
+      "backends": [
+        "local",
+        "openai",
+        "ollama"
+      ],
+      "publicable": "parcial"
+    },
+    {
+      "id": "academico",
+      "descripcion": "Tesis, estado del arte y metodologia",
+      "rutas": [
+        "/srv/tesis/workspace/academico"
+      ],
+      "backends": [
+        "local",
+        "openai",
+        "anthropic",
+        "gemini"
+      ],
+      "publicable": "sanitizado"
+    },
+    {
+      "id": "edge",
+      "descripcion": "Nodo edge y pipeline IoT",
+      "rutas": [
+        "/srv/tesis/workspace/edge"
+      ],
+      "backends": [
+        "local"
+      ],
+      "publicable": "tecnico_controlado"
+    },
+    {
+      "id": "administrativo",
+      "descripcion": "Operacion del sistema, secretos y seguridad",
+      "rutas": [
+        "/srv/tesis/workspace/admin"
+      ],
+      "backends": [
+        "local"
+      ],
+      "publicable": false
+    }
+  ]
+}

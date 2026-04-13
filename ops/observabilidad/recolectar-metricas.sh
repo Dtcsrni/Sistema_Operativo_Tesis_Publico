@@ -1,0 +1,155 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+TEXTFILE_COLLECTOR_DIR="${TEXTFILE_COLLECTOR_DIR:-/var/lib/node_exporter/textfile_collector}"
+SISTEMA_TESIS_HEALTHCHECK_CMD="${SISTEMA_TESIS_HEALTHCHECK_CMD:-python3 /srv/tesis/repo/07_scripts/tesis.py doctor --check}"
+OPENCLAW_HEALTHCHECK_CMD="${OPENCLAW_HEALTHCHECK_CMD:-/srv/tesis/repo/runtime/openclaw/wrappers/healthcheck.sh}"
+EDGE_IOT_HEALTHCHECK_CMD="${EDGE_IOT_HEALTHCHECK_CMD:-/srv/tesis/repo/ops/edge/edge-iot-healthcheck.sh}"
+ADMIN_HEALTHCHECK_CMD="${ADMIN_HEALTHCHECK_CMD:-test -d /mnt/emmc/backups}"
+
+mkdir -p "${TEXTFILE_COLLECTOR_DIR}"
+
+service_up() {
+  if systemctl is-active --quiet "$1"; then
+    echo 1
+  else
+    echo 0
+  fi
+}
+
+log_bytes() {
+  local dir="$1"
+  find "$dir" -maxdepth 1 -type f -name '*.log' -printf '%s\n' 2>/dev/null | awk '{sum += $1} END {print sum + 0}'
+}
+
+latest_mtime() {
+  local dir="$1"
+  local ts
+  ts="$(find "$dir" -maxdepth 1 -type f -printf '%T@\n' 2>/dev/null | sort -nr | head -n 1 | cut -d. -f1)"
+  if [ -z "${ts}" ]; then
+    echo 0
+  else
+    echo "${ts}"
+  fi
+}
+
+read_edge_resilience_value() {
+  local key="$1"
+  local file="/var/lib/edge-iot/runtime/resilience.env"
+  if [ ! -f "${file}" ]; then
+    case "${key}" in
+      EDGE_IOT_RESILIENCE_STATE) echo "healthy" ;;
+      *) echo "0" ;;
+    esac
+    return
+  fi
+  awk -F= -v search="${key}" '$1 == search {gsub(/^"|"$/, "", $2); print $2}' "${file}" | tail -n 1
+}
+
+map_edge_state_to_gauge() {
+  case "$1" in
+    healthy) echo 0 ;;
+    degraded_offline) echo 1 ;;
+    recovering) echo 2 ;;
+    quarantined) echo 3 ;;
+    *) echo -1 ;;
+  esac
+}
+
+recent_error_lines() {
+  local dir="$1"
+  local total=0
+  local file
+  local count
+  while IFS= read -r -d '' file; do
+    count="$(tail -n 200 "$file" 2>/dev/null | grep -Eic 'error|fail|fatal|traceback' || true)"
+    total=$((total + count))
+  done < <(find "$dir" -maxdepth 1 -type f -name '*.log' -print0 2>/dev/null)
+  echo "${total}"
+}
+
+run_healthcheck() {
+  local command="$1"
+  local start_ms
+  local end_ms
+  local status=1
+  start_ms="$(date +%s%3N)"
+  if bash -lc "$command" >/dev/null 2>&1; then
+    status=1
+  else
+    status=0
+  fi
+  end_ms="$(date +%s%3N)"
+  echo "${status} $((end_ms - start_ms))"
+}
+
+write_domain_metrics() {
+  local file="$1"
+  local domain="$2"
+  local service_name="$3"
+  local log_dir="$4"
+  local healthcheck_cmd="$5"
+  local service_status
+  local health_payload
+  local health_up
+  local health_latency_ms
+
+  service_status="$(service_up "$service_name")"
+  health_payload="$(run_healthcheck "$healthcheck_cmd")"
+  health_up="${health_payload%% *}"
+  health_latency_ms="${health_payload##* }"
+
+  cat > "$file" <<EOF
+# HELP tesis_domain_service_up Estado del servicio del dominio.
+# TYPE tesis_domain_service_up gauge
+tesis_domain_service_up{domain="${domain}",service="${service_name}"} ${service_status}
+# HELP tesis_domain_healthcheck_up Resultado del ultimo healthcheck local.
+# TYPE tesis_domain_healthcheck_up gauge
+tesis_domain_healthcheck_up{domain="${domain}"} ${health_up}
+# HELP tesis_domain_healthcheck_latency_ms Latencia del ultimo healthcheck local.
+# TYPE tesis_domain_healthcheck_latency_ms gauge
+tesis_domain_healthcheck_latency_ms{domain="${domain}"} ${health_latency_ms}
+# HELP tesis_domain_log_bytes Peso acumulado de logs del dominio.
+# TYPE tesis_domain_log_bytes gauge
+tesis_domain_log_bytes{domain="${domain}"} $(log_bytes "$log_dir")
+# HELP tesis_domain_error_lines_recent Conteo reciente de lineas con error en logs.
+# TYPE tesis_domain_error_lines_recent gauge
+tesis_domain_error_lines_recent{domain="${domain}"} $(recent_error_lines "$log_dir")
+# HELP tesis_domain_last_activity_timestamp Ultimo timestamp util observado en logs del dominio.
+# TYPE tesis_domain_last_activity_timestamp gauge
+tesis_domain_last_activity_timestamp{domain="${domain}"} $(latest_mtime "$log_dir")
+EOF
+}
+
+write_domain_metrics "${TEXTFILE_COLLECTOR_DIR}/tesis-os.prom" "sistema_tesis" "tesis-healthcheck.timer" "/var/log/tesis-os" "${SISTEMA_TESIS_HEALTHCHECK_CMD}"
+write_domain_metrics "${TEXTFILE_COLLECTOR_DIR}/openclaw.prom" "openclaw" "openclaw-gateway.service" "/var/log/openclaw" "${OPENCLAW_HEALTHCHECK_CMD}"
+write_domain_metrics "${TEXTFILE_COLLECTOR_DIR}/edge-iot.prom" "edge_iot" "edge-iot-worker.service" "/var/log/edge-iot" "${EDGE_IOT_HEALTHCHECK_CMD}"
+write_domain_metrics "${TEXTFILE_COLLECTOR_DIR}/tesis-admin.prom" "administrativo" "tesis-backup.timer" "/var/log/tesis-admin" "${ADMIN_HEALTHCHECK_CMD}"
+
+edge_state="$(read_edge_resilience_value EDGE_IOT_RESILIENCE_STATE)"
+edge_failures="$(read_edge_resilience_value EDGE_IOT_FAILURE_COUNT)"
+edge_quarantine_until="$(read_edge_resilience_value EDGE_IOT_QUARANTINE_UNTIL)"
+edge_last_recovery="$(read_edge_resilience_value EDGE_IOT_LAST_RECOVERY_AT)"
+edge_last_recovery_ts=0
+if [ -n "${edge_last_recovery}" ] && [ "${edge_last_recovery}" != "0" ]; then
+  edge_last_recovery_ts="$(date -d "${edge_last_recovery}" +%s 2>/dev/null || echo 0)"
+fi
+cat >> "${TEXTFILE_COLLECTOR_DIR}/edge-iot.prom" <<EOF
+# HELP tesis_edge_resilience_state Estado de resiliencia de edge_iot.
+# TYPE tesis_edge_resilience_state gauge
+tesis_edge_resilience_state{domain="edge_iot",state="${edge_state}"} $(map_edge_state_to_gauge "${edge_state}")
+# HELP tesis_edge_resilience_failures_total Fallas consecutivas registradas por el watchdog.
+# TYPE tesis_edge_resilience_failures_total gauge
+tesis_edge_resilience_failures_total{domain="edge_iot"} ${edge_failures:-0}
+# HELP tesis_edge_resilience_quarantined Bandera de cuarentena del dominio edge_iot.
+# TYPE tesis_edge_resilience_quarantined gauge
+tesis_edge_resilience_quarantined{domain="edge_iot"} $( [ "${edge_state}" = "quarantined" ] && echo 1 || echo 0 )
+# HELP tesis_edge_resilience_last_recovery_timestamp Timestamp de la ultima recuperación observada.
+# TYPE tesis_edge_resilience_last_recovery_timestamp gauge
+tesis_edge_resilience_last_recovery_timestamp{domain="edge_iot"} ${edge_last_recovery_ts}
+# HELP tesis_edge_resilience_quarantine_until_timestamp Fin de cuarentena si aplica.
+# TYPE tesis_edge_resilience_quarantine_until_timestamp gauge
+tesis_edge_resilience_quarantine_until_timestamp{domain="edge_iot"} ${edge_quarantine_until:-0}
+EOF
+
+echo "OBSERVABILIDAD_OK ${TEXTFILE_COLLECTOR_DIR}"

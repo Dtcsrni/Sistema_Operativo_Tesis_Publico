@@ -2,4 +2,4 @@
 
 Campos minimos: concepto, definicion, fuentes, analogias, limites, aplicacion, pendientes.
 
-_Última actualización: `2026-04-04`._
+_Última actualización: `2026-04-13`._

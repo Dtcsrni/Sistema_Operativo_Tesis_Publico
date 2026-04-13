@@ -1,0 +1,647 @@
+from __future__ import annotations
+
+import json
+import logging
+import os
+import sys
+from http import HTTPStatus
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+from typing import Any, Callable
+from urllib.parse import urlparse
+
+from serena_core import (
+    append_trace_record,
+    apply_controlled_change,
+    evaluate_serena_artifact,
+    fetch_compact,
+    prepare_change,
+    write_derived_artifact,
+)
+from serena_policy import (
+    load_serena_config,
+    load_tool_contracts,
+    preflight,
+    resolve_root,
+    runtime_identity,
+)
+
+
+PROTOCOL_VERSION = "2025-03-26"
+LOGGER = logging.getLogger("serena_mcp")
+HTTP_ENDPOINT = "/mcp"
+TOOL_NAME_ALIASES = {
+    "context.fetch_compact": "context_fetch_compact",
+    "governance.preflight": "governance_preflight",
+    "artifacts.evaluate_serena": "artifacts_evaluate_serena",
+    "artifacts.write_derived": "artifacts_write_derived",
+    "canon.prepare_change": "canon_prepare_change",
+    "canon.apply_controlled_change": "canon_apply_controlled_change",
+    "trace.append_operation": "trace_append_operation",
+}
+
+
+def _debug_log_path() -> Path | None:
+    raw = os.getenv("SERENA_MCP_DEBUG_LOG", "").strip()
+    if not raw:
+        return None
+    return Path(raw).expanduser()
+
+
+def _debug_log(message: str) -> None:
+    path = _debug_log_path()
+    if path is None:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(message.rstrip() + "\n")
+
+
+def _summarize_for_debug(payload: dict[str, Any]) -> dict[str, Any]:
+    summary: dict[str, Any] = {}
+    if "jsonrpc" in payload:
+        summary["jsonrpc"] = payload.get("jsonrpc")
+    if "id" in payload:
+        summary["id"] = payload.get("id")
+    if "method" in payload:
+        summary["method"] = payload.get("method")
+    params = payload.get("params")
+    if isinstance(params, dict):
+        name = params.get("name")
+        if isinstance(name, str) and name.strip():
+            summary["tool"] = name.strip()
+        arguments = params.get("arguments")
+        if isinstance(arguments, dict):
+            summary["arguments"] = _minimize_inputs(arguments)
+    result = payload.get("result")
+    if isinstance(result, dict):
+        tools = result.get("tools")
+        if isinstance(tools, list):
+            summary["tool_count"] = len(tools)
+        structured = result.get("structuredContent")
+        if isinstance(structured, dict):
+            summary["status"] = structured.get("status")
+            summary["risk_level"] = structured.get("risk_level")
+            summary["write_scope"] = structured.get("write_scope")
+            artifacts = structured.get("artifacts")
+            if isinstance(artifacts, list):
+                summary["artifact_paths"] = [
+                    item.get("path", "") for item in artifacts if isinstance(item, dict) and item.get("path")
+                ]
+    error = payload.get("error")
+    if isinstance(error, dict):
+        summary["error"] = {
+            "code": error.get("code"),
+            "message": error.get("message"),
+        }
+    return summary
+
+
+def _header_bytes(body: bytes) -> bytes:
+    return f"Content-Length: {len(body)}\r\n\r\n".encode("ascii") + body
+
+
+def _write_message(payload: dict[str, Any]) -> None:
+    body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+    _debug_log(f"OUT {json.dumps(_summarize_for_debug(payload), ensure_ascii=False)}")
+    sys.stdout.buffer.write(_header_bytes(body))
+    sys.stdout.buffer.flush()
+
+
+def _read_message() -> dict[str, Any] | None:
+    headers: dict[str, str] = {}
+    while True:
+        raw = sys.stdin.buffer.readline()
+        if not raw:
+            _debug_log("IN <EOF>")
+            return None
+        line = raw.decode("utf-8").strip()
+        if not line:
+            break
+        key, _, value = line.partition(":")
+        headers[key.lower()] = value.strip()
+    content_length = int(headers.get("content-length", "0"))
+    if content_length <= 0:
+        _debug_log(f"IN <invalid-content-length headers={headers}>")
+        return None
+    body = sys.stdin.buffer.read(content_length)
+    if not body:
+        _debug_log("IN <empty-body>")
+        return None
+    decoded = body.decode("utf-8")
+    _debug_log(f"IN {decoded}")
+    return json.loads(decoded)
+
+
+def _jsonrpc_result(message_id: Any, result: dict[str, Any]) -> dict[str, Any]:
+    return {"jsonrpc": "2.0", "id": message_id, "result": result}
+
+
+def _jsonrpc_error(message_id: Any, code: int, message: str, data: dict[str, Any] | None = None) -> dict[str, Any]:
+    error_payload = {"code": code, "message": message}
+    if data:
+        error_payload["data"] = data
+    return {"jsonrpc": "2.0", "id": message_id, "error": error_payload}
+
+
+def _minimize_inputs(arguments: dict[str, Any]) -> dict[str, Any]:
+    minimized: dict[str, Any] = {}
+    for key, value in arguments.items():
+        if key in {"content", "new_content"} and isinstance(value, str):
+            minimized[key] = {"chars": len(value), "sha256": _sha256(value)}
+            continue
+        if isinstance(value, str) and len(value) > 240:
+            minimized[key] = value[:237] + "..."
+            continue
+        minimized[key] = value
+    return minimized
+
+
+def _sha256(value: str) -> str:
+    import hashlib
+
+    normalized = value.replace("\r\n", "\n").replace("\r", "\n")
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+
+
+class SerenaMCPServer:
+    def __init__(self, *, root: Path | None = None, identity_overrides: dict[str, str] | None = None) -> None:
+        self.root = resolve_root(root)
+        self.config = load_serena_config(self.root)
+        self.identity = runtime_identity(self.root)
+        if identity_overrides:
+            for key, value in identity_overrides.items():
+                if str(value).strip():
+                    self.identity[key] = str(value).strip()
+        self.contracts = load_tool_contracts(self.root)
+        self.handlers: dict[str, Callable[[dict[str, Any]], dict[str, Any]]] = {
+            "context.fetch_compact": self._handle_fetch_compact,
+            "governance.preflight": self._handle_preflight,
+            "artifacts.evaluate_serena": self._handle_evaluate_serena,
+            "artifacts.write_derived": self._handle_write_derived,
+            "canon.prepare_change": self._handle_prepare_change,
+            "canon.apply_controlled_change": self._handle_apply_controlled_change,
+            "trace.append_operation": self._handle_trace_append_operation,
+        }
+        self.public_to_canonical = {alias: canonical for canonical, alias in TOOL_NAME_ALIASES.items()}
+
+    def supported_tool_names(self) -> list[str]:
+        return [name for name, contract in self.contracts.items() if contract.enabled]
+
+    def public_tool_name(self, canonical_name: str) -> str:
+        return TOOL_NAME_ALIASES.get(canonical_name, canonical_name)
+
+    def resolve_tool_name(self, requested_name: str) -> str:
+        if requested_name in self.handlers:
+            return requested_name
+        return self.public_to_canonical.get(requested_name, requested_name)
+
+    def initialize(self, params: dict[str, Any]) -> dict[str, Any]:
+        requested = str(params.get("protocolVersion", "")).strip()
+        return {
+            "protocolVersion": requested or PROTOCOL_VERSION,
+            "capabilities": {"tools": {}, "resources": {}},
+            "serverInfo": {
+                "name": str(self.config.get("server", {}).get("name", "serena-local")),
+                "version": str(self.config.get("server", {}).get("version", "1.0.0")),
+            },
+            "instructions": (
+                "Serena MCP expone herramientas compactas y gobernadas para contexto, artefactos y cambios controlados."
+            ),
+        }
+
+    def dispatch_message(self, message: dict[str, Any]) -> dict[str, Any] | None:
+        method = str(message.get("method", "")).strip()
+        message_id = message.get("id")
+        params = dict(message.get("params", {}) or {})
+        _debug_log(f"HANDLE method={method} id={message_id}")
+
+        if method == "initialize":
+            return _jsonrpc_result(message_id, self.initialize(params))
+        if method == "notifications/initialized":
+            return None
+        if method == "ping":
+            return _jsonrpc_result(message_id, {"pong": True})
+        if method == "tools/list":
+            return _jsonrpc_result(message_id, self.list_tools())
+        if method == "resources/list":
+            return _jsonrpc_result(message_id, self.list_resources())
+        if method == "tools/call":
+            return _jsonrpc_result(
+                message_id,
+                self.call_tool(str(params.get("name", "")).strip(), dict(params.get("arguments", {}) or {})),
+            )
+        return _jsonrpc_error(message_id, -32601, f"Método no soportado: {method}")
+
+    def list_tools(self) -> dict[str, Any]:
+        tools = []
+        for canonical_name in self.supported_tool_names():
+            contract = self.contracts[canonical_name]
+            tools.append(
+                {
+                    "name": self.public_tool_name(canonical_name),
+                    "description": contract.description,
+                    "inputSchema": self._tool_schema(canonical_name),
+                }
+            )
+        return {"tools": tools}
+
+    def list_resources(self) -> dict[str, Any]:
+        return {"resources": []}
+
+    def call_tool(self, name: str, arguments: dict[str, Any]) -> dict[str, Any]:
+        canonical_name = self.resolve_tool_name(name)
+        if canonical_name not in self.handlers:
+            available = ", ".join(self.public_tool_name(item) for item in self.supported_tool_names())
+            raise KeyError(f"Herramienta no soportada: {name}. Disponibles: {available}")
+        result = self.handlers[canonical_name](arguments)
+        minimized_inputs = _minimize_inputs(arguments)
+        trace = append_trace_record(
+            tool_name=canonical_name,
+            intent=str(arguments.get("intent", arguments.get("tool_name", ""))),
+            minimized_inputs=minimized_inputs,
+            result=result,
+            read_paths=result.get("references", result.get("read_paths", [])),
+            write_paths=[item.get("path", "") for item in result.get("artifacts", []) if isinstance(item, dict)],
+            step_id=str(arguments.get("step_id", "")),
+            source_event_id=str(arguments.get("source_event_id", "")),
+            identity=self.identity,
+            root=self.root,
+        )
+        result.setdefault("trace", trace)
+        return {
+            "content": [{"type": "text", "text": json.dumps(result, ensure_ascii=False, indent=2)}],
+            "structuredContent": result,
+            "isError": False,
+        }
+
+    def _handle_fetch_compact(self, arguments: dict[str, Any]) -> dict[str, Any]:
+        payload = fetch_compact(
+            query=str(arguments.get("query", "")).strip(),
+            paths=list(arguments.get("paths", []) or []),
+            limit=int(arguments.get("limit", 5)),
+            context_lines=int(arguments.get("context_lines", 1)),
+            root=self.root,
+        )
+        return {
+            "status": "ok",
+            "risk_level": "MEDIO",
+            "write_scope": "read_only",
+            "evidence": {},
+            "artifacts": [],
+            "next_required_action": "none",
+            **payload,
+        }
+
+    def _handle_preflight(self, arguments: dict[str, Any]) -> dict[str, Any]:
+        return preflight(
+            tool_name=str(arguments.get("tool_name", "")).strip() or "governance.preflight",
+            target_paths=list(arguments.get("target_paths", []) or []),
+            step_id=str(arguments.get("step_id", "")).strip(),
+            source_event_id=str(arguments.get("source_event_id", "")).strip(),
+            intent=str(arguments.get("intent", "")).strip(),
+            root=self.root,
+        )
+
+    def _handle_evaluate_serena(self, arguments: dict[str, Any]) -> dict[str, Any]:
+        artifact = evaluate_serena_artifact(
+            plan_path=str(arguments.get("plan_path", "")).strip(),
+            report_path=str(arguments.get("report_path", "00_sistema_tesis/config/ab_pilot_report.json")).strip(),
+            markdown_path=str(arguments.get("markdown_path", "06_dashboard/generado/ab_pilot_report.md")).strip(),
+            trace_path=str(arguments.get("trace_path", "00_sistema_tesis/bitacora/audit_history/ab_pilot_runs.jsonl")).strip(),
+            session_id=str(arguments.get("session_id", "")).strip(),
+            step_id=str(arguments.get("step_id", "")).strip(),
+            source_event_id=str(arguments.get("source_event_id", "")).strip(),
+            root=self.root,
+        )
+        return {
+            "status": "ok",
+            "risk_level": "MEDIO",
+            "write_scope": "derived",
+            "evidence": {
+                "step_id": str(arguments.get("step_id", "")).strip(),
+                "source_event_id": str(arguments.get("source_event_id", "")).strip(),
+            },
+            "artifacts": [
+                {"path": artifact["report_path"]},
+                {"path": artifact["markdown_path"]},
+                {"path": artifact["trace_path"]},
+            ],
+            "next_required_action": "review_report",
+            "summary": artifact["summary"],
+        }
+
+    def _handle_write_derived(self, arguments: dict[str, Any]) -> dict[str, Any]:
+        artifact = write_derived_artifact(
+            path=str(arguments.get("path", "")).strip(),
+            content=str(arguments.get("content", "")),
+            root=self.root,
+        )
+        return {
+            "status": "ok",
+            "risk_level": "MEDIO",
+            "write_scope": "derived",
+            "evidence": {},
+            "artifacts": [artifact],
+            "next_required_action": "none",
+        }
+
+    def _handle_prepare_change(self, arguments: dict[str, Any]) -> dict[str, Any]:
+        payload = prepare_change(
+            path=str(arguments.get("path", "")).strip(),
+            new_content=str(arguments.get("new_content", "")),
+            intent=str(arguments.get("intent", "")).strip(),
+            root=self.root,
+        )
+        return {
+            "status": "ok",
+            "risk_level": payload["preflight"]["risk_level"],
+            "write_scope": payload["preflight"]["write_scope"],
+            "evidence": payload["preflight"]["evidence"],
+            "artifacts": [{"path": payload["path"]}],
+            "next_required_action": payload["preflight"]["next_required_action"],
+            "diff_preview": payload["diff_preview"],
+            "current_sha256": payload["current_sha256"],
+            "proposed_sha256": payload["proposed_sha256"],
+            "references": [payload["path"]],
+        }
+
+    def _handle_apply_controlled_change(self, arguments: dict[str, Any]) -> dict[str, Any]:
+        payload = apply_controlled_change(
+            path=str(arguments.get("path", "")).strip(),
+            new_content=str(arguments.get("new_content", "")),
+            step_id=str(arguments.get("step_id", "")).strip(),
+            source_event_id=str(arguments.get("source_event_id", "")).strip(),
+            intent=str(arguments.get("intent", "")).strip(),
+            root=self.root,
+        )
+        return {
+            "status": "ok",
+            "risk_level": payload["preflight"]["risk_level"],
+            "write_scope": payload["preflight"]["write_scope"],
+            "evidence": payload["preflight"]["evidence"],
+            "artifacts": [{"path": payload["path"], "sha256": payload["sha256"]}],
+            "next_required_action": "run_audit",
+        }
+
+    def _handle_trace_append_operation(self, arguments: dict[str, Any]) -> dict[str, Any]:
+        record = append_trace_record(
+            tool_name=str(arguments.get("tool_name", "")).strip() or "trace.append_operation",
+            intent=str(arguments.get("intent", "")).strip(),
+            minimized_inputs=_minimize_inputs(dict(arguments.get("inputs", {}) or {})),
+            result=dict(arguments.get("result", {}) or {}),
+            read_paths=list(arguments.get("read_paths", []) or []),
+            write_paths=list(arguments.get("write_paths", []) or []),
+            step_id=str(arguments.get("step_id", "")).strip(),
+            source_event_id=str(arguments.get("source_event_id", "")).strip(),
+            root=self.root,
+        )
+        return {
+            "status": "ok",
+            "risk_level": "MEDIO",
+            "write_scope": "derived",
+            "evidence": {
+                "step_id": str(arguments.get("step_id", "")).strip(),
+                "source_event_id": str(arguments.get("source_event_id", "")).strip(),
+            },
+            "artifacts": [{"path": record["path"]}],
+            "next_required_action": "none",
+            "record": record["record"],
+        }
+
+    def _tool_schema(self, name: str) -> dict[str, Any]:
+        schemas: dict[str, dict[str, Any]] = {
+            "context.fetch_compact": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string"},
+                    "paths": {"type": "array", "items": {"type": "string"}},
+                    "limit": {"type": "integer", "minimum": 1},
+                    "context_lines": {"type": "integer", "minimum": 0},
+                },
+            },
+            "governance.preflight": {
+                "type": "object",
+                "properties": {
+                    "tool_name": {"type": "string"},
+                    "target_paths": {"type": "array", "items": {"type": "string"}},
+                    "step_id": {"type": "string"},
+                    "source_event_id": {"type": "string"},
+                    "intent": {"type": "string"},
+                },
+                "required": ["tool_name"],
+            },
+            "artifacts.evaluate_serena": {
+                "type": "object",
+                "properties": {
+                    "plan_path": {"type": "string"},
+                    "report_path": {"type": "string"},
+                    "markdown_path": {"type": "string"},
+                    "trace_path": {"type": "string"},
+                    "session_id": {"type": "string"},
+                    "step_id": {"type": "string"},
+                    "source_event_id": {"type": "string"},
+                },
+                "required": ["plan_path"],
+            },
+            "artifacts.write_derived": {
+                "type": "object",
+                "properties": {
+                    "path": {"type": "string"},
+                    "content": {"type": "string"},
+                },
+                "required": ["path", "content"],
+            },
+            "canon.prepare_change": {
+                "type": "object",
+                "properties": {
+                    "path": {"type": "string"},
+                    "new_content": {"type": "string"},
+                    "intent": {"type": "string"},
+                },
+                "required": ["path", "new_content"],
+            },
+            "canon.apply_controlled_change": {
+                "type": "object",
+                "properties": {
+                    "path": {"type": "string"},
+                    "new_content": {"type": "string"},
+                    "step_id": {"type": "string"},
+                    "source_event_id": {"type": "string"},
+                    "intent": {"type": "string"},
+                },
+                "required": ["path", "new_content", "step_id"],
+            },
+            "trace.append_operation": {
+                "type": "object",
+                "properties": {
+                    "tool_name": {"type": "string"},
+                    "intent": {"type": "string"},
+                    "inputs": {"type": "object"},
+                    "result": {"type": "object"},
+                    "read_paths": {"type": "array", "items": {"type": "string"}},
+                    "write_paths": {"type": "array", "items": {"type": "string"}},
+                    "step_id": {"type": "string"},
+                    "source_event_id": {"type": "string"},
+                },
+            },
+        }
+        return schemas[name]
+
+
+def serve() -> int:
+    logging.basicConfig(stream=sys.stderr, level=logging.INFO)
+    _debug_log(f"START pid={os.getpid()} python={sys.executable} cwd={Path.cwd()}")
+    server = SerenaMCPServer()
+    _debug_log(
+        "READY "
+        + json.dumps(
+            {
+                "root": str(server.root),
+                "server": server.config.get("server", {}),
+                "tools": [server.public_tool_name(name) for name in server.supported_tool_names()],
+                "identity": server.identity,
+            },
+            ensure_ascii=False,
+        )
+    )
+    while True:
+        message = _read_message()
+        if message is None:
+            _debug_log("STOP no-message")
+            return 0
+
+        try:
+            response = server.dispatch_message(message)
+            if response is None:
+                continue
+        except Exception as exc:
+            LOGGER.exception("Serena MCP error")
+            _debug_log(f"ERROR {exc.__class__.__name__}: {exc}")
+            response = _jsonrpc_error(
+                message.get("id"),
+                -32000,
+                str(exc),
+                {"type": exc.__class__.__name__},
+            )
+        _write_message(response)
+
+
+class SerenaHTTPHandler(BaseHTTPRequestHandler):
+    server_version = "SerenaMCP/1.1"
+
+    @property
+    def mcp_server(self) -> SerenaMCPServer:
+        return self.server.mcp_server  # type: ignore[attr-defined]
+
+    def log_message(self, format: str, *args: Any) -> None:
+        LOGGER.info("HTTP %s", format % args)
+
+    def _send_json(self, status: HTTPStatus, payload: dict[str, Any] | list[Any]) -> None:
+        body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+        self.send_response(status.value)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        self.wfile.write(body)
+
+    def _send_status(self, status: HTTPStatus) -> None:
+        self.send_response(status.value)
+        self.send_header("Content-Length", "0")
+        self.end_headers()
+
+    def _origin_allowed(self) -> bool:
+        origin = self.headers.get("Origin", "").strip()
+        if not origin:
+            return True
+        parsed = urlparse(origin)
+        return parsed.hostname in {"127.0.0.1", "localhost"}
+
+    def _is_endpoint(self) -> bool:
+        return urlparse(self.path).path == HTTP_ENDPOINT
+
+    def do_GET(self) -> None:
+        if not self._is_endpoint():
+            self._send_status(HTTPStatus.NOT_FOUND)
+            return
+        if not self._origin_allowed():
+            self._send_status(HTTPStatus.FORBIDDEN)
+            return
+        self._send_json(
+            HTTPStatus.OK,
+            {
+                "server": self.mcp_server.config.get("server", {}),
+                "status": "ok",
+                "transport": "streamable-http",
+                "endpoint": HTTP_ENDPOINT,
+            },
+        )
+
+    def do_POST(self) -> None:
+        if not self._is_endpoint():
+            self._send_status(HTTPStatus.NOT_FOUND)
+            return
+        if not self._origin_allowed():
+            self._send_status(HTTPStatus.FORBIDDEN)
+            return
+        try:
+            length = int(self.headers.get("Content-Length", "0"))
+        except ValueError:
+            self._send_status(HTTPStatus.BAD_REQUEST)
+            return
+        body = self.rfile.read(length)
+        if not body:
+            self._send_status(HTTPStatus.BAD_REQUEST)
+            return
+        decoded = body.decode("utf-8")
+        _debug_log(f"HTTP IN {decoded}")
+        try:
+            message = json.loads(decoded)
+        except json.JSONDecodeError:
+            self._send_status(HTTPStatus.BAD_REQUEST)
+            return
+        try:
+            response = self.mcp_server.dispatch_message(message)
+        except Exception as exc:
+            LOGGER.exception("Serena MCP HTTP error")
+            _debug_log(f"HTTP ERROR {exc.__class__.__name__}: {exc}")
+            response = _jsonrpc_error(message.get("id"), -32000, str(exc), {"type": exc.__class__.__name__})
+        if response is None:
+            self._send_status(HTTPStatus.ACCEPTED)
+            return
+        _debug_log(f"HTTP OUT {json.dumps(_summarize_for_debug(response), ensure_ascii=False)}")
+        self._send_json(HTTPStatus.OK, response)
+
+
+def serve_http(*, host: str = "127.0.0.1", port: int = 8765) -> int:
+    logging.basicConfig(stream=sys.stderr, level=logging.INFO)
+    server = SerenaMCPServer()
+    httpd = ThreadingHTTPServer((host, port), SerenaHTTPHandler)
+    httpd.mcp_server = server  # type: ignore[attr-defined]
+    _debug_log(f"HTTP START host={host} port={port} endpoint={HTTP_ENDPOINT}")
+    LOGGER.info("HTTP_READY http://%s:%s%s", host, port, HTTP_ENDPOINT)
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        LOGGER.info("HTTP_STOP keyboard-interrupt")
+    finally:
+        httpd.server_close()
+    return 0
+
+
+if __name__ == "__main__":
+    if "--transport" in sys.argv:
+        index = sys.argv.index("--transport")
+        transport = sys.argv[index + 1]
+    else:
+        transport = "stdio"
+    if transport == "http":
+        host = "127.0.0.1"
+        port = 8765
+        if "--host" in sys.argv:
+            host = sys.argv[sys.argv.index("--host") + 1]
+        if "--port" in sys.argv:
+            port = int(sys.argv[sys.argv.index("--port") + 1])
+        raise SystemExit(serve_http(host=host, port=port))
+    raise SystemExit(serve())

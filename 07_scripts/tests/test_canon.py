@@ -10,10 +10,12 @@ sys.path.insert(0, str(ROOT / "07_scripts"))
 
 import canon  # noqa: E402
 from canon import (  # noqa: E402
+    append_openclaw_proposal,
     build_state,
     materialize_events,
     projection_paths,
     render_ledger,
+    render_openclaw_proposals,
     reseal_events,
     resolve_human_validation_evidence,
     verify_conversation_source_for_step,
@@ -200,6 +202,7 @@ class TestCanon(unittest.TestCase):
     def test_projection_paths_include_conversation_source_index(self):
         paths = projection_paths([])
         self.assertIn("00_sistema_tesis/bitacora/indice_fuentes_conversacion.md", paths)
+        self.assertIn("00_sistema_tesis/bitacora/openclaw_proposals.md", paths)
 
     def test_validate_events_requires_source_event_for_new_steps(self):
         events = reseal_events(
@@ -372,6 +375,97 @@ class TestCanon(unittest.TestCase):
                 result = verify_conversation_source_for_step("VAL-STEP-501", events, require_local=True)
         self.assertEqual(result["repo_status"], "ok")
         self.assertEqual(result["local_status"], "ok")
+
+    def test_validate_events_accepts_openclaw_proposal(self):
+        events = reseal_events(
+            [
+                {
+                    "event_id": "EVT-0001",
+                    "event_type": "openclaw_proposal",
+                    "occurred_at": "2026-04-07 01:00:00",
+                    "actor": {"type": "ai", "id": "openclaw", "display_name": "openclaw"},
+                    "session_id": "openclaw-session-1",
+                    "risk_level": "ALTO",
+                    "links": {"reference": "[DEC-0020]"},
+                    "payload": {
+                        "proposal_id": "OCP-0001",
+                        "task_id": "TASK-001",
+                        "title": "Borrador metodológico",
+                        "domain": "academico",
+                        "objective": "Preparar propuesta trazable",
+                        "decision": {"provider": "gemini_web_assisted"},
+                        "evidence": {"payload_hash": "abc123"},
+                        "approval": {"status": "pending", "step_id_expected": "VAL-STEP-900"},
+                        "proposal_status": "draft_pending_human_review",
+                    },
+                    "affected_files": ["00_sistema_tesis/canon/events.jsonl", "00_sistema_tesis/bitacora/openclaw_proposals.md"],
+                    "human_validation": {"required": False},
+                    "prev_event_hash": "",
+                    "content_hash": "",
+                }
+            ]
+        )
+        self.assertEqual(validate_events(events), [])
+
+    def test_render_openclaw_proposals_surfaces_pending_review(self):
+        events = reseal_events(
+            [
+                {
+                    "event_id": "EVT-0001",
+                    "event_type": "openclaw_proposal",
+                    "occurred_at": "2026-04-07 01:00:00",
+                    "actor": {"type": "ai", "id": "openclaw", "display_name": "openclaw"},
+                    "session_id": "openclaw-session-1",
+                    "risk_level": "ALTO",
+                    "links": {"reference": "[DEC-0020]"},
+                    "payload": {
+                        "proposal_id": "OCP-0001",
+                        "task_id": "TASK-001",
+                        "title": "Borrador metodológico",
+                        "domain": "academico",
+                        "objective": "Preparar propuesta trazable",
+                        "decision": {"provider": "gemini_web_assisted", "requires_human_gate": True},
+                        "evidence": {"payload_hash": "abc123"},
+                        "approval": {"status": "pending", "step_id_expected": "VAL-STEP-900"},
+                        "proposal_status": "draft_pending_human_review",
+                    },
+                    "affected_files": ["00_sistema_tesis/canon/events.jsonl", "00_sistema_tesis/bitacora/openclaw_proposals.md"],
+                    "human_validation": {"required": False},
+                    "prev_event_hash": "",
+                    "content_hash": "",
+                }
+            ]
+        )
+        rendered = render_openclaw_proposals(events)
+        self.assertIn("OCP-0001", rendered)
+        self.assertIn("draft_pending_human_review", rendered)
+        self.assertIn("VAL-STEP-900", rendered)
+
+    def test_append_openclaw_proposal_emits_draft_event(self):
+        with TemporaryDirectory() as tmp_dir:
+            repo = Path(tmp_dir)
+            (repo / "00_sistema_tesis" / "canon").mkdir(parents=True, exist_ok=True)
+            (repo / "00_sistema_tesis" / "bitacora").mkdir(parents=True, exist_ok=True)
+            events_path = repo / "00_sistema_tesis" / "canon" / "events.jsonl"
+            state_path = repo / "00_sistema_tesis" / "canon" / "state.json"
+            events_path.write_text("", encoding="utf-8")
+            state_path.write_text("{}", encoding="utf-8")
+            with patch.object(canon, "ROOT", repo), patch.object(canon, "CANON_DIR", repo / "00_sistema_tesis" / "canon"), patch.object(canon, "EVENTS_PATH", events_path), patch.object(canon, "STATE_PATH", state_path), patch.object(canon, "SOURCE_EVIDENCE_DIR", repo / "00_sistema_tesis" / "evidencia_privada" / "conversaciones_codex"):
+                event = append_openclaw_proposal(
+                    task_payload={
+                        "task_id": "TASK-001",
+                        "title": "Borrador metodológico",
+                        "domain": "academico",
+                        "objective": "Preparar propuesta trazable",
+                    },
+                    decision_payload={"provider": "gemini_web_assisted", "requires_human_gate": True},
+                    evidence_payload={"payload_hash": "abc123"},
+                    approval_payload={"status": "pending", "step_id_expected": "VAL-STEP-900"},
+                    session_id="openclaw-session-1",
+                    linked_reference="[DEC-0020]",
+                )
+        self.assertEqual(event["event_type"], "openclaw_proposal")
+        self.assertEqual(event["payload"]["proposal_status"], "draft_pending_human_review")
 
 
 if __name__ == "__main__":

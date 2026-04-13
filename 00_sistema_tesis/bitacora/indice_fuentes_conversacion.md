@@ -40,6 +40,26 @@ La evidencia cruda vive en `evidencia privada no publicada/conversaciones_codex/
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260401-trazabilidad-conversacion-actual | ok |
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260402-verificacion-registro-reciente | ok |
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260404-register-untracked-advances | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260407-serena-mcp-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260408-dec0022-desktop-edge | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260408-serena-mcp-v11 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260408-serena-mcp-common-governance-v2 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260408-serena-mcp-common-governance-v2 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260410-serena-dual-mcp-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260410-serena-access-runtime-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260410-serena-bridge-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260411-trazabilidad-publish-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260412-b0-desktop-closeout | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260412-regularizacion-bitacoras-faltantes | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260412-serena-policy-operativa-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260412-serena-http-always-on-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260412-serena-vscode-auto-tasks-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260412-serena-compare-write-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260412-guardrails-manifest-incremental-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260412-serena-trace-append-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260412-serena-closeout-publication-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260413-serena-auto-activate-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260413-actions-public-sync-v1 | ok |
 
 **Navegación:**
 - [Volver al Ledger](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md)
@@ -49,4 +69,4 @@ La evidencia cruda vive en `evidencia privada no publicada/conversaciones_codex/
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-04`._
+_Última actualización: `2026-04-13`._

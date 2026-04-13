@@ -11,3 +11,6 @@ ENT-009,Análisis integrado y discusión,Síntesis de resultados limitaciones y 
 ENT-010,Manuscrito base de tesis,Documento integral de tesis con capítulos y anexos,B8,pendiente,05_tesis
 ENT-011,Paquete sanitizado reproducible,Versión pública controlada sin información sensible,B9,pendiente,06_dashboard/generado
 ENT-012,Cierre y defensa,Versión final materiales de defensa y transferencia,B10,pendiente,05_tesis
+ENT-013,Infraestructura edge_iot aislada y validada en Orange Pi,Separación estricta de dominios hardening observabilidad y criterio de aceptación Go No Go para despliegue edge,B0,pendiente,04_implementacion/edge_iot
+ENT-014,Arquitectura formal del sistema operativo de tesis,Modelo modular contratos de datos y políticas de versionado interno con trazabilidad documental,B0,pendiente,docs/02_arquitectura/arquitectura-general.md
+ENT-015,Conformidad y eficiencia operativa del sistema de tesis,Suite de pruebas threat model métricas de salud y cierre de arquitectura B0 verificable,B0,pendiente,tests/integration/test_repo_layout.sh

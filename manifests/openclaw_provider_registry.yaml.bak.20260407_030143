@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "providers": [
+    {
+      "id": "local",
+      "mode": "rules_only",
+      "domains": ["personal", "profesional", "academico", "edge", "administrativo"]
+    },
+    {
+      "id": "ollama_local",
+      "mode": "local_model",
+      "domains": ["profesional", "academico"]
+    },
+    {
+      "id": "rknn_llm_experimental",
+      "mode": "npu_experimental_secondary",
+      "domains": ["profesional", "academico"]
+    },
+    {
+      "id": "gemini_web_assisted",
+      "mode": "cloud_web_assisted",
+      "domains": ["academico"]
+    },
+    {
+      "id": "openai_api",
+      "mode": "cloud_api",
+      "domains": ["profesional", "academico"]
+    }
+  ]
+}

@@ -70,4 +70,4 @@ Seguir con la siguiente tarea operativa del bloque B0/B1 manteniendo el patrón 
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-04`._
+_Última actualización: `2026-04-13`._

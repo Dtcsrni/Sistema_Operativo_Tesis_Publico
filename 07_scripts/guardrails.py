@@ -66,6 +66,26 @@ def tracked_files() -> set[str]:
         return set()
     return {line.strip().replace("\\", "/") for line in result.stdout.splitlines() if line.strip()}
 
+
+def _load_manifest_payload() -> dict[str, str] | None:
+    if not MANIFEST_PATH.exists():
+        return None
+    try:
+        payload = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(payload, dict):
+        return None
+    return {str(key).replace("\\", "/"): str(value) for key, value in payload.items()}
+
+
+def _write_manifest_payload(manifest: dict[str, str]) -> None:
+    if not MANIFEST_PATH.parent.exists():
+        os.makedirs(MANIFEST_PATH.parent, exist_ok=True)
+    ordered = {key: manifest[key] for key in sorted(manifest)}
+    with open(MANIFEST_PATH, "w", encoding="utf-8") as f:
+        json.dump(ordered, f, indent=4, sort_keys=False)
+
 def relative_to_root(file_path):
     path = Path(file_path).resolve()
     try:
@@ -125,24 +145,52 @@ def backup_file(file_path):
 def update_manifest():
     manifest = {}
     tracked = tracked_files()
-    # Scan for protected files
-    for p in ROOT.rglob("*"):
-        if p.is_file() and not any(part.startswith(".") for part in p.parts):
+    if tracked:
+        for rel_posix in sorted(tracked):
+            p = ROOT / rel_posix
+            if not p.is_file():
+                continue
             if p.resolve() == MANIFEST_PATH.resolve():
                 continue
-            rel_posix = p.relative_to(ROOT).as_posix()
-            if tracked and rel_posix not in tracked:
+            if any(part.startswith(".") for part in p.parts):
                 continue
             if is_protected_path(p):
-                # Normalizar rutas a forward slashes para compatibilidad cross-platform
                 manifest[rel_posix] = get_file_hash(p)
+    else:
+        # Fallback cuando git no esta disponible.
+        for p in ROOT.rglob("*"):
+            if p.is_file() and not any(part.startswith(".") for part in p.parts):
+                if p.resolve() == MANIFEST_PATH.resolve():
+                    continue
+                rel_posix = p.relative_to(ROOT).as_posix()
+                if is_protected_path(p):
+                    manifest[rel_posix] = get_file_hash(p)
     
-    if not MANIFEST_PATH.parent.exists():
-        os.makedirs(MANIFEST_PATH.parent, exist_ok=True)
-        
-    with open(MANIFEST_PATH, "w", encoding='utf-8') as f:
-        json.dump(manifest, f, indent=4)
+    _write_manifest_payload(manifest)
     print(f"[GUARDRAIL] Integridad actualizada en manifest.")
+
+
+def update_manifest_for_path(file_path):
+    rel_path = relative_to_root(file_path) or str(file_path).strip().replace("\\", "/")
+    normalized_rel_path = rel_path.replace("\\", "/")
+    if normalized_rel_path == str(MANIFEST_PATH.relative_to(ROOT)).replace("\\", "/"):
+        return
+
+    manifest = _load_manifest_payload()
+    if manifest is None:
+        update_manifest()
+        return
+
+    abs_path = ROOT / normalized_rel_path
+    if not abs_path.exists() or not abs_path.is_file() or any(part.startswith(".") for part in abs_path.parts):
+        manifest.pop(normalized_rel_path, None)
+    elif is_protected_path(abs_path):
+        manifest[normalized_rel_path] = get_file_hash(abs_path)
+    else:
+        manifest.pop(normalized_rel_path, None)
+
+    _write_manifest_payload(manifest)
+    print(f"[GUARDRAIL] Integridad incremental actualizada: {normalized_rel_path}")
 
 def verify_integrity():
     if not MANIFEST_PATH.exists():
@@ -195,7 +243,7 @@ def safe_write(file_path, content, force=False):
     Path(file_path).write_text(content, encoding='utf-8')
     # Update manifest after successful write if it was a protected file
     if protected:
-        update_manifest()
+        update_manifest_for_path(file_path)
     return True
 
 def safe_dump_json(file_path, payload, force=False):

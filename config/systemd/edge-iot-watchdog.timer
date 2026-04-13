@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer de watchdog híbrido del dominio edge_iot
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=2min
+Unit=edge-iot-watchdog.service
+
+[Install]
+WantedBy=timers.target

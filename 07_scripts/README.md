@@ -13,6 +13,9 @@ python 07_scripts/tesis.py doctor
 
 ### 2. Auditar antes de cerrar trabajo
 ```powershell
+python 07_scripts/check_serena_access.py
+set SERENA_BRIDGE_BEARER_TOKEN=<token>
+python runtime/serena_bridge/bin/serena_bridge.py
 python 07_scripts/tesis.py audit --check
 python 07_scripts/build_all.py
 ```
@@ -78,6 +81,8 @@ python 07_scripts/tesis.py split-staged --commit
 ## Scripts de soporte
 
 - `build_all.py`: auditoría integral del sistema.
+- `check_serena_access.py`: verifica la salud técnica de `serena-local` por `http` y de `serena-local-py` por `stdio`, distingue perfiles expuestos en el workspace vs backends solo saludables, y comprueba si `serena-local` sigue disponible como ruta operativa esperada del workspace.
+- `runtime/serena_bridge/bin/serena_bridge.py`: expone Serena MCP por HTTP autenticado para runtimes externos compatibles.
 - `build_wiki.py`: genera wiki verificable Markdown y HTML.
 - `build_dashboard.py`: genera dashboard HTML derivado.
 - `build_readme_portada.py`: reconstruye `README.md`.
@@ -100,4 +105,4 @@ python 07_scripts/tesis.py split-staged --commit
 - La IA es opcional; la operación principal debe seguir siendo legible para humanos.
 - Si un cambio afecta gobernanza, arquitectura o método, registra decisión y vuelve a auditar.
 
-_Última actualización: `2026-04-04`._
+_Última actualización: `2026-04-13`._

@@ -431,7 +431,7 @@ def build_sistema_page(section: dict, generated_at: str, notice: str) -> str:
             "- `paquete`: conjunto versionado de contexto o evidencia a integrar.",
             "- `staging`: zona temporal de verificación antes de integrar al canon.",
             "- `indice maestro`: registro consolidado de ingreso y destino de artefactos.",
-            "- `evidencia`, `soporte`, `politica`, `modulo`, `rol`, `tier`, `status`, `accion`: etiquetas de clasificación que no deben confundirse entre sí.",
+            "- `evidencia`, `soporte`, `politica`, `modulo`, `rol`, `nivel`, `estado`, `accion`: etiquetas de clasificación que no deben confundirse entre sí.",
             "",
         ]
     )

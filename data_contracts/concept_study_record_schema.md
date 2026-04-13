@@ -2,4 +2,4 @@
 
 Campos minimos: `study_id`, `concepto`, `nivel_profundidad`, `definicion_operativa`, `fuentes`, `contraste`, `aplicacion_al_proyecto`, `pendientes`.
 
-_Última actualización: `2026-04-04`._
+_Última actualización: `2026-04-13`._

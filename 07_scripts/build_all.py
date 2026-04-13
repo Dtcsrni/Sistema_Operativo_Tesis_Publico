@@ -18,6 +18,7 @@ STEPS = [
     ("Auditoría de Seguridad Unificada", "07_scripts/security_audit.py", []),
     ("Generar Badges de Seguridad", "07_scripts/generate_security_badges.py", []),
     ("Validar estructura", "07_scripts/validate_structure.py", []),
+    ("Validar arquitectura B0 desktop-first", "07_scripts/validate_b0_architecture.py", []),
     ("Auditar No-Hardcode Runtime", "07_scripts/verify_no_hardcoded_runtime.py", []),
     ("Auditar Ledger IA", "07_scripts/verify_ledger.py", []),
     ("Auditar Cadena de Bitácoras", "07_scripts/verify_bitacora_chain.py", []),

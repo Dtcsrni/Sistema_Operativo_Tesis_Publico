@@ -1,0 +1,37 @@
+{
+  "version": "1.0",
+  "default_rules": {
+    "http_entre_dominios": false,
+    "db_compartida_directa": false,
+    "requiere_trazabilidad": true
+  },
+  "channels": [
+    {
+      "id": "openclaw_drafts",
+      "source_domain": "openclaw",
+      "target_domain": "sistema_tesis",
+      "mechanism": "archivo_draft",
+      "root": "/srv/tesis/intercambio/openclaw/outbox",
+      "retention": "sesion_activa_y_auditoria",
+      "requires_human_gate": true
+    },
+    {
+      "id": "openclaw_requests",
+      "source_domain": "sistema_tesis",
+      "target_domain": "openclaw",
+      "mechanism": "cli_explicita",
+      "root": "/srv/tesis/intercambio/openclaw/inbox",
+      "retention": "operativa",
+      "requires_human_gate": false
+    },
+    {
+      "id": "edge_spool",
+      "source_domain": "edge_iot",
+      "target_domain": "sistema_tesis",
+      "mechanism": "spool_local",
+      "root": "/srv/tesis/intercambio/edge/spool",
+      "retention": "tecnica_con_rotacion",
+      "requires_human_gate": false
+    }
+  ]
+}

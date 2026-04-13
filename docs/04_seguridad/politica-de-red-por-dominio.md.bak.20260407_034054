@@ -1,0 +1,18 @@
+# Política de Red por Dominio
+
+## Reglas globales
+- `allow_interdomain_http = false`
+- `allow_cross_workspace_reads = false`
+- `allow_cross_domain_sqlite = false`
+
+## Perfiles
+- `salida_minima`: sistema base con la salida estrictamente necesaria para sincronización ya existente.
+- `egress_controlado_localhost_in`: `openclaw` con escucha solo en `localhost` y salida controlada a proveedores.
+- `edge_restringido`: `edge_iot` con puertos explícitos y sin acceso a canon ni publicación.
+- `sin_nube`: dominio administrativo.
+- `offline_logico`: dominio personal.
+
+## Criterio operativo
+- abrir puertos solo cuando exista servicio y contrato explícito;
+- negar mezcla de dominios por red;
+- preferir intercambio por archivos/CLI antes que sockets o APIs.

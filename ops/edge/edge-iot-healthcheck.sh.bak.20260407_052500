@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+: "${EDGE_IOT_WORKDIR:?EDGE_IOT_WORKDIR es obligatorio}"
+: "${EDGE_IOT_LOG_DIR:?EDGE_IOT_LOG_DIR es obligatorio}"
+: "${EDGE_IOT_STATE_DIR:?EDGE_IOT_STATE_DIR es obligatorio}"
+
+test -d "${EDGE_IOT_WORKDIR}"
+test -d "${EDGE_IOT_LOG_DIR}"
+test -d "${EDGE_IOT_STATE_DIR}"
+test -f "${EDGE_IOT_STATE_DIR}/last_start.txt" || true
+
+if systemctl is-active --quiet edge-iot-worker.service; then
+  echo "EDGE_IOT_HEALTH_OK"
+  exit 0
+fi
+
+echo "EDGE_IOT_HEALTH_FAIL"
+exit 1

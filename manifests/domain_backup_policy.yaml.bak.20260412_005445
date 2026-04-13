@@ -1,0 +1,74 @@
+{
+  "version": "1.0",
+  "format": "mixed_tar_snapshot",
+  "encryption": "none_permissions_only",
+  "defaults": {
+    "backup_root": "/mnt/emmc/backups",
+    "snapshot_root": "/mnt/emmc/snapshots",
+    "sandbox_root": "/tmp/tesis-restore",
+    "tmp_root": "/tmp/tesis-backup",
+    "keep_archives": 14,
+    "keep_snapshots": 7
+  },
+  "domains": {
+    "sistema_tesis": {
+      "include_paths": [
+        "/srv/tesis/repo",
+        "/var/lib/tesis-os",
+        "/srv/tesis/outputs",
+        "/var/log/tesis-os"
+      ],
+      "exclude_globs": [
+        "srv/tesis/repo/.git/*",
+        "srv/tesis/repo/.venv/*",
+        "srv/tesis/repo/**/__pycache__/*",
+        "srv/tesis/repo/.pytest_cache/*",
+        "srv/tesis/repo/06_dashboard/generado/*",
+        "srv/tesis/repo/06_dashboard/publico/*"
+      ],
+      "snapshot_dir": "/mnt/emmc/snapshots/sistema_tesis",
+      "backup_dir": "/mnt/emmc/backups/sistema_tesis",
+      "critical_paths": [
+        "srv/tesis/repo/README.md",
+        "var/lib/tesis-os"
+      ]
+    },
+    "openclaw": {
+      "include_paths": [
+        "/var/lib/herramientas/openclaw",
+        "/var/cache/herramientas/openclaw",
+        "/var/log/openclaw",
+        "/srv/tesis/workspace/openclaw",
+        "/srv/tesis/intercambio/openclaw",
+        "/etc/tesis-os/openclaw.env"
+      ],
+      "exclude_globs": [
+        "mnt/emmc/models/ollama/*",
+        "opt/tesis-os/vendor/rknn-llm/*"
+      ],
+      "snapshot_dir": "/mnt/emmc/snapshots/openclaw",
+      "backup_dir": "/mnt/emmc/backups/openclaw",
+      "critical_paths": [
+        "var/lib/herramientas/openclaw",
+        "etc/tesis-os/openclaw.env"
+      ]
+    },
+    "edge_iot": {
+      "include_paths": [
+        "/var/lib/edge-iot",
+        "/var/log/edge-iot",
+        "/srv/tesis/workspace/edge",
+        "/srv/tesis/intercambio/edge",
+        "/etc/tesis-os/edge-iot.env",
+        "/etc/tesis-os/policies/edge_iot_resilience_policy.yaml"
+      ],
+      "exclude_globs": [],
+      "snapshot_dir": "/mnt/emmc/snapshots/edge_iot",
+      "backup_dir": "/mnt/emmc/backups/edge_iot",
+      "critical_paths": [
+        "var/lib/edge-iot/runtime",
+        "etc/tesis-os/edge-iot.env"
+      ]
+    }
+  }
+}

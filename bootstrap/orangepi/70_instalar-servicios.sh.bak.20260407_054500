@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+sudo install -d /etc/tesis-os
+sudo install -d /etc/tesis-os/policies
+sudo install -m 0644 "${REPO_ROOT}"/config/systemd/*.service /etc/systemd/system/
+sudo install -m 0644 "${REPO_ROOT}"/config/systemd/*.timer /etc/systemd/system/
+if [ ! -f /etc/tesis-os/edge-iot.env ]; then
+  sudo install -m 0640 "${REPO_ROOT}/config/env/edge-iot.env.example" /etc/tesis-os/edge-iot.env
+fi
+sudo install -m 0644 "${REPO_ROOT}"/manifests/domain_runtime_isolation.yaml /etc/tesis-os/policies/domain_runtime_isolation.yaml
+sudo install -m 0644 "${REPO_ROOT}"/manifests/domain_network_policy.yaml /etc/tesis-os/policies/domain_network_policy.yaml
+sudo install -m 0644 "${REPO_ROOT}"/manifests/interdomain_exchange_contract.yaml /etc/tesis-os/policies/interdomain_exchange_contract.yaml
+sudo install -m 0644 "${REPO_ROOT}"/manifests/observability_policy.yaml /etc/tesis-os/policies/observability_policy.yaml
+sudo install -m 0644 "${REPO_ROOT}"/manifests/log_retention_policy.yaml /etc/tesis-os/policies/log_retention_policy.yaml
+sudo install -m 0644 "${REPO_ROOT}"/manifests/prometheus_targets.yaml /etc/tesis-os/policies/prometheus_targets.yaml
+sudo install -m 0644 "${REPO_ROOT}"/manifests/observability_negative_checks.yaml /etc/tesis-os/policies/observability_negative_checks.yaml
+sudo install -m 0644 "${REPO_ROOT}"/manifests/edge_iot_resilience_policy.yaml /etc/tesis-os/policies/edge_iot_resilience_policy.yaml
+sudo systemctl daemon-reload
+sudo systemctl enable tesis-healthcheck.timer tesis-backup.timer tesis-sync.timer edge-iot-worker.service edge-iot-watchdog.timer

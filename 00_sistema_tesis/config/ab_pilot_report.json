@@ -1,0 +1,55 @@
+{
+  "generated_at": "2026-04-07",
+  "experiment_id": "ab-2026-04-template",
+  "execution_context": {
+    "session_id": "ab-pilot-local",
+    "step_id": "",
+    "source_event_id": ""
+  },
+  "criteria": {
+    "primary_objective": "reduce_tokens_cost",
+    "min_cost_reduction_pct": 25.0,
+    "min_token_reduction_pct": 20.0,
+    "min_acceptance_rate": 0.9,
+    "max_gate_failures": 0
+  },
+  "summary": {
+    "serena": {
+      "route": "serena",
+      "tasks": 1,
+      "input_tokens": 1800,
+      "output_tokens": 700,
+      "total_tokens": 2500,
+      "total_cost_usd": 0.045,
+      "avg_latency_ms": 4200.0,
+      "acceptance_rate": 1.0,
+      "gate_failures": 0,
+      "rework_rate": 0.0
+    },
+    "winner": "serena",
+    "reasons": [
+      "Serena cumple los umbrales de calidad y gate."
+    ]
+  },
+  "by_task_type": {
+    "resumen_capitulo": {
+      "task_type": "resumen_capitulo",
+      "winner": "serena",
+      "reasons": [
+        "Serena cumple los umbrales de calidad y gate."
+      ],
+      "serena": {
+        "route": "serena",
+        "tasks": 1,
+        "input_tokens": 1800,
+        "output_tokens": 700,
+        "total_tokens": 2500,
+        "total_cost_usd": 0.045,
+        "avg_latency_ms": 4200.0,
+        "acceptance_rate": 1.0,
+        "gate_failures": 0,
+        "rework_rate": 0.0
+      }
+    }
+  }
+}
