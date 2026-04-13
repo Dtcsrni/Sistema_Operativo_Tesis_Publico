@@ -14,10 +14,7 @@ case "${command}" in
     cat "${EDGE_IOT_RESILIENCE_FILE}"
     ;;
   clear-quarantine)
-    EDGE_IOT_QUARANTINE_UNTIL=0
-    EDGE_IOT_QUARANTINE_REASON=""
-    EDGE_IOT_FAILURE_COUNT=0
-    EDGE_IOT_RESILIENCE_STATE="healthy"
+    edge_iot_clear_quarantine
     edge_iot_save_state
     edge_iot_log_event "info" "manual_clear_quarantine" "manual_clear"
     echo "EDGE_IOT_QUARANTINE_CLEARED"
