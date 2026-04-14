@@ -183,6 +183,88 @@ def render_markdown_fragment(rel_path: str, *, demote_by: int = 1) -> list[str]:
     return lines
 
 
+def _indent_markdown_block(lines: list[str], spaces: int = 4) -> list[str]:
+    prefix = " " * spaces
+    return [f"{prefix}{line}" if line else prefix for line in lines]
+
+
+def _month_bucket_from_date(date_str: str) -> str:
+    if re.match(r"^\d{4}-\d{2}-\d{2}$", date_str):
+        return date_str[:7]
+    return "sin-fecha"
+
+
+def _is_iso_date(date_str: str) -> bool:
+    return bool(re.match(r"^\d{4}-\d{2}-\d{2}$", date_str))
+
+
+def _month_bucket_sort_key(bucket: str) -> tuple[int, str]:
+    if bucket == "sin-fecha":
+        return (0, "")
+    return (1, bucket)
+
+
+def _safe_details_title(text: str) -> str:
+    return text.replace('"', r'\"').strip()
+
+
+def _extract_markdown_summary(rel_path: str, *, max_lines: int = 4, max_chars: int = 420) -> list[str]:
+    target = ROOT / rel_path
+    if not target.exists():
+        return ["Resumen no disponible (archivo no encontrado)."]
+
+    summary: list[str] = []
+    total_chars = 0
+    in_front_matter = False
+    front_matter_checked = False
+    in_code_block = False
+
+    for raw_line in target.read_text(encoding="utf-8", errors="replace").splitlines():
+        line = raw_line.rstrip()
+        stripped = line.strip()
+
+        if not front_matter_checked and stripped == "---":
+            in_front_matter = True
+            front_matter_checked = True
+            continue
+        if in_front_matter:
+            if stripped == "---":
+                in_front_matter = False
+            continue
+
+        if stripped.startswith("```"):
+            in_code_block = not in_code_block
+            continue
+        if in_code_block:
+            continue
+        if not stripped:
+            continue
+        if stripped.startswith("#"):
+            continue
+        normalized = stripped
+        while re.match(r"^[-*+]\s+", normalized):
+            normalized = re.sub(r"^[-*+]\s+", "", normalized)
+        normalized = re.sub(r"^\d+\.\s+", "", normalized)
+        normalized = _rewrite_embedded_markdown_links(normalized, rel_path)
+        if normalized.startswith("<!--"):
+            continue
+        if normalized.startswith("|"):
+            continue
+
+        projected = total_chars + len(normalized)
+        if projected > max_chars and summary:
+            break
+
+        summary.append(normalized)
+        total_chars = projected
+        if len(summary) >= max_lines:
+            break
+
+    if not summary:
+        return ["Sin resumen breve disponible; consulta el archivo para ver el contenido completo."]
+    return summary
+
+
 def render_source_links(sources: list[str]) -> list[str]:
     rows: list[list[str]] = []
     for path in sources:
@@ -882,6 +964,7 @@ def build_decisiones_page(section: dict, generated_at: str, notice: str) -> str:
 
 def build_bitacora_page(section: dict, generated_at: str, notice: str) -> str:
     bitacoras = list_markdown_entries("00_sistema_tesis/bitacora")
+    bitacoras = [item for item in bitacoras if not item["archivo"].endswith("log_conversaciones_ia.md")]
     reportes = list_markdown_entries("00_sistema_tesis/reportes_semanales")
     lines = [
         f"# {section['titulo']}",
@@ -902,13 +985,43 @@ def build_bitacora_page(section: dict, generated_at: str, notice: str) -> str:
             "",
         ]
     )
-    lines.extend(["## Bitácoras", ""])
+    lines.extend(
+        [
+            "## Bitácoras",
+            "",
+            "Las entradas están agrupadas por año-mes y comprimidas en acordeones para facilitar lectura rápida.",
+            "Abre solo la bitácora que necesites y usa el enlace de archivo para navegar al registro completo.",
+            "",
+        ]
+    )
     if bitacoras:
+        grouped: dict[str, list[dict]] = {}
         for item in bitacoras:
-            lines.append(f"- `{item['fecha']}` [{item['titulo']}]({repo_link_from_wiki(item['archivo'])})")
+            bucket = _month_bucket_from_date(item["fecha"])
+            grouped.setdefault(bucket, []).append(item)
 
-        lines.extend(["", "## Contenido de Bitácora de Conversaciones IA", ""])
-        lines.extend(render_markdown_fragment("00_sistema_tesis/bitacora/log_conversaciones_ia.md", demote_by=1))
+        ordered_buckets = sorted(grouped.keys(), key=_month_bucket_sort_key, reverse=True)
+        for bucket in ordered_buckets:
+            bucket_title = bucket if bucket != "sin-fecha" else "Sin fecha"
+            lines.extend([f"### {bucket_title}", ""])
+            for item in grouped[bucket]:
+                display_date = item["fecha"] if _is_iso_date(item["fecha"]) else "Sin fecha"
+                details_title = _safe_details_title(f"{display_date} - {item['titulo']}")
+                lines.append(f'??? "{details_title}"')
+                lines.append("")
+                lines.append(f"    **Archivo completo:** [{item['archivo']}]({repo_link_from_wiki(item['archivo'])})")
+                lines.append("")
+                lines.append("    **Resumen breve**")
+                lines.append("")
+                for excerpt_line in _extract_markdown_summary(item["archivo"]):
+                    lines.append(f"    - {excerpt_line}")
+                lines.append("")
+
+        lines.extend(["## Bitácora de Conversaciones IA", ""])
+        lines.append('??? "Mostrar contenido completo"')
+        lines.append("")
+        lines.extend(_indent_markdown_block(render_markdown_fragment("00_sistema_tesis/bitacora/log_conversaciones_ia.md", demote_by=1)))
+        lines.append("")
     else:
         lines.append("Sin bitácoras registradas aún.")
     lines.extend(["", "## Reportes semanales", ""])
