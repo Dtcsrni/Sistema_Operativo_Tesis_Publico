@@ -53,4 +53,4 @@ Estado de cobertura de firmware, gateway y analítica.
 - Cobertura: `pendiente`
 - Mensaje: Sin contenido operativo aún. La wiki refleja el estado real del repositorio y no inventa artefactos.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

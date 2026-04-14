@@ -105,4 +105,4 @@ python 07_scripts/tesis.py split-staged --commit
 - La IA es opcional; la operación principal debe seguir siendo legible para humanos.
 - Si un cambio afecta gobernanza, arquitectura o método, registra decisión y vuelve a auditar.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

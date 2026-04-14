@@ -39,4 +39,4 @@ Definir la evidencia mínima para declarar que el cierre arquitectónico de `B0`
 - `T-039` a `T-049`: pueden cerrarse si la suite pasa y la documentación queda alineada.
 - `T-050`: debe permanecer abierto o en progreso mientras `T-038` siga pendiente por host real.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

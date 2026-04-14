@@ -129,4 +129,4 @@ gantt
 |ENT-014|Arquitectura formal del sistema operativo de tesis|listo|docs/02_arquitectura/arquitectura-general.md|
 |ENT-015|Conformidad y eficiencia operativa del sistema de tesis|pendiente|tests/integration/test_repo_layout.sh|
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

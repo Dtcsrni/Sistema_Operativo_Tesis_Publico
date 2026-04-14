@@ -8,4 +8,4 @@
 - Riesgo residual documentado.
 - Instrumentacion lista.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

@@ -51,4 +51,4 @@
 - `01_planeacion/entregables.csv`
 - `01_planeacion/riesgos.csv`
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

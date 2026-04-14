@@ -580,4 +580,4 @@ Toda documentacion mejorada del sistema debe responder implicitamente a estas pr
 |wiki_manifest_generado|06_dashboard/generado/wiki_manifest.json|sí|2026-04-14|
 |readme_portada_generado|README.md|sí|2026-04-14|
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

@@ -46,4 +46,4 @@ Fuente maquina-legible:
 - `build_readme_portada.py`, `build_wiki.py`, `build_dashboard.py` y `build_memory.py` producen superficies derivadas.
 - `publication.py` solo consume derivados ya validados.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

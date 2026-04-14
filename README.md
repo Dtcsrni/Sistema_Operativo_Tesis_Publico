@@ -220,4 +220,4 @@ python 07_scripts/report_consistency.py
 
 _Generado automáticamente el 2026-04-14._
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

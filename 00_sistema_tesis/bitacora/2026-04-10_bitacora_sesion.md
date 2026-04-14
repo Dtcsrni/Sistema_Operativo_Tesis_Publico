@@ -71,4 +71,4 @@ Mantener la verificación reproducible de acceso Serena desde host, fallback `st
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

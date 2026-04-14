@@ -36,4 +36,4 @@
 - serena: costo 0.045000 USD, tokens 2500, latencia 4200.00 ms
 - Serena cumple los umbrales de calidad y gate.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

@@ -77,4 +77,4 @@
   - coincidencia exacta entre `quoted_text` y `confirmation_text`,
   - ejecución explícita de `tesis.py proposal finalize-openclaw`.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._
