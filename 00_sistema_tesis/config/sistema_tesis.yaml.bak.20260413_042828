@@ -1,0 +1,97 @@
+{
+  "_comentario": "SISTEMA_TESIS:PROTEGIDO",
+  "identidad_proyecto": {
+    "id": "tesis-iot-pachuca-resiliencia",
+    "nombre_corto": "Sistema Operativo de la Tesis IoT Pachuca",
+    "programa": "Posgrado en Ingeniería",
+    "linea_investigacion": "Internet de las Cosas, resiliencia de comunicaciones y control adaptativo"
+  },
+  "titulo_vigente": "Arquitectura resiliente para telemetría y control adaptativo en entornos urbanos intermitentes: simulación y validación experimental en la Zona Metropolitana de Pachuca",
+  "subtitulo_interno": "Sistema operativo documental, técnico y experimental para gobernar la tesis de posgrado",
+  "version": "0.1.0",
+  "estado_global": "base_operativa_inicial",
+  "idioma_principal": "es-MX",
+  "resumen_problema": "La intermitencia urbana de conectividad y energía degrada la continuidad de telemetría y compromete acciones de control oportunas en despliegues IoT metropolitanos. El proyecto busca diseñar y validar una arquitectura que degrade con gracia, preserve variables críticas y sostenga operación útil bajo interrupciones parciales.",
+  "objetivo_general": "Diseñar, simular y validar experimentalmente una arquitectura resiliente para telemetría y control adaptativo en entornos urbanos intermitentes, evaluando su aplicabilidad en escenarios representativos de la Zona Metropolitana de Pachuca.",
+  "bloque_activo": "B0",
+  "fase_actual": "investigacion_y_desarrollo_metodologico",
+  "siguiente_entregable": "ENT-001",
+  "riesgo_principal_abierto": "R-001",
+  "rutas_canonicas": {
+    "sistema": "00_sistema_tesis/config/sistema_tesis.yaml",
+    "hipotesis": "00_sistema_tesis/config/hipotesis.yaml",
+    "bloques": "00_sistema_tesis/config/bloques.yaml",
+    "dashboard": "00_sistema_tesis/config/dashboard.yaml",
+    "publicacion": "00_sistema_tesis/config/publicacion.yaml",
+    "agent_identity": "00_sistema_tesis/config/agent_identity.json",
+    "gobernanza_ia": "00_sistema_tesis/config/ia_gobernanza.yaml",
+    "wiki": "00_sistema_tesis/config/wiki.yaml",
+    "manual_operacion_humana": "00_sistema_tesis/manual_operacion_humana.md",
+    "backlog": "01_planeacion/backlog.csv",
+    "riesgos": "01_planeacion/riesgos.csv",
+    "roadmap": "01_planeacion/roadmap.csv",
+    "entregables": "01_planeacion/entregables.csv",
+    "decisiones": "00_sistema_tesis/decisiones",
+    "bitacora": "00_sistema_tesis/bitacora",
+    "reportes_semanales": "00_sistema_tesis/reportes_semanales",
+    "dashboard_generado": "06_dashboard/generado/index.html",
+    "bundle_publico": "06_dashboard/publico/index.md",
+    "bundle_publico_manifest": "06_dashboard/publico/manifest_publico.json",
+    "wiki_markdown_generada": "06_dashboard/wiki/index.md",
+    "wiki_html_generada": "06_dashboard/generado/wiki/index.html",
+    "wiki_manifest_generado": "06_dashboard/generado/wiki_manifest.json",
+    "readme_portada_generado": "README.md"
+  },
+  "politicas_sistema": [
+    "El repositorio privado es la fuente de verdad del sistema operativo de tesis.",
+    "Los artefactos generados no se editan manualmente; se regeneran desde fuentes.",
+    "La wiki verificable es una guía derivada y trazable; no sustituye a las fuentes canónicas.",
+    "Los bloques macro se gobiernan en bloques.yaml y los subbloques/tareas operativas en backlog.csv.",
+    "Toda decisión de arquitectura, alcance, método o evidencia se registra como decisión o bitácora.",
+    "Los datos raw se preservan inmutables; las transformaciones se documentan y versionan.",
+    "Toda salida asistida por IA debe someterse a revisión humana proporcional al riesgo.",
+    "Todo flujo crítico debe poder ejecutarse por vía manual explícita; la IA es opcional y nunca requisito operativo.",
+    "La operación se separa en superficie privada canónica y superficie pública sanitizada, ambas regenerables desde fuentes.",
+    "Los cambios en automatización y software deben seguir TDD con evidencia de prueba ejecutada y resultado verificable.",
+    "Los metadatos operativos críticos y la identidad de agentes se definen en configuración versionada o entorno; nunca en scripts o plantillas hardcodeadas."
+  ],
+  "arquitectura_base": {
+    "patron_general": "repositorio_fuente_de_verdad_mas_dashboard_estatico_generado",
+    "formatos_fuente": [
+      "markdown",
+      "yaml",
+      "csv"
+    ],
+    "formatos_derivados": [
+      "html",
+      "csv",
+      "markdown"
+    ],
+    "estilo_dashboard": "hibrido_serio",
+    "soporte_local_remoto": true,
+    "criterio_bajo_rozamiento": "retomar el proyecto en menos de 3 minutos desde README_INICIO.md"
+  },
+  "control_version_sistema_tesis": {
+    "version_semantica_base": "0.1.0",
+    "estado_modelo_datos": "estable_inicial",
+    "ultima_revision_estructura": "2026-03-23",
+    "criterio_de_cambio": "Cambios de estructura canónica, catálogos o flujos de gobernanza deben registrarse como decisión."
+  },
+  "referencias_base": [
+    {
+      "tema": "datos_fair",
+      "fuente": "Wilkinson et al., The FAIR Guiding Principles for scientific data management and stewardship, Scientific Data, 2016",
+      "url": "https://www.nature.com/articles/sdata201618"
+    },
+    {
+      "tema": "citacion_y_trazabilidad_de_software",
+      "fuente": "Smith et al., Software citation principles, PeerJ Computer Science, FORCE11, 2016",
+      "url": "https://peerj.com/articles/cs-86/"
+    },
+    {
+      "tema": "gobernanza_de_proyectos_reproducibles",
+      "fuente": "The Turing Way, Guide for reproducible, ethical and collaborative data science",
+      "url": "https://book.the-turing-way.org/"
+    }
+  ]
+}

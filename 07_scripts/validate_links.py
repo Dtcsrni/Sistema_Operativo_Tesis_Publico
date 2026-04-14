@@ -28,6 +28,7 @@ SKIP_SCHEMES = ("http://", "https://", "mailto:", "tel:", "data:", "javascript:"
 ABSOLUTE_DRIVE_PATTERN = re.compile(r"^/?[A-Za-z]:/")
 SCAN_TARGETS = [
     "README.md",
+    "MEMORY.md",
     "README_INICIO.md",
     "06_dashboard/wiki",
     "06_dashboard/generado",

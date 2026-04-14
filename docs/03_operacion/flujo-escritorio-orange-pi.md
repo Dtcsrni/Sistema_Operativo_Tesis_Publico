@@ -4,10 +4,10 @@
 Definir el flujo tecnico normal entre el workspace principal de escritorio y el nodo edge en Orange Pi sin ambiguedad operativa.
 
 ## Principio
-- El cambio nace, se edita y se valida primero en el escritorio.
+- El cambio nace, se edita y se valida primero en el nodo `desktop_workspace`.
 - La Orange Pi recibe el repositorio por Git en `/srv/tesis/repo` como clon operativo.
 - La Orange Pi ejecuta validacion edge, runtime y observabilidad local.
-- El retorno hacia el escritorio ocurre por logs, metricas y evidencia edge, no por mover la autoria principal al nodo edge.
+- El retorno hacia `desktop_workspace` ocurre por logs, metricas y evidencia edge, no por mover la autoria principal al nodo edge.
 
 ## Secuencia normal
 1. En escritorio, editar fuentes canonicas y ejecutar `python3 07_scripts/build_all.py`.

@@ -55,18 +55,18 @@ tarea,T-035,Implementar backup y restore independiente para sistema_tesis edge_i
 tarea,T-036,Validar que la integración entre dominios use solo APIs o colas definidas y bloquear accesos internos directos,pendiente,critica,B0,ENT-013,Incluir pruebas negativas de acceso cruzado
 tarea,T-037,Ejecutar benchmark base de latencia throughput CPU RAM temperatura y energía en edge_iot,pendiente,media,B0,ENT-013,Establece línea base operativa antes de B1 B2
 tarea,T-038,Emitir checklist de aceptación para instalación productiva en Orange Pi con evidencia trazable,pendiente,critica,B0,ENT-013,Formaliza criterio de edge listo
-tarea,T-039,Definir arquitectura modular del sistema operativo de tesis con límites entre canon proyecciones auditoría y publicación,pendiente,critica,B0,ENT-014,Debe separar capas y eliminar acoplamiento implícito
-tarea,T-040,Formalizar esquema de datos canónicos y contratos de evolución para eventos estado y proyecciones,pendiente,alta,B0,ENT-014,Incluye reglas de compatibilidad hacia atrás
-tarea,T-041,Definir contratos estables para comandos tesis.py y scripts críticos con entradas y salidas verificables,pendiente,alta,B0,ENT-014,Evita roturas silenciosas entre automatizaciones
-tarea,T-042,Auditar dependencias internas del sistema y eliminar ciclos o acoplamientos riesgosos entre módulos,pendiente,alta,B0,ENT-014,Prioriza módulos de canon guardrails y publicación
-tarea,T-043,Implementar versionado semántico de esquema y migraciones controladas del sistema operativo de tesis,pendiente,alta,B0,ENT-014,Incluye registro de migraciones y rollback seguro
-tarea,T-044,Definir threat model del sistema documental y controles por superficie canon no público y público,pendiente,critica,B0,ENT-015,Debe cubrir integridad disponibilidad y exposición accidental
-tarea,T-045,Implementar suite de pruebas de conformidad para validar contratos de estructura trazabilidad y evidencia,pendiente,critica,B0,ENT-015,La suite debe ejecutarse en local y CI
-tarea,T-046,Implementar pruebas de regresión para build_all y generación de derivados con snapshots controlados,pendiente,alta,B0,ENT-015,Previene regresiones en dashboard wiki y bundle público
-tarea,T-047,Agregar métricas de salud del sistema operativo de tesis para tiempos de build fallos y drift,pendiente,media,B0,ENT-015,Permite detectar degradación operativa temprana
-tarea,T-048,Reducir tiempo de auditoría y generación mediante profiling y mejoras de pipeline,pendiente,media,B0,ENT-015,Objetivo de menor latencia sin perder controles
-tarea,T-049,Consolidar documento final de arquitectura del sistema operativo de tesis con diagramas y decisiones trazables,pendiente,alta,B0,ENT-014,Debe ser base para operación sin IA obligatoria
-tarea,T-050,Emitir criterio formal de arquitectura correcta funcional segura efectiva y eficiente con evidencia reproducible,pendiente,critica,B0,ENT-015,Habilita transición de B0 a ejecución B1 B2 sin deuda arquitectónica crítica
+tarea,T-039,Definir arquitectura modular del sistema operativo de tesis con límites entre canon proyecciones auditoría publicación y memoria derivada,hecho,critica,B0,ENT-014,Debe separar capas y eliminar acoplamiento implícito
+tarea,T-040,Formalizar esquema de datos canónicos y contratos de evolución para eventos estado derivados vistas de trazabilidad y memoria operativa,hecho,alta,B0,ENT-014,Incluye reglas de compatibilidad hacia atrás
+tarea,T-041,Definir contratos estables para comandos tesis.py y scripts críticos con entradas salidas códigos y side effects verificables,hecho,alta,B0,ENT-014,Evita roturas silenciosas entre automatizaciones
+tarea,T-042,Auditar dependencias internas del sistema y eliminar ciclos o acoplamientos riesgosos entre módulos con dirección canon hacia derivados,hecho,alta,B0,ENT-014,Prioriza módulos de canon guardrails publicación y memoria
+tarea,T-043,Implementar versionado semántico de esquema y migraciones controladas del sistema operativo de tesis con gates para cambios breaking,hecho,alta,B0,ENT-014,Incluye registro de migraciones y rollback seguro
+tarea,T-044,Definir threat model del sistema documental y controles por superficie canon no público público y memoria derivada,hecho,critica,B0,ENT-015,Debe cubrir integridad disponibilidad y exposición accidental
+tarea,T-045,Implementar suite de pruebas de conformidad para validar contratos de estructura trazabilidad memoria y evidencia,hecho,critica,B0,ENT-015,La suite debe ejecutarse en local y CI
+tarea,T-046,Implementar pruebas de regresión para build_all y generación de derivados con snapshots o fingerprints controlados,hecho,alta,B0,ENT-015,Previene regresiones en dashboard wiki README publicación y memory
+tarea,T-047,Agregar métricas de salud del sistema operativo de tesis para tiempos de build fallos drift y última corrida válida,hecho,media,B0,ENT-015,Permite detectar degradación operativa temprana
+tarea,T-048,Reducir tiempo de auditoría y generación mediante profiling y visibilidad de etapas lentas del pipeline,hecho,media,B0,ENT-015,Objetivo de menor latencia sin perder controles
+tarea,T-049,Consolidar documento final de arquitectura del sistema operativo de tesis con diagramas decisiones trazables y criterio formal de cierre,hecho,alta,B0,ENT-014,Debe ser base para operación sin IA obligatoria
+tarea,T-050,Emitir criterio formal de arquitectura correcta funcional segura efectiva y eficiente con evidencia reproducible,en_progreso,critica,B0,ENT-015,Habilita transición de B0 a ejecución B1 B2 sin deuda arquitectónica crítica y queda bloqueado por host real
 riesgo,R-001,Deriva entre fuentes canónicas y artefactos generados,abierto,alto,proceso,media,Validar antes de generar y prohibir edición manual del dashboard
 riesgo,R-002,Ambigüedad en la línea base de comparación,abierto,alto,metodologico,alta,Definir arquitectura base explícita en B2 con criterios y supuestos auditables
 riesgo,R-003,Escenarios de intermitencia poco representativos del caso de estudio,abierto,alto,metodologico,media,Delimitar taxonomía contextual de Pachuca y registrar supuestos
@@ -89,5 +89,5 @@ entregable,ENT-010,Manuscrito base de tesis,pendiente,B8,05_tesis,,Documento int
 entregable,ENT-011,Paquete sanitizado reproducible,pendiente,B9,06_dashboard/generado,,Versión pública controlada sin información sensible
 entregable,ENT-012,Cierre y defensa,pendiente,B10,05_tesis,,Versión final materiales de defensa y transferencia
 entregable,ENT-013,Infraestructura edge_iot aislada y validada en Orange Pi,pendiente,B0,04_implementacion/edge_iot,,Separación estricta de dominios hardening observabilidad y criterio de aceptación Go No Go para despliegue edge
-entregable,ENT-014,Arquitectura formal del sistema operativo de tesis,pendiente,B0,docs/02_arquitectura/arquitectura-general.md,,Modelo modular contratos de datos y políticas de versionado interno con trazabilidad documental
-entregable,ENT-015,Conformidad y eficiencia operativa del sistema de tesis,pendiente,B0,tests/integration/test_repo_layout.sh,,Suite de pruebas threat model métricas de salud y cierre de arquitectura B0 verificable
+entregable,ENT-014,Arquitectura formal del sistema operativo de tesis,listo,B0,docs/02_arquitectura/arquitectura-general.md,,Modelo modular contratos de datos políticas de versionado interno mapa de dependencias y trazabilidad documental
+entregable,ENT-015,Conformidad y eficiencia operativa del sistema de tesis,pendiente,B0,tests/integration/test_repo_layout.sh,,Suite de pruebas threat model métricas de salud profiling y cierre de arquitectura B0 verificable

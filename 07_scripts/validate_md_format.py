@@ -35,7 +35,7 @@ def main():
     # Patrones específicos para cumplimiento estricto
     dec_patterns = {
         r"## Criterio de Aceptación Humana": "Sección: Criterio de Aceptación Humana",
-        r"## Trazabilidad de IA": "Sección: Trazabilidad de IA",
+        r"## Trazabilidad del trabajo asistido": "Sección: Trazabilidad de IA",
         r"\*\*Agente/Rol:\*\*": "Campo: Agente/Rol en Trazabilidad de IA",
         r"\*\*Soporte:\*\*": "Campo: Soporte en Criterio de Aceptación Humana",
         r"\*\*Modo:\*\*": "Campo: Modo en Criterio de Aceptación Humana"
@@ -71,3 +71,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -10,7 +10,7 @@ Este skill define las reglas inquebrantables para la colaboración humano-agente
 ## Reglas de Oro
 
 1.  **Soberanía Humana Absoluta**: El Agente tiene PROHIBIDO marcar como completados (`[x]`) los campos de "Criterio de Aceptación Humana". Esta acción es exclusiva del Tesista.
-2.  **Vinculación por Step ID**: Toda propuesta sustantiva o validación debe vincularse a un **Step ID** único y registrarse en el `log_conversaciones_ia.md`.
+2.  **Vinculación por Step ID**: Toda propuesta sustantiva o validación debe vincularse a un **Step ID** único y registrarse en el `log_sesiones_trabajo_registradas.md`.
 3.  **Libro Mayor (Ledger) Inmutable**: Cada entrada en el Ledger debe estar protegida por un delimitador `<<< >>>` y un **Hash SHA-256** de integridad.
 4.  **Respeto a Guardrails**: Si un archivo contiene el tag `<!-- SISTEMA_TESIS:PROTEGIDO -->`, el Agente no debe modificarlo sin una instrucción humana explícita y el uso de mecanismos de respaldo.
 5.  **Cadenas de Evidencia**: Mantener la continuidad de la cadena en el Ledger (Anterior/Siguiente) para facilitar la auditoría.

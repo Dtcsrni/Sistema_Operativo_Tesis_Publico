@@ -17,7 +17,7 @@ El sistema operativo de tesis acumuló varias fuentes operativas paralelas para 
 
 Adoptar un **canon unificado append-only** en `00_sistema_tesis/canon/events.jsonl` como única fuente operativa de trazabilidad humana y actividad agéntica. A partir de este canon, el sistema materializa como proyecciones derivadas:
 
-1. `log_conversaciones_ia.md`
+1. `log_sesiones_trabajo_registradas.md`
 2. `matriz_trazabilidad.md`
 3. bitácoras de sesión
 4. `ia_journal.json`
@@ -66,7 +66,7 @@ La alternativa elegida reduce duplicidad operativa, baja el riesgo de inconsiste
 - **Negativas:** Se introduce una migración arquitectónica que exige compatibilidad temporal y más pruebas.
 - **Deuda explícita:** Los wrappers heredados deben permanecer durante la transición para no romper hábitos ni hooks existentes.
 
-## Trazabilidad de IA
+## Trazabilidad del trabajo asistido
 
 - **Proveedor:** proveedor de IA no publicado
 - **Modelo/Versión:** modelo de IA no publicado

@@ -19,7 +19,7 @@ Se establece un marco agnóstico de gobernanza de IA con cuatro categorías de u
 
 ## Alternativas consideradas
 
-1. No documentar uso de IA.
+1. No documentar trabajo asistido.
 2. Permitir uso amplio con validación informal.
 3. Gobernanza explícita con validación y trazabilidad.
 
@@ -50,10 +50,10 @@ El enfoque explícito reduce riesgos de alucinación, fuga de contexto y depende
 ## Consecuencias
 
 - Aumenta disciplina de revisión.
-- Vuelve auditable el uso de IA en etapas sensibles.
+- Vuelve auditable el trabajo asistido en etapas sensibles.
 - Añade una pequeña carga administrativa, compensada por menor riesgo metodológico.
 
-## Trazabilidad de IA
+## Trazabilidad del trabajo asistido
 
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0
@@ -72,7 +72,7 @@ El enfoque explícito reduce riesgos de alucinación, fuga de contexto y depende
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Incorporar sección de IA en plantilla de bitácora
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-- [ ] Evaluar más adelante una vista sanitizada de uso de IA para anexos o metodología
+- [ ] Evaluar más adelante una vista sanitizada de trabajo asistido para anexos o metodología
   - [ ] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Referencias

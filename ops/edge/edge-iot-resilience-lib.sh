@@ -82,6 +82,13 @@ edge_iot_reset_failures() {
   EDGE_IOT_QUARANTINE_REASON=""
 }
 
+edge_iot_clear_quarantine() {
+  EDGE_IOT_QUARANTINE_UNTIL=0
+  EDGE_IOT_QUARANTINE_REASON=""
+  EDGE_IOT_FAILURE_COUNT=0
+  EDGE_IOT_RESILIENCE_STATE="healthy"
+}
+
 edge_iot_set_state() {
   local state="$1"
   EDGE_IOT_RESILIENCE_STATE="${state}"
@@ -109,6 +116,7 @@ edge_iot_quarantine_active() {
 edge_iot_emit_spool_note() {
   local label="$1"
   local detail="$2"
-  local path="${EDGE_IOT_SPOOL_DIR}/$(date +%Y%m%d_%H%M%S)_${label}.txt"
+  local path
+  path="${EDGE_IOT_SPOOL_DIR}/$(date +%Y%m%d_%H%M%S)_${label}.txt"
   printf 'timestamp=%s\nlabel=%s\ndetail=%s\n' "$(edge_iot_iso_now)" "${label}" "${detail}" > "${path}"
 }

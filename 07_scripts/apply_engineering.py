@@ -27,7 +27,7 @@ def apply_metadata_header(content, file_name):
 def ensure_global_references(content):
     """Garantiza que el archivo tenga las referencias LID, GOV, AUD al final."""
     refs = [
-        "[LID]: log_conversaciones_ia.md",
+        "[LID]: log_sesiones_trabajo_registradas.md",
         "[GOV]: ../config/ia_gobernanza.yaml",
         "[AUD]: ../../07_scripts/build_all.py",
     ]
@@ -56,9 +56,10 @@ def main():
         p = root / d
         if not p.exists(): continue
         for f in p.glob("*.md"):
-            if f.name in ["log_conversaciones_ia.md", "matriz_trazabilidad.md"]:
+            if f.name in ["log_sesiones_trabajo_registradas.md", "matriz_trazabilidad.md"]:
                 continue
             engineer_file(f)
 
 if __name__ == "__main__":
     main()
+

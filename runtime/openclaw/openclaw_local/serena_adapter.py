@@ -120,12 +120,13 @@ class SerenaClient:
                 "transport": self.transport,
                 "config": self.config_snapshot(),
             }
-        missing = sorted(REQUIRED_TOOLS - _normalize_tool_names(sequence["tool_names"]))
+        normalized_tool_names = sorted(_normalize_tool_names(sequence["tool_names"]))
+        missing = sorted(REQUIRED_TOOLS - set(normalized_tool_names))
         status = "ok" if not missing else "degraded"
         return {
             "status": status,
             "transport": self.transport,
-            "tool_names": sequence["tool_names"],
+            "tool_names": normalized_tool_names,
             "missing_tools": missing,
             "server": sequence["server"],
             "protocol_version": sequence["protocol_version"],

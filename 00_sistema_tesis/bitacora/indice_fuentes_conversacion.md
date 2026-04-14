@@ -60,12 +60,13 @@ La evidencia cruda vive en `evidencia privada no publicada/conversaciones_codex/
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260412-serena-closeout-publication-v1 | ok |
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260413-serena-auto-activate-v1 | ok |
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260413-actions-public-sync-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260413-closeout-impl-v1 | ok |
 
 **Navegación:**
-- [Volver al Ledger](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md)
+- [Volver al Ledger](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md)
 - [Volver a la Matriz](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/matriz_trazabilidad.md)
 
-[LID]: log_conversaciones_ia.md
+[LID]: log_sesiones_trabajo_registradas.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 

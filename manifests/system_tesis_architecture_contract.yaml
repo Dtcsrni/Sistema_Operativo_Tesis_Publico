@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "contract_id": "system_tesis_architecture_contract",
   "desktop_first": true,
   "authoring_node": "desktop_vscode",
@@ -24,6 +24,38 @@
       "id": "publicacion",
       "description": "Bundle publico sanitizado y superficies derivadas publicables.",
       "write_scope": "derivado"
+    },
+    {
+      "id": "memoria_derivada",
+      "description": "Resumen operativo derivado desde canon y trazabilidad sin edicion manual.",
+      "write_scope": "derivado"
+    }
+  ],
+  "surface_ownership": [
+    {
+      "id": "canon",
+      "owner": "canon.py",
+      "source_of_truth": true
+    },
+    {
+      "id": "auditoria_guardrails",
+      "owner": "validate_structure.py + validate_b0_architecture.py",
+      "source_of_truth": false
+    },
+    {
+      "id": "proyecciones",
+      "owner": "build_readme_portada.py + build_wiki.py + build_dashboard.py",
+      "source_of_truth": false
+    },
+    {
+      "id": "publicacion",
+      "owner": "publication.py",
+      "source_of_truth": false
+    },
+    {
+      "id": "memoria_derivada",
+      "owner": "build_memory.py",
+      "source_of_truth": false
     }
   ],
   "interfaces": [
@@ -50,17 +82,39 @@
       "source": "auditoria_guardrails",
       "target": "publicacion",
       "mechanism": "gate_previo_a_publicar"
+    },
+    {
+      "id": "canon_to_memoria_derivada",
+      "source": "canon",
+      "target": "memoria_derivada",
+      "mechanism": "resumen_operativo_generado"
     }
+  ],
+  "allowed_flows": [
+    "canon_to_auditoria_read_only",
+    "canon_to_proyecciones_build_only",
+    "canon_to_publicacion_sanitized_build_only",
+    "canon_to_memoria_derivada_build_only",
+    "auditoria_to_publicacion_gate_only"
   ],
   "forbidden_couplings": [
     "edge_iot_to_canon_write",
     "publicacion_to_canon_write",
+    "memoria_derivada_to_canon_write",
     "proyecciones_as_source_of_truth",
     "orange_pi_as_primary_authoring_node"
   ],
+  "breaking_change_gates": {
+    "requires_contract_update": true,
+    "requires_migration_record": true,
+    "requires_cli_review_for_breaking_output": true
+  },
   "critical_scripts": [
+    "07_scripts/canon.py",
     "07_scripts/tesis.py",
     "07_scripts/build_all.py",
+    "07_scripts/build_memory.py",
+    "07_scripts/validate_memory.py",
     "07_scripts/validate_structure.py",
     "07_scripts/validate_b0_architecture.py"
   ]

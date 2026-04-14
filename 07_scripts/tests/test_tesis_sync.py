@@ -35,22 +35,23 @@ class TestTesisSync(unittest.TestCase):
     def test_classify_paths_keeps_primary_projection_in_operational_bundle(self):
         paths = [
             "00_sistema_tesis/canon/events.jsonl",
-            "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
+            "00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md",
             "06_dashboard/wiki/index.md",
             "06_dashboard/generado/wiki_manifest.json",
             "06_dashboard/publico/index.md",
             "00_sistema_tesis/config/token_usage_snapshot.json",
             "README.md",
+            "MEMORY.md",
         ]
         operational, secondary = classify_sync_paths(
             paths,
-            ["00_sistema_tesis/bitacora/log_conversaciones_ia.md"],
+            ["00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md"],
         )
         self.assertEqual(
             operational,
             [
                 "00_sistema_tesis/canon/events.jsonl",
-                "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
+                "00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md",
             ],
         )
         self.assertEqual(
@@ -61,6 +62,7 @@ class TestTesisSync(unittest.TestCase):
                 "06_dashboard/publico/index.md",
                 "00_sistema_tesis/config/token_usage_snapshot.json",
                 "README.md",
+                "MEMORY.md",
             ],
         )
 
@@ -78,9 +80,9 @@ diff --git a/a b/b
 @@ -1 +1 @@
 +def append_conversation_source():
 """,
-            "00_sistema_tesis/bitacora/log_conversaciones_ia.md": """
+            "00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md": """
 diff --git a/a b/b
-+++ b/00_sistema_tesis/bitacora/log_conversaciones_ia.md
++++ b/00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md
 @@ -1 +1 @@
 +## [VAL-STEP-500]
 """,
@@ -93,7 +95,7 @@ diff --git a/a b/b
         }
         bundles, derived, unassigned = classify_patches_by_step(
             patches,
-            ["00_sistema_tesis/bitacora/log_conversaciones_ia.md"],
+            ["00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md"],
             {"VAL-STEP-470", "VAL-STEP-500"},
         )
         self.assertEqual(unassigned, [])
@@ -235,3 +237,4 @@ diff --git a/a b/b
 
 if __name__ == "__main__":
     unittest.main()
+

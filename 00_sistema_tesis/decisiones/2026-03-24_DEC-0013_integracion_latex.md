@@ -46,7 +46,7 @@ Retroactivo: Decisión tomada durante la fase de infraestructura inicial.
 ## Consecuencias
 - **Positivas:** Permite escribir con la agilidad de MD y publicar con la gloria de LaTeX. Evita la duplicidad de contenido.
 - **Negativas:** Se requiere instalar Pandoc en el sistema para la conversión automática.
-## Trazabilidad de IA
+## Trazabilidad del trabajo asistido
 
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0

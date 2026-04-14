@@ -101,7 +101,7 @@ class TestGovernanceGate(unittest.TestCase):
         diff_text = """diff --git a/00_sistema_tesis/bitacora/matriz_trazabilidad.md b/00_sistema_tesis/bitacora/matriz_trazabilidad.md
 +++ b/00_sistema_tesis/bitacora/matriz_trazabilidad.md
 @@ -1,0 +1 @@
-+| 2026-03-26 | [VAL-STEP-430] | [DEC-0014] | Cierre | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_conversaciones_ia.md#val-step-430) |
++| 2026-03-26 | [VAL-STEP-430] | [DEC-0014] | Cierre | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-430) |
 """
         step_ids = extract_step_ids_from_diff(
             diff_text,
@@ -110,7 +110,7 @@ class TestGovernanceGate(unittest.TestCase):
         self.assertEqual(step_ids, ["VAL-STEP-430"])
 
     def test_rejects_projection_edits_without_canon_change(self):
-        errors = detect_projection_policy_errors(["00_sistema_tesis/bitacora/log_conversaciones_ia.md"])
+        errors = detect_projection_policy_errors(["00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md"])
         self.assertTrue(errors)
         self.assertIn("proyecciones", errors[0].lower())
 
@@ -126,7 +126,7 @@ class TestGovernanceGate(unittest.TestCase):
             "agent": "test-agent",
             "step_id": "VAL-STEP-278",
             "changed_files": ["README.md"],
-            "protected_files_touched": ["00_sistema_tesis/bitacora/log_conversaciones_ia.md"],
+            "protected_files_touched": ["00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md"],
             "checks_run": ["Validacion de soberania", "Validar estructura"],
             "checks_failed": [],
             "recommendations": ["Mantener el gate como unica puerta de enforcement para hooks, CI y wrappers."],
@@ -183,3 +183,4 @@ class TestGovernanceGate(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

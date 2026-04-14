@@ -48,10 +48,12 @@ REQUIRED_PATHS = [
     "01_planeacion/entregables.csv",
     "README_INICIO.md",
     "README.md",
+    "MEMORY.md",
     "docs/02_arquitectura/arquitectura-general.md",
     "docs/02_arquitectura/contrato-maestro-de-dominios.md",
     "docs/02_arquitectura/arquitectura-interna-sistema-tesis.md",
     "docs/02_arquitectura/arquitectura-objetivo-b0-desktop-first.md",
+    "docs/02_arquitectura/criterio-formal-cierre-b0.md",
     "docs/03_operacion/flujo-escritorio-orange-pi.md",
     "docs/03_operacion/rol-de-openclaw-en-la-tesis.md",
     "docs/04_seguridad/politica-de-sanitizacion-y-publicacion.md",
@@ -70,6 +72,7 @@ REQUIRED_PATHS = [
     "manifests/system_tesis_architecture_contract.yaml",
     "manifests/system_tesis_canonical_schema.yaml",
     "manifests/system_tesis_cli_contracts.yaml",
+    "manifests/system_tesis_dependency_map.yaml",
     "manifests/b0_external_gates.yaml",
     "bootstrap/host/00_validar-descargas.ps1",
     "bootstrap/orangepi/10_primer-arranque.sh",
@@ -116,6 +119,7 @@ def validate() -> list[str]:
     architecture_contract = load_yaml_json("manifests/system_tesis_architecture_contract.yaml")
     schema_contract = load_yaml_json("manifests/system_tesis_canonical_schema.yaml")
     cli_contracts = load_yaml_json("manifests/system_tesis_cli_contracts.yaml")
+    dependency_map = load_yaml_json("manifests/system_tesis_dependency_map.yaml")
     b0_external_gates = load_yaml_json("manifests/b0_external_gates.yaml")
     public_sync = load_yaml_json("manifests/public_private_sync_policy.yaml")
     desktop_edge_sync = load_yaml_json("manifests/desktop_edge_sync_contract.yaml")
@@ -203,10 +207,28 @@ def validate() -> list[str]:
 
     if architecture_contract.get("desktop_first") is not True:
         errors.append("system_tesis_architecture_contract.yaml debe declarar desktop_first=true")
+    layer_ids = [layer["id"] for layer in architecture_contract.get("layers", [])]
+    if layer_ids != ["canon", "proyecciones", "auditoria_guardrails", "publicacion", "memoria_derivada"]:
+        errors.append("system_tesis_architecture_contract.yaml debe declarar las 5 superficies canónicas esperadas")
+    ownership_ids = {item["id"] for item in architecture_contract.get("surface_ownership", [])}
+    if ownership_ids != set(layer_ids):
+        errors.append("system_tesis_architecture_contract.yaml debe declarar ownership lógico por superficie")
     if schema_contract.get("schema_version") != "1.0.0":
         errors.append("system_tesis_canonical_schema.yaml debe fijar schema_version=1.0.0")
+    schema_entities = dict(schema_contract.get("entities", {}))
+    for entity_name in ("events", "state", "derived_artifacts", "traceability_views", "memory_summary"):
+        if entity_name not in schema_entities:
+            errors.append(f"system_tesis_canonical_schema.yaml debe declarar la entidad {entity_name}")
     if cli_contracts.get("entrypoint") != "07_scripts/tesis.py":
         errors.append("system_tesis_cli_contracts.yaml debe apuntar a 07_scripts/tesis.py")
+    cli_ids = {item.get("id") for item in cli_contracts.get("commands", [])}
+    for command_id in {"status", "next", "doctor_check", "audit_check", "materialize", "publish_build", "publish_check", "source_status_check", "sync"}:
+        if command_id not in cli_ids:
+            errors.append(f"system_tesis_cli_contracts.yaml debe declarar el comando {command_id}")
+    if dependency_map.get("dependency_direction") != "canon_hacia_derivados":
+        errors.append("system_tesis_dependency_map.yaml debe fijar dependency_direction=canon_hacia_derivados")
+    if "memory_projection" not in {item.get("id") for item in dependency_map.get("critical_modules", [])}:
+        errors.append("system_tesis_dependency_map.yaml debe declarar memory_projection")
     for item in b0_external_gates.get("gates", []):
         if item.get("status") != "pendiente_host_real":
             errors.append(f"b0_external_gates.yaml debe mantener pendiente_host_real para {item.get('id', 'N/A')}")
@@ -251,6 +273,9 @@ def validate() -> list[str]:
         source = artifact["source"]
         if not (ROOT / source).exists():
             errors.append(f"publicacion.yaml referencia una fuente inexistente: {source}")
+    artifact_sources = {artifact["source"] for artifact in publicacion["artefactos"]}
+    if "MEMORY.md" not in artifact_sources:
+        errors.append("publicacion.yaml debe publicar MEMORY.md como artefacto derivado oficial")
     excluded_prefixes = set(publicacion.get("sanitizacion", {}).get("excluir_prefijos", []))
     if "00_sistema_tesis/evidencia_privada/" not in excluded_prefixes:
         errors.append("publicacion.yaml debe excluir 00_sistema_tesis/evidencia_privada/ del bundle público")
@@ -262,6 +287,11 @@ def validate() -> list[str]:
     for marker in ("source register", "source verify", "evidencia fuente"):
         if marker not in manual_humano:
             errors.append(f"manual_operacion_humana.md no documenta el flujo requerido: {marker}")
+
+    memory_text = (ROOT / "MEMORY.md").read_text(encoding="utf-8")
+    for marker in ("Últimos cambios validados", "Próximos pendientes críticos", "Referencias base"):
+        if marker not in memory_text:
+            errors.append(f"MEMORY.md no contiene el marcador requerido: {marker}")
 
     desktop_edge_flow = (ROOT / "docs/03_operacion/flujo-escritorio-orange-pi.md").read_text(encoding="utf-8")
     for marker in (

@@ -26,10 +26,10 @@
 - **Archivos Clave:** [Listado de archivos modificados]
 - **Validación del Sistema:** [ ] Auditoría `build_all.py` aprobada.
 
-## Uso de IA y Gobernanza
-- **Proveedor:** [PROVEEDOR_IA]
-- **Modelo/Versión:** [MODELO_VERSION_IA]
-- **Objetivo:** [Propósito del uso de IA]
+## Trabajo asistido con IA y gobernanza
+- **Proveedor de asistencia:** [PROVEEDOR_IA]
+- **Modelo/Versión de asistencia:** [MODELO_VERSION_IA]
+- **Objetivo:** [Propósito del trabajo asistido]
 - **Nivel de Razonamiento:** [bajo | medio | alto]
 - **Alineación Ética:**
     - [ ] Transparencia (NIST RMF)
@@ -59,7 +59,7 @@
 ## Siguiente paso concreto
 (Acción inmediata para la próxima sesión)
 
-[LID]: log_conversaciones_ia.md
+[LID]: log_sesiones_trabajo_registradas.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 

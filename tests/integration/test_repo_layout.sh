@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
-test -d docs && test -d manifests && test -d bootstrap && test -d runtime && test -d data_contracts
+test -d docs && test -d manifests && test -d bootstrap && test -d runtime && test -d data_contracts && test -f MEMORY.md
 echo INTEGRATION_REPO_LAYOUT_OK

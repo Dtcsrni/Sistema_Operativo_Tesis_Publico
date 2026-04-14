@@ -57,7 +57,7 @@ Retroactivo: Decisión tomada durante la fase de infraestructura inicial.
 - **Negativas/Riesgos:**
   - Requiere que el tesista tenga configurado GPG4win/GnuPG correctamente.
   - Mayor fricción operativa (un click/huella por commit), pero con alto valor metodológico.
-## Trazabilidad de IA
+## Trazabilidad del trabajo asistido
 
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0

@@ -15,7 +15,7 @@ PROTECTED_EXACT_PATHS = {
     "00_sistema_tesis/config/integrity_manifest.json",
 }
 UNPROTECTED_EXACT_PATHS = {
-    "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
+    "00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md",
     "00_sistema_tesis/bitacora/matriz_trazabilidad.md",
     "00_sistema_tesis/config/sign_offs.json",
     "00_sistema_tesis/ia_journal.json",
@@ -257,3 +257,4 @@ if __name__ == "__main__":
             sys.exit(1)
     elif "--update" in sys.argv:
         update_manifest()
+

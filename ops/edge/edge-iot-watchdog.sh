@@ -8,7 +8,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/edge-iot-resilience-lib.sh"
 
 edge_iot_load_state
-EDGE_IOT_LAST_HEALTHCHECK_AT="$(edge_iot_now)"
+edge_iot_now >/dev/null
 
 if edge_iot_quarantine_active; then
   edge_iot_set_state "quarantined"

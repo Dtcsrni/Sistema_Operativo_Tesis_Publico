@@ -1,5 +1,5 @@
 <!-- SISTEMA_TESIS:PROTEGIDO -->
-# Ledger de Conversaciones IA (Inmutable y Enlazado)
+# Ledger de Sesiones de trabajo registradas (Inmutable y Enlazado)
 
 Este archivo es el **Libro Mayor** de las validaciones humanas. El contenido exacto está entre `<<<` y `>>>`. 
 Cada bloque forma parte de una **Cadena de Evidencia Vinculada**.
@@ -27,7 +27,7 @@ Objetivo de Sesión: Establecimiento de bases de soberanía humana.
 Contexto Operativo: Inicio de la fase de endurecimiento del sistema (B0). El tesista define la regla de oro para la interacción con agentes: nada se valida sin intervención humana explícita.
 Infraestructura: Python 3.14.3 | Windows 11 | Gemini 1.5 Pro v1.0.
 ID de Sesión: 128bceee
-Diferencial de Plan: [implementation_plan_v2.md](../../06_dashboard/wiki/nota_seguridad_y_acceso.md)
+Diferencial de Plan: [implementation_plan_v2.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 ---
 Tesista (Erick Renato Vega Ceron | Sesion: 128bceee): "asegurate de siempre preguntarme y vincular mis decisiones y respuestas a los elementos de trazabilidad, especialmente si requieren validación humana.">>>
 
@@ -54,7 +54,7 @@ Objetivo de Sesión: Validación del protocolo DEC-0014 y Defensa en Profundidad
 Contexto Operativo: El agente propone un método detallado de vinculación por Step ID y pre-checklists anidadas para robustecer la cadena de confianza. El tesista aprueba la implementación global.
 Infraestructura: Python 3.14.3 | Windows 11 | Gemini 1.5 Pro v1.0.
 ID de Sesión: 128bceee
-Diferencial de Plan: [implementation_plan_v13.md](../../06_dashboard/wiki/nota_seguridad_y_acceso.md)
+Diferencial de Plan: [implementation_plan_v13.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 ---
 Agente: "¿Este nivel de detalle y vinculación por Step ID te parece el método confiable que buscas?"
 Tesista (Erick Renato Vega Ceron | Sesion: 128bceee): "si. Implementa">>>
@@ -82,7 +82,7 @@ Objetivo de Sesión: Auditoría de estado y funcionalidad de la wiki.
 Contexto Operativo: El tesista consulta sobre el estado actual de la wiki. El agente audita la generación de MkDocs y los validadores internos, reportando éxito parcial (wiki interna OK, auditoría externa fallida).
 Infraestructura: Python 3.14.3 | Windows 11 | Gemini 1.5 Pro v1.0.
 ID de Sesión: 5819a70e
-Diferencial de Plan: No se requirió plan de cambio estructural; se utilizó [task.md](../../06_dashboard/wiki/nota_seguridad_y_acceso.md) para guiar la auditoría de diagnóstico.
+Diferencial de Plan: No se requirió plan de cambio estructural; se utilizó [task.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) para guiar la auditoría de diagnóstico.
 ---
 Tesista (Erick Renato Vega Ceron | Sesion: 5819a70e): "funciona ya la wiki y está completa, y correcta?"
 Agente: "La wiki es funcional y correcta según sus validadores internos. La falta de completitud en secciones específicas es nominal y esperada. El fallo de auditoría externa es por red. Recomendación: Iniciar firmas de bloques.">>>
@@ -110,7 +110,7 @@ Objetivo de Sesión: Rectificación de diagnóstico de red y corrección de est�
 Contexto Operativo: Rectificación técnica tras descubrir que el sistema sí posee red pero las URLs de NIST eran incorrectas. Se propone corrección de `ia_gobernanza.yaml` y reconstrucción del Ledger.
 Infraestructura: Python 3.14.3 | Windows 11 | Gemini 1.5 Pro v1.0 | verify_standards.py.
 ID de Sesión: 5819a70e
-Diferencial de Plan: [implementation_plan.md](../../06_dashboard/wiki/nota_seguridad_y_acceso.md)
+Diferencial de Plan: [implementation_plan.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 ---
 Tesista (Erick Renato Vega Ceron | Step Id: 77): "\"sin éxito debido a la falta de conexión a red en este entorno.\"?\"
 Agente: "Rectificación de auditoría: El error previo atribuyó erróneamente el fallo a la falta de red. Se confirma conectividad (Google 200, Wikipedia Main 200). Los fallos en `verify_standards.py` se deben a URLs incorrectas (ej. NIST RMF 404) y fallos de validación de descriptores clave en el contenido de Wikipedia. La wiki sigue siendo funcional pero el audit de estándares requiere corrección de fuentes.">>>
@@ -138,7 +138,7 @@ Objetivo de Sesión: Mejora del sistema de bitácora y trazabilidad.
 Contexto Operativo: El tesista solicita mejorar el sistema de bitácora. El agente propone un sistema de cadena de confianza criptográfica entre sesiones, plantillas enriquecidas y scripts de automatización.
 Infraestructura: Python 3.14.3 | Windows 11 | Gemini 1.5 Pro v1.0.
 ID de Sesión: 5819a70e
-Diferencial de Plan: [implementation_plan.md](../../06_dashboard/wiki/nota_seguridad_y_acceso.md)
+Diferencial de Plan: [implementation_plan.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 ---
 Tesista (Erick Renato Vega Ceron | Step Id: 380): "mejora el sistema de bitácora"
 Agente: "Propongo un sistema de 'Cadena de Confianza' donde cada bitácora referencia el hash de la anterior. Además, automatizaremos la creación de sesiones y la validación de integridad.">>>
@@ -166,7 +166,7 @@ Objetivo de Sesión: Diagnóstico de completitud arquitectónica para inicio de 
 Contexto Operativo: El tesista consulta sobre los elementos faltantes en la arquitectura para iniciar el desarrollo. El agente analiza la brecha entre la infraestructura de gobernanza (B0) y el diseño técnico de la tesis (B1/B2), identificando la necesidad de delimitación formal, línea base y diseño detallado de componentes IoT.
 Infraestructura: Gemini 1.5 Pro | Sistema Operativo de Tesis v0.1.0.
 ID de Sesión: b4fee61f
-Diferencial de Plan: Análisis de brechas en [analysis_arch_readiness.md](../../06_dashboard/wiki/nota_seguridad_y_acceso.md)
+Diferencial de Plan: Análisis de brechas en [analysis_arch_readiness.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 ---
 Tesista (Erick Renato Vega Ceron | Sesion: b4fee61f): "¿que faltaria en la arquitectura para poder empezar el desarrollo de la tesis?"
 Agente: "La infraestructura de gestión está completa. Faltan la delimitación formal del caso de estudio (B1), la definición de la línea base de comparación (B2) y el diseño detallado de los componentes de resiliencia (B2) antes de la implementación física.">>>
@@ -1665,7 +1665,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260413-serena-auto-acti
 - **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
 - **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
 - **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
-- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: FIN]
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
 - **Contenido:**
 <<<
 Objetivo de Sesión: Cerrar la verificación de Actions y la sincronización pendiente del downstream público con Step ID asignado automáticamente por el agente.
@@ -1676,6 +1676,27 @@ Diferencial de Plan: registrar evento interno no público y validación humana i
 ---
 Agente: Lo que me bloquea para cerrar de forma correcta no es técnico sino de gobernanza del repo: necesito el Step ID humano para registrar esta instrucción crítica en los archivos protegidos y poder dejar trazabilidad, commit y publicación sin violar AGENTS.md. En cuanto me lo des, sigo con.
 Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260413-actions-public-sync-v1): Continúa, decide siempre automáticamente el step id>>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-13
+- **Vínculo:** DEC-0014
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas resolver pendientes, realizar commit/push/sync y monitorear Actions hasta publicación correcta?
+- **Confirmación Verbal (Texto Exacto):** Start implementation
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: FIN]
+- **Contenido:**
+<<<
+Objetivo de sesión: cerrar pendientes técnicos, publicar cambios y verificar despliegue público end-to-end.>>>
 
 **Navegación:**
 - [Volver a la Matriz](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/matriz_trazabilidad.md)

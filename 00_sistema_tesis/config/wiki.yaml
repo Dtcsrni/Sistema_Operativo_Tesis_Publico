@@ -122,7 +122,7 @@
     {
       "id": "bitacora",
       "titulo": "Bitácora",
-      "descripcion": "Registro de sesiones, uso de IA y aprendizaje operativo.",
+      "descripcion": "Registro de sesiones, trabajo asistido y aprendizaje operativo.",
       "fuentes": [
         "00_sistema_tesis/bitacora",
         "00_sistema_tesis/reportes_semanales"
@@ -154,3 +154,4 @@
     }
   ]
 }
+

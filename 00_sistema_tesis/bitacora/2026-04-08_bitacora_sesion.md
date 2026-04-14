@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-08
 
 - **ID de Sesión:** codex-local-20260408-dec0022-desktop-edge
-- **Cadena de Confianza (Anterior):** `sha256/388bb8839fcb37ad7de3237e1f6a83a2771139e41cc8ae38577d9d340fb6d101`
+- **Cadena de Confianza (Anterior):** `sha256/38ca91cf6c8d0632c1ee765a997777e7e873407f2cd995bfcb7480c20096adf1`
 - **Bloque principal:** B0
 - **Tipo de sesión:** diseño | implementación | validación
 
@@ -75,7 +75,7 @@ Formalizar la arquitectura operativa con escritorio primario y Orange Pi como no
 ## Siguiente paso concreto
 Traducir esta frontera arquitectónica en procedimientos de despliegue y sincronización más finos entre el workspace de escritorio y el nodo edge de Orange Pi.
 
-[LID]: log_conversaciones_ia.md
+[LID]: log_sesiones_trabajo_registradas.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 

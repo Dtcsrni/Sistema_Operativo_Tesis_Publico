@@ -17,7 +17,7 @@ Con el Bloque 0 operativo, surgieron tres vectores de riesgo:
 ## Decisión
 
 Se han integrado las configuraciones base para endurecer la infraestructura del repositorio:
-1. Se ha creado la plantilla `.github/PULL_REQUEST_TEMPLATE.md` para estandarizar la incorporación de código mediante PRs (exigiendo comprobación de tests, uso de IA y build exitoso).
+1. Se ha creado la plantilla `.github/PULL_REQUEST_TEMPLATE.md` para estandarizar la incorporación de código mediante PRs (exigiendo comprobación de tests, trabajo asistido y build exitoso).
 2. Se crearon las dependencias y el archivo `.pre-commit-config.yaml` con linters (`markdownlint`) y validadores en cascada (`build_all.py`).
 3. Se integraron como dependencias teóricas requeridas.
 
@@ -58,7 +58,7 @@ Retroactivo: Decisión tomada durante la fase de infraestructura inicial.
 - **Positivas:** El repositorio ahora cuenta con las normativas (PRs), configuraciones y documentación necesarias para un ecosistema de calidad de software estándar. Si el entorno se migra a WSL, Linux ordinario o a una distribución estándar de Python en Windows, la protección se activa inmediatamente.
 - **Negativas/Riesgos:** Hasta que el entorno local adopte una cadena de herramientas estándar (Pip/Rust compilables de forma nativa en Windows) o el usuario decida instalar `dvc` y los `hooks` pre-compilados manualmente sin usar MSYS2, el riesgo de "deriva local" entre YAMLs y CSVs reaparece dependiente enteramente de la memoria del usuario para ejecutar `build_all.py`.
 
-## Trazabilidad de IA
+## Trazabilidad del trabajo asistido
 
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0

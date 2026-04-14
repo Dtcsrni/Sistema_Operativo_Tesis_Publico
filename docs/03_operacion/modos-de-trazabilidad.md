@@ -12,7 +12,7 @@ La trazabilidad del sistema existe para reconstruir, sin ambiguedad, que se deci
 
 ## Fuentes de verdad
 
-- **Libro mayor conversacional:** [00_sistema_tesis/bitacora/log_conversaciones_ia.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md)
+- **Libro mayor conversacional:** [00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md)
 - **Matriz maestra de validaciones:** [00_sistema_tesis/bitacora/matriz_trazabilidad.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/matriz_trazabilidad.md)
 - **Plantillas de bitacora y decision:** [00_sistema_tesis/plantillas/bitacora_template.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/plantillas/bitacora_template.md), [00_sistema_tesis/plantillas/decision_template.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/plantillas/decision_template.md)
 - **Politica de gobernanza IA:** [00_sistema_tesis/config/ia_gobernanza.yaml](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/ia_gobernanza.yaml)

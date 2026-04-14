@@ -33,6 +33,8 @@ repo_url: https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico
 
 docs_dir: 06_dashboard/wiki
 
+plugins: []
+
 markdown_extensions:
   - admonition
   - pymdownx.details

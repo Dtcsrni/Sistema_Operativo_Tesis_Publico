@@ -1,47 +1,85 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "contract_id": "system_tesis_cli_contracts",
   "entrypoint": "07_scripts/tesis.py",
   "commands": [
     {
       "id": "status",
       "usage": "python 07_scripts/tesis.py status",
-      "outputs": ["texto_humano", "bloque_activo", "siguiente_entregable", "riesgo_principal"]
+      "required_args": [],
+      "outputs": ["texto_humano", "bloque_activo", "siguiente_entregable", "riesgo_principal"],
+      "exit_codes": {"0": "estado legible y consistente"},
+      "side_effects": []
     },
     {
       "id": "next",
       "usage": "python 07_scripts/tesis.py next",
-      "outputs": ["texto_humano", "tareas_sugeridas", "riesgos_prioritarios"]
+      "required_args": [],
+      "outputs": ["texto_humano", "tareas_sugeridas", "riesgos_prioritarios"],
+      "exit_codes": {"0": "siguiente trabajo sugerido"},
+      "side_effects": []
     },
     {
       "id": "doctor_check",
       "usage": "python 07_scripts/tesis.py doctor --check",
-      "outputs": ["exit_code", "errores_operativos"]
+      "required_args": ["--check"],
+      "outputs": ["exit_code", "errores_operativos"],
+      "exit_codes": {"0": "sin drift ni errores", "1": "drift, errores o evidencia faltante"},
+      "side_effects": []
+    },
+    {
+      "id": "audit_check",
+      "usage": "python 07_scripts/tesis.py audit --check",
+      "required_args": ["--check"],
+      "outputs": ["exit_code", "errores_canon", "proyecciones_fuera_de_sincronia"],
+      "exit_codes": {"0": "canon íntegro", "1": "errores de canon o drift"},
+      "side_effects": []
+    },
+    {
+      "id": "materialize",
+      "usage": "python 07_scripts/tesis.py materialize",
+      "required_args": [],
+      "outputs": ["proyecciones_actualizadas", "estado"],
+      "exit_codes": {"0": "proyecciones sincronizadas"},
+      "side_effects": ["actualiza proyecciones primarias del canon"]
     },
     {
       "id": "publish_build",
       "usage": "python 07_scripts/tesis.py publish --build",
-      "outputs": ["bundle_publico", "manifest_publico", "estado"]
+      "required_args": ["--build"],
+      "outputs": ["bundle_publico", "manifest_publico", "estado"],
+      "exit_codes": {"0": "bundle público regenerado"},
+      "side_effects": ["reescribe 06_dashboard/publico/"]
     },
     {
       "id": "publish_check",
       "usage": "python 07_scripts/tesis.py publish --check",
-      "outputs": ["exit_code", "drift_publicacion", "errores_publicacion"]
+      "required_args": ["--check"],
+      "outputs": ["exit_code", "drift_publicacion", "errores_publicacion"],
+      "exit_codes": {"0": "bundle público consistente", "1": "drift o errores de sanitización"},
+      "side_effects": []
     },
     {
       "id": "source_status_check",
       "usage": "python 07_scripts/tesis.py source status --check",
-      "outputs": ["exit_code", "source_repo_failures", "source_local_failures"]
+      "required_args": ["status", "--check"],
+      "outputs": ["exit_code", "source_repo_failures", "source_local_failures"],
+      "exit_codes": {"0": "evidencia fuente consistente", "1": "faltan corroboraciones o verificación local"},
+      "side_effects": []
     },
     {
       "id": "sync",
       "usage": "python 07_scripts/tesis.py sync --message <msg> --step-id validación humana interna no pública",
-      "outputs": ["commit_id", "branch", "protected_summary"]
+      "required_args": ["--message", "--step-id"],
+      "outputs": ["commit_id", "branch", "protected_summary"],
+      "exit_codes": {"0": "sync completado", "1": "fallo de governance gate o git"},
+      "side_effects": ["stagea y puede crear commits firmados"]
     }
   ],
   "rules": {
     "stdout_humano_primero": true,
     "breaking_output_change_requires_contract_update": true,
-    "protected_changes_require_step_id": true
+    "protected_changes_require_step_id": true,
+    "machine_verifiable_contract": true
   }
 }

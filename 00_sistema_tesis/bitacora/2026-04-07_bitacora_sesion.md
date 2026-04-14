@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-07
 
 - **ID de Sesión:** codex-local-20260407-cierre-conversacion-trazabilidad
-- **Cadena de Confianza (Anterior):** `sha256/953070f7e22b1b46550369063381805a7391f72a4824e107d9b1b72d8ffb3cf2`
+- **Cadena de Confianza (Anterior):** `sha256/bd3e98fc7463927f0217c8c90155f3f0d7a4de64e53dcfcb51085f7f302ca1b2`
 - **Bloque principal:** B1
 - **Tipo de sesión:** administración | implementación | validación
 
@@ -75,7 +75,7 @@ Cerrar la conversación actual dejando al día la trazabilidad operativa del tra
 ## Siguiente paso concreto
 Continuar con `T-037` y, cuando se quiera cerrar técnicamente este bloque, consolidar cambios en commit firmado o derivar una decisión nueva sobre la ampliación de Serena.
 
-[LID]: log_conversaciones_ia.md
+[LID]: log_sesiones_trabajo_registradas.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 

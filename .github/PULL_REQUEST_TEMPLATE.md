@@ -13,7 +13,7 @@ Describe brevemente qué cambias o agregas en este PR.
 - [ ] Si toqué trazabilidad protegida, vinculé el cambio a un validación humana interna no pública existente y verificable en el ledger.
 - [ ] Mi cambio incluye pruebas adicionales si agregué scripts nuevos o validadores.
 - [ ] He documentado decisiones arquitectónicas o flujos nuevos en `00_sistema_tesis/decisiones`.
-- [ ] He registrado el uso de IA de acuerdo al archivo de gobernanza (`ia_gobernanza.yaml`) si aplica.
+- [ ] He registrado el trabajo asistido de acuerdo al archivo de gobernanza (`ia_gobernanza.yaml`) si aplica.
 
 ## Evidencia de Verificación
 

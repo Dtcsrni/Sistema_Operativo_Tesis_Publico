@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-13
 
 - **ID de Sesión:** codex-local-20260413-actions-public-sync-v1
-- **Cadena de Confianza (Anterior):** `sha256/629c089091c7744b955c6bd1167c887e5788fdbb58cc5595cc9f3ea0e04e2a63`
+- **Cadena de Confianza (Anterior):** `sha256/b6bb0a4f687d25bacee917f82e0460cfb8a24a509ada876b9db757b59c307c9a`
 - **Bloque principal:** B1
 - **Tipo de sesión:** validación | administración | publicación
 
@@ -66,7 +66,7 @@ Verificar el estado real de GitHub Actions, corregir la compuerta CI hasta elimi
 ## Siguiente paso concreto
 Registrar validación humana interna no pública, ejecutar `build_all.py`, hacer commit/push del fix y sincronizar manualmente el repo público atrasado.
 
-[LID]: log_conversaciones_ia.md
+[LID]: log_sesiones_trabajo_registradas.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 

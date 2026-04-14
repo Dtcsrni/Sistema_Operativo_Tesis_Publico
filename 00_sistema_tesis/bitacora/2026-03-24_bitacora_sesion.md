@@ -68,7 +68,7 @@ Rectificar la auditoría de estándares externos y mejorar el rigor del sistema 
 ## Siguiente paso concreto
 Iniciar la firma GPG de los bloques de infraestructura validados para elevar la métrica de soberanía en la wiki.
 
-[LID]: log_conversaciones_ia.md
+[LID]: log_sesiones_trabajo_registradas.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 

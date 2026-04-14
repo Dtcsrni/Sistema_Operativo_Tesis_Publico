@@ -8,11 +8,11 @@ No equivalen a validación humana ni sustituyen validación humana interna no p�
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 
 **Navegación:**
-- [Volver al Ledger](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md)
+- [Volver al Ledger](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md)
 - [Volver a la Matriz](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/matriz_trazabilidad.md)
 - [Volver al Índice de Fuentes](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/indice_fuentes_conversacion.md)
 
-[LID]: log_conversaciones_ia.md
+[LID]: log_sesiones_trabajo_registradas.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
