@@ -52,4 +52,4 @@ Estado de cobertura de capítulos y figuras.
 - Cobertura: `pendiente`
 - Mensaje: Sin contenido operativo aún. La wiki refleja el estado real del repositorio y no inventa artefactos.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

@@ -58,6 +58,16 @@ def test_generated_public_surface_is_editorially_clean(isolated_repo: Path) -> N
     assert "[validacion_humana_interna]" not in public_bitacora
     assert "[hash_redactado]" not in public_bitacora
     assert "VAL-STEP-" not in public_bitacora
+    assert "### Sin fecha" not in public_bitacora
+    assert "### Índices maestros" in public_bitacora
+    assert "### Qué es este bloque" in public_bitacora
+    assert "### Para qué sirve" in public_bitacora
+    assert "### Qué representa" in public_bitacora
+    assert "### Enlaces de navegación" in public_bitacora
+    assert "## Bitácora de sesiones de trabajo registradas" in public_bitacora
+    assert "??? \"2026-" in public_bitacora
+    assert "validación(es)\"" in public_bitacora
+    assert "https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/" in public_bitacora
     assert "[identidad_agente_privada]" not in public_dashboard
     assert "[fecha_hora_redactada]" not in public_dashboard
     assert "Última actualización:" in public_readme

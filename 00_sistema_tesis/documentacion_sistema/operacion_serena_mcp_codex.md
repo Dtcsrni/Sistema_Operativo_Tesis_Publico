@@ -144,4 +144,4 @@ Resultado esperado:
 6. Si el host sigue sin ver tools MCP aunque HTTP responda bien, asumir primero una limitacion del host/runtime antes que un fallo de negocio en Serena.
 7. Si un host externo no puede registrar `127.0.0.1`, desplegar el bridge detras de un tunel o reverse proxy con auth y registrar esa URL publica.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

@@ -40,4 +40,4 @@ Fuente maquina-legible:
   - `permission denied`, `unreadable`, `explicit failure` y salida distinta de cero son cumplimiento esperado en casos negativos;
   - `no such file` no cuenta como evidencia suficiente si la prueba no preparo antes el artefacto centinela.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

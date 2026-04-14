@@ -4,4 +4,4 @@ La bitacora operativa y la auditoria viven en el canon no público. El soporte d
 
 Comando base: `python 07_scripts/build_all.py`.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

@@ -20,4 +20,4 @@ Cerrar B0 a nivel de arquitectura, contratos y pruebas desde escritorio, dejando
 - `ENT-013` solo puede quedar listo para validacion mientras los gates externos permanezcan pendientes.
 - `T-050` se interpreta como cierre arquitectonico B0 desde escritorio, no como certificacion fisica del edge.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

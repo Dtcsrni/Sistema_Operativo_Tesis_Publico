@@ -2,4 +2,4 @@
 
 Campos minimos: `reference_id`, `titulo`, `autores`, `fuente`, `tipo_fuente`, `anio`, `doi`, `url`, `nivel_jerarquia`, `metadatos_verificados`, `observaciones`.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

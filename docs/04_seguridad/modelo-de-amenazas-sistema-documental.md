@@ -30,4 +30,4 @@
 - Las reglas de no HTTP interdominio, no lectura cruzada y no restore cruzado estan declaradas y validadas.
 - Orange Pi aparece solo como clon operativo y nodo de validacion local.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

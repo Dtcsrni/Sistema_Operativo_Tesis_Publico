@@ -79,4 +79,4 @@ Continuar con `T-037` y, cuando se quiera cerrar técnicamente este bloque, cons
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

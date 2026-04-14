@@ -187,8 +187,7 @@ def _rewrite_public_phrases(text: str) -> str:
 
 
 def _rewrite_public_bitacora(text: str) -> str:
-    rewritten = PUBLIC_SESSION_HEADING_PATTERN.sub("### Sesión con validación humana interna no pública", text)
-    rewritten = PUBLIC_HASH_LINE_PATTERN.sub("- **Hash:** `Hash omitido por seguridad`", rewritten)
+    rewritten = PUBLIC_HASH_LINE_PATTERN.sub("- **Hash:** `Hash omitido por seguridad`", text)
     rewritten = PUBLIC_CONFIRMATION_SOURCE_PATTERN.sub("- **Fuente de confirmación:** `Referencia interna no pública`", rewritten)
     rewritten = PUBLIC_CHAIN_PATTERN.sub("- **Cadena de trazabilidad:** `Referencia interna no pública`", rewritten)
     rewritten = rewritten.replace("Hash de Confirmación Verbal", "Confirmación verbal")

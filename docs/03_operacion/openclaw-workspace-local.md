@@ -69,4 +69,4 @@ Ofrecer una superficie híbrida CLI + web para operar `openclaw` en Orange Pi si
 - La salida de `openclaw` se considera propuesta operativa hasta revisión humana.
 - La evidencia fuente y el `Step ID` se preservan fuera de la cola automática.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

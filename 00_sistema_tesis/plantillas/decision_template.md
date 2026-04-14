@@ -74,4 +74,4 @@ Lista aquí normas, artículos, documentación o decisiones previas relevantes.
 [GOV]: ruta local no pública
 [AUD]: ruta local no pública
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

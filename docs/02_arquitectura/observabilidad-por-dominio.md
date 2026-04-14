@@ -24,4 +24,4 @@
 - `node_exporter`: `127.0.0.1:9100`
 - Archivos `.prom` por dominio en `/var/lib/node_exporter/textfile_collector`
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

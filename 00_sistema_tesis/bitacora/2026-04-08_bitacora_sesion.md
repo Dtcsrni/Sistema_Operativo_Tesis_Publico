@@ -79,4 +79,4 @@ Traducir esta frontera arquitectónica en procedimientos de despliegue y sincron
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

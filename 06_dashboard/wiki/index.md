@@ -104,4 +104,4 @@ graph LR
 - La wiki debe reflejar directorios vacíos como cobertura pendiente, sin inventar contenido.
 - Toda salida debe poder regenerarse de forma determinista desde scripts versionados.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

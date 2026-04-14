@@ -455,4 +455,4 @@ Cada entrada de este glosario indica:
 
 En la capa publica pueden explicarse familias y semantica de IDs, por ejemplo `VAL_STEP_{nnn}` o `EVT_{nnnn}`, pero no deben exponerse instancias privadas completas, hashes sensibles ni rutas internas no publicables.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

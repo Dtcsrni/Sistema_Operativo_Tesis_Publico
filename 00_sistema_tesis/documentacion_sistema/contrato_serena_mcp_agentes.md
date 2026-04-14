@@ -58,4 +58,4 @@ El servidor anuncia estos nombres canónicos en `tools/list`. Por compatibilidad
 - `docs/03_operacion/openclaw-workspace-local.md`
 - `docs/03_operacion/serena-mcp-host-template.json`
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

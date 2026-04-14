@@ -42,4 +42,4 @@ Este repositorio es un **Sistema Operativo de Tesis de Posgrado** gobernado por 
 Erick Renato Vega Ceron (Tesista Soberano)
 2026-03-24
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

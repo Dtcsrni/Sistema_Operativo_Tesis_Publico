@@ -1,6 +1,6 @@
 {
-  "generated_at_utc": "20260414_043419",
-  "total_duration_seconds": 14.825,
+  "generated_at_utc": "20260414_043357",
+  "total_duration_seconds": 17.222,
   "slow_stages": [],
   "steps": [
     {
@@ -10,7 +10,7 @@
         "materialize"
       ],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.227,
+      "duration_seconds": 0.229,
       "budget_seconds": 10.0,
       "status": "ok",
       "returncode": 0
@@ -23,7 +23,7 @@
         "--check"
       ],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.247,
+      "duration_seconds": 0.251,
       "budget_seconds": 10.0,
       "status": "ok",
       "returncode": 0
@@ -43,7 +43,7 @@
       "script": "07_scripts/sync_evidence.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.139,
+      "duration_seconds": 0.14,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -55,7 +55,7 @@
         "--verify"
       ],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.09,
+      "duration_seconds": 0.094,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -65,7 +65,7 @@
       "script": "07_scripts/security_audit.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 3.171,
+      "duration_seconds": 5.297,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -95,7 +95,7 @@
       "script": "07_scripts/build_memory.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.162,
+      "duration_seconds": 0.165,
       "budget_seconds": 5.0,
       "status": "ok",
       "returncode": 0
@@ -105,7 +105,7 @@
       "script": "07_scripts/validate_memory.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.162,
+      "duration_seconds": 0.165,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -115,7 +115,7 @@
       "script": "07_scripts/validate_structure.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.201,
+      "duration_seconds": 0.198,
       "budget_seconds": 10.0,
       "status": "ok",
       "returncode": 0
@@ -125,7 +125,7 @@
       "script": "07_scripts/validate_b0_architecture.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.135,
+      "duration_seconds": 0.138,
       "budget_seconds": 10.0,
       "status": "ok",
       "returncode": 0
@@ -135,7 +135,7 @@
       "script": "07_scripts/verify_no_hardcoded_runtime.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.143,
+      "duration_seconds": 0.187,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -145,7 +145,7 @@
       "script": "07_scripts/verify_ledger.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.08,
+      "duration_seconds": 0.079,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -155,7 +155,7 @@
       "script": "07_scripts/verify_bitacora_chain.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.066,
+      "duration_seconds": 0.064,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -165,7 +165,7 @@
       "script": "07_scripts/verify_standards.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 2.173,
+      "duration_seconds": 2.261,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -175,7 +175,7 @@
       "script": "07_scripts/document_audit.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.068,
+      "duration_seconds": 0.07,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -185,7 +185,7 @@
       "script": "07_scripts/secret_scanner.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.524,
+      "duration_seconds": 0.539,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -197,7 +197,7 @@
         "--check"
       ],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.131,
+      "duration_seconds": 0.149,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -207,7 +207,7 @@
       "script": "07_scripts/build_token_usage_snapshot.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.166,
+      "duration_seconds": 0.159,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -217,7 +217,7 @@
       "script": "07_scripts/build_wiki.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 1.699,
+      "duration_seconds": 1.612,
       "budget_seconds": 20.0,
       "status": "ok",
       "returncode": 0
@@ -227,7 +227,7 @@
       "script": "07_scripts/validate_wiki.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.139,
+      "duration_seconds": 0.181,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -250,7 +250,7 @@
         "--build"
       ],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.298,
+      "duration_seconds": 0.274,
       "budget_seconds": 30.0,
       "status": "ok",
       "returncode": 0
@@ -260,7 +260,7 @@
       "script": "07_scripts/validate_links.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.223,
+      "duration_seconds": 0.22,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -270,7 +270,7 @@
       "script": "07_scripts/validate_public_text.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.156,
+      "duration_seconds": 0.153,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -284,7 +284,7 @@
         "--check"
       ],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.189,
+      "duration_seconds": 0.194,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -297,7 +297,7 @@
         "--check"
       ],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.374,
+      "duration_seconds": 0.395,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -307,7 +307,7 @@
       "script": "07_scripts/export_master_sheet.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.124,
+      "duration_seconds": 0.126,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -317,7 +317,7 @@
       "script": "07_scripts/report_consistency.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.205,
+      "duration_seconds": 0.214,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -327,7 +327,7 @@
       "script": "07_scripts/build_wiki.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 1.538,
+      "duration_seconds": 1.642,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -337,7 +337,7 @@
       "script": "07_scripts/validate_wiki.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.126,
+      "duration_seconds": 0.132,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -347,7 +347,7 @@
       "script": "07_scripts/validate_links.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.213,
+      "duration_seconds": 0.218,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -357,7 +357,7 @@
       "script": "07_scripts/validate_public_text.py",
       "args": [],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.145,
+      "duration_seconds": 0.153,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0
@@ -370,7 +370,7 @@
         "--check"
       ],
       "started_at_utc": "2026-04-14",
-      "duration_seconds": 0.263,
+      "duration_seconds": 0.275,
       "budget_seconds": null,
       "status": "ok",
       "returncode": 0

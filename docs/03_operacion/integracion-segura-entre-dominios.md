@@ -32,4 +32,4 @@ Fuente maquina-legible:
 - un caso positivo pasa solo cuando la operacion se ejecuta en el usuario correcto y deja el artefacto esperado;
 - si una prueba negativa falla por falta accidental del archivo y no por permiso, hay que corregir el montaje del caso antes de aceptar el resultado.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

@@ -41,4 +41,4 @@ Congelar el contrato de separacion entre `sistema_tesis`, `openclaw`, `edge_iot`
 - La validacion real en Orange Pi queda como gate externo documentado en `manifests/b0_external_gates.yaml`.
 - `ENT-013` puede quedar listo para validacion, pero no validado, hasta ejecutar pruebas reales de host.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

@@ -11,4 +11,4 @@ Objetivo: aumentar el valor operativo del archivo de contexto priorizando inclus
 ## Principio rector
 No se persigue compresión máxima, sino **densidad de utilidad**: cada archivo añadido debe ahorrar reconstrucción, mejorar sustentación o preservar trazabilidad ética/técnica.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

@@ -212,6 +212,192 @@ def _safe_details_title(text: str) -> str:
     return text.replace('"', r'\"').strip()
 
 
+def _truncate_text(value: str, *, max_chars: int = 220) -> str:
+    compact = re.sub(r"\s+", " ", value).strip()
+    if len(compact) <= max_chars:
+        return compact
+    return compact[: max_chars - 1].rstrip() + "..."
+
+
+def _index_decisions_by_id() -> dict[str, str]:
+    decisions_dir = ROOT / "00_sistema_tesis/decisiones"
+    decision_index: dict[str, str] = {}
+    if not decisions_dir.exists():
+        return decision_index
+
+    for item in decisions_dir.glob("*.md"):
+        match = re.search(r"(DEC-\d{4})", item.name)
+        if not match:
+            continue
+        decision_index[match.group(1)] = f"00_sistema_tesis/decisiones/{item.name}"
+    return decision_index
+
+
+def _render_vinculo_summary(vinculo_text: str, decisions_index: dict[str, str]) -> str:
+    normalized = (vinculo_text or "").strip()
+    if not normalized:
+        return "Sin vínculo"
+
+    dec_match = re.search(r"(DEC-\d{4})", normalized)
+    if dec_match:
+        dec_id = dec_match.group(1)
+        target_rel = decisions_index.get(dec_id)
+        if target_rel:
+            return f"[{dec_id}]({repo_link_from_wiki(target_rel)})"
+
+    return f"`{normalized}` (referencia operativa interna no enlazable)"
+
+
+def _parse_ledger_validation_entries(rel_path: str) -> list[dict[str, str]]:
+    target = ROOT / rel_path
+    if not target.exists():
+        return []
+
+    entries: list[dict[str, str]] = []
+    current: dict[str, str] | None = None
+    in_raw_content = False
+
+    def match_field(line: str, label: str) -> str | None:
+        pattern = rf"^- \*\*{re.escape(label)}:\*\*\s*(.+)$"
+        match = re.match(pattern, line)
+        if not match:
+            return None
+        return match.group(1).strip()
+
+    for raw_line in target.read_text(encoding="utf-8", errors="replace").splitlines():
+        stripped = raw_line.strip()
+        if stripped == "<<<":
+            in_raw_content = True
+            continue
+        if stripped.endswith(">>>"):
+            in_raw_content = False
+            continue
+        if in_raw_content:
+            continue
+
+        heading_match = re.match(r"^## \[(VAL-STEP-[^\]]+)\]", stripped)
+        if heading_match:
+            if current:
+                entries.append(current)
+            current = {
+                "step_id": heading_match.group(1),
+                "fecha": "",
+                "vinculo": "",
+                "audit_level": "",
+                "pregunta": "",
+                "confirmacion": "",
+            }
+            continue
+
+        if not current:
+            continue
+
+        fecha = match_field(stripped, "Fecha")
+        if fecha is not None:
+            current["fecha"] = fecha
+            continue
+
+        vinculo = match_field(stripped, "Vínculo")
+        if vinculo is not None:
+            current["vinculo"] = vinculo
+            continue
+
+        audit_level = match_field(stripped, "Audit Level")
+        if audit_level is not None:
+            current["audit_level"] = audit_level
+            continue
+
+        pregunta = match_field(stripped, "Pregunta Crítica / Disparador")
+        if pregunta is not None:
+            current["pregunta"] = pregunta
+            continue
+
+        confirmacion = match_field(stripped, "Confirmación Verbal (Texto Exacto)")
+        if confirmacion is not None:
+            current["confirmacion"] = confirmacion
+
+    if current:
+        entries.append(current)
+    return entries
+
+
+def _render_ledger_monthly_summary() -> list[str]:
+    rel_path = "00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md"
+    entries = _parse_ledger_validation_entries(rel_path)
+    decisions_index = _index_decisions_by_id()
+    if not entries:
+        lines = [
+            "## Bitácora de sesiones de trabajo registradas",
+            "",
+            "No se pudo construir el resumen mensual. Consulta el archivo canónico para ver el contenido completo.",
+            "",
+            f"- **Archivo completo:** [{rel_path}]({repo_link_from_wiki(rel_path)})",
+            "",
+        ]
+        return lines
+
+    grouped: dict[str, list[dict[str, str]]] = {}
+    for entry in entries:
+        bucket = _month_bucket_from_date(entry["fecha"])
+        grouped.setdefault(bucket, []).append(entry)
+
+    ordered_buckets = sorted(grouped.keys(), key=_month_bucket_sort_key, reverse=True)
+    lines = [
+        "## Bitácora de sesiones de trabajo registradas",
+        "",
+        "### Qué es este bloque",
+        "",
+        "Este bloque existe para conservar, en superficie pública, la evidencia mínima de validación humana",
+        "que sostiene la gobernanza del sistema sin exponer contenido sensible del ledger canónico.",
+        "",
+        "### Para qué sirve",
+        "",
+        "- Permite rastrear qué validaciones humanas habilitaron cambios relevantes.",
+        "- Conecta decisiones canónicas con sesiones de trabajo de forma auditable.",
+        "- Facilita revisión pública sin publicar transcripciones completas ni datos internos.",
+        "",
+        "### Qué representa",
+        "",
+        "Representa un resumen sanitizado de validaciones (no una transcripción completa del Libro Mayor).",
+        "Cada registro conserva fecha, referencia operativa, nivel de auditoría y síntesis del disparador/confirmación.",
+        "",
+        "### Enlaces de navegación",
+        "",
+        f"- **Ledger completo:** [{rel_path}]({repo_link_from_wiki(rel_path)})",
+        f"- **Matriz de trazabilidad:** [00_sistema_tesis/bitacora/matriz_trazabilidad.md]({repo_link_from_wiki('00_sistema_tesis/bitacora/matriz_trazabilidad.md')})",
+        f"- **Índice de decisiones:** [06_dashboard/wiki/decisiones.md]({repo_link_from_wiki('06_dashboard/wiki/decisiones.md')})",
+        "",
+        "### Índices maestros",
+        "",
+        f"- **Total de registros de validación:** `{len(entries)}`",
+        "",
+    ]
+
+    for bucket in ordered_buckets:
+        bucket_title = bucket if bucket != "sin-fecha" else "Sin fecha (registro heredado)"
+        month_entries = grouped[bucket]
+        lines.append(f'??? "{bucket_title} — {len(month_entries)} validación(es)"')
+        lines.append("")
+        for index, entry in enumerate(month_entries, start=1):
+            fecha = entry["fecha"] if _is_iso_date(entry["fecha"]) else "Sin fecha"
+            vinculo = _render_vinculo_summary(entry["vinculo"], decisions_index)
+            audit_level = entry["audit_level"] or "N/D"
+            pregunta = _truncate_text(entry["pregunta"] or "No especificado.", max_chars=280)
+            confirmacion = _truncate_text(entry["confirmacion"] or "No especificado.", max_chars=280)
+            step_id = entry["step_id"] or "N/D"
+
+            lines.append(f"    **[{step_id}] Registro {index} del mes**")
+            lines.append("")
+            lines.append(f"    - **Fecha:** `{fecha}`")
+            lines.append(f"    - **Decisión o referencia:** {vinculo}")
+            lines.append(f"    - **Nivel de auditoría:** `{audit_level}`")
+            lines.append(f"    - **Disparador resumido:** {pregunta}")
+            lines.append(f"    - **Confirmación resumida:** {confirmacion}")
+            lines.append("")
+
+    return lines
+
+
 def _extract_markdown_summary(rel_path: str, *, max_lines: int = 4, max_chars: int = 420) -> list[str]:
     target = ROOT / rel_path
     if not target.exists():
@@ -1006,10 +1192,17 @@ def build_bitacora_page(section: dict, generated_at: str, notice: str) -> str:
 
         ordered_buckets = sorted(grouped.keys(), key=_month_bucket_sort_key, reverse=True)
         for bucket in ordered_buckets:
-            bucket_title = bucket if bucket != "sin-fecha" else "Sin fecha"
+            bucket_title = bucket if bucket != "sin-fecha" else "Índices maestros"
             lines.extend([f"### {bucket_title}", ""])
+            if bucket == "sin-fecha":
+                lines.extend(
+                    [
+                        "Documentos de referencia vivos (matriz, índices y propuestas) que no representan una sesión fechada.",
+                        "",
+                    ]
+                )
             for item in grouped[bucket]:
-                display_date = item["fecha"] if _is_iso_date(item["fecha"]) else "Sin fecha"
+                display_date = item["fecha"] if _is_iso_date(item["fecha"]) else "Índice maestro"
                 details_title = _safe_details_title(f"{display_date} - {item['titulo']}")
                 lines.append(f'??? "{details_title}"')
                 lines.append("")
@@ -1021,11 +1214,7 @@ def build_bitacora_page(section: dict, generated_at: str, notice: str) -> str:
                     lines.append(f"    - {excerpt_line}")
                 lines.append("")
 
-        lines.extend(["## Bitácora de sesiones de trabajo registradas", ""])
-        lines.append('??? "Mostrar contenido completo"')
-        lines.append("")
-        lines.extend(_indent_markdown_block(render_markdown_fragment("00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md", demote_by=1)))
-        lines.append("")
+        lines.extend(_render_ledger_monthly_summary())
     else:
         lines.append("Sin bitácoras registradas aún.")
     lines.extend(["", "## Reportes semanales", ""])

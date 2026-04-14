@@ -56,4 +56,4 @@ Definir el flujo tecnico normal entre el workspace principal de escritorio y el 
 - Si el cambio no toca runtime edge: `repo-only` o `repo+postcheck` segun el nivel de verificacion requerido.
 - Si el cambio toca runtime edge: `repo+restart-edge` con recuperacion posterior de logs y evidencia.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

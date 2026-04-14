@@ -70,4 +70,4 @@ Mantener sincronizada la wiki con la bitácora canónica y continuar con la sigu
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

@@ -74,4 +74,4 @@ Consolidar cambios en commit firmado y ejecutar push con variables de entorno re
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

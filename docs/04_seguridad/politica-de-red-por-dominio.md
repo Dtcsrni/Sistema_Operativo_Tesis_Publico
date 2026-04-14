@@ -20,4 +20,4 @@
 - preferir intercambio por archivos/CLI antes que sockets o APIs;
 - exponer métricas solo en `localhost` y nunca como canal interdominio general.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

@@ -67,4 +67,4 @@
 4. Integrar referencias de evidencia experimental futuras contra `02_evidencia/` y el índice maestro.
 5. Definir pipeline de sincronización futura con Overleaf, manteniendo estatus de borrador no canónico hasta nueva decisión formal.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._

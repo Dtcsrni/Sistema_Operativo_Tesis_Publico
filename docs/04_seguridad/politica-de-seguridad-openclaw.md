@@ -27,4 +27,4 @@ OpenClaw opera con minimo privilegio. Las acciones destructivas o de alto impact
 ## Referencias
 - Ver también `docs/04_seguridad/modelo-de-amenazas-openclaw.md`.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-13`._
