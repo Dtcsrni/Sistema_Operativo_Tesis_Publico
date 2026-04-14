@@ -1803,3 +1803,95 @@ HTTP IN {"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}
 HANDLE method=notifications/initialized id=None
 HANDLE method=tools/list id=2
 HTTP OUT {"jsonrpc": "2.0", "id": 2, "tool_count": 7}
+HTTP IN {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}
+HANDLE method=initialize id=1
+HTTP OUT {"jsonrpc": "2.0", "id": 1}
+HTTP IN {"jsonrpc": "2.0", "method": "notifications/initialized", "params": {}}
+HANDLE method=notifications/initialized id=None
+HTTP IN {"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": {}}
+HANDLE method=tools/list id=2
+HTTP OUT {"jsonrpc": "2.0", "id": 2, "tool_count": 7}
+HTTP IN {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}
+HANDLE method=initialize id=1
+HTTP OUT {"jsonrpc": "2.0", "id": 1}
+HTTP IN {"jsonrpc": "2.0", "method": "notifications/initialized", "params": {}}
+HANDLE method=notifications/initialized id=None
+HTTP IN {"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": {}}
+HANDLE method=tools/list id=2
+HTTP OUT {"jsonrpc": "2.0", "id": 2, "tool_count": 7}
+HTTP IN {"jsonrpc": "2.0", "id": 10, "method": "tools/call", "params": {"name": "context.fetch_compact", "arguments": {"query": "DEC-0022", "paths": ["00_sistema_tesis/decisiones/2026-04-08_DEC-0022_arquitectura_operativa_escritorio_primario_y_orange_pi_edge.md"], "limit": 1, "context_lines": 0}}}
+HANDLE method=tools/call id=10
+HTTP OUT {"jsonrpc": "2.0", "id": 10, "status": "ok", "risk_level": "MEDIO", "write_scope": "read_only", "artifact_paths": []}
+HTTP IN {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}
+HANDLE method=initialize id=1
+HTTP OUT {"jsonrpc": "2.0", "id": 1}
+HTTP IN {"jsonrpc": "2.0", "method": "notifications/initialized", "params": {}}
+HANDLE method=notifications/initialized id=None
+HTTP IN {"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": {}}
+HANDLE method=tools/list id=2
+HTTP OUT {"jsonrpc": "2.0", "id": 2, "tool_count": 7}
+HTTP IN {"jsonrpc": "2.0", "id": 10, "method": "tools/call", "params": {"name": "governance.preflight", "arguments": {"tool_name": "canon.apply_controlled_change", "target_paths": ["00_sistema_tesis/decisiones/2026-04-08_DEC-0022_arquitectura_operativa_escritorio_primario_y_orange_pi_edge.md"], "step_id": "", "source_event_id": "", "intent": "diagnostico de acceso serena"}}}
+HANDLE method=tools/call id=10
+HTTP OUT {"jsonrpc": "2.0", "id": 10, "status": "blocked", "risk_level": "ALTO", "write_scope": "protected", "artifact_paths": ["00_sistema_tesis/decisiones/2026-04-08_DEC-0022_arquitectura_operativa_escritorio_primario_y_orange_pi_edge.md"]}
+HTTP IN {"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"governance_preflight","arguments":{"tool_name":"context.fetch_compact","target_paths":["mkdocs.yml",".github/workflows","06_dashboard","docs"],"intent":"Diagnóstico de despliegue GUI e íconos"},"_meta":{"progressToken":"c5bbf629-8477-4d9e-b106-94168ac397dc","vscode.conversationId":"ce74c29a-4f93-4a99-91b7-94933bf81efc","vscode.requestId":"cfeb9268-c7bd-4388-a6fc-2bfc31145253"}}}
+HANDLE method=tools/call id=3
+HTTP OUT {"jsonrpc": "2.0", "id": 3, "status": "blocked", "risk_level": "MEDIO", "write_scope": "blocked", "artifact_paths": ["mkdocs.yml", ".github/workflows", "06_dashboard", "docs"]}
+HTTP IN {"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"context_fetch_compact","arguments":{"query":"GUI moderno iconos despliegue github pages mkdocs material fontawesome site_url repo_url extra_css extra_javascript","paths":["mkdocs.yml",".github/workflows","06_dashboard","docs"],"limit":20,"context_lines":2},"_meta":{"progressToken":"cd4cb094-f893-4e2c-91b0-49c1fcbc2e3e","vscode.conversationId":"ce74c29a-4f93-4a99-91b7-94933bf81efc","vscode.requestId":"cfeb9268-c7bd-4388-a6fc-2bfc31145253"}}}
+HANDLE method=tools/call id=4
+HTTP OUT {"jsonrpc": "2.0", "id": 4, "status": "ok", "risk_level": "MEDIO", "write_scope": "read_only", "artifact_paths": []}
+HTTP IN {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{"roots":{"listChanged":true},"sampling":{},"elicitation":{"form":{},"url":{}},"tasks":{"list":{},"cancel":{},"requests":{"sampling":{"createMessage":{}},"elicitation":{"create":{}}}},"extensions":{"io.modelcontextprotocol/ui":{"mimeTypes":["text/html;profile=mcp-app"]}}},"clientInfo":{"name":"Visual Studio Code","version":"1.115.0"}}}
+HANDLE method=initialize id=1
+HTTP OUT {"jsonrpc": "2.0", "id": 1}
+HTTP IN {"method":"notifications/initialized","jsonrpc":"2.0"}
+HTTP IN {"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}
+HANDLE method=notifications/initialized id=None
+HANDLE method=tools/list id=2
+HTTP OUT {"jsonrpc": "2.0", "id": 2, "tool_count": 7}
+HTTP IN {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{"roots":{"listChanged":true},"sampling":{},"elicitation":{"form":{},"url":{}},"tasks":{"list":{},"cancel":{},"requests":{"sampling":{"createMessage":{}},"elicitation":{"create":{}}}},"extensions":{"io.modelcontextprotocol/ui":{"mimeTypes":["text/html;profile=mcp-app"]}}},"clientInfo":{"name":"Visual Studio Code","version":"1.115.0"}}}
+HANDLE method=initialize id=1
+HTTP OUT {"jsonrpc": "2.0", "id": 1}
+HTTP IN {"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}
+HTTP IN {"method":"notifications/initialized","jsonrpc":"2.0"}
+HANDLE method=notifications/initialized id=None
+HANDLE method=tools/list id=2
+HTTP OUT {"jsonrpc": "2.0", "id": 2, "tool_count": 7}
+HTTP IN {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{"roots":{"listChanged":true},"sampling":{},"elicitation":{"form":{},"url":{}},"tasks":{"list":{},"cancel":{},"requests":{"sampling":{"createMessage":{}},"elicitation":{"create":{}}}},"extensions":{"io.modelcontextprotocol/ui":{"mimeTypes":["text/html;profile=mcp-app"]}}},"clientInfo":{"name":"Visual Studio Code","version":"1.115.0"}}}
+HANDLE method=initialize id=1
+HTTP OUT {"jsonrpc": "2.0", "id": 1}
+HTTP IN {"method":"notifications/initialized","jsonrpc":"2.0"}
+HTTP IN {"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}
+HANDLE method=notifications/initialized id=None
+HANDLE method=tools/list id=2
+HTTP OUT {"jsonrpc": "2.0", "id": 2, "tool_count": 7}
+HTTP IN {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{"roots":{"listChanged":true},"sampling":{},"elicitation":{"form":{},"url":{}},"tasks":{"list":{},"cancel":{},"requests":{"sampling":{"createMessage":{}},"elicitation":{"create":{}}}},"extensions":{"io.modelcontextprotocol/ui":{"mimeTypes":["text/html;profile=mcp-app"]}}},"clientInfo":{"name":"Visual Studio Code","version":"1.115.0"}}}
+HANDLE method=initialize id=1
+HTTP OUT {"jsonrpc": "2.0", "id": 1}
+HTTP IN {"method":"notifications/initialized","jsonrpc":"2.0"}
+HTTP IN {"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}
+HANDLE method=notifications/initialized id=None
+HANDLE method=tools/list id=2
+HTTP OUT {"jsonrpc": "2.0", "id": 2, "tool_count": 7}
+HTTP IN {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{"roots":{"listChanged":true},"sampling":{},"elicitation":{"form":{},"url":{}},"tasks":{"list":{},"cancel":{},"requests":{"sampling":{"createMessage":{}},"elicitation":{"create":{}}}},"extensions":{"io.modelcontextprotocol/ui":{"mimeTypes":["text/html;profile=mcp-app"]}}},"clientInfo":{"name":"Visual Studio Code","version":"1.115.0"}}}
+HANDLE method=initialize id=1
+HTTP OUT {"jsonrpc": "2.0", "id": 1}
+HTTP IN {"method":"notifications/initialized","jsonrpc":"2.0"}
+HTTP IN {"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}
+HANDLE method=notifications/initialized id=None
+HANDLE method=tools/list id=2
+HTTP OUT {"jsonrpc": "2.0", "id": 2, "tool_count": 7}
+HTTP IN {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{"roots":{"listChanged":true},"sampling":{},"elicitation":{"form":{},"url":{}},"tasks":{"list":{},"cancel":{},"requests":{"sampling":{"createMessage":{}},"elicitation":{"create":{}}}},"extensions":{"io.modelcontextprotocol/ui":{"mimeTypes":["text/html;profile=mcp-app"]}}},"clientInfo":{"name":"Visual Studio Code","version":"1.115.0"}}}
+HANDLE method=initialize id=1
+HTTP OUT {"jsonrpc": "2.0", "id": 1}
+HTTP IN {"method":"notifications/initialized","jsonrpc":"2.0"}
+HANDLE method=notifications/initialized id=None
+HTTP IN {"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}
+HANDLE method=tools/list id=2
+HTTP OUT {"jsonrpc": "2.0", "id": 2, "tool_count": 7}
+HTTP IN {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{"roots":{"listChanged":true},"sampling":{},"elicitation":{"form":{},"url":{}},"tasks":{"list":{},"cancel":{},"requests":{"sampling":{"createMessage":{}},"elicitation":{"create":{}}}},"extensions":{"io.modelcontextprotocol/ui":{"mimeTypes":["text/html;profile=mcp-app"]}}},"clientInfo":{"name":"Visual Studio Code","version":"1.115.0"}}}
+HANDLE method=initialize id=1
+HTTP OUT {"jsonrpc": "2.0", "id": 1}
+HTTP IN {"method":"notifications/initialized","jsonrpc":"2.0"}
+HTTP IN {"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}
+HANDLE method=notifications/initialized id=None
+HANDLE method=tools/list id=2
+HTTP OUT {"jsonrpc": "2.0", "id": 2, "tool_count": 7}

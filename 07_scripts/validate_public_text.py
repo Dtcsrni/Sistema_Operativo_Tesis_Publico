@@ -17,6 +17,7 @@ PROHIBITED_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
 )
 REQUIRED_LAST_UPDATE_TARGETS = (
     "README_publico.md",
+    "index.html",
     "index.md",
     "dashboard/index.html",
     "wiki/index.md",

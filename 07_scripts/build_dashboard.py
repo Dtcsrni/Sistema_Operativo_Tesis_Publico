@@ -575,7 +575,7 @@ def main() -> int:
     <a class="review-dock__item" href="{escape(relative_from_generated('01_planeacion/backlog.csv'))}" target="_blank" rel="noreferrer" title="Backlog">BL</a>
     <a class="review-dock__item" href="{escape(relative_from_generated('01_planeacion/riesgos.csv'))}" target="_blank" rel="noreferrer" title="Riesgos">RG</a>
     <a class="review-dock__item" href="wiki/index.html" title="Wiki">WK</a>
-    <a class="review-dock__item" href="{escape(relative_from_generated(publicacion['salida']['directorio'] + '/index.md'))}" target="_blank" rel="noreferrer" title="Público">PB</a>
+    <a class="review-dock__item" href="{escape(relative_from_generated(publicacion['salida']['directorio'] + '/index.html'))}" target="_blank" rel="noreferrer" title="Público">PB</a>
   </aside>
 
   <section class="toolbar">
@@ -660,7 +660,7 @@ def main() -> int:
           <strong>Dashboard</strong>
           <span>Vista operativa actual</span>
         </a>
-        <a class="review-link-card" href="{escape(relative_from_generated(publicacion['salida']['directorio'] + '/index.md'))}" target="_blank" rel="noreferrer">
+        <a class="review-link-card" href="{escape(relative_from_generated(publicacion['salida']['directorio'] + '/index.html'))}" target="_blank" rel="noreferrer">
           <strong>Público</strong>
           <span>Bundle sanitizado</span>
         </a>

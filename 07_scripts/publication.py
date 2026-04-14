@@ -402,8 +402,51 @@ def expected_publication_outputs(config: dict | None = None) -> set[str]:
     expected = set(expected)
     expected.add(publication["salida"]["manifest"])
     expected.add(_relative_output_path(publication, "index.md"))
+    expected.add(_relative_output_path(publication, "index.html"))
     expected.add(_public_note_relpath())
     return expected
+
+
+def build_public_entry_html(config: dict, manifest_payload: dict) -> str:
+    generated_at = manifest_payload["generated_at"]
+    return "\n".join(
+        [
+            "<!DOCTYPE html>",
+            '<html lang="es-MX">',
+            "<head>",
+            '  <meta charset="utf-8">',
+            '  <meta name="viewport" content="width=device-width, initial-scale=1">',
+            '  <meta name="theme-color" content="#0f766e">',
+            "  <title>Plataforma de Investigacion para Tesis IoT</title>",
+            "  <style>",
+            "    :root { color-scheme: light; }",
+            "    body { margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; background: linear-gradient(145deg, #eef7f5, #f6f8f3); color: #102a2a; }",
+            "    main { max-width: 880px; margin: 0 auto; padding: 2.5rem 1.25rem 3rem; }",
+            "    .card { background: #ffffff; border: 1px solid #d8ece8; border-radius: 18px; padding: 1.2rem; margin-top: 1rem; box-shadow: 0 12px 30px rgba(12, 80, 74, 0.08); }",
+            "    h1 { margin: 0 0 0.5rem; font-size: 1.9rem; }",
+            "    p { margin: 0.5rem 0; line-height: 1.5; }",
+            "    ul { margin: 0.6rem 0 0; padding-left: 1.2rem; }",
+            "    a { color: #0f766e; font-weight: 600; }",
+            "  </style>",
+            "</head>",
+            "<body>",
+            "  <main>",
+            "    <h1>Plataforma de Investigacion para Tesis IoT</h1>",
+            "    <p>Superficie publica curada y reproducible del sistema operativo de tesis.</p>",
+            "    <div class=\"card\">",
+            "      <p><strong>Entrada principal:</strong> <a href=\"dashboard/index.html\">Dashboard moderno</a></p>",
+            "      <p><strong>Wiki visual:</strong> <a href=\"wiki_html/index.html\">Wiki HTML</a></p>",
+            "      <p><strong>Wiki markdown:</strong> <a href=\"wiki/index.md\">Wiki Markdown</a></p>",
+            "      <p><strong>Bundle editorial:</strong> <a href=\"index.md\">Indice editorial</a></p>",
+            "      <p><strong>Acceso y seguridad:</strong> <a href=\"NOTA_SEGURIDAD_Y_ACCESO.md\">Nota de seguridad</a></p>",
+            "    </div>",
+            f"    <p>Ultima actualizacion: <strong>{generated_at}</strong></p>",
+            "  </main>",
+            "</body>",
+            "</html>",
+            "",
+        ]
+    )
 
 
 def build_publication_index(config: dict, manifest_payload: dict) -> str:
@@ -425,7 +468,8 @@ def build_publication_index(config: dict, manifest_payload: dict) -> str:
         "",
         "## Rutas de navegación pública",
         "",
-        "- Entrada general: `README_publico.md`.",
+        "- Entrada general: `index.html`.",
+        "- Entrada editorial: `README_publico.md`.",
         "- Estado operativo breve: `MEMORY_publico.md`.",
         "- Mapa del sistema y ruta base: `wiki/index.md`.",
         "- Propósito, módulos y flujos: `wiki/sistema.md`.",
@@ -460,6 +504,7 @@ def build_publication_index(config: dict, manifest_payload: dict) -> str:
             "## Qué revisar siempre",
             "",
             "- `README_publico.md`",
+            "- `index.html`",
             "- `dashboard/index.html`",
             "- `wiki/index.md`",
             "- `manifest_publico.json`",
@@ -587,6 +632,14 @@ def publication_bundle_status(*, build: bool = False, config: dict | None = None
         text=index_content,
         source_rel=index_rel,
         public_rel=index_rel,
+        config=publication,
+        generated_at=generated_at,
+    ).encode("utf-8")
+    entry_html_rel = _relative_output_path(publication, "index.html")
+    rendered[entry_html_rel] = render_public_text(
+        text=build_public_entry_html(publication, manifest_payload),
+        source_rel=entry_html_rel,
+        public_rel=entry_html_rel,
         config=publication,
         generated_at=generated_at,
     ).encode("utf-8")

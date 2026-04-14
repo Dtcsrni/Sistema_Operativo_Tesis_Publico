@@ -19,7 +19,7 @@ jobs:
       - name: Confirmar que la publicación en origen está desactivada
         run: echo "GitHub Pages solo se despliega desde Dtcsrni/Sistema_Operativo_Tesis_Publico."
 
-  build-public-site:
+  deploy:
     if: github.repository == 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
@@ -41,32 +41,11 @@ jobs:
         run: |
           python 07_scripts/sync_public_repo.py --mode mirror --target-dir "$RUNNER_TEMP/public-sync-check" --branch main --skip-local-mirror --check --allow-dirty
 
-      - name: Verificar artefacto público de entrada
-        run: |
-          test -f 06_dashboard/publico/index.html
-          test -f 06_dashboard/publico/dashboard/index.html
-          test -f 06_dashboard/publico/dashboard/icon.svg
-          test -f 06_dashboard/publico/dashboard/manifest.webmanifest
+      - name: Construir sitio público
+        run: mkdocs build
 
-      - name: Configurar GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Subir artefacto estático de la superficie pública
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: 06_dashboard/publico
-
-  deploy:
-    if: github.repository == 'Dtcsrni/Sistema_Operativo_Tesis_Publico' && github.ref == 'refs/heads/main'
-    needs: build-public-site
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
       - name: Desplegar sitio público
-        id: deployment
-        uses: actions/deploy-pages@v4
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          mkdocs gh-deploy --force

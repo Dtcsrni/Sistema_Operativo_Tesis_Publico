@@ -309,6 +309,10 @@ def validate_sync_payloads(payloads: dict[str, bytes]) -> list[str]:
             errors.append("El workflow de Pages no restringe el despliegue al repo público derivado.")
         if "refs/heads/main" not in pages_text:
             errors.append("El workflow de Pages no fija `main` como rama de despliegue.")
+        if "upload-pages-artifact" not in pages_text:
+            errors.append("El workflow de Pages no publica artefacto estático con `upload-pages-artifact`.")
+        if "path: 06_dashboard/publico" not in pages_text:
+            errors.append("El workflow de Pages no publica la superficie `06_dashboard/publico`.")
 
     mkdocs_payload = payloads.get("mkdocs.yml")
     if not mkdocs_payload:
