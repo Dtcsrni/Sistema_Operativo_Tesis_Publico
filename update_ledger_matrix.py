@@ -3,7 +3,7 @@ from pathlib import Path
 sys.path.append('07_scripts')
 from guardrails import safe_write
 
-ledger_path = Path('00_sistema_tesis/bitacora/log_conversaciones_ia.md')
+ledger_path = Path('00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md')
 matrix_path = Path('00_sistema_tesis/bitacora/matriz_trazabilidad.md')
 
 ledger_content = ledger_path.read_text(encoding='utf-8')
@@ -48,15 +48,15 @@ else:
     ledger_content += new_ledger_entry
 
 # 3. Update Matrix
-matrix_row = '| 2026-03-24 | [VAL-STEP-400] | [BIT-DIAG] | Análisis de preparación arquitectónica | MEDIO | Transparencia (NIST) | [/] Producido | [Log](log_conversaciones_ia.md#val-step-400) |'
-prev_row = '| 2026-03-24 | [VAL-STEP-380] | [BIT-IMP] | Mejora del sistema de bitácora y cadena | ALTO | Integridad (UNESCO) | [/] En curso | [Log](log_conversaciones_ia.md#val-step-380) |'
+matrix_row = '| 2026-03-24 | [VAL-STEP-400] | [BIT-DIAG] | Análisis de preparación arquitectónica | MEDIO | Transparencia (NIST) | [/] Producido | [Log](log_sesiones_trabajo_registradas.md#val-step-400) |'
+prev_row = '| 2026-03-24 | [VAL-STEP-380] | [BIT-IMP] | Mejora del sistema de bitácora y cadena | ALTO | Integridad (UNESCO) | [/] En curso | [Log](log_sesiones_trabajo_registradas.md#val-step-380) |'
 
 if prev_row in matrix_content:
     matrix_content = matrix_content.replace(prev_row, prev_row + '\n' + matrix_row)
 else:
     print(f"Warning: Could not find {prev_row}")
 
-matrix_link = '[VAL-STEP-400]: log_conversaciones_ia.md#val-step-400'
+matrix_link = '[VAL-STEP-400]: log_sesiones_trabajo_registradas.md#val-step-400'
 if matrix_link not in matrix_content:
     matrix_content = matrix_content.strip() + '\n' + matrix_link + '\n'
 
@@ -70,3 +70,4 @@ if safe_write(str(matrix_path), matrix_content, force=True):
     print(f'Matrix updated: {matrix_path}')
 else:
     print(f'Failed to update Matrix')
+

@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-02
 
 - **ID de Sesión:** codex-local-20260402-verificacion-registro-reciente
-- **Cadena de Confianza (Anterior):** `sha256/43ae3f866516220b9edabff7d7ecefa5b7e1b1571d471e72fa7f025db35f7014`
+- **Cadena de Confianza (Anterior):** `sha256/37b001ff7b056e82df46f3d84d0dd78dad781568bb7bf7d9cfa7445514f8d14c`
 - **Bloque principal:** B0
 - **Tipo de sesión:** verificación | regularización | documentación
 
@@ -31,7 +31,7 @@ Verificar que las actividades recientes quedaran correctamente registradas y cer
 
 ## Evidencia Técnica e Integridad
 - **Commits de referencia:** `e4408e0`
-- **Archivos Clave:** `00_sistema_tesis/canon/events.jsonl`, `00_sistema_tesis/bitacora/log_conversaciones_ia.md`, `00_sistema_tesis/bitacora/matriz_trazabilidad.md`, `00_sistema_tesis/bitacora/indice_fuentes_conversacion.md`, `06_dashboard/wiki/bitacora.md`
+- **Archivos Clave:** `00_sistema_tesis/canon/events.jsonl`, `00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md`, `00_sistema_tesis/bitacora/matriz_trazabilidad.md`, `00_sistema_tesis/bitacora/indice_fuentes_conversacion.md`, `06_dashboard/wiki/bitacora.md`
 - **Validación del Sistema:** [x] `build_all.py` aprobado.
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
@@ -66,7 +66,7 @@ Verificar que las actividades recientes quedaran correctamente registradas y cer
 ## Siguiente paso concreto
 Seguir con la siguiente tarea operativa del bloque B0/B1 manteniendo el patrón de registro canónico primero.
 
-[LID]: log_conversaciones_ia.md
+[LID]: log_sesiones_trabajo_registradas.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 

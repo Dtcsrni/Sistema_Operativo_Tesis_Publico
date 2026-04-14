@@ -53,7 +53,7 @@ def process_file(file_path):
     # 3. Definiciones de Referencia al Final
     final_lines.extend([
         "",
-        "[LID]: log_conversaciones_ia.md",
+        "[LID]: log_sesiones_trabajo_registradas.md",
         "[GOV]: ../config/ia_gobernanza.yaml",
         "[AUD]: ../../07_scripts/build_all.py",
     ])
@@ -74,7 +74,7 @@ def main():
         p = root / d
         if not p.exists(): continue
         for f in p.glob("*.md"):
-            if f.name in ["log_conversaciones_ia.md", "matriz_trazabilidad.md"]:
+            if f.name in ["log_sesiones_trabajo_registradas.md", "matriz_trazabilidad.md"]:
                 continue
             if process_file(f):
                 print(f"Inyectado pre-checklist en: {f.name}")
@@ -83,3 +83,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -98,7 +98,7 @@ def main():
         if not path.exists():
             continue
         for file_path in path.glob("*.md"):
-            if file_path.name in ["log_conversaciones_ia.md", "matriz_trazabilidad.md"]:
+            if file_path.name in ["log_sesiones_trabajo_registradas.md", "matriz_trazabilidad.md"]:
                 continue
             file_errors = audit_document(file_path)
             if file_errors:
@@ -117,3 +117,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

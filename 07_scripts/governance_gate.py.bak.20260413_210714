@@ -1,0 +1,542 @@
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+import re
+import subprocess
+import sys
+import tempfile
+from datetime import datetime
+from pathlib import Path
+
+from canon import EVENTS_PATH, import_legacy_events, materialize_events, projection_paths, step_ids_exist, validate_events
+from common import ROOT, now_stamp, preferred_python_executable
+from guardrails import is_protected_path
+
+
+DEFAULT_OUTPUT_DIR = ROOT / "00_sistema_tesis" / "bitacora" / "audit_history" / "governance_gate"
+SAFE_TMP_DIR = Path(tempfile.gettempdir()) / "sistema_tesis_governance_gate"
+STAGES = ("pre-commit", "pre-push", "ci", "manual")
+STEP_ID_PATTERN = re.compile(r"^VAL-STEP-[A-Za-z0-9_-]+$")
+STEP_ID_TOKEN_PATTERN = re.compile(r"VAL-STEP-[A-Za-z0-9_-]+")
+EVENT_JSON_STEP_PATTERN = re.compile(r'"event_id"\s*:\s*"(VAL-STEP-[A-Za-z0-9_-]+)"')
+STEP_ID_HEADER_PATTERN = re.compile(r"^## \[(VAL-STEP-[A-Za-z0-9_-]+)\]")
+STEP_ID_TABLE_PATTERN = re.compile(r"^\|\s*[^|]+\|\s*\[(VAL-STEP-[A-Za-z0-9_-]+)\]\s*\|")
+STEP_ID_SUPPORT_PATTERN = re.compile(r"Soporte:\s*\[(VAL-STEP-[A-Za-z0-9_-]+)\]")
+PRIMARY_PROJECTION_PATHS = {
+    "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
+    "00_sistema_tesis/bitacora/matriz_trazabilidad.md",
+    "00_sistema_tesis/bitacora/indice_fuentes_conversacion.md",
+    "00_sistema_tesis/config/sign_offs.json",
+    "00_sistema_tesis/ia_journal.json",
+    "00_sistema_tesis/canon/state.json",
+}
+
+
+def should_skip_gpg_check() -> bool:
+    value = os.getenv("SISTEMA_TESIS_SKIP_GPG_CHECK", "").strip().lower()
+    return value in {"1", "true", "yes", "on"}
+
+
+def ensure_canon_initialized() -> None:
+    if not EVENTS_PATH.exists():
+        import_legacy_events()
+
+
+def safe_temp_env() -> dict[str, str]:
+    SAFE_TMP_DIR.mkdir(parents=True, exist_ok=True)
+    env = os.environ.copy()
+    safe_tmp = str(SAFE_TMP_DIR)
+    env["TMPDIR"] = safe_tmp
+    env["TMP"] = safe_tmp
+    env["TEMP"] = safe_tmp
+    return env
+
+
+def run_command(cmd: list[str]) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        cmd,
+        cwd=ROOT,
+        env=safe_temp_env(),
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+
+
+def emit_text(text: str, *, stream) -> None:
+    encoding = getattr(stream, "encoding", None) or "utf-8"
+    safe_text = text.encode(encoding, errors="replace").decode(encoding, errors="replace")
+    print(safe_text, file=stream)
+
+
+def git_lines(args: list[str]) -> list[str]:
+    result = run_command(["git", *args])
+    if result.returncode != 0:
+        return []
+    return [line.strip() for line in result.stdout.splitlines() if line.strip()]
+
+
+def git_value(args: list[str]) -> str:
+    result = run_command(["git", *args])
+    if result.returncode != 0:
+        return ""
+    return result.stdout.strip()
+
+
+def git_ref_exists(ref_name: str) -> bool:
+    result = run_command(["git", "rev-parse", "--verify", "--quiet", ref_name])
+    return result.returncode == 0
+
+
+def unique_paths(paths: list[str]) -> list[str]:
+    seen = set()
+    ordered = []
+    for raw in paths:
+        path = raw.strip().replace("\\", "/")
+        if not path or path in seen:
+            continue
+        seen.add(path)
+        ordered.append(path)
+    return ordered
+
+
+def get_changed_files(stage: str) -> list[str]:
+    if stage == "pre-commit":
+        return unique_paths(git_lines(["diff", "--cached", "--name-only", "--diff-filter=ACMR"]))
+    if stage == "pre-push":
+        branch = git_value(["branch", "--show-current"])
+        remote_ref = f"origin/{branch}" if branch else ""
+        if remote_ref and git_ref_exists(remote_ref):
+            return unique_paths(git_lines(["diff", "--name-only", f"{remote_ref}...HEAD"]))
+        return unique_paths(git_lines(["show", "--pretty=format:", "--name-only", "HEAD"]))
+    if stage == "ci":
+        base_ref = os.getenv("GITHUB_BASE_REF", "").strip()
+        remote_ref = f"origin/{base_ref}" if base_ref else ""
+        if remote_ref and git_ref_exists(remote_ref):
+            return unique_paths(git_lines(["diff", "--name-only", f"{remote_ref}...HEAD"]))
+        return unique_paths(git_lines(["show", "--pretty=format:", "--name-only", "HEAD"]))
+    tracked = git_lines(["diff", "--name-only", "HEAD"])
+    untracked = git_lines(["ls-files", "--others", "--exclude-standard"])
+    return unique_paths(tracked + untracked)
+
+
+def diff_text_for_stage(stage: str) -> str:
+    if stage == "pre-commit":
+        result = run_command(["git", "diff", "--cached", "--unified=0", "--no-color"])
+        return result.stdout if result.returncode == 0 else ""
+    if stage == "pre-push":
+        branch = git_value(["branch", "--show-current"])
+        remote_ref = f"origin/{branch}" if branch else ""
+        if remote_ref and git_ref_exists(remote_ref):
+            result = run_command(["git", "diff", f"{remote_ref}...HEAD", "--unified=0", "--no-color"])
+            return result.stdout if result.returncode == 0 else ""
+        result = run_command(["git", "show", "--format=", "--unified=0", "--no-color", "HEAD"])
+        return result.stdout if result.returncode == 0 else ""
+    if stage == "ci":
+        base_ref = os.getenv("GITHUB_BASE_REF", "").strip()
+        remote_ref = f"origin/{base_ref}" if base_ref else ""
+        if remote_ref and git_ref_exists(remote_ref):
+            result = run_command(["git", "diff", f"{remote_ref}...HEAD", "--unified=0", "--no-color"])
+            return result.stdout if result.returncode == 0 else ""
+        result = run_command(["git", "show", "--format=", "--unified=0", "--no-color", "HEAD"])
+        return result.stdout if result.returncode == 0 else ""
+    result = run_command(["git", "diff", "HEAD", "--unified=0", "--no-color"])
+    return result.stdout if result.returncode == 0 else ""
+
+
+def extract_step_ids_from_diff(diff_text: str, files: list[str]) -> list[str]:
+    if not diff_text or not files:
+        return []
+    header_step_ids = set()
+    structured_step_ids = set()
+    referenced_step_ids = set()
+    current_file = ""
+    for line in diff_text.splitlines():
+        if line.startswith("+++ b/"):
+            current_file = line[6:].strip()
+            continue
+        if not line.startswith("+") or line.startswith("+++"):
+            continue
+        if current_file not in files:
+            continue
+
+        normalized = line[1:].strip()
+        json_match = EVENT_JSON_STEP_PATTERN.search(normalized)
+        if json_match:
+            structured_step_ids.add(json_match.group(1))
+            continue
+
+        header_match = STEP_ID_HEADER_PATTERN.match(normalized)
+        if header_match:
+            header_step_ids.add(header_match.group(1))
+            continue
+
+        support_match = STEP_ID_SUPPORT_PATTERN.search(normalized)
+        if support_match:
+            structured_step_ids.add(support_match.group(1))
+            continue
+
+        table_match = STEP_ID_TABLE_PATTERN.match(normalized)
+        if table_match:
+            structured_step_ids.add(table_match.group(1))
+            continue
+
+        referenced_step_ids.update(STEP_ID_TOKEN_PATTERN.findall(normalized))
+
+    selected = header_step_ids or structured_step_ids or referenced_step_ids
+    return sorted(selected)
+
+
+def autodetect_step_ids(stage: str, tracked_files: list[str]) -> list[str]:
+    diff_text = diff_text_for_stage(stage)
+    return extract_step_ids_from_diff(diff_text, tracked_files)
+
+
+def step_sequence_value(step_id: str) -> tuple[int, str]:
+    match = re.match(r"^VAL-STEP-(\d+)$", step_id.strip())
+    if match:
+        return int(match.group(1)), step_id
+    return -1, step_id
+
+
+def auto_resolve_step_id(explicit_step_id: str, detected_step_ids: list[str], protected_files: list[str]) -> tuple[str, bool]:
+    if explicit_step_id.strip():
+        return explicit_step_id.strip(), False
+    if not protected_files:
+        return "", False
+    unique_detected = sorted(set(detected_step_ids), key=step_sequence_value)
+    if len(unique_detected) == 1:
+        return unique_detected[0], False
+    if len(unique_detected) > 1:
+        return unique_detected[-1], True
+    return "", False
+
+
+def get_protected_files(paths: list[str]) -> list[str]:
+    protected = []
+    for rel_path in paths:
+        if is_protected_path(ROOT / rel_path):
+            protected.append(rel_path)
+    return protected
+
+
+def is_primary_projection_path(rel_path: str) -> bool:
+    return rel_path in PRIMARY_PROJECTION_PATHS
+
+
+def detect_projection_policy_errors(changed_files: list[str], stage: str = "pre-commit") -> list[str]:
+    # En CI permitimos commits de remediacion canónica (solo proyecciones)
+    # para recuperar sincronia sin exigir cambios adicionales en events.jsonl.
+    if stage == "ci":
+        return []
+    projection_changes = [path for path in changed_files if is_primary_projection_path(path)]
+    if not projection_changes:
+        return []
+    if "00_sistema_tesis/canon/events.jsonl" in changed_files:
+        return []
+    return [
+        "Se detectó edición directa de proyecciones primarias sin cambios en `00_sistema_tesis/canon/events.jsonl`."
+    ]
+
+
+def validate_step_id(stage: str, step_id: str, protected_files: list[str], detected_step_ids: list[str]) -> list[str]:
+    if not protected_files:
+        return []
+    if not step_id:
+        if stage in {"pre-push", "ci"} and len(detected_step_ids) > 1 and step_ids_exist(detected_step_ids):
+            return []
+        if len(detected_step_ids) > 1:
+            return ["Se detectaron multiples Step IDs en el cambio protegido; especifica uno explicitamente con `--step-id`."]
+        return ["Se requiere un Step ID mediante `--step-id` o `SISTEMA_TESIS_STEP_ID` cuando se tocan archivos protegidos."]
+    if not STEP_ID_PATTERN.match(step_id):
+        return [f"El Step ID `{step_id}` no cumple el formato `VAL-STEP-XXX`."]
+    if step_ids_exist([step_id]):
+        return []
+    return [f"El Step ID `{step_id}` no existe en el canon actual y no puede usarse como evidencia humana valida."]
+
+
+def step_ids_exist_in_ledger(step_ids: list[str]) -> bool:
+    ensure_canon_initialized()
+    return step_ids_exist(step_ids)
+
+
+def file_hashes(paths: list[str]) -> dict[str, str]:
+    hashes = {}
+    for rel_path in paths:
+        full_path = ROOT / rel_path
+        if not full_path.exists() or not full_path.is_file():
+            continue
+        digest = hashlib.sha256()
+        with full_path.open("rb") as handle:
+            for chunk in iter(lambda: handle.read(65536), b""):
+                digest.update(chunk)
+        hashes[rel_path] = digest.hexdigest()
+    return hashes
+
+
+def public_sync_check_dir() -> str:
+    return str(SAFE_TMP_DIR / "public_sync_check")
+
+
+def checks_for_stage(stage: str) -> list[tuple[str, list[str]]]:
+    python = preferred_python_executable()
+    pre_commit_checks = [
+        ("Auditar canon", [python, "07_scripts/tesis.py", "audit", "--check"]),
+        ("Validar estructura", [python, "07_scripts/validate_structure.py"]),
+        ("Validar publicación pública", [python, "07_scripts/tesis.py", "publish", "--check"]),
+        ("Validar calidad editorial pública", [python, "07_scripts/validate_public_text.py"]),
+        ("Escaneo de secretos", [python, "07_scripts/secret_scanner.py"]),
+        ("Auditar Ledger IA", [python, "07_scripts/verify_ledger.py"]),
+        ("Auditar Cadena de Bitacoras", [python, "07_scripts/verify_bitacora_chain.py"]),
+        ("Verificar Jerarquia", [python, "07_scripts/verify_hierarchy.py"]),
+    ]
+    if stage == "pre-commit":
+        return pre_commit_checks
+    if stage == "pre-push":
+        if should_skip_gpg_check():
+            return pre_commit_checks
+        return pre_commit_checks + [("Verificar firma GPG", [python, "07_scripts/setup_gpg_attestation.py", "--check"])]
+    if stage == "ci":
+        ci_checks: list[tuple[str, list[str]]] = []
+        in_github_actions = os.getenv("GITHUB_ACTIONS", "").strip().lower() == "true"
+        if not should_skip_gpg_check():
+            ci_checks.append(("Verificar firma GPG", [python, "07_scripts/setup_gpg_attestation.py", "--check"]))
+        ci_checks.extend(
+            [
+            ("Pruebas", [python, "-m", "pytest", "-q", "-s"]),
+            (
+                "Verificar downstream público sanitizado",
+                [
+                    python,
+                    "07_scripts/sync_public_repo.py",
+                    "--mode",
+                    "mirror",
+                    "--target-dir",
+                    public_sync_check_dir(),
+                    "--branch",
+                    "main",
+                    "--check",
+                    "--allow-dirty",
+                ],
+            ),
+            ("Build total", [python, "07_scripts/build_all.py"]),
+            ]
+        )
+        if not in_github_actions:
+            ci_checks.append(("Artefactos versionados", ["git", "diff", "--exit-code"]))
+        return ci_checks
+    return [("Build total", [python, "07_scripts/build_all.py"])]
+
+
+def execute_checks(checks: list[tuple[str, list[str]]]) -> tuple[list[str], list[str], list[dict[str, object]]]:
+    run_labels: list[str] = []
+    failed_labels: list[str] = []
+    details: list[dict[str, object]] = []
+    for label, cmd in checks:
+        print(f"[GATE] {label}")
+        result = run_command(cmd)
+        run_labels.append(label)
+        details.append(
+            {
+                "name": label,
+                "command": cmd,
+                "returncode": result.returncode,
+                "stdout": result.stdout.strip(),
+                "stderr": result.stderr.strip(),
+            }
+        )
+        if result.stdout.strip():
+            emit_text(result.stdout.strip(), stream=sys.stdout)
+        if result.stderr.strip():
+            emit_text(result.stderr.strip(), stream=sys.stderr)
+        if result.returncode != 0:
+            failed_labels.append(label)
+            break
+    return run_labels, failed_labels, details
+
+
+def build_recommendations(stage: str, errors: list[str], failed_checks: list[str]) -> list[str]:
+    recommendations = []
+    if any("Step ID" in error or "Step IDs" in error for error in errors):
+        recommendations.append("Adjunta un `VAL-STEP-XXX` valido mediante `--step-id` o `SISTEMA_TESIS_STEP_ID`.")
+        recommendations.append("Si el índice mezcla varios paquetes, usa `python 07_scripts/tesis.py split-staged --commit` para separarlos automáticamente por Step ID.")
+    if any("proyecciones" in error.lower() for error in errors):
+        recommendations.append("Regenera las proyecciones mediante `python 07_scripts/tesis.py materialize` y evita editar vistas primarias a mano.")
+    if stage == "pre-push" and "Verificar firma GPG" in failed_checks:
+        recommendations.append("Firma los commits locales pendientes antes de volver a ejecutar el push.")
+    if stage in {"manual", "ci"} and "Build total" in failed_checks:
+        recommendations.append("Corrige la auditoría global y reintenta el gate hasta obtener `Build total` exitoso.")
+    if not recommendations and not failed_checks:
+        recommendations.append("Mantener el gate como unica puerta de enforcement para hooks, CI y wrappers.")
+    return recommendations
+
+
+def render_markdown(attestation: dict[str, object]) -> str:
+    protected_files = attestation.get("protected_files_touched", [])
+    checks_run = attestation.get("checks_run", [])
+    checks_failed = attestation.get("checks_failed", [])
+    lines = [
+        "# Attestation de Governance Gate",
+        "",
+        f"- Generated at: {attestation['generated_at']}",
+        f"- Stage: {attestation['stage']}",
+        f"- Status: {attestation['status']}",
+        f"- Agent: {attestation['agent']}",
+        f"- Step ID: {attestation['step_id'] or 'n/a'}",
+        f"- Git ref: {attestation['git_ref'] or 'n/a'}",
+        f"- Git commit: {attestation['git_commit'] or 'n/a'}",
+        "",
+        "## Resumen Ejecutivo",
+        "",
+        f"- Archivos cambiados: {len(attestation['changed_files'])}",
+        f"- Archivos protegidos tocados: {len(protected_files)}",
+        f"- Checks ejecutados: {len(checks_run)}",
+        f"- Checks fallidos: {len(checks_failed)}",
+        "",
+        "## Archivos Protegidos",
+        "",
+    ]
+    if protected_files:
+        lines.extend(f"- {path}" for path in protected_files)
+    else:
+        lines.append("- Ninguno")
+    lines.extend(["", "## Checks", ""])
+    if checks_run:
+        lines.extend(f"- {label}" for label in checks_run)
+    else:
+        lines.append("- Ninguno")
+    lines.extend(["", "## Checks Fallidos", ""])
+    if checks_failed:
+        lines.extend(f"- {label}" for label in checks_failed)
+    else:
+        lines.append("- Ninguno")
+    lines.extend(["", "## Recomendaciones", ""])
+    for recommendation in attestation["recommendations"]:
+        lines.append(f"- {recommendation}")
+    return "\n".join(lines) + "\n"
+
+
+def write_attestation(attestation: dict[str, object], output_dir: Path) -> tuple[Path, Path]:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
+    stage = str(attestation["stage"]).replace("-", "_")
+    stem = f"governance_gate_{stage}_{timestamp}"
+    json_path = output_dir / f"{stem}.json"
+    md_path = output_dir / f"{stem}.md"
+    json_path.write_text(json.dumps(attestation, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    md_path.write_text(render_markdown(attestation), encoding="utf-8")
+    return json_path, md_path
+
+
+def build_attestation(
+    *,
+    stage: str,
+    agent: str,
+    step_id: str,
+    changed_files: list[str],
+    protected_files: list[str],
+    checks_run: list[str],
+    checks_failed: list[str],
+    check_details: list[dict[str, object]],
+    recommendations: list[str],
+) -> dict[str, object]:
+    status = "ok" if not checks_failed else "failed"
+    return {
+        "generated_at": now_stamp(),
+        "stage": stage,
+        "status": status,
+        "agent": agent,
+        "step_id": step_id,
+        "changed_files": changed_files,
+        "protected_files_touched": protected_files,
+        "checks_run": checks_run,
+        "checks_failed": checks_failed,
+        "hashes": file_hashes(protected_files),
+        "git_ref": git_value(["rev-parse", "--abbrev-ref", "HEAD"]),
+        "git_commit": git_value(["rev-parse", "HEAD"]),
+        "recommendations": recommendations,
+        "check_details": check_details,
+    }
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Gate canonico de gobernanza agnostico de agente.")
+    parser.add_argument("--stage", required=True, choices=STAGES)
+    parser.add_argument("--step-id", default=os.getenv("SISTEMA_TESIS_STEP_ID", "").strip())
+    parser.add_argument("--agent", default=os.getenv("SISTEMA_TESIS_AGENT", "").strip())
+    parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
+    return parser.parse_args()
+
+
+def main() -> int:
+    ensure_canon_initialized()
+    args = parse_args()
+    stage = args.stage
+    agent = args.agent or os.getenv("GITHUB_ACTOR", "").strip() or "manual"
+    changed_files = get_changed_files(stage)
+    protected_files = get_protected_files(changed_files)
+    tracked_for_detection = unique_paths(changed_files + ["00_sistema_tesis/canon/events.jsonl"])
+    detected_step_ids = autodetect_step_ids(stage, tracked_for_detection)
+    resolved_step_id, auto_selected_step_id = auto_resolve_step_id(args.step_id, detected_step_ids, protected_files)
+
+    policy_errors = detect_projection_policy_errors(changed_files, stage=stage)
+    policy_errors.extend(validate_step_id(stage, resolved_step_id, protected_files, detected_step_ids))
+    policy_errors.extend(validate_events())
+    if stage in {"pre-commit", "pre-push", "ci"}:
+        drift = materialize_events(check=True)
+        if drift:
+            policy_errors.append("Existen proyecciones fuera de sincronía con el canon: " + ", ".join(drift))
+
+    checks_run: list[str] = ["Validacion de soberania"]
+    checks_failed: list[str] = []
+    check_details: list[dict[str, object]] = [
+        {
+            "name": "Validacion de soberania",
+            "command": [],
+            "returncode": 0 if not policy_errors else 1,
+            "stdout": "\n".join(policy_errors) if policy_errors else f"OK ({resolved_step_id or 'sin Step ID requerido'})",
+            "stderr": "",
+        }
+    ]
+
+    if policy_errors:
+        checks_failed.append("Validacion de soberania")
+        for error in policy_errors:
+            print(f"[GATE ERROR] {error}", file=sys.stderr)
+    else:
+        if auto_selected_step_id:
+            print(f"[GATE] Step ID auto-resuelto: {resolved_step_id}")
+        stage_checks = checks_for_stage(stage)
+        extra_run, extra_failed, extra_details = execute_checks(stage_checks)
+        checks_run.extend(extra_run)
+        checks_failed.extend(extra_failed)
+        check_details.extend(extra_details)
+
+    recommendations = build_recommendations(stage, policy_errors, checks_failed)
+    attestation = build_attestation(
+        stage=stage,
+        agent=agent,
+        step_id=resolved_step_id,
+        changed_files=changed_files,
+        protected_files=protected_files,
+        checks_run=checks_run,
+        checks_failed=checks_failed,
+        check_details=check_details,
+        recommendations=recommendations,
+    )
+    json_path, md_path = write_attestation(attestation, Path(args.output_dir))
+    print(f"[GATE] Attestation JSON: {json_path.relative_to(ROOT)}")
+    print(f"[GATE] Attestation Markdown: {md_path.relative_to(ROOT)}")
+    if checks_failed:
+        print("[GATE] Resultado: FALLIDO", file=sys.stderr)
+        return 1
+    print("[GATE] Resultado: OK")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

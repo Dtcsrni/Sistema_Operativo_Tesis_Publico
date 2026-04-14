@@ -63,7 +63,7 @@ class TestCanon(unittest.TestCase):
 
     def test_projection_paths_include_primary_views(self):
         paths = projection_paths([])
-        self.assertIn("00_sistema_tesis/bitacora/log_conversaciones_ia.md", paths)
+        self.assertIn("00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md", paths)
         self.assertIn("00_sistema_tesis/config/sign_offs.json", paths)
         self.assertIn("00_sistema_tesis/canon/state.json", paths)
 
@@ -470,3 +470,4 @@ class TestCanon(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

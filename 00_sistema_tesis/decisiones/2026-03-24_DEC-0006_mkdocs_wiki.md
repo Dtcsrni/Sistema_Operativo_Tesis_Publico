@@ -61,7 +61,7 @@ Retroactivo: Decisión tomada durante la fase de infraestructura inicial.
   - Requiere que el repositorio sea público (o tener GitHub Pro para Pages privado). 
   - Añade un tiempo de espera de ~2-3 minutos tras el push para ver los cambios en vivo.
 
-## Trazabilidad de IA
+## Trazabilidad del trabajo asistido
 
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0

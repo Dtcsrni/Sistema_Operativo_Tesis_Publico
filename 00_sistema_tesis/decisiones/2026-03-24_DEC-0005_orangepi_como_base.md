@@ -55,7 +55,7 @@ Retroactivo: Decisión tomada durante la fase de infraestructura inicial.
 - **Negativas/Riesgos:** 
   - Se debe asegurar de que las pruebas automatizadas y los scripts de generación (como `build_all.py`) se mantengan agnósticos al sistema operativo (utilizando módulos de sistema cruzado como `pathlib`). Esto ya se consideró en el código actual.
 
-## Trazabilidad de IA
+## Trazabilidad del trabajo asistido
 
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0

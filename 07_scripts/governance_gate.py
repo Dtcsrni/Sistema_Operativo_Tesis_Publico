@@ -26,7 +26,7 @@ STEP_ID_HEADER_PATTERN = re.compile(r"^## \[(VAL-STEP-[A-Za-z0-9_-]+)\]")
 STEP_ID_TABLE_PATTERN = re.compile(r"^\|\s*[^|]+\|\s*\[(VAL-STEP-[A-Za-z0-9_-]+)\]\s*\|")
 STEP_ID_SUPPORT_PATTERN = re.compile(r"Soporte:\s*\[(VAL-STEP-[A-Za-z0-9_-]+)\]")
 PRIMARY_PROJECTION_PATHS = {
-    "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
+    "00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md",
     "00_sistema_tesis/bitacora/matriz_trazabilidad.md",
     "00_sistema_tesis/bitacora/indice_fuentes_conversacion.md",
     "00_sistema_tesis/config/sign_offs.json",
@@ -540,3 +540,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

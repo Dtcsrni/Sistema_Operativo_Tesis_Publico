@@ -49,7 +49,7 @@ def main():
         p = root / d
         if not p.exists(): continue
         for f in p.glob("*.md"):
-            if f.name in ["log_conversaciones_ia.md", "matriz_trazabilidad.md"]:
+            if f.name in ["log_sesiones_trabajo_registradas.md", "matriz_trazabilidad.md"]:
                 continue
             file_errors = verify_file_hierarchy(f)
             if file_errors:
@@ -67,3 +67,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

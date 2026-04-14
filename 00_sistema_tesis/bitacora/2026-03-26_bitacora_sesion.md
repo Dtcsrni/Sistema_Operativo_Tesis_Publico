@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-03-26
 
 - **ID de Sesión:** codex-local-20260326-close
-- **Cadena de Confianza (Anterior):** `sha256/add6bd7930a2a53a5e8d3f989f641c904e68de0fe5430f774dc36c5ef49437b0`
+- **Cadena de Confianza (Anterior):** `sha256/1ebb5446e7dec341706d660d37a4fcf7ba08d4a5b1b2aee183d70121d0b1ec4c`
 - **Bloque principal:** B0
 - **Tipo de sesión:** administración | implementación | validación
 
@@ -33,7 +33,7 @@ Cerrar estrictamente la conversación del 2026-03-26 con trazabilidad completa, 
 
 ## Evidencia Técnica e Integridad
 - **Commits:** `feat: close 2026-03-26 governance session and enforce runtime identity policy`
-- **Archivos Clave:** `07_scripts/governance_gate.py`, `07_scripts/update_ledger.py`, `00_sistema_tesis/bitacora/log_conversaciones_ia.md`, `00_sistema_tesis/bitacora/matriz_trazabilidad.md`, `00_sistema_tesis/bitacora/2026-03-26_bitacora_sesion.md`
+- **Archivos Clave:** `07_scripts/governance_gate.py`, `07_scripts/update_ledger.py`, `00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md`, `00_sistema_tesis/bitacora/matriz_trazabilidad.md`, `00_sistema_tesis/bitacora/2026-03-26_bitacora_sesion.md`
 - **Validación del Sistema:** [x] Auditoría `build_all.py` aprobada.
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
@@ -180,7 +180,7 @@ Cerrar la conversación actual con toda la política de trazabilidad ya implanta
 - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
 - **Hash (Contenido):** `hash omitido:omitido`
 
-[LID]: log_conversaciones_ia.md
+[LID]: log_sesiones_trabajo_registradas.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 

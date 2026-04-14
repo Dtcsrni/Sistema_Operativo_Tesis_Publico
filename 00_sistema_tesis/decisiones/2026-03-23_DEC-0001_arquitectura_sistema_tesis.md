@@ -53,7 +53,7 @@ La opción elegida minimiza complejidad operativa, preserva trazabilidad bajo co
 - Reduce riesgo de deriva entre fuente y visualización.
 - Impone disciplina: los artefactos generados no deben editarse a mano.
 
-## Trazabilidad de IA
+## Trazabilidad del trabajo asistido
 
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0

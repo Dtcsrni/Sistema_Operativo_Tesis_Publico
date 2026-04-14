@@ -48,7 +48,7 @@ Retroactivo: Decisión tomada durante la fase de infraestructura inicial.
 ## Consecuencias
 - **Positivas:** Trazabilidad total, formato consistente, ahorro de tiempo en redacción.
 - **Negativas:** Requiere mantener el archivo `.bib` actualizado (se recomienda usar Zotero para exportarlo).
-## Trazabilidad de IA
+## Trazabilidad del trabajo asistido
 
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0

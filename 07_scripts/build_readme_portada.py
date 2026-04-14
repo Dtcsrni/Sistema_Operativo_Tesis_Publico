@@ -134,7 +134,7 @@ def main() -> int:
         "- Cada página de la wiki debe declarar navegación local, fuentes canónicas y artefactos derivados relacionados.",
         "- Si una salida derivada necesita cambio, la intervención correcta es sobre la fuente canónica declarada, no sobre el derivado.",
         "- Para cerrar la cadena de rastreo revisa [`06_dashboard/generado/wiki_manifest.json`](06_dashboard/generado/wiki_manifest.json) y [`06_dashboard/publico/manifest_publico.json`](06_dashboard/publico/manifest_publico.json).",
-        "- Para trazabilidad operativa del trabajo revisa [`00_sistema_tesis/bitacora/matriz_trazabilidad.md`](00_sistema_tesis/bitacora/matriz_trazabilidad.md) y [`00_sistema_tesis/bitacora/log_conversaciones_ia.md`](00_sistema_tesis/bitacora/log_conversaciones_ia.md).",
+        "- Para trazabilidad operativa del trabajo revisa [`00_sistema_tesis/bitacora/matriz_trazabilidad.md`](00_sistema_tesis/bitacora/matriz_trazabilidad.md) y [`00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md`](00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md).",
         "",
         "## Qué revisar siempre",
         "",
@@ -301,3 +301,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

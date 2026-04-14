@@ -1,5 +1,5 @@
 <!-- SISTEMA_TESIS:PROTEGIDO -->
-# Ledger de Conversaciones IA (Inmutable y Enlazado)
+# Ledger de Sesiones de trabajo registradas (Inmutable y Enlazado)
 
 Este archivo es el **Libro Mayor** de las validaciones humanas. El contenido exacto está entre `<<<` y `>>>`. 
 Cada bloque forma parte de una **Cadena de Evidencia Vinculada**.
@@ -1665,7 +1665,7 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260413-serena-auto-acti
 - **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
 - **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
 - **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
-- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: FIN]
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
 - **Contenido:**
 <<<
 Objetivo de Sesión: Cerrar la verificación de Actions y la sincronización pendiente del downstream público con Step ID asignado automáticamente por el agente.
@@ -1676,6 +1676,27 @@ Diferencial de Plan: registrar evento interno no público y validación humana i
 ---
 Agente: Lo que me bloquea para cerrar de forma correcta no es técnico sino de gobernanza del repo: necesito el Step ID humano para registrar esta instrucción crítica en los archivos protegidos y poder dejar trazabilidad, commit y publicación sin violar AGENTS.md. En cuanto me lo des, sigo con.
 Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260413-actions-public-sync-v1): Continúa, decide siempre automáticamente el step id>>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-13
+- **Vínculo:** DEC-0014
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas resolver pendientes, realizar commit/push/sync y monitorear Actions hasta publicación correcta?
+- **Confirmación Verbal (Texto Exacto):** Start implementation
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: FIN]
+- **Contenido:**
+<<<
+Objetivo de sesión: cerrar pendientes técnicos, publicar cambios y verificar despliegue público end-to-end.>>>
 
 **Navegación:**
 - [Volver a la Matriz](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/matriz_trazabilidad.md)

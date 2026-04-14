@@ -1,13 +1,13 @@
 {
   "version": "1.0",
-  "proposito": "Definir el uso instrumental, formativo y trazable de inteligencia artificial dentro del sistema operativo de tesis.",
+  "proposito": "Definir el uso instrumental, formativo y trazable de asistencia con IA dentro del sistema operativo de tesis.",
   "principios": [
-    "La IA apoya el trabajo humano; no sustituye juicio metodológico, validación experimental ni autoría responsable.",
+    "La asistencia con IA apoya el trabajo humano; no sustituye juicio metodológico, validación experimental ni autoría responsable.",
     "Todo flujo crítico del sistema debe tener una vía manual explícita y operable sin depender de IA.",
-    "Toda salida de IA debe tratarse como borrador o insumo hasta su revisión humana proporcional al riesgo.",
-    "El uso de IA debe fortalecer aprendizaje, criterio técnico y capacidad de explicación del tesista.",
+    "Toda salida con asistencia de IA debe tratarse como borrador o insumo hasta su revisión humana proporcional al riesgo.",
+    "El trabajo asistido debe fortalecer aprendizaje, criterio técnico y capacidad de explicación del tesista.",
     "El marco es agnóstico a herramientas y proveedores; se gobierna por función, riesgo y evidencia, no por marca.",
-    "Toda salida asistida por IA debe someterse a revisión humana proporcional al riesgo.",
+    "Toda salida con asistencia de IA debe someterse a revisión humana proporcional al riesgo.",
     "Se impone el protocolo de 'Human-Agent Handshake' (DEC-0014) para toda validación de infraestructura o método."
   ],
   "categorias_de_uso": {
@@ -102,7 +102,7 @@
     "Todo cambio en scripts, validadores, generadores y software nuevo debe iniciar con una prueba o contrato verificable que falle antes de implementar la solución.",
     "No se acepta código nuevo en 04_implementacion sin pruebas asociadas o, si aún no es ejecutable, sin la especificación de prueba que lo gobernará.",
     "Las automatizaciones documentales deben tener pruebas de estructura, regresión o snapshot suficiente para detectar deriva funcional.",
-    "Toda contribución asistida por IA en código o automatización debe dejar evidencia de prueba ejecutada y del resultado obtenido."
+    "Toda contribución con asistencia de IA en código o automatización debe dejar evidencia de prueba ejecutada y del resultado obtenido."
   ],
   "flujo_tdd_operativo": [
     "escribir prueba o contrato verificable",
@@ -336,3 +336,4 @@
     }
   ]
 }
+

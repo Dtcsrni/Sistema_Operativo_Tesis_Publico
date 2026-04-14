@@ -60,7 +60,7 @@ Retroactivo: Decisión tomada durante la fase de infraestructura inicial.
   - **Transparencia:** Facilidad para generar reportes de auditoría para directores de tesis.
 - **Negativas/Riesgos:**
   - Requiere la disciplina del tesista de correr `sign_off.py` al terminar una sección importante.
-## Trazabilidad de IA
+## Trazabilidad del trabajo asistido
 
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0

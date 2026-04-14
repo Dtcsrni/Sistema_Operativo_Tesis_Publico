@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-10
 
 - **ID de Sesión:** codex-local-20260410-serena-dual-y-bridge
-- **Cadena de Confianza (Anterior):** `sha256/173b72080f65a3a4baafdd38da27471732f996c0e73f2ef92fcfaaa8ba1c50a5`
+- **Cadena de Confianza (Anterior):** `sha256/d44c545f25ee7c85c38df96de5d010ec0ada76a56ecdb041e18cbe56d1dfd8cd`
 - **Bloque principal:** B0
 - **Tipo de sesión:** integración | arquitectura | documentación
 
@@ -67,7 +67,7 @@ Consolidar la habilitación dual de Serena MCP para VS Code/Codex, exponer el br
 ## Siguiente paso concreto
 Mantener la verificación reproducible de acceso Serena desde host, fallback `stdio` y bridge externo.
 
-[LID]: log_conversaciones_ia.md
+[LID]: log_sesiones_trabajo_registradas.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 

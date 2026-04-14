@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-11
 
 - **ID de Sesión:** codex-local-20260411-trazabilidad-publish-v1
-- **Cadena de Confianza (Anterior):** `sha256/e6f792b558579af1207529e800cbaaa8caa874f3920395aa70bef12618a2d290`
+- **Cadena de Confianza (Anterior):** `sha256/cf8e6355acf3c78ef8dc2f4a61a01f4f7a07fadaa403f3b73064569f2ea20a2d`
 - **Bloque principal:** B0
 - **Tipo de sesión:** trazabilidad | publicación | cierre
 
@@ -31,7 +31,7 @@ Completar la política de trazabilidad, registrar la instrucción humana corresp
 
 ## Evidencia Técnica e Integridad
 - **Commits de referencia:** `34b18bf`, `80790ba`, `7186c77`
-- **Archivos Clave:** `00_sistema_tesis/bitacora/log_conversaciones_ia.md`, `00_sistema_tesis/bitacora/matriz_trazabilidad.md`, `README.md`, `06_dashboard/wiki`, `06_dashboard/generado`
+- **Archivos Clave:** `00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md`, `00_sistema_tesis/bitacora/matriz_trazabilidad.md`, `README.md`, `06_dashboard/wiki`, `06_dashboard/generado`
 - **Validación del Sistema:** [x] La trazabilidad del día quedó materializada y coherente con los derivados.
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
@@ -67,7 +67,7 @@ Completar la política de trazabilidad, registrar la instrucción humana corresp
 ## Siguiente paso concreto
 Mantener el cierre diario de trazabilidad alineado con ledger, matriz y artefactos derivados.
 
-[LID]: log_conversaciones_ia.md
+[LID]: log_sesiones_trabajo_registradas.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 

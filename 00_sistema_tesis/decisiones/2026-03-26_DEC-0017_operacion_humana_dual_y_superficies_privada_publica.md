@@ -63,7 +63,7 @@ La alternativa elegida reduce dependencia cognitiva de la IA, mejora legibilidad
 - **Negativas:** aumenta el número de artefactos derivados y exige mantener consistencia documental.
 - **Deuda explícita:** habrá que vigilar que la capa humana no duplique información que ya vive en fuentes canónicas.
 
-## Trazabilidad de IA
+## Trazabilidad del trabajo asistido
 
 - **Proveedor:** proveedor de IA no publicado
 - **Modelo/Versión:** modelo de IA no publicado

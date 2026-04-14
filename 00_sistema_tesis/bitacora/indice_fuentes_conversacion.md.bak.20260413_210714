@@ -1,0 +1,70 @@
+<!-- SISTEMA_TESIS:PROTEGIDO -->
+# Índice Privado de Fuentes de Conversación
+
+Este índice enlaza cada `VAL-STEP-*` con su estatus de evidencia fuente de conversación.
+La evidencia cruda vive en `00_sistema_tesis/evidencia_privada/conversaciones_codex/` y no forma parte de la superficie pública.
+
+- **Enforcement desde:** `VAL-STEP-501`
+- **Directorio privado:** `00_sistema_tesis/evidencia_privada/conversaciones_codex`
+
+| Step ID | Proveniencia | Verificación de cita | Source EVT | Sesión | Estado repo |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| VAL-STEP-210 | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| VAL-STEP-278 | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| VAL-STEP-300 | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| VAL-STEP-305 | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| VAL-STEP-380 | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| VAL-STEP-400 | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| VAL-STEP-410 | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| VAL-STEP-420 | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| VAL-STEP-430 | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| VAL-STEP-440 | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| VAL-STEP-450 | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| VAL-STEP-460 | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| VAL-STEP-470 | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| VAL-STEP-480 | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| VAL-STEP-490 | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| VAL-STEP-500 | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| VAL-STEP-510 | corroborated_conversation_source | verified_against_source | EVT-0051 | codex-local-20260326-ingestion-iot-v10 | ok |
+| VAL-STEP-520 | corroborated_conversation_source | verified_against_source | EVT-0052 | codex-local-20260326-docs-restructure | ok |
+| VAL-STEP-530 | corroborated_conversation_source | verified_against_source | EVT-0053 | codex-local-20260326-docs-followup | ok |
+| VAL-STEP-540 | corroborated_conversation_source | verified_against_source | EVT-0054 | codex-local-20260327-terminologia | ok |
+| VAL-STEP-550 | corroborated_conversation_source | verified_against_source | EVT-0055 | codex-local-20260327-navegacion-canonica | ok |
+| VAL-STEP-560 | corroborated_conversation_source | verified_against_source | EVT-0056 | codex-local-20260327-correccion-evidencia-540 | ok |
+| VAL-STEP-570 | corroborated_conversation_source | verified_against_source | EVT-0057 | codex-local-20260327-normalizacion-global-evidencia | ok |
+| VAL-STEP-580 | corroborated_conversation_source | verified_against_source | EVT-0058 | codex-local-20260327-migracion-sistema-tesis | ok |
+| VAL-STEP-590 | corroborated_conversation_source | verified_against_source | EVT-0059 | codex-local-20260327-cierre-pendientes-cicd | ok |
+| VAL-STEP-600 | corroborated_conversation_source | verified_against_source | EVT-0060 | 735fa0a1-c29f-40a2-8c83-3e8ad8a2884d | ok |
+| VAL-STEP-610 | corroborated_conversation_source | verified_against_source | EVT-0061 | 3e5f5319-f769-495b-8990-837fd6de57ab | ok |
+| VAL-STEP-620 | corroborated_conversation_source | verified_against_source | EVT-0062 | 814db1d5-6b35-47d2-b7bd-7178a38c0ab6 | ok |
+| VAL-STEP-630 | corroborated_conversation_source | verified_against_source | EVT-0063 | codex-local-20260401-trazabilidad-conversacion-actual | ok |
+| VAL-STEP-640 | corroborated_conversation_source | verified_against_source | EVT-0064 | codex-local-20260402-verificacion-registro-reciente | ok |
+| VAL-STEP-650 | corroborated_conversation_source | verified_against_source | EVT-0068 | codex-local-20260404-register-untracked-advances | ok |
+| VAL-STEP-660 | corroborated_conversation_source | verified_against_source | EVT-0078 | codex-local-20260407-serena-mcp-v1 | ok |
+| VAL-STEP-663 | corroborated_conversation_source | verified_against_source | EVT-0079 | codex-local-20260408-dec0022-desktop-edge | ok |
+| VAL-STEP-662 | corroborated_conversation_source | verified_against_source | EVT-0081 | codex-local-20260408-serena-mcp-v11 | ok |
+| VAL-STEP-664 | corroborated_conversation_source | verified_against_source | EVT-0084 | codex-local-20260408-serena-mcp-common-governance-v2 | ok |
+| VAL-STEP-665 | corroborated_conversation_source | verified_against_source | EVT-0084 | codex-local-20260408-serena-mcp-common-governance-v2 | ok |
+| VAL-STEP-666 | corroborated_conversation_source | verified_against_source | EVT-0085 | codex-local-20260410-serena-dual-mcp-v1 | ok |
+| VAL-STEP-667 | corroborated_conversation_source | verified_against_source | EVT-0086 | codex-local-20260410-serena-access-runtime-v1 | ok |
+| VAL-STEP-668 | corroborated_conversation_source | verified_against_source | EVT-0087 | codex-local-20260410-serena-bridge-v1 | ok |
+| VAL-STEP-669 | corroborated_conversation_source | verified_against_source | EVT-0088 | codex-local-20260411-trazabilidad-publish-v1 | ok |
+| VAL-STEP-670 | corroborated_conversation_source | verified_against_source | EVT-0089 | codex-local-20260412-b0-desktop-closeout | ok |
+| VAL-STEP-671 | corroborated_conversation_source | verified_against_source | EVT-0090 | codex-local-20260412-regularizacion-bitacoras-faltantes | ok |
+| VAL-STEP-672 | corroborated_conversation_source | verified_against_source | EVT-0095 | codex-local-20260412-serena-policy-operativa-v1 | ok |
+| VAL-STEP-673 | corroborated_conversation_source | verified_against_source | EVT-0096 | codex-local-20260412-serena-http-always-on-v1 | ok |
+| VAL-STEP-674 | corroborated_conversation_source | verified_against_source | EVT-0097 | codex-local-20260412-serena-vscode-auto-tasks-v1 | ok |
+| VAL-STEP-675 | corroborated_conversation_source | verified_against_source | EVT-0098 | codex-local-20260412-serena-compare-write-v1 | ok |
+| VAL-STEP-676 | corroborated_conversation_source | verified_against_source | EVT-0099 | codex-local-20260412-guardrails-manifest-incremental-v1 | ok |
+| VAL-STEP-677 | corroborated_conversation_source | verified_against_source | EVT-0100 | codex-local-20260412-serena-trace-append-v1 | ok |
+| VAL-STEP-678 | corroborated_conversation_source | verified_against_source | EVT-0101 | codex-local-20260412-serena-closeout-publication-v1 | ok |
+| VAL-STEP-679 | corroborated_conversation_source | verified_against_source | EVT-0102 | codex-local-20260413-serena-auto-activate-v1 | ok |
+| VAL-STEP-680 | corroborated_conversation_source | verified_against_source | EVT-0103 | codex-local-20260413-actions-public-sync-v1 | ok |
+
+**Navegación:**
+- [Volver al Ledger](log_conversaciones_ia.md)
+- [Volver a la Matriz](matriz_trazabilidad.md)
+
+[LID]: log_conversaciones_ia.md
+[GOV]: ../config/ia_gobernanza.yaml
+[AUD]: ../../07_scripts/build_all.py

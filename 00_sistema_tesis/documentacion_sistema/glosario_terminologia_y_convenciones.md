@@ -155,7 +155,7 @@ Cada entrada de este glosario indica:
 - **Uso operativo:** ofrecer vistas legibles sin editar manualmente la salida.
 - **Fuente de verdad / modulo:** scripts de materializacion y generacion.
 - **Que no significa:** no puede convertirse en fuente primaria.
-- **Ejemplo:** `log_conversaciones_ia.md` y `matriz_trazabilidad.md` son proyecciones del canon.
+- **Ejemplo:** `log_sesiones_trabajo_registradas.md` y `matriz_trazabilidad.md` son proyecciones del canon.
 
 ### Artefacto derivado
 

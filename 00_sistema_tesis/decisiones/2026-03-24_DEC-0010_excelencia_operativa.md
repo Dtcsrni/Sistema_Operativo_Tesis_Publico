@@ -58,7 +58,7 @@ Retroactivo: Decisión tomada durante la fase de infraestructura inicial.
   - **Claridad Estratégica:** El roadmap visual permite detectar desviaciones de tiempo de un vistazo.
 - **Negativas/Riesgos:**
   - El escáner de secretos puede arrojar falsos positivos si se usan strings que parezcan hashes.
-## Trazabilidad de IA
+## Trazabilidad del trabajo asistido
 
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0

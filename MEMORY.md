@@ -20,11 +20,11 @@
 
 ## Últimos cambios validados
 
+- **validación humana interna no pública** · `2026-04-13` · Autorizacion humana para resolver pendientes, publicar y monitorear CI hasta despliegue correcto · soporte DEC-0014
 - **validación humana interna no pública** · `2026-04-13` · Autorización humana para asignar automáticamente el Step ID y cerrar verificación CI/publicación pública · soporte [DEC-0014]
 - **validación humana interna no pública** · `2026-04-13` · Política operativa para activar Serena primero cuando no esté disponible · soporte [DEC-0014]
 - **validación humana interna no pública** · `2026-04-12` · Cierre de trazabilidad final y preparación de publicación de Serena · soporte [DEC-0014]
 - **validación humana interna no pública** · `2026-04-12` · Optimización de traza Serena MCP por append JSONL en lugar de rewrite completo · soporte [DEC-0014]
-- **validación humana interna no pública** · `2026-04-12` · Optimización incremental exacta del manifest de integridad con alcance global en guardrails · soporte [DEC-0014]
 
 ## Próximos pendientes críticos
 
@@ -45,7 +45,7 @@
 ## Referencias base
 
 - `00_sistema_tesis/canon/events.jsonl`
-- `00_sistema_tesis/bitacora/log_conversaciones_ia.md`
+- `00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md`
 - `00_sistema_tesis/bitacora/matriz_trazabilidad.md`
 - `01_planeacion/backlog.csv`
 - `01_planeacion/entregables.csv`

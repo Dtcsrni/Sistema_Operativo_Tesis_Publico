@@ -11,7 +11,7 @@ No sustituye la tesis. Gobierna la tesis.
 Existe para resolver cuatro problemas simultaneos:
 
 1. Evitar que decisiones, cambios y resultados queden dispersos o dependan de memoria informal.
-2. Mantener control humano explicito cuando se usa automatizacion o IA instrumental.
+2. Mantener control humano explicito cuando se usa automatizacion o asistencia con IA.
 3. Separar con rigor la base privada canonica de la superficie publica divulgable.
 4. Permitir retomar, auditar, defender y publicar el sistema sin reconstruir contexto desde cero.
 
@@ -49,7 +49,7 @@ La documentacion del sistema debe permitir dos lecturas validas:
 El sistema no debe:
 
 - inventar arquitectura IoT que aun no sea canonica;
-- presentar la IA como autora o validadora final;
+- presentar la asistencia con IA como autora o validadora final;
 - mezclar evidencia privada con la superficie publica;
 - reemplazar fuentes canonicas con artefactos derivados.
 

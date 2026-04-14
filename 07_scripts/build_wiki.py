@@ -177,6 +177,7 @@ def render_markdown_fragment(rel_path: str, *, demote_by: int = 1) -> list[str]:
         if match:
             hashes, title = match.groups()
             raw_line = f"{'#' * (len(hashes) + demote_by)} {title}"
+        raw_line = raw_line.replace("log_conversaciones_ia.md", "log_sesiones_trabajo_registradas.md")
         raw_line = _rewrite_embedded_markdown_links(raw_line, rel_path)
         lines.append(raw_line)
     lines.append("")
@@ -407,7 +408,7 @@ def render_index_page(wiki: dict, pages: list[dict], generated_at: str) -> str:
             "- Revisa su bloque `Origen canónico y artefactos relacionados`.",
             "- Sigue la lista de fuentes canónicas declaradas en esa misma página.",
             "- Si necesitas validar la cadena de publicación, cruza con `06_dashboard/generado/wiki_manifest.json` y `06_dashboard/publico/manifest_publico.json`.",
-            "- Si necesitas trazabilidad operativa interna, consulta `00_sistema_tesis/bitacora/matriz_trazabilidad.md` y `00_sistema_tesis/bitacora/log_conversaciones_ia.md`.",
+            "- Si necesitas trazabilidad operativa interna, consulta `00_sistema_tesis/bitacora/matriz_trazabilidad.md` y `00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md`.",
             "",
             "## Módulos del sistema",
             "",
@@ -560,7 +561,7 @@ def build_gobernanza_page(section: dict, generated_at: str, notice: str) -> str:
         [
             "## Qué resuelve este subsistema",
             "",
-            "- Evita que la IA o la automatización se presenten como autoridad final.",
+            "- Evita que la asistencia con IA o la automatización se presenten como autoridad final.",
             "- Obliga a distinguir entre confirmación humana, evidencia fuerte y artefacto derivado.",
             "- Mantiene visible qué reglas aplican en privado y qué puede explicarse en público.",
             "",
@@ -597,7 +598,7 @@ def build_gobernanza_page(section: dict, generated_at: str, notice: str) -> str:
             "## Regla de operación humana",
             "",
             "- Todo flujo crítico debe tener vía manual explícita y legible para el tesista y terceros humanos.",
-            "- La IA es opcional y nunca sustituye validación, criterio metodológico ni publicación responsable.",
+            "- La IA es opcional como asistencia y nunca sustituye validación, criterio metodológico ni publicación responsable.",
             "- La exposición pública solo ocurre mediante sanitización reproducible desde la base privada.",
             f"- Bundle público: `{publicacion['salida']['directorio']}`",
             "",
@@ -964,7 +965,7 @@ def build_decisiones_page(section: dict, generated_at: str, notice: str) -> str:
 
 def build_bitacora_page(section: dict, generated_at: str, notice: str) -> str:
     bitacoras = list_markdown_entries("00_sistema_tesis/bitacora")
-    bitacoras = [item for item in bitacoras if not item["archivo"].endswith("log_conversaciones_ia.md")]
+    bitacoras = [item for item in bitacoras if not item["archivo"].endswith("log_sesiones_trabajo_registradas.md")]
     reportes = list_markdown_entries("00_sistema_tesis/reportes_semanales")
     lines = [
         f"# {section['titulo']}",
@@ -1017,10 +1018,10 @@ def build_bitacora_page(section: dict, generated_at: str, notice: str) -> str:
                     lines.append(f"    - {excerpt_line}")
                 lines.append("")
 
-        lines.extend(["## Bitácora de Conversaciones IA", ""])
+        lines.extend(["## Bitácora de sesiones de trabajo registradas", ""])
         lines.append('??? "Mostrar contenido completo"')
         lines.append("")
-        lines.extend(_indent_markdown_block(render_markdown_fragment("00_sistema_tesis/bitacora/log_conversaciones_ia.md", demote_by=1)))
+        lines.extend(_indent_markdown_block(render_markdown_fragment("00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md", demote_by=1)))
         lines.append("")
     else:
         lines.append("Sin bitácoras registradas aún.")
@@ -1250,3 +1251,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

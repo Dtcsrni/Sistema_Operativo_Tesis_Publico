@@ -20,7 +20,7 @@
         "00_sistema_tesis_config_integrity_manifest.json"
       ],
       "alto": [
-        "00_sistema_tesis_bitacora_log_conversaciones_ia.md",
+        "00_sistema_tesis_bitacora_log_sesiones_trabajo_registradas.md",
         "00_sistema_tesis_bitacora_matriz_trazabilidad.md",
         "00_sistema_tesis_bitacora_"
       ],
@@ -45,3 +45,4 @@
     }
   }
 }
+

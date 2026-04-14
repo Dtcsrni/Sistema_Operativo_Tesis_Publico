@@ -17,7 +17,7 @@ from sync_public_repo import (
 def test_mirror_source_map_excludes_private_surfaces() -> None:
     source_map = _source_map_mirror(ROOT)
     assert "00_sistema_tesis/canon/events.jsonl" in source_map
-    assert "00_sistema_tesis/bitacora/log_conversaciones_ia.md" in source_map
+    assert "00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md" in source_map
     assert "00_sistema_tesis/config/sign_offs.json" not in source_map
 
 
@@ -112,3 +112,4 @@ def test_sync_target_writes_matching_provenance_fingerprint() -> None:
         assert expected_fingerprint in provenance
         assert "public_local_mirror" in provenance
         assert result["bundle_fingerprint"] == expected_fingerprint
+

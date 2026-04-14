@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-03-31
 
 - **ID de Sesión:** codex-local-20260331-source-evidence
-- **Cadena de Confianza (Anterior):** `sha256/f593f4a7aad0a8c30be0a157418aa4bc64e87083f6fe34d862a7c2cc25d6588b`
+- **Cadena de Confianza (Anterior):** `sha256/b37930afc41da0ebb389b1ef97a6b689a9f5dac2ba7496d233af040a5b6864b9`
 - **Bloque principal:** B0
 - **Tipo de sesión:** administración | validación
 
@@ -65,7 +65,7 @@ Registrar evidencia fuente de conversación para fortalecer corroboración de va
 ## Siguiente paso concreto
 Mantener sincronizadas las bitácoras diarias con cada fecha de actividad canónica.
 
-[LID]: log_conversaciones_ia.md
+[LID]: log_sesiones_trabajo_registradas.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 

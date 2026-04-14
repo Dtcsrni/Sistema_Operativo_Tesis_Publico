@@ -47,11 +47,11 @@ Explica por qué la alternativa elegida reduce riesgo, complejidad o ambigüedad
 - Qué limita
 - Qué deuda deja
 
-## Trazabilidad de IA
+## Trazabilidad del trabajo asistido
 
-- **Agente/Rol:** [AGENTE_ROL_IA]
-- **Proveedor:** [PROVEEDOR_IA]
-- **Modelo/Versión:** [MODELO_VERSION_IA]
+- **Agente/Rol de asistencia:** [AGENTE_ROL_IA]
+- **Proveedor de asistencia:** [PROVEEDOR_IA]
+- **Modelo/Versión de asistencia:** [MODELO_VERSION_IA]
 - **Nivel de Razonamiento:** [bajo|medio|alto]
 - **Prompts/Contexto clave:** [Resumen o link a conversación]
 

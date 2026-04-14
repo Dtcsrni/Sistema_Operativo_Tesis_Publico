@@ -64,7 +64,7 @@ def verify_ledger(file_path):
 
 def main():
     root = Path(__file__).resolve().parents[1]
-    ledger_path = root / "00_sistema_tesis" / "bitacora" / "log_conversaciones_ia.md"
+    ledger_path = root / "00_sistema_tesis" / "bitacora" / "log_sesiones_trabajo_registradas.md"
     errors, headers = verify_ledger(ledger_path)
     
     if errors:
@@ -75,3 +75,4 @@ def main():
         print(f"AUDITORÍA LEDGER: OK ({len(headers)} bloques enlazados)")
 
 if __name__ == "__main__": main()
+

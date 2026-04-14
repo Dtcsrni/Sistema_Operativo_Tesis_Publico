@@ -54,7 +54,7 @@ La política explícita reduce desperdicio de uso, mejora previsibilidad operati
 - El sistema podrá aprender con el tiempo qué tipos de tareas justifican mayor consumo.
 - Se desincentiva exploración amplia sin objetivo operativo inmediato.
 
-## Trazabilidad de IA
+## Trazabilidad del trabajo asistido
 
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0

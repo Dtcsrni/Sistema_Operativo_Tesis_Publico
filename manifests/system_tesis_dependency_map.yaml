@@ -18,7 +18,7 @@
         "00_sistema_tesis/canon/events.jsonl"
       ],
       "writes": [
-        "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
+        "00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md",
         "00_sistema_tesis/bitacora/matriz_trazabilidad.md",
         "00_sistema_tesis/canon/state.json"
       ],
@@ -136,3 +136,4 @@
     "derived_to_canon_dependency_cycle"
   ]
 }
+

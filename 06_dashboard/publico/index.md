@@ -4,7 +4,7 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 
 - **Generado:** `2026-04-13`
 - **Estado:** `ok`
-- **Fingerprint del bundle:** `3a783b27517e2a2e29e49351063d48de0e847912e1101de14eece448fa6529e6`
+- **Fingerprint del bundle:** `d9d28b1bfb08d82c07ca4fae2de78a62b0069f33e7f34ec7a1910164d9bae8c5`
 - **Aviso:** Este bundle público es un artefacto derivado y curado editorialmente. No se corrige a mano; se reconstruye desde la base canónica.
 
 ## Superficies

@@ -1,0 +1,338 @@
+{
+  "version": "1.0",
+  "proposito": "Definir el uso instrumental, formativo y trazable de inteligencia artificial dentro del sistema operativo de tesis.",
+  "principios": [
+    "La IA apoya el trabajo humano; no sustituye juicio metodológico, validación experimental ni autoría responsable.",
+    "Todo flujo crítico del sistema debe tener una vía manual explícita y operable sin depender de IA.",
+    "Toda salida de IA debe tratarse como borrador o insumo hasta su revisión humana proporcional al riesgo.",
+    "El uso de IA debe fortalecer aprendizaje, criterio técnico y capacidad de explicación del tesista.",
+    "El marco es agnóstico a herramientas y proveedores; se gobierna por función, riesgo y evidencia, no por marca.",
+    "Toda salida asistida por IA debe someterse a revisión humana proporcional al riesgo.",
+    "Se impone el protocolo de 'Human-Agent Handshake' (DEC-0014) para toda validación de infraestructura o método."
+  ],
+  "categorias_de_uso": {
+    "permitido": [
+      "lluvia_de_ideas_acotada",
+      "reestructuracion_de_texto_no_sustantivo",
+      "apoyo_para_plantillas",
+      "resumen_de_material_propio",
+      "ayuda_para_consistencia_documental",
+      "sugerencias_de_automatizacion"
+    ],
+    "permitido_con_revision_reforzada": [
+      "propuestas_de_arquitectura",
+      "borradores_de_redaccion_tecnica",
+      "sintesis_de_literatura",
+      "apoyo_en_codigo_y_scripts",
+      "interpretacion_preliminar_de_resultados",
+      "diseno_de_experimentos"
+    ],
+    "restringido": [
+      "redaccion_final_de_aportaciones_sin_revision",
+      "generacion_de_citas_sin_verificacion",
+      "analisis_estadistico_sin_replicacion",
+      "decisiones_metodologicas_no_documentadas"
+    ],
+    "prohibido": [
+      "fabricacion_de_datos",
+      "invencion_de_resultados",
+      "atribucion_falsa_de_fuentes",
+      "ocultar_uso_sustantivo_de_ia",
+      "delegar_a_ia_validacion_final_de_hipotesis"
+    ]
+  },
+  "requisitos_validacion_humana": {
+    "siempre": [
+      "verificar precisión factual",
+      "confirmar trazabilidad a fuentes reales",
+      "comprobar coherencia con objetivos e hipótesis",
+      "registrar uso cuando impacte decisiones, redacción sustantiva o código",
+      "preferir la vía manual cuando exista una ruta humana clara y suficiente para el objetivo"
+    ],
+    "reforzada_si_hay_riesgo_alto": [
+      "doble revisión de métricas, supuestos y resultados",
+      "replicación manual o programática de cálculos",
+      "validación contra fuentes primarias",
+      "registro explícito de cambios aceptados y descartados",
+      "vinculación obligatoria de decisiones agénticas a prompts y validación biométrica/GPG (Human-Agent Loop)"
+    ]
+  },
+  "rol_formativo_de_la_ia": {
+    "objetivo": "Usar IA para acelerar comprensión, estructurar problemas y practicar criterio técnico sin erosionar el aprendizaje profundo del tesista.",
+    "practicas_recomendadas": [
+      "pedir explicaciones comparativas y luego reformularlas con palabras propias",
+      "usar IA para proponer esquemas y después validarlos contra literatura y experimentos",
+      "documentar qué partes se adoptaron, cuáles se rechazaron y por qué",
+      "preferir sesiones donde la IA explicite supuestos, riesgos y alternativas"
+    ]
+  },
+  "enfoque_agnostico": {
+    "criterio": "Las reglas aplican igual a asistentes conversacionales, copilotos de código, generadores de texto, herramientas de búsqueda y automatizadores con IA.",
+    "dependencia_de_proveedor": "No se asume proveedor único ni integración específica."
+  },
+  "registro_de_uso": {
+    "obligatorio": true,
+    "donde_registrar": "00_sistema_tesis/bitacora",
+    "minimo_requerido": [
+      "fecha",
+      "objetivo_del_uso",
+      "tipo_de_tarea",
+      "herramienta_o_clase_de_herramienta",
+      "resultado_aprovechado",
+      "revision_humana_realizada",
+      "riesgos_detectados"
+    ]
+  },
+  "politica_no_hardcode": {
+    "principio": "Los metadatos operativos críticos, identidades humanas/agénticas, proveedores, modelos, presupuestos y defaults de gobernanza deben residir en configuración versionada o variables de entorno, no embebidos en scripts o plantillas.",
+    "aplica_a": [
+      "07_scripts",
+      "00_sistema_tesis/plantillas",
+      ".github"
+    ],
+    "fuente_canonica_identidad_agente": "00_sistema_tesis/config/agent_identity.json",
+    "fuente_canonica_identidad_humana": "00_sistema_tesis/config/tesista.json",
+    "enforcement": [
+      "validate_structure.py",
+      "verify_no_hardcoded_runtime.py",
+      "build_all.py"
+    ]
+  },
+  "principios_tdd": [
+    "Todo cambio en scripts, validadores, generadores y software nuevo debe iniciar con una prueba o contrato verificable que falle antes de implementar la solución.",
+    "No se acepta código nuevo en 04_implementacion sin pruebas asociadas o, si aún no es ejecutable, sin la especificación de prueba que lo gobernará.",
+    "Las automatizaciones documentales deben tener pruebas de estructura, regresión o snapshot suficiente para detectar deriva funcional.",
+    "Toda contribución asistida por IA en código o automatización debe dejar evidencia de prueba ejecutada y del resultado obtenido."
+  ],
+  "flujo_tdd_operativo": [
+    "escribir prueba o contrato verificable",
+    "ejecutar prueba y confirmar falla inicial",
+    "implementar el cambio mínimo necesario",
+    "refactorizar conservando comportamiento",
+    "regenerar artefactos derivados",
+    "ejecutar validaciones y pruebas completas",
+    "registrar resultado verificable en bitácora o evidencia de cambio"
+  ],
+  "economia_y_optimizacion_de_uso": {
+    "proposito": "Maximizar avance funcional verificable por unidad de uso, reduciendo exploracion redundante, latencia innecesaria y consumo excesivo de razonamiento alto.",
+    "principios": [
+      "Usar el menor nivel de razonamiento que produzca una salida significativamente buena para la tarea, con razonamiento bajo como límite inferior, nunca razonamiento 0. Siempre priorizar el más confiable, menos propenso a alucinar o producir algo factualmente o matemáticamente incorrecto",
+      "Reservar razonamiento alto para decisiones fundacionales, consolidaciones grandes, contradicciones complejas o tareas donde el costo del error sea elevado.",
+      "Preferir avances funcionales completos y cerrados sobre analisis fragmentado con alto consumo de uso.",
+      "Evitar exploracion amplia cuando exista una siguiente accion canonicamente evidente.",
+      "Subir el nivel de razonamiento solo si el resultado anterior fue insuficiente, ambiguo o riesgoso.",
+      "La economia de uso no debe degradar la calidad metodologica de ninguna manera, ni la trazabilidad altamente detallada y confiable/falsable, ni la validacion humana explícita validada por biometría o firmas digitales robustas confiables."
+    ],
+    "politica_de_seleccion_de_razonamiento": {
+      "bajo_o_equivalente": [
+        "reestructuracion de texto",
+        "resumen directo",
+        "clasificacion simple",
+        "transformacion a tablas o YAML/CSV",
+        "actualizacion menor de backlog o bitacora"
+      ],
+      "medio_o_equivalente": [
+        "analisis de estado del proyecto",
+        "sintesis comparativa",
+        "planeacion operativa",
+        "diseno documental",
+        "diagnostico tecnico no ambiguo"
+      ],
+      "alto_o_equivalente": [
+        "diseno de arquitectura",
+        "operacionalizacion de hipotesis y metricas",
+        "analisis de contradicciones",
+        "extraccion rigurosa de evidencia",
+        "consolidacion extensa de contexto"
+      ]
+    },
+    "matriz_operativa_por_tipo_de_tarea": [
+      {
+        "tipo_de_tarea": "arquitectura y linea base comparativa",
+        "nivel_recomendado": "alto",
+        "cuando_subir": "si hay multiples restricciones, decisiones metodologicas irreversibles o alto costo del error",
+        "cuando_bajar": "si solo se esta reordenando o documentando una decision ya tomada"
+      },
+      {
+        "tipo_de_tarea": "hipotesis, metricas y criterios de evaluacion",
+        "nivel_recomendado": "alto",
+        "cuando_subir": "si se esta operacionalizando soporte, falsacion o comparabilidad experimental",
+        "cuando_bajar": "si solo se transcriben definiciones ya acordadas"
+      },
+      {
+        "tipo_de_tarea": "simulacion, escenarios y validacion metodologica",
+        "nivel_recomendado": "alto",
+        "cuando_subir": "si hay contradicciones, equivalencias complejas o necesidad de trazabilidad rigurosa",
+        "cuando_bajar": "si la tarea es ejecucion mecanica, registro o limpieza de parametros"
+      },
+      {
+        "tipo_de_tarea": "sintesis operativa y diagnostico de estado",
+        "nivel_recomendado": "medio",
+        "cuando_subir": "si el material es muy contradictorio o se requiere consolidacion extensa",
+        "cuando_bajar": "si el resumen es directo y de alcance pequeno"
+      },
+      {
+        "tipo_de_tarea": "documentacion, backlog, bitacora y traduccion documental",
+        "nivel_recomendado": "bajo",
+        "cuando_subir": "si la tarea se convierte en decision de alcance, metodo o arquitectura",
+        "cuando_bajar": "mantener bajo cuando sea trabajo transformacional o administrativo"
+      },
+      {
+        "tipo_de_tarea": "automatizacion y scripts acotados",
+        "nivel_recomendado": "medio",
+        "cuando_subir": "si la automatizacion afecta consistencia global, modelo de datos o evidencia trazable",
+        "cuando_bajar": "si es ajuste menor, formato o plumbing evidente"
+      }
+    ],
+  "regla_de_escalamiento": [
+      "Empezar por razonamiento medio como default para trabajo sustantivo.",
+      "Bajar a bajo si la tarea es mecanica o transformacional.",
+      "Subir a alto solo cuando existan multiples restricciones, ambiguedad real, alto costo del error o exigencia de exhaustividad."
+    ],
+    "unidad_operativa_sugerida": "Cada bloque de uso debe aspirar a cerrar una pieza funcional completa, un artefacto verificable o una decision trazable.",
+    "senal_de_mala_economia": [
+      "muchas respuestas de exploracion con poco cambio verificable",
+      "uso repetido de razonamiento alto en tareas mecanicas",
+      "reanalisis de contexto ya consolidado",
+      "preguntas demasiado amplias sin objetivo operativo inmediato"
+    ],
+    "politica_de_modelos_y_razonamiento": [
+      {
+        "tipo_de_tarea": "default del hilo",
+        "modelo_recomendado": "GPT-5.4-Mini",
+        "nivel_recomendado": "medio",
+        "uso": "trabajo sustantivo de avance continuo con buena economia de tokens",
+        "cuando_subir": "si la tarea cruza a arquitectura, hipotesis, metricas o decisiones irreversibles",
+        "cuando_bajar": "si el trabajo es repetitivo, documental o de bajo costo del error"
+      },
+      {
+        "tipo_de_tarea": "arquitectura, hipotesis y decisiones fundacionales",
+        "modelo_recomendado": "GPT-5.4",
+        "nivel_recomendado": "alto",
+        "uso": "razonamiento profundo para definir linea base, criterios y consolidaciones importantes",
+        "cuando_subir": "si hay ambiguedad real, muchas restricciones o costo alto del error",
+        "cuando_bajar": "si solo se traduce una decision ya tomada o se reorganiza material"
+      },
+      {
+        "tipo_de_tarea": "codigo, scripts y automatizacion",
+        "modelo_recomendado": "GPT-5.3-Codex",
+        "nivel_recomendado": "medio",
+        "uso": "cambios de codigo, refactors, validadores y automatizacion reproducible",
+        "cuando_subir": "si el cambio afecta consistencia global, modelo de datos o evidencia trazable",
+        "cuando_bajar": "si es ajuste menor, formato o plumbing evidente"
+      },
+      {
+        "tipo_de_tarea": "refactor grande o analisis profundo de repo",
+        "modelo_recomendado": "GPT-5.1-Codex-Max",
+        "nivel_recomendado": "alto",
+        "uso": "sesiones largas con multiples archivos, muchas dependencias o riesgo de regresion",
+        "cuando_subir": "si la tarea requiere consolidar mucho contexto o resolver contradicciones",
+        "cuando_bajar": "si el cambio es local, acotado y mecanico"
+      },
+      {
+        "tipo_de_tarea": "cambios simples y mecanicos",
+        "modelo_recomendado": "GPT-5.1-Codex-Mini",
+        "nivel_recomendado": "bajo",
+        "uso": "ajustes pequenos, formato, renombres y tareas de bajo valor por token",
+        "cuando_subir": "si aparece ambiguedad, complejidad tecnica o necesidad de mas trazabilidad",
+        "cuando_bajar": "mantener bajo mientras la tarea siga siendo mecanica"
+      }
+    ]
+  },
+  "cumplimiento_estandares": {
+    "marcos_de_referencia": [
+      {
+        "estandar": "NIST AI Risk Management Framework 1.0 (AI RMF 1.0)",
+        "principios_mapeados": ["Gobernanza", "Transparencia", "Responsabilidad"],
+        "aplicacion_en_sistema": "Soberanía humana estricta y Ledger inmutable con Hashes SHA-256.",
+        "url_oficial": "https://www.nist.gov/itl/ai-risk-management-framework",
+        "url_auditoria": "https://en.wikipedia.org/wiki/Risk_Management_Framework",
+        "descriptores_clave": ["NIST", "Risk Management Framework"],
+        "ultima_consulta": "2026-03-24"
+      },
+      {
+        "estandar": "Recomendaciones de la UNESCO sobre la Ética de la IA",
+        "principios_mapeados": ["Proporcionalidad", "Seguridad", "Privacidad"],
+        "aplicacion_en_sistema": "Clasificación de riesgo en bitácoras y guardrails de inmutabilidad.",
+        "url_oficial": "https://www.unesco.org/en/legal-affairs/recommendation-ethics-artificial-intelligence",
+        "url_auditoria": "https://en.wikipedia.org/wiki/Ethics_of_artificial_intelligence",
+        "descriptores_clave": ["UNESCO", "Ethics"],
+        "ultima_consulta": "2026-03-24"
+      },
+      {
+        "estandar": "COPE (Committee on Publication Ethics): Authorship and AI tools",
+        "principios_mapeados": ["Transparencia de Autoría", "Responsabilidad de Integridad"],
+        "aplicacion_en_sistema": "Documentación obligatoria de modelo/proveedor y prohibición de autoría IA.",
+        "url_oficial": "https://publicationethics.org/cope-position-statements/ai-author",
+        "url_auditoria": "https://en.wikipedia.org/wiki/Committee_on_Publication_Ethics",
+        "descriptores_clave": ["Committee", "Ethics", "COPE"],
+        "ultima_consulta": "2026-03-24"
+      },
+      {
+        "estandar": "ISO/IEC 42001:2023 - Artificial intelligence — Management system",
+        "principios_mapeados": ["Gestión de Sistemas", "Mejora Continua", "Evaluación de Impacto"],
+        "aplicacion_en_sistema": "Módulo guardrails.py y política de backups automáticos.",
+        "url_oficial": "https://www.iso.org/standard/81230.html",
+        "url_auditoria": "https://www.iso.org/standard/81230.html",
+        "descriptores_clave": ["ISO/IEC 42001", "Artificial intelligence"],
+        "ultima_consulta": "2026-03-24"
+      },
+      {
+        "estandar": "IEEE 7000-2021 - Value-Based Engineering",
+        "principios_mapeados": ["Inclusión de Valores Éticos en Diseño"],
+        "aplicacion_en_sistema": "Inyección de soberanía humana en el ADN del agente (Skill handshake_ledger).",
+        "url_oficial": "https://standards.ieee.org/ieee/7000/6744/",
+        "url_auditoria": "https://en.wikipedia.org/wiki/Value-based_engineering",
+        "descriptores_clave": ["Value-based engineering", "IEEE"],
+        "ultima_consulta": "2026-03-24"
+      },
+      {
+        "estandar": "Principios FAIR (Findable, Accessible, Interoperable, Reusable)",
+        "principios_mapeados": ["Datos Científicos Transparentes", "Interoperabilidad"],
+        "aplicacion_en_sistema": "Estructura de Matriz de Trazabilidad y formatos agnósticos (YAML/Markdown).",
+        "url_oficial": "https://www.go-fair.org/fair-principles/",
+        "url_auditoria": "https://en.wikipedia.org/wiki/FAIR_data",
+        "descriptores_clave": ["Findability", "Accessibility", "Interoperability", "Reusability"],
+        "ultima_consulta": "2026-03-24"
+      }
+    ],
+    "verificador_etico_automatico": "verify_ledger.py [Integrity Check]",
+    "politica_de_revisión_de_estandares": "Semestral"
+  },
+  "evidencia_fuente_conversacion": {
+    "obligatoria_para_val_step_nuevo": true,
+    "platform": "codex",
+    "client_surface": "vscode_codex",
+    "capture_method": "automatic_transcript_only",
+    "captura_manual_requerida": false,
+    "message_role_default": "human",
+    "activacion": {
+      "desde_step_id": "VAL-STEP-501",
+      "justificacion": "VAL-STEP-500 implementa la migración. A partir del siguiente step, toda validación humana nueva debe quedar enlazada a evidencia fuente corroborable."
+    },
+    "artefactos_minimos": [
+      "transcripcion.md",
+      "metadata.json"
+    ],
+    "flujo_requerido": [
+      "registrar fuente con tesis.py source register",
+      "enlazar source_event_id al VAL-STEP nuevo",
+      "verificar con tesis.py source verify --step-id STEP_ID_REAL",
+      "mantener evidencia_privada fuera de la superficie pública"
+    ]
+  },
+  "referencias_base": [
+    {
+      "fuente": "NIST AI Risk Management Framework 1.0",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+    },
+    {
+      "fuente": "UNESCO Recommendation on the Ethics of Artificial Intelligence",
+      "url": "https://www.unesco.org/en/legal-affairs/recommendation-ethics-artificial-intelligence"
+    },
+    {
+      "fuente": "The Turing Way, AI-assisted writing and collaboration guidance",
+      "url": "https://book.the-turing-way.org/"
+    }
+  ]
+}

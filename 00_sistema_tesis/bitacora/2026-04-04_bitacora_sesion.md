@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-04
 
 - **ID de Sesión:** codex-local-20260404-trazabilidad-cierre
-- **Cadena de Confianza (Anterior):** `sha256/01e8f238fd233bdd9b9915759be03950e7925373a27e05707a1cdc94eed848d5`
+- **Cadena de Confianza (Anterior):** `sha256/1788c2804520a0da93c800c24ce5c1979c727edfb5da1e075a9917b257f031ba`
 - **Bloque principal:** B0
 - **Tipo de sesión:** administración | implementación | validación
 
@@ -70,7 +70,7 @@ Completar trazabilidad de avances pendientes e implementar automatización en ho
 ## Siguiente paso concreto
 Consolidar cambios en commit firmado y ejecutar push con variables de entorno requeridas por `pre-push`.
 
-[LID]: log_conversaciones_ia.md
+[LID]: log_sesiones_trabajo_registradas.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 

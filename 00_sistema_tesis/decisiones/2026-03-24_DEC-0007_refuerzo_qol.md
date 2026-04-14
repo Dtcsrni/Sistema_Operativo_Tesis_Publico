@@ -60,7 +60,7 @@ Retroactivo: Decisión tomada durante la fase de infraestructura inicial.
   - **Portabilidad:** El sistema puede moverse entre Windows, Linux y Orange Pi con la misma imagen Docker.
 - **Negativas/Riesgos:**
   - Requiere mantener el `requirements-dev.txt` actualizado para la imagen Docker.
-## Trazabilidad de IA
+## Trazabilidad del trabajo asistido
 
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0

@@ -56,7 +56,7 @@ Retroactivo: Decisión tomada durante la fase de infraestructura inicial.
   - **Seguridad Agéntica:** La IA deja de ser un "actor silencioso" y se convierte en un "colaborador transparente".
 - **Negativas/Riesgos:**
   - Un 0% de soberanía al inicio puede resultar abrumador, pero incentiva la revisión exhaustiva.
-## Trazabilidad de IA
+## Trazabilidad del trabajo asistido
 
 - **Proveedor:** Google (DeepMind)
 - **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0

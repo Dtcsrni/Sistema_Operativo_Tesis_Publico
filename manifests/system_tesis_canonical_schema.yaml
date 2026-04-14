@@ -29,7 +29,7 @@
     },
     "traceability_views": {
       "path_globs": [
-        "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
+        "00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md",
         "00_sistema_tesis/bitacora/matriz_trazabilidad.md",
         "00_sistema_tesis/bitacora/indice_fuentes_conversacion.md"
       ],
@@ -56,3 +56,4 @@
     "major_bump_required_for_entity_removal": true
   }
 }
+

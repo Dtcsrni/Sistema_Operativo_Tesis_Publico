@@ -49,8 +49,8 @@
     "Los bloques macro se gobiernan en bloques.yaml y los subbloques/tareas operativas en backlog.csv.",
     "Toda decisión de arquitectura, alcance, método o evidencia se registra como decisión o bitácora.",
     "Los datos raw se preservan inmutables; las transformaciones se documentan y versionan.",
-    "Toda salida asistida por IA debe someterse a revisión humana proporcional al riesgo.",
-    "Todo flujo crítico debe poder ejecutarse por vía manual explícita; la IA es opcional y nunca requisito operativo.",
+    "Toda salida con asistencia de IA debe someterse a revisión humana proporcional al riesgo.",
+    "Todo flujo crítico debe poder ejecutarse por vía manual explícita; la asistencia con IA es opcional y nunca requisito operativo.",
     "La operación se separa en superficie canónica no pública canónica y superficie pública sanitizada, ambas regenerables desde fuentes.",
     "Los cambios en automatización y software deben seguir TDD con evidencia de prueba ejecutada y resultado verificable.",
     "Los metadatos operativos críticos y la identidad de agentes se definen en configuración versionada o entorno; nunca en scripts o plantillas hardcodeadas."

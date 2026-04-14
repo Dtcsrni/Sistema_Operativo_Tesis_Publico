@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-12
 
 - **ID de Sesión:** codex-local-20260412-b0-desktop-regularizacion
-- **Cadena de Confianza (Anterior):** `sha256/548e9e0b7b9c41f638070a520ceb95fb9d3d665614df107b60e9701b7e1422f2`
+- **Cadena de Confianza (Anterior):** `sha256/2756c0ca4015a3a04df22dbf4812aa5a19b48ca83374d51b5c65ba471e6acf87`
 - **Bloque principal:** B0
 - **Tipo de sesión:** arquitectura | trazabilidad | validación
 
@@ -31,7 +31,7 @@ Cerrar el paquete desktop-first de B0, materializar su trazabilidad protegida y 
 
 ## Evidencia Técnica e Integridad
 - **Commits de referencia:** `70f3a45`
-- **Archivos Clave:** `manifests/system_tesis_architecture_contract.yaml`, `manifests/system_tesis_canonical_schema.yaml`, `manifests/system_tesis_cli_contracts.yaml`, `07_scripts/validate_b0_architecture.py`, `tests/test_b0_architecture_contracts.py`, `00_sistema_tesis/bitacora/log_conversaciones_ia.md`, `00_sistema_tesis/bitacora/matriz_trazabilidad.md`
+- **Archivos Clave:** `manifests/system_tesis_architecture_contract.yaml`, `manifests/system_tesis_canonical_schema.yaml`, `manifests/system_tesis_cli_contracts.yaml`, `07_scripts/validate_b0_architecture.py`, `tests/test_b0_architecture_contracts.py`, `00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md`, `00_sistema_tesis/bitacora/matriz_trazabilidad.md`
 - **Validación del Sistema:** [x] Auditoría y pruebas locales relevantes ejecutadas.
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
@@ -67,7 +67,7 @@ Cerrar el paquete desktop-first de B0, materializar su trazabilidad protegida y 
 ## Siguiente paso concreto
 Conservar el cierre diario en tiempo real para que Git, bitácoras, ledger y matriz no vuelvan a divergir.
 
-[LID]: log_conversaciones_ia.md
+[LID]: log_sesiones_trabajo_registradas.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 

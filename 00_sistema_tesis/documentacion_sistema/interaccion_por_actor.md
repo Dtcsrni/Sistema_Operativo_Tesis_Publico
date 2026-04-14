@@ -21,7 +21,7 @@
 
 - editar artefactos derivados a mano;
 - usar la capa publica como fuente de verdad;
-- asumir que una salida de IA equivale a validacion humana;
+- asumir que una salida con asistencia de IA equivale a validacion humana;
 - marcar una tarea principal como cerrada si los prerrequisitos siguen pendientes.
 
 ## Lector publico
@@ -45,10 +45,10 @@
 
 - que la parte publica contiene toda la evidencia;
 - que la ausencia de un detalle implica ausencia de trazabilidad;
-- que la IA conduce autonomamente el sistema;
+- que la asistencia con IA conduce autonomamente el sistema;
 - que los pendientes tecnicos abiertos ya estan resueltos.
 
-## IA instrumental
+## Asistencia con IA (instrumental)
 
 ### Funcion permitida
 

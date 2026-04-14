@@ -17,7 +17,7 @@ CANON_DIR = ROOT / "00_sistema_tesis" / "canon"
 EVENTS_PATH = CANON_DIR / "events.jsonl"
 STATE_PATH = CANON_DIR / "state.json"
 
-LEDGER_PATH = ROOT / "00_sistema_tesis" / "bitacora" / "log_conversaciones_ia.md"
+LEDGER_PATH = ROOT / "00_sistema_tesis" / "bitacora" / "log_sesiones_trabajo_registradas.md"
 MATRIX_PATH = ROOT / "00_sistema_tesis" / "bitacora" / "matriz_trazabilidad.md"
 BITACORA_DIR = ROOT / "00_sistema_tesis" / "bitacora"
 IA_JOURNAL_PATH = ROOT / "00_sistema_tesis" / "ia_journal.json"
@@ -234,7 +234,7 @@ def load_events() -> list[dict[str, Any]]:
 def projection_paths(events: list[dict[str, Any]] | None = None) -> list[str]:
     items = load_events() if events is None else events
     projected = {
-        "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
+        "00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md",
         "00_sistema_tesis/bitacora/matriz_trazabilidad.md",
         "00_sistema_tesis/bitacora/indice_fuentes_conversacion.md",
         "00_sistema_tesis/bitacora/openclaw_proposals.md",
@@ -688,12 +688,12 @@ def _read_legacy_ledger_source() -> str:
         if _ledger_content_has_payload(content):
             return content
 
-    git_content = _read_file_from_git_head("00_sistema_tesis/bitacora/log_conversaciones_ia.md")
+    git_content = _read_file_from_git_head("00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md")
     if git_content and _ledger_content_has_payload(git_content):
         return git_content
 
     backups = sorted(
-        (ROOT / "config" / "backups").glob("00_sistema_tesis_bitacora_log_conversaciones_ia.md*.bak"),
+        (ROOT / "config" / "backups").glob("00_sistema_tesis_bitacora_log_sesiones_trabajo_registradas.md*.bak"),
         reverse=True,
     )
     for backup in backups:
@@ -788,7 +788,7 @@ def import_legacy_events(force: bool = False) -> list[dict[str, Any]]:
                     "matrix_row": matrix_entry,
                 },
                 "affected_files": [
-                    "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
+                    "00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md",
                     "00_sistema_tesis/bitacora/matriz_trazabilidad.md",
                 ],
                 "human_validation": {
@@ -815,7 +815,7 @@ def import_legacy_events(force: bool = False) -> list[dict[str, Any]]:
     bitacora_files = sorted(
         path
         for path in BITACORA_DIR.glob("*.md")
-        if path.name not in {"log_conversaciones_ia.md", "matriz_trazabilidad.md"}
+        if path.name not in {"log_sesiones_trabajo_registradas.md", "matriz_trazabilidad.md"}
     )
     for bitacora_path in bitacora_files:
         content = normalize_text(bitacora_path.read_text(encoding="utf-8"))
@@ -882,7 +882,7 @@ def import_legacy_events(force: bool = False) -> list[dict[str, Any]]:
 def render_ledger(events: list[dict[str, Any]]) -> str:
     lines = [
         "<!-- SISTEMA_TESIS:PROTEGIDO -->",
-        "# Ledger de Conversaciones IA (Inmutable y Enlazado)",
+        "# Ledger de Sesiones de trabajo registradas (Inmutable y Enlazado)",
         "",
         "Este archivo es el **Libro Mayor** de las validaciones humanas. El contenido exacto está entre `<<<` y `>>>`. ",
         "Cada bloque forma parte de una **Cadena de Evidencia Vinculada**.",
@@ -957,7 +957,7 @@ def render_matrix(events: list[dict[str, Any]]) -> str:
         step_id = str(event["event_id"])
         matrix_row = dict(event.get("payload", {}).get("matrix_row", {}))
         lines.append(
-            "| {date} | [{step}] | {reference} | {summary} | {risk} | {ethics} | {state} | [Log](log_conversaciones_ia.md#{anchor}) |".format(
+            "| {date} | [{step}] | {reference} | {summary} | {risk} | {ethics} | {state} | [Log](log_sesiones_trabajo_registradas.md#{anchor}) |".format(
                 date=matrix_row.get("date", str(event["occurred_at"])[:10]),
                 step=step_id,
                 reference=matrix_row.get("reference", event.get("links", {}).get("reference", "[DEC-0014]")),
@@ -974,14 +974,14 @@ def render_matrix(events: list[dict[str, Any]]) -> str:
             "---",
             "**Navegación:**",
             "- [Volver al Inicio](../../README.md)",
-            "- [Consultar Libro Mayor](log_conversaciones_ia.md)",
+            "- [Consultar Libro Mayor](log_sesiones_trabajo_registradas.md)",
             "- [Auditoría del Sistema](../../06_dashboard/generado/reporte_consistencia.md)",
             "",
         ]
     )
     for event in human_events:
         step_id = str(event["event_id"])
-        lines.append(f"[{step_id}]: log_conversaciones_ia.md#{step_id.lower()}")
+        lines.append(f"[{step_id}]: log_sesiones_trabajo_registradas.md#{step_id.lower()}")
     return "\n".join(lines) + "\n"
 
 
@@ -1018,10 +1018,10 @@ def render_conversation_source_index(events: list[dict[str, Any]]) -> str:
         [
             "",
             "**Navegación:**",
-            "- [Volver al Ledger](log_conversaciones_ia.md)",
+            "- [Volver al Ledger](log_sesiones_trabajo_registradas.md)",
             "- [Volver a la Matriz](matriz_trazabilidad.md)",
             "",
-            "[LID]: log_conversaciones_ia.md",
+            "[LID]: log_sesiones_trabajo_registradas.md",
             "[GOV]: ../config/ia_gobernanza.yaml",
             "[AUD]: ../../07_scripts/build_all.py",
             "",
@@ -1062,11 +1062,11 @@ def render_openclaw_proposals(events: list[dict[str, Any]]) -> str:
         [
             "",
             "**Navegación:**",
-            "- [Volver al Ledger](log_conversaciones_ia.md)",
+            "- [Volver al Ledger](log_sesiones_trabajo_registradas.md)",
             "- [Volver a la Matriz](matriz_trazabilidad.md)",
             "- [Volver al Índice de Fuentes](indice_fuentes_conversacion.md)",
             "",
-            "[LID]: log_conversaciones_ia.md",
+            "[LID]: log_sesiones_trabajo_registradas.md",
             "[GOV]: ../config/ia_gobernanza.yaml",
             "[AUD]: ../../07_scripts/build_all.py",
             "",
@@ -1107,7 +1107,7 @@ def render_session_files(events: list[dict[str, Any]]) -> dict[str, str]:
 
 def projected_payloads(events: list[dict[str, Any]]) -> dict[str, str]:
     outputs: dict[str, str] = {
-        "00_sistema_tesis/bitacora/log_conversaciones_ia.md": render_ledger(events),
+        "00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md": render_ledger(events),
         "00_sistema_tesis/bitacora/matriz_trazabilidad.md": render_matrix(events),
         "00_sistema_tesis/bitacora/indice_fuentes_conversacion.md": render_conversation_source_index(events),
         "00_sistema_tesis/bitacora/openclaw_proposals.md": render_openclaw_proposals(events),
@@ -1336,7 +1336,7 @@ def append_human_validation(
         },
         "affected_files": [
             "00_sistema_tesis/canon/events.jsonl",
-            "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
+            "00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md",
             "00_sistema_tesis/bitacora/matriz_trazabilidad.md",
         ],
         "human_validation": {
@@ -1495,3 +1495,4 @@ def append_session_record(*, rel_path: str, content: str, session_id: str) -> di
             "human_validation": {"required": False},
         }
     )
+

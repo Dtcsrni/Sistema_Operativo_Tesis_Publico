@@ -88,7 +88,7 @@ No sustituye la tesis. Gobierna la tesis.
 Existe para resolver cuatro problemas simultaneos:
 
 1. Evitar que decisiones, cambios y resultados queden dispersos o dependan de memoria informal.
-2. Mantener control humano explicito cuando se usa automatizacion o IA instrumental.
+2. Mantener control humano explicito cuando se usa automatizacion o asistencia con IA.
 3. Separar con rigor la base privada canonica de la superficie publica divulgable.
 4. Permitir retomar, auditar, defender y publicar el sistema sin reconstruir contexto desde cero.
 
@@ -126,7 +126,7 @@ La documentacion del sistema debe permitir dos lecturas validas:
 El sistema no debe:
 
 - inventar arquitectura IoT que aun no sea canonica;
-- presentar la IA como autora o validadora final;
+- presentar la asistencia con IA como autora o validadora final;
 - mezclar evidencia privada con la superficie publica;
 - reemplazar fuentes canonicas con artefactos derivados.
 
@@ -479,7 +479,7 @@ Todo flujo del sistema debe cumplir tres condiciones:
 
 - editar artefactos derivados a mano;
 - usar la capa publica como fuente de verdad;
-- asumir que una salida de IA equivale a validacion humana;
+- asumir que una salida con asistencia de IA equivale a validacion humana;
 - marcar una tarea principal como cerrada si los prerrequisitos siguen pendientes.
 
 ### Lector publico
@@ -503,10 +503,10 @@ Todo flujo del sistema debe cumplir tres condiciones:
 
 - que la parte publica contiene toda la evidencia;
 - que la ausencia de un detalle implica ausencia de trazabilidad;
-- que la IA conduce autonomamente el sistema;
+- que la asistencia con IA conduce autonomamente el sistema;
 - que los pendientes tecnicos abiertos ya estan resueltos.
 
-### IA instrumental
+### Asistencia con IA (instrumental)
 
 #### Funcion permitida
 
@@ -562,14 +562,14 @@ Toda documentacion mejorada del sistema debe responder implicitamente a estas pr
 |dashboard|00_sistema_tesis/config/dashboard.yaml|sí|2026-03-24|
 |publicacion|00_sistema_tesis/config/publicacion.yaml|sí|2026-04-14|
 |agent_identity|Identidad técnica no publicada por seguridad|sí|2026-03-26|
-|gobernanza_ia|00_sistema_tesis/config/ia_gobernanza.yaml|sí|2026-04-11|
-|wiki|00_sistema_tesis/config/wiki.yaml|sí|2026-03-27|
+|gobernanza_ia|00_sistema_tesis/config/ia_gobernanza.yaml|sí|2026-04-14|
+|wiki|00_sistema_tesis/config/wiki.yaml|sí|2026-04-14|
 |manual_operacion_humana|00_sistema_tesis/manual_operacion_humana.md|sí|2026-04-11|
 |backlog|01_planeacion/backlog.csv|sí|2026-04-14|
 |riesgos|01_planeacion/riesgos.csv|sí|2026-03-26|
 |roadmap|01_planeacion/roadmap.csv|sí|2026-03-23|
 |entregables|01_planeacion/entregables.csv|sí|2026-04-14|
-|decisiones|00_sistema_tesis/decisiones|sí|2026-04-11|
+|decisiones|00_sistema_tesis/decisiones|sí|2026-04-14|
 |bitacora|00_sistema_tesis/bitacora|sí|2026-04-14|
 |reportes_semanales|00_sistema_tesis/reportes_semanales|sí|2026-03-24|
 |dashboard_generado|06_dashboard/generado/index.html|sí|2026-04-14|

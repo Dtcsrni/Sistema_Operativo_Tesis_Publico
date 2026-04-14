@@ -13,7 +13,7 @@ SOURCE_PATHS = [
     "01_planeacion/backlog.csv",
     "01_planeacion/riesgos.csv",
     "01_planeacion/entregables.csv",
-    "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
+    "00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md",
     "00_sistema_tesis/bitacora/matriz_trazabilidad.md",
 ]
 
@@ -128,7 +128,7 @@ def render_memory() -> str:
             "## Referencias base",
             "",
             "- `00_sistema_tesis/canon/events.jsonl`",
-            "- `00_sistema_tesis/bitacora/log_conversaciones_ia.md`",
+            "- `00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md`",
             "- `00_sistema_tesis/bitacora/matriz_trazabilidad.md`",
             "- `01_planeacion/backlog.csv`",
             "- `01_planeacion/entregables.csv`",
@@ -147,3 +147,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

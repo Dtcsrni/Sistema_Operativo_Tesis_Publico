@@ -21,7 +21,7 @@ class TestDocumentAudit(unittest.TestCase):
   - **Hash de confirmación verbal:** `sha256:abc`
   - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-999 :: human_validation.confirmation_text`
 
-[LID]: log_conversaciones_ia.md
+[LID]: log_sesiones_trabajo_registradas.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 """
@@ -37,7 +37,7 @@ class TestDocumentAudit(unittest.TestCase):
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
   - **Soporte:** [VAL-STEP-999]
 
-[LID]: log_conversaciones_ia.md
+[LID]: log_sesiones_trabajo_registradas.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 """
@@ -67,3 +67,4 @@ class TestDocumentAudit(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

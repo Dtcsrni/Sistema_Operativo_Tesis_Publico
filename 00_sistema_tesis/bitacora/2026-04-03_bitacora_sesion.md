@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-03
 
 - **ID de Sesión:** codex-local-20260403-publicacion-downstream-hardening
-- **Cadena de Confianza (Anterior):** `sha256/0ccde1b22f7a527ae26a4e42677f6fb421952a394bbd0284f9094e0ce786c032`
+- **Cadena de Confianza (Anterior):** `sha256/6ec151b0e64388a4614eafaed72595f7c390d5bc36074f6ce437b099fcb68514`
 - **Bloque principal:** B0
 - **Tipo de sesión:** publicación | ci/cd | endurecimiento | regularización
 
@@ -67,7 +67,7 @@ Endurecer la publicación downstream y la superficie pública, estabilizando enl
 ## Siguiente paso concreto
 Mantener la cobertura diaria sincronizada con la actividad real de Git para que este tipo de regularización no vuelva a acumularse.
 
-[LID]: log_conversaciones_ia.md
+[LID]: log_sesiones_trabajo_registradas.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 

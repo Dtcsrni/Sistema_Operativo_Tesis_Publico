@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-01
 
 - **ID de Sesión:** codex-local-20260401-trazabilidad-conversacion-actual
-- **Cadena de Confianza (Anterior):** `sha256/89ad026423739fccfaadad4f2bdbe0de84c7045bc35d851f9e913c53ae4b57c3`
+- **Cadena de Confianza (Anterior):** `sha256/909d33b3016c313b4a26a508d5c5d9b2f645f44abe1b2deee8ecd791b37aebd4`
 - **Bloque principal:** B0
 - **Tipo de sesión:** validación | documentación | integración | automatización
 
@@ -31,7 +31,7 @@ Completar la trazabilidad de la conversación actual, regularizar la fuente de c
 
 ## Evidencia Técnica e Integridad
 - **Commits de referencia:** `fc5f028`, `ca334ec`, `97ac854`, `d2f6182`
-- **Archivos Clave:** `00_sistema_tesis/canon/events.jsonl`, `00_sistema_tesis/bitacora/log_conversaciones_ia.md`, `00_sistema_tesis/bitacora/matriz_trazabilidad.md`, `00_sistema_tesis/bitacora/indice_fuentes_conversacion.md`, `07_scripts/build_wiki.py`, `07_scripts/publication.py`
+- **Archivos Clave:** `00_sistema_tesis/canon/events.jsonl`, `00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md`, `00_sistema_tesis/bitacora/matriz_trazabilidad.md`, `00_sistema_tesis/bitacora/indice_fuentes_conversacion.md`, `07_scripts/build_wiki.py`, `07_scripts/publication.py`
 - **Validación del Sistema:** [x] `build_all.py` aprobado.
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
@@ -66,7 +66,7 @@ Completar la trazabilidad de la conversación actual, regularizar la fuente de c
 ## Siguiente paso concreto
 Mantener sincronizada la wiki con la bitácora canónica y continuar con la siguiente fase del bloque operativo.
 
-[LID]: log_conversaciones_ia.md
+[LID]: log_sesiones_trabajo_registradas.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 

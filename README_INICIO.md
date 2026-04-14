@@ -8,7 +8,7 @@
 
 Este repositorio es el **Sistema Operativo de la Tesis**: una base documental, técnica y operativa para gobernar una tesis de posgrado en IoT sobre resiliencia de telemetría y control adaptativo en entornos urbanos intermitentes.
 
-No existe para delegar la tesis a la IA. Existe para dejar una base:
+No existe para delegar la tesis a sistemas de IA. Existe para dejar una base:
 
 - humana;
 - trazable;
@@ -22,7 +22,7 @@ Existe para que el proyecto pueda:
 
 - retomar contexto en minutos y no en días;
 - vincular decisiones, evidencia, backlog, implementación y redacción;
-- sostener soberanía humana estricta cuando se usa IA instrumental;
+- sostener soberanía humana estricta cuando se usa asistencia con IA;
 - separar base privada canónica de superficie pública sanitizada;
 - explicarse con claridad al tesista y a lectores externos.
 
@@ -43,7 +43,7 @@ Los subsistemas principales son:
 - **Superficie privada:** canon, backlog, decisiones, bitácora, auditoría y evidencia completa.
 - **Superficie pública:** bundle público curado en `06_dashboard/publico/`, derivado y no editable a mano.
 - **Publicación externa:** el sitio y la exposición pública salen del downstream `https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico`, no del repo privado canónico.
-- **IA opcional:** la IA acelera trabajo, pero no es requisito para operar el sistema.
+- **Asistencia con IA opcional:** la asistencia con IA acelera trabajo, pero no es requisito para operar el sistema.
 
 ## Estructura operativa nueva
 
@@ -78,7 +78,7 @@ Si necesitas orientarte sin perder el origen canónico:
 2. Desde cada página de la wiki, usa el bloque `Origen canónico y artefactos relacionados`.
 3. Si necesitas cambiar contenido, salta de la página derivada a su fuente canónica declarada y edítala ahí.
 4. Si necesitas verificar publicación o sanitización, cruza [`06_dashboard/generado/wiki_manifest.json`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) con [`06_dashboard/publico/manifest_publico.json`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
-5. Si necesitas trazabilidad operativa, revisa [`00_sistema_tesis/bitacora/matriz_trazabilidad.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y [`00_sistema_tesis/bitacora/log_conversaciones_ia.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
+5. Si necesitas trazabilidad operativa, revisa [`00_sistema_tesis/bitacora/matriz_trazabilidad.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y [`00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
 
 ## Entradas por necesidad
 

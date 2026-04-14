@@ -67,7 +67,7 @@ graph LR
 - Revisa su bloque `Origen canónico y artefactos relacionados`.
 - Sigue la lista de fuentes canónicas declaradas en esa misma página.
 - Si necesitas validar la cadena de publicación, cruza con `06_dashboard/generado/wiki_manifest.json` y `06_dashboard/publico/manifest_publico.json`.
-- Si necesitas trazabilidad operativa, consulta `00_sistema_tesis/bitacora/matriz_trazabilidad.md` y `00_sistema_tesis/bitacora/log_conversaciones_ia.md`.
+- Si necesitas trazabilidad operativa, consulta `00_sistema_tesis/bitacora/matriz_trazabilidad.md` y `00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md`.
 
 ## Módulos del sistema
 
