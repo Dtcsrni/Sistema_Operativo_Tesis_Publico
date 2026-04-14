@@ -1690,3 +1690,11 @@ HTTP IN {"method":"notifications/initialized","jsonrpc":"2.0"}
 HANDLE method=tools/list id=2
 HANDLE method=notifications/initialized id=None
 HTTP OUT {"jsonrpc": "2.0", "id": 2, "tool_count": 7}
+HTTP IN {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{"roots":{"listChanged":true},"sampling":{},"elicitation":{"form":{},"url":{}},"tasks":{"list":{},"cancel":{},"requests":{"sampling":{"createMessage":{}},"elicitation":{"create":{}}}},"extensions":{"io.modelcontextprotocol/ui":{"mimeTypes":["text/html;profile=mcp-app"]}}},"clientInfo":{"name":"Visual Studio Code","version":"1.115.0"}}}
+HANDLE method=initialize id=1
+HTTP OUT {"jsonrpc": "2.0", "id": 1}
+HTTP IN {"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}
+HTTP IN {"method":"notifications/initialized","jsonrpc":"2.0"}
+HANDLE method=tools/list id=2
+HANDLE method=notifications/initialized id=None
+HTTP OUT {"jsonrpc": "2.0", "id": 2, "tool_count": 7}
