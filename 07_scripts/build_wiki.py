@@ -178,6 +178,9 @@ def render_markdown_fragment(rel_path: str, *, demote_by: int = 1) -> list[str]:
             hashes, title = match.groups()
             raw_line = f"{'#' * (len(hashes) + demote_by)} {title}"
         raw_line = raw_line.replace("log_conversaciones_ia.md", "log_sesiones_trabajo_registradas.md")
+        if rel_path.endswith("00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md"):
+            # Evita que contenido de trazas (por ejemplo <match ...>) rompa el parser HTML de MkDocs.
+            raw_line = raw_line.replace("<", "&lt;").replace(">", "&gt;")
         raw_line = _rewrite_embedded_markdown_links(raw_line, rel_path)
         lines.append(raw_line)
     lines.append("")
