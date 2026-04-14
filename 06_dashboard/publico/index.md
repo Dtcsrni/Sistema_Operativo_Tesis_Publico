@@ -4,7 +4,7 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 
 - **Generado:** `2026-04-13`
 - **Estado:** `ok`
-- **Fingerprint del bundle:** `a629b57aba357edb706dc62e23daec6df5360c00c148dec261150c7617de53be`
+- **Fingerprint del bundle:** `5b820fd435542e63db77a2efea8b440ca36b33c92a12deacf155a619bd28dffc`
 - **Aviso:** Este bundle público es un artefacto derivado y curado editorialmente. No se corrige a mano; se reconstruye desde la base canónica.
 
 ## Superficies
@@ -16,6 +16,7 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 ## Rutas de navegación pública
 
 - Entrada general: `README_publico.md`.
+- Estado operativo breve: `MEMORY_publico.md`.
 - Mapa del sistema y ruta base: `wiki/index.md`.
 - Propósito, módulos y flujos: `wiki/sistema.md`.
 - Reglas y límites: `wiki/gobernanza.md`.
@@ -32,6 +33,7 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 ## Artefactos incluidos
 
 - `06_dashboard/publico/README_publico.md` ← `README.md`
+- `06_dashboard/publico/MEMORY_publico.md` ← `MEMORY.md`
 - `06_dashboard/publico/wiki/bitacora.md` ← `06_dashboard/wiki/bitacora.md`
 - `06_dashboard/publico/wiki/bloques.md` ← `06_dashboard/wiki/bloques.md`
 - `06_dashboard/publico/wiki/decisiones.md` ← `06_dashboard/wiki/decisiones.md`

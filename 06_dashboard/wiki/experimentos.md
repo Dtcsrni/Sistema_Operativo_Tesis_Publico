@@ -3,7 +3,7 @@
 Estado de cobertura de simulación y validación experimental.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-13`
+- **Fecha:** `2026-04-14`
 - **Estado:** `OK`
 - **Fuentes:** `02_experimentos`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -53,4 +53,4 @@ Estado de cobertura de simulación y validación experimental.
 - Cobertura: `pendiente`
 - Mensaje: Sin contenido operativo aún. La wiki refleja el estado real del repositorio y no inventa artefactos.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

@@ -18,10 +18,10 @@ Este repositorio documenta decisiones, hipótesis, backlog, riesgos, experimento
 ## Estado actual
 
 - **Versión del sistema:** `0.1.0`
-- **Estado global:** `base_operativa_inicial`
+- **Estado global:** `arquitectura_formal_reforzada`
 - **Bloque activo:** `B0` - Gobierno del sistema de tesis y base operativa
 - **Fase actual:** `investigacion_y_desarrollo_metodologico`
-- **Siguiente entregable:** `ENT-001` - Base operativa del sistema de tesis
+- **Siguiente entregable:** `ENT-015` - Conformidad y eficiencia operativa del sistema de tesis
 - **Riesgo principal abierto:** `R-001`
 
 ## Qué contiene
@@ -57,6 +57,7 @@ Empieza por estos archivos:
 - [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md)
 - [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md)
 - [`01_planeacion/backlog.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/01_planeacion/backlog.csv)
+- [`MEMORY.md`](06_dashboard/publico/MEMORY_publico.md)
 - [`docs/02_arquitectura/arquitectura-general.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/docs/02_arquitectura/arquitectura-general.md)
 - [`manifests/storage_layout.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/manifests/storage_layout.yaml)
 - [`bootstrap/orangepi/10_primer-arranque.sh`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/bootstrap/orangepi/10_primer-arranque.sh)
@@ -77,7 +78,7 @@ Empieza por estos archivos:
 - La entrada navegable del sistema es [`06_dashboard/wiki/index.md`](06_dashboard/publico/wiki/index.md).
 - Cada página de la wiki debe declarar navegación local, fuentes canónicas y artefactos derivados relacionados.
 - Si una salida derivada necesita cambio, la intervención correcta es sobre la fuente canónica declarada, no sobre el derivado.
-- Para cerrar la cadena de rastreo revisa [`06_dashboard/generado/wiki_manifest.json`](06_dashboard/publico/manifest_publico.json) y [`06_dashboard/publico/manifest_publico.json`](06_dashboard/publico/manifest_publico.json).
+- Para cerrar la cadena de rastreo revisa [`06_dashboard/generado/wiki_manifest.json`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/manifest_publico.json) y [`06_dashboard/publico/manifest_publico.json`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/manifest_publico.json).
 - Para trazabilidad operativa del trabajo revisa [`00_sistema_tesis/bitacora/matriz_trazabilidad.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/matriz_trazabilidad.md) y [`00_sistema_tesis/bitacora/log_conversaciones_ia.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md).
 
 ## Qué revisar siempre
@@ -86,10 +87,11 @@ Empieza por estos archivos:
 - [`00_sistema_tesis/config/sistema_tesis.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/sistema_tesis.yaml)
 - [`01_planeacion/backlog.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/01_planeacion/backlog.csv)
 - [`01_planeacion/riesgos.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/01_planeacion/riesgos.csv)
+- [`MEMORY.md`](06_dashboard/publico/MEMORY_publico.md)
 - [`00_sistema_tesis/bitacora/matriz_trazabilidad.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/matriz_trazabilidad.md)
 - [`06_dashboard/wiki/index.md`](06_dashboard/publico/wiki/index.md)
 - [`06_dashboard/generado/index.html`](06_dashboard/publico/dashboard/index.html)
-- [`06_dashboard/publico/index.md`](06_dashboard/publico/index.md)
+- [`06_dashboard/publico/index.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/index.md)
 
 ## Hipótesis activas prioritarias
 
@@ -109,7 +111,7 @@ Empieza por estos archivos:
 - **T-027** · `B0` · Definir arquitectura de separación obligatoria entre sistema_tesis edge_iot y openclaw con contratos de interfaz · prioridad `critica` · objetivo `2026-04-06`
 - **T-011** · `B2` · Formalizar componentes flujos y modos de degradación de la arquitectura propuesta · prioridad `critica` · objetivo `2026-04-08`
 - **T-029** · `B0` · Separar gestión de secretos y variables por dominio con rutas y políticas independientes · prioridad `critica` · objetivo `2026-04-08`
-- **T-039** · `B0` · Definir arquitectura modular del sistema operativo de tesis con límites entre canon proyecciones auditoría y publicación · prioridad `critica` · objetivo `2026-04-08`
+- **T-030** · `B0` · Definir aislamiento de red y runtime por dominio en Orange Pi con comunicación solo por contratos explícitos · prioridad `critica` · objetivo `2026-04-09`
 
 ## Riesgos abiertos
 
@@ -211,11 +213,11 @@ python 07_scripts/report_consistency.py
 - [`README.md`](06_dashboard/publico/README_publico.md)
 - [`06_dashboard/wiki/index.md`](06_dashboard/publico/wiki/index.md)
 - [`06_dashboard/generado/wiki/index.html`](06_dashboard/publico/wiki_html/index.html)
-- [`06_dashboard/generado/wiki_manifest.json`](06_dashboard/publico/manifest_publico.json)
+- [`06_dashboard/generado/wiki_manifest.json`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/manifest_publico.json)
 - [`06_dashboard/generado/index.html`](06_dashboard/publico/dashboard/index.html)
 - [`06_dashboard/generado/hoja_maestra_consolidada.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/hoja_maestra_consolidada.csv)
 - [`reporte interno no publicado`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
 
-_Generado automáticamente el 2026-04-11._
+_Generado automáticamente el 2026-04-14._
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

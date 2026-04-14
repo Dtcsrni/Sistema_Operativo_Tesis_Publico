@@ -91,4 +91,4 @@ El evaluador actual recomienda una ruta unica: serena.
 - La captura automatica al journal de operacion IA queda como siguiente fase, no como requisito de cierre.
 - La validacion E2E del MCP se documenta en `00_sistema_tesis/documentacion_sistema/operacion_serena_mcp_codex.md`.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

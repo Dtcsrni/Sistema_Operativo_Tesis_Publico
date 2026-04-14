@@ -2,4 +2,4 @@
 
 Cruza concepto, nivel de profundidad, fuentes, contradicciones, utilidad para tesis y siguiente accion.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

@@ -41,6 +41,7 @@ class TestTesisSync(unittest.TestCase):
             "06_dashboard/publico/index.md",
             "00_sistema_tesis/config/token_usage_snapshot.json",
             "README.md",
+            "MEMORY.md",
         ]
         operational, secondary = classify_sync_paths(
             paths,
@@ -61,6 +62,7 @@ class TestTesisSync(unittest.TestCase):
                 "06_dashboard/publico/index.md",
                 "00_sistema_tesis/config/token_usage_snapshot.json",
                 "README.md",
+                "MEMORY.md",
             ],
         )
 

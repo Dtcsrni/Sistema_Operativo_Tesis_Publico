@@ -19,4 +19,4 @@ Endurecer el host Orange Pi para el dominio `edge_iot` sin afectar `sistema_tesi
 - Este corte no abre puertos de aplicación ni define unidades propias de `edge_iot`.
 - La comunicación con otros dominios sigue limitada a rutas de intercambio y CLI explícita.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

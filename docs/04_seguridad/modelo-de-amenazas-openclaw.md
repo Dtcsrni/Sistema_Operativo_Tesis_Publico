@@ -30,4 +30,4 @@ Definir los riesgos principales de `openclaw` como plano de control asistivo mul
 - Migración opcional a un resolver compatible con vault sin romper la CLI ni los wrappers.
 - Reglas de publicación más finas por tipo de evidencia y tipo de artefacto.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

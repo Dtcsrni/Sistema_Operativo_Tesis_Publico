@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-13",
+  "generated_at": "2026-04-14",
   "verification": {
     "status": "ok",
     "required_page_fields": [
@@ -207,8 +207,8 @@
     },
     {
       "path": "00_sistema_tesis/config/sistema_tesis.yaml",
-      "sha256": "779c044c7f15d6febfac5ec52ca6312582c65dabc6c41055cef58ea569400b94",
-      "modified": "2026-03-26",
+      "sha256": "e62200bd20b046658ffd5731aaddbf3918835ffd06778faafa7735da792e4039",
+      "modified": "2026-04-14",
       "kind": "file"
     },
     {
@@ -237,14 +237,14 @@
     },
     {
       "path": "00_sistema_tesis/config/publicacion.yaml",
-      "sha256": "a41d58cb9b884e4de3c03436f3b025cfd8cb581011397a370a0d71366adaff31",
-      "modified": "2026-04-11",
+      "sha256": "0f33e5405bcb62e8c8f2eddb594248b90ef0134203487c3c0700eef2a5f1c85e",
+      "modified": "2026-04-14",
       "kind": "file"
     },
     {
       "path": "01_planeacion/backlog.csv",
-      "sha256": "a98e7ac8ffa70ad05ace93bad273572d43113704caa6515c24a1d5fe4c335c40",
-      "modified": "2026-04-11",
+      "sha256": "42cb5c773c28da2a6793756772c06253323b9f48cf8504299e6d8b976f18c1f8",
+      "modified": "2026-04-14",
       "kind": "file"
     },
     {
@@ -261,8 +261,8 @@
     },
     {
       "path": "01_planeacion/entregables.csv",
-      "sha256": "32306e3924e2b0f56fcc2f48913e7e5487be17bf80d56db5ce1920ba6a0ff764",
-      "modified": "2026-04-07",
+      "sha256": "c98a095b217650a1dd168914f102a690b42371cb345b72e25b773f7656b6788b",
+      "modified": "2026-04-14",
       "kind": "file"
     },
     {
@@ -274,7 +274,7 @@
     {
       "path": "00_sistema_tesis/bitacora",
       "sha256": null,
-      "modified": "2026-04-13",
+      "modified": "2026-04-14",
       "kind": "directory"
     },
     {

@@ -6,4 +6,4 @@ Ruta minima:
 3. Ejecutar `python 07_scripts/tesis.py doctor --check`.
 4. Revisar `bootstrap/` antes de tocar Orange Pi.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

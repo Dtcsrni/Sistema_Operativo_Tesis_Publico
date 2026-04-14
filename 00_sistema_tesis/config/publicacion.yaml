@@ -18,6 +18,10 @@
       "target": "README_publico.md"
     },
     {
+      "source": "MEMORY.md",
+      "target": "MEMORY_publico.md"
+    },
+    {
       "source": "06_dashboard/wiki",
       "target": "wiki"
     },

@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "contract_id": "system_tesis_canonical_schema",
   "schema_version": "1.0.0",
   "compatibility": {
@@ -18,11 +18,33 @@
       "format": "json",
       "required_fields": ["current_block", "last_event_id", "derived_artifacts"]
     },
-    "projections": {
+    "derived_artifacts": {
       "path_globs": [
         "06_dashboard/wiki/*.md",
         "06_dashboard/generado/**/*",
-        "README.md"
+        "README.md",
+        "MEMORY.md"
+      ],
+      "source_of_truth": "canon"
+    },
+    "traceability_views": {
+      "path_globs": [
+        "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
+        "00_sistema_tesis/bitacora/matriz_trazabilidad.md",
+        "00_sistema_tesis/bitacora/indice_fuentes_conversacion.md"
+      ],
+      "source_of_truth": "canon"
+    },
+    "memory_summary": {
+      "path": "MEMORY.md",
+      "format": "markdown",
+      "required_sections": [
+        "Estado actual",
+        "Entregable activo",
+        "Últimos cambios validados",
+        "Próximos pendientes críticos",
+        "Riesgos prioritarios",
+        "Referencias base"
       ],
       "source_of_truth": "canon"
     }
@@ -30,6 +52,7 @@
   "migration_policy": {
     "requires_explicit_record": true,
     "requires_schema_review": true,
-    "allows_additive_fields_without_data_rewrite": true
+    "allows_additive_fields_without_data_rewrite": true,
+    "major_bump_required_for_entity_removal": true
   }
 }

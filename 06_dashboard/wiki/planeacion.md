@@ -3,7 +3,7 @@
 Backlog, riesgos, roadmap y entregables del sistema.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-13`
+- **Fecha:** `2026-04-14`
 - **Estado:** `OK`
 - **Fuentes:** `01_planeacion/backlog.csv`, `01_planeacion/riesgos.csv`, `01_planeacion/roadmap.csv`, `01_planeacion/entregables.csv`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -51,7 +51,7 @@ Backlog, riesgos, roadmap y entregables del sistema.
 
 ## Lectura rápida
 
-- Tareas pendientes o en progreso: `31`
+- Tareas pendientes o en progreso: `20`
 - Riesgos abiertos: `8`
 - Entregables definidos: `15`
 
@@ -126,7 +126,7 @@ gantt
 |ENT-011|Paquete sanitizado reproducible|pendiente|06_dashboard/generado|
 |ENT-012|Cierre y defensa|pendiente|05_tesis|
 |ENT-013|Infraestructura edge_iot aislada y validada en Orange Pi|pendiente|04_implementacion/edge_iot|
-|ENT-014|Arquitectura formal del sistema operativo de tesis|pendiente|docs/02_arquitectura/arquitectura-general.md|
+|ENT-014|Arquitectura formal del sistema operativo de tesis|listo|docs/02_arquitectura/arquitectura-general.md|
 |ENT-015|Conformidad y eficiencia operativa del sistema de tesis|pendiente|tests/integration/test_repo_layout.sh|
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

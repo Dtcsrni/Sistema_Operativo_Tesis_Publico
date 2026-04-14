@@ -11,4 +11,4 @@ No mezclar por defecto origen personal, proceso profesional, trazabilidad academ
 - Orange Pi es clon operativo y no workspace principal de autoria.
 - La validacion fisica de host queda como gate externo; no debe confundirse con cierre arquitectonico desde escritorio.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

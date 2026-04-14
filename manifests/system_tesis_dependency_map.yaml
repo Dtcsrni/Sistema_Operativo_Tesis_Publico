@@ -1,0 +1,138 @@
+{
+  "version": "1.0",
+  "contract_id": "system_tesis_dependency_map",
+  "dependency_direction": "canon_hacia_derivados",
+  "layers": [
+    "canon",
+    "auditoria_guardrails",
+    "proyecciones",
+    "publicacion",
+    "memoria_derivada"
+  ],
+  "critical_modules": [
+    {
+      "id": "canon_core",
+      "path": "07_scripts/canon.py",
+      "layer": "canon",
+      "reads": [
+        "00_sistema_tesis/canon/events.jsonl"
+      ],
+      "writes": [
+        "00_sistema_tesis/bitacora/log_conversaciones_ia.md",
+        "00_sistema_tesis/bitacora/matriz_trazabilidad.md",
+        "00_sistema_tesis/canon/state.json"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "structure_validation",
+      "path": "07_scripts/validate_structure.py",
+      "layer": "auditoria_guardrails",
+      "reads": [
+        "manifests/system_tesis_architecture_contract.yaml",
+        "manifests/system_tesis_canonical_schema.yaml",
+        "manifests/system_tesis_cli_contracts.yaml",
+        "manifests/system_tesis_dependency_map.yaml"
+      ],
+      "writes": [],
+      "depends_on": [
+        "canon_core"
+      ]
+    },
+    {
+      "id": "readme_projection",
+      "path": "07_scripts/build_readme_portada.py",
+      "layer": "proyecciones",
+      "reads": [
+        "00_sistema_tesis/config/sistema_tesis.yaml",
+        "01_planeacion/backlog.csv",
+        "01_planeacion/riesgos.csv",
+        "01_planeacion/entregables.csv"
+      ],
+      "writes": [
+        "README.md"
+      ],
+      "depends_on": [
+        "canon_core"
+      ]
+    },
+    {
+      "id": "memory_projection",
+      "path": "07_scripts/build_memory.py",
+      "layer": "memoria_derivada",
+      "reads": [
+        "00_sistema_tesis/canon/events.jsonl",
+        "01_planeacion/backlog.csv",
+        "01_planeacion/riesgos.csv",
+        "01_planeacion/entregables.csv"
+      ],
+      "writes": [
+        "MEMORY.md"
+      ],
+      "depends_on": [
+        "canon_core"
+      ]
+    },
+    {
+      "id": "wiki_projection",
+      "path": "07_scripts/build_wiki.py",
+      "layer": "proyecciones",
+      "reads": [
+        "00_sistema_tesis/documentacion_sistema/",
+        "00_sistema_tesis/config/",
+        "01_planeacion/"
+      ],
+      "writes": [
+        "06_dashboard/wiki/",
+        "06_dashboard/generado/wiki/",
+        "06_dashboard/generado/wiki_manifest.json"
+      ],
+      "depends_on": [
+        "canon_core",
+        "structure_validation"
+      ]
+    },
+    {
+      "id": "dashboard_projection",
+      "path": "07_scripts/build_dashboard.py",
+      "layer": "proyecciones",
+      "reads": [
+        "00_sistema_tesis/config/",
+        "01_planeacion/"
+      ],
+      "writes": [
+        "06_dashboard/generado/index.html"
+      ],
+      "depends_on": [
+        "canon_core",
+        "wiki_projection"
+      ]
+    },
+    {
+      "id": "publication_bundle",
+      "path": "07_scripts/publication.py",
+      "layer": "publicacion",
+      "reads": [
+        "README.md",
+        "MEMORY.md",
+        "06_dashboard/wiki/",
+        "06_dashboard/generado/"
+      ],
+      "writes": [
+        "06_dashboard/publico/"
+      ],
+      "depends_on": [
+        "readme_projection",
+        "memory_projection",
+        "wiki_projection",
+        "dashboard_projection"
+      ]
+    }
+  ],
+  "forbidden_cycles": [
+    "proyecciones_to_canon_runtime_write",
+    "publicacion_to_canon_runtime_write",
+    "memoria_derivada_to_canon_runtime_write",
+    "derived_to_canon_dependency_cycle"
+  ]
+}

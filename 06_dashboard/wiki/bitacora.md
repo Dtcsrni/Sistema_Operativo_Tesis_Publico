@@ -3,7 +3,7 @@
 Registro de sesiones, uso de IA y aprendizaje operativo.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-13`
+- **Fecha:** `2026-04-14`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/bitacora`, `00_sistema_tesis/reportes_semanales`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -65,8 +65,6 @@ Registro de sesiones, uso de IA y aprendizaje operativo.
 - `2026-04-01` [Bitácora de sesión 2026-04-01](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-04-01_bitacora_sesion.md)
 - `2026-03-31` [Bitácora de sesión 2026-03-31](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-03-31_bitacora_sesion.md)
 - `2026-03-27` [Bitácora de sesión 2026-03-27](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-03-27_bitacora_sesion.md)
-- `2026-03-26` [Bitácora de sesión 2026-03-26](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-03-26_bitacora_sesion_2.md)
-- `2026-03-26` [Bitácora de sesión 2026-03-26](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-03-26_bitacora_sesion_1.md)
 - `2026-03-26` [Bitácora de sesión 2026-03-26](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-03-26_bitacora_sesion.md)
 - `2026-03-25` [Bitácora de sesión 2026-03-25](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-03-25_bitacora_sesion.md)
 - `2026-03-24` [Bitácora de sesión 2026-03-24](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-03-24_bitacora_sesion.md)
@@ -1761,4 +1759,4 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260413-actions-public-s
 
 - `2026-S13_r` [Resumen semanal 2026-S13](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/reportes_semanales/2026-S13_resumen_semanal.md)
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

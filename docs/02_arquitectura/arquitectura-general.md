@@ -11,14 +11,12 @@ El repositorio canónico es la fuente de verdad operacional del Sistema Operativ
 - No es flujo normal usar un workspace remoto montado por red ni convertir la Orange Pi en la superficie principal de redaccion o decisiones arquitectonicas.
 
 ## Capas
-- Canon soberano: `00_sistema_tesis/`.
-- Planeacion: `01_planeacion/`.
-- Implementacion y experimentacion: `02_experimentos/`, `04_implementacion/`, `05_tesis_latex/`.
-- Documentacion operativa estructurada: `docs/`.
-- Contratos y manifiestos: `data_contracts/`, `manifests/`.
-- Automatizacion y bootstrap: `07_scripts/`, `bootstrap/`, `ops/`.
-- Integracion opcional OpenClaw: `runtime/openclaw/`.
-- Superficie derivada: `06_dashboard/` y repo publico sanitizado.
+- `canon`: `00_sistema_tesis/canon/`, ledger, matriz, backlog y configuracion soberana.
+- `auditoria_guardrails`: validadores, governance gate, chequeos de estructura, conformidad y evidencia.
+- `proyecciones`: `README.md`, wiki derivada, dashboard y manifiestos generados.
+- `publicacion`: bundle publico sanitizado en `06_dashboard/publico/`.
+- `memoria_derivada`: `MEMORY.md` como resumen operativo generado desde canon y trazabilidad.
+- Contexto complementario: `docs/`, `manifests/`, `bootstrap/`, `ops/`, `runtime/openclaw/`, `02_experimentos/`, `04_implementacion/`, `05_tesis/`.
 
 ## Reglas
 - El trabajo principal de tesis ocurre en `desktop_workspace`.
@@ -27,10 +25,30 @@ El repositorio canónico es la fuente de verdad operacional del Sistema Operativ
 - El sistema base debe operar sin OpenClaw.
 - Toda exposicion externa sale del downstream publico sanitizado.
 - Hardware, edge, tesis y administracion se separan por dominio.
+- Solo el `canon` es fuente de verdad.
+- `proyecciones`, `publicacion` y `memoria_derivada` son artefactos reconstruibles y nunca deben corregirse a mano.
+- `auditoria_guardrails` puede bloquear y medir, pero no inventa estado canónico.
+
+## Flujos y ownership
+- `canon -> auditoria_guardrails`: lectura controlada para validacion y enforcement.
+- `canon -> proyecciones`: materializacion determinista de README, wiki y dashboard.
+- `canon -> memoria_derivada`: resumen operativo de retoma rapida sin memoria informal del agente.
+- `proyecciones -> publicacion`: build sanitizado y curado editorialmente.
+- Ownership logico:
+  - `canon.py` mantiene canon y trazabilidad materializada.
+  - `build_*` generan derivados.
+  - `publication.py` solo publica derivados sanitizados.
+  - `validate_*` y `build_all.py` verifican, perfilan y bloquean drift.
+
+## Evolucion y cambios breaking
+- Cambios aditivos al esquema canónico pueden mantenerse dentro de `1.x` si preservan compatibilidad hacia atrás.
+- Cambios breaking requieren `major` nuevo, registro en `docs/05_reproducibilidad/migraciones-canonicas.md` y actualización de contratos.
+- Cambios breaking en salida de `tesis.py` requieren actualizar el contrato CLI y su suite de conformidad.
 
 ## Validacion
 - `python 07_scripts/validate_structure.py`
+- `python 07_scripts/validate_memory.py`
 - `python 07_scripts/tesis.py doctor --check`
 - `python 07_scripts/build_all.py`
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

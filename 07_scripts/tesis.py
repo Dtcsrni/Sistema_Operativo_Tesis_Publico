@@ -47,6 +47,7 @@ SECOND_LEVEL_DERIVED_PATHS = {
     "00_sistema_tesis/config/security_report.json",
     "00_sistema_tesis/config/token_usage_snapshot.json",
     "README.md",
+    "MEMORY.md",
 }
 HUMAN_OPERATION_MARKERS = {
     "README_INICIO.md": ["Superficie privada", "Superficie pública", "IA opcional"],

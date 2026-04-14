@@ -42,4 +42,4 @@ Operar un servicio genérico del dominio `edge_iot` sin acoplarlo todavía a una
 - Ante intermitencia externa, degrada a `degraded_offline`, encola evidencia en `spool` y solo reinicia cuando cruza el umbral configurado.
 - Si excede el máximo de fallas consecutivas, entra en `quarantined` y deja evidencia operativa para revisión humana.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

@@ -1,6 +1,6 @@
 # Reporte de consistencia
 
-    - Fecha de generación: 2026-04-13
+    - Fecha de generación: 2026-04-14
 - Proyecto: Sistema Operativo de la Tesis IoT Pachuca
 - Versión del sistema: 0.1.0
 
@@ -10,12 +10,12 @@
 - Hipótesis definidas: 7
 - Hipótesis activas: 7
 - Tareas en backlog: 50
-- Tareas pendientes: 31
+- Tareas pendientes: 19
 - Riesgos abiertos: 8
 - Decisiones registradas: 23
 - Errores de validación de wiki: 0
 - Resúmenes semanales con economía de uso: 1/1
-- Bitácoras con economía de uso: 18/22
+- Bitácoras con economía de uso: 16/20
 - Semanas con oportunidad de desperdicio identificada: 1/1
 - Semanas con gasto ineficiente realmente registrado: 0/1
 
@@ -44,4 +44,4 @@ Antes de sacar conclusiones fuertes, conviene cerrar cobertura completa de econo
 - documentacion, backlog, bitacora y traduccion documental: usar `bajo`. Subir si si la tarea se convierte en decision de alcance, metodo o arquitectura. Bajar si mantener bajo cuando sea trabajo transformacional o administrativo.
 - automatizacion y scripts acotados: usar `medio`. Subir si si la automatizacion afecta consistencia global, modelo de datos o evidencia trazable. Bajar si si es ajuste menor, formato o plumbing evidente.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

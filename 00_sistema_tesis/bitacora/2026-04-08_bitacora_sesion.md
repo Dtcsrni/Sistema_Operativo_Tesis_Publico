@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-08
 
 - **ID de Sesión:** codex-local-20260408-dec0022-desktop-edge
-- **Cadena de Confianza (Anterior):** `sha256/388bb8839fcb37ad7de3237e1f6a83a2771139e41cc8ae38577d9d340fb6d101`
+- **Cadena de Confianza (Anterior):** `sha256/52db0adc4e89050a683d2c93b2632e6f6d99c66f494b832e3d36f8333511ab2b`
 - **Bloque principal:** B0
 - **Tipo de sesión:** diseño | implementación | validación
 
@@ -79,4 +79,4 @@ Traducir esta frontera arquitectónica en procedimientos de despliegue y sincron
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

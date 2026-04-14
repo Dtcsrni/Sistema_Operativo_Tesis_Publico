@@ -248,6 +248,7 @@ def build_public_access_note(config: dict, generated_at: str) -> str:
         "## Qué sí puedes consultar aquí",
         "",
         "- `README_publico.md`",
+        "- `MEMORY_publico.md`",
         "- `index.md`",
         "- `manifest_publico.json`",
         "- `wiki/index.md`",
@@ -278,12 +279,10 @@ def _public_repo_blob_href(target_rel: str) -> str:
 def _public_equivalent_for_source(target_rel: str, config: dict) -> str | None:
     if target_rel == "06_dashboard/generado/wiki_manifest.json":
         return "06_dashboard/publico/manifest_publico.json"
-    if target_rel in expected_publication_outputs(config):
+    _, source_to_public, expected_outputs = _artifact_output_cache(config)
+    if target_rel in expected_outputs:
         return target_rel
-    for source_path, rel_target in _iter_artifact_outputs(config):
-        if source_path.relative_to(ROOT).as_posix() == target_rel:
-            return _relative_output_path(config, rel_target)
-    return None
+    return source_to_public.get(target_rel)
 
 
 def _requires_public_note(target_rel: str) -> bool:
@@ -379,9 +378,29 @@ def _iter_artifact_outputs(config: dict) -> list[tuple[Path, str]]:
     return outputs
 
 
+def _artifact_output_cache(config: dict) -> tuple[list[tuple[Path, str]], dict[str, str], set[str]]:
+    cached_outputs = config.get("__artifact_outputs_cache")
+    cached_map = config.get("__artifact_source_to_public_cache")
+    cached_expected = config.get("__artifact_expected_outputs_cache")
+    if cached_outputs is not None and cached_map is not None and cached_expected is not None:
+        return cached_outputs, cached_map, cached_expected
+
+    outputs = _iter_artifact_outputs(config)
+    source_to_public = {
+        source_path.relative_to(ROOT).as_posix(): _relative_output_path(config, rel_target)
+        for source_path, rel_target in outputs
+    }
+    expected = set(source_to_public.values())
+    config["__artifact_outputs_cache"] = outputs
+    config["__artifact_source_to_public_cache"] = source_to_public
+    config["__artifact_expected_outputs_cache"] = expected
+    return outputs, source_to_public, expected
+
+
 def expected_publication_outputs(config: dict | None = None) -> set[str]:
     publication = load_publication_config() if config is None else config
-    expected = {_relative_output_path(publication, rel_path) for _, rel_path in _iter_artifact_outputs(publication)}
+    _, _, expected = _artifact_output_cache(publication)
+    expected = set(expected)
     expected.add(publication["salida"]["manifest"])
     expected.add(_relative_output_path(publication, "index.md"))
     expected.add(_public_note_relpath())
@@ -408,6 +427,7 @@ def build_publication_index(config: dict, manifest_payload: dict) -> str:
         "## Rutas de navegación pública",
         "",
         "- Entrada general: `README_publico.md`.",
+        "- Estado operativo breve: `MEMORY_publico.md`.",
         "- Mapa del sistema y ruta base: `wiki/index.md`.",
         "- Propósito, módulos y flujos: `wiki/sistema.md`.",
         "- Reglas y límites: `wiki/gobernanza.md`.",
@@ -485,10 +505,8 @@ def _render_manifest(
 def _read_output_payload(path: Path, config: dict) -> bytes:
     if _is_text_file(path):
         source_rel = path.relative_to(ROOT).as_posix()
-        public_rel = _relative_output_path(
-            config,
-            next(rel_target for source_path, rel_target in _iter_artifact_outputs(config) if source_path == path),
-        )
+        _, source_to_public, _ = _artifact_output_cache(config)
+        public_rel = source_to_public[source_rel]
         generated_at = datetime.fromtimestamp(path.stat().st_mtime).strftime("%Y-%m-%d")
         return render_public_text(
             text=path.read_text(encoding="utf-8"),
@@ -542,8 +560,9 @@ def publication_bundle_status(*, build: bool = False, config: dict | None = None
     output_root.mkdir(parents=True, exist_ok=True)
     rendered: dict[str, bytes] = {}
     artifacts: list[dict[str, str]] = []
+    artifact_outputs, _, _ = _artifact_output_cache(publication)
 
-    for source_path, rel_target in _iter_artifact_outputs(publication):
+    for source_path, rel_target in artifact_outputs:
         payload = _read_output_payload(source_path, publication)
         public_rel = _relative_output_path(publication, rel_target)
         rendered[public_rel] = payload
@@ -554,7 +573,7 @@ def publication_bundle_status(*, build: bool = False, config: dict | None = None
             }
         )
 
-    latest_source_mtime = max(source_path.stat().st_mtime for source_path, _ in _iter_artifact_outputs(publication))
+    latest_source_mtime = max(source_path.stat().st_mtime for source_path, _ in artifact_outputs)
     generated_at = datetime.fromtimestamp(latest_source_mtime).strftime("%Y-%m-%d")
     manifest_payload = _render_manifest(
         publication,

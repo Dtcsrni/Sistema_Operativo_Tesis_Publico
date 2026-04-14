@@ -3,7 +3,7 @@
 Registro de decisiones de arquitectura, método y operación.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-13`
+- **Fecha:** `2026-04-14`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/decisiones`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -72,4 +72,4 @@ Registro de decisiones de arquitectura, método y operación.
 - `2026-03-23` [DEC-0002 Gobernanza de IA instrumental y registro de uso](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-23_DEC-0002_gobernanza_ia_instrumental.md)
 - `2026-03-23` [DEC-0001 Arquitectura base del sistema operativo de tesis](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-23_DEC-0001_arquitectura_sistema_tesis.md)
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

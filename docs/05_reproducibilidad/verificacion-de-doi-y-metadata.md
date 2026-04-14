@@ -4,4 +4,4 @@ Campos minimos: titulo, autores, anio, DOI, URL, fuente, estado de verificacion.
 
 Si el DOI no se confirma, la referencia no se usa para afirmaciones fuertes.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

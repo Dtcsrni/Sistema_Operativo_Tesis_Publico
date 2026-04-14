@@ -9,12 +9,15 @@ REQUIRED_PATHS = [
     "docs/02_arquitectura/contrato-maestro-de-dominios.md",
     "docs/02_arquitectura/arquitectura-interna-sistema-tesis.md",
     "docs/02_arquitectura/arquitectura-objetivo-b0-desktop-first.md",
+    "docs/02_arquitectura/criterio-formal-cierre-b0.md",
     "docs/04_seguridad/modelo-de-amenazas-sistema-documental.md",
     "docs/05_reproducibilidad/migraciones-canonicas.md",
     "manifests/system_tesis_architecture_contract.yaml",
     "manifests/system_tesis_canonical_schema.yaml",
     "manifests/system_tesis_cli_contracts.yaml",
+    "manifests/system_tesis_dependency_map.yaml",
     "manifests/b0_external_gates.yaml",
+    "MEMORY.md",
 ]
 
 
@@ -40,6 +43,7 @@ def validate() -> list[str]:
     architecture = load_yaml_json("manifests/system_tesis_architecture_contract.yaml")
     schema = load_yaml_json("manifests/system_tesis_canonical_schema.yaml")
     cli = load_yaml_json("manifests/system_tesis_cli_contracts.yaml")
+    dependency_map = load_yaml_json("manifests/system_tesis_dependency_map.yaml")
     gates = load_yaml_json("manifests/b0_external_gates.yaml")
 
     runtime_domains = runtime["dominios"]
@@ -113,13 +117,14 @@ def validate() -> list[str]:
         errors.append("edge_iot debe declararse como host_real_requerido en backup policy")
 
     layer_ids = [item["id"] for item in architecture["layers"]]
-    if layer_ids != ["canon", "proyecciones", "auditoria_guardrails", "publicacion"]:
+    if layer_ids != ["canon", "proyecciones", "auditoria_guardrails", "publicacion", "memoria_derivada"]:
         errors.append(f"Capas de arquitectura inesperadas: {layer_ids}")
     if architecture["desktop_first"] is not True:
         errors.append("system_tesis_architecture_contract debe ser desktop_first")
     for coupling in (
         "edge_iot_to_canon_write",
         "publicacion_to_canon_write",
+        "memoria_derivada_to_canon_write",
         "proyecciones_as_source_of_truth",
         "orange_pi_as_primary_authoring_node",
     ):
@@ -132,11 +137,15 @@ def validate() -> list[str]:
         errors.append("system_tesis_canonical_schema debe forzar major bump en cambios breaking")
     if schema["migration_policy"]["requires_explicit_record"] is not True:
         errors.append("system_tesis_canonical_schema debe exigir registro explicito de migracion")
+    if "memory_summary" not in schema["entities"]:
+        errors.append("system_tesis_canonical_schema debe declarar memory_summary")
 
     expected_cli_ids = {
         "status",
         "next",
         "doctor_check",
+        "audit_check",
+        "materialize",
         "publish_build",
         "publish_check",
         "source_status_check",
@@ -145,6 +154,22 @@ def validate() -> list[str]:
     cli_ids = {item["id"] for item in cli["commands"]}
     if cli_ids != expected_cli_ids:
         errors.append(f"system_tesis_cli_contracts no coincide con los comandos esperados: {sorted(cli_ids)}")
+    for item in cli["commands"]:
+        if "side_effects" not in item or "exit_codes" not in item:
+            errors.append(f"El comando CLI {item['id']} debe declarar exit_codes y side_effects")
+
+    dependency_ids = {item["id"] for item in dependency_map["critical_modules"]}
+    for dependency_id in {
+        "canon_core",
+        "structure_validation",
+        "readme_projection",
+        "memory_projection",
+        "wiki_projection",
+        "dashboard_projection",
+        "publication_bundle",
+    }:
+        if dependency_id not in dependency_ids:
+            errors.append(f"system_tesis_dependency_map no contiene el módulo crítico {dependency_id}")
 
     expected_gate_ids = {
         "host_runtime_isolation_validation",
@@ -170,11 +195,13 @@ def validate() -> list[str]:
             "proyecciones",
             "auditoria_guardrails",
             "publicacion",
+            "memoria_derivada",
         ],
         "docs/04_seguridad/modelo-de-amenazas-sistema-documental.md": [
             "Canon privado",
             "bundle publico",
             "Orange Pi",
+            "MEMORY.md",
         ],
         "docs/02_arquitectura/arquitectura-objetivo-b0-desktop-first.md": [
             "Gates externos",
@@ -189,13 +216,22 @@ def validate() -> list[str]:
                 errors.append(f"{rel_path} no contiene el marcador requerido: {marker}")
 
     for script in architecture["critical_scripts"]:
-        if script not in {"07_scripts/tesis.py", "07_scripts/build_all.py", "07_scripts/validate_structure.py", "07_scripts/validate_b0_architecture.py"}:
+        if script not in {"07_scripts/canon.py", "07_scripts/tesis.py", "07_scripts/build_all.py", "07_scripts/build_memory.py", "07_scripts/validate_memory.py", "07_scripts/validate_structure.py", "07_scripts/validate_b0_architecture.py"}:
             errors.append(f"Script critico inesperado en architecture contract: {script}")
         if not (ROOT / script).exists():
             errors.append(f"No existe el script critico declarado: {script}")
 
     if "07_scripts/validate_b0_architecture.py" not in architecture["critical_scripts"]:
         errors.append("architecture contract debe declarar validate_b0_architecture.py como script critico")
+    if "07_scripts/build_memory.py" not in architecture["critical_scripts"]:
+        errors.append("architecture contract debe declarar build_memory.py como script critico")
+    if "07_scripts/validate_memory.py" not in architecture["critical_scripts"]:
+        errors.append("architecture contract debe declarar validate_memory.py como script critico")
+
+    memory_text = _load_text("MEMORY.md")
+    for marker in ("Últimos cambios validados", "Próximos pendientes críticos", "Referencias base"):
+        if marker not in memory_text:
+            errors.append(f"MEMORY.md no contiene el marcador requerido: {marker}")
 
     return errors
 

@@ -3,7 +3,7 @@
 Registro de decisiones de arquitectura, método y operación.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-13`
+- **Fecha:** `2026-04-14`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/decisiones`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.

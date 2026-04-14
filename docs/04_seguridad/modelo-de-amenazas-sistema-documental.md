@@ -3,12 +3,14 @@
 ## Superficies
 - Canon privado en `00_sistema_tesis/`.
 - Proyecciones derivadas en `06_dashboard/wiki/`, `06_dashboard/generado/` y `README.md`.
+- Memoria derivada en `MEMORY.md`.
 - Bundle publico sanitizado.
 - Puente operativo escritorio -> Orange Pi por Git y artefactos explicitos.
 
 ## Amenazas prioritarias
 - Escritura cruzada desde runtime edge o asistivo hacia el canon no público.
 - Uso de artefactos derivados como si fueran fuente de verdad.
+- Uso de `MEMORY.md` como sustituto del ledger o de la matriz.
 - Exposicion accidental de evidencia privada o secretos en publicacion.
 - Deriva entre manifests, docs y scripts criticos.
 - Tratar el clon de Orange Pi como repositorio principal de autoria.
@@ -18,6 +20,8 @@
 - Sanitizacion obligatoria antes de publicacion.
 - Contratos maquina-legibles de red, runtime, backups e intercambio.
 - Suite de conformidad que falle ante mezcla de dominios o drift contractual.
+- Validacion determinista de `MEMORY.md` contra canon.
+- Observabilidad de `build_all.py` con tiempos, drift y etapa lenta.
 - Gates externos explicitos para lo que solo puede validarse en host real.
 
 ## Criterio de aceptacion
@@ -26,4 +30,4 @@
 - Las reglas de no HTTP interdominio, no lectura cruzada y no restore cruzado estan declaradas y validadas.
 - Orange Pi aparece solo como clon operativo y nodo de validacion local.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

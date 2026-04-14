@@ -5,7 +5,7 @@ import hashlib
 import os
 import subprocess
 import sys
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 
 from data_io import dump_structured_path, load_structured_path
@@ -58,6 +58,7 @@ GENERATED_PATH_PREFIXES = (
 )
 GENERATED_PATHS = {
     "README.md",
+    "MEMORY.md",
 }
 DASHBOARD_TIMESTAMP_SOURCES = [
     "00_sistema_tesis/config/sistema_tesis.yaml",
@@ -201,7 +202,7 @@ def stable_generated_at(relative_paths: list[str]) -> str:
             )
             stamp = result.stdout.strip()
             if result.returncode == 0 and stamp.isdigit():
-                return datetime.utcfromtimestamp(int(stamp)).strftime("%Y-%m-%d %H:%M:%S")
+                return datetime.fromtimestamp(int(stamp), tz=UTC).strftime("%Y-%m-%d %H:%M:%S")
         except Exception:
             pass
 
@@ -224,7 +225,7 @@ def stable_generated_at(relative_paths: list[str]) -> str:
                 mtimes.append(item.stat().st_mtime)
     if not mtimes:
         return now_stamp()
-    return datetime.utcfromtimestamp(max(mtimes)).strftime("%Y-%m-%d %H:%M:%S")
+    return datetime.fromtimestamp(max(mtimes), tz=UTC).strftime("%Y-%m-%d %H:%M:%S")
 
 
 def preferred_python_executable() -> str:

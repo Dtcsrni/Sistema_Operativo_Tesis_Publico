@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-03-31
 
 - **ID de Sesión:** codex-local-20260331-source-evidence
-- **Cadena de Confianza (Anterior):** `sha256/fef14807765da75a490cb6ad1d21fba49445e6228f295a257afcb254668231f5`
+- **Cadena de Confianza (Anterior):** `sha256/f593f4a7aad0a8c30be0a157418aa4bc64e87083f6fe34d862a7c2cc25d6588b`
 - **Bloque principal:** B0
 - **Tipo de sesión:** administración | validación
 
@@ -69,4 +69,4 @@ Mantener sincronizadas las bitácoras diarias con cada fecha de actividad canón
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-07
 
 - **ID de Sesión:** codex-local-20260407-cierre-conversacion-trazabilidad
-- **Cadena de Confianza (Anterior):** `sha256/953070f7e22b1b46550369063381805a7391f72a4824e107d9b1b72d8ffb3cf2`
+- **Cadena de Confianza (Anterior):** `sha256/a6ef36dbc2540b29e8724edf98f38fcdd2adf47653846a3f9c3d39d93d3caffd`
 - **Bloque principal:** B1
 - **Tipo de sesión:** administración | implementación | validación
 
@@ -79,4 +79,4 @@ Continuar con `T-037` y, cuando se quiera cerrar técnicamente este bloque, cons
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

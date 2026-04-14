@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-12
 
 - **ID de Sesión:** codex-local-20260412-b0-desktop-regularizacion
-- **Cadena de Confianza (Anterior):** `sha256/d62304832390a3208bff39095fcb4fdd2f3a5a847808c625e9291d02242c8dea`
+- **Cadena de Confianza (Anterior):** `sha256/548e9e0b7b9c41f638070a520ceb95fb9d3d665614df107b60e9701b7e1422f2`
 - **Bloque principal:** B0
 - **Tipo de sesión:** arquitectura | trazabilidad | validación
 
@@ -71,4 +71,4 @@ Conservar el cierre diario en tiempo real para que Git, bitácoras, ledger y mat
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

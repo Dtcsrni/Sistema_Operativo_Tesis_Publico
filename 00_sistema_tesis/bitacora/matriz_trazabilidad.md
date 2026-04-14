@@ -69,7 +69,7 @@ Este archivo es el índice central de todas las validaciones de soberanía human
 **Navegación:**
 - [Volver al Inicio](../../06_dashboard/publico/README_publico.md)
 - [Consultar Libro Mayor](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_conversaciones_ia.md)
-- [Auditoría del Sistema](../../06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [Auditoría del Sistema](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 
 [validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
 [validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
@@ -123,4 +123,4 @@ Este archivo es el índice central de todas las validaciones de soberanía human
 [validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
 [validación humana interna no pública]: log_conversaciones_ia.md#validación humana interna no pública
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

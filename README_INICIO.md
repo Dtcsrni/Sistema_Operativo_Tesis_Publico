@@ -62,53 +62,53 @@ La capa operativa para despliegue real y reproducibilidad ahora se organiza tamb
 Si retomas el proyecto o necesitas explicar el sistema desde cero:
 
 1. Lee este archivo completo.
-2. Lee [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
-3. Lee [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
-4. Lee [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
-5. Lee [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md) para entender IDs, términos y convenciones.
-6. Si vas a operar el sistema, continúa con [`00_sistema_tesis/manual_operacion_humana.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
-7. Si vas a preparar despliegue, revisa [`docs/02_arquitectura/arquitectura-general.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md), [`docs/02_arquitectura/topologia-de-almacenamiento.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y `bootstrap/`.
+2. Lee [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
+3. Lee [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
+4. Lee [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
+5. Lee [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) para entender IDs, términos y convenciones.
+6. Si vas a operar el sistema, continúa con [`00_sistema_tesis/manual_operacion_humana.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
+7. Si vas a preparar despliegue, revisa [`docs/02_arquitectura/arquitectura-general.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md), [`docs/02_arquitectura/topologia-de-almacenamiento.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y `bootstrap/`.
 8. Si quieres diagnóstico inmediato, ejecuta `python 07_scripts/tesis.py status` y `python 07_scripts/tesis.py next`.
 
 ## Mapa de navegación y rastreo
 
 Si necesitas orientarte sin perder el origen canónico:
 
-1. Empieza en [`README_INICIO.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y luego entra a [`06_dashboard/wiki/index.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
+1. Empieza en [`README_INICIO.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y luego entra a [`06_dashboard/wiki/index.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
 2. Desde cada página de la wiki, usa el bloque `Origen canónico y artefactos relacionados`.
 3. Si necesitas cambiar contenido, salta de la página derivada a su fuente canónica declarada y edítala ahí.
-4. Si necesitas verificar publicación o sanitización, cruza [`06_dashboard/generado/wiki_manifest.json`](06_dashboard/wiki/nota_seguridad_y_acceso.md) con [`06_dashboard/publico/manifest_publico.json`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
-5. Si necesitas trazabilidad operativa, revisa [`00_sistema_tesis/bitacora/matriz_trazabilidad.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y [`00_sistema_tesis/bitacora/log_conversaciones_ia.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
+4. Si necesitas verificar publicación o sanitización, cruza [`06_dashboard/generado/wiki_manifest.json`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) con [`06_dashboard/publico/manifest_publico.json`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
+5. Si necesitas trazabilidad operativa, revisa [`00_sistema_tesis/bitacora/matriz_trazabilidad.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y [`00_sistema_tesis/bitacora/log_conversaciones_ia.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
 
 ## Entradas por necesidad
 
-- Entender propósito, módulos y flujos: [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md), [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
-- Entender reglas e interacción humana: [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y [`00_sistema_tesis/config/ia_gobernanza.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
-- Entender términos, IDs y convenciones: [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
-- Entender trabajo en curso: [`01_planeacion/backlog.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md), [`01_planeacion/riesgos.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y [`06_dashboard/wiki/planeacion.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
-- Entender decisiones y continuidad: [`00_sistema_tesis/decisiones`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y [`00_sistema_tesis/bitacora`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
-- Entender la politica de trazabilidad: [`docs/03_operacion/modos-de-trazabilidad.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md) y [`docs/05_reproducibilidad/matriz-de-trazabilidad-cientifica.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md).
+- Entender propósito, módulos y flujos: [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md), [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
+- Entender reglas e interacción humana: [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y [`00_sistema_tesis/config/ia_gobernanza.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
+- Entender términos, IDs y convenciones: [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
+- Entender trabajo en curso: [`01_planeacion/backlog.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md), [`01_planeacion/riesgos.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y [`06_dashboard/wiki/planeacion.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
+- Entender decisiones y continuidad: [`00_sistema_tesis/decisiones`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y [`00_sistema_tesis/bitacora`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
+- Entender la politica de trazabilidad: [`docs/03_operacion/modos-de-trazabilidad.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y [`docs/05_reproducibilidad/matriz-de-trazabilidad-cientifica.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
 
 ## Fuentes canónicas para entender el sistema
 
-- [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`00_sistema_tesis/config/sistema_tesis.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`00_sistema_tesis/config/publicacion.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`00_sistema_tesis/config/ia_gobernanza.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/documentacion_sistema/flujos_operativos.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/config/sistema_tesis.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/config/publicacion.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/config/ia_gobernanza.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Qué revisar siempre
 
-- [`00_sistema_tesis/manual_operacion_humana.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`01_planeacion/backlog.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`01_planeacion/riesgos.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`00_sistema_tesis/bitacora/matriz_trazabilidad.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`06_dashboard/wiki/index.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`06_dashboard/generado/index.html`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`06_dashboard/publico/index.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`00_sistema_tesis/manual_operacion_humana.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`01_planeacion/backlog.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`01_planeacion/riesgos.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`00_sistema_tesis/bitacora/matriz_trazabilidad.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`06_dashboard/wiki/index.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`06_dashboard/generado/index.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`06_dashboard/publico/index.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Flujos operativos mínimos
 
@@ -156,22 +156,22 @@ python 07_scripts/tesis.py source verify --step-id validación humana interna no
 
 ## Dónde registrar cada cosa
 
-- **Decisiones de arquitectura, gobernanza o método:** [`00_sistema_tesis/decisiones/`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- **Bitácora operativa o de sesión:** [`00_sistema_tesis/bitacora/`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- **Tareas y prioridades:** [`01_planeacion/backlog.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- **Riesgos y mitigaciones:** [`01_planeacion/riesgos.csv`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- **Política pública sanitizada:** [`00_sistema_tesis/config/publicacion.yaml`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- **Decisiones de arquitectura, gobernanza o método:** [`00_sistema_tesis/decisiones/`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- **Bitácora operativa o de sesión:** [`00_sistema_tesis/bitacora/`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- **Tareas y prioridades:** [`01_planeacion/backlog.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- **Riesgos y mitigaciones:** [`01_planeacion/riesgos.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- **Política pública sanitizada:** [`00_sistema_tesis/config/publicacion.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 - **Evidencia fuente privada de conversación:** `evidencia privada no publicada/conversaciones_codex/`
 
 ## Qué no se edita a mano
 
 No se corrigen manualmente los artefactos derivados. Se regeneran.
 
-- [`README.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`06_dashboard/wiki/index.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`06_dashboard/generado/index.html`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`06_dashboard/publico/index.md`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
-- [`06_dashboard/publico/manifest_publico.json`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
+- [`README.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`06_dashboard/wiki/index.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`06_dashboard/generado/index.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`06_dashboard/publico/index.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
+- [`06_dashboard/publico/manifest_publico.json`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 
 ## Criterio de esta base
 
@@ -182,4 +182,4 @@ No se corrigen manualmente los artefactos derivados. Se regeneran.
 - confirmación verbal corroborada con transcripción para `VAL-STEP` nuevos;
 - TDD para automatización, validadores y software nuevo.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

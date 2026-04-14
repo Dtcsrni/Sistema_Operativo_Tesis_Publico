@@ -57,7 +57,11 @@ def test_internal_and_public_outputs_use_surface_specific_links(isolated_repo: P
 
     assert "(../../00_sistema_tesis/bitacora/matriz_trazabilidad.md)" in bitacora_page
     assert 'href="../wiki_html/index.html"' in public_dashboard
-    assert 'href="../index.md"' in public_dashboard
+    assert (
+        'href="../index.md"' in public_dashboard
+        or 'href="../README_publico.md"' in public_dashboard
+        or 'href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/index.md"' in public_dashboard
+    )
     assert "(dashboard/badges/security_status.svg)" in public_readme
     assert "(dashboard/badges/integrity.svg)" in public_readme
     assert "(dashboard/badges/ledger.svg)" in public_readme

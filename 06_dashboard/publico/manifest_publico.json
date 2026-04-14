@@ -2,12 +2,16 @@
   "generated_at": "2026-04-13",
   "status": "ok",
   "scope": "publico_sanitizado",
-  "bundle_fingerprint": "a629b57aba357edb706dc62e23daec6df5360c00c148dec261150c7617de53be",
+  "bundle_fingerprint": "5b820fd435542e63db77a2efea8b440ca36b33c92a12deacf155a619bd28dffc",
   "notice": "Este bundle público es un artefacto derivado y curado editorialmente. No se corrige a mano; se reconstruye desde la base canónica.",
   "artifacts": [
     {
       "source": "README.md",
       "output": "06_dashboard/publico/README_publico.md"
+    },
+    {
+      "source": "MEMORY.md",
+      "output": "06_dashboard/publico/MEMORY_publico.md"
     },
     {
       "source": "06_dashboard/wiki/bitacora.md",

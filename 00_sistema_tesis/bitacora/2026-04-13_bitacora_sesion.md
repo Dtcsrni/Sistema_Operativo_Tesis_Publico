@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-13
 
 - **ID de Sesión:** codex-local-20260413-actions-public-sync-v1
-- **Cadena de Confianza (Anterior):** `sha256/629c089091c7744b955c6bd1167c887e5788fdbb58cc5595cc9f3ea0e04e2a63`
+- **Cadena de Confianza (Anterior):** `sha256/2f8d5373688fbffa747157a41f25bcb67104ba73b1ed7777eb71a4a7d656194d`
 - **Bloque principal:** B1
 - **Tipo de sesión:** validación | administración | publicación
 
@@ -70,4 +70,4 @@ Registrar validación humana interna no pública, ejecutar `build_all.py`, hacer
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

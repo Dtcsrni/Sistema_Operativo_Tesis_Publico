@@ -149,4 +149,4 @@ La firma humana no se autoemite desde IA sin contexto trazable. Si un artefacto 
    - `python 07_scripts/build_all.py`
    - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._

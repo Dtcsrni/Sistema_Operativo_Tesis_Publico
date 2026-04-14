@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-03-27
 
 - **ID de Sesión:** 2026-03-27_bitacora_sesion
-- **Cadena de Confianza (Anterior):** `sha256/7159b2cb36c6bf0a0a2ac1084d1b69b2790bf2328bc4903c45d0553c79c0ab37`
+- **Cadena de Confianza (Anterior):** `sha256/e251f5b98a8f27718ddf7dbd0bb3259cf69ae5ccae2b3d70bd1e95e11dd5cac9`
 - **Bloque principal:** B0
 - **Tipo de sesión:** publicación | ci/cd | documentación
 
@@ -68,4 +68,4 @@ Continuar con la validación de la wiki y el bundle público sanitizado bajo el 
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-14`._
