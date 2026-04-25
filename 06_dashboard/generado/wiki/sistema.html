@@ -46,14 +46,14 @@
   <main>
     <header>
       <h1>Sistema</h1>
-      <p class="stamp">Artefacto derivado generado el 2026-04-14</p>
+      <p class="stamp">Artefacto derivado generado el 2026-04-25</p>
     </header>
     <pre># Sistema
 
 Propósito, alcance, módulos, flujos e interacción del sistema operativo de tesis.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-14`
+- **Fecha:** `2026-04-25`
 - **Estado:** `OK`
 - **Fuentes:** `README_INICIO.md`, `00_sistema_tesis/manual_operacion_humana.md`, `00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`, `00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`, `00_sistema_tesis/documentacion_sistema/flujos_operativos.md`, `00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/publicacion.yaml`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -256,6 +256,15 @@ El sistema se organiza por subsistemas coordinados. Cada subsistema tiene una fu
 - Visible al publico: objetivo, problema, marco actual, modulos y limites.
 - Privado: evidencia no publicada, borradores internos y soportes no sanitizados.
 
+#### 8. OpenClaw como plano de control asistivo PC-first
+
+- Proposito: ofrecer una capa asistiva local-first para operar sesiones, canales remotos y modelos sin sustituir el canon ni la validacion humana.
+- Fuentes principales: `runtime/openclaw/`, `docs/02_arquitectura/openclaw-control-plane.md`, `docs/03_operacion/openclaw-workspace-local.md`, `docs/03_operacion/flujo-escritorio-orange-pi.md`, `04_implementacion/gateway/`.
+- Derivados: API local, bot Matrix, bot Telegram, trazas SQLite, estado de proveedores y cobertura de implementacion en la wiki.
+- Visible al publico: arquitectura general, contratos de sesion, politica `desktop-first`, canal Matrix principal y Telegram secundario.
+- Privado: secretos de proveedores, tokens de Matrix/Telegram, rutas sensibles del host y evidencia operativa fina.
+- Regla operativa: la PC principal concentra el carril pesado con `pc_native_llamacpp`; `tesis-edge` mantiene continuidad 24/7, relay y runtime ligero.
+
 ### Relaciones clave
 
 - Gobierno define las reglas con las que opera trazabilidad.
@@ -265,6 +274,7 @@ El sistema se organiza por subsistemas coordinados. Cada subsistema tiene una fu
 - Automatizacion convierte fuentes en vistas legibles sin duplicacion manual.
 - Publicacion filtra la vista externa sin alterar la base privada.
 - La tesis IoT recibe estructura, continuidad y explicabilidad gracias a todos los modulos anteriores.
+- OpenClaw extiende la operacion asistiva del sistema, pero sigue subordinado a gobierno, trazabilidad y validacion humana.
 
 ### Regla de lectura
 
@@ -496,7 +506,47 @@ Salida esperada:
 - runtime externo consumiendo el mismo contrato `serena-local`;
 - auth minima activa;
 - misma gobernanza que el MCP local;
-- traza diferenciada del host llamador.
+- traza diferenciada del host llamador;
+
+### Flujo 13. Trabajar con Caveman y Serena como politica base
+
+Objetivo: mantener el modo de trabajo conciso de Caveman y la primera capa de contexto de Serena como comportamiento normal para cualquier agente de IA en el repo.
+
+Secuencia:
+
+1. Verificar que `caveman` resuelva en el shell con `command -v caveman`.
+2. Confirmar que `caveman --help` responda y usar Caveman como modo base de ejecución y redacción.
+3. Verificar el estado de Serena con `python3 07_scripts/check_serena_access.py --json`.
+4. Si `serena-local` esta disponible y recomendado, usarlo primero para `context.fetch_compact` y `governance.preflight`.
+5. Si Serena no esta disponible, restaurarla primero antes de degradar a filesystem-only.
+6. Ejecutar `python 07_scripts/build_all.py` al cerrar cambios de politica o infraestructura.
+
+Salida esperada:
+
+- Caveman disponible y usado como modo base;
+- Serena usada como primera capa de contexto cuando el perfil recomendado este disponible;
+- trazabilidad y auditoria actualizadas sin perder la ruta operativa principal.
+
+### Flujo 14. Operar OpenClaw con PC-first y Matrix soberano
+
+Objetivo: usar OpenClaw como capa asistiva sin mover la autoria principal fuera del escritorio ni degradar el edge a nodo pesado por defecto.
+
+Secuencia:
+
+1. Levantar o verificar el runtime pesado de la PC con `llama.cpp server` y confirmar `OPENCLAW_DESKTOP_RUNTIME=llamacpp`.
+2. Confirmar en `pasarela estado` que `nodes.desktop.runtime=llamacpp` y que el edge mantiene su runtime local ligero.
+3. Operar sesiones desde `CLI`, `web_local`, `matrix` o `telegram`; todos los canales deben pasar por la misma `session-layer`.
+4. Mantener `Matrix` como plano remoto principal y `Telegram` solo como compatibilidad, fallback o notificacion.
+5. Si la PC no esta disponible, permitir degradacion explicita a `ollama_local` o `local`, sin promover nube por defecto.
+6. Si una tarea requiere nube premium, exigir politica de sesion compatible y traza del cambio de carril.
+7. Registrar y revisar trazas, fallback reasons, proveedor/modelo efectivos y aprobaciones antes de cerrar la operacion.
+
+Salida esperada:
+
+- carril pesado resuelto por la PC principal;
+- edge conservando continuidad 24/7 y relay remoto;
+- canales alineados sobre un mismo contrato de sesion;
+- politica `desktop-first` visible, verificable y auditable.
 
 ### Regla transversal
 
@@ -612,25 +662,25 @@ Toda documentacion mejorada del sistema debe responder implicitamente a estas pr
 |dashboard|00_sistema_tesis/config/dashboard.yaml|sí|2026-03-24|
 |publicacion|00_sistema_tesis/config/publicacion.yaml|sí|2026-04-14|
 |agent_identity|Identidad técnica no publicada por seguridad|sí|2026-03-26|
-|gobernanza_ia|00_sistema_tesis/config/ia_gobernanza.yaml|sí|2026-04-14|
-|wiki|00_sistema_tesis/config/wiki.yaml|sí|2026-04-14|
-|manual_operacion_humana|00_sistema_tesis/manual_operacion_humana.md|sí|2026-04-11|
+|gobernanza_ia|00_sistema_tesis/config/ia_gobernanza.yaml|sí|2026-04-21|
+|wiki|00_sistema_tesis/config/wiki.yaml|sí|2026-04-23|
+|manual_operacion_humana|00_sistema_tesis/manual_operacion_humana.md|sí|2026-04-21|
 |backlog|01_planeacion/backlog.csv|sí|2026-04-14|
 |riesgos|01_planeacion/riesgos.csv|sí|2026-03-26|
 |roadmap|01_planeacion/roadmap.csv|sí|2026-03-23|
 |entregables|01_planeacion/entregables.csv|sí|2026-04-14|
-|decisiones|00_sistema_tesis/decisiones|sí|2026-04-14|
-|bitacora|00_sistema_tesis/bitacora|sí|2026-04-14|
+|decisiones|00_sistema_tesis/decisiones|sí|2026-04-23|
+|bitacora|00_sistema_tesis/bitacora|sí|2026-04-25|
 |reportes_semanales|00_sistema_tesis/reportes_semanales|sí|2026-03-24|
-|dashboard_generado|06_dashboard/generado/index.html|sí|2026-04-14|
-|bundle_publico|06_dashboard/publico/index.md|sí|2026-04-14|
-|bundle_publico_manifest|06_dashboard/publico/manifest_publico.json|sí|2026-04-14|
-|wiki_markdown_generada|06_dashboard/wiki/index.md|sí|2026-04-14|
-|wiki_html_generada|06_dashboard/generado/wiki/index.html|sí|2026-04-14|
-|wiki_manifest_generado|06_dashboard/generado/wiki_manifest.json|sí|2026-04-14|
-|readme_portada_generado|README.md|sí|2026-04-14|
+|dashboard_generado|06_dashboard/generado/index.html|sí|2026-04-25|
+|bundle_publico|06_dashboard/publico/index.md|sí|2026-04-25|
+|bundle_publico_manifest|06_dashboard/publico/manifest_publico.json|sí|2026-04-25|
+|wiki_markdown_generada|06_dashboard/wiki/index.md|sí|2026-04-25|
+|wiki_html_generada|06_dashboard/generado/wiki/index.html|sí|2026-04-25|
+|wiki_manifest_generado|06_dashboard/generado/wiki_manifest.json|sí|2026-04-25|
+|readme_portada_generado|README.md|sí|2026-04-23|
 </pre>
-      <footer class="public-update"><p>Última actualización: <strong>2026-04-14</strong></p></footer>
+      <footer class="public-update"><p>Última actualización: <strong>2026-04-25</strong></p></footer>
   </main>
 </body>
 </html>

@@ -1,5 +1,5 @@
 {
-    "00_sistema_tesis/canon/events.jsonl": "0d206ba9cba259a3c5d8eafb691a03c3c6656e13c2b18d3737e21e5119853303",
+    "00_sistema_tesis/canon/events.jsonl": "9fae91e5329597e100c3f760b9ff36e94b677b73e956159a0f99c693056b23d3",
     "00_sistema_tesis/canon/events.jsonl.bak": "a5f09744c5877232e70e8ef14d02c04beaced9e3021496200203953adcd8afa8",
     "00_sistema_tesis/canon/events.jsonl.bak.20260412_1521": "92a49c833a96c4857208be0bf6f106b4a5d70adc295224e0971999cb32e7f507",
     "00_sistema_tesis/canon/events.jsonl.bak.20260412_1602": "232c34d011f5b91a756810c402621a46192b702af0f090f68089e5b1841e746a",
@@ -7,7 +7,7 @@
     "00_sistema_tesis/canon/events.jsonl.bak.20260412_1828": "2629b6b8f84d098ef1610dca54e3414f581d236ee413f8d1973a80993ede72d5",
     "00_sistema_tesis/canon/events.jsonl.bak.20260412_1845": "abe5bed6a6bfa147e16eff885edac30e96bf63c27696282826efd3a44b3f39ca",
     "identidad técnica no publicada por seguridad": "a533526689e9c74e24911b91b80d93390ae1c2b8c6c44c8c8434e0101a737fb4",
-    "00_sistema_tesis/config/ia_gobernanza.yaml": "5f567b64c07ee66e514e339af492bb77aec6ad064c1b85b08531fc2853d5ee09",
+    "00_sistema_tesis/config/ia_gobernanza.yaml": "8ded422193290f820bc14f0c2d5ea63965871ca838db9ddfe77a10d4b3d0e445",
     "00_sistema_tesis/decisiones/2026-03-23_DEC-0001_arquitectura_sistema_tesis.md": "44a448695f2f45e0e91d8c132469764ab57391ef07d08e889c551069dc0880f7",
     "00_sistema_tesis/decisiones/2026-03-23_DEC-0002_gobernanza_ia_instrumental.md": "4202ae6746b9cd04ec134369b3ecb9bb665df1e83c484a93b05eff474adfe0b0",
     "00_sistema_tesis/decisiones/2026-03-24_DEC-0003_economia_de_uso_y_seleccion_de_razonamiento.md": "f45a731ff442d2fbc34c78611bcf3ce806f0a0b3ef3930fe2fa99d2257d9b484",
@@ -29,6 +29,7 @@
     "00_sistema_tesis/decisiones/2026-03-27_DEC-0021_publicacion_desde_downstream_publico_sanitizado.md": "8879d21adccce8c3b277e7f82933b396fb74e785335c2bbb7fcc837f1aea74f0",
     "00_sistema_tesis/decisiones/2026-04-08_DEC-0022_arquitectura_operativa_escritorio_primario_y_orange_pi_edge.md": "2e225db07f29c8ecdeb8b3e98046df852ed3290722a1aa61031e33b6bfb355e0",
     "00_sistema_tesis/decisiones/2026-04-08_DEC-0023_serena_mcp_como_capa_comun_para_agentes.md": "b478ca524148aca5d92c89ac48a73c9b8e363e01f6243d10f19acec576c4123c",
-    "AGENTS.md": "62253b03757ef91cab1b385b5ee3661e65b3dcd3f6d7fb43584c4370cbec0b61",
+    "00_sistema_tesis/decisiones/2026-04-21_DEC-0024_operacion_chatgpt_plus_sin_api_en_tesista_directo.md": "02b2000355de408dbf411905c848bf910766e3f96491e5a5a4f9aa343275791c",
+    "AGENTS.md": "2882142acec37e99fdb10fd6fcb15a68fd48257bf0743ffb3f8bf41626ab0ead",
     "_agents/skills/handshake_ledger/SKILL.md": "3ca6449ffb855fe870f8c1ee103283812b0d5dbd70e8a61a52ed87b9921b6baf"
 }

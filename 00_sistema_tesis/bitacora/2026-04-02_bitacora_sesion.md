@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-02
 
 - **ID de Sesión:** codex-local-20260402-verificacion-registro-reciente
-- **Cadena de Confianza (Anterior):** `sha256/37b001ff7b056e82df46f3d84d0dd78dad781568bb7bf7d9cfa7445514f8d14c`
+- **Cadena de Confianza (Anterior):** `sha256/e7cba921c92953b58105b725cbdfe9ec382346321df3657ce6f4d1c23efca688`
 - **Bloque principal:** B0
 - **Tipo de sesión:** verificación | regularización | documentación
 
@@ -70,4 +70,4 @@ Seguir con la siguiente tarea operativa del bloque B0/B1 manteniendo el patrón 
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

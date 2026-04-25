@@ -1,0 +1,13 @@
+[Unit]
+Description=OpenClaw Desktop Compute reverse tunnel to tesis-edge
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/openclaw-desktop-tunnel.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

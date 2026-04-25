@@ -7,6 +7,10 @@ SYNC_BRANCH="${SYNC_BRANCH:-main}"
 PYTHON_BIN="${PYTHON_BIN:-python3}"
 EDGE_SERVICE_NAME="${EDGE_SERVICE_NAME:-edge-iot-worker.service}"
 SYNC_PROFILE="${SYNC_PROFILE:-${1:-repo+postcheck}}"
+EDGE_NOISE_PATTERNS=(
+  "00_sistema_tesis/evidencia_privada/conversaciones_codex"
+  "00_sistema_tesis/evidencia_privada/staging_ingestion"
+)
 
 usage() {
   cat <<'EOF'
@@ -31,17 +35,34 @@ run_postcheck() {
   bash "${REPO_ROOT}/bootstrap/orangepi/90_postcheck.sh"
 }
 
+cleanup_edge_noise() {
+  local path
+
+  for path in "${EDGE_NOISE_PATTERNS[@]}"; do
+    if [ -e "${REPO_ROOT}/${path}" ]; then
+      rm -rf "${REPO_ROOT:?}/${path}"
+    fi
+  done
+
+  find "${REPO_ROOT}" -type d -name '.pytest_cache' -prune -exec rm -rf {} +
+  find "${REPO_ROOT}" -type d -name '__pycache__' -prune -exec rm -rf {} +
+  find "${REPO_ROOT}" -type f \( -name '*.pyc' -o -name '*.pyo' -o -name '*.bak*' \) -delete
+}
+
 case "${SYNC_PROFILE}" in
   repo-only)
     sync_repo
+    cleanup_edge_noise
     ;;
   repo+postcheck)
     sync_repo
     run_postcheck
+    cleanup_edge_noise
     ;;
   repo+restart-edge)
     sync_repo
     run_postcheck
+    cleanup_edge_noise
     systemctl restart "${EDGE_SERVICE_NAME}"
     systemctl is-active --quiet "${EDGE_SERVICE_NAME}"
     ;;

@@ -25,6 +25,38 @@ CLAIM_CLASSIFICATIONS = {
 }
 CRITICAL_CLASSIFICATIONS = {"hecho_verificado", "inferencia_razonada"}
 ACADEMIC_MODES = {"estado_del_arte", "metodologia", "redaccion_tesis"}
+CLOUD_PROVIDER_MODES = {"cloud_api", "cloud_web_assisted"}
+HEAVY_ACADEMIC_MODES = {"estado_del_arte", "metodologia", "redaccion_tesis"}
+HEAVY_TASK_MARKERS = {
+    "comparacion_literatura",
+    "estado_del_arte",
+    "generacion_extensa",
+    "rag",
+    "sintesis_larga",
+}
+REASONING_TEXT_INDICATORS = {
+    "por qué",
+    "por que",
+    "cómo funciona",
+    "como funciona",
+    "diseña",
+    "arquitectura",
+    "evalúa",
+    "evalua",
+    "critica",
+    "analiza a fondo",
+    "razona",
+    "compara en detalle",
+}
+REASONING_TASK_MARKERS = {
+    "analisis_critico",
+    "comparacion_profunda",
+    "diagnostico_complejo",
+    "diseño_arquitectura",
+    "evaluacion_riesgos",
+    "reasoning",
+    "sintesis_multimodal",
+}
 
 
 def route_task(
@@ -36,6 +68,7 @@ def route_task(
 ) -> ProviderDecision:
     repo = repo_root or Path(__file__).resolve().parents[3]
     domain_policy = policies["domains"][task.domain]
+    secret_domain_policy = load_domain_secret_policies(repo)["domains"][task.domain]
     provider_registry = load_provider_registry(repo)
     provider_index = {str(item["id"]): item for item in provider_registry.get("providers", [])}
     secret_policies = load_domain_secret_policies(repo)
@@ -49,6 +82,13 @@ def route_task(
 
     evaluations: list[str] = []
     candidates = _candidate_provider_order(task)
+    protected_candidates: list[str] = []
+    preferred_web = _preferred_web_assisted_provider(task)
+    if preferred_web:
+        protected_candidates = [preferred_web]
+        if preferred_web != "chatgpt_plus_web_assisted":
+            protected_candidates.append("chatgpt_plus_web_assisted")
+    candidates = _rank_candidates_with_feedback(candidates, task, store=store, protected_candidates=protected_candidates)
     chosen_meta: dict[str, Any] | None = None
     chosen_secret = None
     for provider_id in candidates:
@@ -61,7 +101,14 @@ def route_task(
             continue
         resolution = resolve_provider_secret(task.domain, provider_id, secret_policies=secret_policies)
         mode = str(provider_meta.get("mode", "local_rules"))
-        is_cloud = mode in {"cloud_api", "cloud_web_assisted"}
+        is_cloud = mode in CLOUD_PROVIDER_MODES
+        if is_cloud and mode == "cloud_web_assisted":
+            if not (secret_domain_policy.allow_web_assisted and _web_assisted_enabled()):
+                evaluations.append(f"{provider_id}: web_asistido_deshabilitado")
+                continue
+        elif is_cloud and not _cloud_providers_enabled(task):
+            evaluations.append(f"{provider_id}: nube_deshabilitada_por_defecto")
+            continue
         if task.preferred_mode == "offline" and is_cloud:
             evaluations.append(f"{provider_id}: omitido_por_modo_offline")
             continue
@@ -118,6 +165,7 @@ def route_task(
 
     fallback_chain = _build_fallback_chain(task, policies, chosen_meta["id"], provider_index)
     reason = _route_reason(task, chosen_meta["id"], evaluations)
+    reasoning_quality = _reasoning_quality_for(chosen_meta["id"], provider_index)
     return ProviderDecision(
         domain=task.domain,
         risk_level=task.risk_level,
@@ -133,7 +181,42 @@ def route_task(
         session_mode=str(chosen_meta["session_mode"]),
         fallback_chain=fallback_chain,
         reason=reason,
+        reasoning_quality=reasoning_quality,
     )
+
+
+def _rank_candidates_with_feedback(
+    candidates: list[str],
+    task: TaskEnvelope,
+    *,
+    store: Any | None,
+    protected_candidates: list[str] | None = None,
+) -> list[str]:
+    if store is None or not candidates:
+        return candidates
+    protected = [item for item in (protected_candidates or []) if item in candidates]
+    if protected:
+        candidates = [item for item in candidates if item not in protected]
+    try:
+        feedback = store.get_provider_outcome_stats(domain=task.domain, request_kind=str(task.extra_context.get("request_profile", "")).strip() or None, limit=100)
+    except AttributeError:
+        return protected + candidates
+
+    ranked: list[tuple[float, int, str]] = []
+    for index, provider_id in enumerate(candidates):
+        stats = feedback.get(provider_id) or {}
+        success_rate = float(stats.get("success_rate", 0.0) or 0.0)
+        failure_rate = float(stats.get("failure_rate", 0.0) or 0.0)
+        timeout_rate = float(stats.get("timeout_rate", 0.0) or 0.0)
+        average_latency = stats.get("average_latency_ms")
+        latency_penalty = 0.0
+        if average_latency is not None:
+            latency_penalty = min(float(average_latency) / 10_000.0, 0.5)
+        score = success_rate - latency_penalty - (failure_rate * 0.35) - (timeout_rate * 0.5)
+        ranked.append((score, index, provider_id))
+    ranked.sort(key=lambda item: (-item[0], item[1]))
+    ranked_candidates = [item[2] for item in ranked]
+    return protected + ranked_candidates
 
 
 def build_evidence_record(
@@ -407,45 +490,246 @@ def default_data_dir(root: Path | None = None) -> Path:
     return data_dir
 
 
+def _npu_explicitly_enabled(task: TaskEnvelope) -> bool:
+    if task.extra_context.get("prefer_npu"):
+        return True
+    if task.extra_context.get("npu_bench_approved"):
+        return True
+    return str(task.extra_context.get("runtime_override", "")).strip().lower() == "rknn_llm_experimental"
+
+
+def _task_requires_advanced_reasoning(task: TaskEnvelope) -> bool:
+    """Detect when a task needs advanced reasoning capabilities."""
+    task_type = str(task.extra_context.get("task_type", "")).strip().lower()
+    if task_type in REASONING_TASK_MARKERS:
+        return True
+    request_kind = str(task.extra_context.get("request_profile", "")).strip().lower()
+    if request_kind in {"reasoning", "deep", "research"}:
+        return True
+    academic_mode = str(task.extra_context.get("academic_mode", "")).strip()
+    if academic_mode in HEAVY_ACADEMIC_MODES and task.complexity == "high":
+        return True
+    if task.requires_citations and task.complexity == "high":
+        return True
+    return False
+
+
+def _env_flag_enabled(name: str, *, default: bool = False) -> bool:
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on", "si", "sí"}
+
+
+def _web_assisted_enabled() -> bool:
+    return _env_flag_enabled("OPENCLAW_WEB_ENABLED", default=True)
+
+
+def _preferred_web_assisted_provider(task: TaskEnvelope) -> str:
+    explicit = str(task.extra_context.get("preferred_web_assisted", "") or "").strip().lower()
+    if explicit in {"chatgpt_plus_web_assisted", "gemini_web_assisted"}:
+        return explicit
+    if task.extra_context.get("prefer_chatgpt_plus") is True:
+        return "chatgpt_plus_web_assisted"
+    return ""
+
+
+def _cloud_providers_enabled(task: TaskEnvelope) -> bool:
+    if task.extra_context.get("allow_cloud") is True:
+        return True
+    if str(task.extra_context.get("network_mode", "")).strip().lower() == "cloud_allowed":
+        return True
+    return _env_flag_enabled("OPENCLAW_CLOUD_ENABLED", default=False)
+
+
+def _desktop_compute_enabled(task: TaskEnvelope) -> bool:
+    if task.extra_context.get("disable_desktop_compute") is True:
+        return False
+    if task.extra_context.get("desktop_compute") is False:
+        return False
+    return _env_flag_enabled("OPENCLAW_DESKTOP_COMPUTE_ENABLED", default=True)
+
+
+def _desktop_provider_id() -> str:
+    runtime = os.getenv("OPENCLAW_DESKTOP_RUNTIME", "").strip().lower()
+    if runtime == "llamacpp":
+        return "pc_native_llamacpp"
+    return "desktop_compute"
+
+
+def _desktop_compute_requested(task: TaskEnvelope) -> bool:
+    override = str(task.extra_context.get("runtime_override", "")).strip().lower()
+    if override in {"desktop_compute", "pc_native_llamacpp", "desktop"}:
+        return True
+    if task.extra_context.get("desktop_compute") is True:
+        return True
+    task_type = str(task.extra_context.get("task_type", "")).strip().lower()
+    if task_type in HEAVY_TASK_MARKERS:
+        return True
+    academic_mode = str(task.extra_context.get("academic_mode", "")).strip()
+    if task.domain == "academico" and academic_mode in HEAVY_ACADEMIC_MODES:
+        return task.complexity in {"medium", "high"} or task.requires_citations
+    return task.domain in {"academico", "profesional"} and task.complexity == "high"
+
+
+def _append_npu_if_requested(order: list[str], task: TaskEnvelope) -> list[str]:
+    if _npu_explicitly_enabled(task) and "rknn_llm_experimental" not in order:
+        order.append("rknn_llm_experimental")
+    return order
+
+
+def _task_requires_advanced_reasoning(task: TaskEnvelope) -> bool:
+    task_type = str(task.extra_context.get("task_type", "")).strip().lower()
+    if task_type in REASONING_TASK_MARKERS:
+        return True
+    request_kind = str(task.extra_context.get("request_kind", "")).strip()
+    if task.complexity == "high" and request_kind == "reasoning":
+        return True
+    academic_mode = str(task.extra_context.get("academic_mode", "")).strip()
+    if academic_mode in HEAVY_ACADEMIC_MODES and task.complexity == "high":
+        return True
+    objective = str(task.objective).lower()
+    if any(indicator in objective for indicator in REASONING_TEXT_INDICATORS):
+        return True
+    return False
+
+
+def _reasoning_quality_for(provider_id: str, provider_index: dict[str, Any]) -> str:
+    provider_meta = provider_index.get(provider_id, {})
+    tier = str(provider_meta.get("reasoning_tier", "")).strip().lower()
+    if tier == "premium":
+        return "advanced"
+    if tier == "intermediate":
+        return "intermediate"
+    model_class = str(provider_meta.get("model_class", "")).strip()
+    if model_class in {"cloud_assisted_premium"}:
+        return "intermediate"
+    if model_class in {"open_source_gpu_heavy"}:
+        return "intermediate"
+    return "basic"
+
+
 def _candidate_provider_order(task: TaskEnvelope) -> list[str]:
+    desktop_provider = _desktop_provider_id()
     if task.domain in {"edge", "administrativo", "personal"}:
         return ["local"]
     if task.preferred_mode == "offline" or task.extra_context.get("network_mode") == "offline":
-        order = ["local", "ollama_local", "rknn_llm_experimental"]
-        if task.extra_context.get("prefer_npu"):
-            order = ["local", "rknn_llm_experimental", "ollama_local"]
-        return order
+        order = ["local", "ollama_local"]
+        return _append_npu_if_requested(order, task)
+    advanced_reasoning = _task_requires_advanced_reasoning(task)
     if task.domain == "profesional":
+        preferred_web = _preferred_web_assisted_provider(task)
+        if preferred_web:
+            order = [preferred_web, "openai_api", "groq_api", "ollama_local", "local"]
+            if preferred_web != "chatgpt_plus_web_assisted":
+                order.insert(1, "chatgpt_plus_web_assisted")
+            return _append_npu_if_requested(order, task)
+        if advanced_reasoning:
+            order = ["chatgpt_plus_web_assisted", desktop_provider, "openai_api", "groq_api", "ollama_local", "local"]
+            if not _desktop_compute_enabled(task):
+                order.remove(desktop_provider)
+            return _append_npu_if_requested(order, task)
         if task.complexity == "high" or task.risk_level in {"high", "critical"}:
-            return ["openai_api", "groq_api", "ollama_local", "local"]
+            if _cloud_providers_enabled(task) and not _desktop_compute_enabled(task):
+                order = ["chatgpt_plus_web_assisted", "openai_api", "groq_api", "ollama_local", "local"]
+                return _append_npu_if_requested(order, task)
+            order = [desktop_provider, "chatgpt_plus_web_assisted", "ollama_local", "local", "groq_api", "openai_api"]
+            if not _desktop_compute_enabled(task):
+                order.remove(desktop_provider)
+            return _append_npu_if_requested(order, task)
         if task.complexity == "medium":
-            return ["groq_api", "ollama_local", "openai_api", "local"]
-        return ["local", "ollama_local", "groq_api"]
+            if _cloud_providers_enabled(task) and not _desktop_compute_requested(task):
+                order = ["groq_api", "ollama_local", "openai_api", "local"]
+                return _append_npu_if_requested(order, task)
+            order = ["ollama_local", "local", desktop_provider, "groq_api", "openai_api"]
+            if not _desktop_compute_enabled(task) or not _desktop_compute_requested(task):
+                order.remove(desktop_provider)
+            return _append_npu_if_requested(order, task)
+        order = ["local", "ollama_local", "groq_api"]
+        return _append_npu_if_requested(order, task)
     if task.domain == "academico":
+        preferred_web = _preferred_web_assisted_provider(task)
+        if preferred_web:
+            order = [preferred_web, "gemini_web_assisted", "openai_api", "gemini_api", "groq_api", desktop_provider, "ollama_local", "local"]
+            if preferred_web != "chatgpt_plus_web_assisted":
+                order.insert(1, "chatgpt_plus_web_assisted")
+            if not _desktop_compute_enabled(task):
+                order = [item for item in order if item != desktop_provider]
+            return _append_npu_if_requested(order, task)
+        if _task_requires_advanced_reasoning(task):
+            order = [
+                "chatgpt_plus_web_assisted",
+                "gemini_web_assisted",
+                desktop_provider,
+                "openai_api",
+                "gemini_api",
+                "groq_api",
+                "ollama_local",
+                "local",
+            ]
+            if not _desktop_compute_enabled(task):
+                order = [item for item in order if item != desktop_provider]
+            return _append_npu_if_requested(order, task)
         if task.complexity == "high" or task.requires_citations:
-            return [
+            if _cloud_providers_enabled(task) and not _desktop_compute_enabled(task):
+                order = [
+                    "gemini_api",
+                    "gemini_web_assisted",
+                    "openai_api",
+                    "chatgpt_plus_web_assisted",
+                    "groq_api",
+                    "ollama_local",
+                    "local",
+                ]
+                return _append_npu_if_requested(order, task)
+            order = [
+                desktop_provider,
+                "ollama_local",
+                "local",
                 "gemini_api",
                 "gemini_web_assisted",
                 "openai_api",
                 "chatgpt_plus_web_assisted",
                 "groq_api",
-                "ollama_local",
-                "rknn_llm_experimental" if task.extra_context.get("prefer_npu") else "local",
-                "local",
             ]
+            if not _desktop_compute_enabled(task):
+                order.remove(desktop_provider)
+            return _append_npu_if_requested(order, task)
         if task.complexity == "medium":
-            return ["ollama_local", "groq_api", "gemini_api", "gemini_web_assisted", "local"]
-        return ["local", "ollama_local", "groq_api"]
+            if _desktop_compute_enabled(task):
+                order = [desktop_provider]
+                if _cloud_providers_enabled(task):
+                    order.extend(["groq_api", "gemini_api", "gemini_web_assisted", "openai_api", "chatgpt_plus_web_assisted"])
+                order.extend(["ollama_local", "local"])
+                return _append_npu_if_requested(order, task)
+            if _cloud_providers_enabled(task):
+                order = ["groq_api", "gemini_api", "gemini_web_assisted", "openai_api", "chatgpt_plus_web_assisted", "ollama_local", "local"]
+                return _append_npu_if_requested(order, task)
+            order = ["ollama_local", "local"]
+            return _append_npu_if_requested(order, task)
+        order = [desktop_provider, "groq_api", "gemini_api", "gemini_web_assisted", "openai_api", "chatgpt_plus_web_assisted", "ollama_local", "local"]
+        if not _desktop_compute_enabled(task):
+            order = [item for item in order if item != desktop_provider]
+        return _append_npu_if_requested(order, task)
     return ["local"]
 
 
 def _build_fallback_chain(task: TaskEnvelope, policies: dict[str, Any], selected: str, provider_index: dict[str, Any]) -> list[str]:
     fallback_chain: list[str] = []
+    allow_web_assisted = bool(load_domain_secret_policies(Path(__file__).resolve().parents[3])["domains"][task.domain].allow_web_assisted) and _web_assisted_enabled()
     for provider_id in _candidate_provider_order(task):
         if provider_id == selected:
             continue
-        if provider_id in provider_index and provider_id in policies["domains"][task.domain].allowed_backends:
-            fallback_chain.append(provider_id)
+        provider_meta = provider_index.get(provider_id)
+        if provider_meta is None or provider_id not in policies["domains"][task.domain].allowed_backends:
+            continue
+        provider_mode = str(provider_meta.get("mode", "local_rules"))
+        if provider_mode in CLOUD_PROVIDER_MODES:
+            if provider_mode == "cloud_web_assisted" and allow_web_assisted:
+                pass
+            elif not _cloud_providers_enabled(task):
+                continue
+        fallback_chain.append(provider_id)
     fallback_chain.extend(["offline", "manual"])
     deduped: list[str] = []
     for item in fallback_chain:
@@ -479,3 +763,21 @@ def _route_reason(task: TaskEnvelope, selected_provider: str, evaluations: list[
 
 def _pipe_safe(value: str) -> str:
     return value.replace("|", "/").replace("\n", " ").strip()
+
+
+def _reasoning_quality_for(provider_id: str, provider_index: dict[str, Any]) -> str:
+    """Map provider to reasoning quality tier based on registry metadata."""
+    provider_meta = provider_index.get(provider_id)
+    if provider_meta is None:
+        return "basic"
+    tier = str(provider_meta.get("reasoning_tier", "")).strip().lower()
+    if tier in {"premium", "advanced"}:
+        return "advanced"
+    if tier in {"intermediate", "mid"}:
+        return "intermediate"
+    model_class = str(provider_meta.get("model_class", "")).strip().lower()
+    if "premium" in model_class:
+        return "advanced"
+    if "mid" in model_class or "heavy" in model_class:
+        return "intermediate"
+    return "basic"

@@ -9,6 +9,7 @@ import time
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+from urllib import error, request
 from uuid import uuid4
 
 from .contracts import BenchmarkRecord, RuntimeProbe
@@ -55,12 +56,14 @@ def summarize_host(repo_root: Path | None = None) -> dict[str, Any]:
 
 def probe_runtime_status(repo_root: Path | None = None) -> dict[str, Any]:
     root = repo_root or Path(__file__).resolve().parents[3]
-    data_dir = Path(os.getenv("OPENCLAW_DATA_DIR", "/var/lib/herramientas/openclaw"))
-    cache_dir = Path(os.getenv("OPENCLAW_CACHE_DIR", "/var/cache/herramientas/openclaw"))
-    log_dir = Path(os.getenv("OPENCLAW_LOG_DIR", "/var/log/openclaw"))
-    env_file = Path(os.getenv("OPENCLAW_ENV_FILE", "/etc/tesis-os/openclaw.env"))
+    defaults = _runtime_path_defaults(root)
+    data_dir = Path(os.getenv("OPENCLAW_DATA_DIR", str(defaults["data_dir"])))
+    cache_dir = Path(os.getenv("OPENCLAW_CACHE_DIR", str(defaults["cache_dir"])))
+    log_dir = Path(os.getenv("OPENCLAW_LOG_DIR", str(defaults["log_dir"])))
+    env_file = Path(os.getenv("OPENCLAW_ENV_FILE", str(defaults["env_file"])))
     db_path = Path(os.getenv("OPENCLAW_DB_PATH", data_dir / "openclaw.db"))
     ollama = detect_ollama_status()
+    llamacpp = detect_llamacpp_status()
     npu = detect_npu_status()
     preflight = build_preflight_report(repo_root=root)
     state = "base_only"
@@ -68,10 +71,14 @@ def probe_runtime_status(repo_root: Path | None = None) -> dict[str, Any]:
         state = "openclaw_ready"
     if ollama["ready"]:
         state = "ollama_ready"
+    if llamacpp["ready"]:
+        state = "desktop_llamacpp_ready"
     if npu["ready"]:
         state = "npu_experimental_ready"
     active_runtime = "local"
-    if ollama["ready"]:
+    if llamacpp["ready"]:
+        active_runtime = "pc_native_llamacpp"
+    elif ollama["ready"]:
         active_runtime = "ollama_local"
     return {
         "state": state,
@@ -92,6 +99,7 @@ def probe_runtime_status(repo_root: Path | None = None) -> dict[str, Any]:
             "db_parent_exists": db_path.parent.exists(),
         },
         "ollama": ollama,
+        "llamacpp": llamacpp,
         "npu": npu,
         "host": summarize_host(root),
         "preflight": preflight,
@@ -112,8 +120,9 @@ def build_runtime_probe(repo_root: Path | None = None, *, source_command: str = 
 
 def build_preflight_report(repo_root: Path | None = None) -> dict[str, Any]:
     root = repo_root or Path(__file__).resolve().parents[3]
-    env_file = Path(os.getenv("OPENCLAW_ENV_FILE", "/etc/tesis-os/openclaw.env"))
-    data_dir = Path(os.getenv("OPENCLAW_DATA_DIR", "/var/lib/herramientas/openclaw"))
+    defaults = _runtime_path_defaults(root)
+    env_file = Path(os.getenv("OPENCLAW_ENV_FILE", str(defaults["env_file"])))
+    data_dir = Path(os.getenv("OPENCLAW_DATA_DIR", str(defaults["data_dir"])))
     db_path = Path(os.getenv("OPENCLAW_DB_PATH", data_dir / "openclaw.db"))
     wrapper = root / "runtime" / "openclaw" / "wrappers" / "openclaw-gateway.sh"
     checks = [
@@ -133,35 +142,52 @@ def build_preflight_report(repo_root: Path | None = None) -> dict[str, Any]:
 
 def run_runtime_benchmarks(repo_root: Path | None = None) -> dict[str, Any]:
     root = repo_root or Path(__file__).resolve().parents[3]
+    include_llamacpp = os.getenv("OPENCLAW_DESKTOP_RUNTIME", "").strip().lower() == "llamacpp" or os.getenv("OPENCLAW_FORCE_LLAMACPP_READY") == "1"
     if os.getenv("OPENCLAW_BENCHMARK_SIMULATION") == "1":
         ollama_latency = float(os.getenv("OPENCLAW_BENCHMARK_OLLAMA_MS", "120.0"))
+        llamacpp_latency = float(os.getenv("OPENCLAW_BENCHMARK_LLAMACPP_MS", "95.0"))
         npu_latency = float(os.getenv("OPENCLAW_BENCHMARK_NPU_MS", "75.0"))
         ollama = _benchmark_record(
             provider="ollama_local",
             status="simulated_ok",
             latency_ms=ollama_latency,
-            details={"mode": "simulated", "model": os.getenv("OPENCLAW_OLLAMA_BENCH_MODEL", "qwen2.5:0.5b")},
+            details={"mode": "simulated", "model": os.getenv("OPENCLAW_OLLAMA_BENCH_MODEL", "qwen3:4b")},
         )
+        llamacpp = _benchmark_record(
+            provider="pc_native_llamacpp",
+            status="simulated_ok" if os.getenv("OPENCLAW_FORCE_LLAMACPP_READY") == "1" else "simulated_skipped",
+            latency_ms=llamacpp_latency if os.getenv("OPENCLAW_FORCE_LLAMACPP_READY") == "1" else None,
+            details={"mode": "simulated", "model": os.getenv("OPENCLAW_DESKTOP_RUNTIME_MODEL", "mistral-nemo:12b")},
+        ) if include_llamacpp else None
         npu = _benchmark_record(
             provider="rknn_llm_experimental",
             status="simulated_ok" if os.getenv("OPENCLAW_FORCE_NPU_READY") == "1" else "simulated_skipped",
             latency_ms=npu_latency if os.getenv("OPENCLAW_FORCE_NPU_READY") == "1" else None,
             details={"mode": "simulated"},
         )
-        recommended = _recommended_runtime(ollama.to_dict(), npu.to_dict())
+        recommended = _recommended_runtime(ollama.to_dict(), llamacpp.to_dict() if llamacpp else None, npu.to_dict())
+        results = [ollama.to_dict()]
+        if llamacpp is not None:
+            results.append(llamacpp.to_dict())
+        results.append(npu.to_dict())
         return {
             "active_runtime": probe_runtime_status(root)["active_runtime"],
             "recommended_runtime": recommended,
-            "results": [ollama.to_dict(), npu.to_dict()],
+            "results": results,
         }
 
     ollama = _run_ollama_benchmark()
+    llamacpp = _run_llamacpp_benchmark() if include_llamacpp else None
     npu = _run_npu_benchmark()
-    recommended = _recommended_runtime(ollama, npu)
+    recommended = _recommended_runtime(ollama, llamacpp, npu)
+    results = [ollama]
+    if llamacpp is not None:
+        results.append(llamacpp)
+    results.append(npu)
     return {
         "active_runtime": probe_runtime_status(root)["active_runtime"],
         "recommended_runtime": recommended,
-        "results": [ollama, npu],
+        "results": results,
     }
 
 
@@ -203,9 +229,66 @@ def detect_npu_status() -> dict[str, Any]:
     }
 
 
+def detect_llamacpp_status() -> dict[str, Any]:
+    forced = os.getenv("OPENCLAW_FORCE_LLAMACPP_READY")
+    configured_base_url = os.getenv(
+        "OPENCLAW_DESKTOP_RUNTIME_BASE_URL",
+        os.getenv("OPENCLAW_DESKTOP_COMPUTE_BASE_URL", "http://127.0.0.1:21434"),
+    ).rstrip("/")
+    bind_port = os.getenv("OPENCLAW_LLAMACPP_BIND_PORT", "21435").strip() or "21435"
+    local_base_url = f"http://127.0.0.1:{bind_port}"
+    runtime = os.getenv("OPENCLAW_DESKTOP_RUNTIME", "llamacpp").strip() or "llamacpp"
+    model = os.getenv("OPENCLAW_DESKTOP_RUNTIME_MODEL", os.getenv("OPENCLAW_DESKTOP_COMPUTE_MODEL", "mistral-nemo:12b")).strip() or "mistral-nemo:12b"
+    local_fallback_raw = os.getenv("OPENCLAW_LLAMACPP_LOCAL_FALLBACK", "1" if os.name == "nt" else "0").strip().lower()
+    local_fallback_enabled = local_fallback_raw in {"1", "true", "yes", "on", "si", "sí"}
+    probe_targets = [configured_base_url]
+    fallback_used = False
+    if local_fallback_enabled and runtime == "llamacpp" and configured_base_url != local_base_url:
+        probe_targets.append(local_base_url)
+    if forced == "1":
+        return {
+            "installed": True,
+            "ready": True,
+            "mode": "desktop_native_llamacpp",
+            "runtime": runtime,
+            "base_url": configured_base_url,
+            "model": model,
+        }
+
+    status = "unavailable"
+    latency_ms = 0.0
+    error_code = "not_probed"
+    selected_base_url = configured_base_url
+    for index, target_url in enumerate(probe_targets):
+        status, latency_ms, error_code = _http_probe(target_url + "/health", timeout=2.0)
+        if status != "ok":
+            props_status, props_latency_ms, props_error_code = _http_probe(target_url + "/props", timeout=2.0)
+            if props_status == "ok":
+                status, latency_ms, error_code = props_status, props_latency_ms, props_error_code
+        if status == "ok":
+            selected_base_url = target_url
+            fallback_used = index > 0
+            break
+    return {
+        "installed": runtime == "llamacpp",
+        "ready": status == "ok",
+        "mode": "desktop_native_llamacpp",
+        "runtime": runtime,
+        "base_url": selected_base_url,
+        "configured_base_url": configured_base_url,
+        "local_base_url": local_base_url,
+        "local_fallback_enabled": local_fallback_enabled,
+        "fallback_used": fallback_used,
+        "model": model,
+        "probe_status": status,
+        "probe_latency_ms": latency_ms,
+        "probe_error": error_code,
+    }
+
+
 def _run_ollama_benchmark() -> dict[str, Any]:
     ollama = detect_ollama_status()
-    model = os.getenv("OPENCLAW_OLLAMA_BENCH_MODEL", "qwen2.5:0.5b")
+    model = os.getenv("OPENCLAW_OLLAMA_BENCH_MODEL", "qwen3:4b")
     if not ollama["installed"]:
         return _benchmark_record(
             provider="ollama_local",
@@ -221,19 +304,37 @@ def _run_ollama_benchmark() -> dict[str, Any]:
             latency_ms=None,
             details={"model": model, "reason": "modelo_no_descargado"},
         ).to_dict()
+    http_ok, http_payload = _run_ollama_http_benchmark(model=model, timeout=90)
+    if http_ok:
+        return _benchmark_record(
+            provider="ollama_local",
+            status="ok",
+            latency_ms=http_payload["elapsed_ms"],
+            details={
+                "model": model,
+                "method": "http_generate",
+                "response": str(http_payload.get("response", "")).strip()[:200],
+            },
+        ).to_dict()
     executed = _run_command([ollama["command"], "run", model, "Responde únicamente: listo"], timeout=90)
     status = "ok" if executed["returncode"] == 0 else "failed"
     return _benchmark_record(
         provider="ollama_local",
         status=status,
         latency_ms=executed["elapsed_ms"],
-        details={"model": model, "stdout": executed["stdout"].strip()[:200], "stderr": executed["stderr"].strip()[:200]},
+        details={
+            "model": model,
+            "method": "cli_run_fallback",
+            "stdout": executed["stdout"].strip()[:200],
+            "stderr": executed["stderr"].strip()[:200],
+            "http_error": str(http_payload.get("error", "")),
+        },
     ).to_dict()
 
 
 def _run_npu_benchmark() -> dict[str, Any]:
     npu = detect_npu_status()
-    command = os.getenv("OPENCLAW_NPU_BENCH_CMD", "").strip()
+    command = _env_value("OPENCLAW_NPU_BENCH_CMD").strip()
     if not npu["installed"]:
         return _benchmark_record(
             provider="rknn_llm_experimental",
@@ -258,10 +359,100 @@ def _run_npu_benchmark() -> dict[str, Any]:
     ).to_dict()
 
 
-def _recommended_runtime(ollama: dict[str, Any], npu: dict[str, Any]) -> str:
+def _run_ollama_http_benchmark(*, model: str, timeout: int) -> tuple[bool, dict[str, Any]]:
+    base_url = os.getenv("OPENCLAW_EDGE_OLLAMA_BASE_URL", "http://127.0.0.1:11434").rstrip("/")
+    endpoint = base_url + "/api/generate"
+    payload = json.dumps(
+        {
+            "model": model,
+            "prompt": "Responde únicamente: listo",
+            "stream": False,
+            "options": {
+                "num_predict": int(os.getenv("OPENCLAW_BENCH_NUM_PREDICT", "8")),
+                "num_ctx": int(os.getenv("OPENCLAW_BENCH_NUM_CTX", "512")),
+                "temperature": 0,
+            },
+        },
+        ensure_ascii=False,
+    ).encode("utf-8")
+    req = request.Request(endpoint, data=payload, method="POST")
+    req.add_header("Content-Type", "application/json")
+    started = time.perf_counter()
+    try:
+        with request.urlopen(req, timeout=timeout) as response:
+            raw = response.read().decode("utf-8", errors="replace")
+        parsed = json.loads(raw)
+        return True, {
+            "elapsed_ms": round((time.perf_counter() - started) * 1000.0, 3),
+            "response": str(parsed.get("response", "")),
+        }
+    except (error.URLError, error.HTTPError, json.JSONDecodeError, OSError) as exc:
+        return False, {
+            "elapsed_ms": round((time.perf_counter() - started) * 1000.0, 3),
+            "error": f"{type(exc).__name__}:{exc}",
+        }
+
+
+def _run_llamacpp_benchmark() -> dict[str, Any]:
+    status = detect_llamacpp_status()
+    if not status["installed"]:
+        return _benchmark_record(
+            provider="pc_native_llamacpp",
+            status="skipped_unconfigured",
+            latency_ms=None,
+            details={"reason": "desktop_runtime_no_configurado"},
+        ).to_dict()
+    if not status["ready"]:
+        return _benchmark_record(
+            provider="pc_native_llamacpp",
+            status="skipped_unavailable",
+            latency_ms=None,
+            details={"reason": status.get("probe_error", "llamacpp_unavailable"), "base_url": status["base_url"]},
+        ).to_dict()
+
+    payload = json.dumps(
+        {
+            "model": status["model"],
+            "messages": [{"role": "user", "content": "Responde únicamente: listo"}],
+            "max_tokens": 8,
+            "temperature": 0,
+        },
+        ensure_ascii=False,
+    ).encode("utf-8")
+    req = request.Request(status["base_url"] + "/v1/chat/completions", data=payload, method="POST")
+    req.add_header("Content-Type", "application/json")
+    started = time.perf_counter()
+    try:
+        with request.urlopen(req, timeout=60) as response:
+            raw = response.read().decode("utf-8", errors="replace")
+        parsed = json.loads(raw)
+        choices = parsed.get("choices") or []
+        text = ""
+        if choices and isinstance(choices[0], dict):
+            text = str((choices[0].get("message") or {}).get("content", "")).strip()
+        return _benchmark_record(
+            provider="pc_native_llamacpp",
+            status="ok",
+            latency_ms=round((time.perf_counter() - started) * 1000.0, 3),
+            details={"model": status["model"], "response": text[:200], "base_url": status["base_url"]},
+        ).to_dict()
+    except (error.URLError, error.HTTPError, json.JSONDecodeError, OSError) as exc:
+        return _benchmark_record(
+            provider="pc_native_llamacpp",
+            status="failed",
+            latency_ms=round((time.perf_counter() - started) * 1000.0, 3),
+            details={"model": status["model"], "error": f"{type(exc).__name__}:{exc}", "base_url": status["base_url"]},
+        ).to_dict()
+
+
+def _recommended_runtime(ollama: dict[str, Any], llamacpp: dict[str, Any] | None, npu: dict[str, Any]) -> str:
     ollama_ok = ollama.get("status") in {"ok", "simulated_ok"}
+    llamacpp_ok = bool(llamacpp) and llamacpp.get("status") in {"ok", "simulated_ok"}
     npu_ok = npu.get("status") in {"ok", "simulated_ok"}
-    if npu_ok and ollama_ok:
+    allow_npu_promotion = os.getenv("OPENCLAW_NPU_AUTO_PROMOTE", "").strip().lower() in {"1", "true", "yes", "on"}
+    if llamacpp_ok:
+        return "pc_native_llamacpp"
+    if allow_npu_promotion and npu_ok and ollama_ok:
         if float(npu.get("latency_ms") or 9e9) < float(ollama.get("latency_ms") or 9e9):
             return "rknn_llm_experimental"
     if ollama_ok:
@@ -308,6 +499,22 @@ def _run_command(command: list[str] | str, *, timeout: int, shell: bool = False)
         }
 
 
+def _http_probe(url: str, *, timeout: float = 4.0) -> tuple[str, float | None, str]:
+    started = time.perf_counter()
+    req = request.Request(url, method="GET")
+    try:
+        with request.urlopen(req, timeout=timeout) as response:
+            _ = response.read(256)
+            latency = (time.perf_counter() - started) * 1000.0
+            return "ok", round(latency, 3), ""
+    except error.HTTPError as exc:
+        latency = (time.perf_counter() - started) * 1000.0
+        return "degraded", round(latency, 3), f"http_{exc.code}"
+    except Exception as exc:  # noqa: BLE001
+        latency = (time.perf_counter() - started) * 1000.0
+        return "unavailable", round(latency, 3), f"{type(exc).__name__}:{exc}"
+
+
 def _memory_total_bytes() -> int:
     forced = os.getenv("OPENCLAW_FORCE_MEMORY_BYTES")
     if forced:
@@ -318,6 +525,46 @@ def _memory_total_bytes() -> int:
         if page_size and phys_pages:
             return page_size * phys_pages
     return 0
+
+
+def _env_value(name: str, default: str = "") -> str:
+    raw = os.getenv(name, "").strip()
+    if raw:
+        return raw
+    defaults = _runtime_path_defaults(Path(__file__).resolve().parents[3])
+    env_file = Path(os.getenv("OPENCLAW_ENV_FILE", str(defaults["env_file"])))
+    if not env_file.exists():
+        return default
+    try:
+        for line in env_file.read_text(encoding="utf-8", errors="ignore").splitlines():
+            stripped = line.strip()
+            if not stripped or stripped.startswith("#") or "=" not in stripped:
+                continue
+            key, value = stripped.split("=", 1)
+            if key.strip() != name:
+                continue
+            return value.strip().strip("'\"")
+    except OSError:
+        return default
+    return default
+
+
+def _runtime_path_defaults(repo_root: Path) -> dict[str, Path]:
+    if os.name == "nt":
+        local_env = repo_root / "config" / "env" / "openclaw.env"
+        fallback_env = repo_root / "config" / "env" / "openclaw.env.example"
+        return {
+            "env_file": local_env if local_env.exists() else fallback_env,
+            "data_dir": repo_root / "runtime" / "openclaw" / "state",
+            "cache_dir": repo_root / "runtime" / "openclaw" / "cache",
+            "log_dir": repo_root / "runtime" / "openclaw" / "logs",
+        }
+    return {
+        "env_file": Path("/etc/tesis-os/openclaw.env"),
+        "data_dir": Path("/var/lib/herramientas/openclaw"),
+        "cache_dir": Path("/var/cache/herramientas/openclaw"),
+        "log_dir": Path("/var/log/openclaw"),
+    }
 
 
 def _detect_rootfs() -> dict[str, Any]:

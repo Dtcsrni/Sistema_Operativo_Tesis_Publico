@@ -75,9 +75,12 @@ class TestHumanOperationalLayer(unittest.TestCase):
         materialize_events(check=False)
         publication_bundle_status(build=True)
         buffer = io.StringIO()
-        with redirect_stdout(buffer):
-            code = cmd_doctor(argparse.Namespace(check=True))
+        with patch("check_agent_tooling.build_report", return_value={"caveman": {"available": True, "status": "ok"}, "policy": {"workflow": "test"}}):
+            with redirect_stdout(buffer):
+                code = cmd_doctor(argparse.Namespace(check=True))
         output = buffer.getvalue()
+        if code != 0:
+            print(f"\nDOCTOR FAILURE IN CI:\n{output}")
         self.assertEqual(code, 0)
         self.assertIn("DOCTOR:", output)
         self.assertIn("Source evidence repo status", output)

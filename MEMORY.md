@@ -5,7 +5,7 @@
 
 ## Estado actual
 
-- **Generado:** `2026-04-14`
+- **Generado:** `2026-04-24`
 - **Versión del sistema:** `0.1.0`
 - **Estado global:** `arquitectura_formal_reforzada`
 - **Bloque activo:** `B0`
@@ -20,11 +20,11 @@
 
 ## Últimos cambios validados
 
-- **validación humana interna no pública** · `2026-04-13` · Autorizacion humana para resolver pendientes, publicar y monitorear CI hasta despliegue correcto · soporte DEC-0014
-- **validación humana interna no pública** · `2026-04-13` · Autorización humana para asignar automáticamente el Step ID y cerrar verificación CI/publicación pública · soporte [DEC-0014]
-- **validación humana interna no pública** · `2026-04-13` · Política operativa para activar Serena primero cuando no esté disponible · soporte [DEC-0014]
-- **validación humana interna no pública** · `2026-04-12` · Cierre de trazabilidad final y preparación de publicación de Serena · soporte [DEC-0014]
-- **validación humana interna no pública** · `2026-04-12` · Optimización de traza Serena MCP por append JSONL en lugar de rewrite completo · soporte [DEC-0014]
+- **validación humana interna no pública** · `2026-04-24` · Autorización humana para cerrar pendientes host-real de OpenClaw: Matrix local en tesis-edge y llama.cpp Windows expuesto al edge. · soporte [DEC-0014]
+- **validación humana interna no pública** · `2026-04-23` · Implementación autorizada de OpenClaw PC-first con session layer común, Matrix remoto principal, Telegram secundario y runtime pesado pc_native_llamacpp. · soporte [DEC-0022]
+- **validación humana interna no pública** · `2026-04-23` · Cierre trazable de mejoras Serena/Caveman: health gate unificado, nuevas tools de contexto y guía operativa de uso. · soporte [DEC-0023]
+- **validación humana interna no pública** · `2026-04-21` · Corrección integral de ruteo OpenClaw Telegram/Edge con SLA, concurrencia serial, fallbacks semánticos seguros y configuración oficial OpenClaw trazable. · soporte [DEC-0020]
+- **validación humana interna no pública** · `2026-04-21` · Corrección de NameError y endurecimiento de resiliencia en ruteo OpenClaw Telegram ante fallos de nube. · soporte [DEC-0020]
 
 ## Próximos pendientes críticos
 
@@ -51,4 +51,4 @@
 - `01_planeacion/entregables.csv`
 - `01_planeacion/riesgos.csv`
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

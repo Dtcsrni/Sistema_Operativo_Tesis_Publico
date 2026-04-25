@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-04
 
 - **ID de Sesión:** codex-local-20260404-trazabilidad-cierre
-- **Cadena de Confianza (Anterior):** `sha256/1788c2804520a0da93c800c24ce5c1979c727edfb5da1e075a9917b257f031ba`
+- **Cadena de Confianza (Anterior):** `sha256/9a41600a32b7521e367199615e1fd80310f16fe5522be3e3309f8f3ab0960e30`
 - **Bloque principal:** B0
 - **Tipo de sesión:** administración | implementación | validación
 
@@ -74,4 +74,4 @@ Consolidar cambios en commit firmado y ejecutar push con variables de entorno re
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

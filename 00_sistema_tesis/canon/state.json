@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-04-13",
+  "generated_at": "2026-04-24",
   "canon": {
-    "event_count": 158,
-    "latest_event_id": "validación humana interna no pública",
+    "event_count": 215,
+    "latest_event_id": "evento interno no público",
     "latest_step_id": "validación humana interna no pública",
     "projection_paths": [
       "00_sistema_tesis/bitacora/2026-03-23_bitacora_base_operativa.md",
@@ -19,6 +19,11 @@
       "00_sistema_tesis/bitacora/2026-04-11_bitacora_sesion.md",
       "00_sistema_tesis/bitacora/2026-04-12_bitacora_sesion.md",
       "00_sistema_tesis/bitacora/2026-04-13_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-04-20_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-04-21_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-04-21_bitacora_sesion_1.md",
+      "00_sistema_tesis/bitacora/2026-04-23_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-04-24_bitacora_sesion.md",
       "00_sistema_tesis/bitacora/indice_fuentes_conversacion.md",
       "00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md",
       "00_sistema_tesis/bitacora/matriz_trazabilidad.md",
@@ -29,17 +34,19 @@
     ]
   },
   "counts_by_type": {
-    "agent_activity": 29,
+    "agent_activity": 30,
     "artifact_signed": 4,
-    "conversation_source_registered": 38,
-    "human_validation": 52,
-    "session_recorded": 35
+    "conversation": 1,
+    "conversation_source_registered": 58,
+    "human_validation": 70,
+    "operational_deployment": 6,
+    "session_recorded": 46
   },
   "source_evidence": {
     "enforcement_from_step_id": "validación humana interna no pública",
-    "registered_sources": 38,
-    "human_validations_with_source": 36,
-    "human_validations_requiring_source": 36,
+    "registered_sources": 58,
+    "human_validations_with_source": 54,
+    "human_validations_requiring_source": 54,
     "legacy_without_source": 16
   },
   "openclaw": {

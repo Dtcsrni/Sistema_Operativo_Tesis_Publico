@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-11
 
 - **ID de Sesión:** codex-local-20260411-trazabilidad-publish-v1
-- **Cadena de Confianza (Anterior):** `sha256/cf8e6355acf3c78ef8dc2f4a61a01f4f7a07fadaa403f3b73064569f2ea20a2d`
+- **Cadena de Confianza (Anterior):** `sha256/66d504ac887c4b727cb992f82ed2542309cdea54580618fef5ced6d0fab0ef60`
 - **Bloque principal:** B0
 - **Tipo de sesión:** trazabilidad | publicación | cierre
 
@@ -71,4 +71,4 @@ Mantener el cierre diario de trazabilidad alineado con ledger, matriz y artefact
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

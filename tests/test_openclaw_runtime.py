@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -22,16 +23,22 @@ from openclaw_local.engine import (  # noqa: E402
     summarize_host,
 )
 from openclaw_local.policies import load_budget_policy, load_domain_policies, load_domain_secret_policies, load_provider_registry, load_runtime_contracts  # noqa: E402
-from openclaw_local.runtime_status import build_preflight_report, probe_runtime_status, run_runtime_benchmarks  # noqa: E402
+from openclaw_local.notifier import dispatch_test_notification  # noqa: E402
+from openclaw_local.runtime_status import build_preflight_report, detect_llamacpp_status, probe_runtime_status, run_runtime_benchmarks  # noqa: E402
 from openclaw_local.secret_resolver import build_secret_status, resolve_provider_secret  # noqa: E402
+from openclaw_local.session_layer import build_nodes_summary  # noqa: E402
 from openclaw_local.storage import OpenClawStore  # noqa: E402
+from openclaw_local.image_backend import generate_image_from_prompt  # noqa: E402
 
 
 def _write_domain_envs(tmp_path: Path) -> Path:
     domains_dir = tmp_path / "domains"
     domains_dir.mkdir()
     (domains_dir / "personal.env").write_text("", encoding="utf-8")
-    (domains_dir / "profesional.env").write_text("GROQ_API_KEY=groq-prof\nOPENAI_API_KEY=openai-prof\n", encoding="utf-8")
+    (domains_dir / "profesional.env").write_text(
+        "GROQ_API_KEY=groq-prof\nOPENAI_API_KEY=openai-prof\nOPENCLAW_CHATGPT_PLUS_ENABLED=1\n",
+        encoding="utf-8",
+    )
     (domains_dir / "academico.env").write_text(
         "GROQ_API_KEY=groq-acad\nGEMINI_API_KEY=gemini-acad\nOPENAI_API_KEY=openai-acad\nOPENCLAW_GEMINI_STUDENT_ENABLED=1\nOPENCLAW_CHATGPT_PLUS_ENABLED=1\n",
         encoding="utf-8",
@@ -62,7 +69,7 @@ def test_route_task_prefers_local_for_edge_and_requires_gate_on_mutation() -> No
     assert decision.fallback_chain[-1] == "manual"
 
 
-def test_route_task_uses_cloud_assisted_for_academic_high_complexity(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_route_task_prefers_desktop_compute_for_academic_high_complexity(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     policies = load_domain_policies(ROOT)
     monkeypatch.setenv("OPENCLAW_DOMAINS_ENV_DIR", str(_write_domain_envs(tmp_path)))
     store = OpenClawStore(tmp_path / "openclaw.db")
@@ -79,11 +86,177 @@ def test_route_task_uses_cloud_assisted_for_academic_high_complexity(tmp_path: P
 
     decision = route_task(task, policies, repo_root=ROOT, store=store)
 
-    assert decision.provider == "gemini_api"
-    assert decision.model_class == "cloud_assisted_mid_cost"
+    assert decision.provider == "desktop_compute"
+    assert decision.model_class == "open_source_gpu_heavy"
     assert decision.requires_human_gate is False
     assert "offline" in decision.fallback_chain
+    assert "gemini_api" not in decision.fallback_chain
+    assert decision.session_mode == "desktop_local_runtime"
+
+
+def test_route_task_prefers_pc_native_llamacpp_when_configured(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    policies = load_domain_policies(ROOT)
+    monkeypatch.setenv("OPENCLAW_DOMAINS_ENV_DIR", str(_write_domain_envs(tmp_path)))
+    monkeypatch.setenv("OPENCLAW_DESKTOP_RUNTIME", "llamacpp")
+    monkeypatch.setenv("OPENCLAW_DESKTOP_COMPUTE_ENABLED", "1")
+    store = OpenClawStore(tmp_path / "openclaw.db")
+    task = TaskEnvelope(
+        task_id="TASK-ACA-LLAMACPP-001",
+        title="Comparar literatura con runtime nativo",
+        domain="academico",
+        objective="Sintetizar contradicciones entre fuentes primarias",
+        complexity="high",
+        risk_level="medium",
+        requires_citations=True,
+        mutates_state=False,
+    )
+
+    decision = route_task(task, policies, repo_root=ROOT, store=store)
+
+    assert decision.provider == "pc_native_llamacpp"
+    assert decision.model_class == "open_source_gpu_heavy"
+    assert decision.session_mode == "desktop_native_runtime"
+
+
+def test_build_nodes_summary_keeps_edge_runtime_local_when_desktop_llamacpp_is_enabled(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("OPENCLAW_DESKTOP_RUNTIME", "llamacpp")
+    monkeypatch.setenv("OPENCLAW_EDGE_ROLE", "relay_light_runtime")
+    monkeypatch.setenv("OPENCLAW_FORCE_LLAMACPP_READY", "1")
+    monkeypatch.setenv("OPENCLAW_FORCE_OLLAMA_READY", "1")
+
+    nodes = build_nodes_summary(ROOT)
+    by_id = {item["id"]: item for item in nodes}
+
+    assert by_id["desktop"]["runtime"] == "llamacpp"
+    assert by_id["edge"]["runtime"] == "ollama_local"
+
+
+def test_build_nodes_summary_includes_matrix_node_when_configured(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("OPENCLAW_MATRIX_ENABLED", "1")
+    monkeypatch.setenv("OPENCLAW_MATRIX_HOMESERVER", "http://matrix.local")
+    monkeypatch.setenv("OPENCLAW_MATRIX_ACCESS_TOKEN", "token")
+    monkeypatch.setenv("OPENCLAW_MATRIX_USER_ID", "@openclaw:matrix.local")
+
+    nodes = build_nodes_summary(ROOT)
+    by_id = {item["id"]: item for item in nodes}
+
+    assert by_id["matrix"]["runtime"] == "matrix_bot"
+    assert by_id["matrix"]["base_url"] == "http://matrix.local"
+    assert by_id["matrix"]["enabled"] is True
+
+
+def test_detect_llamacpp_status_requires_a_real_ready_endpoint(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("OPENCLAW_DESKTOP_RUNTIME", "llamacpp")
+    monkeypatch.setenv("OPENCLAW_DESKTOP_RUNTIME_BASE_URL", "http://127.0.0.1:21434")
+    monkeypatch.setenv("OPENCLAW_LLAMACPP_LOCAL_FALLBACK", "0")
+
+    probes = iter(
+        [
+            ("degraded", 10.0, "http_404"),
+            ("degraded", 12.0, "http_404"),
+        ]
+    )
+
+    monkeypatch.setattr("openclaw_local.runtime_status._http_probe", lambda url, timeout=2.0: next(probes))
+
+    status = detect_llamacpp_status()
+
+    assert status["installed"] is True
+    assert status["ready"] is False
+    assert status["probe_error"] == "http_404"
+
+
+def test_runtime_benchmarks_do_not_promote_llamacpp_when_runtime_is_configured_but_not_ready(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("OPENCLAW_BENCHMARK_SIMULATION", "1")
+    monkeypatch.setenv("OPENCLAW_FORCE_OLLAMA_READY", "1")
+    monkeypatch.delenv("OPENCLAW_FORCE_LLAMACPP_READY", raising=False)
+    monkeypatch.setenv("OPENCLAW_DESKTOP_RUNTIME", "llamacpp")
+
+    payload = run_runtime_benchmarks(ROOT)
+
+    assert payload["active_runtime"] == "ollama_local"
+
+
+def test_route_task_uses_cloud_when_explicitly_enabled_for_academic_high_complexity(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    policies = load_domain_policies(ROOT)
+    monkeypatch.setenv("OPENCLAW_DOMAINS_ENV_DIR", str(_write_domain_envs(tmp_path)))
+    monkeypatch.setenv("OPENCLAW_CLOUD_ENABLED", "1")
+    monkeypatch.setenv("OPENCLAW_DESKTOP_COMPUTE_ENABLED", "0")
+    store = OpenClawStore(tmp_path / "openclaw.db")
+    task = TaskEnvelope(
+        task_id="TASK-ACA-CLOUD-001",
+        title="Comparar literatura con nube permitida",
+        domain="academico",
+        objective="Sintetizar contradicciones entre fuentes primarias",
+        complexity="high",
+        risk_level="medium",
+        requires_citations=True,
+        mutates_state=False,
+    )
+
+    decision = route_task(task, policies, repo_root=ROOT, store=store)
+
+    assert decision.provider == "gemini_api"
+    assert decision.model_class == "cloud_assisted_mid_cost"
     assert decision.session_mode == "direct_api_call"
+
+
+def test_route_task_prefers_desktop_compute_for_academic_medium_when_enabled(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    policies = load_domain_policies(ROOT)
+    monkeypatch.setenv("OPENCLAW_DOMAINS_ENV_DIR", str(_write_domain_envs(tmp_path)))
+    monkeypatch.setenv("OPENCLAW_DESKTOP_COMPUTE_ENABLED", "1")
+    store = OpenClawStore(tmp_path / "openclaw.db")
+    task = TaskEnvelope(
+        task_id="TASK-ACA-CHAT-001",
+        title="Chat académico breve",
+        domain="academico",
+        objective="Resume el estado del tema en pocas frases",
+        complexity="medium",
+        risk_level="low",
+        mutates_state=False,
+    )
+
+    decision = route_task(task, policies, repo_root=ROOT, store=store)
+
+    assert decision.provider == "desktop_compute"
+    assert decision.model_class == "open_source_gpu_heavy"
+    assert decision.session_mode == "desktop_local_runtime"
+
+
+def test_route_task_uses_recent_feedback_to_reorder_candidates(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    policies = load_domain_policies(ROOT)
+    store = OpenClawStore(tmp_path / "openclaw.db")
+    task = TaskEnvelope(
+        task_id="TASK-ACA-FEEDBACK-001",
+        title="Comparar literatura con feedback",
+        domain="academico",
+        objective="Sintetizar contradicciones entre fuentes primarias",
+        complexity="high",
+        risk_level="medium",
+        requires_citations=True,
+        mutates_state=False,
+        extra_context={"request_profile": "research"},
+    )
+
+    def fake_secret_resolution(*args: object, **kwargs: object):
+        return SimpleNamespace(status="ok", credential_scope="local")
+
+    class FakeStore:
+        def get_provider_outcome_stats(self, *, domain: str | None = None, request_kind: str | None = None, limit: int = 50):
+            return {
+                "desktop_compute": {"success_rate": 0.1, "average_latency_ms": 1200.0},
+                "ollama_local": {"success_rate": 0.95, "average_latency_ms": 300.0},
+            }
+
+    monkeypatch.setattr("openclaw_local.engine.resolve_provider_secret", fake_secret_resolution)
+
+    decision = route_task(task, policies, repo_root=ROOT, store=FakeStore())
+
+    assert decision.provider == "ollama_local"
+    assert decision.mode == "local_model"
 
 
 def test_build_evidence_record_hashes_payload_stably() -> None:
@@ -122,6 +295,17 @@ def test_build_evidence_record_hashes_payload_stably() -> None:
     assert record_a.payload_hash == record_b.payload_hash
     assert record_a.provider == decision.provider
     assert record_a.task_id == task.task_id
+
+
+def test_generate_image_defaults_to_pc_tunnel_base_url(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("OPENCLAW_IMAGE_BACKEND", raising=False)
+    monkeypatch.delenv("OPENCLAW_COMFYUI_BASE_URL", raising=False)
+    monkeypatch.setattr("openclaw_local.image_backend._comfyui_ready", lambda base_url, timeout_seconds: False)
+
+    payload = generate_image_from_prompt("Tezcatlipoca")
+
+    assert payload["status"] == "unavailable"
+    assert payload["base_url"] == "http://127.0.0.1:28000"
 
 
 def test_store_persists_tasks_approvals_and_evidence(tmp_path: Path) -> None:
@@ -186,6 +370,8 @@ def test_runtime_contract_manifest_declares_required_contracts() -> None:
         "WritingDraft",
         "RuntimeProbe",
         "BenchmarkRecord",
+        "SessionEnvelope",
+        "SessionMessage",
         "SecretResolution",
         "BillingRecord",
         "BudgetSnapshot",
@@ -197,6 +383,29 @@ def test_summarize_host_reports_core_capabilities() -> None:
     assert summary["cpu_count"] >= 1
     assert "disk" in summary
     assert "memory" in summary
+
+
+def test_telegram_notification_skips_when_not_configured(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("OPENCLAW_TELEGRAM_ENABLED", raising=False)
+    monkeypatch.delenv("OPENCLAW_TELEGRAM_BOT_TOKEN", raising=False)
+    monkeypatch.delenv("OPENCLAW_TELEGRAM_CHAT_ID", raising=False)
+
+    payload = dispatch_test_notification(message="Ping")
+
+    assert payload["status"] == "skipped"
+    assert payload["channel"] == "telegram"
+
+
+def test_telegram_notification_errors_with_invalid_token(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("OPENCLAW_TELEGRAM_ENABLED", "1")
+    monkeypatch.setenv("OPENCLAW_TELEGRAM_BOT_TOKEN", "invalid_token")
+    monkeypatch.setenv("OPENCLAW_TELEGRAM_CHAT_ID", "123456")
+    monkeypatch.setenv("OPENCLAW_TELEGRAM_TIMEOUT_SECONDS", "2")
+
+    payload = dispatch_test_notification(message="Ping")
+
+    assert payload["status"] in {"error", "sent"}
+    assert payload["channel"] == "telegram"
 
 
 def test_academic_literature_packet_requires_contradictions_and_writes_matrices() -> None:
@@ -393,9 +602,21 @@ def test_runtime_benchmarks_are_persistable_without_auto_switch(tmp_path: Path, 
     saved = store.list_benchmark_runs(limit=5)
 
     assert payload["active_runtime"] == "ollama_local"
-    assert payload["recommended_runtime"] == "rknn_llm_experimental"
+    assert payload["recommended_runtime"] == "ollama_local"
     assert len(saved) == 2
     assert all(item["provider"] in {"ollama_local", "rknn_llm_experimental"} for item in saved)
+
+
+def test_runtime_benchmarks_only_promote_npu_when_auto_promotion_is_enabled(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.setenv("OPENCLAW_BENCHMARK_SIMULATION", "1")
+    monkeypatch.setenv("OPENCLAW_FORCE_OLLAMA_READY", "1")
+    monkeypatch.setenv("OPENCLAW_FORCE_NPU_READY", "1")
+    monkeypatch.setenv("OPENCLAW_NPU_AUTO_PROMOTE", "1")
+
+    payload = run_runtime_benchmarks(ROOT)
+
+    assert payload["active_runtime"] == "ollama_local"
+    assert payload["recommended_runtime"] == "rknn_llm_experimental"
 
 
 def test_preflight_report_fails_when_env_is_missing(tmp_path: Path, monkeypatch) -> None:
@@ -437,13 +658,62 @@ def test_secret_status_does_not_expose_secret_values(tmp_path: Path, monkeypatch
     assert payload["domains"]["academico"]["providers"]["gemini_api"]["status"] == "ready"
 
 
-def test_route_task_prefers_groq_for_professional_medium_when_secret_exists(tmp_path: Path, monkeypatch) -> None:
+def test_secret_resolver_reports_inaccessible_domain_file_without_crashing(tmp_path: Path, monkeypatch) -> None:
+    domains_dir = _write_domain_envs(tmp_path)
+    personal_env = domains_dir / "personal.env"
+    personal_env.chmod(0)
+    monkeypatch.setenv("OPENCLAW_DOMAINS_ENV_DIR", str(domains_dir))
+
+    try:
+        resolution = resolve_provider_secret("personal", "local", secret_policies=load_domain_secret_policies(ROOT))
+    finally:
+        personal_env.chmod(0o644)
+
+    assert resolution.status in {"not_required", "inaccessible"}
+
+
+def test_secret_resolver_treats_zero_toggle_as_missing_for_web_assisted(tmp_path: Path, monkeypatch) -> None:
+    domains_dir = _write_domain_envs(tmp_path)
+    (domains_dir / "academico.env").write_text(
+        "GROQ_API_KEY=\nGEMINI_API_KEY=\nOPENAI_API_KEY=\nOPENCLAW_GEMINI_STUDENT_ENABLED=0\nOPENCLAW_CHATGPT_PLUS_ENABLED=0\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("OPENCLAW_DOMAINS_ENV_DIR", str(domains_dir))
+
+    gemini_web = resolve_provider_secret("academico", "gemini_web_assisted", secret_policies=load_domain_secret_policies(ROOT))
+    chatgpt_web = resolve_provider_secret("academico", "chatgpt_plus_web_assisted", secret_policies=load_domain_secret_policies(ROOT))
+
+    assert gemini_web.status == "missing"
+    assert chatgpt_web.status == "missing"
+
+
+def test_route_task_keeps_professional_medium_local_when_cloud_is_disabled(tmp_path: Path, monkeypatch) -> None:
     domains_dir = _write_domain_envs(tmp_path)
     monkeypatch.setenv("OPENCLAW_DOMAINS_ENV_DIR", str(domains_dir))
     store = OpenClawStore(tmp_path / "openclaw.db")
     task = TaskEnvelope(
         task_id="TASK-PRO-001",
         title="Resumen técnico",
+        domain="profesional",
+        objective="Sintetizar incidentes de bajo costo",
+        complexity="medium",
+        risk_level="medium",
+    )
+
+    decision = route_task(task, load_domain_policies(ROOT), repo_root=ROOT, store=store)
+
+    assert decision.provider == "ollama_local"
+    assert decision.session_mode == "local_runtime"
+
+
+def test_route_task_prefers_groq_for_professional_medium_when_cloud_is_enabled(tmp_path: Path, monkeypatch) -> None:
+    domains_dir = _write_domain_envs(tmp_path)
+    monkeypatch.setenv("OPENCLAW_DOMAINS_ENV_DIR", str(domains_dir))
+    monkeypatch.setenv("OPENCLAW_CLOUD_ENABLED", "1")
+    store = OpenClawStore(tmp_path / "openclaw.db")
+    task = TaskEnvelope(
+        task_id="TASK-PRO-CLOUD-001",
+        title="Resumen técnico con nube permitida",
         domain="profesional",
         objective="Sintetizar incidentes de bajo costo",
         complexity="medium",
@@ -511,3 +781,12 @@ def test_budget_simulation_blocks_domain_when_local_ledger_exhausts_limit(tmp_pa
 
     assert payload["allowed"] is False
     assert payload["resulting_action"] == "degradar_local_offline_manual"
+
+
+def test_openclaw_env_example_keeps_local_first_defaults() -> None:
+    env_example = (ROOT / "config" / "env" / "openclaw.env.example").read_text(encoding="utf-8")
+
+    assert "OPENCLAW_PROFILE" not in env_example
+    assert "OPENCLAW_SERENA_MODE=auto" in env_example
+    assert "OPENCLAW_SERENA_TRANSPORT=http" in env_example
+    assert "OPENCLAW_NPU_AUTO_PROMOTE=0" in env_example

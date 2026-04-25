@@ -2,4 +2,4 @@
 
 Campos minimos: `analysis_id`, `sistema`, `alcance`, `supuestos`, `arquitectura`, `riesgos`, `comparativas`, `decision_relacionada`.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

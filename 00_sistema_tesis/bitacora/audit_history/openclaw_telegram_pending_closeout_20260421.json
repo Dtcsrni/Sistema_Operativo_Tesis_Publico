@@ -1,0 +1,76 @@
+{
+  "evidence_id": "openclaw_telegram_pending_closeout_20260421",
+  "created_at": "2026-04-21T15:09:52Z",
+  "scope": "openclaw_telegram_desktop_compute_closeout",
+  "human_validation_claimed": false,
+  "secrets_redacted": true,
+  "serena_status": {
+    "recommended_profile": "serena-local",
+    "http_status": "unavailable",
+    "fallback_used": "filesystem",
+    "note": "El backend stdio estaba sano pero no expuesto como ruta operativa normal del workspace."
+  },
+  "live_edge": {
+    "host": "tesis-edge",
+    "services": {
+      "openclaw-gateway": "active",
+      "openclaw-telegram-bot": "active"
+    },
+    "desktop_compute_tags_probe": "mistral-nemo:12b visible at http://127.0.0.1:21434/api/tags",
+    "env_policy": {
+      "OPENCLAW_CLOUD_ENABLED": "0",
+      "OPENCLAW_NPU_AUTO_PROMOTE": "0",
+      "OPENCLAW_DESKTOP_COMPUTE_MODEL": "mistral-nemo:12b",
+      "OPENCLAW_TELEGRAM_EDGE_MODEL": "gemma3:4b",
+      "OPENCLAW_TELEGRAM_FALLBACK_MODEL": "qwen2.5:0.5b"
+    },
+    "approval_cleanup": {
+      "approval_id": "APR-TGM-TOOL-9d867443",
+      "task_id": "TGM-TOOL-9d867443",
+      "final_status": "rejected_test",
+      "mutation_executed": false
+    },
+    "telegram_store_summary": {
+      "pending_approvals": 0,
+      "telegram_events": 7,
+      "db_path": "/var/lib/herramientas/openclaw/openclaw.db"
+    }
+  },
+  "live_desktop": {
+    "service": "openclaw-desktop-tunnel.service",
+    "scope": "systemd --user",
+    "status": "active",
+    "recovery_command": "systemctl --user restart openclaw-desktop-tunnel.service"
+  },
+  "changes": {
+    "telegram_bot": [
+      "Formato fijo para /investiga: hallazgos, supuestos, riesgos, siguientes pasos.",
+      "Normalizacion defensiva de encabezados del modelo antes de responder.",
+      "Modo seguro mantenido: mutaciones por /herramienta crean aprobacion y no ejecutan cambios."
+    ],
+    "operation": [
+      "Plantilla logrotate para /var/log/openclaw/openclaw-telegram-bot.log.",
+      "Logrotate desplegado en /etc/logrotate.d/openclaw-telegram-bot con dry-run correcto.",
+      "Documentado comando de recuperacion del tunel desktop."
+    ]
+  },
+  "verification": {
+    "py_compile": "ok",
+    "pytest": "45 passed in 25.33s",
+    "build_all": {
+      "status": "ok",
+      "profile": "historial interno no público/build_all_profile_20260421_151335.json"
+    },
+    "edge_smoke": {
+      "telegram_estado": "ok",
+      "telegram_investiga": "ok via desktop_compute with fixed headings",
+      "logrotate_debug": "reading config file and rotating pattern recognized"
+    }
+  },
+  "non_goals": [
+    "No se habilito nube.",
+    "No se promovio NPU RKNN/RKLLM.",
+    "No se habilito aprobacion real por Telegram.",
+    "No se declaro validacion humana."
+  ]
+}

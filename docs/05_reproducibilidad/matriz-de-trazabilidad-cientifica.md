@@ -34,4 +34,4 @@ Esta matriz sirve para sostener la trazabilidad de afirmaciones con valor cienti
 
 Una fila solo puede darse por cerrada cuando la evidencia permita responder: que se afirmo, con que se sostuvo, como se verifico y que limite tiene.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

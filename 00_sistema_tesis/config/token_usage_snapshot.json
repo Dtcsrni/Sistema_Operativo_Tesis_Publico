@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-03-27",
+  "generated_at": "2026-04-20",
   "timezone": "America/Mexico_City",
-  "status": "degraded",
-  "message": "OPENAI_ADMIN_KEY no configurada. No se pudo sincronizar uso real desde la API.",
+  "status": "local_only",
+  "message": "Sin API: snapshot local estimado a partir de presupuesto configurado.",
   "source": {
     "usage_endpoint": "https://api.openai.com/v1/organization/usage/completions",
     "costs_endpoint": "https://api.openai.com/v1/organization/costs",
@@ -35,7 +35,7 @@
     }
   },
   "recommendations": [
-    "Configurar OPENAI_ADMIN_KEY para habilitar medicion exacta de consumo diario y semanal.",
-    "Mientras tanto, usar el overlay local como presupuesto operativo estimado."
+    "Mantener el overlay local como referencia operativa sin sincronización remota.",
+    "No usar API externa mientras no exista presupuesto disponible."
   ]
 }

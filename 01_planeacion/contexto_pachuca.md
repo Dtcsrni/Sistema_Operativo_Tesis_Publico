@@ -20,4 +20,4 @@ Propuesta: **Red de telemetría para monitoreo de inundaciones rápidas (Flash F
 ---
 *Este documento es un borrador para discusión académica. Su contenido alimentará el Capítulo 1 de la tesis.*
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

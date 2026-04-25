@@ -81,4 +81,4 @@ La alternativa elegida maximiza trazabilidad práctica y verificable sin depende
 [GOV]: ruta local no pública
 [AUD]: ruta local no pública
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

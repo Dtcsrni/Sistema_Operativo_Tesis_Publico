@@ -1,0 +1,141 @@
+{
+  "version": "1.0",
+  "providers": [
+    {
+      "id": "local",
+      "mode": "local_rules",
+      "model_class": "rules_or_local_model",
+      "billing_mode": "estimated",
+      "session_mode": "local_runtime",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 0,
+      "domains": ["personal", "profesional", "academico", "edge", "administrativo"]
+    },
+    {
+      "id": "ollama_local",
+      "mode": "local_model",
+      "model_class": "local_rag_and_summary",
+      "billing_mode": "estimated",
+      "session_mode": "local_runtime",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 900,
+      "domains": ["profesional", "academico"],
+      "measured_candidates": {
+        "node": "tesis-edge",
+        "evidence": "00_sistema_tesis/bitacora/audit_history/openclaw_max_model_bench_edge_20260421.json",
+        "daily_recommended": "gemma3:4b",
+        "fallback": "qwen2.5:0.5b",
+        "experimental_ceiling": "qwen2.5-coder:7b",
+        "notes": [
+          "gemma3:4b respondio en 3.5097 s caliente y dejo ~2.5 GiB disponibles.",
+          "qwen2.5-coder:7b arranco y respondio en 2.0039 s caliente, pero queda como techo controlado por presion de memoria.",
+          "qwen3:4b arranco, pero la plantilla thinking no respeto el prompt minimo y tardo 28.5228 s caliente."
+        ]
+      }
+    },
+    {
+      "id": "rknn_llm_experimental",
+      "mode": "npu_experimental_secondary",
+      "model_class": "local_rag_and_summary",
+      "billing_mode": "estimated",
+      "session_mode": "local_runtime",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 700,
+      "domains": ["profesional", "academico"],
+      "promotion_policy": {
+        "auto_promote": false,
+        "requires_runtime_device": "/dev/rknpu*",
+        "requires_preconverted_rkllm_model": true,
+        "requires_benchmark_evidence": true,
+        "current_status": "experimental_bloqueado_por_runtime_incompleto"
+      },
+      "candidate_models": [
+        {
+          "name": "Phi-3-3.8B W8A8",
+          "role": "balanced_npu_candidate",
+          "status": "pendiente_modelo_rkllm_preconvertido"
+        },
+        {
+          "name": "ChatGLM3-6B W8A8",
+          "role": "max_reasonable_8gb_candidate",
+          "status": "pendiente_modelo_rkllm_preconvertido"
+        }
+      ]
+    },
+    {
+      "id": "desktop_compute",
+      "mode": "desktop_compute_http",
+      "model_class": "open_source_gpu_heavy",
+      "billing_mode": "estimated",
+      "session_mode": "desktop_local_runtime",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 1800,
+      "domains": ["profesional", "academico"],
+      "measured_candidates": {
+        "node": "desktop_compute",
+        "evidence": "00_sistema_tesis/bitacora/audit_history/openclaw_max_model_bench_pc_20260421.json",
+        "daily_recommended": "mistral-nemo:12b",
+        "coding_heavy": "qwen2.5-coder:14b",
+        "experimental_ceiling": "qwen3:14b",
+        "alternative_ceiling": "phi4:14b",
+        "notes": [
+          "mistral-nemo:12b respondio en 1.0835 s caliente con pico GPU 7192 MiB.",
+          "qwen2.5-coder:14b respondio en 2.11 s caliente con pico GPU 7491 MiB.",
+          "phi4:14b respondio en 2.1573 s caliente, pero Ollama lo reporto luego como 47% CPU / 53% GPU.",
+          "qwen3:14b arranco, pero no respeto el prompt minimo y tardo 25.8801 s caliente por plantilla thinking.",
+          "La medicion se hizo antes de wsl --shutdown; WSL sigue limitado a ~7.7 GiB RAM."
+        ]
+      }
+    },
+    {
+      "id": "groq_api",
+      "mode": "cloud_api",
+      "model_class": "cloud_assisted_low_cost",
+      "billing_mode": "api_measured",
+      "session_mode": "direct_api_call",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 800,
+      "domains": ["profesional", "academico"]
+    },
+    {
+      "id": "gemini_api",
+      "mode": "cloud_api",
+      "model_class": "cloud_assisted_mid_cost",
+      "billing_mode": "api_measured",
+      "session_mode": "direct_api_call",
+      "estimated_cost_usd": 0.05,
+      "estimated_tokens": 1400,
+      "domains": ["academico"]
+    },
+    {
+      "id": "gemini_web_assisted",
+      "mode": "cloud_web_assisted",
+      "model_class": "cloud_assisted_mid_cost",
+      "billing_mode": "manual_web_assisted",
+      "session_mode": "human_supervised_web_session",
+      "estimated_cost_usd": 0.02,
+      "estimated_tokens": 1200,
+      "domains": ["academico"]
+    },
+    {
+      "id": "openai_api",
+      "mode": "cloud_api",
+      "model_class": "cloud_assisted_premium",
+      "billing_mode": "api_measured",
+      "session_mode": "direct_api_call",
+      "estimated_cost_usd": 0.25,
+      "estimated_tokens": 1800,
+      "domains": ["profesional", "academico"]
+    },
+    {
+      "id": "chatgpt_plus_web_assisted",
+      "mode": "cloud_web_assisted",
+      "model_class": "cloud_assisted_premium",
+      "billing_mode": "manual_web_assisted",
+      "session_mode": "human_supervised_web_session",
+      "estimated_cost_usd": 0.03,
+      "estimated_tokens": 1600,
+      "domains": ["profesional", "academico"]
+    }
+  ]
+}

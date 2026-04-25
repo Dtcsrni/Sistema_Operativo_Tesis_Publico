@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-03
 
 - **ID de Sesión:** codex-local-20260403-publicacion-downstream-hardening
-- **Cadena de Confianza (Anterior):** `sha256/6ec151b0e64388a4614eafaed72595f7c390d5bc36074f6ce437b099fcb68514`
+- **Cadena de Confianza (Anterior):** `sha256/72f3c777c056558061c74a118edcb412093100f96a54d231ba7ff77853d02ca1`
 - **Bloque principal:** B0
 - **Tipo de sesión:** publicación | ci/cd | endurecimiento | regularización
 
@@ -71,4 +71,4 @@ Mantener la cobertura diaria sincronizada con la actividad real de Git para que 
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

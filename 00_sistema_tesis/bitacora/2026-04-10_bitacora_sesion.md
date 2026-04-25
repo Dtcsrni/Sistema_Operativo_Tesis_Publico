@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-10
 
 - **ID de Sesión:** codex-local-20260410-serena-dual-y-bridge
-- **Cadena de Confianza (Anterior):** `sha256/d44c545f25ee7c85c38df96de5d010ec0ada76a56ecdb041e18cbe56d1dfd8cd`
+- **Cadena de Confianza (Anterior):** `sha256/1113a8926f9dcd7d4c2a948e12b090e841070182eec3f4a29b19ca19a7822747`
 - **Bloque principal:** B0
 - **Tipo de sesión:** integración | arquitectura | documentación
 
@@ -71,4 +71,4 @@ Mantener la verificación reproducible de acceso Serena desde host, fallback `st
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

@@ -14,3 +14,4 @@ mi_llave_secreta_backup.asc
 config/backups/*.bak
 .env
 runtime/openclaw/state/
+scratch/

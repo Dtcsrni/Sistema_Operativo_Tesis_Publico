@@ -54,6 +54,8 @@ def test_operational_topology_manifest_declares_desktop_first_edge_model() -> No
 
     assert payload["primary_authoring_node"] == "desktop_vscode"
     assert payload["edge_execution_node"] == "orange_pi"
+    assert payload["edge_hostname"] == "tesis-edge"
+    assert payload["edge_ssh_user"] == "tesisai"
     assert payload["integration_mode"] == "git_and_artifacts"
     assert "git_sync" in payload["allowed_remote_operations"]
     assert "artefactos_generados" in payload["allowed_remote_operations"]
@@ -67,9 +69,11 @@ def test_docs_describe_desktop_first_and_orange_pi_edge_roles() -> None:
 
     assert "desktop_workspace" in architecture
     assert "orange_pi_edge" in architecture
+    assert "tesis-edge" in architecture
     assert "git_sync" in architecture
     assert "workspace remoto montado por red" in manual
     assert "clon operativo local de despliegue y supervisión" in manual
+    assert "tesis-edge" in manual
     assert "clon operativo para despliegue, supervision y ejecucion local" in storage
 
 

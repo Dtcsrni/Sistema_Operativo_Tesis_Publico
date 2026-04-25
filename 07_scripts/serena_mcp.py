@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import sys
+import time
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -14,8 +15,12 @@ from serena_core import (
     append_trace_record,
     apply_controlled_change,
     evaluate_serena_artifact,
+    fetch_changes,
     fetch_compact,
     prepare_change,
+    repo_map,
+    session_brief,
+    trace_lookup,
     write_derived_artifact,
 )
 from serena_policy import (
@@ -32,6 +37,10 @@ LOGGER = logging.getLogger("serena_mcp")
 HTTP_ENDPOINT = "/mcp"
 TOOL_NAME_ALIASES = {
     "context.fetch_compact": "context_fetch_compact",
+    "context.repo_map": "context_repo_map",
+    "context.fetch_changes": "context_fetch_changes",
+    "context.trace_lookup": "context_trace_lookup",
+    "context.session_brief": "context_session_brief",
     "governance.preflight": "governance_preflight",
     "artifacts.evaluate_serena": "artifacts_evaluate_serena",
     "artifacts.write_derived": "artifacts_write_derived",
@@ -176,6 +185,10 @@ class SerenaMCPServer:
         self.contracts = load_tool_contracts(self.root)
         self.handlers: dict[str, Callable[[dict[str, Any]], dict[str, Any]]] = {
             "context.fetch_compact": self._handle_fetch_compact,
+            "context.repo_map": self._handle_repo_map,
+            "context.fetch_changes": self._handle_fetch_changes,
+            "context.trace_lookup": self._handle_trace_lookup,
+            "context.session_brief": self._handle_session_brief,
             "governance.preflight": self._handle_preflight,
             "artifacts.evaluate_serena": self._handle_evaluate_serena,
             "artifacts.write_derived": self._handle_write_derived,
@@ -254,8 +267,19 @@ class SerenaMCPServer:
         if canonical_name not in self.handlers:
             available = ", ".join(self.public_tool_name(item) for item in self.supported_tool_names())
             raise KeyError(f"Herramienta no soportada: {name}. Disponibles: {available}")
+        started_at = time.perf_counter()
         result = self.handlers[canonical_name](arguments)
         minimized_inputs = _minimize_inputs(arguments)
+        elapsed_ms = round((time.perf_counter() - started_at) * 1000, 2)
+        input_chars = len(json.dumps(minimized_inputs, ensure_ascii=False, sort_keys=True))
+        output_chars = len(json.dumps(result, ensure_ascii=False, sort_keys=True))
+        telemetry = {
+            "latency_ms": elapsed_ms,
+            "input_chars": input_chars,
+            "output_chars": output_chars,
+            "tokens_saved_est": max((output_chars - input_chars) // 4, 0),
+            "fallback_used": bool(result.get("fallback_used", False)),
+        }
         trace = append_trace_record(
             tool_name=canonical_name,
             intent=str(arguments.get("intent", arguments.get("tool_name", ""))),
@@ -266,9 +290,11 @@ class SerenaMCPServer:
             step_id=str(arguments.get("step_id", "")),
             source_event_id=str(arguments.get("source_event_id", "")),
             identity=self.identity,
+            telemetry=telemetry,
             root=self.root,
         )
         result.setdefault("trace", trace)
+        result.setdefault("telemetry", telemetry)
         return {
             "content": [{"type": "text", "text": json.dumps(result, ensure_ascii=False, indent=2)}],
             "structuredContent": result,
@@ -281,6 +307,73 @@ class SerenaMCPServer:
             paths=list(arguments.get("paths", []) or []),
             limit=int(arguments.get("limit", 5)),
             context_lines=int(arguments.get("context_lines", 1)),
+            root=self.root,
+        )
+        return {
+            "status": "ok",
+            "risk_level": "MEDIO",
+            "write_scope": "read_only",
+            "evidence": {},
+            "artifacts": [],
+            "next_required_action": "none",
+            **payload,
+        }
+
+    def _handle_repo_map(self, arguments: dict[str, Any]) -> dict[str, Any]:
+        payload = repo_map(
+            query=str(arguments.get("query", "")).strip(),
+            paths=list(arguments.get("paths", []) or []),
+            limit=int(arguments.get("limit", 40)),
+            root=self.root,
+        )
+        return {
+            "status": "ok",
+            "risk_level": "MEDIO",
+            "write_scope": "read_only",
+            "evidence": {},
+            "artifacts": [],
+            "next_required_action": "none",
+            **payload,
+        }
+
+    def _handle_fetch_changes(self, arguments: dict[str, Any]) -> dict[str, Any]:
+        payload = fetch_changes(
+            paths=list(arguments.get("paths", []) or []),
+            limit=int(arguments.get("limit", 10)),
+            max_diff_chars=int(arguments.get("max_diff_chars", 1400)),
+            root=self.root,
+        )
+        return {
+            "status": "ok",
+            "risk_level": "MEDIO",
+            "write_scope": "read_only",
+            "evidence": {},
+            "artifacts": [],
+            "next_required_action": "none",
+            **payload,
+        }
+
+    def _handle_trace_lookup(self, arguments: dict[str, Any]) -> dict[str, Any]:
+        payload = trace_lookup(
+            query=str(arguments.get("query", "")).strip(),
+            limit=int(arguments.get("limit", 5)),
+            context_lines=int(arguments.get("context_lines", 0)),
+            root=self.root,
+        )
+        return {
+            "status": "ok",
+            "risk_level": "MEDIO",
+            "write_scope": "read_only",
+            "evidence": {},
+            "artifacts": [],
+            "next_required_action": "none",
+            **payload,
+        }
+
+    def _handle_session_brief(self, arguments: dict[str, Any]) -> dict[str, Any]:
+        payload = session_brief(
+            query=str(arguments.get("query", "")).strip(),
+            paths=list(arguments.get("paths", []) or []),
             root=self.root,
         )
         return {
@@ -418,6 +511,38 @@ class SerenaMCPServer:
                     "paths": {"type": "array", "items": {"type": "string"}},
                     "limit": {"type": "integer", "minimum": 1},
                     "context_lines": {"type": "integer", "minimum": 0},
+                },
+            },
+            "context.repo_map": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string"},
+                    "paths": {"type": "array", "items": {"type": "string"}},
+                    "limit": {"type": "integer", "minimum": 1},
+                },
+            },
+            "context.fetch_changes": {
+                "type": "object",
+                "properties": {
+                    "paths": {"type": "array", "items": {"type": "string"}},
+                    "limit": {"type": "integer", "minimum": 1},
+                    "max_diff_chars": {"type": "integer", "minimum": 120},
+                },
+            },
+            "context.trace_lookup": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string"},
+                    "limit": {"type": "integer", "minimum": 1},
+                    "context_lines": {"type": "integer", "minimum": 0},
+                },
+                "required": ["query"],
+            },
+            "context.session_brief": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string"},
+                    "paths": {"type": "array", "items": {"type": "string"}},
                 },
             },
             "governance.preflight": {

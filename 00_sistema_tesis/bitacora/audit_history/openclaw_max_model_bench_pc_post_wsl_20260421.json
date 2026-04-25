@@ -1,0 +1,554 @@
+{
+  "host": {
+    "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "memory_total_bytes": 12545507328,
+    "root_disk": {
+      "path": "/mnt/v/sistema_operativo_tesis_posgrado",
+      "total_bytes": 240055742464,
+      "used_bytes": 89751007232,
+      "free_bytes": 150304735232
+    }
+  },
+  "benchmarks": {
+    "cpu_sha256": {
+      "rounds": 8,
+      "payload_mb": 128.0,
+      "elapsed_s": 0.0609,
+      "throughput_mb_s": 2101.23,
+      "digest": "a06c26cbac8b8070"
+    },
+    "memory_copy": {
+      "rounds": 12,
+      "payload_mb": 768.0,
+      "elapsed_s": 0.0443,
+      "throughput_mb_s": 17351.06
+    },
+    "disk_io": null,
+    "gpu": {
+      "status": "ok",
+      "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 1271, 6679, 2, 595.97",
+      "parsed": {
+        "name": "NVIDIA GeForce RTX 4060 Ti",
+        "memory_total_mib": 8188,
+        "memory_used_mib": 1271,
+        "memory_free_mib": 6679,
+        "utilization_gpu_pct": 2,
+        "driver_version": "595.97"
+      }
+    },
+    "ollama": [
+      {
+        "status": "ok",
+        "model": "mistral-nemo:12b",
+        "runs": [
+          {
+            "run": 1,
+            "status": "ok",
+            "elapsed_s": 19.7889,
+            "returncode": 0,
+            "stdout": "Listo",
+            "stderr": "",
+            "memory_before": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 11235328,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16777216
+            },
+            "memory_after": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 10594708,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16777216
+            },
+            "gpu_before": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 1271, 6679, 1, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 1271,
+                "memory_free_mib": 6679,
+                "utilization_gpu_pct": 1,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_after": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7410, 540, 5, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7410,
+                "memory_free_mib": 540,
+                "utilization_gpu_pct": 5,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_samples": 35,
+            "gpu_peak_memory_used_mib": 7404
+          },
+          {
+            "run": 2,
+            "status": "ok",
+            "elapsed_s": 1.1014,
+            "returncode": 0,
+            "stdout": "Listo",
+            "stderr": "",
+            "memory_before": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 10595384,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16777216
+            },
+            "memory_after": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 10588164,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16777216
+            },
+            "gpu_before": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7410, 540, 5, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7410,
+                "memory_free_mib": 540,
+                "utilization_gpu_pct": 5,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_after": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7407, 543, 20, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7407,
+                "memory_free_mib": 543,
+                "utilization_gpu_pct": 20,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_samples": 2,
+            "gpu_peak_memory_used_mib": 7410
+          }
+        ],
+        "cold_elapsed_s": 19.7889,
+        "warm_elapsed_s": 1.1014,
+        "best_elapsed_s": 1.1014,
+        "gpu_peak_memory_used_mib": 7410
+      },
+      {
+        "status": "ok",
+        "model": "gemma3:12b",
+        "runs": [
+          {
+            "run": 1,
+            "status": "ok",
+            "elapsed_s": 27.8576,
+            "returncode": 0,
+            "stdout": "Listo.",
+            "stderr": "",
+            "memory_before": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 10590776,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16777216
+            },
+            "memory_after": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 6976048,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16632132
+            },
+            "gpu_before": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7407, 543, 20, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7407,
+                "memory_free_mib": 543,
+                "utilization_gpu_pct": 20,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_after": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7218, 732, 20, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7218,
+                "memory_free_mib": 732,
+                "utilization_gpu_pct": 20,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_samples": 34,
+            "gpu_peak_memory_used_mib": 7598
+          },
+          {
+            "run": 2,
+            "status": "ok",
+            "elapsed_s": 1.9908,
+            "returncode": 0,
+            "stdout": "Listo",
+            "stderr": "",
+            "memory_before": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 6975356,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16632132
+            },
+            "memory_after": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 6922116,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16650820
+            },
+            "gpu_before": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7218, 732, 0, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7218,
+                "memory_free_mib": 732,
+                "utilization_gpu_pct": 0,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_after": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7218, 732, 0, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7218,
+                "memory_free_mib": 732,
+                "utilization_gpu_pct": 0,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_samples": 3,
+            "gpu_peak_memory_used_mib": 7218
+          }
+        ],
+        "cold_elapsed_s": 27.8576,
+        "warm_elapsed_s": 1.9908,
+        "best_elapsed_s": 1.9908,
+        "gpu_peak_memory_used_mib": 7598
+      },
+      {
+        "status": "ok",
+        "model": "qwen2.5-coder:14b",
+        "runs": [
+          {
+            "run": 1,
+            "status": "ok",
+            "elapsed_s": 48.2399,
+            "returncode": 0,
+            "stdout": "Listo",
+            "stderr": "",
+            "memory_before": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 6925820,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16650820
+            },
+            "memory_after": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 10409348,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16688452
+            },
+            "gpu_before": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7218, 732, 0, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7218,
+                "memory_free_mib": 732,
+                "utilization_gpu_pct": 0,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_after": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7384, 566, 0, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7384,
+                "memory_free_mib": 566,
+                "utilization_gpu_pct": 0,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_samples": 82,
+            "gpu_peak_memory_used_mib": 7384
+          },
+          {
+            "run": 2,
+            "status": "ok",
+            "elapsed_s": 1.0782,
+            "returncode": 0,
+            "stdout": "listo",
+            "stderr": "",
+            "memory_before": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 10431616,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16688452
+            },
+            "memory_after": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 10483016,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16703812
+            },
+            "gpu_before": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7384, 566, 0, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7384,
+                "memory_free_mib": 566,
+                "utilization_gpu_pct": 0,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_after": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7384, 566, 19, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7384,
+                "memory_free_mib": 566,
+                "utilization_gpu_pct": 19,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_samples": 2,
+            "gpu_peak_memory_used_mib": 7384
+          }
+        ],
+        "cold_elapsed_s": 48.2399,
+        "warm_elapsed_s": 1.0782,
+        "best_elapsed_s": 1.0782,
+        "gpu_peak_memory_used_mib": 7384
+      },
+      {
+        "status": "ok",
+        "model": "qwen3:14b",
+        "runs": [
+          {
+            "run": 1,
+            "status": "ok",
+            "elapsed_s": 31.7998,
+            "returncode": 0,
+            "stdout": "Thinking...\nOkay, the user just said \"Responde únicamente: listo\" which means \"Respond \nonly: ready\" in Spanish. They want me to reply with \"listo\" and nothing els\nelse. Let me check the instructions again to make sure I'm following correc\ncorrectly. The user specified to respond only with \"listo\" a",
+            "stderr": "",
+            "memory_before": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 10485636,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16703812
+            },
+            "memory_after": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 6950856,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16688632
+            },
+            "gpu_before": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7384, 566, 0, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7384,
+                "memory_free_mib": 566,
+                "utilization_gpu_pct": 0,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_after": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7356, 594, 0, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7356,
+                "memory_free_mib": 594,
+                "utilization_gpu_pct": 0,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_samples": 47,
+            "gpu_peak_memory_used_mib": 7529
+          },
+          {
+            "run": 2,
+            "status": "ok",
+            "elapsed_s": 19.0608,
+            "returncode": 0,
+            "stdout": "Thinking...\nOkay, the user just said \"Responde únicamente: listo\" which means \"Respond \nonly: ready\" in Spanish. They want me to reply with just \"listo\" and nothin\nnothing else. Let me make sure I understand correctly. They might be testin\ntesting if I follow instructions precisely. I need to confir",
+            "stderr": "",
+            "memory_before": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 6948720,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16688632
+            },
+            "memory_after": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 6895484,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16689144
+            },
+            "gpu_before": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7356, 594, 0, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7356,
+                "memory_free_mib": 594,
+                "utilization_gpu_pct": 0,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_after": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7356, 594, 0, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7356,
+                "memory_free_mib": 594,
+                "utilization_gpu_pct": 0,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_samples": 30,
+            "gpu_peak_memory_used_mib": 7364
+          }
+        ],
+        "cold_elapsed_s": 31.7998,
+        "warm_elapsed_s": 19.0608,
+        "best_elapsed_s": 19.0608,
+        "gpu_peak_memory_used_mib": 7529
+      },
+      {
+        "status": "ok",
+        "model": "phi4:14b",
+        "runs": [
+          {
+            "run": 1,
+            "status": "ok",
+            "elapsed_s": 57.5568,
+            "returncode": 0,
+            "stdout": "Listo. ¿En qué puedo ayudarte?",
+            "stderr": "",
+            "memory_before": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 6894428,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16689144
+            },
+            "memory_after": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 10425320,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16675964
+            },
+            "gpu_before": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7356, 594, 0, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7356,
+                "memory_free_mib": 594,
+                "utilization_gpu_pct": 0,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_after": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7374, 576, 13, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7374,
+                "memory_free_mib": 576,
+                "utilization_gpu_pct": 13,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_samples": 99,
+            "gpu_peak_memory_used_mib": 7374
+          },
+          {
+            "run": 2,
+            "status": "ok",
+            "elapsed_s": 2.1445,
+            "returncode": 0,
+            "stdout": "Listo. ¿En qué puedo ayudarte?",
+            "stderr": "",
+            "memory_before": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 10425064,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16675964
+            },
+            "memory_after": {
+              "memtotal_kib": 12251472,
+              "memavailable_kib": 10450084,
+              "swaptotal_kib": 16777216,
+              "swapfree_kib": 16675964
+            },
+            "gpu_before": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7374, 576, 13, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7374,
+                "memory_free_mib": 576,
+                "utilization_gpu_pct": 13,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_after": {
+              "status": "ok",
+              "raw": "NVIDIA GeForce RTX 4060 Ti, 8188, 7374, 576, 0, 595.97",
+              "parsed": {
+                "name": "NVIDIA GeForce RTX 4060 Ti",
+                "memory_total_mib": 8188,
+                "memory_used_mib": 7374,
+                "memory_free_mib": 576,
+                "utilization_gpu_pct": 0,
+                "driver_version": "595.97"
+              }
+            },
+            "gpu_samples": 4,
+            "gpu_peak_memory_used_mib": 7374
+          }
+        ],
+        "cold_elapsed_s": 57.5568,
+        "warm_elapsed_s": 2.1445,
+        "best_elapsed_s": 2.1445,
+        "gpu_peak_memory_used_mib": 7374
+      }
+    ]
+  }
+}

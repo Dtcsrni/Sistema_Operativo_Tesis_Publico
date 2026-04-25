@@ -3,6 +3,8 @@
   "jerarquia": [
     "reglas_y_scripts_locales",
     "modelos_locales_ligeros",
+    "pc_nativa_llamacpp",
+    "nodo_desktop_compute",
     "proveedores_gratuitos",
     "proveedores_costo_intermedio",
     "modelos_premium"
@@ -16,6 +18,43 @@
     "contexto_requerido",
     "dominio"
   ],
+  "model_selection": {
+    "desktop_compute": {
+      "daily_recommended": "mistral-nemo:12b",
+      "coding_heavy": "qwen2.5-coder:14b",
+      "experimental_ceiling": "qwen3:14b",
+      "alternative_ceiling": "phi4:14b",
+      "evidence": "historial interno no público/openclaw_max_model_bench_pc_post_wsl_20260421.json",
+      "comparative_evidence": "historial interno no público/openclaw_max_model_bench_pc_20260421.json",
+      "caveat": "Resultados post-WSL con memory=12GB aplicado; mantener margen porque la RTX 4060 Ti tiene 8GB VRAM y los 14B usan offload parcial."
+    },
+    "pc_native_llamacpp": {
+      "daily_recommended": "mistral-nemo:12b",
+      "coding_heavy": "qwen2.5-coder:14b",
+      "experimental_ceiling": "qwen3:14b",
+      "alternative_ceiling": "phi4:14b",
+      "evidence": "historial interno no público/openclaw_max_model_bench_pc_post_wsl_20260421.json",
+      "comparative_evidence": "historial interno no público/openclaw_max_model_bench_pc_20260421.json",
+      "caveat": "Carril pesado principal previsto para la PC en host nativo via llama.cpp server; mantener alias desktop_compute mientras dura la transicion."
+    },
+    "orange_pi_edge_cpu": {
+      "daily_recommended": "qwen3:4b",
+      "fallback": "qwen3:4b",
+      "experimental_ceiling": "qwen2.5-coder:7b",
+      "evidence": "historial interno no público/openclaw_max_model_bench_edge_20260421.json"
+    },
+    "orange_pi_edge_npu": {
+      "status": "experimental_no_promoted",
+      "requires": [
+        "/dev/rknpu* visible o mecanismo equivalente documentado",
+        "usuario de servicio con permisos video/render si aplica",
+        "modelo .rkllm preconvertido",
+        "benchmark TTFT/tokens_s/memoria sin caida de servicio"
+      ],
+      "candidate_balance": "Phi-3-3.8B W8A8",
+      "candidate_max_reasonable": "ChatGLM3-6B W8A8"
+    }
+  },
   "dominios": {
     "administrativo": {
       "preferencia": [
@@ -27,6 +66,8 @@
       "preferencia": [
         "reglas_y_scripts_locales",
         "modelos_locales_ligeros",
+        "pc_nativa_llamacpp",
+        "nodo_desktop_compute",
         "proveedores_gratuitos",
         "proveedores_costo_intermedio",
         "modelos_premium"
@@ -36,6 +77,8 @@
       "preferencia": [
         "reglas_y_scripts_locales",
         "modelos_locales_ligeros",
+        "pc_nativa_llamacpp",
+        "nodo_desktop_compute",
         "proveedores_gratuitos",
         "proveedores_costo_intermedio"
       ]

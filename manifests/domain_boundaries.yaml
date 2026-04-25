@@ -26,8 +26,12 @@
         "local",
         "ollama_local",
         "rknn_llm_experimental",
+        "pc_native_llamacpp",
+        "desktop_compute",
         "groq_api",
-        "openai_api"
+        "openai_api",
+        "gemini_web_assisted",
+        "chatgpt_plus_web_assisted"
       ],
       "publicable": "parcial"
     },
@@ -43,6 +47,8 @@
         "local",
         "ollama_local",
         "rknn_llm_experimental",
+        "pc_native_llamacpp",
+        "desktop_compute",
         "groq_api",
         "gemini_api",
         "gemini_web_assisted",

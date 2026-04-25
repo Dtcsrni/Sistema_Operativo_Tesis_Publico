@@ -44,6 +44,7 @@ Los subsistemas principales son:
 - **Superficie pública:** bundle público curado en `06_dashboard/publico/`, derivado y no editable a mano.
 - **Publicación externa:** el sitio y la exposición pública salen del downstream `https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico`, no del repo privado canónico.
 - **Asistencia con IA opcional:** la asistencia con IA acelera trabajo, pero no es requisito para operar el sistema.
+- **Modo de trabajo agéntico:** `caveman` como punto de entrada conciso del shell y `serena-local` como primera capa de contexto compacto cuando el workspace lo expone.
 
 ## Estructura operativa nueva
 
@@ -69,6 +70,7 @@ Si retomas el proyecto o necesitas explicar el sistema desde cero:
 6. Si vas a operar el sistema, continúa con [`00_sistema_tesis/manual_operacion_humana.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md).
 7. Si vas a preparar despliegue, revisa [`docs/02_arquitectura/arquitectura-general.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md), [`docs/02_arquitectura/topologia-de-almacenamiento.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y `bootstrap/`.
 8. Si quieres diagnóstico inmediato, ejecuta `python 07_scripts/tesis.py status` y `python 07_scripts/tesis.py next`.
+9. Si vas a iniciar trabajo técnico con bajo ruido, ejecuta `python 07_scripts/check_agent_tooling.py`.
 
 ## Mapa de navegación y rastreo
 
@@ -182,4 +184,4 @@ No se corrigen manualmente los artefactos derivados. Se regeneran.
 - confirmación verbal corroborada con transcripción para `VAL-STEP` nuevos;
 - TDD para automatización, validadores y software nuevo.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

@@ -55,6 +55,7 @@ La IA es opcional: acelera trabajo, pero no es requisito para retomar, registrar
 3. Ejecutar `python 07_scripts/tesis.py audit --check`.
 4. Ejecutar `python 07_scripts/build_all.py` antes de cerrar trabajo o proponer cambios.
 5. Revisar wiki y dashboard generados si se necesita lectura rápida humana.
+6. El snapshot de tokens es opcional y local por defecto; no requiere `OPENAI_ADMIN_KEY` mientras no exista presupuesto para API externa.
 
 ### Preparar despliegue en Orange Pi
 
@@ -64,8 +65,9 @@ La IA es opcional: acelera trabajo, pero no es requisito para retomar, registrar
 4. Correr `bash bootstrap/orangepi/90_postcheck.sh` al finalizar.
 5. Tratar `/srv/tesis/repo` como clon operativo local de despliegue y supervisión, no como repositorio principal de autoría.
 6. Registrar cualquier desviación real de hardware, almacenamiento o servicios en bitácora/decisión.
-7. Para actualizar el clon operativo desde el escritorio, preferir `bash /srv/tesis/repo/ops/actualizacion/sync_repo_desde_desktop.sh repo+postcheck`.
+7. Para actualizar el clon operativo desde el escritorio, preferir `bash /srv/tesis/repo/ops/actualizacion/sync_repo_desde_desktop.sh repo+postcheck`; ese perfil también limpia ruido edge-volatil que no aporta al runtime (`.pytest_cache`, `__pycache__`, bytecode, backups y staging privado).
 8. Usar `repo-only` si solo se alineará el clon local, y `repo+restart-edge` si el cambio exige reiniciar `edge-iot-worker.service`.
+9. Acceder por SSH al host `tesis-edge` con el usuario dedicado `tesisai` y la llave definida en `ORANGEPI_KEY_PATH`; no usar contraseña.
 
 ### Operación permitida en Orange Pi
 
@@ -149,4 +151,4 @@ La firma humana no se autoemite desde IA sin contexto trazable. Si un artefacto 
    - `python 07_scripts/build_all.py`
    - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

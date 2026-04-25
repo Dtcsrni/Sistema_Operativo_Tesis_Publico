@@ -4,4 +4,4 @@ Fuente maquina-legible: `manifests/bibliography_policy.yaml`.
 
 Toda referencia debe clasificarse por tipo, nivel de evidencia y estado de verificacion.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

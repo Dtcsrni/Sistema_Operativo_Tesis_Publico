@@ -2,4 +2,4 @@
 
 Campos minimos: `component_id`, `componente`, `modelo`, `voltaje`, `corriente`, `interfaz`, `pinout_verificado`, `datasheet`, `riesgo`, `estado`.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

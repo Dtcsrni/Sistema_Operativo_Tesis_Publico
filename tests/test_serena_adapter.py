@@ -87,6 +87,10 @@ def test_serena_adapter_healthcheck_accepts_legacy_tool_aliases(monkeypatch) -> 
             "tool_names": sorted(
                 {
                     "context_fetch_compact",
+                    "context_repo_map",
+                    "context_fetch_changes",
+                    "context_trace_lookup",
+                    "context_session_brief",
                     "governance_preflight",
                     "artifacts_evaluate_serena",
                     "artifacts_write_derived",

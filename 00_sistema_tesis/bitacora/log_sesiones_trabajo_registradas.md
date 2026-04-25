@@ -1693,12 +1693,402 @@ Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260413-actions-public-s
 - **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
 - **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
 - **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
-- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: FIN]
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
 - **Contenido:**
 <<<
 Objetivo de sesión: cerrar pendientes técnicos, publicar cambios y verificar despliegue público end-to-end.>>>
 
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-14
+- **Vínculo:** [DEC-0014]
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Continuo con el cierre canónico y la materialización final de la reformalización ENT-014/015?
+- **Confirmación Verbal (Texto Exacto):** continua
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
+- **Contenido:**
+<<<
+Objetivo de sesión: continuar y cerrar la trazabilidad canónica de la reformalización de ENT-014 y ENT-015, materializando ledger, matriz y derivados desde el canon sin editar manualmente las proyecciones.>>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-20
+- **Vínculo:** [DEC-0014]
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas asegurar que Caveman y Serena estén disponibles y se usen prioritariamente como política base del sistema operativo de tesis para cualquier agente de IA?
+- **Confirmación Verbal (Texto Exacto):** asegura que caveman y srena estén disponibles y sean usados prioritariamente como política del sistema operativo de tesis para cualquier agente de IA
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Formalizar la política de prioridad conjunta de Caveman y Serena para cualquier agente de IA del repositorio.
+Contexto Operativo: El tesista instruye que Caveman y Serena estén disponibles y sean usados prioritariamente como política base del sistema operativo de tesis para cualquier agente de IA. Caveman queda como modo operativo conciso por defecto y Serena como primera capa de contexto compacto y gobernanza cuando el perfil recomendado esté disponible.
+Infraestructura: runtime de IA no publicado | Bash local sobre WSL | Sistema Operativo de Tesis.
+ID de Sesión: codex-local-20260420-caveman-serena-policy-v1
+Diferencial de Plan: actualizar AGENTS.md, la documentación operativa de Serena/Codex, el flujo operativo 11/13, registrar la instrucción en el ledger y la matriz, y reauditar con build_all.py.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260420-caveman-serena-policy-v1): "asegura que caveman y srena estén disponibles y sean usados prioritariamente como política del sistema operativo de tesis para cualquier agente de IA">>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-20
+- **Vínculo:** DEC-0014
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Confirmas que toda acción que produzca cambios o sea relevante debe trazarse conforme la política de trazabilidad?
+- **Confirmación Verbal (Texto Exacto):** siempre debemos de trazar todas las acciones que producen cambios, o que son relevantes, conforme la política de trazabilidad+
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Formalizar la exigencia de trazabilidad completa para cambios y acciones relevantes en el repositorio.
+Contexto Operativo: El tesista instruye que toda acción que produzca cambios o que sea relevante quede trazada conforme la política de trazabilidad del Sistema Operativo de Tesis.
+Infraestructura: runtime de IA no publicado | Bash local sobre WSL | Sistema Operativo de Tesis.
+ID de Sesión: codex-local-20260420-trazabilidad-total-v1
+Diferencial de Plan: registrar la instrucción humana en canon, ledger y matriz, y reauditar con build_all.py.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260420-trazabilidad-total-v1): \"siempre debemos de trazar todas las acciones que producen cambios, o que son relevantes, conforme la política de trazabilidad+\">>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0014]
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas documentar todo el cierre OpenClaw/Telegram conforme a la política de trazabilidad?
+- **Confirmación Verbal (Texto Exacto):** documenta todo según política de trazabilidad
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Documentar el cierre operativo OpenClaw/Telegram, Desktop Compute y evidencias asociadas conforme a la política de trazabilidad.\nContexto Operativo: El tesista instruye documentar todo según la política de trazabilidad tras el cierre técnico del bot Telegram, routing OpenClaw, túnel desktop_compute, limpieza de aprobación de prueba, logrotate y evidencias de validación.\nInfraestructura: runtime de IA no publicado | Bash local sobre WSL | tesis-edge | OpenClaw local-first | Telegram polling local.\nID de Sesión: codex-local-20260421-openclaw-telegram-trazabilidad-v1\nDiferencial de Plan: registrar fuente de conversación evento interno no público, emitir validación humana interna no pública para la autorización documental, consolidar bitácora operativa y reauditar con build_all.py.\n---\nTesista (Erick Renato Vega Ceron | Sesion: codex-local-20260421-openclaw-telegram-trazabilidad-v1): documenta todo según política de trazabilidad>>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0020]
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** prompt_de_implementacion_contextualizado | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Mejorar significativamente el comportamiento del chat Telegram de OpenClaw. Contexto Operativo: El tesista instruye implementar el plan diseñado para convertir OpenClaw Telegram en una interfaz confiable de comandos y LLM local-first, con memoria por chat, /hora determinística, investigación web read-only, routing automático explicado y propuestas de aprobación para acciones ambiguas o no implementadas. Archivos técnicos previstos: runtime/openclaw/openclaw_local/telegram_bot.py y tests/test_openclaw_telegram_bot.py. Confirmación humana: PLEASE IMPLEMENT THIS PLAN:>>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0020]
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instruccion humana directa de continuidad operativa para completar la implementacion adaptativa del chat Telegram de OpenClaw.
+- **Confirmación Verbal (Texto Exacto):** continua
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** continuacion_operativa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
+- **Contenido:**
+<<<
+Objetivo de Sesion: completar la segunda capa de mejoras del chat Telegram de OpenClaw. Contexto Operativo: el tesista instruye continuar la implementacion para hacer el asistente mas dinamico, adaptable, con aprendizaje, memoria ampliada, mejores herramientas read-only y consultas deterministicas. Archivos tecnicos afectados: runtime/openclaw/openclaw_local/telegram_bot.py, runtime/openclaw/bin/openclaw_local.py y tests/test_openclaw_telegram_bot.py. Confirmacion humana: continua>>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0014]
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa para corregir la vulnerabilidad de Dependabot.
+- **Confirmación Verbal (Texto Exacto):** corrige la vulnerabilidad de dependabot
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_seguridad | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
+- **Contenido:**
+<<<
+Objetivo de Sesion: corregir vulnerabilidad Dependabot del repositorio. Contexto Operativo: OSV/GitHub Advisory identifica GHSA-6w46-j5rx-g56g en pytest 9.0.2, con version corregida 9.0.3. Cambio tecnico: requirements-dev.txt actualiza pytest==9.0.2 a pytest==9.0.3. Validacion prevista: consulta OSV sin vulnerabilidades para el conjunto fijado, pytest focal OpenClaw y build_all.py. Confirmacion humana: corrige la vulnerabilidad de dependabot>>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0014]
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instruccion humana directa para integrar la mejora de OpenClaw y hacer push via SSH.
+- **Confirmación Verbal (Texto Exacto):** implementa via ssh
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
+- **Contenido:**
+<<<
+Objetivo de Sesion: Mejorar inteligencia OpenClaw y desplegar via SSH. Contexto Operativo: Integracion de Chain-of-Thought y web_assisted. Confirmacion humana: implementa via ssh>>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0014]
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** MEDIO
+- **Pregunta Crítica / Disparador:** Instruccion humana directa para verificar y validar en el edge node.
+- **Confirmación Verbal (Texto Exacto):** verifica por acceso ssh tesisai que las mejoras estén implementadas en openclaw y valida
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
+- **Contenido:**
+<<<
+Objetivo de Sesion: Validar la implementacion en el Edge Node (Orange Pi). Contexto Operativo: Sincronizacion manual de repositorio en el edge y verificacion del demonio OpenClaw local-first. Confirmacion humana: verifica por acceso ssh tesisai que las mejoras estén implementadas en openclaw y valida>>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0020]
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa para implementar el plan de mejora OpenClaw Telegram con aprobación simplificada e imagen local.
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
+- **Contenido:**
+<<<
+Objetivo de Sesion: corregir OpenClaw Telegram para eliminar bucles conversacionales, respetar contexto de chat, preferir Qwen3 en chat breve, simplificar aprobación desde Telegram e integrar backend local ComfyUI para imagen. Contexto Operativo: el tesista instruye implementar el plan completo titulado Corregir OpenClaw Telegram Para Conversación, Aprobación e Imagen Local. Archivos tecnicos afectados: runtime/openclaw/openclaw_local/telegram_bot.py, runtime/openclaw/openclaw_local/image_backend.py, runtime/openclaw/bin/openclaw_local.py, tests/test_openclaw_telegram_bot.py y docs/03_operacion/openclaw-workspace-local.md. Validacion prevista: pytest focal Telegram y build_all.py. Confirmacion humana: PLEASE IMPLEMENT THIS PLAN:>>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0020]
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa para desplegar en el edge la mejora de OpenClaw Telegram.
+- **Confirmación Verbal (Texto Exacto):** despliega en el edge
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_operativa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
+- **Contenido:**
+<<<
+Objetivo de Sesion: desplegar en tesis-edge la mejora OpenClaw Telegram con aprobación simplificada e imagen local ComfyUI. Contexto Operativo: se aplican en /srv/tesis/repo los cambios de runtime OpenClaw, CLI, tests y documentación; se crea backup remoto previo, se reinicia openclaw-telegram-bot.service y se ejecutan smokes y pytest focal remoto. Confirmacion humana: despliega en el edge>>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0020]
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa para usar ComfyUI en esta PC como backend local de imagen del edge.
+- **Confirmación Verbal (Texto Exacto):** si, comfy en esta pc
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_operativa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
+- **Contenido:**
+<<<
+Objetivo de Sesion: conectar ComfyUI instalado en esta PC con tesis-edge para generación local de imágenes desde OpenClaw Telegram. Contexto Operativo: se añade forward SSH opcional PC -> edge 127.0.0.1:28000 hacia ComfyUI local 127.0.0.1:8000, se configura OPENCLAW_COMFYUI_BASE_URL en el edge, se ajusta PermitListen del hardening SSH y se documenta el diagnóstico cuando ComfyUI no escucha. Confirmacion humana: si, comfy en esta pc>>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0020]
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas la implementación de búsqueda automática y señal de actividad persistente para mejorar la calidad del razonamiento?
+- **Confirmación Verbal (Texto Exacto):** reinicialo cada que hagas un cambio en el bot y cómo responde
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** sin_confirmacion_explicita | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
+- **Contenido:**
+<<<
+Objetivo de Sesion: Automatizar RAG en chat de Telegram, forzar modelos de alta calidad (Qwen3:4b) para conocimiento y mantener señal de actividad persistente. Contexto Operativo: se mejora el ruteo automático y se inyecta evidencia web de forma transparente. Confirmación humana: reinicialo cada que hagas un cambio en el bot y cómo responde>>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0020]
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas proceder con la corrección y el registro en el Ledger?
+- **Confirmación Verbal (Texto Exacto):** implementa
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** sin_confirmacion_explicita | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
+- **Contenido:**
+<<<
+Objetivo de Sesion: Corregir NameError en ruteo y mejorar resiliencia ante fallos de nube en OpenClaw Telegram. Contexto Operativo: se identifica variable 'request_kind' no definida en _select_chat_runtime; se implementa try-except en la cascada de ruteo para forzar fallback a qwen3:4b; se ajustan esperas en web_session.py para Playwright. Confirmacion humana: implementa>>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0020]
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas implementar el plan de corrección OpenClaw Telegram/Edge?
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN: Plan De Corrección OpenClaw Telegram/Edge
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_operativa_explicita | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
+- **Contenido:**
+<<<
+Objetivo de Sesion: implementar el plan de corrección OpenClaw Telegram/Edge. Contexto Operativo: ruteo local-first con SLA, web-assisted solo explícito, concurrencia limitada por chat/backend, keepalive y contexto reducido, exclusión de qwen2.5:0.5b como fallback semántico, observabilidad estructurada y plantilla oficial OpenClaw. Confirmacion humana: PLEASE IMPLEMENT THIS PLAN: Plan De Corrección OpenClaw Telegram/Edge>>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-23
+- **Vínculo:** [DEC-0023]
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas ejecutar el cierre de trazabilidad y documentación operativa en una sola entrega?
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_operativa_explicita | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
+- **Contenido:**
+<<<
+Objetivo de Sesión: formalizar trazabilidad y documentación operativa de mejoras Serena/Caveman ya implementadas. Contexto Operativo: se registra evidencia fuente del pedido humano, se enlaza Step ID por continuidad y se verifica cadena/documentación con pruebas y build_all. Confirmación humana: PLEASE IMPLEMENT THIS PLAN:>>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-23
+- **Vínculo:** [DEC-0022]
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa para ejecutar la implementación completa de OpenClaw PC-first con Matrix soberano y runtime pesado nativo.
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_operativa_explicita | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: validación humana interna no pública]
+- **Contenido:**
+<<<
+Objetivo de Sesion: implementar la refactorizacion completa OpenClaw PC-first con session layer comun, Matrix remoto principal, Telegram secundario, runtime pesado pc_native_llamacpp y cierre documental verificable. Contexto Operativo: se introduce la capa de sesiones compartida entre CLI/web/Matrix/Telegram, se incorpora el adaptador Matrix, se formaliza llama.cpp server como backend pesado de la PC mediante pc_native_llamacpp, se mantienen aliases transitorios para desktop_compute, se actualizan manifests, contratos, docs operativas y se valida con suite OpenClaw ampliada y regeneracion documental. Confirmacion humana: PLEASE IMPLEMENT THIS PLAN:>>>
+
+---
+
+## [validación humana interna no pública]
+- **Proveedor:** proveedor de IA no publicado
+- **Modelo/Versión:** modelo de IA no publicado
+- **Fecha:** 2026-04-24
+- **Vínculo:** DEC-0014
+- **Hash:** `hash omitido:omitido`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas implementar el cierre host-real de OpenClaw con Matrix edge local y llama.cpp Windows service?
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+- **Hash de Confirmación Verbal:** `hash omitido:omitido`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** evento interno no público | Captura requerida: True
+- **Cadena:** [Anterior: validación humana interna no pública] | [Siguiente: FIN]
+- **Contenido:**
+<<<
+Agente: ¿Autorizas implementar el cierre host-real de OpenClaw con Matrix edge local y llama.cpp Windows service? Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260424-openclaw-host-real-closeout-v1): PLEASE IMPLEMENT THIS PLAN:>>>
+
 **Navegación:**
 - [Volver a la Matriz](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/matriz_trazabilidad.md)
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

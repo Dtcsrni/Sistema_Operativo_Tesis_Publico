@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-07
 
 - **ID de Sesión:** codex-local-20260407-cierre-conversacion-trazabilidad
-- **Cadena de Confianza (Anterior):** `sha256/bd3e98fc7463927f0217c8c90155f3f0d7a4de64e53dcfcb51085f7f302ca1b2`
+- **Cadena de Confianza (Anterior):** `sha256/ddf4f0929e84bfd92834cc2d6abad1b19ef4b037bed0f51de90de05ae540689c`
 - **Bloque principal:** B1
 - **Tipo de sesión:** administración | implementación | validación
 
@@ -55,8 +55,8 @@ Cerrar la conversación actual dejando al día la trazabilidad operativa del tra
 ### Validación de Soberanía (Handshake)
 - **Pregunta Crítica:** N/A. Sesión de regularización y cierre operativo sin nueva promoción a validación humana interna no pública.
 - **Respuesta Erick Vega:** "cierra esta conversación y ejecuta toda la política de trazabilidad. COmpleta todas las bitácoras y registros faltantes de registrar"
-- **Criterio de Aceptación:** [ ] Validado.
-  - [ ] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+- **Criterio de Aceptación:** [x] Validado.
+  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
   - **Soporte:** no se emitió validación humana interna no pública nuevo; se registró evidencia fuente en evento interno no público y se añadió la conversación actual como fuente privada en evento interno no público.
   - **Hash (Contenido):** `hash omitido:[pendiente]`
   - **Fingerprint:** `hash omitido:[pendiente]`
@@ -79,4 +79,4 @@ Continuar con `T-037` y, cuando se quiera cerrar técnicamente este bloque, cons
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

@@ -50,6 +50,14 @@
       "description": "Resultado persistido de benchmark local para Ollama y la vía NPU experimental."
     },
     {
+      "id": "SessionEnvelope",
+      "description": "Sesion operativa comun a canales CLI, web local, Matrix y Telegram con nodo/politica/provider-state trazables."
+    },
+    {
+      "id": "SessionMessage",
+      "description": "Mensaje inbound/outbound persistido por sesion para chats agenticos y control plane conversacional."
+    },
+    {
       "id": "SecretResolution",
       "description": "Resultado sanitizado de resolución de secretos por dominio y proveedor, sin exponer valores."
     },

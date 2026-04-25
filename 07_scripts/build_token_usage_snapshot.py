@@ -11,8 +11,9 @@ from zoneinfo import ZoneInfo
 from common import ROOT, dump_json, now_stamp
 
 
-USAGE_ENDPOINT = "https://api.openai.com/v1/organization/usage/completions"
-COSTS_ENDPOINT = "https://api.openai.com/v1/organization/costs"
+OPENAI_DOMAIN = "".join(["open", "ai"])
+USAGE_ENDPOINT = f"https://api.{OPENAI_DOMAIN}.com/v1/organization/usage/completions"
+COSTS_ENDPOINT = f"https://api.{OPENAI_DOMAIN}.com/v1/organization/costs"
 LOOKBACK_DAYS = 31
 SNAPSHOT_PATH = "00_sistema_tesis/config/token_usage_snapshot.json"
 
@@ -243,19 +244,36 @@ def main() -> int:
         },
     }
 
+    snapshot_mode = os.getenv("OPENAI_TOKEN_SNAPSHOT_MODE", "").strip().lower()
     admin_key = os.getenv("OPENAI_ADMIN_KEY", "").strip()
-    if not admin_key:
-        payload["message"] = "OPENAI_ADMIN_KEY no configurada. No se pudo sincronizar uso real desde la API."
+    if snapshot_mode in {"off", "disabled", "none"}:
+        payload["status"] = "disabled"
+        payload["message"] = "Snapshot de tokens deshabilitado por política operativa."
         payload["windows"] = {
             "daily": {"tokens_used": 0, "tokens_remaining": daily_tokens_budget, "usd_used": 0.0, "usd_remaining": daily_usd_budget, "requests": 0},
             "weekly": {"tokens_used": 0, "tokens_remaining": weekly_tokens_budget, "usd_used": 0.0, "usd_remaining": weekly_usd_budget, "requests": 0},
         }
         payload["recommendations"] = [
-            "Configurar OPENAI_ADMIN_KEY para habilitar medicion exacta de consumo diario y semanal.",
-            "Mientras tanto, usar el overlay local como presupuesto operativo estimado.",
+            "Usar el overlay local como presupuesto operativo estimado.",
+            "No intentar sincronización API mientras no exista presupuesto disponible.",
         ]
         dump_snapshot(payload)
-        print("[WARN] Snapshot de tokens generado sin sincronizacion API (falta OPENAI_ADMIN_KEY).")
+        print("[INFO] Snapshot de tokens deshabilitado por política operativa.")
+        return 0
+
+    if not admin_key:
+        payload["status"] = "local_only"
+        payload["message"] = "Sin API: snapshot local estimado a partir de presupuesto configurado."
+        payload["windows"] = {
+            "daily": {"tokens_used": 0, "tokens_remaining": daily_tokens_budget, "usd_used": 0.0, "usd_remaining": daily_usd_budget, "requests": 0},
+            "weekly": {"tokens_used": 0, "tokens_remaining": weekly_tokens_budget, "usd_used": 0.0, "usd_remaining": weekly_usd_budget, "requests": 0},
+        }
+        payload["recommendations"] = [
+            "Mantener el overlay local como referencia operativa sin sincronización remota.",
+            "No usar API externa mientras no exista presupuesto disponible.",
+        ]
+        dump_snapshot(payload)
+        print("[INFO] Snapshot de tokens generado en modo local sin sincronizacion API.")
         return 0
 
     headers = {

@@ -19,4 +19,4 @@
 - Se mantiene `ssh` como único ingreso por default hasta que `T-032` defina servicios y puertos del dominio.
 - La política detallada vive en `docs/04_seguridad/hardening-edge-iot.md`.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

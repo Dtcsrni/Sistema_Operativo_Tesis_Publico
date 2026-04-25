@@ -20,6 +20,14 @@ Definir como operar Serena MCP desde VS Code con Codex sin perder soberania huma
 Serena MCP no reemplaza `tesis.py` ni `ab_pilot.py`. Su funcion es exponer herramientas compactas y auditables para que Codex opere con menos contexto repetido y con enforcement explicito.
 Adicionalmente, `OpenClaw` lo consume ahora como adapter interno de contexto/gobernanza, sin incorporarlo al ruteo de proveedores de inferencia.
 
+## Caveman como modo base de agente
+
+- Caveman no es un servidor MCP adicional: es el modo operativo conciso que debe estar disponible para cualquier agente de IA antes de entrar al trabajo tecnico.
+- La comprobacion minima es `command -v caveman` seguido de `caveman --help`; si falla, el agente debe intentar restaurar la disponibilidad del wrapper o del bundle global antes de seguir.
+- Cuando Caveman y Serena estan disponibles, la secuencia preferida es: Caveman como modo base de redaccion/ejecucion, Serena como primera capa de contexto compacto y gobernanza, y `build_all.py` como cierre de auditoria.
+- Caveman no sustituye la disciplina de trazabilidad ni la politica de Serena; complementa la capa de contexto con un modo de trabajo mas directo y menos ruidoso.
+- Para verificación operativa conjunta de sesión, usar `python3 07_scripts/check_agent_context_tools.py --attempt-start-http`.
+
 ## Contrato común para hosts/agentes
 
 - `serena-local` se mantiene como nombre lógico común para hosts MCP compatibles.
@@ -56,15 +64,19 @@ Adicionalmente, `OpenClaw` lo consume ahora como adapter interno de contexto/gob
 
 ## Herramientas visibles en el host
 
-El host debe ver exactamente estas herramientas publicadas con `_` en el nombre para compatibilidad con VS Code `1.115.0`:
+El host debe ver estas herramientas publicadas con `_` en el nombre para compatibilidad con VS Code:
 
 1. `context_fetch_compact`
-2. `governance_preflight`
-3. `artifacts_evaluate_serena`
-4. `artifacts_write_derived`
-5. `canon_prepare_change`
-6. `canon_apply_controlled_change`
-7. `trace_append_operation`
+2. `context_repo_map`
+3. `context_fetch_changes`
+4. `context_trace_lookup`
+5. `context_session_brief`
+6. `governance_preflight`
+7. `artifacts_evaluate_serena`
+8. `artifacts_write_derived`
+9. `canon_prepare_change`
+10. `canon_apply_controlled_change`
+11. `trace_append_operation`
 
 Internamente Serena conserva los nombres canónicos con puntos para traza, política y compatibilidad de clientes; el servidor acepta llamadas tanto con `_` como con `.`.
 
@@ -78,14 +90,15 @@ Internamente Serena conserva los nombres canónicos con puntos para traza, polí
 6. Aceptar la ejecución automática de tareas del workspace si VS Code la solicita (o fijar `"task.allowAutomaticTasks": "on"` en `.vscode/settings.json`).
 7. Abrir el panel MCP o la superficie de herramientas del host Codex.
 8. Confirmar que aparezca `serena-local` sin error de arranque.
-9. Confirmar que el host liste las 7 herramientas visibles en `serena-local`.
+9. Confirmar que el host liste las 11 herramientas visibles en `serena-local`.
 10. Si se reactiva `serena-local-py` para diagnóstico, tratarlo solo como ruta auxiliar y no como requisito E2E del workspace.
 11. Ejecutar `context_fetch_compact` con una consulta de solo lectura.
 12. Ejecutar `governance_preflight` sobre una ruta canónica o protegida.
 13. Confirmar que exista o se actualice `historial interno no público/serena_mcp_operations.jsonl`.
 14. Si el servidor no responde al `initialize`, revisar `historial interno no público/serena_mcp_debug.log`.
-15. Ejecutar `python 07_scripts/check_serena_access.py` para verificar que `serena-local` siga disponible y recomendado, y para recordar la frontera entre host y runtime.
-16. Si se requiere un runtime externo, exportar `SERENA_BRIDGE_BEARER_TOKEN` y arrancar `python runtime/serena_bridge/bin/serena_bridge.py`.
+15. Ejecutar `python3 07_scripts/check_serena_access.py --attempt-start-http` para verificar/recuperar `serena-local` y recordar la frontera entre host y runtime.
+16. Ejecutar `python3 07_scripts/check_agent_context_tools.py --attempt-start-http` para validar disponibilidad conjunta Caveman + Serena.
+17. Si se requiere un runtime externo, exportar `SERENA_BRIDGE_BEARER_TOKEN` y arrancar `python runtime/serena_bridge/bin/serena_bridge.py`.
 
 ## Prueba minima recomendada
 
@@ -118,14 +131,17 @@ Resultado esperado:
 ## Flujo corto Codex + Serena MCP
 
 1. `context_fetch_compact` para ubicar contexto relevante sin abrir documentos completos.
-2. `governance_preflight` para validar intencion, riesgo y requisitos.
-3. `canon_prepare_change` para revisar diff y hashes antes de tocar canon.
-4. `canon_apply_controlled_change` solo cuando exista validación humana interna no pública vigente y evidencia fuente corroborada si aplica.
-5. `python 07_scripts/build_all.py` para auditoria posterior.
+2. `context_repo_map` o `context_session_brief` para reducir contexto inicial por rutas y estado operativo.
+3. `context_fetch_changes` para resumir diff local sin abrir archivos completos.
+4. `context_trace_lookup` para recuperar referencias de DEC/bitácora/matriz.
+5. `governance_preflight` para validar intencion, riesgo y requisitos.
+6. `canon_prepare_change` para revisar diff y hashes antes de tocar canon.
+7. `canon_apply_controlled_change` solo cuando exista validación humana interna no pública vigente y evidencia fuente corroborada si aplica.
+8. `python3 07_scripts/build_all.py` para auditoria posterior.
 
 ## Regla de interpretacion
 
-- Si VS Code muestra `serena-local`, las 7 tools y una traza nueva en JSONL, la integracion E2E se considera operativa.
+- Si VS Code muestra `serena-local`, las 11 tools y una traza nueva en JSONL, la integracion E2E se considera operativa.
 - Si además se reactiva `serena-local-py` y muestra las mismas 7 tools, el diagnóstico por `stdio` se considera operativo, pero no es requisito para el workspace actual.
 - Si solo existe `.vscode/mcp.json`, la integracion esta declarada pero no validada en uso real.
 - En Windows con host local, el launcher recomendado para uso bajo demanda es una tarea de VS Code que ejecute `.vscode/serena-http.cmd`.
@@ -144,4 +160,4 @@ Resultado esperado:
 6. Si el host sigue sin ver tools MCP aunque HTTP responda bien, asumir primero una limitacion del host/runtime antes que un fallo de negocio en Serena.
 7. Si un host externo no puede registrar `127.0.0.1`, desplegar el bridge detras de un tunel o reverse proxy con auth y registrar esa URL publica.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

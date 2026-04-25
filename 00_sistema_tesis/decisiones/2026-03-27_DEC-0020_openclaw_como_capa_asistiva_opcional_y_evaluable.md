@@ -25,4 +25,4 @@ Modelar OpenClaw como capa local-first opcional con conectividad hibrida, desaco
 [GOV]: ruta local no pública
 [AUD]: ruta local no pública
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

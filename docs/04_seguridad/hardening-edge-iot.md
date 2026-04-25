@@ -12,11 +12,16 @@ Endurecer el host Orange Pi para el dominio `edge_iot` sin afectar `sistema_tesi
 - `bluetooth.service` deshabilitado.
 - `root login` deshabilitado.
 - `PasswordAuthentication` deshabilitado.
+- `AllowUsers ErickV tesisai` para limitar el acceso SSH a las cuentas operativas del host.
+- `ErickV` mantiene privilegios administrativos completos y `tesisai` recibe sudo sin contraseña para mantenimiento edge controlado.
+- Ambas cuentas pertenecen a `adm`, `sudo` y `systemd-journal`.
+- La cuenta `orangepi` queda bloqueada y sin shell interactiva si sigue existiendo en el host.
 - `AllowTcpForwarding` y `AllowAgentForwarding` deshabilitados.
+- El host operativo de tesis se nombra `tesis-edge`.
 
 ## Límites
 - Este corte no crea todavía servicios `edge_iot`; eso corresponde a `T-032`.
 - Este corte no abre puertos de aplicación ni define unidades propias de `edge_iot`.
 - La comunicación con otros dominios sigue limitada a rutas de intercambio y CLI explícita.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

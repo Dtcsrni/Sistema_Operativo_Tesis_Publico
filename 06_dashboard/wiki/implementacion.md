@@ -3,7 +3,7 @@
 Estado de cobertura de firmware, gateway y analítica.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-14`
+- **Fecha:** `2026-04-25`
 - **Estado:** `OK`
 - **Fuentes:** `04_implementacion`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -50,7 +50,10 @@ Estado de cobertura de firmware, gateway y analítica.
 
 - Ruta: `04_implementacion`
 - Existe: `sí`
-- Cobertura: `pendiente`
-- Mensaje: Sin contenido operativo aún. La wiki refleja el estado real del repositorio y no inventa artefactos.
+- Cobertura: `parcial_o_activa`
 
-_Última actualización: `2026-04-14`._
+## Archivos detectados
+
+- `04_implementacion/gateway/openclaw_pc_first_matrix_runtime.md`
+
+_Última actualización: `2026-04-25`._

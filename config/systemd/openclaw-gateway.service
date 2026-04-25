@@ -6,6 +6,7 @@ ConditionPathExists=/srv/tesis/repo/runtime/openclaw/wrappers/openclaw-gateway.s
 
 [Service]
 Type=simple
+Environment=OPENCLAW_OFFICIAL_GATEWAY_ENABLED=0
 EnvironmentFile=/etc/tesis-os/openclaw.env
 ExecStartPre=/bin/bash -lc '/srv/tesis/repo/runtime/openclaw/wrappers/openclaw-preflight.sh'
 ExecStart=/bin/bash -lc '/srv/tesis/repo/runtime/openclaw/wrappers/openclaw-gateway.sh'

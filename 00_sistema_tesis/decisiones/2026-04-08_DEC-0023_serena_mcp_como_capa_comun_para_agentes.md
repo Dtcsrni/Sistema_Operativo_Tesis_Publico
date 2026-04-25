@@ -41,4 +41,4 @@ Adoptar a `serena-local` como la capa oficial comun de contexto compacto, prefli
 [GOV]: ruta local no pública
 [AUD]: ruta local no pública
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

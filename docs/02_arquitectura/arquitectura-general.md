@@ -5,7 +5,7 @@ El repositorio canónico es la fuente de verdad operacional del Sistema Operativ
 
 ## Topologia operativa
 - `desktop_workspace`: PC de escritorio con Visual Studio Code como estacion principal de autoria, diseno, analisis, construccion documental y mantenimiento del repositorio soberano.
-- `orange_pi_edge`: Orange Pi como nodo edge operativo para `edge_iot`, observabilidad local, servicios del stack IoT y capacidades que deban vivir cerca del hardware o del entorno fisico.
+- `orange_pi_edge`: Orange Pi como nodo edge operativo para `edge_iot`, observabilidad local, servicios del stack IoT y capacidades que deban vivir cerca del hardware o del entorno fisico. El host SSH operativo del nodo se nombra `tesis-edge` y el usuario dedicado para agentes es `tesisai`.
 - Integracion principal: `git_sync` + artefactos y contratos explicitos.
 - Retorno desde Orange Pi: logs operativos, evidencia edge, metricas y artefactos locales derivados.
 - No es flujo normal usar un workspace remoto montado por red ni convertir la Orange Pi en la superficie principal de redaccion o decisiones arquitectonicas.
@@ -51,4 +51,4 @@ El repositorio canónico es la fuente de verdad operacional del Sistema Operativ
 - `python 07_scripts/tesis.py doctor --check`
 - `python 07_scripts/build_all.py`
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

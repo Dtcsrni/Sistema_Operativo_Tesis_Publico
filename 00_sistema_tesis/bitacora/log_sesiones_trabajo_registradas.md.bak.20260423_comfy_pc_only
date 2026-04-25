@@ -1,0 +1,2050 @@
+<!-- SISTEMA_TESIS:PROTEGIDO -->
+# Ledger de Sesiones de trabajo registradas (Inmutable y Enlazado)
+
+Este archivo es el **Libro Mayor** de las validaciones humanas. El contenido exacto está entre `<<<` y `>>>`. 
+Cada bloque forma parte de una **Cadena de Evidencia Vinculada**.
+
+---
+
+## [VAL-STEP-210]
+- **Proveedor:** Google (DeepMind)
+- **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0
+- **Fecha:** 2026-03-24
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:4d8b13892802e1b6f8f96ff30f07bff8be0c5828519b3aa53c9906ca5343819a`
+- **Audit Level:** CRÍTICO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** "asegurate de siempre preguntarme y vincular mis decisiones y respuestas a los elementos de trazabilidad, especialmente si requieren validación humana."
+- **Hash de Confirmación Verbal:** `sha256:74cebbc9ef9ecda8b4122f2bc1c2567fb43aec5d3fd097572645423301b7c320`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-210 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: derivada_de_content_text
+- **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
+- **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
+- **Cadena:** [Anterior: INICIO] | [Siguiente: VAL-STEP-278]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Establecimiento de bases de soberanía humana.
+Contexto Operativo: Inicio de la fase de endurecimiento del sistema (B0). El tesista define la regla de oro para la interacción con agentes: nada se valida sin intervención humana explícita.
+Infraestructura: Python 3.14.3 | Windows 11 | Gemini 1.5 Pro v1.0.
+ID de Sesión: 128bceee
+Diferencial de Plan: [implementation_plan_v2.md](file:///C:/Users/evega/.gemini/antigravity/brain/128bceee-e11a-450b-8a38-022147a4ece8/implementation_plan_v2.md)
+---
+Tesista (Erick Renato Vega Ceron | Sesion: 128bceee): "asegurate de siempre preguntarme y vincular mis decisiones y respuestas a los elementos de trazabilidad, especialmente si requieren validación humana.">>>
+
+---
+
+## [VAL-STEP-278]
+- **Proveedor:** Google (DeepMind)
+- **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0
+- **Fecha:** 2026-03-24
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:23a4936ab73a61f7d931ca07a2d7b81822baa3f316245ed386a6119a563fce99`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** "¿Este nivel de detalle y vinculación por Step ID te parece el método confiable que buscas?"
+- **Confirmación Verbal (Texto Exacto):** "si. Implementa"
+- **Hash de Confirmación Verbal:** `sha256:4f0ccb4b958d42df6b5f4fcff8ae7220b87d5dcf391b1bd558358a93b8d7ab84`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-278 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** respuesta_afirmativa | Fuente: derivada_de_content_text
+- **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
+- **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-210] | [Siguiente: VAL-STEP-300]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Validación del protocolo DEC-0014 y Defensa en Profundidad.
+Contexto Operativo: El agente propone un método detallado de vinculación por Step ID y pre-checklists anidadas para robustecer la cadena de confianza. El tesista aprueba la implementación global.
+Infraestructura: Python 3.14.3 | Windows 11 | Gemini 1.5 Pro v1.0.
+ID de Sesión: 128bceee
+Diferencial de Plan: [implementation_plan_v13.md](file:///C:/Users/evega/.gemini/antigravity/brain/128bceee-e11a-450b-8a38-022147a4ece8/implementation_plan_v13.md)
+---
+Agente: "¿Este nivel de detalle y vinculación por Step ID te parece el método confiable que buscas?"
+Tesista (Erick Renato Vega Ceron | Sesion: 128bceee): "si. Implementa">>>
+
+---
+
+## [VAL-STEP-300]
+- **Proveedor:** Google (DeepMind)
+- **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0
+- **Fecha:** 2026-03-24
+- **Vínculo:** [WIKI-AUD]
+- **Hash:** `sha256:7c3b7edc3665b1f3bf1fa8dd956bf5980a0129779da107d888622e0f650f4dd9`
+- **Audit Level:** MEDIO
+- **Pregunta Crítica / Disparador:** "La wiki es funcional y correcta según sus validadores internos. La falta de completitud en secciones específicas es nominal y esperada. El fallo de auditoría externa es por red. Recomendación: Iniciar firmas de bloques."
+- **Confirmación Verbal (Texto Exacto):** "funciona ya la wiki y está completa, y correcta?"
+- **Hash de Confirmación Verbal:** `sha256:b9048e63af4831cb10f4866028829062d3b83546958c19e05b734ef8052595f4`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-300 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** enunciado_humano | Fuente: derivada_de_content_text
+- **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
+- **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-278] | [Siguiente: VAL-STEP-305]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Auditoría de estado y funcionalidad de la wiki.
+Contexto Operativo: El tesista consulta sobre el estado actual de la wiki. El agente audita la generación de MkDocs y los validadores internos, reportando éxito parcial (wiki interna OK, auditoría externa fallida).
+Infraestructura: Python 3.14.3 | Windows 11 | Gemini 1.5 Pro v1.0.
+ID de Sesión: 5819a70e
+Diferencial de Plan: No se requirió plan de cambio estructural; se utilizó [task.md](file:///C:/Users/evega/.gemini/antigravity/brain/5819a70e-7d5a-432a-9082-fad45c1cf2e7/task.md) para guiar la auditoría de diagnóstico.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: 5819a70e): "funciona ya la wiki y está completa, y correcta?"
+Agente: "La wiki es funcional y correcta según sus validadores internos. La falta de completitud en secciones específicas es nominal y esperada. El fallo de auditoría externa es por red. Recomendación: Iniciar firmas de bloques.">>>
+
+---
+
+## [VAL-STEP-305]
+- **Proveedor:** Google (DeepMind)
+- **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0
+- **Fecha:** 2026-03-24
+- **Vínculo:** [GOV-FIX]
+- **Hash:** `sha256:fe5699dd6aa7d5506abc8ca3c3cb082830f95f6dac2e4016d43a810a9b2b133a`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** "Rectificación de auditoría: El error previo atribuyó erróneamente el fallo a la falta de red. Se confirma conectividad (Google 200, Wikipedia Main 200). Los fallos en `verify_standards.py` se deben a URLs incorrectas (ej. NIST RMF 404) y fallos de validación de descriptores clave en el contenido de Wikipedia. La wiki sigue siendo funcional pero el audit de estándares requiere corrección de fuentes."
+- **Confirmación Verbal (Texto Exacto):** "\"sin éxito debido a la falta de conexión a red en este entorno.\"?\"
+- **Hash de Confirmación Verbal:** `sha256:408a6cbe06080b7fc866aba1085d42d1f37be55b0d611738cd4297569ecc4d15`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-305 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** enunciado_humano | Fuente: derivada_de_content_text
+- **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
+- **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-300] | [Siguiente: VAL-STEP-380]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Rectificación de diagnóstico de red y corrección de estándares.
+Contexto Operativo: Rectificación técnica tras descubrir que el sistema sí posee red pero las URLs de NIST eran incorrectas. Se propone corrección de `ia_gobernanza.yaml` y reconstrucción del Ledger.
+Infraestructura: Python 3.14.3 | Windows 11 | Gemini 1.5 Pro v1.0 | verify_standards.py.
+ID de Sesión: 5819a70e
+Diferencial de Plan: [implementation_plan.md](file:///C:/Users/evega/.gemini/antigravity/brain/5819a70e-7d5a-432a-9082-fad45c1cf2e7/implementation_plan.md)
+---
+Tesista (Erick Renato Vega Ceron | Step Id: 77): "\"sin éxito debido a la falta de conexión a red en este entorno.\"?\"
+Agente: "Rectificación de auditoría: El error previo atribuyó erróneamente el fallo a la falta de red. Se confirma conectividad (Google 200, Wikipedia Main 200). Los fallos en `verify_standards.py` se deben a URLs incorrectas (ej. NIST RMF 404) y fallos de validación de descriptores clave en el contenido de Wikipedia. La wiki sigue siendo funcional pero el audit de estándares requiere corrección de fuentes.">>>
+
+---
+
+## [VAL-STEP-380]
+- **Proveedor:** Google (DeepMind)
+- **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0
+- **Fecha:** 2026-03-24
+- **Vínculo:** [BIT-IMP]
+- **Hash:** `sha256:069dac0920cb0f60c8a0d6189049d0fa12f3f2c7b74ae3d408db40ac47279f78`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** "Propongo un sistema de 'Cadena de Confianza' donde cada bitácora referencia el hash de la anterior. Además, automatizaremos la creación de sesiones y la validación de integridad."
+- **Confirmación Verbal (Texto Exacto):** "mejora el sistema de bitácora"
+- **Hash de Confirmación Verbal:** `sha256:c805721f248cf9105836093bbc88c27d5b9429534491b7a0118ff528f1dd3be3`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-380 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** enunciado_humano | Fuente: derivada_de_content_text
+- **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
+- **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-305] | [Siguiente: VAL-STEP-400]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Mejora del sistema de bitácora y trazabilidad.
+Contexto Operativo: El tesista solicita mejorar el sistema de bitácora. El agente propone un sistema de cadena de confianza criptográfica entre sesiones, plantillas enriquecidas y scripts de automatización.
+Infraestructura: Python 3.14.3 | Windows 11 | Gemini 1.5 Pro v1.0.
+ID de Sesión: 5819a70e
+Diferencial de Plan: [implementation_plan.md](file:///C:/Users/evega/.gemini/antigravity/brain/5819a70e-7d5a-432a-9082-fad45c1cf2e7/implementation_plan.md)
+---
+Tesista (Erick Renato Vega Ceron | Step Id: 380): "mejora el sistema de bitácora"
+Agente: "Propongo un sistema de 'Cadena de Confianza' donde cada bitácora referencia el hash de la anterior. Además, automatizaremos la creación de sesiones y la validación de integridad.">>>
+
+---
+
+## [VAL-STEP-400]
+- **Proveedor:** Google (DeepMind)
+- **Modelo/Versión:** Gemini 1.5 Pro / Advanced Agentic Coding v1.0
+- **Fecha:** 2026-03-24
+- **Vínculo:** [BIT-DIAG]
+- **Hash:** `sha256:c7022f5fc569a82b891e008d90692cff8d045fe88d3b2431571bfdd9c577601c`
+- **Audit Level:** MEDIO
+- **Pregunta Crítica / Disparador:** "La infraestructura de gestión está completa. Faltan la delimitación formal del caso de estudio (B1), la definición de la línea base de comparación (B2) y el diseño detallado de los componentes de resiliencia (B2) antes de la implementación física."
+- **Confirmación Verbal (Texto Exacto):** "¿que faltaria en la arquitectura para poder empezar el desarrollo de la tesis?"
+- **Hash de Confirmación Verbal:** `sha256:4fbfee0aa1a536799c8684179b13515c5830323fc8b8022ed0369133b920ea0b`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-400 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** enunciado_humano | Fuente: derivada_de_content_text
+- **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
+- **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-380] | [Siguiente: VAL-STEP-410]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Diagnóstico de completitud arquitectónica para inicio de desarrollo.
+Contexto Operativo: El tesista consulta sobre los elementos faltantes en la arquitectura para iniciar el desarrollo. El agente analiza la brecha entre la infraestructura de gobernanza (B0) y el diseño técnico de la tesis (B1/B2), identificando la necesidad de delimitación formal, línea base y diseño detallado de componentes IoT.
+Infraestructura: Gemini 1.5 Pro | Sistema Operativo de Tesis v0.1.0.
+ID de Sesión: b4fee61f
+Diferencial de Plan: Análisis de brechas en [analysis_arch_readiness.md](file:///C:/Users/evega/.gemini/antigravity/brain/b4fee61f-fbc5-4f59-b6a1-2add4cc3cb69/analysis_arch_readiness.md)
+---
+Tesista (Erick Renato Vega Ceron | Sesion: b4fee61f): "¿que faltaria en la arquitectura para poder empezar el desarrollo de la tesis?"
+Agente: "La infraestructura de gestión está completa. Faltan la delimitación formal del caso de estudio (B1), la definición de la línea base de comparación (B2) y el diseño detallado de los componentes de resiliencia (B2) antes de la implementación física.">>>
+
+---
+
+## [VAL-STEP-410]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-26
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:a491e300e4f8e173e290c7ecd67509caa9f61f92efc5ad44a3ed35bc9bf29d43`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Solicitud humana contextualizada para implementar el Gate de Gobernanza Agnóstico de Agente en la sesión codex-local-20260326.
+- **Confirmación Verbal (Texto Exacto):** Implementación del Gate de Gobernanza Agnóstico de Agente con hooks, CI, escritura segura y attestations.
+- **Hash de Confirmación Verbal:** `sha256:abb858c66aed14239ced6736d93838a45fc3e215ed539b4c1d119ce97e242bf8`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-410 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** prompt_de_implementacion_legacy_contextualizado | Fuente: extracto_contextual_derivado_del_canon_privado
+- **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
+- **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-400] | [Siguiente: VAL-STEP-420]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Implementación del governance gate agnóstico de agente.
+Contexto Operativo: El tesista instruye implementar el gate canónico de gobernanza, integrar hooks, CI, escritura segura y attestations para enforcement agnóstico del agente.
+Infraestructura: OpenAI Codex GPT-5 | Windows 11 | Python | GitHub Actions.
+Superficie de interacción: Codex local previo a enforcement con fuente privada no capturada.
+ID de Sesión: codex-local-20260326
+Diferencial de Plan: Implementar el plan titulado "Implementación del Gate de Gobernanza Agnóstico de Agente".
+---
+Extracto contextual normalizado: "Implementación del Gate de Gobernanza Agnóstico de Agente con hooks, CI, escritura segura y attestations.">>>
+
+---
+
+## [VAL-STEP-420]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-26
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:71e74a8371afee652bfee4c9ed7ba3344d32be3f8384634e78251f38cd548600`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** "nada debe ser hardcodeado nunca. Implementa eso como política general del proyecto e implementalo"
+- **Hash de Confirmación Verbal:** `sha256:c19fd612c579794fd0cb225f3cd85df288cc2997f5d4cf8a4f73c37cd137aec3`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-420 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: derivada_de_content_text
+- **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
+- **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-410] | [Siguiente: VAL-STEP-430]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Prohibición general de hardcodes operativos.
+Contexto Operativo: El tesista instruye que ningún metadato operativo crítico, identidad de agente, proveedor, modelo o default de gobernanza permanezca hardcodeado en scripts o plantillas del proyecto.
+Infraestructura: OpenAI Codex GPT-5 | Windows 11 | Python | GitHub Actions.
+ID de Sesión: codex-local-20260326-nohardcode
+Diferencial de Plan: Implementar la política general de no-hardcode mediante configuración canónica, plantillas parametrizadas y validación automática.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260326-nohardcode): "nada debe ser hardcodeado nunca. Implementa eso como política general del proyecto e implementalo">>>
+
+---
+
+## [VAL-STEP-430]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-26
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:84329ade0a9589d3a7510f219757c6c44a6fb7241cd66cd695fcffa990e0ca0b`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas cerrar estrictamente esta conversación con bitácora del día, ledger, matriz, hooks, auditoría final y commit firmado?
+- **Confirmación Verbal (Texto Exacto):** Autorización contextualizada para cierre estricto de la conversación del 2026-03-26 con bitácora diaria, ledger, matriz, hooks, auditoría final y commit firmado.
+- **Hash de Confirmación Verbal:** `sha256:0cd6d9713184717ba581b30cd326d672b4a465ce1b9ba0214305f10e83ba3080`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-430 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** respuesta_contextual_legacy_derivada | Fuente: extracto_contextual_derivado_del_canon_privado
+- **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
+- **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-420] | [Siguiente: VAL-STEP-440]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Cierre estricto de la conversación del 2026-03-26.
+Contexto Operativo: El tesista autoriza cerrar la conversación con bitácora diaria, ledger, matriz, hooks locales, auditoría final y commit firmado, manteniendo `/.env` fuera del cierre Git.
+Infraestructura: OpenAI Codex GPT-5 | Windows 11 | Python | Git | GPG.
+Superficie de interacción: Codex local previo a enforcement con respuesta afirmativa y prompt complementario sin fuente privada capturada.
+ID de Sesión: codex-local-20260326-close
+Diferencial de Plan: Ejecutar el plan titulado "Plan de Cierre Estricto de la Conversación del 2026-03-26".
+---
+Extracto contextual normalizado: "Autorización contextualizada para cierre estricto de la conversación del 2026-03-26 con bitácora diaria, ledger, matriz, hooks, auditoría final y commit firmado.">>>
+
+---
+
+## [VAL-STEP-440]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-26
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:e65f3f9614fbd10bd450380fbf9ae6ff05c90332d0837b26665d8b1e3967adff`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** "Se corrige la heurística del gate para commits del ledger y se valida con pruebas y build completo."
+- **Confirmación Verbal (Texto Exacto):** "revisa y corrige el error del gate que detecta múltiples Step IDs en el diff protegido".
+- **Hash de Confirmación Verbal:** `sha256:dc1298499614ee0046b5068b89f3748842a7abff7561fe960a15cde340b3819e`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-440 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** enunciado_humano | Fuente: derivada_de_content_text
+- **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
+- **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-430] | [Siguiente: VAL-STEP-450]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Corrección del gate para commits de trazabilidad protegida.
+Contexto Operativo: El tesista reporta que el governance gate bloquea commits legítimos del ledger en VS Code al detectar múltiples Step IDs por referencias de cadena, aun cuando existe un Step ID principal único del cambio.
+Infraestructura: OpenAI Codex GPT-5 | Windows 11 | Python | Git | VS Code.
+ID de Sesión: codex-local-20260326-step440
+Diferencial de Plan: Ajustar la autodetección de Step IDs del governance gate para priorizar el identificador estructural principal del diff protegido.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260326-step440): "revisa y corrige el error del gate que detecta múltiples Step IDs en el diff protegido".
+Agente: "Se corrige la heurística del gate para commits del ledger y se valida con pruebas y build completo.">>>
+
+---
+
+## [VAL-STEP-450]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-26
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:168bbd4fe8a4d2d624ec20eb3ceeea5351e2acb6339da562e001220862d57cb0`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** "Se ajusta la política del gate para rangos multi-commit y se valida con push dry-run, pruebas y build completo."
+- **Confirmación Verbal (Texto Exacto):** "corrige tambien el caso pre-push porque VS Code bloquea sincronizar cambios".
+- **Hash de Confirmación Verbal:** `sha256:4f0916955b3680ef608ef5f3166de43d311b9ae58555cf02359cdb8baf00d3cc`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-450 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** enunciado_humano | Fuente: derivada_de_content_text
+- **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
+- **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-440] | [Siguiente: VAL-STEP-460]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Corrección de política del governance gate para pre-push.
+Contexto Operativo: El tesista reporta que VS Code no puede sincronizar porque el hook pre-push exige un único Step ID aun cuando el rango `origin...HEAD` contiene múltiples Step IDs protegidos ya committeados y válidos en el ledger.
+Infraestructura: OpenAI Codex GPT-5 | Windows 11 | Python | Git | VS Code.
+ID de Sesión: codex-local-20260326-step450
+Diferencial de Plan: Ajustar la validación del gate para permitir múltiples Step IDs válidos en `pre-push` y `ci`, manteniendo la exigencia estricta en `pre-commit`.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260326-step450): "corrige tambien el caso pre-push porque VS Code bloquea sincronizar cambios".
+Agente: "Se ajusta la política del gate para rangos multi-commit y se valida con push dry-run, pruebas y build completo.">>>
+
+---
+
+## [VAL-STEP-460]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-26
+- **Vínculo:** [DEC-0016]
+- **Hash:** `sha256:56d7c5d335c330984bd14cdfcc49cb4a6625d89b1b653e0bb7d73400757000b8`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Solicitud humana contextualizada para ejecutar el rediseño v2 del sistema operativo de tesis hacia canon unificado.
+- **Confirmación Verbal (Texto Exacto):** Rediseño v2 del Sistema Operativo de Tesis hacia un canon unificado de eventos append-only, proyecciones derivadas y CLI canónica.
+- **Hash de Confirmación Verbal:** `sha256:b0c50e2806dc6a44467f6a6dae28b1c63016c079f1e6f9afff6e41f0853827bc`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-460 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** prompt_de_implementacion_legacy_contextualizado | Fuente: extracto_contextual_derivado_del_canon_privado
+- **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
+- **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-450] | [Siguiente: VAL-STEP-470]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Implementación del rediseño v2 del sistema operativo de tesis.
+Contexto Operativo: El tesista instruye ejecutar el rediseño completo hacia un canon unificado de eventos append-only, con proyecciones derivadas para ledger, matriz, bitácoras, journal y sign-offs, más una CLI canónica y enforcement actualizado.
+Infraestructura: OpenAI Codex GPT-5 | Windows 11 | Python | Git.
+Superficie de interacción: Codex local previo a enforcement con transcripción privada no capturada.
+ID de Sesión: codex-local-20260326-v2canon
+Diferencial de Plan: Implementar el plan titulado "Rediseño v2 del Sistema Operativo de Tesis".
+---
+Extracto contextual normalizado: "Rediseño v2 del Sistema Operativo de Tesis hacia un canon unificado de eventos append-only, proyecciones derivadas y CLI canónica.">>>
+
+---
+
+## [VAL-STEP-470]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-26
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:60499eadcaea8edace40da6d3a76887b5f0ef6c0615f71ecf02c6e25d1be9a2f`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Solicitud humana contextualizada para implementar el modelo humano primero y la publicación sanitizada.
+- **Confirmación Verbal (Texto Exacto):** Implementación del modelo humano primero, publicación sanitizada y simplificación operativa.
+- **Hash de Confirmación Verbal:** `sha256:4a9af731bad283170d80e25565857b20b62f17a8f70be8874c14af6a726ff9f5`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-470 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** prompt_de_implementacion_legacy_contextualizado | Fuente: extracto_contextual_derivado_del_canon_privado
+- **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
+- **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-460] | [Siguiente: VAL-STEP-480]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Implementación del modelo humano primero, publicación sanitizada y simplificación operativa.
+Contexto Operativo: El tesista instruye implementar una capa humana dual sobre el canon privado, con operación manual explícita, CLI guiada, exportación pública sanitizada y reducción de dependencia de IA.
+Infraestructura: OpenAI Codex GPT-5 | Windows 11 | Python | Git.
+Superficie de interacción: Codex local previo a enforcement con transcripción privada no capturada.
+ID de Sesión: codex-local-20260326-humanfirst
+Diferencial de Plan: Implementar el plan titulado "Operación Humana Dual, Publicación Sanitizada y Simplificación del Sistema".
+---
+Extracto contextual normalizado: "Implementación del modelo humano primero, publicación sanitizada y simplificación operativa.">>>
+
+---
+
+## [VAL-STEP-480]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-26
+- **Vínculo:** [DEC-0017]
+- **Hash:** `sha256:e8fa975cfd2d3073ef6bab4cef5cf39fe112f02ddb96585de9654a5fc7de5672`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** "vamos a cerrar con esta conversación, implementa toda la política de trazabilidad (incluyendo bitácora, etc) para pasar a otra conversación si consideras que ya no hay pendientes de lo tratado en esta"
+- **Hash de Confirmación Verbal:** `sha256:882572c8353d13646f3f1a000e8fb3386c58390bd2cd51676df8534c520e72c1`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-480 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: derivada_de_content_text
+- **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
+- **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-470] | [Siguiente: VAL-STEP-490]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Cierre trazable de la conversación del 2026-03-26.
+Contexto Operativo: El tesista instruye cerrar esta conversación implementando toda la política de trazabilidad, incluyendo bitácora, auditoría y preparación explícita del relevo a la siguiente conversación sin dejar pendientes de lo tratado.
+Infraestructura: OpenAI Codex GPT-5 | Windows 11 | Python | Git.
+ID de Sesión: codex-local-20260326-convclose
+Diferencial de Plan: Ejecutar el cierre documental, canónico y operativo de la conversación tras completar la capa humana dual, la publicación sanitizada y los refinamientos de UX/UI.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260326-convclose): "vamos a cerrar con esta conversación, implementa toda la política de trazabilidad (incluyendo bitácora, etc) para pasar a otra conversación si consideras que ya no hay pendientes de lo tratado en esta">>>
+
+---
+
+## [VAL-STEP-490]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-26
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:88ba06c79a270df8b0b44e678cd9e1836781f29384d61bcbe8e7255f48efe80a`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** "mejora los prechecks, agrega más si es conveniente. Mejora el contexto en todos los registros de conversación, especialmente si están relacionados a decisiones o cambios (agrega explícitamente el texto con el que el usuario implementó la 'confirmación verbal' y solidifica esa fuente de verdad de confirmación verbal para que sea más confiable para la filosofía de la investigación, la ciencia, la tesis, y el sistema operativo de tesis"
+- **Hash de Confirmación Verbal:** `sha256:aca546ca2253310c84d60e0a2e36094ecac3cce43492a28709d56996654b7752`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-490 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
+- **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-480] | [Siguiente: VAL-STEP-500]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Fortalecimiento de prechecks y formalización de confirmación verbal canónica.
+Contexto Operativo: El tesista instruye endurecer la política de prechecks y mejorar el contexto en los registros de conversación, especialmente en decisiones y cambios, preservando explícitamente el texto exacto de la confirmación verbal y su fuente de verdad canónica.
+Infraestructura: OpenAI Codex GPT-5 | Windows 11 | Python | Git.
+ID de Sesión: codex-local-20260326-prechecks
+Diferencial de Plan: Implementar enforcement documental más rico, extracción estructurada de confirmación verbal y actualización de registros conversacionales dependientes de `VAL-STEP-*`.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260326-prechecks): "mejora los prechecks, agrega más si es conveniente. Mejora el contexto en todos los registros de conversación, especialmente si están relacionados a decisiones o cambios (agrega explícitamente el texto con el que el usuario implementó la 'confirmación verbal' y solidifica esa fuente de verdad de confirmación verbal para que sea más confiable para la filosofía de la investigación, la ciencia, la tesis, y el sistema operativo de tesis">>>
+
+---
+
+## [VAL-STEP-500]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-26
+- **Vínculo:** [DEC-0018]
+- **Hash:** `sha256:cd95a79611884c7651a8a75c639366e7f2036be2cc0d9042511519226084b951`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Implemento el plan de evidencia fuente de conversación Codex para confirmación verbal?
+- **Confirmación Verbal (Texto Exacto):** Implementación del plan de evidencia fuente de conversación Codex para confirmación verbal.
+- **Hash de Confirmación Verbal:** `sha256:b9b754ab021b77268ecdbfbf40fc2ff7de8c7aabbe195d3a3b9876c3e220234a`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-500 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** prompt_de_implementacion_legacy_contextualizado | Fuente: extracto_contextual_derivado_del_canon_privado
+- **Proveniencia de la Confirmación:** legacy_unverified_source | Verificación: internal_canon_only
+- **Fuente de Conversación Registrada:** `N/A` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-490] | [Siguiente: VAL-STEP-510]
+- **Contenido:**
+<<<
+Agente: "¿Implemento el plan de evidencia fuente de conversación Codex para confirmación verbal?"
+Superficie de interacción: Codex local previo a enforcement obligatorio con canon interno disponible pero sin fuente privada corroborada.
+Extracto contextual normalizado: "Implementación del plan de evidencia fuente de conversación Codex para confirmación verbal."
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260326-source-evidence): "PLEASE IMPLEMENT THIS PLAN:">>>
+
+---
+
+## [VAL-STEP-510]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-26
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:c9e2580614bbfd079b064f2a0b093b3bf498afa3abcbbf18cc0d770e7f394269`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Solicitud humana compuesta capturada en el panel de Codex de VS Code para implementar la ingestión canónica IoT v10 con contexto operativo explícito.
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+# Plan de Ingestión Canónica IoT v10 (staging + trazabilidad completa)
+
+Objetivo operativo resumido:
+- staging aislado
+- verificación de integridad
+- registro maestro
+- clasificación por áreas lógicas
+- reporte de consistencia
+- Overleaf actual como borrador provisional no canónico
+- **Hash de Confirmación Verbal:** `sha256:1eee6192d6b2a07530fdc09c6a18c9288f5e5a207ca27e42616d92a80c562833`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-510 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** prompt_de_implementacion_contextualizado | Fuente: transcripcion_contextual_del_panel_codex
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0051` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-500] | [Siguiente: VAL-STEP-520]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Ingestión canónica del paquete de contexto IoT v10.
+Contexto Operativo: El tesista ordena implementar el plan completo de ingestión con staging aislado, verificación de integridad, registro maestro, clasificación por áreas lógicas y reporte de consistencia, manteniendo Overleaf actual como borrador provisional no canónico.
+Infraestructura: OpenAI Codex GPT-5 | Visual Studio Code | Panel Codex | Windows 11 | Python | Git.
+ID de Sesión: codex-local-20260326-ingestion-iot-v10
+Diferencial de Plan: Implementar el plan titulado "Plan de Ingestión Canónica IoT v10 (staging + trazabilidad completa)" a partir de un prompt sustantivo contextualizado.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260326-ingestion-iot-v10): "PLEASE IMPLEMENT THIS PLAN:
+# Plan de Ingestión Canónica IoT v10 (staging + trazabilidad completa)
+
+Objetivo operativo resumido:
+- staging aislado
+- verificación de integridad
+- registro maestro
+- clasificación por áreas lógicas
+- reporte de consistencia
+- Overleaf actual como borrador provisional no canónico">>>
+
+---
+
+## [VAL-STEP-520]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-26
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:b38dae4afd2876e57ab2f05d0ff74858c7eeb170c9c0a8893de4b60e564ce8e0`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Solicitud humana compuesta capturada en el panel de Codex de VS Code para reestructurar integralmente la documentación del sistema.
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+# Reestructura integral de documentación del Sistema Operativo de Tesis
+
+Objetivo operativo resumido:
+- explicar con claridad para qué y por qué existe el sistema
+- explicar módulos y relaciones
+- explicar flujos operativos
+- explicar interacción del tesista y del lector público
+- mantener la frontera privado/público sin inventar arquitectura IoT no canónica
+- **Hash de Confirmación Verbal:** `sha256:fe7cab4f7ecfd6377fd53382f8ce4e1fa998bc17104a8532f1c391812565d0d3`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-520 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** prompt_de_implementacion_contextualizado | Fuente: transcripcion_contextual_del_panel_codex
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0052` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-510] | [Siguiente: VAL-STEP-530]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Reestructura integral de la documentación del Sistema Operativo de Tesis.
+Contexto Operativo: El tesista ordena rediseñar por completo la documentación para explicar con claridad el propósito del sistema, sus módulos, sus flujos operativos y la interacción tanto para el tesista como para lectores con acceso a la parte pública, manteniendo la frontera privado/público y sin inventar arquitectura IoT aún no canónica.
+Infraestructura: OpenAI Codex GPT-5 | Visual Studio Code | Panel Codex | Windows 11 | Python | Git.
+ID de Sesión: codex-local-20260326-docs-restructure
+Diferencial de Plan: Implementar el plan titulado "Reestructura integral de documentación del Sistema Operativo de Tesis" a partir de un prompt sustantivo contextualizado.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260326-docs-restructure): "PLEASE IMPLEMENT THIS PLAN:
+# Reestructura integral de documentación del Sistema Operativo de Tesis
+
+Objetivo operativo resumido:
+- explicar con claridad para qué y por qué existe el sistema
+- explicar módulos y relaciones
+- explicar flujos operativos
+- explicar interacción del tesista y del lector público
+- mantener la frontera privado/público sin inventar arquitectura IoT no canónica">>>
+
+---
+
+## [VAL-STEP-530]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-26
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:02a125fbdc93e54a46f34ad6c84d6461a1b300c16497c897b00c10aeb3a0e768`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Respuesta afirmativa capturada en el panel de Codex de VS Code para autorizar el cierre de pendientes secundarios de la reestructura documental.
+- **Confirmación Verbal (Texto Exacto):** si, hazlo
+
+Contexto autorizado:
+- extender la claridad editorial a más páginas derivadas
+- cerrar pendientes secundarios de la reestructura documental
+- no autoemitir una firma humana desactualizada
+- **Hash de Confirmación Verbal:** `sha256:5e3e7066a106ff7e9b7224931f9b3c462ddf3d3622c12b0e7c374ef8f796d03b`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-530 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** respuesta_afirmativa_contextualizada | Fuente: transcripcion_contextual_del_panel_codex
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0053` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-520] | [Siguiente: VAL-STEP-540]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Cierre de pendientes secundarios de la reestructura documental.
+Contexto Operativo: El tesista instruye continuar y ejecutar los pendientes menores posteriores a la reestructura principal, extendiendo la claridad editorial a más páginas derivadas y cerrando todo lo que no requiera validación humana imposible de autoemitir.
+Infraestructura: OpenAI Codex GPT-5 | Visual Studio Code | Panel Codex | Windows 11 | Python | Git.
+ID de Sesión: codex-local-20260326-docs-followup
+Diferencial de Plan: Extender la mejora narrativa a páginas adicionales de la wiki y dejar identificado el pendiente real de firma humana desactualizada sin falsificarlo.
+---
+Extracto contextual normalizado: "si, hazlo
+
+Contexto autorizado:
+- extender la claridad editorial a más páginas derivadas
+- cerrar pendientes secundarios de la reestructura documental
+- no autoemitir una firma humana desactualizada">>>
+
+---
+
+## [VAL-STEP-540]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-27
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:6b18b9a4dbc5628882a90821cddaf9286b0aa590766b522383d1caea855fb210`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Solicitud humana compuesta capturada en el panel de Codex de VS Code para implementar el sistema de terminología con contexto previo relacionado.
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+# Sistema de Terminología, Convenciones e Identificadores
+
+## Resumen
+
+Se incorporará una arquitectura terminológica canónica, mixta y técnicamente explícita para que el sistema defina de manera estable:
+- términos del sistema operativo documental,
+- familias de identificadores e IDs,
+- convenciones de trazabilidad,
+- nomenclatura de paquetes y evidencia ingerida,
+- definiciones locales resumidas en páginas clave,
+- una versión pública sanitizada pero detallada.
+- **Hash de Confirmación Verbal:** `sha256:a9e2073c00812821f5178beaa7fdcef1cb50dd8529d8b13908822437eaccb253`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-540 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** prompt_de_implementacion_contextualizado | Fuente: transcripcion_contextual_del_panel_codex
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0054` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-530] | [Siguiente: VAL-STEP-550]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Implementación del sistema de terminología, convenciones e identificadores.
+Contexto Operativo: El tesista solicita, desde Visual Studio Code con el panel de Codex, incorporar un glosario canónico y navegable para explicar términos del sistema documental, familias de IDs, convenciones de trazabilidad y nomenclatura de evidencia ingerida. La solicitud se entiende junto con el prompt previo que pide definir bien las terminologías y convenciones.
+Infraestructura: OpenAI Codex GPT-5 | Visual Studio Code | Panel Codex | Windows 11 | Python | Git.
+ID de Sesión: codex-local-20260327-terminologia
+Diferencial de Plan: Implementar el plan titulado "Sistema de Terminología, Convenciones e Identificadores" a partir de un prompt sustantivo contextualizado, no de un prefijo aislado.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260327-terminologia): "PLEASE IMPLEMENT THIS PLAN:
+# Sistema de Terminología, Convenciones e Identificadores
+
+## Resumen
+
+Se incorporará una arquitectura terminológica canónica, mixta y técnicamente explícita para que el sistema defina de manera estable:
+- términos del sistema operativo documental,
+- familias de identificadores e IDs,
+- convenciones de trazabilidad,
+- nomenclatura de paquetes y evidencia ingerida,
+- definiciones locales resumidas en páginas clave,
+- una versión pública sanitizada pero detallada.">>>
+
+---
+
+## [VAL-STEP-550]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-27
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:f405b1d044d594c0c4502f714e430ae6f5fdae8080816cd8473b5fdf1056ae5b`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** mejora la navegación de todo el sistema de documentación y trazabilidad que se puedan rastrear hasta sus origenes canónicos
+- **Hash de Confirmación Verbal:** `sha256:5304d8366b4bda827d86bb1cb3e05cb6d2e9a4744bc8188630a59c533b9731a0`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-550 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0055` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-540] | [Siguiente: VAL-STEP-560]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Reforzar la navegación del sistema documental y de trazabilidad hasta sus orígenes canónicos.
+Contexto Operativo: El tesista instruye mejorar la navegación de toda la documentación y trazabilidad para que cada recorrido derivado permita identificar de forma clara sus fuentes canónicas, sus relaciones entre subsistemas y la ruta de retorno hacia el origen de verdad.
+Infraestructura: OpenAI Codex GPT-5 | Windows 11 | Python | Git.
+ID de Sesión: codex-local-20260327-navegacion-canonica
+Diferencial de Plan: Añadir navegación transversal, bloques de origen canónico y enlaces entre documentación, wiki, bundle público y artefactos de trazabilidad.>>>
+
+---
+
+## [VAL-STEP-560]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-27
+- **Vínculo:** [DEC-0018]
+- **Hash:** `sha256:c6655e430bab24ef04b08dea24740ae562a262e923f3e87e7ff386d133898581`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** "PLEASE IMPLEMENT THIS PLAN", ¿cuando dije eso? eso no es una evidencia real. Mapealo en todo caso a mi interacción con los distintos sistemas (como el panel de codex en vs studio code), e incluso los prompts anteriores si están relacionados
+- **Hash de Confirmación Verbal:** `sha256:b42ceb4280f048de383c439de25feefc8f441e2d71a77d3d59e80ed84baef9b1`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-560 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0056` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-550] | [Siguiente: VAL-STEP-570]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Corregir el mapeo de evidencia fuente de VAL-STEP-540.
+Contexto Operativo: El tesista objeta que la cadena aislada "PLEASE IMPLEMENT THIS PLAN" no debe presentarse como evidencia suficiente y ordena remapear la validación hacia la interacción real en el panel de Codex dentro de Visual Studio Code, incorporando el prompt de implementación y los prompts previos relacionados cuando aporten contexto verificable.
+Infraestructura: OpenAI Codex GPT-5 | Visual Studio Code | Panel Codex | Windows 11 | Python | Git.
+ID de Sesión: codex-local-20260327-correccion-evidencia-540
+Diferencial de Plan: Sustituir la cita débil por un extracto sustantivo del prompt real y enriquecer la transcripción con superficie de interacción y cadena contextual de prompts.>>>
+
+---
+
+## [VAL-STEP-570]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-27
+- **Vínculo:** [DEC-0018]
+- **Hash:** `sha256:ca06cc87da107340140460a2ebd0f4c5f8e5c092224a158c0de8943978cdbde8`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** si, normaliza todo
+- **Hash de Confirmación Verbal:** `sha256:af2bc56830ee997c5903ba0e775d5f0f2d472c4ce8ff512413ef4d33592c0892`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-570 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0057` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-560] | [Siguiente: VAL-STEP-580]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Normalizar globalmente los soportes de evidencia de interacción humana en el canon.
+Contexto Operativo: El tesista instruye normalizar todos los VAL-STEP y fuentes relacionadas que aún dependan de citas mínimas o descontextualizadas, remapeándolos a interacción real, contexto inmediato y prompts relacionados cuando corresponda.
+Infraestructura: OpenAI Codex GPT-5 | Visual Studio Code | Panel Codex | Windows 11 | Python | Git.
+ID de Sesión: codex-local-20260327-normalizacion-global-evidencia
+Diferencial de Plan: Aplicar una regla uniforme de contextualización para legacy y para fuentes privadas ya registradas, sin inventar palabras del tesista y sin romper la cadena de evidencia.>>>
+
+---
+
+## [VAL-STEP-580]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-27
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:923c1b76d4635f7dccc3a6dfebaf76bd3e6fb1334e4c54b949c2d3d9374eb11f`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+# Plan de Migración del Sistema Operativo de Tesis
+- **Hash de Confirmación Verbal:** `sha256:b536e07750ac5b76a0763bece46b14d4daaba159fb7c9410041405bc86972ced`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-580 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** prompt_de_implementacion_contextualizado | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0058` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-570] | [Siguiente: VAL-STEP-590]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Implementación de la migración arquitectónica integral del Sistema Operativo de Tesis.
+Contexto Operativo: El tesista instruye ejecutar la migración completa del repositorio canónico privado para llevarlo a una base operativa verificable, reproducible y lista para despliegue real en Orange Pi 5 Plus, incluyendo nueva estructura operativa, bootstrap por fases, manifiestos, separación por dominios, integración opcional de OpenClaw y normalización del flujo privado-publico.
+Infraestructura: OpenAI Codex GPT-5 | Visual Studio Code | Windows 11 | Python | Git.
+ID de Sesión: codex-local-20260327-migracion-sistema-tesis
+Diferencial de Plan: Implementar el plan titulado 'Plan de Migración del Sistema Operativo de Tesis' a partir de un prompt sustantivo contextualizado capturado en la interacción actual.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260327-migracion-sistema-tesis): "PLEASE IMPLEMENT THIS PLAN:
+# Plan de Migración del Sistema Operativo de Tesis">>>
+
+---
+
+## [VAL-STEP-590]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-03-27
+- **Vínculo:** [DEC-0021]
+- **Hash:** `sha256:d8e15755f9d231e23a809642adbc72353b5321a5e8f8cfb9a82ee056ce5924c3`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Solicitud humana directa para implementar el plan de cierre de pendientes y errores restantes del sistema.
+- **Confirmación Verbal (Texto Exacto):** "PLEASE IMPLEMENT THIS PLAN:
+- **Hash de Confirmación Verbal:** `sha256:89a0d23efeefeb8e3d3b14c1f6e90a6b96033318cb460d27594fc2a1a35fb988`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-590 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** prompt_de_implementacion_contextualizado | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0059` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-580] | [Siguiente: VAL-STEP-600]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Cerrar pendientes de gobernanza Git, publicación downstream, trazabilidad humana y CI/CD del Sistema Operativo de Tesis.
+Contexto Operativo: El tesista instruye ejecutar el plan de cierre para mover la publicación externa al repo público derivado, normalizar rama por defecto y remotos, endurecer la verificación del downstream en CI y reducir ambigüedad operativa del uso de Python y publicación.
+Infraestructura: OpenAI Codex GPT-5 | Visual Studio Code | Windows 11 | Python | Git | GitHub.
+ID de Sesión: codex-local-20260327-cierre-pendientes-cicd
+Diferencial de Plan: Implementar el plan titulado 'Plan de Cierre de Pendientes y Errores Restantes' sin falsificar sign-off humano y dejando el downstream público como única superficie externa.>>>
+
+---
+
+## [VAL-STEP-600]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-01
+- **Vínculo:** [WIKI-MOD]
+- **Hash:** `sha256:7c437dbd6937db9470e56fc0d2b1500b482e86c3600d7b1b1f0b32e244eab94f`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** "si procede con la modernización de la wiki y los guardrails de trazabilidad. Asegúrate de que el build falle si no hay registros."
+- **Hash de Confirmación Verbal:** `sha256:3e70948aa423b3feba9a9669153a5eb94c1de0c705e31f967fa498c2c0324593`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-600 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** respuesta_afirmativa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0060` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-590] | [Siguiente: VAL-STEP-610]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Modernización visual de la wiki y endurecimiento de trazabilidad.
+Contexto Operativo: El tesista instruye implementar Glassmorphism y guardrails de sesión para asegurar que no se pierda el registro del canon.
+Infraestructura: Google Gemini | Windows 11 | Python | MkDocs.
+ID de Sesión: 735fa0a1-c29f-40a2-8c83-3e8ad8a2884d
+---
+Tesista (Erick Renato Vega Ceron | Sesion: 735fa0a1-c29f-40a2-8c83-3e8ad8a2884d): "si procede con la modernización de la wiki y los guardrails de trazabilidad. Asegúrate de que el build falle si no hay registros.">>>
+
+---
+
+## [VAL-STEP-610]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-01
+- **Vínculo:** [B0-CLOSE]
+- **Hash:** `sha256:6c36bb87a0ab4b996b2ffbff34ceea2948d7ec2695194576b249d8224c41c96f`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** "excelente. Procede con el cierre de B0 y la preparación de la Orange Pi 5 Plus con el stack de IA."
+- **Hash de Confirmación Verbal:** `sha256:c6681beeccb920061fa6bc51c0e778fd9c2f2370add77e05e90687501a8f3c4c`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-610 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0061` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-600] | [Siguiente: VAL-STEP-620]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Cierre de fase B0 y habilitación de IA en hardware.
+Contexto Operativo: El tesista valida el cierre de la infraestructura base y la preparación de scripts para Orange Pi 5 Plus, incluyendo stack de IA (RKNN).
+Infraestructura: Google Gemini | Orange Pi 5 Plus | RK3588 | Armbian.
+ID de Sesión: 3e5f5319-f769-495b-8990-837fd6de57ab
+---
+Tesista (Erick Renato Vega Ceron | Sesion: 3e5f5319-f769-495b-8990-837fd6de57ab): "excelente. Procede con el cierre de B0 y la preparación de la Orange Pi 5 Plus con el stack de IA.">>>
+
+---
+
+## [VAL-STEP-620]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-01
+- **Vínculo:** [B1-INIT]
+- **Hash:** `sha256:0d88214915f4606fa1bcd6d07de48e7cdcfe236e01ad1b5cc825b1897de4d160`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** "procede con el análisis inicial y la formalización de la transición a B1."
+- **Hash de Confirmación Verbal:** `sha256:242a0be7d21cc3aa1f0807b88c34d24a1343113d5a29962217b4877192c265c0`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-620 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0062` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-610] | [Siguiente: VAL-STEP-630]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Análisis arquitectónico inicial y formalización B1.
+Contexto Operativo: El tesista instruye realizar el análisis profundo de gobernanza y la transición a la fase de investigación (B1).
+Infraestructura: Google Gemini | Windows 11.
+ID de Sesión: 814db1d5-6b35-47d2-b7bd-7178a38c0ab6
+---
+Tesista (Erick Renato Vega Ceron | Sesion: 814db1d5-6b35-47d2-b7bd-7178a38c0ab6): "procede con el análisis inicial y la formalización de la transición a B1.">>>
+
+---
+
+## [VAL-STEP-630]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-01
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:d6316d5bbaefd9c1ff0cc512078ef8caad1f55826a32be4787a8be842b2231ab`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa para completar la trazabilidad de la conversación actual.
+- **Confirmación Verbal (Texto Exacto):** completa la trrazabilidad de esta conversación
+- **Hash de Confirmación Verbal:** `sha256:ef184c23709d4cbfb1c35e10e8b2a9037390e4fa014c801fa3363945829f4f29`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-630 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0063` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-620] | [Siguiente: VAL-STEP-640]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Completar la trazabilidad de la conversación actual.
+Contexto Operativo: El tesista instruye registrar y cerrar la trazabilidad de esta conversación en canon, ledger y matriz usando evidencia fuente verificable.
+Infraestructura: OpenAI Codex GPT-5.3-Codex | Visual Studio Code | Windows 11 | Python | Git.
+ID de Sesión: codex-local-20260401-trazabilidad-conversacion-actual
+Diferencial de Plan: Registrar evidencia fuente, vincular un nuevo VAL-STEP y materializar proyecciones de trazabilidad.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260401-trazabilidad-conversacion-actual): "completa la trrazabilidad de esta conversación">>>
+
+---
+
+## [VAL-STEP-640]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-02
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:aa871583d14ce8cf73c457224027307be6dce044ddbe3815a44040768429bf4e`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Confirmas registrar formalmente la verificación y regularización de actividades recientes no registradas?
+- **Confirmación Verbal (Texto Exacto):** verifica que estén correctamente registradas las actividades recientes no registradas
+- **Hash de Confirmación Verbal:** `sha256:b75f70a6909a43e45a55abb7a057b2d554f2954dda8993e75e25ad86e6189ae5`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-640 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0064` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-630] | [Siguiente: VAL-STEP-650]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Verificar y regularizar el registro de actividades recientes no registradas explícitamente como validación humana independiente. Contexto Operativo: Se identificaron commits recientes de automatización CI/wiki y sanitización pública posteriores al cierre VAL-STEP-630. Se registra validación humana explícita para dejar trazabilidad formal de estas actividades recientes y su estado de cumplimiento (verify en verde).>>>
+
+---
+
+## [VAL-STEP-650]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-04
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:c1a6ac354704834a57b31d2635f454a087ba32ba27dabeb126368f6bb383a0cf`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Registrar integralmente los avances pendientes según políticas de trazabilidad?
+- **Confirmación Verbal (Texto Exacto):** registra todos los avances no registrados con base en las políticas de trazabilidad
+- **Hash de Confirmación Verbal:** `sha256:3ef8dd6961d5255ae07bb79ef6adeb4822990a2f128fd54f499cb74f7ed82015`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-650 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa_contextual | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0068` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-640] | [Siguiente: VAL-STEP-660]
+- **Contenido:**
+<<<
+Instrucción humana para registrar todos los avances no registrados conforme a políticas de trazabilidad; se ejecuta con evidencia fuente enlazada y materialización canónica.>>>
+
+---
+
+## [VAL-STEP-660]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-07
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:c5b18c6d003d3561ab630f47763afcac5f55247e3c7cc6929b47b8d5a2541ada`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+- **Hash de Confirmación Verbal:** `sha256:5b0821492931f18be4114d4ff4a78ef47a0b2707e0f50295869d1e596a6d8a84`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-660 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0078` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-650] | [Siguiente: VAL-STEP-663]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Implementación de Serena MCP v1.
+Contexto Operativo: El tesista instruye implementar Serena como servidor MCP local por stdio, con arquitectura en capas, gobernanza propia, trazabilidad operativa y soporte inicial para VS Code/Codex sin acoplarlo a un proveedor único.
+Infraestructura: OpenAI Codex GPT-5 | VS Code | Python 3 | MCP por stdio.
+ID de Sesión: codex-local-20260407-serena-mcp-v1
+Diferencial de Plan: Implementar el plan titulado "Serena MCP v1 para el Sistema Operativo de Tesis".
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260407-serena-mcp-v1): "PLEASE IMPLEMENT THIS PLAN:">>>
+
+---
+
+## [VAL-STEP-663]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-08
+- **Vínculo:** [DEC-0022]
+- **Hash:** `sha256:7e9e7c207c689092afa63a633b7c290463e28301c1400bc634ebf509562e4263`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+# Plan de Arquitectura Operativa Escritorio Primario + Orange Pi Edge Integrado
+
+## Resumen
+Formalizar el flujo oficial del sistema con estas reglas base:
+
+- El **PC de escritorio con VS Code** es la estación principal de autoría, diseño, análisis, construcción documental y mantenimiento del repositorio soberano.
+- La **Orange Pi** queda como **nodo edge operativo** para `edge_iot` y para las capacidades locales que convenga ejecutar ahí por hardware, proximidad al entorno físico o control del stack IoT.
+- La integración entre ambos se fija por **sincronización Git + artefactos/contratos explícitos**, no por edición principal en la Orange Pi ni por montaje remoto compartido.
+- La Orange Pi puede operar como nodo técnico de experimentación/control edge, pero **no sustituye** al escritorio como superficie principal de tesis ni como sede normal de decisiones arquitectónicas.
+- **Hash de Confirmación Verbal:** `sha256:26f5a83fba722fd5a3985da2a0ce1e4dcbbef42e4edec36aedb4ff87b02d747b`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-663 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** prompt_de_implementacion_contextualizado | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0079` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-660] | [Siguiente: VAL-STEP-662]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Formalizar la arquitectura operativa escritorio primario + Orange Pi edge integrado.
+Contexto Operativo: El tesista instruye implementar el plan que fija al PC de escritorio con VS Code como estación principal de autoría y a la Orange Pi como nodo edge operativo integrado mediante Git, artefactos y contratos explícitos.
+Infraestructura: OpenAI Codex GPT-5 | Visual Studio Code | Windows 11 | Python | Git | Orange Pi 5 Plus.
+ID de Sesión: codex-local-20260408-dec0022-desktop-edge
+Diferencial de Plan: Implementar el plan titulado "Plan de Arquitectura Operativa Escritorio Primario + Orange Pi Edge Integrado" sin sustituir las decisiones previas, sino refinando su frontera operativa.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260408-dec0022-desktop-edge): """PLEASE IMPLEMENT THIS PLAN:
+# Plan de Arquitectura Operativa Escritorio Primario + Orange Pi Edge Integrado
+
+## Resumen
+Formalizar el flujo oficial del sistema con estas reglas base:
+
+- El **PC de escritorio con VS Code** es la estación principal de autoría, diseño, análisis, construcción documental y mantenimiento del repositorio soberano.
+- La **Orange Pi** queda como **nodo edge operativo** para `edge_iot` y para las capacidades locales que convenga ejecutar ahí por hardware, proximidad al entorno físico o control del stack IoT.
+- La integración entre ambos se fija por **sincronización Git + artefactos/contratos explícitos**, no por edición principal en la Orange Pi ni por montaje remoto compartido.
+- La Orange Pi puede operar como nodo técnico de experimentación/control edge, pero **no sustituye** al escritorio como superficie principal de tesis ni como sede normal de decisiones arquitectónicas.""">>>
+
+---
+
+## [VAL-STEP-662]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-08
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:71360550042509e003b8f6260e32c9dbfe4bfc9da1e057318b6dad3258dce02f`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+- **Hash de Confirmación Verbal:** `sha256:5b0821492931f18be4114d4ff4a78ef47a0b2707e0f50295869d1e596a6d8a84`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-662 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0081` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-663] | [Siguiente: VAL-STEP-664]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Cierre E2E de Serena MCP v1.1 para VS Code con Codex.
+Contexto Operativo: El tesista instruye completar la integración operativa verificable de Serena MCP, alinear documentación, formalizar el flujo MCP + Codex y endurecer el cierre de fase sin ampliar el alcance funcional principal.
+Infraestructura: OpenAI Codex GPT-5 | VS Code | Python 3 | MCP por stdio.
+ID de Sesión: codex-local-20260408-serena-mcp-v11
+Diferencial de Plan: Implementar el plan titulado "Serena MCP v1.1: Cierre E2E en VS Code con Codex".
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260408-serena-mcp-v11): "PLEASE IMPLEMENT THIS PLAN:">>>
+
+---
+
+## [VAL-STEP-664]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-08
+- **Vínculo:** [DEC-0023]
+- **Hash:** `sha256:5cf299272f2436f4d8e148c8fc3e1d7fefe7a4d770ee00956649bf3072bade6f`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+# Regularización Canónica de Serena MCP Como Integración Agéntica Común
+
+## Resumen
+Registrar formalmente la adopción de Serena MCP como capa común para agentes del proyecto mediante:
+
+- una nueva decisión canónica amplia, separada de `DEC-0022`,
+- un `VAL-STEP` nuevo de autorización para esa decisión,
+- un segundo `VAL-STEP` nuevo de regularización explícita para la implementación ya realizada de `OpenClaw + contrato MCP común`.
+
+La decisión nueva no debe mezclarse con la arquitectura `desktop-first` de `DEC-0022`; debe quedar como una decisión de integración agéntica y gobernanza operativa.
+
+## Cambios principales
+- Crear una nueva `DEC` canónica, previsiblemente `DEC-0023`, con foco en:
+  - Serena MCP como contrato común para `Codex`, `OpenClaw` y hosts MCP compatibles,
+  - separación estricta entre capa MCP/gobernanza y ruteo de proveedores de inferencia,
+  - carácter modular, reversible y no obligatorio para el pipeline base.
+- Registrar un primer `VAL-STEP` nuevo, previsiblemente `VAL-STEP-664`, como autorización de la nueva DEC:
+  - vinculado a la instrucción actual del usuario,
+  - con referencia principal a la nueva `DEC-0023`,
+  - describiendo la intención de formalizar Serena como capa común agéntica.
+- Registrar un segundo `VAL-STEP` nuevo, previsiblemente `VAL-STEP-665`, como regularización de implementación:
+  - vinculado a la misma línea de decisión,
+  - describiendo que ya existe implementación técnica de adapter `OpenClaw`, contrato MCP común y documentación asociada,
+  - dejando claro que el registro es de regularización posterior, no de validación autónoma del agente.
+- Actualizar la matriz de trazabilidad para reflejar ambos nuevos `VAL-STEP` con intención diferenciada:
+  - autorización de política/decisión,
+  - regularización técnica de implementación.
+- Actualizar la cadena del ledger para insertar ambos `VAL-STEP` después de `VAL-STEP-662` y antes de `FIN`.
+- Actualizar referencias de navegación o listados de decisiones si el proyecto ya indexa automáticamente la nueva DEC.
+
+## Interfaces y artefactos afectados
+- Archivos protegidos a tocar con flujo controlado y backup:
+  - `00_sistema_tesis/decisiones/...DEC-0023...md`
+  - `00_sistema_tesis/bitacora/log_conversaciones_ia.md`
+  - `00_sistema_tesis/bitacora/matriz_trazabilidad.md`
+- La nueva DEC debe referenciar explícitamente:
+  - `VAL-STEP-664` como soporte principal de aceptación humana,
+  - `DEC-0014`, `DEC-0018`, `DEC-0020`, `DEC-0022`,
+  - documentación operativa ya existente de Serena/Codex/OpenClaw.
+- El `VAL-STEP-665` debe mencionar como evidencia de implementación ya realizada:
+  - adapter interno de `OpenClaw`,
+  - contrato MCP común,
+  - documentación de host compatible,
+  - validación técnica ejecutada y auditoría `build_all.py`.
+
+## Casos y validación
+- Verificar que la nueva DEC quede semánticamente separada de `DEC-0022`.
+- Verificar que `VAL-STEP-664` y `VAL-STEP-665` tengan:
+  - texto exacto de confirmación,
+  - hash SHA-256 correcto,
+  - referencia de conversación/canon coherente,
+  - cadena `Anterior/Siguiente` consistente.
+- Verificar que la matriz muestre ambos registros con resúmenes distintos y no redundantes.
+- Ejecutar la auditoría completa `python 07_scripts/build_all.py` al final.
+- Confirmar que no se marque ninguna validación como humana sin dejar explícito que proviene de esta conversación y que la regularización es posterior a la implementación.
+
+## Suposiciones y defaults
+- La nueva decisión será `DEC-0023`, salvo que el repo revele una DEC más reciente al momento de implementar.
+- Los nuevos pasos serán `VAL-STEP-664` y `VAL-STEP-665`, salvo que exista otro `VAL-STEP` posterior al revisar el canon justo antes de escribir.
+- `VAL-STEP-664` será de autorización de política/decisión.
+- `VAL-STEP-665` será de regularización documental de implementación ya realizada.
+- `DEC-0022` no se reabre ni se amplía; solo se referencia como decisión relacionada."
+- **Hash de Confirmación Verbal:** `sha256:72ab54bc9f57d9c2319cd4f7d00ae8efb8a1542b6177486c0508cf1e95e55315`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-664 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** prompt_de_implementacion_contextualizado | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0084` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-662] | [Siguiente: VAL-STEP-665]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Formalizar la decisión canónica Serena MCP como capa común para agentes.
+Contexto Operativo: El tesista instruye registrar una nueva decisión separada de DEC-0022 para fijar a Serena MCP como capa común de contexto compacto, preflight de gobernanza y cambio controlado para Codex, OpenClaw y hosts MCP compatibles.
+Infraestructura: OpenAI Codex GPT-5 | VS Code | Python 3 | Serena MCP local.
+ID de Sesión: codex-local-20260408-serena-mcp-common-governance-v2
+Diferencial de Plan: Crear DEC-0023 como decisión amplia de integración agéntica y gobernanza operativa, sin mezclar MCP con proveedores de inferencia.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260408-serena-mcp-common-governance-v2): """PLEASE IMPLEMENT THIS PLAN:
+# Regularización Canónica de Serena MCP Como Integración Agéntica Común
+
+## Resumen
+Registrar formalmente la adopción de Serena MCP como capa común para agentes del proyecto mediante:
+
+- una nueva decisión canónica amplia, separada de `DEC-0022`,
+- un `VAL-STEP` nuevo de autorización para esa decisión,
+- un segundo `VAL-STEP` nuevo de regularización explícita para la implementación ya realizada de `OpenClaw + contrato MCP común`.
+
+La decisión nueva no debe mezclarse con la arquitectura `desktop-first` de `DEC-0022`; debe quedar como una decisión de integración agéntica y gobernanza operativa.
+
+## Cambios principales
+- Crear una nueva `DEC` canónica, previsiblemente `DEC-0023`, con foco en:
+  - Serena MCP como contrato común para `Codex`, `OpenClaw` y hosts MCP compatibles,
+  - separación estricta entre capa MCP/gobernanza y ruteo de proveedores de inferencia,
+  - carácter modular, reversible y no obligatorio para el pipeline base.
+- Registrar un primer `VAL-STEP` nuevo, previsiblemente `VAL-STEP-664`, como autorización de la nueva DEC:
+  - vinculado a la instrucción actual del usuario,
+  - con referencia principal a la nueva `DEC-0023`,
+  - describiendo la intención de formalizar Serena como capa común agéntica.
+- Registrar un segundo `VAL-STEP` nuevo, previsiblemente `VAL-STEP-665`, como regularización de implementación:
+  - vinculado a la misma línea de decisión,
+  - describiendo que ya existe implementación técnica de adapter `OpenClaw`, contrato MCP común y documentación asociada,
+  - dejando claro que el registro es de regularización posterior, no de validación autónoma del agente.
+- Actualizar la matriz de trazabilidad para reflejar ambos nuevos `VAL-STEP` con intención diferenciada:
+  - autorización de política/decisión,
+  - regularización técnica de implementación.
+- Actualizar la cadena del ledger para insertar ambos `VAL-STEP` después de `VAL-STEP-662` y antes de `FIN`.
+- Actualizar referencias de navegación o listados de decisiones si el proyecto ya indexa automáticamente la nueva DEC.
+
+## Interfaces y artefactos afectados
+- Archivos protegidos a tocar con flujo controlado y backup:
+  - `00_sistema_tesis/decisiones/...DEC-0023...md`
+  - `00_sistema_tesis/bitacora/log_conversaciones_ia.md`
+  - `00_sistema_tesis/bitacora/matriz_trazabilidad.md`
+- La nueva DEC debe referenciar explícitamente:
+  - `VAL-STEP-664` como soporte principal de aceptación humana,
+  - `DEC-0014`, `DEC-0018`, `DEC-0020`, `DEC-0022`,
+  - documentación operativa ya existente de Serena/Codex/OpenClaw.
+- El `VAL-STEP-665` debe mencionar como evidencia de implementación ya realizada:
+  - adapter interno de `OpenClaw`,
+  - contrato MCP común,
+  - documentación de host compatible,
+  - validación técnica ejecutada y auditoría `build_all.py`.
+
+## Casos y validación
+- Verificar que la nueva DEC quede semánticamente separada de `DEC-0022`.
+- Verificar que `VAL-STEP-664` y `VAL-STEP-665` tengan:
+  - texto exacto de confirmación,
+  - hash SHA-256 correcto,
+  - referencia de conversación/canon coherente,
+  - cadena `Anterior/Siguiente` consistente.
+- Verificar que la matriz muestre ambos registros con resúmenes distintos y no redundantes.
+- Ejecutar la auditoría completa `python 07_scripts/build_all.py` al final.
+- Confirmar que no se marque ninguna validación como humana sin dejar explícito que proviene de esta conversación y que la regularización es posterior a la implementación.
+
+## Suposiciones y defaults
+- La nueva decisión será `DEC-0023`, salvo que el repo revele una DEC más reciente al momento de implementar.
+- Los nuevos pasos serán `VAL-STEP-664` y `VAL-STEP-665`, salvo que exista otro `VAL-STEP` posterior al revisar el canon justo antes de escribir.
+- `VAL-STEP-664` será de autorización de política/decisión.
+- `VAL-STEP-665` será de regularización documental de implementación ya realizada.
+- `DEC-0022` no se reabre ni se amplía; solo se referencia como decisión relacionada."""">>>
+
+---
+
+## [VAL-STEP-665]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-08
+- **Vínculo:** [DEC-0023]
+- **Hash:** `sha256:08d6879e68c731d6e55ec1e0fc66cdf98560cda04cc35d7cdc59ca26decde598`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+# Regularización Canónica de Serena MCP Como Integración Agéntica Común
+
+## Resumen
+Registrar formalmente la adopción de Serena MCP como capa común para agentes del proyecto mediante:
+
+- una nueva decisión canónica amplia, separada de `DEC-0022`,
+- un `VAL-STEP` nuevo de autorización para esa decisión,
+- un segundo `VAL-STEP` nuevo de regularización explícita para la implementación ya realizada de `OpenClaw + contrato MCP común`.
+
+La decisión nueva no debe mezclarse con la arquitectura `desktop-first` de `DEC-0022`; debe quedar como una decisión de integración agéntica y gobernanza operativa.
+
+## Cambios principales
+- Crear una nueva `DEC` canónica, previsiblemente `DEC-0023`, con foco en:
+  - Serena MCP como contrato común para `Codex`, `OpenClaw` y hosts MCP compatibles,
+  - separación estricta entre capa MCP/gobernanza y ruteo de proveedores de inferencia,
+  - carácter modular, reversible y no obligatorio para el pipeline base.
+- Registrar un primer `VAL-STEP` nuevo, previsiblemente `VAL-STEP-664`, como autorización de la nueva DEC:
+  - vinculado a la instrucción actual del usuario,
+  - con referencia principal a la nueva `DEC-0023`,
+  - describiendo la intención de formalizar Serena como capa común agéntica.
+- Registrar un segundo `VAL-STEP` nuevo, previsiblemente `VAL-STEP-665`, como regularización de implementación:
+  - vinculado a la misma línea de decisión,
+  - describiendo que ya existe implementación técnica de adapter `OpenClaw`, contrato MCP común y documentación asociada,
+  - dejando claro que el registro es de regularización posterior, no de validación autónoma del agente.
+- Actualizar la matriz de trazabilidad para reflejar ambos nuevos `VAL-STEP` con intención diferenciada:
+  - autorización de política/decisión,
+  - regularización técnica de implementación.
+- Actualizar la cadena del ledger para insertar ambos `VAL-STEP` después de `VAL-STEP-662` y antes de `FIN`.
+- Actualizar referencias de navegación o listados de decisiones si el proyecto ya indexa automáticamente la nueva DEC.
+
+## Interfaces y artefactos afectados
+- Archivos protegidos a tocar con flujo controlado y backup:
+  - `00_sistema_tesis/decisiones/...DEC-0023...md`
+  - `00_sistema_tesis/bitacora/log_conversaciones_ia.md`
+  - `00_sistema_tesis/bitacora/matriz_trazabilidad.md`
+- La nueva DEC debe referenciar explícitamente:
+  - `VAL-STEP-664` como soporte principal de aceptación humana,
+  - `DEC-0014`, `DEC-0018`, `DEC-0020`, `DEC-0022`,
+  - documentación operativa ya existente de Serena/Codex/OpenClaw.
+- El `VAL-STEP-665` debe mencionar como evidencia de implementación ya realizada:
+  - adapter interno de `OpenClaw`,
+  - contrato MCP común,
+  - documentación de host compatible,
+  - validación técnica ejecutada y auditoría `build_all.py`.
+
+## Casos y validación
+- Verificar que la nueva DEC quede semánticamente separada de `DEC-0022`.
+- Verificar que `VAL-STEP-664` y `VAL-STEP-665` tengan:
+  - texto exacto de confirmación,
+  - hash SHA-256 correcto,
+  - referencia de conversación/canon coherente,
+  - cadena `Anterior/Siguiente` consistente.
+- Verificar que la matriz muestre ambos registros con resúmenes distintos y no redundantes.
+- Ejecutar la auditoría completa `python 07_scripts/build_all.py` al final.
+- Confirmar que no se marque ninguna validación como humana sin dejar explícito que proviene de esta conversación y que la regularización es posterior a la implementación.
+
+## Suposiciones y defaults
+- La nueva decisión será `DEC-0023`, salvo que el repo revele una DEC más reciente al momento de implementar.
+- Los nuevos pasos serán `VAL-STEP-664` y `VAL-STEP-665`, salvo que exista otro `VAL-STEP` posterior al revisar el canon justo antes de escribir.
+- `VAL-STEP-664` será de autorización de política/decisión.
+- `VAL-STEP-665` será de regularización documental de implementación ya realizada.
+- `DEC-0022` no se reabre ni se amplía; solo se referencia como decisión relacionada."
+- **Hash de Confirmación Verbal:** `sha256:72ab54bc9f57d9c2319cd4f7d00ae8efb8a1542b6177486c0508cf1e95e55315`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-665 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** prompt_de_implementacion_contextualizado | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0084` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-664] | [Siguiente: VAL-STEP-666]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Regularizar documentalmente la implementación ya realizada de Serena MCP como integración agéntica común.
+Contexto Operativo: El tesista instruye dejar trazada la implementación existente del adapter interno de OpenClaw hacia Serena MCP, el contrato MCP común para agentes compatibles y la documentación operativa asociada, explicitando que el registro es posterior a la ejecución técnica y no una auto-validación autónoma del agente.
+Infraestructura: OpenAI Codex GPT-5 | VS Code | Python 3 | OpenClaw local | Serena MCP local.
+ID de Sesión: codex-local-20260408-serena-mcp-common-governance-v2
+Diferencial de Plan: Regularizar la implementación ya efectuada con evidencia de adapter, contrato común, documentación de host compatible y auditoría técnica ejecutada mediante build_all.py.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260408-serena-mcp-common-governance-v2): """PLEASE IMPLEMENT THIS PLAN:
+# Regularización Canónica de Serena MCP Como Integración Agéntica Común
+
+## Resumen
+Registrar formalmente la adopción de Serena MCP como capa común para agentes del proyecto mediante:
+
+- una nueva decisión canónica amplia, separada de `DEC-0022`,
+- un `VAL-STEP` nuevo de autorización para esa decisión,
+- un segundo `VAL-STEP` nuevo de regularización explícita para la implementación ya realizada de `OpenClaw + contrato MCP común`.
+
+La decisión nueva no debe mezclarse con la arquitectura `desktop-first` de `DEC-0022`; debe quedar como una decisión de integración agéntica y gobernanza operativa.
+
+## Cambios principales
+- Crear una nueva `DEC` canónica, previsiblemente `DEC-0023`, con foco en:
+  - Serena MCP como contrato común para `Codex`, `OpenClaw` y hosts MCP compatibles,
+  - separación estricta entre capa MCP/gobernanza y ruteo de proveedores de inferencia,
+  - carácter modular, reversible y no obligatorio para el pipeline base.
+- Registrar un primer `VAL-STEP` nuevo, previsiblemente `VAL-STEP-664`, como autorización de la nueva DEC:
+  - vinculado a la instrucción actual del usuario,
+  - con referencia principal a la nueva `DEC-0023`,
+  - describiendo la intención de formalizar Serena como capa común agéntica.
+- Registrar un segundo `VAL-STEP` nuevo, previsiblemente `VAL-STEP-665`, como regularización de implementación:
+  - vinculado a la misma línea de decisión,
+  - describiendo que ya existe implementación técnica de adapter `OpenClaw`, contrato MCP común y documentación asociada,
+  - dejando claro que el registro es de regularización posterior, no de validación autónoma del agente.
+- Actualizar la matriz de trazabilidad para reflejar ambos nuevos `VAL-STEP` con intención diferenciada:
+  - autorización de política/decisión,
+  - regularización técnica de implementación.
+- Actualizar la cadena del ledger para insertar ambos `VAL-STEP` después de `VAL-STEP-662` y antes de `FIN`.
+- Actualizar referencias de navegación o listados de decisiones si el proyecto ya indexa automáticamente la nueva DEC.
+
+## Interfaces y artefactos afectados
+- Archivos protegidos a tocar con flujo controlado y backup:
+  - `00_sistema_tesis/decisiones/...DEC-0023...md`
+  - `00_sistema_tesis/bitacora/log_conversaciones_ia.md`
+  - `00_sistema_tesis/bitacora/matriz_trazabilidad.md`
+- La nueva DEC debe referenciar explícitamente:
+  - `VAL-STEP-664` como soporte principal de aceptación humana,
+  - `DEC-0014`, `DEC-0018`, `DEC-0020`, `DEC-0022`,
+  - documentación operativa ya existente de Serena/Codex/OpenClaw.
+- El `VAL-STEP-665` debe mencionar como evidencia de implementación ya realizada:
+  - adapter interno de `OpenClaw`,
+  - contrato MCP común,
+  - documentación de host compatible,
+  - validación técnica ejecutada y auditoría `build_all.py`.
+
+## Casos y validación
+- Verificar que la nueva DEC quede semánticamente separada de `DEC-0022`.
+- Verificar que `VAL-STEP-664` y `VAL-STEP-665` tengan:
+  - texto exacto de confirmación,
+  - hash SHA-256 correcto,
+  - referencia de conversación/canon coherente,
+  - cadena `Anterior/Siguiente` consistente.
+- Verificar que la matriz muestre ambos registros con resúmenes distintos y no redundantes.
+- Ejecutar la auditoría completa `python 07_scripts/build_all.py` al final.
+- Confirmar que no se marque ninguna validación como humana sin dejar explícito que proviene de esta conversación y que la regularización es posterior a la implementación.
+
+## Suposiciones y defaults
+- La nueva decisión será `DEC-0023`, salvo que el repo revele una DEC más reciente al momento de implementar.
+- Los nuevos pasos serán `VAL-STEP-664` y `VAL-STEP-665`, salvo que exista otro `VAL-STEP` posterior al revisar el canon justo antes de escribir.
+- `VAL-STEP-664` será de autorización de política/decisión.
+- `VAL-STEP-665` será de regularización documental de implementación ya realizada.
+- `DEC-0022` no se reabre ni se amplía; solo se referencia como decisión relacionada."""">>>
+
+---
+
+## [VAL-STEP-666]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-10
+- **Vínculo:** [DEC-0023]
+- **Hash:** `sha256:3a8a2a3fbeb49a1b32baee193eb27da66e2fa2396851cfbbef5159496625a57c`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+- **Hash de Confirmación Verbal:** `sha256:5b0821492931f18be4114d4ff4a78ef47a0b2707e0f50295869d1e596a6d8a84`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-666 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** prompt_de_implementacion_contextualizado | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0085` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-665] | [Siguiente: VAL-STEP-667]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Habilitar la convivencia dual de Serena MCP para Codex en VS Code.
+Contexto Operativo: El tesista instruye implementar dos entradas MCP visibles y coexistentes para el mismo backend de Serena: `serena-local` como perfil HTTP oficial y `serena-local-py` como fallback y diagnóstico por `stdio`, conservando el contrato canónico y las 7 herramientas existentes.
+Infraestructura: OpenAI Codex GPT-5 | VS Code | Python 3 | Serena MCP local | OpenClaw local.
+ID de Sesión: codex-local-20260410-serena-dual-mcp-v1
+Diferencial de Plan: Implementar configuración dual en `.vscode/mcp.json`, crear `.vscode/serena-local-py.cmd`, endurecer `.vscode/serena-http.cmd`, documentar el alias operativo local `serena-local-py` y validar ambos transportes antes de ejecutar `build_all.py`.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260410-serena-dual-mcp-v1): "PLEASE IMPLEMENT THIS PLAN:">>>
+
+---
+
+## [VAL-STEP-667]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-10
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:a2e67292c99baa13efbb7cec396445eb3a0cf5807b6d6cda135e61f077ac22db`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas consolidar el acceso operativo de Serena en VS Code, añadir un verificador reproducible y dejar explicita la frontera con este runtime?
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+- **Hash de Confirmación Verbal:** `sha256:5b0821492931f18be4114d4ff4a78ef47a0b2707e0f50295869d1e596a6d8a84`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-667 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0086` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-666] | [Siguiente: VAL-STEP-668]
+- **Contenido:**
+<<<
+Agente: ¿Autorizas consolidar el acceso operativo de Serena en VS Code, añadir un verificador reproducible y dejar explicita la frontera con este runtime?
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260410-serena-access-runtime-v1): PLEASE IMPLEMENT THIS PLAN:>>>
+
+---
+
+## [VAL-STEP-668]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-10
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:b0c2436c4df61a686af3350c276e4ec0c34b89be4b06b98c86d7537b7a001ddc`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas promover Serena a un servicio MCP HTTP registrable, mantener stdio como fallback y documentar el bridge para runtimes externos?
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+- **Hash de Confirmación Verbal:** `sha256:5b0821492931f18be4114d4ff4a78ef47a0b2707e0f50295869d1e596a6d8a84`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-668 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0087` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-667] | [Siguiente: VAL-STEP-669]
+- **Contenido:**
+<<<
+Agente: ¿Autorizas promover Serena a un servicio MCP HTTP registrable, mantener stdio como fallback y documentar el bridge para runtimes externos?
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260410-serena-bridge-v1): PLEASE IMPLEMENT THIS PLAN:>>>
+
+---
+
+## [VAL-STEP-669]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-11
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:af8dcd530dea1395ea0d1123cb9e153b35e37f8e3db10b6c7808135fb3ce9624`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas completar la política de trazabilidad, registrar la instrucción humana y publicar el cambio con commit y push?
+- **Confirmación Verbal (Texto Exacto):** vale, completa la política de trazabilidad, realiza commit y push
+- **Hash de Confirmación Verbal:** `sha256:e3a0835cd963c684fa11c73268b880e810f524361e8a6dac8e5e8965d42827d2`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-669 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0088` | Captura requerida: False
+- **Cadena:** [Anterior: VAL-STEP-668] | [Siguiente: VAL-STEP-670]
+- **Contenido:**
+<<<
+Agente: ¿Autorizas completar la política de trazabilidad, registrar la instrucción humana y publicar el cambio con commit y push?
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260411-trazabilidad-publish-v1): vale, completa la política de trazabilidad, realiza commit y push>>>
+
+---
+
+## [VAL-STEP-670]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-12
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:3fdcfd2de06fb916104ff05954d40f95a9f323b3ddc2de75c7f75e167cd77b5c`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Qué `VAL-STEP-*` quieres usar para registrar este cierre B0 desde escritorio?
+- **Confirmación Verbal (Texto Exacto):** tú considera
+- **Hash de Confirmación Verbal:** `sha256:0d42e0883a3cc3c69d2a7d06c066a4ff61fe9bdf0b6a67f4597ea94fa6ed2c9e`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-670 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** respuesta_abierta_con_delegacion_de_step_id | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0089` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-669] | [Siguiente: VAL-STEP-671]
+- **Contenido:**
+<<<
+Agente: ¿Qué `VAL-STEP-*` quieres usar para registrar este cierre B0 desde escritorio? Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260412-b0-desktop-closeout): tú considera.\n\nObjetivo de Sesión: Registrar de forma canónica el cierre B0 desde escritorio, materializar la trazabilidad protegida correspondiente y habilitar la ejecución local de la suite Python con `pytest`.\nContexto Operativo: El tesista autoriza al agente a considerar y asignar el Step ID necesario para registrar esta validación humana, actualizar ledger/matriz derivados desde el canon y preparar el entorno local con `python3-pip` y `python3-pytest` para ejecutar la conformidad B0 ya implementada.\nInfraestructura: OpenAI Codex GPT-5 | Ubuntu shell local | Python 3 | repo privado Sistema Operativo de Tesis.\nID de Sesión: codex-local-20260412-b0-desktop-closeout\nDiferencial de Plan: Registrar `EVT` de evidencia fuente, promover `VAL-STEP-670`, rematerializar ledger/matriz y luego instalar `pip` + `pytest` desde paquetes del sistema para validar la suite localmente.>>>
+
+---
+
+## [VAL-STEP-671]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-12
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:15836ed1ae37136297f4885ee266cb1aa606378a1f75774fde2d6c4431b98841`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Puedo cerrar eso ahora mismo creando y registrando las bitácoras faltantes para `2026-04-03`, `2026-04-10`, `2026-04-11` y `2026-04-12`, y luego reauditar?
+- **Confirmación Verbal (Texto Exacto):** si, cubre todo lo faltante
+- **Hash de Confirmación Verbal:** `sha256:eccc8ca4de130d7ee1638472cd27df17c885bb3db5c085a765623ba63130c41a`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-671 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0090` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-670] | [Siguiente: VAL-STEP-672]
+- **Contenido:**
+<<<
+Agente: Encontré un hueco real de trazabilidad y tres coberturas parciales. Si quieres, puedo cerrar eso ahora mismo creando y registrando las bitácoras faltantes para `2026-04-03`, `2026-04-10`, `2026-04-11` y `2026-04-12`, y luego reauditar. Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260412-regularizacion-bitacoras-faltantes): si, cubre todo lo faltante.\n\nObjetivo de Sesión: Regularizar la cobertura diaria de trabajo según Git, crear las bitácoras faltantes, ajustar la cadena de confianza entre bitácoras y rematerializar ledger, matriz e índice de fuentes.\nContexto Operativo: El cruce entre actividad real de Git y documentos de trazabilidad mostró ausencia total de bitácora diaria para `2026-04-03` y cobertura parcial sin bitácora diaria para `2026-04-10`, `2026-04-11` y `2026-04-12`. El tesista autoriza cubrir todo lo faltante.\nInfraestructura: OpenAI Codex GPT-5 | Ubuntu shell local | Python 3 | repo privado Sistema Operativo de Tesis.\nID de Sesión: codex-local-20260412-regularizacion-bitacoras-faltantes\nDiferencial de Plan: Registrar evidencia fuente, promover `VAL-STEP-671`, crear bitácoras faltantes, registrar `session_recorded` para cada una y reauditar con `build_all.py`.>>>
+
+---
+
+## [VAL-STEP-672]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-12
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:ecb582cae88c417a1815eecc50c7b10596fcbc0700cb6cbbd19b4c6f486ff33f`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa para implementar la política Serena operativa, alinear AGENTS/documentación/scripts y tratar el Step ID por continuidad canónica delegada al agente.
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+- **Hash de Confirmación Verbal:** `sha256:5b0821492931f18be4114d4ff4a78ef47a0b2707e0f50295869d1e596a6d8a84`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-672 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0095` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-671] | [Siguiente: VAL-STEP-673]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Alinear la política operativa de Serena con el estado real del workspace y la gobernanza del repositorio.
+Contexto Operativo: El tesista instruye implementar la política Serena operativa para que los agentes usen Serena solo cuando esté disponible y recomendado por el perfil activo del host; además autoriza deshabilitar temporalmente serena-local-py como ruta operativa del workspace y conservarlo solo como diagnóstico opcional.
+Infraestructura: OpenAI Codex GPT-5 | VS Code 1.115.0 | MCP HTTP manual | serena-local-py fuera de .vscode/mcp.json.
+ID de Sesión: codex-local-20260412-serena-policy-operativa-v1
+Diferencial de Plan: Actualizar AGENTS.md, documentación Serena y check_serena_access.py para distinguir entre backend sano, perfil expuesto y perfil recomendado; registrar la instrucción humana con EVT-0095 y VAL-STEP-672; reauditar con build_all.py.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260412-serena-policy-operativa-v1): PLEASE IMPLEMENT THIS PLAN:
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260412-serena-policy-operativa-v1): ese lo elige siempre el agente con base en contexto y la continuidad>>>
+
+---
+
+## [VAL-STEP-673]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-12
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:c758138d1d6f34823fca284b95728f0373f0590c0ee79bace074d5dc290dd535`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Ahora está disponible y recomendado? Deberá estarlo siempre que agentes de IA trabajen con el proyecto ya que el objetivo de Serena es optimizar el consumo de tokens.
+- **Confirmación Verbal (Texto Exacto):** alinealo.
+- **Hash de Confirmación Verbal:** `sha256:ef3352571d8cef15faaeee8a78976f3286a856d339f7c5ff00b3852e32c3542d`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-673 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0096` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-672] | [Siguiente: VAL-STEP-674]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Restaurar Serena HTTP como ruta operativa esperada del workspace durante el trabajo agéntico.
+Contexto Operativo: El tesista instruye alinear la política Serena para que serena-local permanezca disponible y recomendado siempre que agentes de IA trabajen con el proyecto, reactivando el autoarranque HTTP y manteniendo serena-local-py solo como diagnóstico opcional.
+Infraestructura: OpenAI Codex GPT-5 | VS Code 1.115.0 | Windows 11 | MCP HTTP con task autoarrancable.
+ID de Sesión: codex-local-20260412-serena-http-always-on-v1
+Diferencial de Plan: restaurar runOn folderOpen en .vscode/tasks.json, actualizar AGENTS.md, documentación Serena y check_serena_access.py, registrar la instrucción humana con evidencia fuente nueva y reauditar con build_all.py.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260412-serena-http-always-on-v1): alinealo.>>>
+
+---
+
+## [VAL-STEP-674]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-12
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:772f64eff46119dac65f0da49a181d4b714730862892ab895968f69e2e3ecd1d`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Continuo con la correccion del error de conexión de Serena en VS Code?
+- **Confirmación Verbal (Texto Exacto):** continua
+- **Hash de Confirmación Verbal:** `sha256:64b3f29ddeb1d678feeda3cc8f87d1b1f9d196397de5799b53cf33eba030147d`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-674 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** respuesta_afirmativa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0097` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-673] | [Siguiente: VAL-STEP-675]
+- **Contenido:**
+<<<
+Objetivo de Sesion: Habilitar tareas automaticas del workspace para garantizar el autoarranque del servidor Serena HTTP.
+Contexto Operativo: El tesista reporta fetch failed al conectar con http://127.0.0.1:8765/mcp y pide continuar. Se activa task.allowAutomaticTasks y se documenta el requerimiento operativo.
+Infraestructura: OpenAI Codex GPT-5 | VS Code 1.115.0 | Windows 11 | MCP HTTP.
+ID de Sesion: codex-local-20260412-serena-vscode-auto-tasks-v1
+Diferencial de Plan: agregar .vscode/settings.json con task.allowAutomaticTasks y actualizar checklist de operacion Serena.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260412-serena-vscode-auto-tasks-v1): continua>>>
+
+---
+
+## [VAL-STEP-675]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-12
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:072222147f3cd8868f830ef9d473fa62f56c28210ed4d98362400b0abd406cba`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Ejecuto la prueba comparativa entre escritura derivada y cambio controlado de Serena sobre la misma ruta?
+- **Confirmación Verbal (Texto Exacto):** vale hazlo
+- **Hash de Confirmación Verbal:** `sha256:25c0ef9861c1353499469e0186f6b0709badd7e94f36f5245b7905fbfbcbbf22`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-675 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** respuesta_afirmativa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0098` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-674] | [Siguiente: VAL-STEP-676]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Comparar artifacts.write_derived y canon.apply_controlled_change sobre la misma ruta derivada.
+Contexto Operativo: El tesista autoriza ejecutar una prueba comparativa explícita para verificar la diferencia de gobernanza entre escritura derivada directa y cambio controlado con step_id válido en Serena MCP.
+Infraestructura: OpenAI Codex GPT-5 | VS Code 1.115.0 | Windows 11 | Serena MCP HTTP local.
+ID de Sesión: codex-local-20260412-serena-compare-write-v1
+Diferencial de Plan: registrar la instrucción humana, ejecutar ambos tools sobre la misma ruta derivada, contrastar resultado y reauditar el sistema.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260412-serena-compare-write-v1): vale hazlo>>>
+
+---
+
+## [VAL-STEP-676]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-12
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:eb79e2d995061994dbb104297a182ad7aa57ec6c42f8d2fffed385ddf251b0f6`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Implemento la optimización incremental exacta del manifest de integridad con alcance global en guardrails?
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+- **Hash de Confirmación Verbal:** `sha256:5b0821492931f18be4114d4ff4a78ef47a0b2707e0f50295869d1e596a6d8a84`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-676 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0099` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-675] | [Siguiente: VAL-STEP-677]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Implementar la optimización incremental exacta del manifest de integridad en guardrails.
+Contexto Operativo: El tesista instruye ejecutar el plan de mejora global para eliminar el rebuild completo del manifest en cada cambio controlado, manteniendo la semántica de integridad y reduciendo la latencia observada en Serena.
+Infraestructura: OpenAI Codex GPT-5 | VS Code 1.115.0 | Windows 11 | Sistema Operativo de Tesis con Serena MCP local.
+ID de Sesión: codex-local-20260412-guardrails-manifest-incremental-v1
+Diferencial de Plan: añadir actualización incremental por ruta en guardrails, conectarla a safe_write y Serena, ampliar pruebas y reauditar.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260412-guardrails-manifest-incremental-v1): PLEASE IMPLEMENT THIS PLAN:>>>
+
+---
+
+## [VAL-STEP-677]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-12
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:b4c8503e0ba477d774bfcecad54c52004c713982ac4479f76c8b8e04c398d7a4`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Continúo con la optimización de la traza MCP para eliminar la latencia residual del camino HTTP?
+- **Confirmación Verbal (Texto Exacto):** continúa
+- **Hash de Confirmación Verbal:** `sha256:f7ab06ed0b431a38771d66c51a9116ece1eb1e169eb9bfaf8c9b4a109083b683`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-677 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** respuesta_afirmativa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0100` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-676] | [Siguiente: VAL-STEP-678]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Optimizar la latencia residual del camino HTTP de Serena reemplazando el rewrite completo de la traza por append JSONL.
+Contexto Operativo: El tesista autoriza continuar tras comprobar que el manifest incremental ya resolvió el cuello principal, pero la respuesta HTTP sigue retenida mientras la traza MCP reescribe completo serena_mcp_operations.jsonl.
+Infraestructura: OpenAI Codex GPT-5 | VS Code 1.115.0 | Windows 11 | Serena MCP HTTP local.
+ID de Sesión: codex-local-20260412-serena-trace-append-v1
+Diferencial de Plan: introducir append JSONL eficiente para la traza Serena, ajustar pruebas y reauditar.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260412-serena-trace-append-v1): continúa>>>
+
+---
+
+## [VAL-STEP-678]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-12
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:9c6a009ec729a9064aa2faf1503a4caec710c7b8d764e4662a29026f90f5730d`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Implemento el cierre de trazabilidad final y la preparación de publicación de Serena según el plan prioritario?
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+- **Hash de Confirmación Verbal:** `sha256:5b0821492931f18be4114d4ff4a78ef47a0b2707e0f50295869d1e596a6d8a84`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-678 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0101` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-677] | [Siguiente: VAL-STEP-679]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Cerrar la trazabilidad final del último tramo de Serena y dejar el estado listo para publicación futura sin empujar directo a main.
+Contexto Operativo: El tesista instruye implementar el plan prioritario de cierre y publicación de Serena, incluyendo el registro formal del ajuste posterior a VAL-STEP-677, la higiene del árbol de trabajo, la corrección pendiente en tests y la separación entre artefactos canónicos y sondas diagnósticas.
+Infraestructura: OpenAI Codex GPT-5 | VS Code 1.115.0 | Windows 11 | Serena MCP HTTP local.
+ID de Sesión: codex-local-20260412-serena-closeout-publication-v1
+Diferencial de Plan: registrar nueva evidencia fuente y VAL-STEP, corregir ResourceWarning en test_serena_mcp.py, documentar el estatus de artefactos diagnósticos, retirar sondas temporales no publicables, revalidar y preparar una rama local de publicación.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260412-serena-closeout-publication-v1): PLEASE IMPLEMENT THIS PLAN:>>>
+
+---
+
+## [VAL-STEP-679]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-13
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:9bd29bf43d4716f5c15ec25b5822a4ad9f7fe15c2bd899779e6f60d2a7f3234d`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Indícame el `Step ID` que quieres usar para registrar esta instrucción humana crítica: “si Serena no está disponible, activalo primero, siempre”. Si prefieres, te propongo uno y lo registro en ledger y matriz antes de aplicarlo a la documentación operativa.
+- **Confirmación Verbal (Texto Exacto):** automáticamente conforme a lo que hay
+- **Hash de Confirmación Verbal:** `sha256:48c35e9caa64143928ddd41da07872804204b9a4c3deea391c3ec07945f8b7b5`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-679 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0102` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-678] | [Siguiente: VAL-STEP-680]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Establecer la política operativa de activación previa de Serena cuando no esté disponible.
+Contexto Operativo: El tesista instruye que, si Serena no está disponible, el agente debe intentar activarla primero siempre antes de degradar a filesystem; además delega al agente la asignación automática del Step ID conforme a la continuidad canónica existente.
+Infraestructura: OpenAI Codex GPT-5 | Bash local | runtime de chat sin namespace Serena expuesto por defecto.
+ID de Sesión: codex-local-20260413-serena-auto-activate-v1
+Diferencial de Plan: registrar EVT-0102 y VAL-STEP-679, actualizar AGENTS.md para exigir intento de activación o restauración de Serena antes de continuar por filesystem, y reauditar con build_all.py.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260413-serena-auto-activate-v1): si serena no está disponible, activalo primero, siempre
+Agente: Indícame el `Step ID` que quieres usar para registrar esta instrucción humana crítica: “si Serena no está disponible, activalo primero, siempre”. Si prefieres, te propongo uno y lo registro en ledger y matriz antes de aplicarlo a la documentación operativa.
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260413-serena-auto-activate-v1): automáticamente conforme a lo que hay>>>
+
+---
+
+## [VAL-STEP-680]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-13
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:a50f50e749612d1821822606956f3625c64342f0f73c97716eca5d83b7ecf3d5`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Puedo continuar el cierre asignando automáticamente el Step ID para registrar esta instrucción crítica y completar trazabilidad, commit y publicación?
+- **Confirmación Verbal (Texto Exacto):** Continúa, decide siempre automáticamente el step id
+- **Hash de Confirmación Verbal:** `sha256:e4931b7447ec558c4d518d0092d3337b628851f9bd3b424711ebaf03585c2994`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-680 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0103` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-679] | [Siguiente: VAL-STEP-681]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Cerrar la verificación de Actions y la sincronización pendiente del downstream público con Step ID asignado automáticamente por el agente.
+Contexto Operativo: El tesista autoriza explícitamente al agente a decidir siempre automáticamente el Step ID para esta línea de trabajo, habilitando el registro canónico de la instrucción crítica, el cierre de trazabilidad y la continuación del fix de CI y publicación pública.
+Infraestructura: OpenAI Codex GPT-5 | Bash local sobre WSL | GitHub API | runtime de chat sin namespace Serena expuesto.
+ID de Sesión: codex-local-20260413-actions-public-sync-v1
+Diferencial de Plan: registrar EVT-0103 y VAL-STEP-680, corregir la compuerta CI reproducible en `governance_gate.py`, reauditar con `build_all.py` y sincronizar el repo público atrasado.
+---
+Agente: Lo que me bloquea para cerrar de forma correcta no es técnico sino de gobernanza del repo: necesito el Step ID humano para registrar esta instrucción crítica en los archivos protegidos y poder dejar trazabilidad, commit y publicación sin violar AGENTS.md. En cuanto me lo des, sigo con.
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260413-actions-public-sync-v1): Continúa, decide siempre automáticamente el step id>>>
+
+---
+
+## [VAL-STEP-681]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-13
+- **Vínculo:** DEC-0014
+- **Hash:** `sha256:4720b0b232b4d93667d5790cbca8a3e3d151508bd3914278374e850536fdb41e`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas resolver pendientes, realizar commit/push/sync y monitorear Actions hasta publicación correcta?
+- **Confirmación Verbal (Texto Exacto):** Start implementation
+- **Hash de Confirmación Verbal:** `sha256:9d47566e2da47e3229123afbeed723f97d666684e90a4f7939419a4583ab74dc`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-681 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0106` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-680] | [Siguiente: VAL-STEP-682]
+- **Contenido:**
+<<<
+Objetivo de sesión: cerrar pendientes técnicos, publicar cambios y verificar despliegue público end-to-end.>>>
+
+---
+
+## [VAL-STEP-682]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-14
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:6a8b273810024c083eaa6c84fc7d3e8d8c466557a8f31c6c1e6bba528cd81009`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Continuo con el cierre canónico y la materialización final de la reformalización ENT-014/015?
+- **Confirmación Verbal (Texto Exacto):** continua
+- **Hash de Confirmación Verbal:** `sha256:64b3f29ddeb1d678feeda3cc8f87d1b1f9d196397de5799b53cf33eba030147d`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-682 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0107` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-681] | [Siguiente: VAL-STEP-683]
+- **Contenido:**
+<<<
+Objetivo de sesión: continuar y cerrar la trazabilidad canónica de la reformalización de ENT-014 y ENT-015, materializando ledger, matriz y derivados desde el canon sin editar manualmente las proyecciones.>>>
+
+---
+
+## [VAL-STEP-683]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-20
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:d98f0666e59024bd3fddf6913920510153344c94b160a980a7ef181e8ead1f74`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas asegurar que Caveman y Serena estén disponibles y se usen prioritariamente como política base del sistema operativo de tesis para cualquier agente de IA?
+- **Confirmación Verbal (Texto Exacto):** asegura que caveman y srena estén disponibles y sean usados prioritariamente como política del sistema operativo de tesis para cualquier agente de IA
+- **Hash de Confirmación Verbal:** `sha256:a604161dbe9ed5364e54b525ad018e47d57949edf9ed651b934e2b80935d5392`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-683 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0108` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-682] | [Siguiente: VAL-STEP-684]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Formalizar la política de prioridad conjunta de Caveman y Serena para cualquier agente de IA del repositorio.
+Contexto Operativo: El tesista instruye que Caveman y Serena estén disponibles y sean usados prioritariamente como política base del sistema operativo de tesis para cualquier agente de IA. Caveman queda como modo operativo conciso por defecto y Serena como primera capa de contexto compacto y gobernanza cuando el perfil recomendado esté disponible.
+Infraestructura: OpenAI Codex GPT-5 | Bash local sobre WSL | Sistema Operativo de Tesis.
+ID de Sesión: codex-local-20260420-caveman-serena-policy-v1
+Diferencial de Plan: actualizar AGENTS.md, la documentación operativa de Serena/Codex, el flujo operativo 11/13, registrar la instrucción en el ledger y la matriz, y reauditar con build_all.py.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260420-caveman-serena-policy-v1): "asegura que caveman y srena estén disponibles y sean usados prioritariamente como política del sistema operativo de tesis para cualquier agente de IA">>>
+
+---
+
+## [VAL-STEP-684]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-20
+- **Vínculo:** DEC-0014
+- **Hash:** `sha256:e3acff1e1fb49fa6560a1883838034861ccd32c872ce276cafbe7cbd97ac5e3d`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Confirmas que toda acción que produzca cambios o sea relevante debe trazarse conforme la política de trazabilidad?
+- **Confirmación Verbal (Texto Exacto):** siempre debemos de trazar todas las acciones que producen cambios, o que son relevantes, conforme la política de trazabilidad+
+- **Hash de Confirmación Verbal:** `sha256:295ff130d5e83d480aea3846651cb17d235d7ca897af3d6fcf6121b020972469`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-684 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0111` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-683] | [Siguiente: VAL-STEP-685]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Formalizar la exigencia de trazabilidad completa para cambios y acciones relevantes en el repositorio.
+Contexto Operativo: El tesista instruye que toda acción que produzca cambios o que sea relevante quede trazada conforme la política de trazabilidad del Sistema Operativo de Tesis.
+Infraestructura: OpenAI Codex GPT-5 | Bash local sobre WSL | Sistema Operativo de Tesis.
+ID de Sesión: codex-local-20260420-trazabilidad-total-v1
+Diferencial de Plan: registrar la instrucción humana en canon, ledger y matriz, y reauditar con build_all.py.
+---
+Tesista (Erick Renato Vega Ceron | Sesion: codex-local-20260420-trazabilidad-total-v1): \"siempre debemos de trazar todas las acciones que producen cambios, o que son relevantes, conforme la política de trazabilidad+\">>>
+
+---
+
+## [VAL-STEP-685]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:60445d9e01c58129da6c515920fba5711d61e0a5a3cd493bc1f03f26808fbdd6`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas documentar todo el cierre OpenClaw/Telegram conforme a la política de trazabilidad?
+- **Confirmación Verbal (Texto Exacto):** documenta todo según política de trazabilidad
+- **Hash de Confirmación Verbal:** `sha256:4ff522e2dfd00f38eb8cb64f8cf0021e6808cc3ebac7f81c291d4ca47351fd13`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-685 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0113` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-684] | [Siguiente: VAL-STEP-686]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Documentar el cierre operativo OpenClaw/Telegram, Desktop Compute y evidencias asociadas conforme a la política de trazabilidad.\nContexto Operativo: El tesista instruye documentar todo según la política de trazabilidad tras el cierre técnico del bot Telegram, routing OpenClaw, túnel desktop_compute, limpieza de aprobación de prueba, logrotate y evidencias de validación.\nInfraestructura: OpenAI Codex GPT-5 | Bash local sobre WSL | tesis-edge | OpenClaw local-first | Telegram polling local.\nID de Sesión: codex-local-20260421-openclaw-telegram-trazabilidad-v1\nDiferencial de Plan: registrar fuente de conversación EVT-0113, emitir VAL-STEP-685 para la autorización documental, consolidar bitácora operativa y reauditar con build_all.py.\n---\nTesista (Erick Renato Vega Ceron | Sesion: codex-local-20260421-openclaw-telegram-trazabilidad-v1): documenta todo según política de trazabilidad>>>
+
+---
+
+## [VAL-STEP-686]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0020]
+- **Hash:** `sha256:a8b9664a37d811a1a553f581e1cc5eed8395da32a52c71347c41c505710ac6a0`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa registrada sin pregunta previa del agente.
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+- **Hash de Confirmación Verbal:** `sha256:5b0821492931f18be4114d4ff4a78ef47a0b2707e0f50295869d1e596a6d8a84`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-686 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** prompt_de_implementacion_contextualizado | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0116` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-685] | [Siguiente: VAL-STEP-687]
+- **Contenido:**
+<<<
+Objetivo de Sesión: Mejorar significativamente el comportamiento del chat Telegram de OpenClaw. Contexto Operativo: El tesista instruye implementar el plan diseñado para convertir OpenClaw Telegram en una interfaz confiable de comandos y LLM local-first, con memoria por chat, /hora determinística, investigación web read-only, routing automático explicado y propuestas de aprobación para acciones ambiguas o no implementadas. Archivos técnicos previstos: runtime/openclaw/openclaw_local/telegram_bot.py y tests/test_openclaw_telegram_bot.py. Confirmación humana: PLEASE IMPLEMENT THIS PLAN:>>>
+
+---
+
+## [VAL-STEP-687]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0020]
+- **Hash:** `sha256:cee6395277e89853f264f6149160d94c38fbc76d386309c35049f430d82459e7`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instruccion humana directa de continuidad operativa para completar la implementacion adaptativa del chat Telegram de OpenClaw.
+- **Confirmación Verbal (Texto Exacto):** continua
+- **Hash de Confirmación Verbal:** `sha256:64b3f29ddeb1d678feeda3cc8f87d1b1f9d196397de5799b53cf33eba030147d`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-687 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** continuacion_operativa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0117` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-686] | [Siguiente: VAL-STEP-688]
+- **Contenido:**
+<<<
+Objetivo de Sesion: completar la segunda capa de mejoras del chat Telegram de OpenClaw. Contexto Operativo: el tesista instruye continuar la implementacion para hacer el asistente mas dinamico, adaptable, con aprendizaje, memoria ampliada, mejores herramientas read-only y consultas deterministicas. Archivos tecnicos afectados: runtime/openclaw/openclaw_local/telegram_bot.py, runtime/openclaw/bin/openclaw_local.py y tests/test_openclaw_telegram_bot.py. Confirmacion humana: continua>>>
+
+---
+
+## [VAL-STEP-688]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:44d39255a9066bf75ab24de2566d28e13407476eacbb9a5c7bcabdc7bf0fca75`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa para corregir la vulnerabilidad de Dependabot.
+- **Confirmación Verbal (Texto Exacto):** corrige la vulnerabilidad de dependabot
+- **Hash de Confirmación Verbal:** `sha256:c90422daa508d117b45ef0eef8c25e25eb9439dddef9dfb1da927b07202095a3`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-688 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_seguridad | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0121` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-687] | [Siguiente: VAL-STEP-689]
+- **Contenido:**
+<<<
+Objetivo de Sesion: corregir vulnerabilidad Dependabot del repositorio. Contexto Operativo: OSV/GitHub Advisory identifica GHSA-6w46-j5rx-g56g en pytest 9.0.2, con version corregida 9.0.3. Cambio tecnico: requirements-dev.txt actualiza pytest==9.0.2 a pytest==9.0.3. Validacion prevista: consulta OSV sin vulnerabilidades para el conjunto fijado, pytest focal OpenClaw y build_all.py. Confirmacion humana: corrige la vulnerabilidad de dependabot>>>
+
+---
+
+## [VAL-STEP-689]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:b3eb5a766a522db0cf47da65686475329b4812abb72dc0e416860fade7504429`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instruccion humana directa para integrar la mejora de OpenClaw y hacer push via SSH.
+- **Confirmación Verbal (Texto Exacto):** implementa via ssh
+- **Hash de Confirmación Verbal:** `sha256:0ea6f2393d407e0a3e7210d0d6f9b3bac5fe10788f339cdcf6da98d8445907f2`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-689 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0122` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-688] | [Siguiente: VAL-STEP-690]
+- **Contenido:**
+<<<
+Objetivo de Sesion: Mejorar inteligencia OpenClaw y desplegar via SSH. Contexto Operativo: Integracion de Chain-of-Thought y web_assisted. Confirmacion humana: implementa via ssh>>>
+
+---
+
+## [VAL-STEP-690]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0014]
+- **Hash:** `sha256:6c7c44866a902202d0e6bd8638506d83161e36675ee02cefe2c40096cdf34191`
+- **Audit Level:** MEDIO
+- **Pregunta Crítica / Disparador:** Instruccion humana directa para verificar y validar en el edge node.
+- **Confirmación Verbal (Texto Exacto):** verifica por acceso ssh tesisai que las mejoras estén implementadas en openclaw y valida
+- **Hash de Confirmación Verbal:** `sha256:c80b61c634265c6f85da7257c14d76d69bc821da8759ccce7b1c7b8c82659534`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-690 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0123` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-689] | [Siguiente: VAL-STEP-691]
+- **Contenido:**
+<<<
+Objetivo de Sesion: Validar la implementacion en el Edge Node (Orange Pi). Contexto Operativo: Sincronizacion manual de repositorio en el edge y verificacion del demonio OpenClaw local-first. Confirmacion humana: verifica por acceso ssh tesisai que las mejoras estén implementadas en openclaw y valida>>>
+
+---
+
+## [VAL-STEP-691]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0020]
+- **Hash:** `sha256:1c9d163e6f9976e08e3eb620f985f758881302d80006bdce6e0fe9c0681219ec`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa para implementar el plan de mejora OpenClaw Telegram con aprobación simplificada e imagen local.
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+- **Hash de Confirmación Verbal:** `sha256:5b0821492931f18be4114d4ff4a78ef47a0b2707e0f50295869d1e596a6d8a84`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-691 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_directa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0124` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-690] | [Siguiente: VAL-STEP-692]
+- **Contenido:**
+<<<
+Objetivo de Sesion: corregir OpenClaw Telegram para eliminar bucles conversacionales, respetar contexto de chat, preferir Qwen3 en chat breve, simplificar aprobación desde Telegram e integrar backend local ComfyUI para imagen. Contexto Operativo: el tesista instruye implementar el plan completo titulado Corregir OpenClaw Telegram Para Conversación, Aprobación e Imagen Local. Archivos tecnicos afectados: runtime/openclaw/openclaw_local/telegram_bot.py, runtime/openclaw/openclaw_local/image_backend.py, runtime/openclaw/bin/openclaw_local.py, tests/test_openclaw_telegram_bot.py y docs/03_operacion/openclaw-workspace-local.md. Validacion prevista: pytest focal Telegram y build_all.py. Confirmacion humana: PLEASE IMPLEMENT THIS PLAN:>>>
+
+---
+
+## [VAL-STEP-692]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0020]
+- **Hash:** `sha256:c48915e57c0da69a7b865b4106b2dfbbbf1a9de9371adda9b976ac60870af301`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa para desplegar en el edge la mejora de OpenClaw Telegram.
+- **Confirmación Verbal (Texto Exacto):** despliega en el edge
+- **Hash de Confirmación Verbal:** `sha256:3fa790928be2bf2cd9c8b61ca504d4ea105d517c0ec69b8dbf960edde4b8e036`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-692 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_operativa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0125` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-691] | [Siguiente: VAL-STEP-693]
+- **Contenido:**
+<<<
+Objetivo de Sesion: desplegar en tesis-edge la mejora OpenClaw Telegram con aprobación simplificada e imagen local ComfyUI. Contexto Operativo: se aplican en /srv/tesis/repo los cambios de runtime OpenClaw, CLI, tests y documentación; se crea backup remoto previo, se reinicia openclaw-telegram-bot.service y se ejecutan smokes y pytest focal remoto. Confirmacion humana: despliega en el edge>>>
+
+---
+
+## [VAL-STEP-693]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0020]
+- **Hash:** `sha256:dd8a296c93c889adc2856df3b1025768d71df35eb6f3e002924ac4f17d966d82`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** Instrucción humana directa para usar ComfyUI en esta PC como backend local de imagen del edge.
+- **Confirmación Verbal (Texto Exacto):** si, comfy en esta pc
+- **Hash de Confirmación Verbal:** `sha256:67e00f00ec88cf70f0c22ca008007e27cd039056ee4af9ad1b97102b7efd9722`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-693 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_operativa | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0128` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-692] | [Siguiente: VAL-STEP-697]
+- **Contenido:**
+<<<
+Objetivo de Sesion: conectar ComfyUI instalado en esta PC con tesis-edge para generación local de imágenes desde OpenClaw Telegram. Contexto Operativo: se añade forward SSH opcional PC -> edge 127.0.0.1:28000 hacia ComfyUI local 127.0.0.1:8000, se configura OPENCLAW_COMFYUI_BASE_URL en el edge, se ajusta PermitListen del hardening SSH y se documenta el diagnóstico cuando ComfyUI no escucha. Confirmacion humana: si, comfy en esta pc>>>
+
+---
+
+## [VAL-STEP-697]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0020]
+- **Hash:** `sha256:6529de2c2fc62ac178d6554b8678e6fdea001664ca5630cfc0f954839314a3e0`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas la implementación de búsqueda automática y señal de actividad persistente para mejorar la calidad del razonamiento?
+- **Confirmación Verbal (Texto Exacto):** reinicialo cada que hagas un cambio en el bot y cómo responde
+- **Hash de Confirmación Verbal:** `sha256:0e9d97fdd72fc2edd2ff9c951bda21ea3964754cefc56052893365a1b813ced9`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-697 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** sin_confirmacion_explicita | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0132` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-693] | [Siguiente: VAL-STEP-698]
+- **Contenido:**
+<<<
+Objetivo de Sesion: Automatizar RAG en chat de Telegram, forzar modelos de alta calidad (Qwen3:4b) para conocimiento y mantener señal de actividad persistente. Contexto Operativo: se mejora el ruteo automático y se inyecta evidencia web de forma transparente. Confirmación humana: reinicialo cada que hagas un cambio en el bot y cómo responde>>>
+
+---
+
+## [VAL-STEP-698]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0020]
+- **Hash:** `sha256:c3c1520016dd2885c7675749c13bd24cb53a67ffa6b0abdad39ad0b9823bb277`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas proceder con la corrección y el registro en el Ledger?
+- **Confirmación Verbal (Texto Exacto):** implementa
+- **Hash de Confirmación Verbal:** `sha256:917b94c5fe8194ea6bd4a42b4ebe442a373ccddc6a7fb32aab7cc412aa4f27e5`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-698 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** sin_confirmacion_explicita | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0133` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-697] | [Siguiente: VAL-STEP-699]
+- **Contenido:**
+<<<
+Objetivo de Sesion: Corregir NameError en ruteo y mejorar resiliencia ante fallos de nube en OpenClaw Telegram. Contexto Operativo: se identifica variable 'request_kind' no definida en _select_chat_runtime; se implementa try-except en la cascada de ruteo para forzar fallback a qwen3:4b; se ajustan esperas en web_session.py para Playwright. Confirmacion humana: implementa>>>
+
+---
+
+## [VAL-STEP-699]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-21
+- **Vínculo:** [DEC-0020]
+- **Hash:** `sha256:be3281124504904190de09a4a87257f32662c8cdc481ffd576e06e1fa085cf61`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas implementar el plan de corrección OpenClaw Telegram/Edge?
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN: Plan De Corrección OpenClaw Telegram/Edge
+- **Hash de Confirmación Verbal:** `sha256:eafc6e6ede121933339dee18cd4b4a9d40e91d79ff45b42f750a47252609ec7f`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-699 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_operativa_explicita | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0134` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-698] | [Siguiente: VAL-STEP-700]
+- **Contenido:**
+<<<
+Objetivo de Sesion: implementar el plan de corrección OpenClaw Telegram/Edge. Contexto Operativo: ruteo local-first con SLA, web-assisted solo explícito, concurrencia limitada por chat/backend, keepalive y contexto reducido, exclusión de qwen2.5:0.5b como fallback semántico, observabilidad estructurada y plantilla oficial OpenClaw. Confirmacion humana: PLEASE IMPLEMENT THIS PLAN: Plan De Corrección OpenClaw Telegram/Edge>>>
+
+---
+
+## [VAL-STEP-700]
+- **Proveedor:** OpenAI
+- **Modelo/Versión:** GPT-5 Codex
+- **Fecha:** 2026-04-23
+- **Vínculo:** [DEC-0023]
+- **Hash:** `sha256:2d22487ce6a5d6efd3a5b2c1f74ddb12f96473a865672f49b944766172eecb12`
+- **Audit Level:** ALTO
+- **Pregunta Crítica / Disparador:** ¿Autorizas ejecutar el cierre de trazabilidad y documentación operativa en una sola entrega?
+- **Confirmación Verbal (Texto Exacto):** PLEASE IMPLEMENT THIS PLAN:
+- **Hash de Confirmación Verbal:** `sha256:5b0821492931f18be4114d4ff4a78ef47a0b2707e0f50295869d1e596a6d8a84`
+- **Fuente de Verdad de Confirmación:** `00_sistema_tesis/canon/events.jsonl :: VAL-STEP-700 :: human_validation.confirmation_text`
+- **Tipo de Confirmación:** instruccion_operativa_explicita | Fuente: campo_canonico_explicito
+- **Proveniencia de la Confirmación:** corroborated_conversation_source | Verificación: verified_against_source
+- **Fuente de Conversación Registrada:** `EVT-0135` | Captura requerida: True
+- **Cadena:** [Anterior: VAL-STEP-699] | [Siguiente: FIN]
+- **Contenido:**
+<<<
+Objetivo de Sesión: formalizar trazabilidad y documentación operativa de mejoras Serena/Caveman ya implementadas. Contexto Operativo: se registra evidencia fuente del pedido humano, se enlaza Step ID por continuidad y se verifica cadena/documentación con pruebas y build_all. Confirmación humana: PLEASE IMPLEMENT THIS PLAN:>>>
+
+**Navegación:**
+- [Volver a la Matriz](matriz_trazabilidad.md)

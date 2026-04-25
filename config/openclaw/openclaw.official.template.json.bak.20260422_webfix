@@ -1,0 +1,98 @@
+{
+  "agents": {
+    "defaults": {
+      "maxConcurrent": 1,
+      "model": {
+        "primary": "ollama/qwen3:4b",
+        "fallbacks": [
+          "ollama/gemma3:4b"
+        ]
+      },
+      "embeddedHarness": {
+        "runtime": "auto",
+        "fallback": "none"
+      },
+      "workspace": "/var/lib/herramientas/openclaw/workspace"
+    }
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "ollama": {
+        "api": "ollama",
+        "baseUrl": "http://127.0.0.1:11434",
+        "models": [
+          {
+            "id": "qwen3:4b",
+            "name": "qwen3:4b edge daily",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 32768,
+            "contextTokens": 4096,
+            "maxTokens": 800,
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            }
+          },
+          {
+            "id": "gemma3:4b",
+            "name": "gemma3:4b edge fallback",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 131072,
+            "contextTokens": 4096,
+            "maxTokens": 800,
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            }
+          },
+          {
+            "id": "qwen2.5:0.5b",
+            "name": "qwen2.5:0.5b ack only",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 32768,
+            "contextTokens": 1024,
+            "maxTokens": 96,
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            }
+          }
+        ]
+      }
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": false,
+      "dmPolicy": "allowlist",
+      "allowFrom": []
+    }
+  },
+  "gateway": {
+    "mode": "local",
+    "bind": "loopback",
+    "port": 18789
+  },
+  "tools": {
+    "deny": [
+      "group:web",
+      "browser"
+    ]
+  }
+}

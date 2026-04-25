@@ -100,6 +100,34 @@ def minimal_repo(repo: Path) -> None:
                     "write_scope": "read_only",
                     "requires_step_id": False,
                 },
+                "context.repo_map": {
+                    "enabled": True,
+                    "description": "map",
+                    "risk_level": "MEDIO",
+                    "write_scope": "read_only",
+                    "requires_step_id": False,
+                },
+                "context.fetch_changes": {
+                    "enabled": True,
+                    "description": "changes",
+                    "risk_level": "MEDIO",
+                    "write_scope": "read_only",
+                    "requires_step_id": False,
+                },
+                "context.trace_lookup": {
+                    "enabled": True,
+                    "description": "trace-lookup",
+                    "risk_level": "MEDIO",
+                    "write_scope": "read_only",
+                    "requires_step_id": False,
+                },
+                "context.session_brief": {
+                    "enabled": True,
+                    "description": "brief",
+                    "risk_level": "MEDIO",
+                    "write_scope": "read_only",
+                    "requires_step_id": False,
+                },
                 "governance.preflight": {
                     "enabled": True,
                     "description": "preflight",
@@ -229,8 +257,12 @@ class TestSerenaMCP(unittest.TestCase):
                 process.stdin.flush()
                 tool_response = read_message(process.stdout)
                 names = {tool["name"] for tool in tool_response["result"]["tools"]}
-                self.assertEqual(len(names), 7)
+                self.assertEqual(len(names), 11)
                 self.assertIn("context_fetch_compact", names)
+                self.assertIn("context_repo_map", names)
+                self.assertIn("context_fetch_changes", names)
+                self.assertIn("context_trace_lookup", names)
+                self.assertIn("context_session_brief", names)
                 self.assertIn("governance_preflight", names)
 
                 process.stdin.write(
@@ -268,6 +300,23 @@ class TestSerenaMCP(unittest.TestCase):
                 process.stdin.flush()
                 canonical_fetch_response = read_message(process.stdout)
                 self.assertEqual(canonical_fetch_response["result"]["structuredContent"]["status"], "ok")
+
+                process.stdin.write(
+                    encode_message(
+                        {
+                            "jsonrpc": "2.0",
+                            "id": 32,
+                            "method": "tools/call",
+                            "params": {
+                                "name": "context_repo_map",
+                                "arguments": {"limit": 3},
+                            },
+                        }
+                    )
+                )
+                process.stdin.flush()
+                map_response = read_message(process.stdout)
+                self.assertEqual(map_response["result"]["structuredContent"]["status"], "ok")
 
                 process.stdin.write(
                     encode_message(
@@ -413,11 +462,12 @@ class TestSerenaMCP(unittest.TestCase):
                     tools_payload = json.loads(response.read().decode("utf-8"))
                 names = {tool["name"] for tool in tools_payload["result"]["tools"]}
                 self.assertIn("context_fetch_compact", names)
+                self.assertIn("context_repo_map", names)
                 self.assertIn("governance_preflight", names)
                 debug_lines = debug_log.read_text(encoding="utf-8").splitlines()
                 http_out_lines = [line for line in debug_lines if line.startswith("HTTP OUT ")]
                 self.assertTrue(http_out_lines)
-                self.assertTrue(any('"tool_count": 7' in line for line in http_out_lines))
+                self.assertTrue(any('"tool_count": 11' in line for line in http_out_lines))
                 self.assertTrue(all('"inputSchema"' not in line for line in http_out_lines))
             finally:
                 close_process(process)

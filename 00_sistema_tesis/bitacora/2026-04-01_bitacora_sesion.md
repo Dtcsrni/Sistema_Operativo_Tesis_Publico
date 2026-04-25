@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-01
 
 - **ID de Sesión:** codex-local-20260401-trazabilidad-conversacion-actual
-- **Cadena de Confianza (Anterior):** `sha256/909d33b3016c313b4a26a508d5c5d9b2f645f44abe1b2deee8ecd791b37aebd4`
+- **Cadena de Confianza (Anterior):** `sha256/c25c4b9d5d221035dc6626eb8b961f8b359a64995b96079881a3423520f6e513`
 - **Bloque principal:** B0
 - **Tipo de sesión:** validación | documentación | integración | automatización
 
@@ -70,4 +70,4 @@ Mantener sincronizada la wiki con la bitácora canónica y continuar con la sigu
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

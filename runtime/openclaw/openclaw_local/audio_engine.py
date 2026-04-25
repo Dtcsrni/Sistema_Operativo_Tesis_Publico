@@ -1,0 +1,175 @@
+from __future__ import annotations
+
+import json
+import mimetypes
+import os
+from pathlib import Path
+from typing import Any
+from urllib import error, parse, request
+from uuid import uuid4
+
+
+def download_telegram_file(*, bot_token: str, file_id: str, target_dir: Path, timeout_seconds: int = 20) -> dict[str, Any]:
+    if not bot_token.strip():
+        return {"status": "error", "error": "telegram_token_missing"}
+    if not file_id.strip():
+        return {"status": "error", "error": "file_id_missing"}
+
+    target_dir.mkdir(parents=True, exist_ok=True)
+    metadata_url = f"https://api.telegram.org/bot{bot_token}/getFile?{parse.urlencode({'file_id': file_id})}"
+    try:
+        with request.urlopen(metadata_url, timeout=timeout_seconds) as response:
+            metadata = json.loads(response.read().decode("utf-8", errors="replace"))
+    except (error.URLError, json.JSONDecodeError) as exc:
+        return {"status": "error", "error": f"telegram_getfile_failed:{exc}"}
+
+    if not metadata.get("ok"):
+        return {"status": "error", "error": f"telegram_getfile_error:{metadata.get('description', 'unknown')}"}
+
+    result = metadata.get("result", {})
+    remote_path = str(result.get("file_path", "")).strip()
+    if not remote_path:
+        return {"status": "error", "error": "telegram_file_path_missing"}
+
+    suffix = Path(remote_path).suffix or ".ogg"
+    local_path = target_dir / f"voice_{uuid4().hex[:12]}{suffix}"
+    file_url = f"https://api.telegram.org/file/bot{bot_token}/{remote_path}"
+    try:
+        with request.urlopen(file_url, timeout=timeout_seconds) as response:
+            local_path.write_bytes(response.read())
+    except (error.URLError, OSError) as exc:
+        return {"status": "error", "error": f"telegram_download_failed:{exc}"}
+
+    return {
+        "status": "ok",
+        "path": str(local_path),
+        "telegram_file_path": remote_path,
+    }
+
+
+def transcribe_audio(
+    *,
+    audio_path: Path,
+    language: str = "es",
+    timeout_seconds: int = 60,
+) -> dict[str, Any]:
+    provider = os.getenv("OPENCLAW_TELEGRAM_STT_PROVIDER", "openai").strip().lower()
+    if provider != "openai":
+        return {"status": "error", "error": f"stt_provider_not_supported:{provider}"}
+
+    api_key = os.getenv("OPENAI_API_KEY", "").strip()
+    if not api_key:
+        return {"status": "error", "error": "openai_api_key_missing"}
+
+    model = os.getenv("OPENCLAW_TELEGRAM_STT_MODEL", "whisper-1").strip() or "whisper-1"
+    if not audio_path.exists():
+        return {"status": "error", "error": "audio_file_missing"}
+
+    fields = {
+        "model": model,
+        "response_format": "json",
+        "language": language,
+    }
+    files = {
+        "file": {
+            "filename": audio_path.name,
+            "content": audio_path.read_bytes(),
+            "content_type": mimetypes.guess_type(audio_path.name)[0] or "audio/ogg",
+        }
+    }
+    body, content_type = _encode_multipart_form_data(fields=fields, files=files)
+    req = request.Request("https://api.openai.com/v1/audio/transcriptions", data=body, method="POST")
+    req.add_header("Authorization", f"Bearer {api_key}")
+    req.add_header("Content-Type", content_type)
+
+    try:
+        with request.urlopen(req, timeout=timeout_seconds) as response:
+            payload = json.loads(response.read().decode("utf-8", errors="replace"))
+    except error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace") if hasattr(exc, "read") else str(exc)
+        return {"status": "error", "error": f"openai_stt_http_error:{detail[:300]}"}
+    except (error.URLError, json.JSONDecodeError) as exc:
+        return {"status": "error", "error": f"openai_stt_error:{exc}"}
+
+    text = str(payload.get("text", "")).strip()
+    if not text:
+        return {"status": "error", "error": "openai_stt_empty_text"}
+
+    return {
+        "status": "ok",
+        "provider": "openai",
+        "model": model,
+        "text": text,
+    }
+
+
+def synthesize_speech(
+    *,
+    text: str,
+    target_dir: Path,
+    timeout_seconds: int = 60,
+) -> dict[str, Any]:
+    provider = os.getenv("OPENCLAW_TELEGRAM_TTS_PROVIDER", "openai").strip().lower()
+    if provider != "openai":
+        return {"status": "error", "error": f"tts_provider_not_supported:{provider}"}
+
+    api_key = os.getenv("OPENAI_API_KEY", "").strip()
+    if not api_key:
+        return {"status": "error", "error": "openai_api_key_missing"}
+
+    model = os.getenv("OPENCLAW_TELEGRAM_TTS_MODEL", "gpt-4o-mini-tts").strip() or "gpt-4o-mini-tts"
+    voice = os.getenv("OPENCLAW_TELEGRAM_TTS_VOICE", "alloy").strip() or "alloy"
+    clipped = text.strip()[:1800]
+    if not clipped:
+        return {"status": "error", "error": "tts_input_empty"}
+
+    target_dir.mkdir(parents=True, exist_ok=True)
+    output_path = target_dir / f"tts_{uuid4().hex[:12]}.mp3"
+    payload = json.dumps({"model": model, "voice": voice, "format": "mp3", "input": clipped}, ensure_ascii=False).encode("utf-8")
+    req = request.Request("https://api.openai.com/v1/audio/speech", data=payload, method="POST")
+    req.add_header("Authorization", f"Bearer {api_key}")
+    req.add_header("Content-Type", "application/json")
+
+    try:
+        with request.urlopen(req, timeout=timeout_seconds) as response:
+            output_path.write_bytes(response.read())
+    except error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace") if hasattr(exc, "read") else str(exc)
+        return {"status": "error", "error": f"openai_tts_http_error:{detail[:300]}"}
+    except (error.URLError, OSError) as exc:
+        return {"status": "error", "error": f"openai_tts_error:{exc}"}
+
+    return {
+        "status": "ok",
+        "provider": "openai",
+        "model": model,
+        "voice": voice,
+        "path": str(output_path),
+    }
+
+
+def _encode_multipart_form_data(*, fields: dict[str, str], files: dict[str, dict[str, Any]]) -> tuple[bytes, str]:
+    boundary = f"----OpenClawBoundary{uuid4().hex}"
+    chunks: list[bytes] = []
+
+    for name, value in fields.items():
+        chunks.append(f"--{boundary}\r\n".encode("utf-8"))
+        chunks.append(f'Content-Disposition: form-data; name="{name}"\r\n\r\n'.encode("utf-8"))
+        chunks.append(str(value).encode("utf-8"))
+        chunks.append(b"\r\n")
+
+    for name, file_meta in files.items():
+        filename = str(file_meta.get("filename", "file.bin"))
+        content = bytes(file_meta.get("content", b""))
+        content_type = str(file_meta.get("content_type", "application/octet-stream"))
+        chunks.append(f"--{boundary}\r\n".encode("utf-8"))
+        chunks.append(
+            f'Content-Disposition: form-data; name="{name}"; filename="{filename}"\r\n'.encode("utf-8")
+        )
+        chunks.append(f"Content-Type: {content_type}\r\n\r\n".encode("utf-8"))
+        chunks.append(content)
+        chunks.append(b"\r\n")
+
+    chunks.append(f"--{boundary}--\r\n".encode("utf-8"))
+    body = b"".join(chunks)
+    return body, f"multipart/form-data; boundary={boundary}"

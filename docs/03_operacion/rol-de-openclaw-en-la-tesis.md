@@ -11,4 +11,4 @@ OpenClaw se posiciona como herramienta de apoyo y objeto de evaluacion secundari
 - `openclaw` no puede convertirse en puente HTTP entre dominios.
 - `openclaw` solo intercambia artefactos con otros dominios por rutas y comandos explícitos.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

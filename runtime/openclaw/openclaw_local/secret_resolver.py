@@ -37,10 +37,17 @@ def resolve_provider_secret(
     env_path = env_root / f"{domain}.env"
     domain_policy: DomainSecretPolicy = secret_policies["domains"][domain]
     expected_variables = list(domain_policy.providers.get(provider, []))
-    values = parse_env_file(env_path)
+    inaccessible = False
+    try:
+        values = parse_env_file(env_path)
+    except PermissionError:
+        values = {}
+        inaccessible = True
     missing = [key for key in expected_variables if not _has_value(key, values)]
     if not expected_variables:
         status = "not_required"
+    elif inaccessible:
+        status = "inaccessible"
     elif missing:
         status = "missing"
     else:
@@ -95,6 +102,12 @@ def build_secret_status(
 
 
 def _has_value(key: str, file_values: dict[str, str]) -> bool:
-    if os.getenv(key, "").strip():
-        return True
-    return bool(file_values.get(key, "").strip())
+    env_value = os.getenv(key, "").strip()
+    if env_value:
+        return env_value.lower() not in {"0", "false", "no", "off"}
+    file_value = file_values.get(key, "").strip()
+    if not file_value:
+        return False
+    if file_value.lower() in {"0", "false", "no", "off"}:
+        return False
+    return True

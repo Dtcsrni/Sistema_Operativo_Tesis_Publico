@@ -5,4 +5,4 @@
 - No energizar sin checklist.
 - Documentar riesgo fisico, hipotesis y correccion.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

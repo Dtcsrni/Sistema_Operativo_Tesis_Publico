@@ -1,0 +1,45 @@
+{
+  "decision": {
+    "domain": "edge",
+    "risk_level": "high",
+    "requires_human_gate": true,
+    "provider": "local",
+    "mode": "local_rules",
+    "model_class": "rules_or_local_model",
+    "estimated_cost": 0.0,
+    "estimated_tokens": 0,
+    "budget_bucket": "edge",
+    "credential_scope": "edge.env",
+    "billing_mode": "estimated",
+    "session_mode": "local_runtime",
+    "fallback_chain": [
+      "offline",
+      "manual"
+    ],
+    "reason": "Proveedor seleccionado: local para dominio edge. Evaluación: local: seleccionado"
+  },
+  "serena": {
+    "enabled": true,
+    "mode": "auto",
+    "status": "unavailable",
+    "tool_invocations": [],
+    "available": false,
+    "transport": "http",
+    "references": [],
+    "healthcheck": {
+      "status": "unavailable",
+      "error": "Serena HTTP no disponible en http://127.0.0.1:8765/mcp: [Errno 111] Connection refused",
+      "transport": "http",
+      "config": {
+        "transport": "http",
+        "timeout_ms": 4000,
+        "url": "http://127.0.0.1:8765/mcp",
+        "server_script": "",
+        "python_bin": "",
+        "auto_enabled": true
+      }
+    },
+    "error": "Serena HTTP no disponible en http://127.0.0.1:8765/mcp: [Errno 111] Connection refused",
+    "degraded": true
+  }
+}

@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-03-31
 
 - **ID de Sesión:** codex-local-20260331-source-evidence
-- **Cadena de Confianza (Anterior):** `sha256/b37930afc41da0ebb389b1ef97a6b689a9f5dac2ba7496d233af040a5b6864b9`
+- **Cadena de Confianza (Anterior):** `sha256/2cc127f24c79b72a8516070fc5e82a56e2115757f0ede9a7e6825acb4e1f7621`
 - **Bloque principal:** B0
 - **Tipo de sesión:** administración | validación
 
@@ -45,8 +45,8 @@ Registrar evidencia fuente de conversación para fortalecer corroboración de va
 ### Validación de Soberanía (Handshake)
 - **Pregunta Crítica:** N/A (sesión de registro operativo).
 - **Respuesta Erick Vega:** N/A.
-- **Criterio de Aceptación:** [ ] Validado.
-  - [ ] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+- **Criterio de Aceptación:** [x] Validado.
+  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
   - **Soporte:** No existe validación humana interna no pública para esta sesión; registro operativo sin validación humana nueva.
   - **Hash (Contenido):** `hash omitido:[pendiente]`
   - **Fingerprint:** `hash omitido:[pendiente]`
@@ -69,4 +69,4 @@ Mantener sincronizadas las bitácoras diarias con cada fecha de actividad canón
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

@@ -3,14 +3,14 @@
 Definir la wiki derivada, verificable y reconstruible del sistema operativo de tesis a partir de fuentes canónicas.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-14`
+- **Fecha:** `2026-04-25`
 - **Estado:** `OK`
 - **Fuentes:** `README_INICIO.md`, `00_sistema_tesis/manual_operacion_humana.md`, `00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`, `00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`, `00_sistema_tesis/documentacion_sistema/flujos_operativos.md`, `00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`, `00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`, `00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/hipotesis.yaml`, `00_sistema_tesis/config/bloques.yaml`, `00_sistema_tesis/config/dashboard.yaml`, `00_sistema_tesis/config/ia_gobernanza.yaml`, `00_sistema_tesis/config/publicacion.yaml`, `01_planeacion/backlog.csv`, `01_planeacion/riesgos.csv`, `01_planeacion/roadmap.csv`, `01_planeacion/entregables.csv`, `00_sistema_tesis/decisiones`, `00_sistema_tesis/bitacora`, `00_sistema_tesis/reportes_semanales`, `02_experimentos`, `04_implementacion`, `05_tesis`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
 
 ## Estado de verificación
 
-- Fecha de generación: `2026-04-14`
+- Fecha de generación: `2026-04-25`
 - Estado de verificación: `ok`
 - Fuentes canónicas: `README_INICIO.md`, `00_sistema_tesis/manual_operacion_humana.md`, `00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`, `00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`, `00_sistema_tesis/documentacion_sistema/flujos_operativos.md`, `00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`, `00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`, `00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/hipotesis.yaml`, `00_sistema_tesis/config/bloques.yaml`, `00_sistema_tesis/config/dashboard.yaml`, `00_sistema_tesis/config/ia_gobernanza.yaml`, `00_sistema_tesis/config/publicacion.yaml`, `01_planeacion/backlog.csv`, `01_planeacion/riesgos.csv`, `01_planeacion/roadmap.csv`, `01_planeacion/entregables.csv`, `00_sistema_tesis/decisiones`, `00_sistema_tesis/bitacora`, `00_sistema_tesis/reportes_semanales`, `02_experimentos`, `04_implementacion`, `05_tesis`
 
@@ -104,4 +104,4 @@ graph LR
 - La wiki debe reflejar directorios vacíos como cobertura pendiente, sin inventar contenido.
 - Toda salida debe poder regenerarse de forma determinista desde scripts versionados.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-25`._

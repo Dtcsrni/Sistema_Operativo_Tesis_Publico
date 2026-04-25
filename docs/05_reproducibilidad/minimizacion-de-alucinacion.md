@@ -5,4 +5,4 @@
 - Etiquetar pendientes de validacion.
 - No inventar DOI, pinouts ni compatibilidades.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

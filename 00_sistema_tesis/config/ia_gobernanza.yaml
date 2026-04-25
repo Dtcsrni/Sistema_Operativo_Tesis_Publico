@@ -70,6 +70,22 @@
     "criterio": "Las reglas aplican igual a asistentes conversacionales, copilotos de código, generadores de texto, herramientas de búsqueda y automatizadores con IA.",
     "dependencia_de_proveedor": "No se asume proveedor único ni integración específica."
   },
+  "politica_de_herramientas_prioritarias": {
+    "proposito": "Reducir ruido, reforzar contexto compacto y evitar que un agente empiece desde una ruta más costosa o menos gobernada de la necesaria.",
+    "orden_normal": [
+      "caveman",
+      "serena-local",
+      "serena-local-py",
+      "filesystem"
+    ],
+    "criterio": "Caveman fija el modo operativo conciso del agente; Serena aporta contexto compacto y gobernanza cuando el perfil recomendado del workspace está disponible; filesystem queda como respaldo operativo.",
+    "reglas": [
+      "Intentar Caveman primero para fijar estilo y control de ruido.",
+      "Intentar Serena después como primera capa de contexto compacto cuando el perfil activo del host esté disponible y recomendado.",
+      "Si Serena no está disponible, intentar restaurarla antes de degradar a filesystem.",
+      "No asumir que un backend saludable equivale a un perfil expuesto en el workspace."
+    ]
+  },
   "registro_de_uso": {
     "obligatorio": true,
     "donde_registrar": "00_sistema_tesis/bitacora",

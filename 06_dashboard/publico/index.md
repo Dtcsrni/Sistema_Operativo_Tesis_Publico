@@ -2,9 +2,9 @@
 
 Definir la exportación pública sanitizada, legible y reproducible del sistema operativo de tesis, exponiendo por defecto artefactos públicos y redirigiendo solo contenido verdaderamente sensible.
 
-- **Generado:** `2026-04-13`
+- **Generado:** `2026-04-25`
 - **Estado:** `ok`
-- **Fingerprint del bundle:** `0bd646f67c7d7c81bcc234b30b88bf8ffbca5d9061e6c1b200287d39821a55d8`
+- **Fingerprint del bundle:** `d18d9f67293f8a25abdf4a38ddd8dfd292c50ba4ac63d5b10c10eeec117d3339`
 - **Aviso:** Este bundle público es un artefacto derivado y curado editorialmente. No se corrige a mano; se reconstruye desde la base canónica.
 
 ## Superficies
@@ -92,4 +92,4 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 - `wiki/index.md`
 - `manifest_publico.json`
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-25`._

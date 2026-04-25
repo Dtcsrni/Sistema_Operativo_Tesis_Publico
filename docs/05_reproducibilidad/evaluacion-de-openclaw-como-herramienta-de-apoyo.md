@@ -2,4 +2,4 @@
 
 Criterios: utilidad practica, productividad, calidad documental, trazabilidad, costo operativo, riesgo de alucinacion, aceptabilidad etica.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

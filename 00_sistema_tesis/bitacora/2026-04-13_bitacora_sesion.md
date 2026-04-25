@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-13
 
 - **ID de Sesión:** codex-local-20260413-actions-public-sync-v1
-- **Cadena de Confianza (Anterior):** `sha256/b6bb0a4f687d25bacee917f82e0460cfb8a24a509ada876b9db757b59c307c9a`
+- **Cadena de Confianza (Anterior):** `sha256/4b55a651b58d01cc3b5e6c7852dd91934ba35daea1daa5371b254f2045a433f1`
 - **Bloque principal:** B1
 - **Tipo de sesión:** validación | administración | publicación
 
@@ -18,7 +18,7 @@ Verificar el estado real de GitHub Actions, corregir la compuerta CI hasta elimi
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Aislar y corregir el fallo reproducible de `pytest` en la compuerta CI.
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-- [ ] Registrar validación humana interna no pública, cerrar trazabilidad y publicar el estado actualizado.
+- [x] Registrar validación humana interna no pública, cerrar trazabilidad y publicar el estado actualizado.
   - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Trabajo realizado
@@ -70,4 +70,4 @@ Registrar validación humana interna no pública, ejecutar `build_all.py`, hacer
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

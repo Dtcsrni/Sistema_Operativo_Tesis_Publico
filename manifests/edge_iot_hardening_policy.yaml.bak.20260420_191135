@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "domain": "edge_iot",
+  "baseline": {
+    "firewall_enabled": true,
+    "incoming_default": "deny",
+    "outgoing_default": "allow",
+    "allow_incoming": ["ssh"],
+    "allow_outgoing": ["dns", "ntp", "https_actualizaciones"],
+    "deny_http_interdomain": true,
+    "fail2ban_enabled": true,
+    "fail2ban_jails": ["sshd"],
+    "disable_bluetooth": true,
+    "allow_root_login": false,
+    "password_authentication": false,
+    "ssh_login_user": "tesisai",
+    "ssh_admin_groups": ["adm", "sudo", "systemd-journal"],
+    "local_admin_sudo": "NOPASSWD:ALL",
+    "lock_default_orangepi_user": true,
+    "edge_runtime_user": "edgeiot",
+    "edge_directories": [
+      "/var/lib/edge-iot",
+      "/var/log/edge-iot",
+      "/srv/tesis/workspace/edge",
+      "/srv/tesis/intercambio/edge"
+    ]
+  }
+}

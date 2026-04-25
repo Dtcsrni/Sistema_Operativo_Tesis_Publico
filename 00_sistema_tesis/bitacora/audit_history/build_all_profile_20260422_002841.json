@@ -1,0 +1,379 @@
+{
+  "generated_at_utc": "20260422_002841",
+  "total_duration_seconds": 74.822,
+  "slow_stages": [],
+  "steps": [
+    {
+      "label": "Materializar proyecciones del canon",
+      "script": "07_scripts/tesis.py",
+      "args": [
+        "materialize"
+      ],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.681,
+      "budget_seconds": 10.0,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Auditar canon unificado",
+      "script": "07_scripts/tesis.py",
+      "args": [
+        "audit",
+        "--check"
+      ],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.959,
+      "budget_seconds": 10.0,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Auditar rotación de backups (dry-run)",
+      "script": "07_scripts/rotate_backups.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.487,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Sincronizar evidencia técnica",
+      "script": "07_scripts/sync_evidence.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.215,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Verificar Integridad del Sistema",
+      "script": "07_scripts/guardrails.py",
+      "args": [
+        "--verify"
+      ],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.272,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Auditoría de Seguridad Unificada",
+      "script": "07_scripts/security_audit.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 16.331,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Generar Badges de Seguridad",
+      "script": "07_scripts/generate_security_badges.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.056,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Generar portada README",
+      "script": "07_scripts/build_readme_portada.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.225,
+      "budget_seconds": 5.0,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Generar memoria operativa",
+      "script": "07_scripts/build_memory.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.178,
+      "budget_seconds": 5.0,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Validar memoria operativa",
+      "script": "07_scripts/validate_memory.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.173,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Validar estructura",
+      "script": "07_scripts/validate_structure.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.547,
+      "budget_seconds": 10.0,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Validar arquitectura B0 desktop-first",
+      "script": "07_scripts/validate_b0_architecture.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.133,
+      "budget_seconds": 10.0,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Auditar No-Hardcode Runtime",
+      "script": "07_scripts/verify_no_hardcoded_runtime.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.447,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Auditar Ledger IA",
+      "script": "07_scripts/verify_ledger.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.069,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Auditar Cadena de Bitácoras",
+      "script": "07_scripts/verify_bitacora_chain.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.094,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Auditar Estándares Externos",
+      "script": "07_scripts/verify_standards.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 2.671,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Autoauditoría documental",
+      "script": "07_scripts/document_audit.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.115,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Escaneo de secretos",
+      "script": "07_scripts/secret_scanner.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 13.101,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Verificar firma GPG",
+      "script": "07_scripts/setup_gpg_attestation.py",
+      "args": [
+        "--check"
+      ],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.098,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 1
+    },
+    {
+      "label": "Sincronizar presupuesto y uso de tokens",
+      "script": "07_scripts/build_token_usage_snapshot.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.113,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Generar wiki verificable",
+      "script": "07_scripts/build_wiki.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 11.064,
+      "budget_seconds": 20.0,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Validar wiki verificable",
+      "script": "07_scripts/validate_wiki.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.235,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Generar dashboard",
+      "script": "07_scripts/build_dashboard.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 5.225,
+      "budget_seconds": 20.0,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Sincronizar publicación pública sanitizada",
+      "script": "07_scripts/tesis.py",
+      "args": [
+        "publish",
+        "--build"
+      ],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.859,
+      "budget_seconds": 30.0,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Validar enlaces derivados y públicos",
+      "script": "07_scripts/validate_links.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 1.59,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Validar calidad editorial pública",
+      "script": "07_scripts/validate_public_text.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.331,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Verificar evidencia fuente de conversación",
+      "script": "07_scripts/tesis.py",
+      "args": [
+        "source",
+        "status",
+        "--check"
+      ],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.811,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Verificar operabilidad humana",
+      "script": "07_scripts/tesis.py",
+      "args": [
+        "doctor",
+        "--check"
+      ],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 3.132,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Exportar hoja maestra",
+      "script": "07_scripts/export_master_sheet.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.096,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Generar reporte de consistencia",
+      "script": "07_scripts/report_consistency.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.835,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Regenerar wiki verificable (post-dashboard)",
+      "script": "07_scripts/build_wiki.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 10.846,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Revalidar wiki verificable (post-dashboard)",
+      "script": "07_scripts/validate_wiki.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.222,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Revalidar enlaces derivados y públicos (post-dashboard)",
+      "script": "07_scripts/validate_links.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 1.473,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Revalidar calidad editorial pública (post-dashboard)",
+      "script": "07_scripts/validate_public_text.py",
+      "args": [],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.304,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    },
+    {
+      "label": "Validar publicación pública sanitizada",
+      "script": "07_scripts/tesis.py",
+      "args": [
+        "publish",
+        "--check"
+      ],
+      "started_at_utc": "2026-04-22",
+      "duration_seconds": 0.834,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0
+    }
+  ]
+}

@@ -61,6 +61,24 @@ La evidencia cruda vive en `evidencia privada no publicada/conversaciones_codex/
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260413-serena-auto-activate-v1 | ok |
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260413-actions-public-sync-v1 | ok |
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260413-closeout-impl-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260414-continue-ent014-ent015 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260420-caveman-serena-policy-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260420-trazabilidad-total-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260421-openclaw-telegram-trazabilidad-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260421-openclaw-telegram-chat-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260421-openclaw-telegram-adaptive-v2 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260421-dependabot-pytest-fix-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260421-implementa-ssh | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 01ab5c16-4c2f-43d8-b7ac-de4a90e374b1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260421-openclaw-telegram-image-approval-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260421-openclaw-edge-deploy-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260421-comfy-edge-tunnel-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 3be4104e-4d65-4712-90ae-9b7674e67342 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 647d09aa-7c58-4004-abdf-d7da5058fc9d | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | d3cb67b8-6a15-411d-8169-7ff9bdb0032a | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260423-serena-caveman-trace-doc-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260423-openclaw-pcfirst-matrix-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260424-openclaw-host-real-closeout-v1 | ok |
 
 **Navegación:**
 - [Volver al Ledger](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md)
@@ -70,4 +88,4 @@ La evidencia cruda vive en `evidencia privada no publicada/conversaciones_codex/
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

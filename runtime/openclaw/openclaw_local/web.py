@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .runtime_status import summarize_host
+from .session_layer import build_nodes_summary, build_provider_summary, ensure_channel_session, process_channel_text, touch_session
 
 try:
     from fastapi import FastAPI, Request
@@ -80,6 +81,8 @@ def create_app(
     store_summary: dict[str, Any],
     provider_registry: dict[str, Any],
     *,
+    repo_root: Path | None = None,
+    store: Any | None = None,
     academic_packets: list[dict[str, Any]] | None = None,
     approvals: list[dict[str, Any]] | None = None,
     runtime_status: dict[str, Any] | None = None,
@@ -93,19 +96,25 @@ def create_app(
 
     app = FastAPI(title="Espacio de trabajo local de OpenClaw")
     templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
+    root = repo_root or Path(__file__).resolve().parents[3]
+
+    def _live_store_summary() -> dict[str, Any]:
+        if store is None:
+            return store_summary
+        return store.audit_summary()
 
     @app.get("/", response_class=HTMLResponse)
     async def index(request: Request) -> Any:
         context = build_dashboard_context(
-            store_summary,
+            _live_store_summary(),
             provider_registry,
             academic_packets=academic_packets,
-            approvals=approvals,
+            approvals=store.list_pending_approvals() if store is not None else approvals,
             runtime_status=runtime_status,
             preflight=preflight,
             secret_status=secret_status,
             budget_status=budget_status,
-            billing_history=billing_history,
+            billing_history=store.list_billing_records(limit=10) if store is not None else billing_history,
         )
         context["request"] = request
         return templates.TemplateResponse("dashboard.html", context)
@@ -114,13 +123,107 @@ def create_app(
     async def health() -> Any:
         return {
             "status": "ok",
-            "store": store_summary,
+            "store": _live_store_summary(),
             "host": summarize_host(),
             "runtime_status": runtime_status or {},
             "preflight": preflight or {},
             "secret_status": secret_status or {},
             "budget_status": budget_status or {},
         }
+
+    @app.get("/nodes", response_class=JSONResponse)
+    async def nodes() -> Any:
+        return {"status": "ok", "nodes": build_nodes_summary(root)}
+
+    @app.get("/providers", response_class=JSONResponse)
+    async def providers() -> Any:
+        return {"status": "ok", "providers": build_provider_summary(root)}
+
+    @app.get("/sessions", response_class=JSONResponse)
+    async def sessions() -> Any:
+        if store is None:
+            return {"status": "error", "reason": "store_not_available"}
+        return {"status": "ok", "sessions": store.list_sessions(limit=100)}
+
+    @app.post("/sessions", response_class=JSONResponse)
+    async def create_session(request: Request) -> Any:
+        if store is None:
+            return {"status": "error", "reason": "store_not_available"}
+        payload = await request.json()
+        channel = str(payload.get("channel", "web_local")).strip() or "web_local"
+        peer_id = str(payload.get("peer_id", "web")).strip() or "web"
+        operator_identity = str(payload.get("operator_identity", peer_id)).strip() or peer_id
+        title_hint = str(payload.get("title", "")).strip() or f"{channel}:{peer_id}"
+        session = ensure_channel_session(
+            store=store,
+            channel=channel,
+            peer_id=peer_id,
+            operator_identity=operator_identity,
+            title_hint=title_hint,
+        )
+        if payload.get("title") or payload.get("payload"):
+            session = touch_session(store=store, session=session, title_hint=title_hint, payload_update=dict(payload.get("payload") or {}))
+        return {"status": "ok", "session": session}
+
+    @app.get("/sessions/{session_id}", response_class=JSONResponse)
+    async def session_detail(session_id: str) -> Any:
+        if store is None:
+            return {"status": "error", "reason": "store_not_available"}
+        session = store.get_session(session_id)
+        if session is None:
+            return {"status": "not_found", "session_id": session_id}
+        return {"status": "ok", "session": session, "messages": store.list_session_messages(session_id, limit=100)}
+
+    @app.post("/sessions/{session_id}/messages", response_class=JSONResponse)
+    async def session_message(session_id: str, request: Request) -> Any:
+        if store is None:
+            return {"status": "error", "reason": "store_not_available"}
+        session = store.get_session(session_id)
+        if session is None:
+            return {"status": "not_found", "session_id": session_id}
+        payload = await request.json()
+        text = str(payload.get("text", "")).strip()
+        if not text:
+            return {"status": "error", "reason": "empty_text"}
+        store.cache_context(
+            f"session:active:{session['channel']}:{session['peer_id']}",
+            {"session_id": session_id, "updated_at": session.get("updated_at", "")},
+        )
+        from .telegram_bot import dispatch_command  # noqa: WPS433
+
+        result = process_channel_text(
+            store=store,
+            repo_root=root,
+            channel=str(session["channel"]),
+            peer_id=str(session["peer_id"]),
+            text=text,
+            dispatcher=lambda command, argument: dispatch_command(command, argument, repo_root=root, store=store, chat_id=f"web:{session['peer_id']}"),
+            operator_identity=str(session.get("operator_identity", session.get("peer_id", "web"))),
+        )
+        return {"status": "ok", **result}
+
+    @app.post("/sessions/{session_id}/approve", response_class=JSONResponse)
+    async def approve_session(session_id: str, request: Request) -> Any:
+        if store is None:
+            return {"status": "error", "reason": "store_not_available"}
+        session = store.get_session(session_id)
+        if session is None:
+            return {"status": "not_found", "session_id": session_id}
+        payload = await request.json()
+        approval_id = str(payload.get("approval_id", "")).strip()
+        decision = str(payload.get("status", "approved")).strip() or "approved"
+        if approval_id:
+            store.mark_approval(approval_id, decision)
+        return {"status": "ok", "session_id": session_id, "approval_id": approval_id, "decision": decision}
+
+    @app.get("/traces/{trace_id}", response_class=JSONResponse)
+    async def trace_detail(trace_id: str) -> Any:
+        if store is None:
+            return {"status": "error", "reason": "store_not_available"}
+        for item in store.list_request_traces(limit=200):
+            if str(item.get("trace_id", "")) == trace_id:
+                return {"status": "ok", "trace": item}
+        return {"status": "not_found", "trace_id": trace_id}
 
     return app
 
@@ -222,6 +325,8 @@ def serve_workspace(
     store_summary: dict[str, Any],
     provider_registry: dict[str, Any],
     *,
+    repo_root: Path | None = None,
+    store: Any | None = None,
     academic_packets: list[dict[str, Any]] | None = None,
     approvals: list[dict[str, Any]] | None = None,
     runtime_status: dict[str, Any] | None = None,
@@ -236,6 +341,8 @@ def serve_workspace(
         app = create_app(
             store_summary,
             provider_registry,
+            repo_root=repo_root,
+            store=store,
             academic_packets=academic_packets,
             approvals=approvals,
             runtime_status=runtime_status,

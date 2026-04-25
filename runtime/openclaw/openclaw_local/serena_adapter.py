@@ -12,6 +12,10 @@ from urllib import request as urllib_request
 
 REQUIRED_TOOLS = {
     "context.fetch_compact",
+    "context.repo_map",
+    "context.fetch_changes",
+    "context.trace_lookup",
+    "context.session_brief",
     "governance.preflight",
     "artifacts.evaluate_serena",
     "artifacts.write_derived",
@@ -22,6 +26,10 @@ REQUIRED_TOOLS = {
 
 LEGACY_TOOL_ALIASES = {
     "context_fetch_compact": "context.fetch_compact",
+    "context_repo_map": "context.repo_map",
+    "context_fetch_changes": "context.fetch_changes",
+    "context_trace_lookup": "context.trace_lookup",
+    "context_session_brief": "context.session_brief",
     "governance_preflight": "governance.preflight",
     "artifacts_evaluate_serena": "artifacts.evaluate_serena",
     "artifacts_write_derived": "artifacts.write_derived",

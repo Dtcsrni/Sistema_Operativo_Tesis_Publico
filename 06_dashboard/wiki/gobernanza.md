@@ -3,7 +3,7 @@
 Políticas del sistema, soberanía humana, trazabilidad y disciplina de automatización responsable.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-14`
+- **Fecha:** `2026-04-25`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`, `00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`, `00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/ia_gobernanza.yaml`, `00_sistema_tesis/config/publicacion.yaml`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -114,4 +114,4 @@ Políticas del sistema, soberanía humana, trazabilidad y disciplina de automati
 - El ledger detallado, la matriz interna completa, las transcripciones y la evidencia fuente permanecen fuera de la superficie pública.
 - La arquitectura IoT se describe hasta el marco canónico vigente; los pendientes abiertos deben mostrarse como pendientes y no como diseño cerrado.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

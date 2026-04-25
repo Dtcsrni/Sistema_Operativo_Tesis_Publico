@@ -22,4 +22,4 @@ Fuente maquina-legible: `manifests/storage_layout.yaml`.
 - No compartir bases de datos, caches o logs entre dominios.
 - La observabilidad se recolecta localmente y no depende de nube.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

@@ -11,12 +11,12 @@
     "profesional": {
       "daily_ratio": 0.30,
       "weekly_ratio": 0.25,
-      "providers": ["ollama_local", "groq_api", "openai_api"]
+      "providers": ["ollama_local", "pc_native_llamacpp", "desktop_compute", "groq_api", "openai_api", "gemini_web_assisted", "chatgpt_plus_web_assisted"]
     },
     "academico": {
       "daily_ratio": 0.55,
       "weekly_ratio": 0.60,
-      "providers": ["ollama_local", "groq_api", "gemini_api", "gemini_web_assisted", "openai_api", "chatgpt_plus_web_assisted"]
+      "providers": ["ollama_local", "pc_native_llamacpp", "desktop_compute", "groq_api", "gemini_api", "gemini_web_assisted", "openai_api", "chatgpt_plus_web_assisted"]
     },
     "edge": {
       "daily_ratio": 0.05,

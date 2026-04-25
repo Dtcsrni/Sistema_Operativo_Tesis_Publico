@@ -4,4 +4,4 @@ Fuentes maquina-legibles: `manifests/public_private_sync_policy.yaml` y `manifes
 
 La capa publica es derivada, sanitizada y no editable a mano.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

@@ -4,4 +4,4 @@ Campos minimos: `record_id`, `tema`, `pregunta`, `fuente`, `anio`, `doi`, `nivel
 
 Criterio: cada fila debe permitir rastrear una afirmacion o decision del sistema de tesis hacia evidencia verificable.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

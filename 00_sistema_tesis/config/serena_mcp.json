@@ -69,6 +69,34 @@
       "write_scope": "read_only",
       "requires_step_id": false
     },
+    "context.repo_map": {
+      "enabled": true,
+      "description": "Entrega un mapa compacto de rutas relevantes dentro de los read_roots permitidos.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "context.fetch_changes": {
+      "enabled": true,
+      "description": "Resume cambios git actuales y diffs acotados para reducir carga de contexto.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "context.trace_lookup": {
+      "enabled": true,
+      "description": "Consulta compacta de trazabilidad en bitacora, matriz y decisiones del canon.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "context.session_brief": {
+      "enabled": true,
+      "description": "Genera un brief de sesion con mapa repo, cambios y trazas relevantes.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
     "governance.preflight": {
       "enabled": true,
       "description": "Clasifica la operación y devuelve requisitos de gobernanza antes de actuar.",

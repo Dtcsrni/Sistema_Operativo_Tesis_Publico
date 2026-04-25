@@ -453,14 +453,14 @@ def main() -> int:
             "Ruta humana principal, separación privado/público y bundle sanitizado derivado",
         ],
         [
-            "Presupuesto de tokens API",
+            "Presupuesto de tokens local",
             " ".join(
                 [
                     source_link("token_budget.json", "00_sistema_tesis/config/token_budget.json"),
                     source_link("token_usage_snapshot.json", "00_sistema_tesis/config/token_usage_snapshot.json"),
                 ]
             ),
-            "Presupuestos diarios/semanales, consumo real sincronizado y recomendaciones de accion",
+            "Presupuestos diarios/semanales, consumo local estimado o sincronizado si existe API y recomendaciones de accion",
         ],
     ]
 
@@ -492,7 +492,7 @@ def main() -> int:
         <strong data-token-remaining-display>{daily_tokens_remaining}</strong>
       </article>
       <article>
-        <span>Uso API hoy</span>
+        <span>Uso local hoy</span>
         <strong data-token-ratio-display>{format_ratio(daily_tokens_ratio)}</strong>
       </article>
     </div>
@@ -559,7 +559,7 @@ def main() -> int:
     <a href="#hipotesis-activas">Hipótesis</a>
     <a href="#economia-uso">Economía</a>
     <a href="#politica-modelos">Modelos</a>
-    <a href="#presupuesto-tokens-api">Cuota API</a>
+    <a href="#presupuesto-tokens-local">Cuota local</a>
     <a href="#matriz-tareas">Matriz</a>
     <a href="#backlog-prioritario">Backlog</a>
     <a href="#riesgos-abiertos">Riesgos</a>
@@ -730,8 +730,8 @@ def main() -> int:
       <p class="trace-row">Fuentes: {source_link("ia_gobernanza.yaml", "00_sistema_tesis/config/ia_gobernanza.yaml")} {source_link("bitacora/", "00_sistema_tesis/bitacora")} {source_link("reportes_semanales/", "00_sistema_tesis/reportes_semanales")}</p>
     </section>
 
-    <section id="presupuesto-tokens-api" class="panel panel-highlight" data-group="ia">
-      <h2>Presupuesto y Consumo API (diario/semanal)</h2>
+    <section id="presupuesto-tokens-local" class="panel panel-highlight" data-group="ia">
+      <h2>Presupuesto y consumo local (diario/semanal)</h2>
       <p class="tag">Estado de sincronizacion: {escape(token_snapshot_status)} | {escape(token_generated_at)} | TZ: {escape(token_source_tz)}</p>
       <p>{escape(token_snapshot_message)}</p>
       {render_table(

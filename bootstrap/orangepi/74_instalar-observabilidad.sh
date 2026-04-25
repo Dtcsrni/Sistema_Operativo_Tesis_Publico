@@ -11,6 +11,18 @@ sudo install -d /etc/systemd/system/prometheus.service.d
 sudo install -d /etc/systemd/system/prometheus-node-exporter.service.d
 sudo install -d /var/lib/node_exporter/textfile_collector
 sudo install -d /var/lib/tesis-observabilidad
+sudo install -d -m 0750 /var/log/tesis-admin
+sudo install -d -m 0750 /var/log/tesis-os
+sudo touch /var/log/tesis-admin/prometheus.log
+sudo touch /var/log/tesis-admin/node-exporter.log
+sudo touch /var/log/tesis-admin/observability-collector.log
+sudo touch /var/log/tesis-admin/tesis-backup.log
+sudo touch /var/log/tesis-os/tesis-healthcheck.log
+sudo touch /var/log/tesis-os/tesis-sync.log
+sudo chown tesisadmin:observabilidad /var/log/tesis-admin /var/log/tesis-admin/*.log
+sudo chown tesis:tesis /var/log/tesis-os /var/log/tesis-os/*.log
+sudo chmod 0640 /var/log/tesis-admin/*.log
+sudo chmod 0640 /var/log/tesis-os/*.log
 
 sudo install -m 0644 "${REPO_ROOT}/config/prometheus/prometheus.yml" /etc/prometheus/prometheus.yml
 sudo install -m 0644 "${REPO_ROOT}/config/logrotate/tesis-observabilidad" /etc/logrotate.d/tesis-observabilidad

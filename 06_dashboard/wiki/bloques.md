@@ -6,7 +6,7 @@
 Bloques macro del sistema y sus criterios de salida.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-14`
+- **Fecha:** `2026-04-25`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/config/bloques.yaml`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -102,4 +102,4 @@ graph LR
 |B9|Reproducibilidad y versión sanitizada pública|no_iniciado|media|B0, B7, B8|Se cuenta con una ruta reproducible para publicar materiales sanitizados sin romper la canonicidad privada del repositorio.|
 |B10|Cierre, defensa y transferencia|no_iniciado|media|B8, B9|La tesis, la defensa y los artefactos de cierre quedan completos, versionados y listos para consulta futura.|
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

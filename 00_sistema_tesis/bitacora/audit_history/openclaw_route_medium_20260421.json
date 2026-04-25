@@ -1,0 +1,32 @@
+{
+  "decision": {
+    "domain": "academico",
+    "risk_level": "low",
+    "requires_human_gate": false,
+    "provider": "ollama_local",
+    "mode": "local_model",
+    "model_class": "local_rag_and_summary",
+    "estimated_cost": 0.0,
+    "estimated_tokens": 900,
+    "budget_bucket": "academico",
+    "credential_scope": "academico.env",
+    "billing_mode": "estimated",
+    "session_mode": "local_runtime",
+    "fallback_chain": [
+      "local",
+      "offline",
+      "manual"
+    ],
+    "reason": "Proveedor seleccionado: ollama_local para dominio academico. Evaluación: ollama_local: seleccionado"
+  },
+  "serena": {
+    "enabled": true,
+    "mode": "auto",
+    "status": "skipped",
+    "tool_invocations": [],
+    "available": false,
+    "transport": "",
+    "references": [],
+    "reason": "heuristica_desactivada"
+  }
+}

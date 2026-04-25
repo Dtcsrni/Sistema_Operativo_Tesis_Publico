@@ -5,8 +5,12 @@ REPO_ROOT="${OPENCLAW_REPO_ROOT:-/srv/tesis/repo}"
 PYTHON_BIN="${OPENCLAW_PYTHON_BIN:-python3}"
 HOST="${OPENCLAW_HOST:-127.0.0.1}"
 PORT="${OPENCLAW_PORT:-18789}"
+OFFICIAL_ENABLED="${OPENCLAW_OFFICIAL_GATEWAY_ENABLED:-0}"
 
-if command -v openclaw >/dev/null 2>&1; then
+if [[ "${OFFICIAL_ENABLED}" =~ ^(1|true|yes|on)$ ]] && command -v openclaw >/dev/null 2>&1; then
+  export HOME="${OPENCLAW_OFFICIAL_HOME:-${OPENCLAW_DATA_DIR:-/var/lib/herramientas/openclaw}}"
+  export NPM_CONFIG_FUND=false
+  export NPM_CONFIG_AUDIT=false
   exec openclaw pasarela servir --host "${HOST}" --puerto "${PORT}"
 fi
 

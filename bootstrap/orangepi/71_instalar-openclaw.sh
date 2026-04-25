@@ -24,7 +24,8 @@ if ! id -u tesis >/dev/null 2>&1; then
   sudo useradd --system --gid tesis --home-dir /srv/tesis --create-home --shell /usr/sbin/nologin tesis
 fi
 
-sudo install -d -o tesis -g tesis /etc/tesis-os "${DOMAINS_DIR}" /var/lib/herramientas/openclaw /var/cache/herramientas/openclaw /var/log/openclaw
+sudo install -d -o tesis -g tesis /etc/tesis-os "${DOMAINS_DIR}"
+sudo install -d -o openclaw -g openclaw /var/lib/herramientas/openclaw /var/cache/herramientas/openclaw /var/log/openclaw
 sudo install -d -o tesis -g tesis /opt/tesis-os/venvs
 
 sudo python3 -m venv "${OPENCLAW_VENV}"
@@ -32,6 +33,9 @@ sudo "${OPENCLAW_VENV}/bin/pip" install --upgrade pip
 if [ -f "${REPO_ROOT}/runtime/openclaw/requirements-web.txt" ]; then
   sudo "${OPENCLAW_VENV}/bin/pip" install -r "${REPO_ROOT}/runtime/openclaw/requirements-web.txt"
 fi
+sudo install -d -o openclaw -g openclaw /var/lib/herramientas/openclaw/ms-playwright
+sudo -u openclaw env HOME=/var/lib/herramientas/openclaw PLAYWRIGHT_BROWSERS_PATH=/var/lib/herramientas/openclaw/ms-playwright \
+  "${OPENCLAW_VENV}/bin/python" -m playwright install chromium || true
 
 if [ ! -f "${OPENCLAW_ENV}" ]; then
   sudo install -m 0640 "${REPO_ROOT}/config/env/openclaw.env.example" "${OPENCLAW_ENV}"
@@ -49,6 +53,7 @@ required = {
     "OPENCLAW_DB_PATH": "/var/lib/herramientas/openclaw/openclaw.db",
     "OPENCLAW_PYTHON_BIN": "/opt/tesis-os/venvs/openclaw/bin/python",
     "OPENCLAW_DOMAINS_ENV_DIR": "/etc/tesis-os/domains",
+    "PLAYWRIGHT_BROWSERS_PATH": "/var/lib/herramientas/openclaw/ms-playwright",
 }
 lines = []
 seen = set()
@@ -89,12 +94,20 @@ install_domain_env administrativo tesisadmin tesisadmin
 
 sudo chown tesis:tesis "${OPENCLAW_ENV}"
 sudo chmod 0640 "${OPENCLAW_ENV}"
+sudo chown -R openclaw:openclaw /var/lib/herramientas/openclaw /var/cache/herramientas/openclaw /var/log/openclaw
+sudo chmod 0750 /var/lib/herramientas/openclaw /var/cache/herramientas/openclaw /var/log/openclaw
 sudo systemctl daemon-reload
 sudo systemctl enable openclaw-gateway.service
 sudo systemctl restart openclaw-gateway.service || true
 
 export OPENCLAW_REPO_ROOT="/srv/tesis/repo"
 export OPENCLAW_PYTHON_BIN="${OPENCLAW_VENV}/bin/python"
+if [ -f "${OPENCLAW_ENV}" ]; then
+  set -a
+  # shellcheck disable=SC1090
+  . "${OPENCLAW_ENV}"
+  set +a
+fi
 bash "${REPO_ROOT}/tests/smoke/test_openclaw.sh" || true
 
 registrar_estado "ok" "openclaw instalado con entorno Python, env efectivo y servicio habilitado"

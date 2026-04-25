@@ -3,7 +3,10 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import socket
+import subprocess
 import sys
+import time
 from pathlib import Path
 from typing import Any
 from urllib import error as urllib_error
@@ -20,6 +23,10 @@ from runtime.serena_bridge.bridge import load_bridge_config  # noqa: E402
 
 EXPECTED_TOOLS = [
     "context.fetch_compact",
+    "context.repo_map",
+    "context.fetch_changes",
+    "context.trace_lookup",
+    "context.session_brief",
     "governance.preflight",
     "artifacts.evaluate_serena",
     "artifacts.write_derived",
@@ -107,12 +114,15 @@ def inspect_log(root: Path) -> dict[str, Any]:
     if not path.exists():
         return {"exists": False}
     text = path.read_text(encoding="utf-8", errors="replace")
+    def _tool_seen(name: str) -> bool:
+        alias = name.replace(".", "_")
+        return name in text or alias in text
     return {
         "exists": True,
         "path": str(path),
         "has_initialize": '"method":"initialize"' in text or "HANDLE method=initialize" in text,
         "has_tools_list": '"method":"tools/list"' in text or "HANDLE method=tools/list" in text,
-        "has_canonical_tools": all(tool in text for tool in EXPECTED_TOOLS),
+        "has_canonical_tools": all(_tool_seen(tool) for tool in EXPECTED_TOOLS),
         "has_vscode_client": "Visual Studio Code" in text,
     }
 
@@ -243,12 +253,82 @@ def recommendations(report: dict[str, Any]) -> list[str]:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Verifica acceso local a Serena y aclara la frontera entre VS Code y este runtime.")
     parser.add_argument("--json", action="store_true", help="Emite el reporte completo como JSON.")
+    parser.add_argument(
+        "--attempt-start-http",
+        action="store_true",
+        help="Si `serena-local` esta en el workspace y el endpoint HTTP no responde, intenta levantarlo en 127.0.0.1:8765.",
+    )
     return parser.parse_args()
 
 
-def main() -> int:
-    args = parse_args()
+def _port_open(host: str, port: int, timeout: float = 0.3) -> bool:
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        sock.settimeout(timeout)
+        return sock.connect_ex((host, port)) == 0
+
+
+def attempt_start_http(root: Path, workspace_profiles: dict[str, bool]) -> dict[str, Any]:
+    report: dict[str, Any] = {
+        "attempted": False,
+        "started": False,
+        "status": "skipped",
+        "reason": "",
+    }
+    if not workspace_profiles.get("serena-local", False):
+        report["reason"] = "serena-local no esta publicado en .vscode/mcp.json"
+        return report
+    report["attempted"] = True
+    if _port_open("127.0.0.1", 8765):
+        report["status"] = "already_listening"
+        report["reason"] = "El puerto 8765 ya esta escuchando."
+        return report
+    python_bin = detect_python_bin(root)
+    server_script = root / "07_scripts" / "serena_mcp.py"
+    env = dict(os.environ)
+    env["SISTEMA_TESIS_ROOT"] = str(root)
+    process = subprocess.Popen(
+        [
+            python_bin,
+            "-u",
+            str(server_script),
+            "--transport",
+            "http",
+            "--host",
+            "127.0.0.1",
+            "--port",
+            "8765",
+        ],
+        cwd=root,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        start_new_session=True,
+        env=env,
+    )
+    deadline = time.time() + 4.0
+    while time.time() < deadline:
+        if _port_open("127.0.0.1", 8765):
+            report["started"] = True
+            report["status"] = "started"
+            report["reason"] = "Servidor HTTP Serena levantado."
+            report["pid"] = process.pid
+            return report
+        time.sleep(0.25)
+    if process.poll() is None:
+        process.terminate()
+        try:
+            process.wait(timeout=1)
+        except subprocess.TimeoutExpired:
+            process.kill()
+    report["status"] = "failed"
+    report["reason"] = "No se logro levantar Serena HTTP en 4s."
+    return report
+
+
+def collect_report(*, attempt_start_http_if_needed: bool = False) -> dict[str, Any]:
     workspace_config = read_mcp_config(ROOT)
+    startup: dict[str, Any] = {}
+    if attempt_start_http_if_needed:
+        startup = attempt_start_http(ROOT, workspace_config.get("profiles", {}))
     report = {
         "repo_root": str(ROOT),
         "mcp_workspace_config": workspace_config,
@@ -260,8 +340,18 @@ def main() -> int:
         "bridge": bridge_report(ROOT),
         "runtime_boundary": build_runtime_boundary(workspace_config.get("profiles", {})),
     }
+    if startup:
+        report["startup"] = startup
+        if startup.get("started"):
+            report["profiles"]["serena-local"] = profile_report(ROOT, "http")
     report["effective_access"] = build_effective_access(report)
     report["recommendations"] = recommendations(report)
+    return report
+
+
+def main() -> int:
+    args = parse_args()
+    report = collect_report(attempt_start_http_if_needed=args.attempt_start_http)
     if args.json:
         print(json.dumps(report, ensure_ascii=False, indent=2))
         return 0
@@ -274,6 +364,16 @@ def main() -> int:
         f"serena-local={report['mcp_workspace_config']['profiles'].get('serena-local', False)} "
         f"serena-local-py={report['mcp_workspace_config']['profiles'].get('serena-local-py', False)}"
     )
+    startup = report.get("startup", {})
+    if startup:
+        print(
+            "- Startup HTTP: "
+            f"attempted={startup.get('attempted', False)} "
+            f"status={startup.get('status', 'unknown')} "
+            f"reason={startup.get('reason', '')}"
+        )
+        if startup.get("status") in {"started", "already_listening"}:
+            print("HTTP_READY http://127.0.0.1:8765/mcp")
     for profile_name in ("serena-local-py", "serena-local"):
         profile = report["profiles"][profile_name]
         health = profile["healthcheck"]

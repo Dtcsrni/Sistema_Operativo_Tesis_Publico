@@ -40,6 +40,7 @@ class ProviderDecision:
     session_mode: str
     fallback_chain: list[str]
     reason: str
+    reasoning_quality: str = "basic"
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -198,6 +199,122 @@ class BenchmarkRecord:
 
 
 @dataclass(slots=True)
+class RequestTrace:
+    trace_id: str
+    task_id: str
+    channel: str
+    command: str
+    request_kind: str
+    complexity: str
+    selected_provider: str
+    selected_model: str
+    fallback_reason: str
+    parse_ms: float | None
+    profile_ms: float | None
+    semantic_ms: float | None
+    routing_ms: float | None
+    web_search_ms: float | None
+    provider_ms: float | None
+    delivery_ms: float | None
+    total_ms: float | None
+    prompt_chars: int
+    prompt_tokens_est: int
+    payload: dict[str, Any]
+    created_at: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(slots=True)
+class SessionEnvelope:
+    session_id: str
+    channel: str
+    peer_id: str
+    operator_identity: str
+    target_node: str
+    provider_policy: str
+    premium_auto: bool
+    status: str
+    title: str
+    task_profile: str
+    payload: dict[str, Any]
+    created_at: str
+    updated_at: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(slots=True)
+class SessionMessage:
+    message_id: str
+    session_id: str
+    direction: str
+    channel: str
+    command: str
+    text: str
+    provider: str
+    model: str
+    status: str
+    payload: dict[str, Any]
+    created_at: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(slots=True)
+class ProviderProbe:
+    probe_id: str
+    provider: str
+    status: str
+    latency_ms: float | None
+    error_code: str
+    payload: dict[str, Any]
+    created_at: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(slots=True)
+class QualityEvalResult:
+    eval_id: str
+    task_id: str
+    domain: str
+    question: str
+    answer: str
+    expected_sources: list[str]
+    used_sources: list[str]
+    supported_claims: int
+    partially_supported_claims: int
+    unsupported_claims: int
+    groundedness_score: float | None
+    faithfulness_score: float | None
+    status: str
+    payload: dict[str, Any]
+    created_at: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(slots=True)
+class NodeBenchmarkReport:
+    report_id: str
+    node: str
+    status: str
+    p50_latency_ms: float | None
+    p95_latency_ms: float | None
+    payload: dict[str, Any]
+    created_at: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(slots=True)
 class SecretResolution:
     resolution_id: str
     domain: str
@@ -237,6 +354,44 @@ class BudgetSnapshot:
     domain: str
     payload: dict[str, Any]
     created_at: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(slots=True)
+class VoiceMessageArtifact:
+    artifact_id: str
+    chat_id: str
+    source: str
+    source_file_id: str
+    source_path: str
+    source_mime_type: str
+    duration_seconds: int | None
+    language_code: str
+    transcript_text: str
+    transcript_provider: str
+    transcript_model: str
+    transcript_confidence: float | None
+    tts_provider: str
+    tts_model: str
+    tts_voice: str
+    reply_audio_path: str
+    created_at: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(slots=True)
+class VoiceSessionState:
+    chat_id: str
+    enabled: bool
+    style: str
+    turn_count: int
+    last_transcript: str
+    last_response: str
+    updated_at: str
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

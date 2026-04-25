@@ -3,7 +3,7 @@
 Registro de decisiones de arquitectura, método y operación.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-14`
+- **Fecha:** `2026-04-25`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/decisiones`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -48,6 +48,7 @@ Registro de decisiones de arquitectura, método y operación.
 
 ## Decisiones registradas
 
+- `2026-04-21` [DEC-0024 Operacion ChatGPT Plus sin API en Tesista Directo](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-21_DEC-0024_operacion_chatgpt_plus_sin_api_en_tesista_directo.md)
 - `2026-04-08` [DEC-0023 Serena MCP como Capa Comun para Agentes](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-08_DEC-0023_serena_mcp_como_capa_comun_para_agentes.md)
 - `2026-04-08` [DEC-0022 Arquitectura Operativa Escritorio Primario y Orange Pi Edge](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-08_DEC-0022_arquitectura_operativa_escritorio_primario_y_orange_pi_edge.md)
 - `2026-03-27` [DEC-0021 Publicacion desde Downstream Publico Sanitizado](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0021_publicacion_desde_downstream_publico_sanitizado.md)
@@ -72,4 +73,4 @@ Registro de decisiones de arquitectura, método y operación.
 - `2026-03-23` [DEC-0002 Gobernanza de IA instrumental y registro de uso](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-23_DEC-0002_gobernanza_ia_instrumental.md)
 - `2026-03-23` [DEC-0001 Arquitectura base del sistema operativo de tesis](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-23_DEC-0001_arquitectura_sistema_tesis.md)
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-25`._

@@ -5,4 +5,4 @@
 - Que contradicciones existen?
 - Que cambia en el diseño o en la hipotesis?
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

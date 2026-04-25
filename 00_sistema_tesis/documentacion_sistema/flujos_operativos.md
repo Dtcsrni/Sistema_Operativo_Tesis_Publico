@@ -219,7 +219,47 @@ Salida esperada:
 - runtime externo consumiendo el mismo contrato `serena-local`;
 - auth minima activa;
 - misma gobernanza que el MCP local;
-- traza diferenciada del host llamador.
+- traza diferenciada del host llamador;
+
+## Flujo 13. Trabajar con Caveman y Serena como politica base
+
+Objetivo: mantener el modo de trabajo conciso de Caveman y la primera capa de contexto de Serena como comportamiento normal para cualquier agente de IA en el repo.
+
+Secuencia:
+
+1. Verificar que `caveman` resuelva en el shell con `command -v caveman`.
+2. Confirmar que `caveman --help` responda y usar Caveman como modo base de ejecución y redacción.
+3. Verificar el estado de Serena con `python3 07_scripts/check_serena_access.py --json`.
+4. Si `serena-local` esta disponible y recomendado, usarlo primero para `context.fetch_compact` y `governance.preflight`.
+5. Si Serena no esta disponible, restaurarla primero antes de degradar a filesystem-only.
+6. Ejecutar `python 07_scripts/build_all.py` al cerrar cambios de politica o infraestructura.
+
+Salida esperada:
+
+- Caveman disponible y usado como modo base;
+- Serena usada como primera capa de contexto cuando el perfil recomendado este disponible;
+- trazabilidad y auditoria actualizadas sin perder la ruta operativa principal.
+
+## Flujo 14. Operar OpenClaw con PC-first y Matrix soberano
+
+Objetivo: usar OpenClaw como capa asistiva sin mover la autoria principal fuera del escritorio ni degradar el edge a nodo pesado por defecto.
+
+Secuencia:
+
+1. Levantar o verificar el runtime pesado de la PC con `llama.cpp server` y confirmar `OPENCLAW_DESKTOP_RUNTIME=llamacpp`.
+2. Confirmar en `pasarela estado` que `nodes.desktop.runtime=llamacpp` y que el edge mantiene su runtime local ligero.
+3. Operar sesiones desde `CLI`, `web_local`, `matrix` o `telegram`; todos los canales deben pasar por la misma `session-layer`.
+4. Mantener `Matrix` como plano remoto principal y `Telegram` solo como compatibilidad, fallback o notificacion.
+5. Si la PC no esta disponible, permitir degradacion explicita a `ollama_local` o `local`, sin promover nube por defecto.
+6. Si una tarea requiere nube premium, exigir politica de sesion compatible y traza del cambio de carril.
+7. Registrar y revisar trazas, fallback reasons, proveedor/modelo efectivos y aprobaciones antes de cerrar la operacion.
+
+Salida esperada:
+
+- carril pesado resuelto por la PC principal;
+- edge conservando continuidad 24/7 y relay remoto;
+- canales alineados sobre un mismo contrato de sesion;
+- politica `desktop-first` visible, verificable y auditable.
 
 ## Regla transversal
 
@@ -229,4 +269,4 @@ Todo flujo del sistema debe cumplir tres condiciones:
 - tener una salida humana legible;
 - poder distinguir entre superficie canónica no pública y superficie publica.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

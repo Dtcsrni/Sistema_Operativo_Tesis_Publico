@@ -26,4 +26,4 @@ OpenClaw no es prerequisito del sistema base ni del pipeline edge.
 - `edge_iot`: usuario `edgeiot`, sin acceso directo a canon, publicación ni SQLite de `openclaw`, con runtime de resiliencia en `/var/lib/edge-iot/runtime`.
 - La fuente máquina-legible incorpora `usuario`, `grupo`, `read_only_paths`, `read_write_paths`, `network_profile` y `hardening`.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

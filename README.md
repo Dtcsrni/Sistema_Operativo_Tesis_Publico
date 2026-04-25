@@ -122,9 +122,9 @@ Empieza por estos archivos:
 
 ## Decisiones recientes
 
+- **2026-04-21** · [DEC-0024 Operacion ChatGPT Plus sin API en Tesista Directo](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-21_DEC-0024_operacion_chatgpt_plus_sin_api_en_tesista_directo.md)
 - **2026-04-08** · [DEC-0023 Serena MCP como Capa Comun para Agentes](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-08_DEC-0023_serena_mcp_como_capa_comun_para_agentes.md)
 - **2026-04-08** · [DEC-0022 Arquitectura Operativa Escritorio Primario y Orange Pi Edge](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-08_DEC-0022_arquitectura_operativa_escritorio_primario_y_orange_pi_edge.md)
-- **2026-03-27** · [DEC-0021 Publicacion desde Downstream Publico Sanitizado](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0021_publicacion_desde_downstream_publico_sanitizado.md)
 
 ## Operación
 
@@ -218,6 +218,6 @@ python 07_scripts/report_consistency.py
 - [`06_dashboard/generado/hoja_maestra_consolidada.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/hoja_maestra_consolidada.csv)
 - [`reporte interno no publicado`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
 
-_Generado automáticamente el 2026-04-14._
+_Generado automáticamente el 2026-04-23._
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

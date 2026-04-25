@@ -1,0 +1,96 @@
+# Espacio de Trabajo Local de OpenClaw
+
+## Objetivo
+Ofrecer una superficie híbrida CLI + web para operar `openclaw` en Orange Pi sin convertirlo en prerrequisito del sistema.
+
+## Flujo mínimo
+1. Ejecutar `python runtime/openclaw/bin/openclaw_local.py doctor`.
+2. Registrar una tarea con `tarea nueva` o evaluarla con `tarea enrutar`.
+3. Correr `ejecutar --simulacion` para generar evidencia y, si corresponde, solicitud de aprobación.
+4. Revisar aprobaciones pendientes.
+5. Levantar la pasarela local con `pasarela servir` cuando existan dependencias web instaladas.
+6. Verificar readiness local con `proveedor estado`, `proveedor medir`, `secretos estado`, `presupuesto estado`, `pasarela preflight` y `pasarela estado`.
+
+## Serena MCP en OpenClaw
+- `OpenClaw` consume `serena-local` como capacidad auxiliar de contexto y gobernanza; no participa en el `provider_registry` ni reemplaza el ruteo de modelos.
+- Cuando una tarea tiene `target_paths`, contexto documental, riesgo alto o modo académico, el CLI intenta usar Serena automáticamente.
+- La salida JSON de `tarea nueva`, `tarea enrutar`, `ejecutar` y `academico ...` incluye un bloque `serena` con disponibilidad, herramientas invocadas, referencias recuperadas y resultado de preflight.
+- Si Serena no está disponible, `OpenClaw` degrada solo en flujos de lectura o `--simulacion`; cuando Serena es obligatoria o la operación pretende mutar artefactos, el comando falla con estado explícito.
+- Si `governance.preflight` devuelve `blocked`, el bloqueo se conserva en la salida y se anota también en el resumen de aprobación humana.
+- Este adapter no vuelve accesible a Serena para cualquier chat externo por defecto; el host o runtime que quiera invocarlo debe registrar el MCP o consumir un bridge explicito.
+
+## Configuración del adapter Serena
+- `OPENCLAW_SERENA_ENABLED=1|0`: activa o desactiva la heurística automática.
+- `OPENCLAW_SERENA_MODE=auto|required|off`: política por defecto del adapter interno.
+- `OPENCLAW_SERENA_TRANSPORT=http|stdio`: transporte preferido del cliente interno.
+- `OPENCLAW_SERENA_URL=http://127.0.0.1:8765/mcp`: endpoint HTTP cuando se usa `http`.
+- `OPENCLAW_SERENA_SCRIPT=/ruta/a/07_scripts/serena_mcp.py`: script local cuando se usa `stdio`.
+- `OPENCLAW_SERENA_PYTHON=/ruta/a/python`: intérprete para lanzar `serena_mcp.py`.
+- `OPENCLAW_SERENA_TIMEOUT_MS=4000`: timeout por llamada.
+- Por comando, `--modo-serena auto|required|off` permite exigir Serena, apagarla o dejar la heurística por defecto.
+- Para diagnostico rapido del host local fuera de OpenClaw, usar `python 07_scripts/check_serena_access.py`.
+- Default operativo recomendado en Orange Pi: `OPENCLAW_SERENA_ENABLED=1`, `OPENCLAW_SERENA_MODE=auto` y `OPENCLAW_SERENA_TRANSPORT=http`.
+- `stdio` queda reservado como ruta diagnostica local y no como transporte normal del workspace.
+
+## Flujos académicos v1
+- `python runtime/openclaw/bin/openclaw_local.py academico estado-del-arte --id-tarea ... --archivo-entrada-json <archivo.json>`
+- `python runtime/openclaw/bin/openclaw_local.py academico metodologia --id-tarea ... --archivo-entrada-json <archivo.json>`
+- `python runtime/openclaw/bin/openclaw_local.py academico redaccion --id-tarea ... --archivo-entrada-json <archivo.json> --escribir-artefactos`
+- `python runtime/openclaw/bin/openclaw_local.py academico exportar-propuesta --id-tarea ...`
+
+## Observabilidad local
+- Log de servicio: `/var/log/openclaw/openclaw-gateway.log`
+- Métricas de dominio: `/var/lib/node_exporter/textfile_collector/openclaw.prom`
+- Scraping local vía `node_exporter` en `127.0.0.1:9100`
+- `Prometheus` vive en `127.0.0.1:9090` y retiene 90 días en esta fase.
+
+## Despliegue local en Orange Pi
+- El entorno efectivo se instala en `/etc/tesis-os/openclaw.env`.
+- Los secretos por dominio viven en `/etc/tesis-os/domains/`.
+- El estado local vive en `/var/lib/herramientas/openclaw`.
+- El cache local vive en `/var/cache/herramientas/openclaw`.
+- Los logs operativos viven en `/var/log/openclaw`.
+- El intercambio con otros dominios vive solo en `/srv/tesis/intercambio/openclaw`.
+- El runtime principal es `Ollama`; la vía `RKLLM`/`RKNN-LLM` se instala como carril experimental secundario.
+- La Orange Pi aloja `openclaw` como nodo asistivo local-first; no sustituye al escritorio como superficie principal de investigación documental.
+- No usar `OPENCLAW_PROFILE=academico` como habilitación amplia: el comportamiento efectivo depende del dominio de la tarea, secretos disponibles, presupuesto y riesgo.
+- Orden operativo por defecto para el asistente científico:
+  1. `local`
+  2. `ollama_local`
+  3. `desktop_compute` para tareas academicas/profesionales pesadas cuando la PC este disponible
+  4. nube academica/profesional solo con `OPENCLAW_CLOUD_ENABLED=1` o permiso explicito por tarea
+  5. `rknn_llm_experimental` solo tras benchmark exitoso y decisión explícita
+- En la fase local-first actual, `OPENCLAW_CLOUD_ENABLED=0` es el valor esperado.
+- `OPENCLAW_DESKTOP_COMPUTE_BASE_URL` debe apuntar a `127.0.0.1` en el escritorio o a un tunel SSH controlado desde `tesis-edge`; en la Orange Pi el puerto recomendado es `127.0.0.1:21434` para no colisionar con su Ollama local.
+- `OPENCLAW_DESKTOP_COMPUTE_AUTH_MODE=ssh_tunnel` indica que la barrera de autenticacion v1 es SSH con llave dedicada y listener en localhost.
+- `OPENCLAW_NPU_AUTO_PROMOTE=0` debe mantenerse en la instalación inicial; la NPU no se promociona automáticamente aunque el benchmark sea mejor.
+- `pasarela preflight` debe pasar antes de habilitar `openclaw-gateway.service`.
+
+## Selección local de modelos medida 2026-04-21
+- Evidencia PC principal post-WSL: `00_sistema_tesis/bitacora/audit_history/openclaw_max_model_bench_pc_post_wsl_20260421.json`.
+- Evidencia PC comparativa pre-WSL: `00_sistema_tesis/bitacora/audit_history/openclaw_max_model_bench_pc_20260421.json`.
+- Evidencia Orange Pi CPU: `00_sistema_tesis/bitacora/audit_history/openclaw_max_model_bench_edge_20260421.json`.
+- PC `desktop_compute`: usar `mistral-nemo:12b` como modelo pesado diario; usar `qwen2.5-coder:14b` para tareas de código; tratar `qwen3:14b` y `phi4:14b` como techo experimental/agresivo.
+- Orange Pi por Ollama CPU: mantener `qwen2.5:0.5b` como fallback mínimo; usar `gemma3:4b` como candidato diario medido; tratar `qwen2.5-coder:7b` como techo experimental controlado.
+- Evitar `qwen3:4b` como modelo de respuesta mínima en edge: arrancó, pero la plantilla `thinking` no respetó el prompt mínimo y elevó latencia.
+- La medición PC posterior a `wsl --shutdown` aplicó `.wslconfig`: WSL pasó a 11.68 GiB visibles y 16 GiB de swap; la VRAM base bajó a ~1271 MiB usados antes de cargar modelos.
+- RKNN/RKLLM sigue en carril experimental: hay `librknnrt.so`, `librkllmrt.so` y `rknn_server`, pero no se observó `/dev/rknpu*` ni demo RKLLM preconvertido listo. No promover NPU hasta tener device/permisos/modelo `.rkllm` y benchmark TTFT/tokens/s/memoria.
+
+## Aislamiento T-030
+- `openclaw-gateway.service` corre bajo `openclaw:openclaw`.
+- `openclaw` no comparte SQLite, cache ni logs con `sistema_tesis` ni `edge_iot`.
+- `openclaw` no expone API interdominio; solo escucha en `localhost`.
+- Toda entrega a `sistema_tesis` sale por drafts, spool local o CLI explícita.
+
+## Secretos y presupuesto
+- `python runtime/openclaw/bin/openclaw_local.py secretos estado` reporta dominios, proveedores permitidos y faltantes sin exponer valores.
+- `python runtime/openclaw/bin/openclaw_local.py presupuesto estado` consolida snapshot global y gasto local de `openclaw`.
+- `python runtime/openclaw/bin/openclaw_local.py presupuesto simular --dominio academico --proveedor gemini_api` permite validar degradación antes de ejecutar una tarea.
+- Las sesiones `gemini_web_assisted` y `chatgpt_plus_web_assisted` se clasifican como supervisadas por humano y usan costo estimado/manual.
+- `academico` y `profesional` son dominios híbridos controlados; `personal`, `edge` y `administrativo` permanecen local/offline.
+- Antes de habilitar nube en uso real por SSH, validar baseline local con `doctor`, `proveedor estado`, `pasarela preflight` y `pasarela estado`.
+
+## Gate humano
+- Toda mutación de estado, publicación o cambio de arquitectura exige aprobación humana.
+- La salida de `openclaw` se considera propuesta operativa hasta revisión humana.
+- La evidencia fuente y el `Step ID` se preservan fuera de la cola automática.

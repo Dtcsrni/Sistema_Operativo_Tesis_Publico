@@ -37,9 +37,16 @@ Este repositorio es un **Sistema Operativo de Tesis de Posgrado** gobernado por 
 - Distingue entre backend sano y perfil expuesto: si `check_serena_access.py` indica que un transporte esta saludable pero no publicado en `.vscode/mcp.json`, no lo uses como base operativa normal.
 - Si Serena no esta disponible o no esta recomendado para el host activo, sigue trabajando con el filesystem del repo y deja constancia del bloqueo operativo en la salida de trabajo.
 
+## 6. Política Caveman
+- Usa Caveman como modo operativo base de cualquier agente de IA en este repositorio antes de iniciar trabajo técnico: `command -v caveman` debe resolver y `caveman --help` debe estar disponible.
+- Si Caveman no esta disponible al inicio o durante la sesion, intenta activarlo o restaurarlo primero por la ruta global del host antes de degradar a texto genérico o a flujo filesystem-only.
+- Trata la disponibilidad shell de `caveman` como el punto de entrada de estilo y control de ruido; no la confundas con la capa de contexto del repositorio.
+- Cuando Caveman y Serena coexistan, la secuencia normal es: Caveman como modo de trabajo conciso, Serena como primera capa de contexto compacto y gobernanza cuando el perfil recomendado este disponible, y filesystem solo como respaldo.
+- No sobreentiendas que `caveman` resuelve por sí solo la política del repo: la enforcement real sigue viniendo de AGENTS, los hooks y la documentación operativa.
+
 ---
 **Firmado:**
 Erick Renato Vega Ceron (Tesista Soberano)
 2026-03-24
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._

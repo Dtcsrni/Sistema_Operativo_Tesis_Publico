@@ -51,12 +51,82 @@ def test_openclaw_doctor_reports_domains_and_store(tmp_path: Path) -> None:
 
     payload = json.loads(result.stdout)
     assert payload["status"] == "ok"
-    assert payload["deployment_state"] == "ollama_ready"
+    assert payload["deployment_state"] in {"ollama_ready", "npu_experimental_ready"}
     assert "academico" in payload["domains"]
     assert "local" in payload["proveedores"]
     assert payload["store"]["db_path"].endswith("openclaw.db")
     assert payload["secretos"]["domains"]["academico"]["providers"]["gemini_api"]["status"] == "ready"
     assert "gemini-acad" not in result.stdout
+
+
+def test_openclaw_web_session_status_reports_manual_login_policy(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path)
+    env["OPENCLAW_WEB_SESSION_USER_DATA_DIR"] = str(tmp_path / "web-session-profile")
+    env["OPENCLAW_TELEGRAM_CHAT_PROVIDER"] = "chatgpt_plus_web_session"
+
+    result = subprocess.run(
+        [PYTHON_BIN, str(CLI), "sesion-web", "estado"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["provider"] == "chatgpt_plus_web_session"
+    assert payload["provider_supported"] is True
+    assert payload["user_data_dir"] == env["OPENCLAW_WEB_SESSION_USER_DATA_DIR"]
+    assert payload["credential_policy"] == "manual_login_only_no_tokens_in_repo"
+
+
+def test_openclaw_web_session_login_requires_gui_or_x11_forwarding(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path)
+    env["OPENCLAW_WEB_SESSION_USER_DATA_DIR"] = str(tmp_path / "web-session-profile")
+    env.pop("DISPLAY", None)
+    env.pop("WAYLAND_DISPLAY", None)
+
+    result = subprocess.run(
+        [PYTHON_BIN, str(CLI), "sesion-web", "login", "--timeout", "5"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert result.returncode == 1
+    assert payload["status"] == "error"
+    assert payload["detail"] == "web_session_requires_gui_or_x11_forwarding"
+    assert payload["web_session"]["gui_session_available"] is False
+
+
+def test_openclaw_gateway_notify_ready_skips_without_credentials(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path)
+    env["OPENCLAW_TELEGRAM_ENABLED"] = "0"
+
+    result = subprocess.run(
+        [
+            PYTHON_BIN,
+            str(CLI),
+            "pasarela",
+            "notificar-listo",
+            "--mensaje",
+            "OpenClaw listo para ordenes.",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["status"] == "skipped"
+    assert payload["channel"] == "telegram"
 
 
 def test_openclaw_run_dry_run_creates_approval_for_mutation(tmp_path: Path) -> None:
@@ -99,10 +169,62 @@ def test_openclaw_run_dry_run_creates_approval_for_mutation(tmp_path: Path) -> N
     assert payload["dry_run"] is True
     assert payload["decision"]["requires_human_gate"] is True
     assert payload["approval_id"].startswith("APR-")
-    assert payload["decision"]["provider"] == "gemini_api"
+    assert payload["decision"]["provider"] == "desktop_compute"
+    if payload["serena"]["status"] != "ok":
+        print(f"\nSERENA FAILURE IN {payload['task']['task_id']}: {payload['serena'].get('error')}")
+        print(f"SERENA HEALTH: {payload['serena'].get('healthcheck')}")
     assert payload["serena"]["status"] == "ok"
     assert "context.fetch_compact" in payload["serena"]["tool_invocations"]
     assert "governance.preflight" in payload["serena"]["tool_invocations"]
+
+
+def test_openclaw_matrix_status_reports_not_configured(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path)
+
+    result = subprocess.run(
+        [PYTHON_BIN, str(CLI), "matrix", "estado"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert result.returncode == 1
+    assert payload["status"] == "not_configured"
+
+
+def test_openclaw_matrix_process_creates_session(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path)
+    env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
+    env["OPENCLAW_DESKTOP_RUNTIME"] = "llamacpp"
+    env["OPENCLAW_FORCE_LLAMACPP_READY"] = "1"
+
+    result = subprocess.run(
+        [
+            PYTHON_BIN,
+            str(CLI),
+            "matrix",
+            "procesar",
+            "--room-id",
+            "!room:test",
+            "--sender",
+            "@alice:test",
+            "--texto",
+            "/estado",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["status"] == "ok"
+    assert payload["session_id"].startswith("OCS-")
 
 
 def test_openclaw_run_blocks_when_serena_is_required_and_unavailable(tmp_path: Path) -> None:
@@ -349,6 +471,9 @@ def test_openclaw_academic_literature_builds_packet_and_cache(tmp_path: Path) ->
     assert payload["task"]["extra_context"]["academic_mode"] == "estado_del_arte"
     assert payload["cache_hit"] is False
     assert "matriz-de-literatura.md" in " ".join(payload["artifacts"])
+    if payload["serena"]["status"] != "ok":
+        print(f"\nSERENA FAILURE IN {payload['task']['task_id']}: {payload['serena'].get('error')}")
+        print(f"SERENA HEALTH: {payload['serena'].get('healthcheck')}")
     assert payload["serena"]["status"] == "ok"
     assert payload["serena"]["references"]
 
@@ -561,8 +686,38 @@ def test_openclaw_provider_status_and_benchmark_reflect_local_runtimes(tmp_path:
 
     assert status_payload["runtime_status"]["state"] == "npu_experimental_ready"
     assert benchmark_payload["active_runtime"] == "ollama_local"
-    assert benchmark_payload["recommended_runtime"] == "rknn_llm_experimental"
+    assert benchmark_payload["recommended_runtime"] == "ollama_local"
     assert status_payload["secretos"]["domains"]["profesional"]["providers"]["groq_api"]["status"] == "ready"
+
+
+def test_openclaw_provider_benchmark_can_promote_npu_only_when_enabled(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path / "openclaw")
+    env["OPENCLAW_CACHE_DIR"] = str(tmp_path / "cache")
+    env["OPENCLAW_LOG_DIR"] = str(tmp_path / "log")
+    env["OPENCLAW_ENV_FILE"] = str(tmp_path / "openclaw.env")
+    env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
+    env["OPENCLAW_FORCE_OLLAMA_READY"] = "1"
+    env["OPENCLAW_FORCE_NPU_READY"] = "1"
+    env["OPENCLAW_BENCHMARK_SIMULATION"] = "1"
+    env["OPENCLAW_NPU_AUTO_PROMOTE"] = "1"
+    Path(env["OPENCLAW_CACHE_DIR"]).mkdir(parents=True)
+    Path(env["OPENCLAW_LOG_DIR"]).mkdir(parents=True)
+    Path(env["OPENCLAW_ENV_FILE"]).write_text("OPENCLAW_PORT=18789\n", encoding="utf-8")
+
+    benchmark = subprocess.run(
+        [PYTHON_BIN, str(CLI), "proveedor", "medir"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    benchmark_payload = json.loads(benchmark.stdout)
+
+    assert benchmark_payload["active_runtime"] == "ollama_local"
+    assert benchmark_payload["recommended_runtime"] == "rknn_llm_experimental"
 
 
 def test_openclaw_gateway_preflight_fails_without_env_file(tmp_path: Path) -> None:
@@ -646,3 +801,55 @@ def test_openclaw_presupuesto_estado_y_simulacion(tmp_path: Path) -> None:
     assert "global" in status_payload
     assert simulate_payload["domain"] == "academico"
     assert simulate_payload["provider"] == "gemini_api"
+
+
+def test_openclaw_diagnostico_medir_persists_node_report(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path / "openclaw")
+    env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
+    env["OPENCLAW_BENCHMARK_SIMULATION"] = "1"
+    env["OPENCLAW_FORCE_OLLAMA_READY"] = "1"
+
+    result = subprocess.run(
+        [PYTHON_BIN, str(CLI), "diagnostico", "medir", "--node", "tesis-edge"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["status"] == "ok"
+    assert payload["node"] == "tesis-edge"
+    assert "report_id" in payload
+
+
+def test_openclaw_diagnostico_report_exports_otel_jsonl(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path / "openclaw")
+    env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
+    env["OPENCLAW_TELEGRAM_EDGE_MODEL"] = "qwen3:4b"
+
+    subprocess.run(
+        [PYTHON_BIN, str(CLI), "diagnostico", "medir"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    destination = tmp_path / "otel" / "traces.jsonl"
+    result = subprocess.run(
+        [PYTHON_BIN, str(CLI), "diagnostico", "reporte", "--json", "--otel-jsonl", str(destination)],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["status"] == "ok"
+    assert payload["otel_export"]["status"] == "ok"
+    assert destination.exists()

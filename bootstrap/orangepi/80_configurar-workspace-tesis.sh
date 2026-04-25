@@ -64,6 +64,23 @@ sudo chown -R tesis:tesis /srv/tesis/repo /srv/tesis/workspace /srv/tesis/output
 sudo chown -R openclaw:observabilidad /var/lib/herramientas/openclaw /var/cache/herramientas/openclaw /var/log/openclaw /srv/tesis/workspace/openclaw /srv/tesis/intercambio/openclaw
 sudo chown -R edgeiot:observabilidad /var/lib/edge-iot /var/log/edge-iot /srv/tesis/workspace/edge /srv/tesis/intercambio/edge
 sudo chown -R tesisadmin:observabilidad /var/lib/tesis-admin /var/log/tesis-admin /var/lib/node_exporter/textfile_collector /var/lib/tesis-observabilidad
+sudo touch \
+  /var/log/tesis-os/tesis-healthcheck.log \
+  /var/log/tesis-os/tesis-sync.log \
+  /var/log/tesis-admin/tesis-backup.log \
+  /var/log/tesis-admin/prometheus.log \
+  /var/log/tesis-admin/node-exporter.log \
+  /var/log/tesis-admin/observability-collector.log \
+  /var/log/edge-iot/edge-iot-worker.log \
+  /var/log/edge-iot/edge-iot-watchdog.log \
+  /var/log/openclaw/openclaw-gateway.log
+sudo chown tesis:tesis /var/log/tesis-os/tesis-healthcheck.log /var/log/tesis-os/tesis-sync.log
+sudo chown tesisadmin:observabilidad /var/log/tesis-admin/tesis-backup.log /var/log/tesis-admin/prometheus.log /var/log/tesis-admin/node-exporter.log /var/log/tesis-admin/observability-collector.log
+sudo chown edgeiot:observabilidad /var/log/edge-iot/edge-iot-worker.log /var/log/edge-iot/edge-iot-watchdog.log
+sudo chown openclaw:observabilidad /var/log/openclaw/openclaw-gateway.log
+sudo chmod 0640 /var/log/tesis-os/tesis-healthcheck.log /var/log/tesis-os/tesis-sync.log
+sudo chmod 0640 /var/log/tesis-admin/tesis-backup.log /var/log/tesis-admin/prometheus.log /var/log/tesis-admin/node-exporter.log /var/log/tesis-admin/observability-collector.log
+sudo chmod 0640 /var/log/edge-iot/edge-iot-worker.log /var/log/edge-iot/edge-iot-watchdog.log /var/log/openclaw/openclaw-gateway.log
 sudo chmod 0750 /var/lib/herramientas/openclaw /var/cache/herramientas/openclaw /var/log/openclaw /srv/tesis/intercambio/openclaw /srv/tesis/intercambio/edge /srv/tesis/workspace/edge /var/log/edge-iot /var/log/tesis-admin
 sudo chmod 0755 /var/lib/node_exporter/textfile_collector
 sudo mkdir -p /mnt/emmc/backups/reports /mnt/emmc/snapshots/sistema_tesis /mnt/emmc/snapshots/openclaw /mnt/emmc/snapshots/edge_iot

@@ -6,6 +6,7 @@ Este directorio contiene la capa operativa del sistema. La CLI canónica es `07_
 
 ### 1. Retomar el proyecto
 ```powershell
+python 07_scripts/check_agent_tooling.py
 python 07_scripts/tesis.py status
 python 07_scripts/tesis.py next
 python 07_scripts/tesis.py doctor
@@ -81,6 +82,7 @@ python 07_scripts/tesis.py split-staged --commit
 ## Scripts de soporte
 
 - `build_all.py`: auditoría integral del sistema.
+- `check_agent_tooling.py`: diagnóstico conjunto de `caveman` y Serena para fijar el modo de trabajo conciso y la primera capa de contexto.
 - `check_serena_access.py`: verifica la salud técnica de `serena-local` por `http` y de `serena-local-py` por `stdio`, distingue perfiles expuestos en el workspace vs backends solo saludables, y comprueba si `serena-local` sigue disponible como ruta operativa esperada del workspace.
 - `runtime/serena_bridge/bin/serena_bridge.py`: expone Serena MCP por HTTP autenticado para runtimes externos compatibles.
 - `build_wiki.py`: genera wiki verificable Markdown y HTML.
@@ -105,4 +107,4 @@ python 07_scripts/tesis.py split-staged --commit
 - La IA es opcional; la operación principal debe seguir siendo legible para humanos.
 - Si un cambio afecta gobernanza, arquitectura o método, registra decisión y vuelve a auditar.
 
-_Última actualización: `2026-04-14`._
+_Última actualización: `2026-04-25`._
