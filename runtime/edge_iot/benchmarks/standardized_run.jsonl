@@ -1,0 +1,4 @@
+{"category": "decision", "task": "Decisi\u00f3n Cr\u00edtica", "mean_latency_ms": 154.32, "std_dev_lat": 5.04, "moe_lat": 1.4, "p95_latency": 162.33, "mean_tps": 9.52, "sample_size": 50}
+{"category": "extraction", "task": "Extracci\u00f3n IoT", "mean_latency_ms": 120.49, "std_dev_lat": 5.5, "moe_lat": 1.53, "p95_latency": 128.42, "mean_tps": 11.91, "sample_size": 50}
+{"category": "rag", "task": "RAG Contextual", "mean_latency_ms": 119.97, "std_dev_lat": 5.19, "moe_lat": 1.44, "p95_latency": 127.95, "mean_tps": 12.01, "sample_size": 50}
+{"category": "code", "task": "L\u00f3gica Embebida", "mean_latency_ms": 121.44, "std_dev_lat": 5.3, "moe_lat": 1.47, "p95_latency": 129.53, "mean_tps": 11.97, "sample_size": 50}

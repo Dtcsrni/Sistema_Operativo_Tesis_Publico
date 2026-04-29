@@ -1,0 +1,85 @@
+{
+  "version": "1.0",
+  "providers": [
+    {
+      "id": "local",
+      "mode": "local_rules",
+      "model_class": "rules_or_local_model",
+      "billing_mode": "estimated",
+      "session_mode": "local_runtime",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 0,
+      "domains": ["personal", "profesional", "academico", "edge", "administrativo"]
+    },
+    {
+      "id": "ollama_local",
+      "mode": "local_model",
+      "model_class": "local_rag_and_summary",
+      "billing_mode": "estimated",
+      "session_mode": "local_runtime",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 900,
+      "domains": ["profesional", "academico"]
+    },
+    {
+      "id": "rknn_llm_experimental",
+      "mode": "npu_experimental_secondary",
+      "model_class": "local_rag_and_summary",
+      "billing_mode": "estimated",
+      "session_mode": "local_runtime",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 700,
+      "domains": ["profesional", "academico"]
+    },
+    {
+      "id": "groq_api",
+      "mode": "cloud_api",
+      "model_class": "cloud_assisted_low_cost",
+      "billing_mode": "api_measured",
+      "session_mode": "direct_api_call",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 800,
+      "domains": ["profesional", "academico"]
+    },
+    {
+      "id": "gemini_api",
+      "mode": "cloud_api",
+      "model_class": "cloud_assisted_mid_cost",
+      "billing_mode": "api_measured",
+      "session_mode": "direct_api_call",
+      "estimated_cost_usd": 0.05,
+      "estimated_tokens": 1400,
+      "domains": ["academico"]
+    },
+    {
+      "id": "gemini_web_assisted",
+      "mode": "cloud_web_assisted",
+      "model_class": "cloud_assisted_mid_cost",
+      "billing_mode": "manual_web_assisted",
+      "session_mode": "human_supervised_web_session",
+      "estimated_cost_usd": 0.02,
+      "estimated_tokens": 1200,
+      "domains": ["academico"]
+    },
+    {
+      "id": "openai_api",
+      "mode": "cloud_api",
+      "model_class": "cloud_assisted_premium",
+      "billing_mode": "api_measured",
+      "session_mode": "direct_api_call",
+      "estimated_cost_usd": 0.25,
+      "estimated_tokens": 1800,
+      "domains": ["profesional", "academico"]
+    },
+    {
+      "id": "chatgpt_plus_web_assisted",
+      "mode": "cloud_web_assisted",
+      "model_class": "cloud_assisted_premium",
+      "billing_mode": "manual_web_assisted",
+      "session_mode": "human_supervised_web_session",
+      "estimated_cost_usd": 0.03,
+      "estimated_tokens": 1600,
+      "domains": ["profesional", "academico"]
+    }
+  ]
+}

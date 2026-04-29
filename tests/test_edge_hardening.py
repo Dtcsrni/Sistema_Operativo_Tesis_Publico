@@ -20,6 +20,15 @@ def test_edge_hardening_policy_declares_expected_controls() -> None:
     assert baseline["fail2ban_enabled"] is True
     assert baseline["allow_root_login"] is False
     assert baseline["password_authentication"] is False
+    assert baseline["ssh_login_user"] == "tesisai"
+    assert baseline["ssh_allowed_users"] == ["ErickV", "tesisai"]
+    assert baseline["ssh_admin_users"] == ["ErickV", "tesisai"]
+    assert baseline["ssh_admin_groups"] == ["adm", "sudo", "systemd-journal"]
+    assert baseline["local_admin_sudo"] == {
+        "ErickV": "NOPASSWD:ALL",
+        "tesisai": "NOPASSWD:ALL",
+    }
+    assert baseline["lock_default_orangepi_user"] is True
     assert baseline["edge_runtime_user"] == "edgeiot"
 
 
@@ -32,6 +41,21 @@ def test_edge_hardening_bootstrap_installs_policy_and_ssh_dropin() -> None:
     assert "fail2ban" in script
     assert "PermitRootLogin no" in script
     assert "PasswordAuthentication no" in script
+    assert "TESIS_EDGE_SSH_USER" in script
+    assert "TESIS_EDGE_ADMIN_USERS" in script
+    assert "AllowUsers ${TESIS_EDGE_ADMIN_USERS}" in script
+    assert "/etc/sudoers.d/90-${admin_user}-edge" in script
+    assert "chage -E 1 orangepi" in script
+
+
+def test_primer_arranque_locks_default_orangepi_user_and_adds_admin_groups() -> None:
+    script = (ROOT / "bootstrap/orangepi/10_primer-arranque.sh").read_text(encoding="utf-8")
+
+    assert "TESIS_EDGE_ADMIN_USERS" in script
+    assert "TESIS_EDGE_ADMIN_GROUPS" in script
+    assert "usermod -aG" in script
+    assert "passwd -l orangepi" in script
+    assert "usermod -s /usr/sbin/nologin orangepi" in script
 
 
 def test_postcheck_runs_edge_hardening_smoke() -> None:
@@ -50,3 +74,4 @@ def test_edge_hardening_documentation_matches_policy() -> None:
     assert "fail2ban" in doc
     assert "ssh" in doc
     assert "T-032" in doc
+    assert "tesis-edge" in doc

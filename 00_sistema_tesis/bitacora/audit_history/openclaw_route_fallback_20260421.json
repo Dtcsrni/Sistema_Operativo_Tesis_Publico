@@ -1,0 +1,46 @@
+{
+  "decision": {
+    "domain": "academico",
+    "risk_level": "medium",
+    "requires_human_gate": false,
+    "provider": "ollama_local",
+    "mode": "local_model",
+    "model_class": "local_rag_and_summary",
+    "estimated_cost": 0.0,
+    "estimated_tokens": 900,
+    "budget_bucket": "academico",
+    "credential_scope": "academico.env",
+    "billing_mode": "estimated",
+    "session_mode": "local_runtime",
+    "fallback_chain": [
+      "local",
+      "offline",
+      "manual"
+    ],
+    "reason": "Proveedor seleccionado: ollama_local para dominio academico. Evaluación: ollama_local: seleccionado"
+  },
+  "serena": {
+    "enabled": true,
+    "mode": "auto",
+    "status": "unavailable",
+    "tool_invocations": [],
+    "available": false,
+    "transport": "http",
+    "references": [],
+    "healthcheck": {
+      "status": "unavailable",
+      "error": "Serena HTTP no disponible en http://127.0.0.1:8765/mcp: [Errno 111] Connection refused",
+      "transport": "http",
+      "config": {
+        "transport": "http",
+        "timeout_ms": 4000,
+        "url": "http://127.0.0.1:8765/mcp",
+        "server_script": "",
+        "python_bin": "",
+        "auto_enabled": true
+      }
+    },
+    "error": "Serena HTTP no disponible en http://127.0.0.1:8765/mcp: [Errno 111] Connection refused",
+    "degraded": true
+  }
+}

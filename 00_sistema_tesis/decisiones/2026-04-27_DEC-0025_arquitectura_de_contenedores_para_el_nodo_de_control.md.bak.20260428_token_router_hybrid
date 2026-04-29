@@ -1,0 +1,86 @@
+<!-- SISTEMA_TESIS:PROTEGIDO -->
+<!-- GID: 2026-04-27_DEC-0025_ | Versión: 1.0.0 | Estado: Propuesta | Auditoría: [ ] -->
+
+# DEC-0025 Arquitectura de Contenedores para el Nodo de Control (PC Hub)
+
+- Fecha: 2026-04-27
+- Estado: propuesta
+- Alcance: arquitectura | infraestructura | operación
+- Relacionada con bloques: B0
+- Relacionada con decisiones: [DEC-0022], [DEC-0016]
+
+## Contexto
+
+Para garantizar la reproducibilidad del entorno de investigación y facilitar el despliegue distribuido entre el Escritorio Primario (PC) y el Nodo Edge (Orange Pi), es necesario estandarizar el runtime del sistema operativo de tesis. La ejecución directa sobre el host (Windows/WSL) presenta riesgos de derivas de dependencias y dificultades para el aislamiento de procesos de inteligencia (OpenClaw) y gobernanza (Dashboard).
+
+## Decisión
+
+Adoptar un stack de contenedores Docker para el Nodo de Control (PC Hub), estructurado de la siguiente manera:
+
+1.  **Servicio `siot-docs`**:
+    *   **Rol**: Servidor de gobernanza y visualización.
+    *   **Runtime**: Nginx (Alpine).
+    *   **Proceso**: Construye el dashboard estático mediante `build_all.py` durante el build de la imagen.
+    *   **Puerto**: 8080 (mapeado localmente).
+2.  **Servicio `siot-agent`**:
+    *   **Rol**: Agente de Inteligencia Operativa (OpenClaw).
+    *   **Runtime**: Python 3.12-slim.
+    *   **Dependencias**: FFmpeg, Playwright (Chromium).
+    *   **Persistencia**: Volúmenes compartidos para el Canon (`00_sistema_tesis`), Estado del Agente y Logs.
+3.  **Orquestación**:
+    *   Uso de `docker-compose.yml` para gestionar redes internas, volúmenes y variables de entorno.
+4.  **Resiliencia de Secretos**:
+    *   El agente debe ser capaz de arrancar y permanecer estable incluso si faltan secretos (como el Token de Telegram), operando en modo espera hasta que se provean.
+
+## Alternativas consideradas
+
+1.  Ejecución nativa en WSL (Rechazada por dificultad de replicación en otros hosts).
+2.  Contenedores individuales sin orquestación (Rechazada por complejidad de gestión de redes y volúmenes).
+3.  **Arquitectura de Microservicios Orquestados (Elegida).**
+
+## Criterio de elección
+
+Maximiza la portabilidad, el aislamiento de dependencias pesadas (como navegadores para RAG) y prepara la infraestructura para la sincronización nativa con el Nodo Edge.
+
+## Métricas de Éxito
+
+- [ ] Disponibilidad del Dashboard en `http://localhost:8080`.
+  - [ ] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+- [ ] Ejecución exitosa de `tests/test_docker_stack.py` dentro del contenedor.
+  - [ ] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+- [ ] Persistencia verificada del canon tras reinicio de contenedores.
+  - [ ] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+
+## Criterio de Aceptación Humana
+
+- [ ] El tesista aprueba la formalización de este stack de contenedores.
+  - [ ] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - **Soporte**: [VAL-STEP-706] (Pendiente de registro)
+  - **Pregunta crítica o disparador**: "¿Autorizas la formalización de DEC-0025 y la integración de Docker como estándar operativo del PC Hub?"
+
+## Consecuencias
+
+- **Positivas**: Entorno determinista, despliegue rápido, aislamiento de riesgos técnicos.
+- **Negativas**: Incremento en el consumo inicial de disco (imágenes Docker) y necesidad de gestionar el ciclo de vida de los contenedores.
+
+## Trazabilidad del trabajo asistido
+
+- **Proveedor**: Google (DeepMind)
+- **Modelo/Versión**: Gemini 1.5 Pro / Advanced Agentic Coding v1.0
+- **Agente/Rol**: Antigravity (Assistant)
+- **Nivel de Razonamiento**: alto
+
+## Implementación o seguimiento
+
+- [x] Crear `Dockerfile` para `siot-docs`.
+  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+- [x] Crear `Dockerfile.agent` para `siot-agent`.
+  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+- [x] Implementar `docker-compose.yml`.
+  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+- [x] Actualizar `manual_operacion_humana.md` con comandos Docker.
+  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+
+[LID]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md
+[GOV]: file:///v:/Sistema_Operativo_Tesis_Posgrado/00_sistema_tesis/config/ia_gobernanza.yaml
+[AUD]: file:///v:/Sistema_Operativo_Tesis_Posgrado/07_scripts/build_all.py

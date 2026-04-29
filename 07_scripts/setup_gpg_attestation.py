@@ -18,10 +18,10 @@ def get_gpg_path():
 
 def configure_git(gpg_path, key_id=None):
     try:
-        subprocess.run(["git", "config", "--global", "gpg.program", gpg_path], check=True)
-        subprocess.run(["git", "config", "--global", "commit.gpgsign", "true"], check=True)
+        subprocess.run(["git", "config", "--local", "gpg.program", gpg_path], check=True)
+        subprocess.run(["git", "config", "--local", "commit.gpgsign", "true"], check=True)
         if key_id:
-            subprocess.run(["git", "config", "--global", "user.signingkey", key_id], check=True)
+            subprocess.run(["git", "config", "--local", "user.signingkey", key_id], check=True)
         return True
     except Exception as e:
         print(f"[ERROR] No se pudo configurar Git: {e}")

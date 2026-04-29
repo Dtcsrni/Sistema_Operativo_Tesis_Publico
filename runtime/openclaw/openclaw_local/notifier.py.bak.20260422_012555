@@ -1,0 +1,115 @@
+from __future__ import annotations
+
+import json
+import os
+from typing import Any
+from urllib import error, parse, request
+
+
+def _env_enabled(name: str, default: bool) -> bool:
+    raw = os.getenv(name, "").strip().lower()
+    if not raw:
+        return default
+    return raw not in {"0", "false", "no", "off"}
+
+
+def _telegram_config_from_env() -> dict[str, str] | None:
+    if not _env_enabled("OPENCLAW_TELEGRAM_ENABLED", False):
+        return None
+    bot_token = os.getenv("OPENCLAW_TELEGRAM_BOT_TOKEN", "").strip()
+    chat_id = os.getenv("OPENCLAW_TELEGRAM_CHAT_ID", "").strip()
+    if not bot_token or not chat_id:
+        return None
+    return {"bot_token": bot_token, "chat_id": chat_id}
+
+
+def _telegram_timeout_seconds() -> int:
+    raw = os.getenv("OPENCLAW_TELEGRAM_TIMEOUT_SECONDS", "10").strip()
+    try:
+        value = int(raw)
+    except ValueError:
+        return 10
+    return max(1, min(value, 60))
+
+
+def send_telegram_message(
+    *,
+    bot_token: str,
+    chat_id: str,
+    text: str,
+    timeout_seconds: int,
+) -> tuple[bool, str]:
+    endpoint = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+    payload = parse.urlencode(
+        {
+            "chat_id": chat_id,
+            "text": text,
+            "disable_web_page_preview": "true",
+        }
+    ).encode("utf-8")
+    req = request.Request(endpoint, data=payload, method="POST")
+    req.add_header("Content-Type", "application/x-www-form-urlencoded")
+    try:
+        with request.urlopen(req, timeout=timeout_seconds) as response:
+            raw = response.read().decode("utf-8", errors="replace")
+    except error.URLError as exc:
+        return False, f"telegram_request_failed:{exc}"
+
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError:
+        return False, "telegram_response_not_json"
+
+    if not data.get("ok", False):
+        return False, f"telegram_api_error:{data.get('description', 'unknown')}"
+    return True, "sent"
+
+
+def dispatch_ready_notification(*, host: str, port: int, runtime_status: dict[str, Any]) -> dict[str, Any]:
+    if not _env_enabled("OPENCLAW_TELEGRAM_READY_ON_START", True):
+        return {"status": "skipped", "reason": "ready_notification_disabled"}
+
+    cfg = _telegram_config_from_env()
+    if cfg is None:
+        return {"status": "skipped", "reason": "telegram_not_configured"}
+
+    state = str(runtime_status.get("state", "unknown"))
+    active_runtime = str(runtime_status.get("active_runtime", "unknown"))
+    chat_provider = os.getenv("OPENCLAW_TELEGRAM_CHAT_PROVIDER", "web_session").strip().lower()
+    chat_model = os.getenv("OPENCLAW_TELEGRAM_CHAT_MODEL", "gpt-5.4").strip() or "gpt-5.4"
+    text = os.getenv(
+        "OPENCLAW_TELEGRAM_READY_MESSAGE",
+        "OpenClaw listo para ordenes.",
+    ).strip()
+    suffix = f"\nHost: {host}:{port}\nEstado: {state}\nRuntime base: {active_runtime}\nChat: {chat_provider} model={chat_model}"
+    ok, detail = send_telegram_message(
+        bot_token=cfg["bot_token"],
+        chat_id=cfg["chat_id"],
+        text=f"{text}{suffix}",
+        timeout_seconds=_telegram_timeout_seconds(),
+    )
+    return {
+        "status": "sent" if ok else "error",
+        "channel": "telegram",
+        "detail": detail,
+        "host": host,
+        "port": port,
+    }
+
+
+def dispatch_test_notification(*, message: str) -> dict[str, Any]:
+    cfg = _telegram_config_from_env()
+    if cfg is None:
+        return {"status": "skipped", "reason": "telegram_not_configured", "channel": "telegram"}
+
+    ok, detail = send_telegram_message(
+        bot_token=cfg["bot_token"],
+        chat_id=cfg["chat_id"],
+        text=message,
+        timeout_seconds=_telegram_timeout_seconds(),
+    )
+    return {
+        "status": "sent" if ok else "error",
+        "channel": "telegram",
+        "detail": detail,
+    }

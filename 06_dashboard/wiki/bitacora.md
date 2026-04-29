@@ -3,7 +3,7 @@
 Registro de sesiones, trabajo asistido y aprendizaje operativo.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-14`
+- **Fecha:** `2026-04-29`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/bitacora`, `00_sistema_tesis/reportes_semanales`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -54,6 +54,72 @@ Abre solo la bitácora que necesites y usa el enlace de archivo para navegar al 
 
 ### 2026-04
 
+??? "2026-04-25 - Bitácora de sesión 2026-04-25"
+
+    **Archivo completo:** [00_sistema_tesis/bitacora/2026-04-25_bitacora_sesion.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-04-25_bitacora_sesion.md)
+
+    **Resumen breve**
+
+    - **ID de Sesión:** antigravity-local-20260425-ci-cd-stabilization-v1
+    - **Cadena de Confianza (Anterior):** `sha256/e5e39470fb5fc24ac36a0d560817f34932bceb9f2c59188175f7ac8e14d08828`
+    - **Bloque principal:** B1
+    - **Tipo de sesión:** implementación | validación | infraestructura
+
+??? "2026-04-24 - Bitácora de sesión 2026-04-24"
+
+    **Archivo completo:** [00_sistema_tesis/bitacora/2026-04-24_bitacora_sesion.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-04-24_bitacora_sesion.md)
+
+    **Resumen breve**
+
+    - **ID de Sesión:** codex-local-20260424-openclaw-host-real-closeout-v1
+    - **Cadena de Confianza (Anterior):** `sha256/3efbcd9217b8002c1ebed7347e88420f36756532b2144746500e5e525db2d840`
+    - **Bloque principal:** B0
+    - **Tipo de sesión:** implementación | validación | administración | despliegue
+
+??? "2026-04-23 - Bitácora de sesión 2026-04-23"
+
+    **Archivo completo:** [00_sistema_tesis/bitacora/2026-04-23_bitacora_sesion.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-04-23_bitacora_sesion.md)
+
+    **Resumen breve**
+
+    - **ID de Sesión:** codex-local-20260423-openclaw-pcfirst-matrix-v1
+    - **Cadena de Confianza (Anterior):** `sha256/1009b20222a10bd74c57ae57e3b97e6639c093a403c26eab43dbe72a79b31289`
+    - **Bloque principal:** B0
+    - **Tipo de sesión:** implementación | validación | documentación | despliegue
+
+??? "2026-04-22 - Bitácora de Sesión - 2026-04-22"
+
+    **Archivo completo:** [00_sistema_tesis/bitacora/2026-04-22_bitacora_sesion.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-04-22_bitacora_sesion.md)
+
+    **Resumen breve**
+
+    - **Cadena de Confianza (Anterior):** `sha256/d97298a0c6de34b8888b1470ad253823e70ab5a6fbe57b90dba89f50d6f5c7dc`
+    - Estabilización completa (Fase 2) de la infraestructura OpenClaw y mejora sustancial en los mecanismos de auditoría del sistema de CI/CD.
+    - Resolver Timeouts (ajustados a 90s) y mejorar el ruteo de inferencia (100% de fiabilidad) en OpenClaw Telegram Bot.
+    - Deduplicar notificaciones e interacciones en `notifier.py`.
+
+??? "2026-04-21 - Bitácora de sesión 2026-04-21"
+
+    **Archivo completo:** [00_sistema_tesis/bitacora/2026-04-21_bitacora_sesion.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-04-21_bitacora_sesion.md)
+
+    **Resumen breve**
+
+    - **ID de Sesión:** codex-local-20260421-openclaw-telegram-trazabilidad-v1
+    - **Cadena de Confianza (Anterior):** `sha256/28c194e9cc4a87fca97daf17d8d982b7cb8788ba89da74faebb0f29d1840b030`
+    - **Bloque principal:** B0
+    - **Tipo de sesión:** implementación | validación | administración
+
+??? "2026-04-20 - Bitácora de sesión 2026-04-20"
+
+    **Archivo completo:** [00_sistema_tesis/bitacora/2026-04-20_bitacora_sesion.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-04-20_bitacora_sesion.md)
+
+    **Resumen breve**
+
+    - **ID de Sesión:** codex-local-20260420-trazabilidad-total-v1
+    - **Cadena de Confianza (Anterior):** `sha256/39c56c2bf0dd686da8bf29d0ce4d3126fea26c3bc65bad80583fa0cf6cc74945`
+    - **Bloque principal:** B0
+    - **Tipo de sesión:** validación | implementación | administración
+
 ??? "2026-04-13 - Bitácora de sesión 2026-04-13"
 
     **Archivo completo:** [00_sistema_tesis/bitacora/2026-04-13_bitacora_sesion.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-04-13_bitacora_sesion.md)
@@ -61,7 +127,7 @@ Abre solo la bitácora que necesites y usa el enlace de archivo para navegar al 
     **Resumen breve**
 
     - **ID de Sesión:** codex-local-20260413-actions-public-sync-v1
-    - **Cadena de Confianza (Anterior):** `sha256/b6bb0a4f687d25bacee917f82e0460cfb8a24a509ada876b9db757b59c307c9a`
+    - **Cadena de Confianza (Anterior):** `sha256/4b55a651b58d01cc3b5e6c7852dd91934ba35daea1daa5371b254f2045a433f1`
     - **Bloque principal:** B1
     - **Tipo de sesión:** validación | administración | publicación
 
@@ -72,7 +138,7 @@ Abre solo la bitácora que necesites y usa el enlace de archivo para navegar al 
     **Resumen breve**
 
     - **ID de Sesión:** codex-local-20260412-b0-desktop-regularizacion
-    - **Cadena de Confianza (Anterior):** `sha256/2756c0ca4015a3a04df22dbf4812aa5a19b48ca83374d51b5c65ba471e6acf87`
+    - **Cadena de Confianza (Anterior):** `sha256/b924739f40cc827edddb098ad260704bb0dc86544b15fe5553e15ba294146146`
     - **Bloque principal:** B0
     - **Tipo de sesión:** arquitectura | trazabilidad | validación
 
@@ -83,7 +149,7 @@ Abre solo la bitácora que necesites y usa el enlace de archivo para navegar al 
     **Resumen breve**
 
     - **ID de Sesión:** codex-local-20260411-trazabilidad-publish-v1
-    - **Cadena de Confianza (Anterior):** `sha256/cf8e6355acf3c78ef8dc2f4a61a01f4f7a07fadaa403f3b73064569f2ea20a2d`
+    - **Cadena de Confianza (Anterior):** `sha256/66d504ac887c4b727cb992f82ed2542309cdea54580618fef5ced6d0fab0ef60`
     - **Bloque principal:** B0
     - **Tipo de sesión:** trazabilidad | publicación | cierre
 
@@ -94,7 +160,7 @@ Abre solo la bitácora que necesites y usa el enlace de archivo para navegar al 
     **Resumen breve**
 
     - **ID de Sesión:** codex-local-20260410-serena-dual-y-bridge
-    - **Cadena de Confianza (Anterior):** `sha256/d44c545f25ee7c85c38df96de5d010ec0ada76a56ecdb041e18cbe56d1dfd8cd`
+    - **Cadena de Confianza (Anterior):** `sha256/1113a8926f9dcd7d4c2a948e12b090e841070182eec3f4a29b19ca19a7822747`
     - **Bloque principal:** B0
     - **Tipo de sesión:** integración | arquitectura | documentación
 
@@ -105,7 +171,7 @@ Abre solo la bitácora que necesites y usa el enlace de archivo para navegar al 
     **Resumen breve**
 
     - **ID de Sesión:** codex-local-20260408-dec0022-desktop-edge
-    - **Cadena de Confianza (Anterior):** `sha256/38ca91cf6c8d0632c1ee765a997777e7e873407f2cd995bfcb7480c20096adf1`
+    - **Cadena de Confianza (Anterior):** `sha256/6098e4bbcbc5a7cf4e27e36191f486677f927c6fc6e22413de1715423dde4719`
     - **Bloque principal:** B0
     - **Tipo de sesión:** diseño | implementación | validación
 
@@ -116,7 +182,7 @@ Abre solo la bitácora que necesites y usa el enlace de archivo para navegar al 
     **Resumen breve**
 
     - **ID de Sesión:** codex-local-20260407-cierre-conversacion-trazabilidad
-    - **Cadena de Confianza (Anterior):** `sha256/bd3e98fc7463927f0217c8c90155f3f0d7a4de64e53dcfcb51085f7f302ca1b2`
+    - **Cadena de Confianza (Anterior):** `sha256/ddf4f0929e84bfd92834cc2d6abad1b19ef4b037bed0f51de90de05ae540689c`
     - **Bloque principal:** B1
     - **Tipo de sesión:** administración | implementación | validación
 
@@ -127,7 +193,7 @@ Abre solo la bitácora que necesites y usa el enlace de archivo para navegar al 
     **Resumen breve**
 
     - **ID de Sesión:** codex-local-20260404-trazabilidad-cierre
-    - **Cadena de Confianza (Anterior):** `sha256/1788c2804520a0da93c800c24ce5c1979c727edfb5da1e075a9917b257f031ba`
+    - **Cadena de Confianza (Anterior):** `sha256/9a41600a32b7521e367199615e1fd80310f16fe5522be3e3309f8f3ab0960e30`
     - **Bloque principal:** B0
     - **Tipo de sesión:** administración | implementación | validación
 
@@ -138,7 +204,7 @@ Abre solo la bitácora que necesites y usa el enlace de archivo para navegar al 
     **Resumen breve**
 
     - **ID de Sesión:** codex-local-20260403-publicacion-downstream-hardening
-    - **Cadena de Confianza (Anterior):** `sha256/6ec151b0e64388a4614eafaed72595f7c390d5bc36074f6ce437b099fcb68514`
+    - **Cadena de Confianza (Anterior):** `sha256/72f3c777c056558061c74a118edcb412093100f96a54d231ba7ff77853d02ca1`
     - **Bloque principal:** B0
     - **Tipo de sesión:** publicación | ci/cd | endurecimiento | regularización
 
@@ -149,7 +215,7 @@ Abre solo la bitácora que necesites y usa el enlace de archivo para navegar al 
     **Resumen breve**
 
     - **ID de Sesión:** codex-local-20260402-verificacion-registro-reciente
-    - **Cadena de Confianza (Anterior):** `sha256/37b001ff7b056e82df46f3d84d0dd78dad781568bb7bf7d9cfa7445514f8d14c`
+    - **Cadena de Confianza (Anterior):** `sha256/e7cba921c92953b58105b725cbdfe9ec382346321df3657ce6f4d1c23efca688`
     - **Bloque principal:** B0
     - **Tipo de sesión:** verificación | regularización | documentación
 
@@ -160,7 +226,7 @@ Abre solo la bitácora que necesites y usa el enlace de archivo para navegar al 
     **Resumen breve**
 
     - **ID de Sesión:** codex-local-20260401-trazabilidad-conversacion-actual
-    - **Cadena de Confianza (Anterior):** `sha256/909d33b3016c313b4a26a508d5c5d9b2f645f44abe1b2deee8ecd791b37aebd4`
+    - **Cadena de Confianza (Anterior):** `sha256/c25c4b9d5d221035dc6626eb8b961f8b359a64995b96079881a3423520f6e513`
     - **Bloque principal:** B0
     - **Tipo de sesión:** validación | documentación | integración | automatización
 
@@ -173,9 +239,29 @@ Abre solo la bitácora que necesites y usa el enlace de archivo para navegar al 
     **Resumen breve**
 
     - **ID de Sesión:** codex-local-20260331-source-evidence
-    - **Cadena de Confianza (Anterior):** `sha256/b37930afc41da0ebb389b1ef97a6b689a9f5dac2ba7496d233af040a5b6864b9`
+    - **Cadena de Confianza (Anterior):** `sha256/2cc127f24c79b72a8516070fc5e82a56e2115757f0ede9a7e6825acb4e1f7621`
     - **Bloque principal:** B0
     - **Tipo de sesión:** administración | validación
+
+??? "2026-03-30 - Bitácora de Sesión - 2026-03-30"
+
+    **Archivo completo:** [00_sistema_tesis/bitacora/2026-03-30_bitacora_sesion.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-03-30_bitacora_sesion.md)
+
+    **Resumen breve**
+
+    - **Cadena de Confianza (Anterior):** `sha256/8388e4fcc38c83abff8d0e15813a3c3781c97fa7a3ae00a7d2e6ce4fc7690b9b`
+    - Automatización y validación de URLs en la documentación. Se implementó un script de análisis en lotes (`batch`) para verificar la consistencia de los enlaces externos y se actualizaron los flujos de trabajo de CI/CD.
+    - Validar automáticamente las URLs referenciadas en el corpus.
+
+??? "2026-03-29 - Bitácora de Sesión - 2026-03-29"
+
+    **Archivo completo:** [00_sistema_tesis/bitacora/2026-03-29_bitacora_sesion.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/2026-03-29_bitacora_sesion.md)
+
+    **Resumen breve**
+
+    - **Cadena de Confianza (Anterior):** `sha256/b37930afc41da0ebb389b1ef97a6b689a9f5dac2ba7496d233af040a5b6864b9`
+    - Refactorización de la estructura de código para mejorar la legibilidad y el mantenimiento. Se generaron múltiples copias de seguridad de los artefactos fundacionales antes de proceder con reestructuraciones profundas en el contexto canónico.
+    - Mejorar la estructura general del proyecto.
 
 ??? "2026-03-27 - Bitácora de sesión 2026-03-27"
 
@@ -236,6 +322,26 @@ Abre solo la bitácora que necesites y usa el enlace de archivo para navegar al 
 
 Documentos de referencia vivos (matriz, índices y propuestas) que no representan una sesión fechada.
 
+??? "Índice maestro - Reporte de Modelos de Infraestructura Temprana (Fase B1)"
+
+    **Archivo completo:** [00_sistema_tesis/bitacora/reporte_modelos_infraestructura_b1.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/reporte_modelos_infraestructura_b1.md)
+
+    **Resumen breve**
+
+    - Este documento preserva la evidencia técnica de los modelos utilizados para la validación inicial del hardware RK3588 antes de su eliminación para optimizar el almacenamiento.
+    - **Estado**: Validación de Driver Exitosa.
+    - **Formato**: `.rkllm` (v1.2.3 runtime compatible).
+    - **Cuantización**: W8A8 (Pesos de 8 bits / Activaciones de 8 bits).
+
+??? "Índice maestro - Protocolo Estándar de Validación SIOT-Edge (PEV-01)"
+
+    **Archivo completo:** [00_sistema_tesis/bitacora/protocolo_estandar_validacion_pev01.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/protocolo_estandar_validacion_pev01.md)
+
+    **Resumen breve**
+
+    - Este documento define el procedimiento mandatorio para la ejecución de benchmarks en el nodo Edge, garantizando la reproducibilidad y validez estadística de los resultados reportados en la tesis.
+    - Desde 2026-04-28, todo benchmark de PC, Edge, NPU, Ollama, llama.cpp u OpenClaw debe emitir evidencia primaria bajo el contrato `BenchmarkRun`:
+
 ??? "Índice maestro - Borradores y Propuestas de OpenClaw"
 
     **Archivo completo:** [00_sistema_tesis/bitacora/openclaw_proposals.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/openclaw_proposals.md)
@@ -258,6 +364,25 @@ Documentos de referencia vivos (matriz, índices y propuestas) que no representa
     - [x] Verificación de Ledger (Libro Mayor)
     - [x] Consistencia de Matriz
 
+??? "Índice maestro - Matriz de criticidad operativa"
+
+    **Archivo completo:** [00_sistema_tesis/bitacora/matriz_criticidad_operativa.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/matriz_criticidad_operativa.md)
+
+    **Resumen breve**
+
+    - Fecha: 2026-04-27
+    - Alcance: fuentes canonicas, guardrails, build, publicacion y trazabilidad.
+    - Pre-checks: [Integridad][LID] [Ética][GOV] [Auditoría][AUD] Contexto explícito | Confirmación verificable | Reproducibilidad mínima
+    - Criticidad `alta`: fallo bloquea gobernanza, build o trazabilidad minima.
+
+??? "Índice maestro - Informe Integral de Benchmarking: Nodo Edge SIOT (Fase B1)"
+
+    **Archivo completo:** [00_sistema_tesis/bitacora/informe_benchmarking_final_b1.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/informe_benchmarking_final_b1.md)
+
+    **Resumen breve**
+
+    - Este informe consolida los resultados de la suite de pruebas ejecutada sobre el hardware **Orange Pi 5 Plus (RK3588)** utilizando el modelo **Llama-3.2-3B-Instruct** acelerado por NPU.
+
 ??? "Índice maestro - Índice Privado de Fuentes de Conversación"
 
     **Archivo completo:** [00_sistema_tesis/bitacora/indice_fuentes_conversacion.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/indice_fuentes_conversacion.md)
@@ -268,6 +393,15 @@ Documentos de referencia vivos (matriz, índices y propuestas) que no representa
     - La evidencia cruda vive en `evidencia privada no publicada/conversaciones_codex/` y no forma parte de la superficie pública.
     - **Enforcement desde:** validación humana interna no pública
     - **Directorio privado:** `evidencia privada no publicada/conversaciones_codex`
+
+??? "Índice maestro - Análisis de Estándares de Reproducibilidad en Benchmarking de IA"
+
+    **Archivo completo:** [00_sistema_tesis/bitacora/analisis_reproducibilidad_benchmarking.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/analisis_reproducibilidad_benchmarking.md)
+
+    **Resumen breve**
+
+    - Este documento analiza las mejores prácticas de la industria y la academia para garantizar que los resultados de pruebas en sistemas de IA sean reproducibles, audibles y libres de "alucinaciones" documentales.
+    - Es el estándar de facto. Su metodología para garantizar reproducibilidad se basa en:
 
 ## Bitácora de sesiones de trabajo registradas
 
@@ -295,9 +429,9 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
 
 ### Índices maestros
 
-- **Total de registros de validación:** `52`
+- **Total de registros de validación:** `96`
 
-??? "2026-04 — 27 validación(es)"
+??? "2026-04 — 71 validación(es)"
 
     **[validación humana interna no pública] Registro 1 del mes**
 
@@ -515,6 +649,358 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
     - **Disparador resumido:** ¿Autorizas resolver pendientes, realizar commit/push/sync y monitorear Actions hasta publicación correcta?
     - **Confirmación resumida:** Start implementation
 
+    **[validación humana interna no pública] Registro 28 del mes**
+
+    - **Fecha:** `2026-04-14`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Continuo con el cierre canónico y la materialización final de la reformalización ENT-014/015?
+    - **Confirmación resumida:** continua
+
+    **[validación humana interna no pública] Registro 29 del mes**
+
+    - **Fecha:** `2026-04-20`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Autorizas asegurar que Caveman y Serena estén disponibles y se usen prioritariamente como política base del sistema operativo de tesis para cualquier agente de IA?
+    - **Confirmación resumida:** asegura que caveman y srena estén disponibles y sean usados prioritariamente como política del sistema operativo de tesis para cualquier agente de IA
+
+    **[validación humana interna no pública] Registro 30 del mes**
+
+    - **Fecha:** `2026-04-20`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Confirmas que toda acción que produzca cambios o sea relevante debe trazarse conforme la política de trazabilidad?
+    - **Confirmación resumida:** siempre debemos de trazar todas las acciones que producen cambios, o que son relevantes, conforme la política de trazabilidad+
+
+    **[validación humana interna no pública] Registro 31 del mes**
+
+    - **Fecha:** `2026-04-21`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Autorizas documentar todo el cierre OpenClaw/Telegram conforme a la política de trazabilidad?
+    - **Confirmación resumida:** documenta todo según política de trazabilidad
+
+    **[validación humana interna no pública] Registro 32 del mes**
+
+    - **Fecha:** `2026-04-21`
+    - **Decisión o referencia:** [DEC-0020](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0020_openclaw_como_capa_asistiva_opcional_y_evaluable.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Instrucción humana directa registrada sin pregunta previa del agente.
+    - **Confirmación resumida:** PLEASE IMPLEMENT THIS PLAN:
+
+    **[validación humana interna no pública] Registro 33 del mes**
+
+    - **Fecha:** `2026-04-21`
+    - **Decisión o referencia:** [DEC-0020](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0020_openclaw_como_capa_asistiva_opcional_y_evaluable.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Instruccion humana directa de continuidad operativa para completar la implementacion adaptativa del chat Telegram de OpenClaw.
+    - **Confirmación resumida:** continua
+
+    **[validación humana interna no pública] Registro 34 del mes**
+
+    - **Fecha:** `2026-04-21`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Instrucción humana directa para corregir la vulnerabilidad de Dependabot.
+    - **Confirmación resumida:** corrige la vulnerabilidad de dependabot
+
+    **[validación humana interna no pública] Registro 35 del mes**
+
+    - **Fecha:** `2026-04-21`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Instruccion humana directa para integrar la mejora de OpenClaw y hacer push via SSH.
+    - **Confirmación resumida:** implementa via ssh
+
+    **[validación humana interna no pública] Registro 36 del mes**
+
+    - **Fecha:** `2026-04-21`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `MEDIO`
+    - **Disparador resumido:** Instruccion humana directa para verificar y validar en el edge node.
+    - **Confirmación resumida:** verifica por acceso ssh tesisai que las mejoras estén implementadas en openclaw y valida
+
+    **[validación humana interna no pública] Registro 37 del mes**
+
+    - **Fecha:** `2026-04-21`
+    - **Decisión o referencia:** [DEC-0020](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0020_openclaw_como_capa_asistiva_opcional_y_evaluable.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Instrucción humana directa para implementar el plan de mejora OpenClaw Telegram con aprobación simplificada e imagen local.
+    - **Confirmación resumida:** PLEASE IMPLEMENT THIS PLAN:
+
+    **[validación humana interna no pública] Registro 38 del mes**
+
+    - **Fecha:** `2026-04-21`
+    - **Decisión o referencia:** [DEC-0020](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0020_openclaw_como_capa_asistiva_opcional_y_evaluable.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Instrucción humana directa para desplegar en el edge la mejora de OpenClaw Telegram.
+    - **Confirmación resumida:** despliega en el edge
+
+    **[validación humana interna no pública] Registro 39 del mes**
+
+    - **Fecha:** `2026-04-21`
+    - **Decisión o referencia:** [DEC-0020](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0020_openclaw_como_capa_asistiva_opcional_y_evaluable.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Instrucción humana directa para usar ComfyUI en esta PC como backend local de imagen del edge.
+    - **Confirmación resumida:** si, comfy en esta pc
+
+    **[validación humana interna no pública] Registro 40 del mes**
+
+    - **Fecha:** `2026-04-21`
+    - **Decisión o referencia:** [DEC-0020](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0020_openclaw_como_capa_asistiva_opcional_y_evaluable.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Autorizas la implementación de búsqueda automática y señal de actividad persistente para mejorar la calidad del razonamiento?
+    - **Confirmación resumida:** reinicialo cada que hagas un cambio en el bot y cómo responde
+
+    **[validación humana interna no pública] Registro 41 del mes**
+
+    - **Fecha:** `2026-04-21`
+    - **Decisión o referencia:** [DEC-0020](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0020_openclaw_como_capa_asistiva_opcional_y_evaluable.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Autorizas proceder con la corrección y el registro en el Ledger?
+    - **Confirmación resumida:** implementa
+
+    **[validación humana interna no pública] Registro 42 del mes**
+
+    - **Fecha:** `2026-04-21`
+    - **Decisión o referencia:** [DEC-0020](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0020_openclaw_como_capa_asistiva_opcional_y_evaluable.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Autorizas implementar el plan de corrección OpenClaw Telegram/Edge?
+    - **Confirmación resumida:** PLEASE IMPLEMENT THIS PLAN: Plan De Corrección OpenClaw Telegram/Edge
+
+    **[validación humana interna no pública] Registro 43 del mes**
+
+    - **Fecha:** `2026-04-23`
+    - **Decisión o referencia:** [DEC-0023](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-08_DEC-0023_serena_mcp_como_capa_comun_para_agentes.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Autorizas ejecutar el cierre de trazabilidad y documentación operativa en una sola entrega?
+    - **Confirmación resumida:** PLEASE IMPLEMENT THIS PLAN:
+
+    **[validación humana interna no pública] Registro 44 del mes**
+
+    - **Fecha:** `2026-04-23`
+    - **Decisión o referencia:** [DEC-0022](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-08_DEC-0022_arquitectura_operativa_escritorio_primario_y_orange_pi_edge.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Instrucción humana directa para ejecutar la implementación completa de OpenClaw PC-first con Matrix soberano y runtime pesado nativo.
+    - **Confirmación resumida:** PLEASE IMPLEMENT THIS PLAN:
+
+    **[validación humana interna no pública] Registro 45 del mes**
+
+    - **Fecha:** `2026-04-24`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Autorizas implementar el cierre host-real de OpenClaw con Matrix edge local y llama.cpp Windows service?
+    - **Confirmación resumida:** PLEASE IMPLEMENT THIS PLAN:
+
+    **[validación humana interna no pública] Registro 46 del mes**
+
+    - **Fecha:** `2026-04-25`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Autorizas la estabilización de CI/CD y la implementación de mecanismos de no regresión?
+    - **Confirmación resumida:** revisa toda la pipeline de CI/CD y verifica que todo pase correctamente, y en caso de no, corrige, mejora y prueba de forma confiable, implementando mecanismos que garanticen la no regresión
+
+    **[validación humana interna no pública] Registro 47 del mes**
+
+    - **Fecha:** `2026-04-26`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `operativo`
+    - **Disparador resumido:** Damos por concluida la migración a Docker con éxito?
+    - **Confirmación resumida:** si
+
+    **[validación humana interna no pública] Registro 48 del mes**
+
+    - **Fecha:** `2026-04-26`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `MEDIO`
+    - **Disparador resumido:** Instrucción humana directa registrada sin pregunta previa del agente.
+    - **Confirmación resumida:** si, implementar a fondo, luego verificar y validar con pruebas, agrega las suites de pruebas necesarias
+
+    **[validación humana interna no pública] Registro 49 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Procedo con la integración de la NPU y la descarga de drivers oficiales?
+    - **Confirmación resumida:** implementalo, investiga las fuentes oficiales y descarga todo lo que sea necesario
+
+    **[validación humana interna no pública] Registro 50 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Continuamos con la implementación de la arquitectura de dominios y benchmarking?
+    - **Confirmación resumida:** si, continúa
+
+    **[validación humana interna no pública] Registro 51 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Damos por buena la implementación del servicio de inferencia y la estructura de red aislada?
+    - **Confirmación resumida:** vale, continúa
+
+    **[validación humana interna no pública] Registro 52 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Damos por buena la suite de pruebas integrales para el edge?
+    - **Confirmación resumida:** vale, continuamos con pruebas completas
+
+    **[validación humana interna no pública] Registro 53 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Damos por cerrados los benchmarks de infraestructura?
+    - **Confirmación resumida:** realiza benchmarks
+
+    **[validación humana interna no pública] Registro 54 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Procedemos con la recomendación de migrar a un modelo de 3B para el cierre de fase?
+    - **Confirmación resumida:** aplica benchmark más agresivos y analiza si se podría implementar algún modelo más grande para aprovechar mejor el hardware
+
+    **[validación humana interna no pública] Registro 55 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Confirmamos Llama-3.2-3B como el modelo máximo para el entorno de 8GB?
+    - **Confirmación resumida:** algo que ocupe los 8gb?
+
+    **[validación humana interna no pública] Registro 56 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `MEDIO`
+    - **Disparador resumido:** ¿Damos por cerrados los modelos de infraestructura y procedemos con la limpieza?
+    - **Confirmación resumida:** elimina los modelos inferiores, para ahorrar espacio, solo documenta muy bien su funcionamiento, pruebas, benchmarks, etc
+
+    **[validación humana interna no pública] Registro 57 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Aprobamos el despliegue de la arquitectura CIA con modelos concurrentes (1B + 3B)?
+    - **Confirmación resumida:** ¿conviene tener más de un modelo local? ¿es viable, factible y optimo orquestar entre más de uno? tal vez algo así como mezcla de expertos
+
+    **[validación humana interna no pública] Registro 58 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Confirmamos la eliminación de modelos 'Gatekeeper' pequeños para priorizar la calidad del modelo 3B?
+    - **Confirmación resumida:** no uses modelos de baja inferencia proclives a errores, maneja un mínimo de calidad de respuesta y procesamiento
+
+    **[validación humana interna no pública] Registro 59 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Consideramos completada la validación por casos de uso para el cierre de fase?
+    - **Confirmación resumida:** verifica con pruebas, y benchmark recomendables con base en diversos tipos de tareas y casos de uso relacionados
+
+    **[validación humana interna no pública] Registro 60 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Damos por cerrados los tests de estrés rigurosos?
+    - **Confirmación resumida:** expande el benchmark, incluye test de stress que implementen distintas situaciones comunes relacionadas de forma rigurosa
+
+    **[validación humana interna no pública] Registro 61 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Damos por validada la metodología estadística rigurosa para los resultados de la tesis?
+    - **Confirmación resumida:** continúa con la implementación y ejecución de esos benchmark y test, y mide correcta y matemática y computacionalmente riguroso los resultados
+
+    **[validación humana interna no pública] Registro 62 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Damos por cerrado el informe de benchmarking de la Fase B1?
+    - **Confirmación resumida:** presenta un informe de los distintos benchmark aplicados
+
+    **[validación humana interna no pública] Registro 63 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Damos por validada la metodología científica de benchmarking para el nodo Edge?
+    - **Confirmación resumida:** continúa
+
+    **[validación humana interna no pública] Registro 64 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Damos por cerrado el ciclo de validación científica con N=50?
+    - **Confirmación resumida:** implementa ese plan y además, saca evidencias de cada uno de los benchmarks en formato de captura y otro que consideres conveniente
+
+    **[validación humana interna no pública] Registro 65 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Damos por validada la regeneración científica endurecida con mediciones de alta precisión?
+    - **Confirmación resumida:** regenera todos los benchmarks y asegura que dichos experimentos sean confiablemente diseñados, con mediciones precisas y registro de esas mediciones correcto según estándares. Desarrolla pruebas que lo garanticen
+
+    **[validación humana interna no pública] Registro 66 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `MEDIO`
+    - **Disparador resumido:** ¿Damos por validada la línea base de la PC para la comparativa experimental?
+    - **Confirmación resumida:** ¿ya ejecutaste todos los benchmark? incluso los de pc
+
+    **[validación humana interna no pública] Registro 67 del mes**
+
+    - **Fecha:** `2026-04-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Damos por validada la medición de capacidad máxima de razonamiento en la PC?
+    - **Confirmación resumida:** pero en la pc el objetivo es probar el modelo más pesado disponible y recomendable para este hardware
+
+    **[validación humana interna no pública] Registro 68 del mes**
+
+    - **Fecha:** `2026-04-28`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Autorizas implementar el plan de economía de tokens y runtime híbrido WSL + Docker?
+    - **Confirmación resumida:** PLEASE IMPLEMENT THIS PLAN:
+
+    **[validación humana interna no pública] Registro 69 del mes**
+
+    - **Fecha:** `2026-04-28`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Autorizas implementar el contrato de benchmarking cientifico trazable para Mistral Nemo 12B en PC?
+    - **Confirmación resumida:** PLEASE IMPLEMENT THIS PLAN:
+
+    **[validación humana interna no pública] Registro 70 del mes**
+
+    - **Fecha:** `2026-04-29`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Autorizas implementar el cierre OpenClaw con Telegram como operador principal y pc_native_llamacpp PC nativo mediante túnel?
+    - **Confirmación resumida:** PLEASE IMPLEMENT THIS PLAN: Cierre OpenClaw: Telegram Principal + pc_native_llamacpp PC Nativo
+
+    **[validación humana interna no pública] Registro 71 del mes**
+
+    - **Fecha:** `2026-04-29`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Autorizas implementar el cierre OpenClaw con Telegram como operador principal y pc_native_llamacpp PC nativo mediante túnel?
+    - **Confirmación resumida:** PLEASE IMPLEMENT THIS PLAN: Cierre OpenClaw: Telegram Principal + pc_native_llamacpp PC Nativo
+
 ??? "2026-03 — 25 validación(es)"
 
     **[validación humana interna no pública] Registro 1 del mes**
@@ -608,7 +1094,7 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
     **[validación humana interna no pública] Registro 12 del mes**
 
     - **Fecha:** `2026-03-26`
-    - **Decisión o referencia:** [DEC-0016](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-26_DEC-0016_canon_unificado_de_eventos_y_proyecciones.md)
+    - **Decisión o referencia:** [DEC-0016](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-29_DEC-0016_politica_gestion_credenciales_hf.md)
     - **Nivel de auditoría:** `ALTO`
     - **Disparador resumido:** Solicitud humana contextualizada para ejecutar el rediseño v2 del sistema operativo de tesis hacia canon unificado.
     - **Confirmación resumida:** Rediseño v2 del Sistema Operativo de Tesis hacia un canon unificado de eventos append-only, proyecciones derivadas y CLI canónica.
@@ -624,7 +1110,7 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
     **[validación humana interna no pública] Registro 14 del mes**
 
     - **Fecha:** `2026-03-26`
-    - **Decisión o referencia:** [DEC-0017](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-26_DEC-0017_operacion_humana_dual_y_superficies_privada_publica.md)
+    - **Decisión o referencia:** [DEC-0017](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-29_DEC-0017_atzin_scientific_engine_architecture.md)
     - **Nivel de auditoría:** `ALTO`
     - **Disparador resumido:** Instrucción humana directa registrada sin pregunta previa del agente.
     - **Confirmación resumida:** "vamos a cerrar con esta conversación, implementa toda la política de trazabilidad (incluyendo bitácora, etc) para pasar a otra conversación si consideras que ya no hay pendientes de lo tratado en esta"
@@ -722,4 +1208,4 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
 
 - `2026-S13_r` [Resumen semanal 2026-S13](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/reportes_semanales/2026-S13_resumen_semanal.md)
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-29`._

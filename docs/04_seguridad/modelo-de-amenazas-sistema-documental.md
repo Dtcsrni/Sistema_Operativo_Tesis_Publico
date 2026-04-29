@@ -1,7 +1,7 @@
 # Modelo de Amenazas del Sistema Documental
 
 ## Superficies
-- Canon privado en `00_sistema_tesis/`.
+- canon no público en `00_sistema_tesis/`.
 - Proyecciones derivadas en `06_dashboard/wiki/`, `06_dashboard/generado/` y `README.md`.
 - Memoria derivada en `MEMORY.md`.
 - Bundle publico sanitizado.
@@ -30,4 +30,4 @@
 - Las reglas de no HTTP interdominio, no lectura cruzada y no restore cruzado estan declaradas y validadas.
 - Orange Pi aparece solo como clon operativo y nodo de validacion local.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-29`._

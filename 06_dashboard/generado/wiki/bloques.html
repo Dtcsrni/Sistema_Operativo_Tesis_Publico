@@ -3,114 +3,282 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bloques</title>
+  <title>Bloques | Tesis OS Wiki</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700&family=Fira+Code&family=Material+Icons&display=swap" rel="stylesheet">
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+  </script>
   <style>
+    :root {
+      --primary: #0f766e;
+      --primary-light: #14b8a6;
+      --secondary: #1e293b;
+      --accent: #06b6d4;
+      --bg: #f8fafc;
+      --surface: rgba(255, 255, 255, 0.85);
+      --border: rgba(226, 232, 240, 0.8);
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      background: #f6f3eb;
-      color: #1e293b;
-      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(15, 118, 110, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.05) 0px, transparent 50%);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      display: flex;
+      min-height: 100vh;
     }
+
+    /* Sidebar Navigation */
+    nav {
+      width: 260px;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      border-right: 1px solid var(--border);
+      padding: 2rem 1rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 100;
+    }
+
+    .nav-header {
+      padding: 0 0.75rem 1.5rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      color: var(--text-muted);
+      border-radius: var(--radius);
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-link .material-icons {
+      font-size: 20px;
+    }
+
+    /* Main Content Area */
     main {
-      max-width: 980px;
+      flex: 1;
+      padding: 3rem 4rem;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 2rem 1.25rem 3rem;
     }
+
     header {
+      margin-bottom: 3rem;
+      animation: fadeInDown 0.6s ease-out;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3rem;
+      margin: 0 0 0.5rem;
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .stamp {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Markdown Rendering Styles */
+    .markdown-body {
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+
+    .markdown-body h2 {
+      font-family: 'Outfit', sans-serif;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+      color: var(--secondary);
+    }
+
+    .markdown-body p { margin-bottom: 1.25rem; }
+
+    .markdown-body code {
+      background: rgba(15, 118, 110, 0.08);
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9em;
+      color: var(--primary);
+    }
+
+    .markdown-body a {
+      color: var(--primary);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .markdown-body a:hover {
+      border-bottom-color: var(--primary);
+    }
+
+    .markdown-body ul {
+      padding-left: 1.5rem;
       margin-bottom: 1.5rem;
     }
-    h1 {
-      margin: 0 0 0.5rem;
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
+
+    .markdown-body li {
+      margin-bottom: 0.5rem;
     }
-    .stamp {
-      color: #475569;
-      font-family: "Segoe UI", Tahoma, sans-serif;
-      font-size: 0.9rem;
+
+    /* Admonitions */
+    .admonition {
+      margin: 1.5rem 0;
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      border-left: 4px solid #ccc;
+      background: white;
+      box-shadow: var(--shadow);
     }
-    pre {
-      white-space: pre-wrap;
-      background: #fff;
-      border: 1px solid #d6d3d1;
-      border-radius: 16px;
-      padding: 1rem;
-      overflow-wrap: anywhere;
-      line-height: 1.55;
+    .admonition.success { border-left-color: #10b981; background: #ecfdf5; }
+    .admonition.warning { border-left-color: #f59e0b; background: #fffbeb; }
+    .admonition.danger { border-left-color: #ef4444; background: #fef2f2; }
+    
+    .admonition-title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
     }
-    a {
-      color: #0f766e;
+
+    @media (max-width: 768px) {
+      body { flex-direction: column; }
+      nav {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 1rem;
+      }
+      .nav-header { display: none; }
+      main { padding: 2rem 1.5rem; }
+      h1 { font-size: 2.2rem; }
     }
   </style>
 </head>
 <body>
+  <nav>
+    <div class="nav-header">
+      <span class="material-icons">architecture</span>
+      Tesis OS
+    </div>
+    <a href="../../publico/wiki_html/casos_uso.html" class="nav-link "><span class="material-icons">smart_toy</span><span>Agente y Casos de Uso</span></a>
+<a href="../../publico/wiki_html/sistema.html" class="nav-link "><span class="material-icons">settings</span><span>Sistema</span></a>
+<a href="../../publico/wiki_html/gobernanza.html" class="nav-link "><span class="material-icons">gavel</span><span>Gobernanza</span></a>
+<a href="../../publico/wiki_html/terminologia.html" class="nav-link "><span class="material-icons">book</span><span>Terminología</span></a>
+<a href="../../publico/wiki_html/planeacion.html" class="nav-link "><span class="material-icons">event_note</span><span>Planeación</span></a>
+<a href="../../publico/wiki_html/hipotesis.html" class="nav-link "><span class="material-icons">lightbulb</span><span>Hipótesis</span></a>
+<a href="../../publico/wiki_html/bloques.html" class="nav-link active"><span class="material-icons">grid_view</span><span>Bloques</span></a>
+<a href="../../publico/wiki_html/decisiones.html" class="nav-link "><span class="material-icons">psychology</span><span>Decisiones</span></a>
+<a href="../../publico/wiki_html/bitacora.html" class="nav-link "><span class="material-icons">history_edu</span><span>Bitácora</span></a>
+<a href="../../publico/wiki_html/experimentos.html" class="nav-link "><span class="material-icons">science</span><span>Experimentos</span></a>
+<a href="../../publico/wiki_html/implementacion.html" class="nav-link "><span class="material-icons">code</span><span>Implementación</span></a>
+<a href="../../publico/wiki_html/tesis.html" class="nav-link "><span class="material-icons">school</span><span>Tesis</span></a>
+  </nav>
   <main>
     <header>
       <h1>Bloques</h1>
-      <p class="stamp">Artefacto derivado generado el 2026-04-14</p>
+      <div class="stamp">
+        <span class="material-icons" style="font-size: 16px;">update</span>
+        Generado el 2026-04-29
+      </div>
     </header>
-    <pre>!!! warning &quot;Validación Humana: DESACTUALIZADA&quot;
-    El archivo original ha sido modificado después de la última firma humana. Requiere revisión.
-
-# Bloques
-
-Bloques macro del sistema y sus criterios de salida.
-
-- **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-14`
-- **Estado:** `OK`
-- **Fuentes:** `00_sistema_tesis/config/bloques.yaml`
-- **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
-
-## Navegación de esta página
-
-- [Volver al índice](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/index.md).
-- Página anterior en la ruta base: [Hipótesis](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/hipotesis.md).
-- Página siguiente en la ruta base: [Decisiones](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/decisiones.md).
-- Relacionada: [Planeación](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/planeacion.md).
-- Relacionada: [Hipótesis](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/hipotesis.md).
-- Relacionada: [Implementación](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/implementacion.md).
-
-## Origen canónico y artefactos relacionados
-
-### Cómo rastrear esta página hasta su origen canónico
-
-1. Esta página derivada: [`06_dashboard/wiki/bloques.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/bloques.md).
+    <div class="markdown-body"><p>!!! warning &quot;Validación Humana: DESACTUALIZADA&quot;
+    El archivo original ha sido modificado después de la última firma humana. Requiere revisión.</p><p><h1>Bloques</h1></p><p>Bloques macro del sistema y sus criterios de salida.
+<ul><li><strong>Tesista:</strong> <code>Erick Renato Vega Ceron</code></li>
+<li><strong>Fecha:</strong> <code>2026-04-29</code></li>
+<li><strong>Estado:</strong> <code>OK</code></li>
+<li><strong>Fuentes:</strong> <code>00_sistema_tesis/config/bloques.yaml</code></li>
+<li><strong>Aviso:</strong> Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.</li>
+</ul>
+<h2>Navegación de esta página</h2>
+<ul><li><a href="../../publico/wiki_html/index.html">Volver al índice</a>.</li>
+<li>Página anterior en la ruta base: <a href="../../publico/wiki_html/hipotesis.html">Hipótesis</a>.</li>
+<li>Página siguiente en la ruta base: <a href="../../publico/wiki_html/decisiones.html">Decisiones</a>.</li>
+<li>Relacionada: <a href="../../publico/wiki_html/planeacion.html">Planeación</a>.</li>
+<li>Relacionada: <a href="../../publico/wiki_html/hipotesis.html">Hipótesis</a>.</li>
+<li>Relacionada: <a href="../../publico/wiki_html/implementacion.html">Implementación</a>.</li>
+</ul>
+<h2>Origen canónico y artefactos relacionados</h2></p><p><h3>Cómo rastrear esta página hasta su origen canónico</h3></p><p>1. Esta página derivada: <a href="../../publico/wiki_html/bloques.html"><code>06_dashboard/wiki/bloques.md</code></a>.
 2. Revisa la lista de fuentes canónicas que alimentan su contenido.
 3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
 4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
-5. Si necesitas cambiar el contenido, edita la fuente canónica y reconstruye; no edites esta salida a mano.
-
-### Fuentes canónicas declaradas
-
-|Fuente canónica|Tipo|Existe|
+5. Si necesitas cambiar el contenido, edita la fuente canónica y reconstruye; no edites esta salida a mano.</p><p><h3>Fuentes canónicas declaradas</h3></p><p>|Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`00_sistema_tesis/config/bloques.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/00_sistema_tesis/config/bloques.yaml)|archivo|sí|
-
-### Artefactos derivados relacionados
-
-- Markdown interno: [`06_dashboard/wiki/bloques.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/bloques.md)
-- HTML interno: [`06_dashboard/generado/wiki/bloques.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/generado/wiki/bloques.html)
-- Markdown público sanitizado: [`06_dashboard/publico/wiki/bloques.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/publico/wiki/bloques.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/bloques.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/publico/wiki_html/bloques.html)
-
-## Qué resuelve este subsistema
-
-- Ordena la tesis como una secuencia de bloques mayores con dependencias explícitas.
-- Permite distinguir qué parte del sistema está activa, cuál depende de otra y cuál sigue pendiente.
-- Sirve como puente entre gobernanza macro y backlog operativo detallado.
-
-## Lectura rápida
-
-- Bloques activos: `1`
-- Bloques no iniciados: `10`
-- Un bloque no se interpreta como completado solo por existir en la estructura; depende de su criterio de salida.
-
-## Grafo de Dependencias
-
-```mermaid
-graph LR
-  style B0 fill:#ff9,stroke:#333
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/bloques.yaml"><code>00_sistema_tesis/config/bloques.yaml</code></a>|archivo|sí|</p><p><h3>Artefactos derivados relacionados</h3>
+<ul><li>Markdown interno: <a href="../../publico/wiki_html/bloques.html"><code>06_dashboard/wiki/bloques.md</code></a></li>
+<li>HTML interno: <a href="../../publico/wiki_html/bloques.html"><code>06_dashboard/generado/wiki/bloques.html</code></a></li>
+<li>Markdown público sanitizado: <a href="../../publico/wiki/bloques.md"><code>06_dashboard/publico/wiki/bloques.md</code></a></li>
+<li>HTML público sanitizado: <a href="../../publico/wiki_html/bloques.html"><code>06_dashboard/publico/wiki_html/bloques.html</code></a></li>
+</ul>
+<h2>Qué resuelve este subsistema</h2>
+<ul><li>Ordena la tesis como una secuencia de bloques mayores con dependencias explícitas.</li>
+<li>Permite distinguir qué parte del sistema está activa, cuál depende de otra y cuál sigue pendiente.</li>
+<li>Sirve como puente entre gobernanza macro y backlog operativo detallado.</li>
+</ul>
+<h2>Lectura rápida</h2>
+<ul><li>Bloques activos: <code>1</code></li>
+<li>Bloques no iniciados: <code>9</code></li>
+<li>Un bloque no se interpreta como completado solo por existir en la estructura; depende de su criterio de salida.</li>
+</ul>
+<h2>Grafo de Dependencias</h2></p><p><div class="mermaid-container"><pre class="mermaid">graph LR
   B0 --&gt; B1
+  style B1 fill:#ff9,stroke:#333
   B0 --&gt; B2
   B1 --&gt; B2
   B2 --&gt; B3
@@ -133,15 +301,10 @@ graph LR
   B7 --&gt; B9
   B8 --&gt; B9
   B8 --&gt; B10
-  B9 --&gt; B10
-```
-
-## Bloques del sistema
-
-|ID|Nombre|Estado|Prioridad|Dependencias|Criterio de salida|
+  B9 --&gt; B10</pre></div></p><p><h2>Bloques del sistema</h2></p><p>|ID|Nombre|Estado|Prioridad|Dependencias|Criterio de salida|
 |---|---|---|---|---|---|
-|B0|Gobierno del sistema de tesis y base operativa|activo|critica|ninguna|Existe una base operativa funcional con validadores, dashboard generado, plantillas y README de retoma rápida, además de separación verificable entre sistema_tesis edge_iot y openclaw en Orange Pi y una arquitectura interna formalizada con pruebas de conformidad.|
-|B1|Delimitación del problema y contexto de Pachuca|no_iniciado|alta|B0|Existe una definición trazable del caso de estudio y de los supuestos urbanos/intermitentes que alimentan diseño y simulación.|
+|B0|Gobierno del sistema de tesis y base operativa|cerrado|critica|ninguna|Existe una base operativa funcional con validadores, dashboard generado, plantillas y README de retoma rápida, además de separación verificable entre sistema_tesis edge_iot y openclaw en Orange Pi y una arquitectura interna formalizada con pruebas de conformidad.|
+|B1|Delimitación del problema y contexto de Pachuca|activo|alta|B0|Existe una definición trazable del caso de estudio y de los supuestos urbanos/intermitentes que alimentan diseño y simulación.|
 |B2|Diseño de arquitectura y formulación de hipótesis|no_iniciado|critica|B0, B1|La arquitectura objetivo, la línea base, los flujos críticos y las hipótesis quedan definidos con métricas y criterios de soporte.|
 |B3|Modelo de control y métricas de desempeño|no_iniciado|alta|B2|Se cuenta con definición operacional de métricas, escenarios y umbrales de comparación para simulación y experimento.|
 |B4|Simulación y escenarios de intermitencia|no_iniciado|critica|B2, B3|La simulación reproduce escenarios definidos, genera métricas comparables y deja trazabilidad de parámetros y semillas.|
@@ -151,8 +314,8 @@ graph LR
 |B8|Redacción de tesis y ensamblaje documental|no_iniciado|alta|B1, B2, B3, B4, B6, B7|Existe un manuscrito completo, consistente y alineado con aportaciones, limitaciones y evidencia disponible.|
 |B9|Reproducibilidad y versión sanitizada pública|no_iniciado|media|B0, B7, B8|Se cuenta con una ruta reproducible para publicar materiales sanitizados sin romper la canonicidad privada del repositorio.|
 |B10|Cierre, defensa y transferencia|no_iniciado|media|B8, B9|La tesis, la defensa y los artefactos de cierre quedan completos, versionados y listos para consulta futura.|
-</pre>
-      <footer class="public-update"><p>Última actualización: <strong>2026-04-13</strong></p></footer>
+</p></div>
+      <footer class="public-update"><p>Última actualización: <strong>2026-04-29</strong></p></footer>
   </main>
 </body>
 </html>

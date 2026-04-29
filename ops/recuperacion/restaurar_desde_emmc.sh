@@ -3,6 +3,7 @@ set -euo pipefail
 
 : "${TESIS_BACKUP_POLICY:=/etc/tesis-os/policies/domain_backup_policy.yaml}"
 : "${TESIS_RESTORE_SANDBOX_ROOT:=/tmp/tesis-restore}"
+: "${TESIS_RESTORE_CONFIRM_CODE:=}"
 
 usage() {
   echo "Uso: $0 --domain <dominio> --manifest <manifest.json> [--mode sandbox|in_place] [--target <ruta>] [--allow-in-place]"
@@ -61,6 +62,10 @@ elif [ "${mode}" = "in_place" ]; then
   [ -n "${target}" ] || usage
   if [ "${target}" != "/" ]; then
     echo "RESTORE_FAIL:in_place_requires_root_target"
+    exit 1
+  fi
+  if [ "${TESIS_RESTORE_CONFIRM_CODE}" != "AUTORIZO_IN_PLACE" ]; then
+    echo "RESTORE_FAIL:missing_double_confirmation_code"
     exit 1
   fi
 else

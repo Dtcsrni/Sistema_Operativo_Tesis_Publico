@@ -1,0 +1,41 @@
+{
+  "generated_at_utc": "20260429_091616",
+  "total_duration_seconds": 0.0,
+  "summary": {
+    "total": 2,
+    "executed": 0,
+    "skipped": 2,
+    "failed": 0,
+    "slow": 0
+  },
+  "slow_stages": [],
+  "failed_stages": [],
+  "steps": [
+    {
+      "label": "Sincronizar estado de OpenClaw",
+      "script": "07_scripts/build_openclaw_status.py",
+      "args": [],
+      "group": "openclaw",
+      "started_at_utc": "2026-04-29",
+      "duration_seconds": 0.0,
+      "budget_seconds": null,
+      "status": "skipped",
+      "returncode": null,
+      "cache_hit": true,
+      "skip_reason": "cache_hit"
+    },
+    {
+      "label": "Sincronizar presupuesto y uso de tokens",
+      "script": "07_scripts/build_token_usage_snapshot.py",
+      "args": [],
+      "group": "openclaw",
+      "started_at_utc": "2026-04-29",
+      "duration_seconds": 0.0,
+      "budget_seconds": null,
+      "status": "skipped",
+      "returncode": null,
+      "cache_hit": true,
+      "skip_reason": "cache_hit"
+    }
+  ]
+}

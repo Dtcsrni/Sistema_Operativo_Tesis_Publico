@@ -48,7 +48,6 @@ if __name__ == "__main__":
     if signoff.returncode != 0:
         sys.exit(signoff.returncode)
 
-    repo_url_with_token = f"https://x-access-token:{public_repo_pat}@{public_repo_url.removeprefix('https://')}"
     sync_public = subprocess.run(
         [
             python_bin,
@@ -58,7 +57,9 @@ if __name__ == "__main__":
             "--target-dir",
             public_target_dir,
             "--repo-url",
-            repo_url_with_token,
+            public_repo_url,
+            "--repo-token",
+            public_repo_pat,
             "--branch",
             public_branch,
             "--push",

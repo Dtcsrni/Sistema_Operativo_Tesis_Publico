@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-14",
+  "generated_at": "2026-04-29",
   "verification": {
     "status": "ok",
     "required_page_fields": [
@@ -12,6 +12,7 @@
   },
   "pages": [
     "index",
+    "casos_uso",
     "sistema",
     "gobernanza",
     "terminologia",
@@ -25,6 +26,17 @@
     "tesis"
   ],
   "page_records": [
+    {
+      "id": "casos_uso",
+      "title": "Agente y Casos de Uso",
+      "markdown": "06_dashboard/wiki/casos_uso.md",
+      "html": "06_dashboard/generado/wiki/casos_uso.html",
+      "sources": [
+        "00_sistema_tesis/documentacion_sistema/casos_uso_agente.md",
+        "00_sistema_tesis/documentacion_sistema/guias_tareas_agente.md"
+      ],
+      "verified": false
+    },
     {
       "id": "sistema",
       "title": "Sistema",
@@ -159,32 +171,44 @@
   "sources": [
     {
       "path": "README_INICIO.md",
-      "sha256": "b85474fa11d7a217b86e3945601e331fa207aed3910186a8a9bc4392d40c4838",
-      "modified": "2026-04-14",
+      "sha256": "03a630dd4da9aad98114a31f7c6beaa6f302bed717a44fb0218269dfd1054536",
+      "modified": "2026-04-21",
+      "kind": "file"
+    },
+    {
+      "path": "00_sistema_tesis/documentacion_sistema/casos_uso_agente.md",
+      "sha256": "31599ce97360e67808dc5c6cdfbbb5e03641b8325e307aff3e0c6ac0310b41b3",
+      "modified": "2026-04-29",
+      "kind": "file"
+    },
+    {
+      "path": "00_sistema_tesis/documentacion_sistema/guias_tareas_agente.md",
+      "sha256": "9863d5a5f9565c22f7e4f01ee81779478a0b001233d79dc331fe159509d4c0e1",
+      "modified": "2026-04-29",
       "kind": "file"
     },
     {
       "path": "00_sistema_tesis/manual_operacion_humana.md",
-      "sha256": "b4ab7184c11732cbb612ba9f5478f339a30853f25c5e38d2278da2396c2f60d0",
-      "modified": "2026-04-11",
+      "sha256": "6bb6bf7552a500a302ec9f4c564fa9b832856b9894c38759f8aaec7a0b20d805",
+      "modified": "2026-04-27",
       "kind": "file"
     },
     {
       "path": "00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md",
-      "sha256": "e5005eccc98a79819fea94896d90015af8e6ce86e06bfd2e8048633989f3eadf",
-      "modified": "2026-04-14",
+      "sha256": "ba9b4821470bb1b33c686cc7b53540930715fab8cd84d3e21b29a1607e08f73a",
+      "modified": "2026-04-25",
       "kind": "file"
     },
     {
       "path": "00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md",
-      "sha256": "c0fa6f9b07c16279cbd6cbf939ab758d385efdaa5553d18850663c8f23ced2ec",
-      "modified": "2026-03-27",
+      "sha256": "761b922ad7fb2b2bc7026aa0d5699ee356d2d1799c8144cc4db1969ed7303779",
+      "modified": "2026-04-29",
       "kind": "file"
     },
     {
       "path": "00_sistema_tesis/documentacion_sistema/flujos_operativos.md",
-      "sha256": "9dd8b1ef5f6b64cea77266d521f0a5e4bf6cc27e03e07161fbc77b1a3924b8d4",
-      "modified": "2026-04-11",
+      "sha256": "ebf0bb4c1dadfb5baffb8be8aac8e8c03e6697d5d3d65829b582b1e3180760e6",
+      "modified": "2026-04-29",
       "kind": "file"
     },
     {
@@ -195,8 +219,8 @@
     },
     {
       "path": "00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md",
-      "sha256": "76e50c04dcfbe3b0ac5c24e7bd5ff8fbb160754b9b710cd246639b79d2c843ba",
-      "modified": "2026-04-14",
+      "sha256": "28a1350936c8c97772773ae8dacf86701990153b12e2be3f244962edc5808616",
+      "modified": "2026-04-25",
       "kind": "file"
     },
     {
@@ -207,8 +231,8 @@
     },
     {
       "path": "00_sistema_tesis/config/sistema_tesis.yaml",
-      "sha256": "1f8c81997bc65761f9396513150fd115d5e88c2d8ff3c87bbf8ce3b594e66dbe",
-      "modified": "2026-04-14",
+      "sha256": "8595316ebcc0097509973c9d94ead21760357580c6ef49a3fb60c9dcc3005790",
+      "modified": "2026-04-27",
       "kind": "file"
     },
     {
@@ -219,8 +243,8 @@
     },
     {
       "path": "00_sistema_tesis/config/bloques.yaml",
-      "sha256": "fdcb8f5b099735408a976469ed38a87814bd28cf04cb92b6d33544baeb07d578",
-      "modified": "2026-04-11",
+      "sha256": "bde806966796dcc9ec77b8b5969daac3ac8aa9352485030ffa52406e17171016",
+      "modified": "2026-04-27",
       "kind": "file"
     },
     {
@@ -231,8 +255,8 @@
     },
     {
       "path": "00_sistema_tesis/config/ia_gobernanza.yaml",
-      "sha256": "5f567b64c07ee66e514e339af492bb77aec6ad064c1b85b08531fc2853d5ee09",
-      "modified": "2026-04-14",
+      "sha256": "8ded422193290f820bc14f0c2d5ea63965871ca838db9ddfe77a10d4b3d0e445",
+      "modified": "2026-04-21",
       "kind": "file"
     },
     {
@@ -268,13 +292,13 @@
     {
       "path": "00_sistema_tesis/decisiones",
       "sha256": null,
-      "modified": "2026-04-14",
+      "modified": "2026-04-29",
       "kind": "directory"
     },
     {
       "path": "00_sistema_tesis/bitacora",
       "sha256": null,
-      "modified": "2026-04-14",
+      "modified": "2026-04-29",
       "kind": "directory"
     },
     {
@@ -292,7 +316,7 @@
     {
       "path": "04_implementacion",
       "sha256": null,
-      "modified": "2026-03-23",
+      "modified": "2026-04-24",
       "kind": "directory"
     },
     {

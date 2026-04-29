@@ -1,0 +1,59 @@
+{
+  "version": "1.0",
+  "jerarquia": [
+    "reglas_y_scripts_locales",
+    "modelos_locales_ligeros",
+    "nodo_desktop_compute",
+    "proveedores_gratuitos",
+    "proveedores_costo_intermedio",
+    "modelos_premium"
+  ],
+  "criterios": [
+    "complejidad",
+    "criticidad",
+    "sensibilidad",
+    "costo_estimado",
+    "latencia",
+    "contexto_requerido",
+    "dominio"
+  ],
+  "dominios": {
+    "administrativo": {
+      "preferencia": [
+        "reglas_y_scripts_locales",
+        "modelos_locales_ligeros"
+      ]
+    },
+    "academico": {
+      "preferencia": [
+        "reglas_y_scripts_locales",
+        "modelos_locales_ligeros",
+        "nodo_desktop_compute",
+        "proveedores_gratuitos",
+        "proveedores_costo_intermedio",
+        "modelos_premium"
+      ]
+    },
+    "profesional": {
+      "preferencia": [
+        "reglas_y_scripts_locales",
+        "modelos_locales_ligeros",
+        "nodo_desktop_compute",
+        "proveedores_gratuitos",
+        "proveedores_costo_intermedio"
+      ]
+    },
+    "hardware": {
+      "preferencia": [
+        "documentacion_oficial",
+        "reglas_y_scripts_locales",
+        "proveedores_costo_intermedio"
+      ]
+    }
+  },
+  "fallback": [
+    "otro_proveedor",
+    "modo_offline",
+    "procedimiento_manual"
+  ]
+}

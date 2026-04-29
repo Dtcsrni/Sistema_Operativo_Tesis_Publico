@@ -38,7 +38,7 @@
       "id": "B0",
       "nombre": "Gobierno del sistema de tesis y base operativa",
       "descripcion": "Define estructura canónica, políticas operativas, flujos de actualización, dashboard inicial y mecanismos de validación del repositorio.",
-      "estado": "activo",
+      "estado": "cerrado",
       "prioridad": "critica",
       "tipo": "gobernanza",
       "dependencias": [],
@@ -62,7 +62,7 @@
       "id": "B1",
       "nombre": "Delimitación del problema y contexto de Pachuca",
       "descripcion": "Acota el problema, define el caso de estudio, fija supuestos de intermitencia urbana y establece alcance espacial, funcional y metodológico.",
-      "estado": "no_iniciado",
+      "estado": "activo",
       "prioridad": "alta",
       "tipo": "marco",
       "dependencias": [

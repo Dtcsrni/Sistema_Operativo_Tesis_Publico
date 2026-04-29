@@ -1,6 +1,6 @@
 tipo_registro,id,nombre,estado,prioridad,referencia_1,referencia_2,notas
-bloque,B0,Gobierno del sistema de tesis y base operativa,activo,critica,,ENT-001|ENT-002|ENT-013|ENT-014|ENT-015,"Define estructura canónica, políticas operativas, flujos de actualización, dashboard inicial y mecanismos de validación del repositorio."
-bloque,B1,Delimitación del problema y contexto de Pachuca,no_iniciado,alta,H6,ENT-003,"Acota el problema, define el caso de estudio, fija supuestos de intermitencia urbana y establece alcance espacial, funcional y metodológico."
+bloque,B0,Gobierno del sistema de tesis y base operativa,cerrado,critica,,ENT-001|ENT-002|ENT-013|ENT-014|ENT-015,"Define estructura canónica, políticas operativas, flujos de actualización, dashboard inicial y mecanismos de validación del repositorio."
+bloque,B1,Delimitación del problema y contexto de Pachuca,activo,alta,H6,ENT-003,"Acota el problema, define el caso de estudio, fija supuestos de intermitencia urbana y establece alcance espacial, funcional y metodológico."
 bloque,B2,Diseño de arquitectura y formulación de hipótesis,no_iniciado,critica,HG|H1|H2|H3,ENT-004,"Formaliza la arquitectura propuesta, la línea base de comparación, las hipótesis específicas y el mapa de decisiones técnicas."
 bloque,B3,Modelo de control y métricas de desempeño,no_iniciado,alta,HG|H3|H4,ENT-005,"Traduce objetivos de resiliencia y control a métricas medibles, escenarios de carga y restricciones operativas."
 bloque,B4,Simulación y escenarios de intermitencia,no_iniciado,critica,HG|H1|H2|H3|H4|H5|H6,ENT-006,"Construye el entorno de simulación, implementa escenarios de intermitencia y compara línea base contra arquitectura propuesta."

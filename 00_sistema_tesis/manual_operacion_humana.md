@@ -6,11 +6,31 @@ La IA es opcional: acelera trabajo, pero no es requisito para retomar, registrar
 
 ## Superficies
 
-- **Superficie privada:** canon, backlog, decisiones, bitácora, auditoría, evidencia y configuración completa.
+- **superficie canónica no pública:** canon, backlog, decisiones, bitácora, auditoría, evidencia y configuración completa.
 - **Superficie pública:** clon filtrado y bundle público curado derivados desde la base privada.
 - **IA opcional:** si no hay IA disponible, el sistema sigue siendo legible y operable mediante Markdown, CSV, YAML y CLI.
 
 ## Nodos operativos
+
+```mermaid
+graph LR
+    subgraph PC ["Escritorio Primario (Soberano)"]
+        VS[VS Code + Scripts]
+        REPO[(repositorio canónico)]
+        subgraph DOCKER ["Stack Docker Hub"]
+            SD[siot-docs:8080]
+            SA[siot-agent]
+        end
+    end
+
+    subgraph OPI ["Nodo Edge (Operativo)"]
+        IOT[Edge IoT Services]
+        OBS[Observabilidad]
+    end
+
+    REPO -- "git push/sync" --> OPI
+    OPI -- "logs/métricas/evidencia" --> REPO
+```
 
 - **Escritorio primario (`desktop_workspace`):** Visual Studio Code en el PC como estación principal de autoría, diseño, análisis, construcción documental y mantenimiento del repositorio soberano.
 - **Nodo edge (`orange_pi_edge`):** Orange Pi para `edge_iot`, observabilidad local, diagnóstico técnico, pruebas en campo y control del stack IoT.
@@ -55,6 +75,7 @@ La IA es opcional: acelera trabajo, pero no es requisito para retomar, registrar
 3. Ejecutar `python 07_scripts/tesis.py audit --check`.
 4. Ejecutar `python 07_scripts/build_all.py` antes de cerrar trabajo o proponer cambios.
 5. Revisar wiki y dashboard generados si se necesita lectura rápida humana.
+6. El snapshot de tokens es opcional y local por defecto; no requiere `OPENAI_ADMIN_KEY` mientras no exista presupuesto para API externa.
 
 ### Preparar despliegue en Orange Pi
 
@@ -64,8 +85,9 @@ La IA es opcional: acelera trabajo, pero no es requisito para retomar, registrar
 4. Correr `bash bootstrap/orangepi/90_postcheck.sh` al finalizar.
 5. Tratar `/srv/tesis/repo` como clon operativo local de despliegue y supervisión, no como repositorio principal de autoría.
 6. Registrar cualquier desviación real de hardware, almacenamiento o servicios en bitácora/decisión.
-7. Para actualizar el clon operativo desde el escritorio, preferir `bash /srv/tesis/repo/ops/actualizacion/sync_repo_desde_desktop.sh repo+postcheck`.
+7. Para actualizar el clon operativo desde el escritorio, preferir `bash /srv/tesis/repo/ops/actualizacion/sync_repo_desde_desktop.sh repo+postcheck`; ese perfil también limpia ruido edge-volatil que no aporta al runtime (`.pytest_cache`, `__pycache__`, bytecode, backups y staging privado).
 8. Usar `repo-only` si solo se alineará el clon local, y `repo+restart-edge` si el cambio exige reiniciar `edge-iot-worker.service`.
+9. Acceder por SSH al host `tesis-edge` con el usuario dedicado `tesisai` y la llave definida en `ORANGEPI_KEY_PATH`; no usar contraseña.
 
 ### Operación permitida en Orange Pi
 
@@ -84,6 +106,31 @@ La IA es opcional: acelera trabajo, pero no es requisito para retomar, registrar
 6. Publicar el downstream remoto con `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`.
 7. La actualización automática del repo público remoto ocurre solo desde `main` después de que `verify` termine en verde y requiere `PUBLIC_REPO_PAT` en GitHub Actions.
 8. Nunca corregir a mano el bundle público ni usar GitHub Pages del repo privado; si algo está mal, ajustar la fuente privada o la política de sanitización y volver a generar.
+
+### Operación con Docker (Nodo de Control)
+
+El sistema ahora corre principalmente en contenedores en la PC. Para gestionarlos:
+
+1. **Iniciar stack PC Hub**: `docker compose -f docker-compose.pc.yml up -d`
+2. **Ver estado PC Hub**: `docker compose -f docker-compose.pc.yml ps`
+3. **Ver logs del agente**: `docker logs -f siot-agent`
+4. **Ejecutar pruebas internas**: `docker exec siot-agent pytest tests/test_docker_stack.py`
+5. **Reconstruir imágenes PC Hub**: `docker compose -f docker-compose.pc.yml build`
+
+Para operación exclusiva del Nodo Edge (Orange Pi):
+
+1. **Iniciar stack Edge**: `docker compose -f docker-compose.edge.yml up -d`
+2. **Ver estado Edge**: `docker compose -f docker-compose.edge.yml ps`
+3. **Reconstruir imágenes Edge**: `docker compose -f docker-compose.edge.yml build`
+4. **Modo hardware estricto (si aplica GPIO/I2C/NPU)**: `SIOT_EDGE_PRIVILEGED=true docker compose -f docker-compose.edge.yml up -d`
+
+Variables recomendadas para separar secretos por dominio:
+
+- `SIOT_DOCS_ENV_FILE=config/env/tesis-os.env.example`
+- `SIOT_AGENT_ENV_FILE=config/env/openclaw.env`
+- `SIOT_EDGE_ENV_FILE=config/env/domains/edge.env.example`
+
+El Dashboard generado por el contenedor está disponible en `http://localhost:8080`.
 
 ## Evidencia fuente de conversación
 
@@ -104,15 +151,24 @@ La evidencia fuente vive en `evidencia privada no publicada/conversaciones_codex
 
 ## Firma humana de artefactos
 
+```mermaid
+stateDiagram-v2
+    [*] --> Pendiente: Cambio en fuente canónica
+    Pendiente --> Evidencia: Registrar fuente de conversación
+    Evidencia --> Validado: sign_off.py + VAL-STEP
+    Validado --> Publicado: build_all.py + publish
+    Publicado --> [*]
+```
+
 La firma humana no se autoemite desde IA sin contexto trazable. Si un artefacto requiere renovar supervisión humana, el tesista debe registrar la firma explícitamente o usar la auto-firma controlada con `VAL-STEP` y evidencia fuente válida.
 
 - Comando base: `python 07_scripts/sign_off.py 07_scripts/README.md "Revisado y aprobado por tesista humano." --session-id <session_id>`
 - Auto-firma controlada (solo drift en fuentes wiki directas):
-  - `python 07_scripts/tesis.py signoff sync --step-id validación humana interna no pública --source-event-id EVT-XXXX --session-id <session_id> --check`
-  - `python 07_scripts/tesis.py signoff sync --step-id validación humana interna no pública --source-event-id EVT-XXXX --session-id <session_id>`
+  - `python 07_scripts/tesis.py signoff sync --step-id validación humana interna no pública --source-event-id evento interno no público --session-id <session_id> --check`
+  - `python 07_scripts/tesis.py signoff sync --step-id validación humana interna no pública --source-event-id evento interno no público --session-id <session_id>`
 - En `pre-push` (hook instalado), exportar antes:
   - `SISTEMA_TESIS_STEP_ID=validación humana interna no pública`
-  - `SISTEMA_TESIS_SOURCE_EVENT_ID=EVT-XXXX`
+  - `SISTEMA_TESIS_SOURCE_EVENT_ID=evento interno no público`
   - `SISTEMA_TESIS_SESSION_ID=<session_id_opcional>`
   - `PUBLIC_REPO_PAT=<token>`
 - Con esas variables, `pre-push` ejecuta automáticamente: gate -> auto-firma controlada -> sincronización al repo público derivado.
@@ -149,4 +205,4 @@ La firma humana no se autoemite desde IA sin contexto trazable. Si un artefacto 
    - `python 07_scripts/build_all.py`
    - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-29`._

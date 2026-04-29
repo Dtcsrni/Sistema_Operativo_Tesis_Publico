@@ -100,6 +100,60 @@ def minimal_repo(repo: Path) -> None:
                     "write_scope": "read_only",
                     "requires_step_id": False,
                 },
+                "context.repo_map": {
+                    "enabled": True,
+                    "description": "map",
+                    "risk_level": "MEDIO",
+                    "write_scope": "read_only",
+                    "requires_step_id": False,
+                },
+                "context.fetch_changes": {
+                    "enabled": True,
+                    "description": "changes",
+                    "risk_level": "MEDIO",
+                    "write_scope": "read_only",
+                    "requires_step_id": False,
+                },
+                "context.trace_lookup": {
+                    "enabled": True,
+                    "description": "trace-lookup",
+                    "risk_level": "MEDIO",
+                    "write_scope": "read_only",
+                    "requires_step_id": False,
+                },
+                "context.session_brief": {
+                    "enabled": True,
+                    "description": "brief",
+                    "risk_level": "MEDIO",
+                    "write_scope": "read_only",
+                    "requires_step_id": False,
+                },
+                **{
+                    name: {
+                        "enabled": True,
+                        "description": name,
+                        "risk_level": "MEDIO",
+                        "write_scope": "read_only",
+                        "requires_step_id": False,
+                    }
+                    for name in [
+                        "context.search_ranked",
+                        "context.file_digest",
+                        "context.symbol_index",
+                        "context.dependency_map",
+                        "context.related_paths",
+                        "context.bundle",
+                        "context.change_impact",
+                        "context.todo_scan",
+                        "memory.lookup",
+                        "memory.session_recap",
+                        "memory.derived_index",
+                        "memory.evidence_digest",
+                        "governance.step_status",
+                        "governance.trace_gap_scan",
+                        "governance.protected_path_check",
+                    ]
+                },
                 "governance.preflight": {
                     "enabled": True,
                     "description": "preflight",
@@ -110,6 +164,13 @@ def minimal_repo(repo: Path) -> None:
                 "artifacts.write_derived": {
                     "enabled": True,
                     "description": "write",
+                    "risk_level": "MEDIO",
+                    "write_scope": "derived",
+                    "requires_step_id": False,
+                },
+                "artifacts.write_memory_derived": {
+                    "enabled": True,
+                    "description": "memory-write",
                     "risk_level": "MEDIO",
                     "write_scope": "derived",
                     "requires_step_id": False,
@@ -127,6 +188,20 @@ def minimal_repo(repo: Path) -> None:
                     "risk_level": "ALTO",
                     "write_scope": "controlled",
                     "requires_step_id": False,
+                },
+                "canon.prepare_multi_change": {
+                    "enabled": True,
+                    "description": "prepare-multi",
+                    "risk_level": "ALTO",
+                    "write_scope": "controlled",
+                    "requires_step_id": False,
+                },
+                "canon.apply_multi_change": {
+                    "enabled": True,
+                    "description": "apply-multi",
+                    "risk_level": "ALTO",
+                    "write_scope": "controlled",
+                    "requires_step_id": True,
                 },
                 "artifacts.evaluate_serena": {
                     "enabled": True,
@@ -229,8 +304,15 @@ class TestSerenaMCP(unittest.TestCase):
                 process.stdin.flush()
                 tool_response = read_message(process.stdout)
                 names = {tool["name"] for tool in tool_response["result"]["tools"]}
-                self.assertEqual(len(names), 7)
+                self.assertEqual(len(names), 29)
                 self.assertIn("context_fetch_compact", names)
+                self.assertIn("context_repo_map", names)
+                self.assertIn("context_fetch_changes", names)
+                self.assertIn("context_trace_lookup", names)
+                self.assertIn("context_session_brief", names)
+                self.assertIn("context_bundle", names)
+                self.assertIn("memory_lookup", names)
+                self.assertIn("canon_apply_multi_change", names)
                 self.assertIn("governance_preflight", names)
 
                 process.stdin.write(
@@ -256,6 +338,31 @@ class TestSerenaMCP(unittest.TestCase):
                     encode_message(
                         {
                             "jsonrpc": "2.0",
+                            "id": 33,
+                            "method": "tools/call",
+                            "params": {
+                                "name": "context_bundle",
+                                "arguments": {
+                                    "query": "Serena",
+                                    "paths": ["docs/nota.md"],
+                                    "max_chars": 1200,
+                                    "include_changes": False,
+                                    "include_trace": False,
+                                },
+                            },
+                        }
+                    )
+                )
+                process.stdin.flush()
+                bundle_response = read_message(process.stdout)
+                bundle_payload = bundle_response["result"]["structuredContent"]
+                self.assertEqual(bundle_payload["status"], "ok")
+                self.assertTrue(bundle_payload["sections"])
+
+                process.stdin.write(
+                    encode_message(
+                        {
+                            "jsonrpc": "2.0",
                             "id": 30,
                             "method": "tools/call",
                             "params": {
@@ -268,6 +375,23 @@ class TestSerenaMCP(unittest.TestCase):
                 process.stdin.flush()
                 canonical_fetch_response = read_message(process.stdout)
                 self.assertEqual(canonical_fetch_response["result"]["structuredContent"]["status"], "ok")
+
+                process.stdin.write(
+                    encode_message(
+                        {
+                            "jsonrpc": "2.0",
+                            "id": 32,
+                            "method": "tools/call",
+                            "params": {
+                                "name": "context_repo_map",
+                                "arguments": {"limit": 3},
+                            },
+                        }
+                    )
+                )
+                process.stdin.flush()
+                map_response = read_message(process.stdout)
+                self.assertEqual(map_response["result"]["structuredContent"]["status"], "ok")
 
                 process.stdin.write(
                     encode_message(
@@ -333,6 +457,30 @@ class TestSerenaMCP(unittest.TestCase):
                 process.stdin.flush()
                 blocked_response = read_message(process.stdout)
                 self.assertIn("error", blocked_response)
+
+                process.stdin.write(
+                    encode_message(
+                        {
+                            "jsonrpc": "2.0",
+                            "id": 51,
+                            "method": "tools/call",
+                            "params": {
+                                "name": "canon_apply_multi_change",
+                                "arguments": {
+                                    "changes": [
+                                        {
+                                            "path": "docs/protegido.md",
+                                            "new_content": "<!-- SISTEMA_TESIS:PROTEGIDO -->\nCambio multi\n",
+                                        }
+                                    ]
+                                },
+                            },
+                        }
+                    )
+                )
+                process.stdin.flush()
+                blocked_multi_response = read_message(process.stdout)
+                self.assertIn("error", blocked_multi_response)
 
                 process.stdin.write(
                     encode_message(
@@ -413,11 +561,13 @@ class TestSerenaMCP(unittest.TestCase):
                     tools_payload = json.loads(response.read().decode("utf-8"))
                 names = {tool["name"] for tool in tools_payload["result"]["tools"]}
                 self.assertIn("context_fetch_compact", names)
+                self.assertIn("context_repo_map", names)
+                self.assertIn("context_bundle", names)
                 self.assertIn("governance_preflight", names)
                 debug_lines = debug_log.read_text(encoding="utf-8").splitlines()
                 http_out_lines = [line for line in debug_lines if line.startswith("HTTP OUT ")]
                 self.assertTrue(http_out_lines)
-                self.assertTrue(any('"tool_count": 7' in line for line in http_out_lines))
+                self.assertTrue(any('"tool_count": 29' in line for line in http_out_lines))
                 self.assertTrue(all('"inputSchema"' not in line for line in http_out_lines))
             finally:
                 close_process(process)

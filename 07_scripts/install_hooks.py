@@ -83,7 +83,8 @@ fi
 "$PYTHON_BIN" 07_scripts/sync_public_repo.py \
   --mode mirror \
   --target-dir "$PUBLIC_TARGET_DIR" \
-  --repo-url "https://x-access-token:${PUBLIC_REPO_PAT}@${PUBLIC_REPO_URL#https://}" \
+  --repo-url "$PUBLIC_REPO_URL" \
+  --repo-token "$PUBLIC_REPO_PAT" \
   --branch "$PUBLIC_BRANCH" \
   --push \
   --allow-dirty

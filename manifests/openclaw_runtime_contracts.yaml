@@ -47,7 +47,19 @@
     },
     {
       "id": "BenchmarkRecord",
-      "description": "Resultado persistido de benchmark local para Ollama y la vía NPU experimental."
+      "description": "Espejo operativo SQLite de una medicion de benchmark; debe incluir run_id, modelo, estado, payload_hash, ruta JSONL primaria y validez cientifica."
+    },
+    {
+      "id": "BenchmarkRun",
+      "description": "Evidencia primaria append-only de benchmark con hash-chain, host fingerprint, modelo, promptset, muestras raw, estadisticos y referencias metodologicas."
+    },
+    {
+      "id": "SessionEnvelope",
+      "description": "Sesion operativa comun a canales CLI, web local y Telegram con nodo/politica/provider-state trazables; Matrix permanece como extension latente."
+    },
+    {
+      "id": "SessionMessage",
+      "description": "Mensaje inbound/outbound persistido por sesion para chats agenticos y control plane conversacional."
     },
     {
       "id": "SecretResolution",

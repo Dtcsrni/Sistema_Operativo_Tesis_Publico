@@ -6,6 +6,7 @@ Este directorio contiene la capa operativa del sistema. La CLI canónica es `07_
 
 ### 1. Retomar el proyecto
 ```powershell
+python 07_scripts/check_agent_tooling.py
 python 07_scripts/tesis.py status
 python 07_scripts/tesis.py next
 python 07_scripts/tesis.py doctor
@@ -42,7 +43,7 @@ python 07_scripts/tesis.py source status --check
 ### 5. Auto-firma controlada en pre-push
 ```powershell
 $env:SISTEMA_TESIS_STEP_ID="validación humana interna no pública"
-$env:SISTEMA_TESIS_SOURCE_EVENT_ID="EVT-XXXX"
+$env:SISTEMA_TESIS_SOURCE_EVENT_ID="evento interno no público"
 $env:SISTEMA_TESIS_SESSION_ID="codex-YYYYMMDD"
 $env:PUBLIC_REPO_PAT="<token>"
 python 07_scripts/tesis.py signoff sync --step-id $env:SISTEMA_TESIS_STEP_ID --source-event-id $env:SISTEMA_TESIS_SOURCE_EVENT_ID --session-id $env:SISTEMA_TESIS_SESSION_ID --check
@@ -81,7 +82,10 @@ python 07_scripts/tesis.py split-staged --commit
 ## Scripts de soporte
 
 - `build_all.py`: auditoría integral del sistema.
+- `agent_task_router.py`: clasifica subtareas por privacidad, riesgo, complejidad y runtime para economía de tokens local-first.
+- `check_agent_tooling.py`: diagnóstico conjunto de `caveman` y Serena para fijar el modo de trabajo conciso y la primera capa de contexto.
 - `check_serena_access.py`: verifica la salud técnica de `serena-local` por `http` y de `serena-local-py` por `stdio`, distingue perfiles expuestos en el workspace vs backends solo saludables, y comprueba si `serena-local` sigue disponible como ruta operativa esperada del workspace.
+- `check_serena_multi_host_contract.py`: verifica que el contrato Serena multi-IDE mantenga 29 herramientas, plantillas de host, bridge autenticado y workspace HTTP alineados.
 - `runtime/serena_bridge/bin/serena_bridge.py`: expone Serena MCP por HTTP autenticado para runtimes externos compatibles.
 - `build_wiki.py`: genera wiki verificable Markdown y HTML.
 - `build_dashboard.py`: genera dashboard HTML derivado.
@@ -105,4 +109,4 @@ python 07_scripts/tesis.py split-staged --commit
 - La IA es opcional; la operación principal debe seguir siendo legible para humanos.
 - Si un cambio afecta gobernanza, arquitectura o método, registra decisión y vuelve a auditar.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-29`._

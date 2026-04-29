@@ -25,6 +25,15 @@
     "/srv/tesis/intercambio/edge/spool",
     "/var/log/edge-iot"
   ],
+  "edge_cleanup_paths": [
+    "evidencia privada no publicada/conversaciones_codex",
+    "evidencia privada no publicada/staging_ingestion",
+    ".pytest_cache",
+    "**/__pycache__",
+    "**/*.pyc",
+    "**/*.pyo",
+    "**/*.bak*"
+  ],
   "desktop_to_edge_payloads": [
     "commits_canonicos",
     "scripts_y_manifests",

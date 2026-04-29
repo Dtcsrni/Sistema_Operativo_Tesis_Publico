@@ -223,9 +223,12 @@ def stable_generated_at(relative_paths: list[str]) -> str:
                 if any(rel.startswith(prefix) for prefix in VOLATILE_PATH_PREFIXES):
                     continue
                 mtimes.append(item.stat().st_mtime)
+    
     if not mtimes:
-        return now_stamp()
-    return datetime.fromtimestamp(max(mtimes), tz=UTC).strftime("%Y-%m-%d %H:%M:%S")
+        return datetime.now().strftime("%Y-%m-%d %H:%M:00")
+    
+    # En Docker/CI sin Git, redondeamos al minuto para evitar drift entre pasos rápidos
+    return datetime.fromtimestamp(max(mtimes), tz=UTC).strftime("%Y-%m-%d %H:%M:00")
 
 
 def preferred_python_executable() -> str:

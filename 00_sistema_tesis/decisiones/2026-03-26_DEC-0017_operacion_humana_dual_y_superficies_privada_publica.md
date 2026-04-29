@@ -17,7 +17,7 @@ El sistema operativo de tesis ya contaba con canon fuerte, guardrails y auditor�
 
 Adoptar un modelo de **operación humana dual** con dos superficies explícitas:
 
-1. **Superficie privada:** canon, backlog, decisiones, bitácora, auditoría, evidencia y configuración íntegra.
+1. **superficie canónica no pública:** canon, backlog, decisiones, bitácora, auditoría, evidencia y configuración íntegra.
 2. **Superficie pública:** bundle público curado, derivado y reproducible para divulgación y evaluación externa.
 
 Como regla estructural, todo flujo crítico debe tener una **vía manual explícita** y la IA queda institucionalizada como apoyo opcional, nunca como requisito operativo.
@@ -95,4 +95,4 @@ La alternativa elegida reduce dependencia cognitiva de la IA, mejora legibilidad
 [GOV]: ruta local no pública
 [AUD]: ruta local no pública
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-29`._

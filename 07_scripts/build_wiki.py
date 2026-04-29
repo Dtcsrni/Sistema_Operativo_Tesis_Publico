@@ -22,6 +22,7 @@ from common import (
 
 
 SECTION_IDS = {
+    "casos_uso",
     "sistema",
     "gobernanza",
     "terminologia",
@@ -36,6 +37,7 @@ SECTION_IDS = {
 }
 
 PAGE_ORDER = [
+    "casos_uso",
     "sistema",
     "gobernanza",
     "terminologia",
@@ -50,6 +52,7 @@ PAGE_ORDER = [
 ]
 
 PAGE_TITLES = {
+    "casos_uso": "Agente y Casos de Uso",
     "sistema": "Sistema",
     "gobernanza": "Gobernanza",
     "terminologia": "Terminología",
@@ -64,6 +67,7 @@ PAGE_TITLES = {
 }
 
 PAGE_RELATED = {
+    "casos_uso": ["sistema", "gobernanza", "decisiones"],
     "sistema": ["gobernanza", "terminologia", "planeacion"],
     "gobernanza": ["sistema", "terminologia", "bitacora"],
     "terminologia": ["sistema", "gobernanza", "planeacion"],
@@ -75,6 +79,21 @@ PAGE_RELATED = {
     "experimentos": ["hipotesis", "implementacion", "tesis"],
     "implementacion": ["bloques", "experimentos", "tesis"],
     "tesis": ["experimentos", "implementacion", "decisiones"],
+}
+
+PAGE_ICONS = {
+    "casos_uso": "smart_toy",
+    "sistema": "settings",
+    "gobernanza": "gavel",
+    "terminologia": "book",
+    "hipotesis": "lightbulb",
+    "bloques": "grid_view",
+    "planeacion": "event_note",
+    "decisiones": "psychology",
+    "bitacora": "history_edu",
+    "experimentos": "science",
+    "implementacion": "code",
+    "tesis": "school",
 }
 
 REQUIRED_PAGE_FIELDS = [
@@ -1281,7 +1300,24 @@ def build_coverage_page(section: dict, generated_at: str, notice: str) -> str:
     return "\n".join(lines)
 
 
+def build_casos_uso_page(section: dict, generated_at: str, notice: str) -> str:
+    lines = [
+        f"# {section['titulo']}",
+        "",
+        section["descripcion"],
+        "",
+    ]
+    lines.extend(render_metadata(generated_at=generated_at, status="ok", sources=section["fuentes"], notice=notice))
+    lines.extend(render_page_navigation("casos_uso"))
+    lines.extend(render_origin_block("casos_uso", section["fuentes"]))
+    lines.extend(render_markdown_fragment("00_sistema_tesis/documentacion_sistema/casos_uso_agente.md", demote_by=0))
+    lines.append("---")
+    lines.extend(render_markdown_fragment("00_sistema_tesis/documentacion_sistema/guias_tareas_agente.md", demote_by=0))
+    return "\n".join(lines)
+
+
 SECTION_BUILDERS = {
+    "casos_uso": build_casos_uso_page,
     "sistema": build_sistema_page,
     "gobernanza": build_gobernanza_page,
     "terminologia": build_terminologia_page,
@@ -1296,59 +1332,329 @@ SECTION_BUILDERS = {
 }
 
 
-def render_html_page(title: str, markdown_content: str, generated_at: str) -> str:
-    body = escape(markdown_content)
+def render_markdown_to_html(markdown_text: str) -> str:
+    """Conversión simple de markdown a HTML sin dependencias externas."""
+    # Preservar bloques de código antes de escapar
+    code_blocks = []
+    def save_code_block(match):
+        lang, content = match.groups()
+        code_blocks.append((lang, content))
+        return f"<!--CODE_BLOCK_{len(code_blocks)-1}-->"
+    
+    # Manejar bloques de código con triple backtick
+    text = re.sub(r'```([a-z]*)\n(.*?)\n```', save_code_block, markdown_text, flags=re.DOTALL)
+    
+    html = escape(text)
+    
+    # Headers
+    html = re.sub(r'^# (.*)$', r'<h1>\1</h1>', html, flags=re.MULTILINE)
+    html = re.sub(r'^## (.*)$', r'<h2>\1</h2>', html, flags=re.MULTILINE)
+    html = re.sub(r'^### (.*)$', r'<h3>\1</h3>', html, flags=re.MULTILINE)
+
+    # Admonitions MkDocs style (!!! type "Title")
+    html = re.sub(
+        r'!!! (success|warning|danger) "([^"]+)"\n\s+(.*)',
+        r'<div class="admonition \1"><p class="admonition-title">\2</p><p>\3</p></div>',
+        html,
+        flags=re.MULTILINE
+    )
+    
+    # Bold / Italic
+    html = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', html)
+    html = re.sub(r'\*(.*?)\*', r'<em>\1</em>', html)
+    
+    # Inline code
+    html = re.sub(r'`(.*?)`', r'<code>\1</code>', html)
+    
+    # Links [label](href.md) -> [label](href.html)
+    def link_repl(match):
+        label, href = match.groups()
+        # Si el enlace es externo, no tocar
+        if href.startswith(SKIP_LINK_PREFIXES):
+            return f'<a href="{href}">{label}</a>'
+            
+        # Si el enlace apunta a otra página de la wiki (están en el mismo nivel)
+        is_wiki_page = any(href == f"{pid}.md" or href == f"{pid}.html" for pid in SECTION_IDS) or href == "index.md" or href == "index.html"
+        
+        if is_wiki_page:
+            if href.endswith(".md"):
+                href = href[:-3] + ".html"
+        else:
+            # Si no es una página de la wiki, probablemente es un archivo del repo
+            # Como estamos en generado/wiki/, necesitamos un nivel extra de ../ si el link original ya usaba ../
+            if href.startswith("../"):
+                href = "../" + href
+        
+        return f'<a href="{href}">{label}</a>'
+    
+    html = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', link_repl, html)
+    
+    # Lists
+    html = re.sub(r'^\s*-\s+(.*)$', r'<li>\1</li>', html, flags=re.MULTILINE)
+    # Wrap li in ul (simplified)
+    html = re.sub(r'((?:<li>.*</li>\n?)+)', r'<ul>\1</ul>', html)
+    
+    # Restore code blocks
+    for i, (lang, content) in enumerate(code_blocks):
+        if lang == "mermaid":
+            replacement = f'<div class="mermaid-container"><pre class="mermaid">{escape(content)}</pre></div>'
+        else:
+            replacement = f'<pre><code class="language-{lang}">{escape(content)}</code></pre>'
+        html = html.replace(f"&lt;!--CODE_BLOCK_{i}--&gt;", replacement)
+
+    # Newlines to paragraphs
+    html = html.replace('\n\n', '</p><p>')
+    
+    return f'<div class="markdown-body"><p>{html}</p></div>'
+
+
+def render_html_page(title: str, markdown_content: str, generated_at: str, current_page_id: str = "") -> str:
+    rendered_body = render_markdown_to_html(markdown_content)
+    
+    # Navigation Sidebar
+    nav_links = []
+    for page_id in PAGE_ORDER:
+        active_class = "active" if page_id == current_page_id else ""
+        icon = PAGE_ICONS.get(page_id, "description")
+        nav_links.append(
+            f'<a href="{page_id}.html" class="nav-link {active_class}">'
+            f'<span class="material-icons">{icon}</span>'
+            f'<span>{PAGE_TITLES[page_id]}</span>'
+            '</a>'
+        )
+    
+    sidebar_nav = "\n".join(nav_links)
+
     return f"""<!DOCTYPE html>
 <html lang="es-MX">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{escape(title)}</title>
+  <title>{escape(title)} | Tesis OS Wiki</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700&family=Fira+Code&family=Material+Icons&display=swap" rel="stylesheet">
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({{ startOnLoad: true, theme: 'neutral' }});
+  </script>
   <style>
+    :root {{
+      --primary: #0f766e;
+      --primary-light: #14b8a6;
+      --secondary: #1e293b;
+      --accent: #06b6d4;
+      --bg: #f8fafc;
+      --surface: rgba(255, 255, 255, 0.85);
+      --border: rgba(226, 232, 240, 0.8);
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }}
+
+    * {{ box-sizing: border-box; }}
+
     body {{
       margin: 0;
-      background: #f6f3eb;
-      color: #1e293b;
-      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(15, 118, 110, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.05) 0px, transparent 50%);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      display: flex;
+      min-height: 100vh;
     }}
+
+    /* Sidebar Navigation */
+    nav {{
+      width: 260px;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      border-right: 1px solid var(--border);
+      padding: 2rem 1rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 100;
+    }}
+
+    .nav-header {{
+      padding: 0 0.75rem 1.5rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }}
+
+    .nav-link {{
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      color: var(--text-muted);
+      border-radius: var(--radius);
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }}
+
+    .nav-link:hover {{
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--primary);
+      transform: translateX(4px);
+    }}
+
+    .nav-link.active {{
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow);
+    }}
+
+    .nav-link .material-icons {{
+      font-size: 20px;
+    }}
+
+    /* Main Content Area */
     main {{
-      max-width: 980px;
+      flex: 1;
+      padding: 3rem 4rem;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 2rem 1.25rem 3rem;
     }}
+
     header {{
+      margin-bottom: 3rem;
+      animation: fadeInDown 0.6s ease-out;
+    }}
+
+    @keyframes fadeInDown {{
+      from {{ opacity: 0; transform: translateY(-20px); }}
+      to {{ opacity: 1; transform: translateY(0); }}
+    }}
+
+    h1 {{
+      font-family: 'Outfit', sans-serif;
+      font-size: 3rem;
+      margin: 0 0 0.5rem;
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }}
+
+    .stamp {{
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }}
+
+    /* Markdown Rendering Styles */
+    .markdown-body {{
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }}
+
+    .markdown-body h2 {{
+      font-family: 'Outfit', sans-serif;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+      color: var(--secondary);
+    }}
+
+    .markdown-body p {{ margin-bottom: 1.25rem; }}
+
+    .markdown-body code {{
+      background: rgba(15, 118, 110, 0.08);
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9em;
+      color: var(--primary);
+    }}
+
+    .markdown-body a {{
+      color: var(--primary);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }}
+
+    .markdown-body a:hover {{
+      border-bottom-color: var(--primary);
+    }}
+
+    .markdown-body ul {{
+      padding-left: 1.5rem;
       margin-bottom: 1.5rem;
     }}
-    h1 {{
-      margin: 0 0 0.5rem;
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
+
+    .markdown-body li {{
+      margin-bottom: 0.5rem;
     }}
-    .stamp {{
-      color: #475569;
-      font-family: "Segoe UI", Tahoma, sans-serif;
-      font-size: 0.9rem;
+
+    /* Admonitions */
+    .admonition {{
+      margin: 1.5rem 0;
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      border-left: 4px solid #ccc;
+      background: white;
+      box-shadow: var(--shadow);
     }}
-    pre {{
-      white-space: pre-wrap;
-      background: #fff;
-      border: 1px solid #d6d3d1;
-      border-radius: 16px;
-      padding: 1rem;
-      overflow-wrap: anywhere;
-      line-height: 1.55;
+    .admonition.success {{ border-left-color: #10b981; background: #ecfdf5; }}
+    .admonition.warning {{ border-left-color: #f59e0b; background: #fffbeb; }}
+    .admonition.danger {{ border-left-color: #ef4444; background: #fef2f2; }}
+    
+    .admonition-title {{
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
     }}
-    a {{
-      color: #0f766e;
+
+    @media (max-width: 768px) {{
+      body {{ flex-direction: column; }}
+      nav {{
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 1rem;
+      }}
+      .nav-header {{ display: none; }}
+      main {{ padding: 2rem 1.5rem; }}
+      h1 {{ font-size: 2.2rem; }}
     }}
   </style>
 </head>
 <body>
+  <nav>
+    <div class="nav-header">
+      <span class="material-icons">architecture</span>
+      Tesis OS
+    </div>
+    {sidebar_nav}
+  </nav>
   <main>
     <header>
       <h1>{escape(title)}</h1>
-      <p class="stamp">Artefacto derivado generado el {escape(generated_at)}</p>
+      <div class="stamp">
+        <span class="material-icons" style="font-size: 16px;">update</span>
+        Generado el {escape(generated_at)}
+      </div>
     </header>
-    <pre>{body}</pre>
+    {rendered_body}
   </main>
 </body>
 </html>
@@ -1384,7 +1690,7 @@ def build_wiki() -> dict:
         markdown_path = markdown_dir / f"{page_id}.md"
         write_text_if_changed(markdown_path, markdown_content + "\n")
 
-        html_content = render_html_page(section["titulo"], markdown_content, generated_at)
+        html_content = render_html_page(section["titulo"], markdown_content, generated_at, current_page_id=page_id)
         html_path = html_dir / f"{page_id}.html"
         write_text_if_changed(html_path, html_content)
 
@@ -1403,7 +1709,7 @@ def build_wiki() -> dict:
     index_path = markdown_dir / "index.md"
     write_text_if_changed(index_path, index_content + "\n")
     index_html_path = html_dir / "index.html"
-    write_text_if_changed(index_html_path, render_html_page("Wiki verificable", index_content, generated_at))
+    write_text_if_changed(index_html_path, render_html_page("Wiki verificable", index_content, generated_at, current_page_id="index"))
 
     page_names = ["index"] + [item["id"] for item in page_records]
     manifest = {

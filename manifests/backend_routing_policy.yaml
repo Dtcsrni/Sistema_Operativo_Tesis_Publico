@@ -3,6 +3,8 @@
   "jerarquia": [
     "reglas_y_scripts_locales",
     "modelos_locales_ligeros",
+    "pc_nativa_llamacpp",
+    "nodo_desktop_compute",
     "proveedores_gratuitos",
     "proveedores_costo_intermedio",
     "modelos_premium"
@@ -16,6 +18,45 @@
     "contexto_requerido",
     "dominio"
   ],
+  "model_selection": {
+    "desktop_compute": {
+      "daily_recommended": "mistral-nemo:12b",
+      "coding_heavy": "qwen2.5-coder:14b",
+      "experimental_ceiling": "qwen3:14b",
+      "alternative_ceiling": "phi4:14b",
+      "benchmark_profile": "pc_mistral_nemo_12b_extensive",
+      "evidence": "historial interno no público/openclaw_max_model_bench_pc_post_wsl_20260421.json",
+      "comparative_evidence": "historial interno no público/openclaw_max_model_bench_pc_20260421.json",
+      "caveat": "Resultados post-WSL con memory=12GB aplicado; mantener margen porque la RTX 4060 Ti tiene 8GB VRAM y los 14B usan offload parcial."
+    },
+    "pc_native_llamacpp": {
+      "daily_recommended": "mistral-nemo:12b",
+      "coding_heavy": "qwen2.5-coder:14b",
+      "experimental_ceiling": "qwen3:14b",
+      "alternative_ceiling": "phi4:14b",
+      "benchmark_profile": "pc_mistral_nemo_12b_extensive",
+      "evidence": "historial interno no público/openclaw_max_model_bench_pc_post_wsl_20260421.json",
+      "comparative_evidence": "historial interno no público/openclaw_max_model_bench_pc_20260421.json",
+      "caveat": "Carril pesado principal previsto para la PC en host nativo via llama.cpp server; mantener alias desktop_compute mientras dura la transicion."
+    },
+    "orange_pi_edge_cpu": {
+      "daily_recommended": "qwen3:4b",
+      "fallback": "qwen3:4b",
+      "experimental_ceiling": "qwen2.5-coder:7b",
+      "evidence": "historial interno no público/openclaw_max_model_bench_edge_20260421.json"
+    },
+    "orange_pi_edge_npu": {
+      "status": "experimental_no_promoted",
+      "requires": [
+        "/dev/rknpu* visible o mecanismo equivalente documentado",
+        "usuario de servicio con permisos video/render si aplica",
+        "modelo .rkllm preconvertido",
+        "benchmark TTFT/tokens_s/memoria sin caida de servicio"
+      ],
+      "candidate_balance": "Phi-3-3.8B W8A8",
+      "candidate_max_reasonable": "ChatGLM3-6B W8A8"
+    }
+  },
   "dominios": {
     "administrativo": {
       "preferencia": [
@@ -27,6 +68,9 @@
       "preferencia": [
         "reglas_y_scripts_locales",
         "modelos_locales_ligeros",
+        "router_externo_documentado",
+        "pc_nativa_llamacpp",
+        "nodo_desktop_compute",
         "proveedores_gratuitos",
         "proveedores_costo_intermedio",
         "modelos_premium"
@@ -36,6 +80,9 @@
       "preferencia": [
         "reglas_y_scripts_locales",
         "modelos_locales_ligeros",
+        "router_externo_documentado",
+        "pc_nativa_llamacpp",
+        "nodo_desktop_compute",
         "proveedores_gratuitos",
         "proveedores_costo_intermedio"
       ]
@@ -48,9 +95,33 @@
       ]
     }
   },
-  "fallback": [
+    "fallback": [
     "otro_proveedor",
     "modo_offline",
     "procedimiento_manual"
-  ]
+  ],
+  "router_policy": {
+    "default_backend": "openclaw_internal_governed_router",
+    "external_router_provider": "external_llm_router",
+    "external_router_priority": "opcional_si_configurado_y_permitido_por_dominio",
+    "known_documented_routers": [
+      "LiteLLM Router/Proxy",
+      "OpenRouter",
+      "Ollama proveedor de IA no publicado-compatible API",
+      "llama.cpp/llama-cpp-python proveedor de IA no publicado-compatible server"
+    ],
+    "governance_note": "OpenClaw conserva gates, trazabilidad, presupuestos y privacidad; el router externo solo ejecuta selección/fallback de modelo cuando está habilitado explícitamente."
+  },
+  "scientific_benchmark_policy": {
+    "primary_pc_model": "mistral-nemo:12b",
+    "primary_evidence_store": "runtime/pc_control/benchmarks/runs/*.jsonl",
+    "operational_mirror": "OpenClaw SQLite benchmark_runs",
+    "invalid_modes": ["simulation_only"],
+    "required_artifacts": ["run_header", "sample", "run_summary", "record_hash", "previous_record_hash"],
+    "methodology_references": [
+      "MLCommons MLPerf Inference principles, without official certification claim",
+      "EleutherAI lm-evaluation-harness when dependencies and datasets are available",
+      "Stanford CRFM HELM-style transparent reporting"
+    ]
+  }
 }

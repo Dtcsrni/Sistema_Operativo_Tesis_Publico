@@ -1,0 +1,68 @@
+# ==========================================
+# Dockerfile para OpenClaw Agent (Inteligencia)
+# ==========================================
+FROM python:3.12-slim
+
+# Evitar generación de .pyc y habilitar logs en tiempo real
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+# Instalar dependencias del sistema necesarias para:
+# - git: Auditoría e integridad
+# - ffmpeg: Procesamiento de audio (Telegram voice)
+# - libgl1: OpenCV/Image processing si se usa
+# - Dependencias de Playwright (navegador)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    ffmpeg \
+    curl \
+    libnss3 \
+    libnspr4 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libcups2 \
+    libdrm2 \
+    libxkbcommon0 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxfixes3 \
+    libxrandr2 \
+    libgbm1 \
+    libasound2 \
+    libpango-1.0-0 \
+    libcairo2 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Crear usuario no-root para seguridad
+RUN useradd -m -u 1000 appuser && \
+    chown -R appuser:appuser /app
+
+# Copiar archivos de dependencias primero para cachear capas
+COPY --chown=appuser:appuser runtime/openclaw/requirements-web.txt .
+RUN pip install --no-cache-dir -r requirements-web.txt && \
+    pip install --no-cache-dir \
+    python-dotenv \
+    pyyaml \
+    python-telegram-bot \
+    matrix-nio \
+    requests \
+    httpx \
+    pytest
+
+# Instalar Playwright y sus navegadores (solo chromium para ahorrar espacio)
+RUN playwright install chromium
+
+# Copiar el resto del código
+# En compose usaremos volúmenes para desarrollo, pero esto asegura una imagen funcional
+COPY --chown=appuser:appuser . .
+
+USER appuser
+
+# Metadata de salud del contenedor (verifica si el bot está vivo)
+HEALTHCHECK --interval=60s --timeout=10s --start-period=30s \
+  CMD python -c "import os; exit(0 if os.getenv('OPENCLAW_TELEGRAM_BOT_TOKEN') else 1)"
+
+# Comando por defecto para el Agente (Hub de Inteligencia)
+CMD ["python", "-m", "runtime.openclaw.openclaw_local.telegram_bot"]

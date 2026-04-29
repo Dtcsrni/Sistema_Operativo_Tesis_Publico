@@ -19,7 +19,7 @@ def render_table(headers: list[str], rows: list[list[str]]) -> str:
     for row in rows:
         cells = "".join(f"<td>{escape(str(cell))}</td>" for cell in row)
         body_html.append(f"<tr>{cells}</tr>")
-    return f"<table><thead><tr>{header_html}</tr></thead><tbody>{''.join(body_html)}</tbody></table>"
+    return f'<div class="table-container"><table><thead><tr>{header_html}</tr></thead><tbody>{"".join(body_html)}</tbody></table></div>'
 
 
 def render_table_html(headers: list[str], rows: list[list[str]]) -> str:
@@ -28,7 +28,7 @@ def render_table_html(headers: list[str], rows: list[list[str]]) -> str:
     for row in rows:
         cells = "".join(f"<td>{cell}</td>" for cell in row)
         body_html.append(f"<tr>{cells}</tr>")
-    return f"<table><thead><tr>{header_html}</tr></thead><tbody>{''.join(body_html)}</tbody></table>"
+    return f'<div class="table-container"><table><thead><tr>{header_html}</tr></thead><tbody>{"".join(body_html)}</tbody></table></div>'
 
 
 def relative_from_generated(relative_path: str) -> str:
@@ -237,10 +237,43 @@ def main() -> int:
     security_report = load_yaml_json("00_sistema_tesis/config/security_report.json")
     token_budget_cfg = load_optional_json("00_sistema_tesis/config/token_budget.json", {})
     token_usage = load_optional_json("00_sistema_tesis/config/token_usage_snapshot.json", {})
+    openclaw_status = load_optional_json("00_sistema_tesis/config/openclaw_status.json", {})
     public_bundle = load_optional_json(publicacion["salida"]["manifest"], {})
     decisiones = list_markdown_entries("00_sistema_tesis/decisiones")[:5]
     reportes_semanales = list_markdown_entries("00_sistema_tesis/reportes_semanales")
     bitacoras = list_markdown_entries("00_sistema_tesis/bitacora")
+    
+    # Pre-cargar narrativa para evitar CORS en file://
+    # Incluir docs base + todas las decisiones
+    narrativa_slugs = {
+        "README_INICIO.md": "README Inicio",
+        "00_sistema_tesis/manual_operacion_humana.md": "Manual Humano",
+    }
+    
+    # Documentación del sistema
+    docs_dir = ROOT / "00_sistema_tesis" / "documentacion_sistema"
+    if docs_dir.exists():
+        for f in docs_dir.glob("*.md"):
+            rel = f.relative_to(ROOT).as_posix()
+            narrativa_slugs[rel] = f.stem.replace("_", " ").title()
+            
+    # Decisiones
+    dec_dir = ROOT / "00_sistema_tesis" / "decisiones"
+    if dec_dir.exists():
+        for f in dec_dir.glob("*.md"):
+            rel = f.relative_to(ROOT).as_posix()
+            # Usar el ID de la decisión como etiqueta si es posible
+            label = f.stem.split("_")[1] if "_" in f.stem else f.stem
+            narrativa_slugs[rel] = label
+
+    narrativa_data = {}
+    for rel_path in narrativa_slugs:
+        abs_path = ROOT / rel_path
+        if abs_path.exists():
+            narrativa_data[rel_path] = abs_path.read_text(encoding="utf-8")
+        else:
+            narrativa_data[rel_path] = f"Error: No se encontró {rel_path}"
+
     file_status = canonical_file_status()
     generated_at = stable_generated_at(
         [
@@ -253,6 +286,7 @@ def main() -> int:
             "00_sistema_tesis/config/security_report.json",
             "00_sistema_tesis/config/token_budget.json",
             "00_sistema_tesis/config/token_usage_snapshot.json",
+            "00_sistema_tesis/config/openclaw_status.json",
             "01_planeacion/backlog.csv",
             "01_planeacion/riesgos.csv",
             "00_sistema_tesis/decisiones",
@@ -375,300 +409,189 @@ def main() -> int:
 
     traceability_rows = [
         [
-            "Resumen general",
-            " ".join(
-                [
-                    source_link("sistema_tesis.yaml", "00_sistema_tesis/config/sistema_tesis.yaml"),
-                    source_link("dashboard.yaml", "00_sistema_tesis/config/dashboard.yaml"),
-                ]
-            ),
-            "Estado global, fase actual y siguiente entregable",
+            '<a href="#resumen-general" class="trace-link">Resumen general</a>',
+            source_link("dashboard.yaml", "00_sistema_tesis/config/dashboard.yaml"),
+            "Muestra el estado global y KPIs inmediatos.",
         ],
         [
-            "Seguridad e Integridad",
-            " ".join(
-                [
-                    source_link("security_report.json", "00_sistema_tesis/config/security_report.json"),
-                    source_link("integrity_manifest.json", "00_sistema_tesis/config/integrity_manifest.json"),
-                ]
-            ),
-            "Reporte de auditoría unificada y estado de integridad",
+            '<a href="#bloque-activo" class="trace-link">Bloque activo</a>',
+            source_link("bloques.yaml", "00_sistema_tesis/config/bloques.yaml"),
+            "Seguimiento del bloque de investigación actual.",
         ],
         [
-            "Bloque activo",
-            " ".join(
-                [
-                    source_link("sistema_tesis.yaml", "00_sistema_tesis/config/sistema_tesis.yaml"),
-                    source_link("bloques.yaml", "00_sistema_tesis/config/bloques.yaml"),
-                ]
-            ),
-            "Bloque vigente, criterio de salida y dependencias",
+            '<a href="#hipotesis-activas" class="trace-link">Hipótesis activas</a>',
+            source_link("hipotesis.yaml", "00_sistema_tesis/config/hipotesis.yaml"),
+            "Validación científica de supuestos de resiliencia.",
         ],
         [
-            "Hipótesis activas",
-            " ".join(
-                [
-                    source_link("hipotesis.yaml", "00_sistema_tesis/config/hipotesis.yaml"),
-                    source_link("bloques.yaml", "00_sistema_tesis/config/bloques.yaml"),
-                ]
-            ),
-            "Hipótesis, evidencia disponible y bloques asociados",
+            '<a href="#decisiones-recientes" class="trace-link">Decisiones recientes</a>',
+            source_link("decisiones/", "00_sistema_tesis/decisiones"),
+            "Registro de arquitectura y gobernanza (ADR).",
         ],
         [
-            "Economía de uso",
-            " ".join(
-                [
-                    source_link("ia_gobernanza.yaml", "00_sistema_tesis/config/ia_gobernanza.yaml"),
-                    source_link("bitacora/", "00_sistema_tesis/bitacora"),
-                    source_link("reportes_semanales/", "00_sistema_tesis/reportes_semanales"),
-                ]
-            ),
-            "Patrones de consumo, recomendación y matriz operativa",
+            '<a href="#backlog-prioritario" class="trace-link">Backlog prioritario</a>',
+            source_link("backlog.csv", "01_planeacion/backlog.csv"),
+            "Tareas pendientes y roadmap de ejecución.",
         ],
         [
-            "Política de modelos",
-            source_link("ia_gobernanza.yaml", "00_sistema_tesis/config/ia_gobernanza.yaml"),
-            "Modelo base por tramo de trabajo, nivel recomendado y criterio de escalamiento",
+            '<a href="#riesgos-abiertos" class="trace-link">Riesgos abiertos</a>',
+            source_link("riesgos.csv", "01_planeacion/riesgos.csv"),
+            "Gestión proactiva de amenazas al proyecto.",
         ],
         [
-            "Backlog y riesgos",
-            " ".join(
-                [
-                    source_link("backlog.csv", "01_planeacion/backlog.csv"),
-                    source_link("riesgos.csv", "01_planeacion/riesgos.csv"),
-                    source_link("entregables.csv", "01_planeacion/entregables.csv"),
-                ]
-            ),
-            "Trabajo pendiente, prioridades y mitigaciones",
-        ],
-        [
-            "Operación humana y publicación",
-            " ".join(
-                [
-                    source_link("manual_operacion_humana.md", "00_sistema_tesis/manual_operacion_humana.md"),
-                    source_link("publicacion.yaml", "00_sistema_tesis/config/publicacion.yaml"),
-                    source_link("bundle_publico/", publicacion["salida"]["directorio"]),
-                ]
-            ),
-            "Ruta humana principal, separación privado/público y bundle sanitizado derivado",
-        ],
-        [
-            "Presupuesto de tokens API",
-            " ".join(
-                [
-                    source_link("token_budget.json", "00_sistema_tesis/config/token_budget.json"),
-                    source_link("token_usage_snapshot.json", "00_sistema_tesis/config/token_usage_snapshot.json"),
-                ]
-            ),
-            "Presupuestos diarios/semanales, consumo real sincronizado y recomendaciones de accion",
+            '<a href="#estado-archivos-canonicos" class="trace-link">Archivos canónicos</a>',
+            source_link("sistema_tesis.yaml", "00_sistema_tesis/config/sistema_tesis.yaml"),
+            "Verificación de integridad de las fuentes de verdad.",
         ],
     ]
 
-    token_overlay_html = f"""
-  <aside class="token-overlay" id="token-overlay" data-default-budget="{daily_budget_tokens}" data-default-used="{daily_tokens_used}" aria-label="Presupuesto local de tokens">
-    <div class="token-overlay__header">
-      <div>
-        <p class="token-overlay__eyebrow">Economía de tokens</p>
-        <h2>Presupuesto visible</h2>
-      </div>
-      <button class="token-overlay__collapse" type="button" data-token-collapse aria-pressed="false">
-        Ocultar
-      </button>
-    </div>
-    <p class="token-overlay__disclaimer">
-      Estimación local para sostener disciplina de uso. No muestra un presupuesto interno de Codex.
-    </p>
-    <div class="token-overlay__stats">
-      <article>
-        <span>Presupuesto</span>
-        <strong data-token-budget-display>{daily_budget_tokens}</strong>
-      </article>
-      <article>
-        <span>Consumido</span>
-        <strong data-token-used-display>{daily_tokens_used}</strong>
-      </article>
-      <article>
-        <span>Restante</span>
-        <strong data-token-remaining-display>{daily_tokens_remaining}</strong>
-      </article>
-      <article>
-        <span>Uso API hoy</span>
-        <strong data-token-ratio-display>{format_ratio(daily_tokens_ratio)}</strong>
-      </article>
-    </div>
-    <label class="token-overlay__field">
-      <span>Presupuesto del día</span>
-      <input data-token-budget-input type="number" min="0" step="100" value="{daily_budget_tokens}">
-    </label>
-    <label class="token-overlay__field">
-      <span>Consumido acumulado</span>
-      <input data-token-used-input type="number" min="0" step="50" value="{daily_tokens_used}">
-    </label>
-    <progress class="token-overlay__meter" data-token-meter value="{daily_tokens_used}" max="{daily_budget_tokens}">0%</progress>
-    <p class="token-overlay__hint" data-token-hint>Meta: mantener la salida útil sin inflar el consumo.</p>
-    <div class="token-overlay__actions">
-      <button type="button" data-token-adjust="50">+50</button>
-      <button type="button" data-token-adjust="250">+250</button>
-      <button type="button" data-token-adjust="-100">-100</button>
-      <button type="button" data-token-reset>Reiniciar</button>
-    </div>
-  </aside>
-"""
+    nodos_rows = [
+        [
+            id_nodo,
+            data.get("rol", "n/a"),
+            data.get("os", "n/a"),
+            ", ".join(data.get("servicios", [])),
+            data.get("hardware", "host/vm")
+        ]
+        for id_nodo, data in sistema.get("nodos_distribuidos", {}).items()
+    ]
 
     html = f"""<!DOCTYPE html>
 <html lang="es-MX">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0f766e">
-  <title>Dashboard | {escape(sistema["identidad_proyecto"]["nombre_corto"])}</title>
+  <meta name="theme-color" content="#0d0e0a">
+  <title>Gobernanza | {escape(sistema["identidad_proyecto"]["nombre_corto"])}</title>
   <link rel="stylesheet" href="estilos.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
   <link rel="manifest" href="manifest.webmanifest">
+  <script>
+    window.SIOT_NARRATIVA = {json.dumps(narrativa_data, ensure_ascii=False)};
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script>
   <script defer src="app.js"></script>
 </head>
 <body>
-{token_overlay_html}
-  <header class="hero">
-    <div>
-      <p class="eyebrow">Sistema Operativo de la Tesis</p>
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">{escape(sistema["identidad_proyecto"]["nombre_corto"])}</div>
+      <div class="version">v{escape(sistema["version"])}</div>
+    </div>
+    <div class="sidebar-scroll">
+      <div class="nav-group">
+        <label>Principal</label>
+        <a href="#resumen-general" class="nav-item">Resumen</a>
+        <a href="#que-revisar-siempre" class="nav-item">Checklist</a>
+        <a href="#seguridad-integridad" class="nav-item">Seguridad</a>
+      </div>
+      <div class="nav-group">
+        <label>Investigación</label>
+        <a href="#bloque-activo" class="nav-item">Bloque</a>
+        <a href="#hipotesis-activas" class="nav-item">Hipótesis</a>
+      </div>
+      <div class="nav-group">
+        <label>Operación</label>
+        <a href="#economia-uso" class="nav-item">Economía</a>
+        <a href="#fuentes-verdad" class="nav-item">Trazabilidad</a>
+        <a href="#narrativa-sistema" class="nav-item">Narrativa</a>
+        <a href="wiki/index.html" class="nav-item wiki-nav">Wiki →</a>
+      </div>
+    </div>
+  </nav>
+  <main class="content-wrapper">
+    <header class="hero">
+      <span class="eyebrow">Sistema Operativo de la Tesis</span>
       <h1>{escape(sistema["titulo_vigente"])}</h1>
       <p class="lead">{escape(sistema["resumen_problema"])}</p>
-    </div>
-    <div class="hero-meta">
-      <div class="meta-card">
-        <span class="meta-label">Versión</span>
-        <strong>{escape(sistema["version"])}</strong>
+      
+      <div class="stats" style="margin-top: 40px;">
+        <article>
+          <span>Versión</span>
+          <strong>{escape(sistema["version"])}</strong>
+        </article>
+        <article>
+          <span>Estado Global</span>
+          <strong>{escape(sistema["estado_global"])}</strong>
+        </article>
+        <article>
+          <span>Confianza Integridad</span>
+          <strong>{trust_score}%</strong>
+        </article>
+        <article>
+          <span>Generado</span>
+          <strong>{escape(generated_at)}</strong>
+        </article>
       </div>
-      <div class="meta-card">
-        <span class="meta-label">Estado global</span>
-        <strong>{escape(sistema["estado_global"])}</strong>
+    </header>
+
+    <section class="toolbar" style="max-width: 1400px; margin: 0 auto 40px;">
+      <div class="panel" style="display: flex; gap: 20px; align-items: center; padding: 16px 24px;">
+        <input id="panel-search" type="search" placeholder="Buscar en la gobernanza..." style="flex: 1; background: transparent; border: none; color: white; font-size: 1rem; outline: none;">
+        <div class="toolbar-actions">
+          <button class="filter-btn is-active" data-filter="all" type="button">Todo</button>
+          <button class="filter-btn" data-filter="estado" type="button">Estado</button>
+          <button class="filter-btn" data-filter="ia" type="button">IA</button>
+          <button class="filter-btn" data-filter="planeacion" type="button">Planeación</button>
+          <button class="filter-btn" data-filter="fuentes" type="button">Fuentes</button>
+        </div>
       </div>
-      <div class="meta-card">
-        <span class="meta-label">Generado</span>
-        <strong>{escape(generated_at)}</strong>
-      </div>
-    </div>
-  </header>
+    </section>
 
-  <nav class="topnav">
-    <a href="#resumen-general">Resumen</a>
-    <a href="#que-revisar-siempre">Revisión</a>
-    <a href="wiki/index.html">Wiki</a>
-      <a href="#seguridad-integridad">Seguridad</a>
-      <a href="#bloque-activo">Bloque</a>
-    <a href="#hipotesis-activas">Hipótesis</a>
-    <a href="#economia-uso">Economía</a>
-    <a href="#politica-modelos">Modelos</a>
-    <a href="#presupuesto-tokens-api">Cuota API</a>
-    <a href="#matriz-tareas">Matriz</a>
-    <a href="#backlog-prioritario">Backlog</a>
-    <a href="#riesgos-abiertos">Riesgos</a>
-    <a href="#fuentes-verdad">Fuentes</a>
-    <a href="#trazabilidad-dashboard">Trazabilidad</a>
-    <a href="#despliegue-orange-pi">Despliegue</a>
-  </nav>
-
-  <aside class="review-dock" id="review-dock" aria-label="Accesos rápidos de revisión">
-    <a class="review-dock__item" href="#que-revisar-siempre" title="Qué revisar siempre">RV</a>
-    <a class="review-dock__item" href="{escape(relative_from_generated('00_sistema_tesis/manual_operacion_humana.md'))}" target="_blank" rel="noreferrer" title="Manual humano">MH</a>
-    <a class="review-dock__item" href="{escape(relative_from_generated('00_sistema_tesis/config/sistema_tesis.yaml'))}" target="_blank" rel="noreferrer" title="Sistema">SY</a>
-    <a class="review-dock__item" href="{escape(relative_from_generated('01_planeacion/backlog.csv'))}" target="_blank" rel="noreferrer" title="Backlog">BL</a>
-    <a class="review-dock__item" href="{escape(relative_from_generated('01_planeacion/riesgos.csv'))}" target="_blank" rel="noreferrer" title="Riesgos">RG</a>
-    <a class="review-dock__item" href="wiki/index.html" title="Wiki">WK</a>
-    <a class="review-dock__item" href="{escape(relative_from_generated(publicacion['salida']['directorio'] + '/index.md'))}" target="_blank" rel="noreferrer" title="Público">PB</a>
-  </aside>
-
-  <section class="toolbar">
-    <div class="toolbar-block">
-      <label for="panel-search">Filtrar paneles</label>
-      <input id="panel-search" type="search" placeholder="Escribe tema, riesgo, hipótesis, tarea o fuente">
-    </div>
-    <div class="toolbar-block toolbar-actions">
-      <button class="filter-btn is-active" data-filter="all" type="button">Todo</button>
-      <button class="filter-btn" data-filter="estado" type="button">Estado</button>
-      <button class="filter-btn" data-filter="ia" type="button">IA</button>
-      <button class="filter-btn" data-filter="planeacion" type="button">Planeación</button>
-      <button class="filter-btn" data-filter="fuentes" type="button">Fuentes</button>
-    </div>
-  </section>
-
-  <main class="layout">
     <section id="resumen-general" class="panel panel-highlight" data-group="estado">
-      <h2>Resumen general</h2>
+      <span class="eyebrow">Vista Ejecutiva</span>
+      <h2>Resumen de Operación</h2>
       <div class="stats">
         <article><span>Bloque activo</span><strong>{escape(sistema["bloque_activo"])}</strong></article>
         <article><span>Fase actual</span><strong>{escape(sistema["fase_actual"])}</strong></article>
         <article><span>Siguiente entregable</span><strong>{escape(sistema["siguiente_entregable"])}</strong></article>
         <article><span>Riesgo principal</span><strong>{escape(sistema["riesgo_principal_abierto"])}</strong></article>
       </div>
-      <p class="trace-row">Fuentes: {source_link("sistema_tesis.yaml", "00_sistema_tesis/config/sistema_tesis.yaml")} {source_link("dashboard.yaml", "00_sistema_tesis/config/dashboard.yaml")}</p>
-      <p class="trace-row">Wiki verificable: <a class="trace-link" href="wiki/index.html">Abrir guía derivada</a></p>
-      <p class="notice">{escape(dashboard["reglas"]["aviso_no_editar"])}</p>
-    </section>
-
-    <section id="operacion-humana" class="panel panel-highlight" data-group="estado">
-      <h2>Operación humana y superficies</h2>
-      <div class="stats">
-        <article><span>IA</span><strong>opcional</strong></article>
-        <article><span>Superficie privada</span><strong>canónica</strong></article>
-        <article><span>Superficie pública</span><strong>sanitizada</strong></article>
-        <article><span>Bundle público</span><strong>{escape(str(public_bundle.get("status", "pendiente")))}</strong></article>
+      <div style="margin-top: 24px;">
+          <p class="notice">{escape(dashboard["reglas"]["aviso_no_editar"])}</p>
       </div>
-      <p class="lead">El sistema debe poder retomarse, auditarse y publicarse mediante rutas humanas explícitas. La base privada conserva la trazabilidad completa; la capa pública es un derivado sanitizado y no editable a mano.</p>
-      <ul class="list">
-        <li><strong>Retomar:</strong> `python 07_scripts/tesis.py status` y `python 07_scripts/tesis.py next`</li>
-        <li><strong>Auditar:</strong> `python 07_scripts/tesis.py doctor` y `python 07_scripts/build_all.py`</li>
-        <li><strong>Publicar:</strong> `python 07_scripts/tesis.py publish --build`</li>
-      </ul>
-      <p class="trace-row">Fuentes: {source_link("manual_operacion_humana.md", "00_sistema_tesis/manual_operacion_humana.md")} {source_link("publicacion.yaml", "00_sistema_tesis/config/publicacion.yaml")} {source_link("bundle_publico/", publicacion["salida"]["directorio"])}</p>
     </section>
 
-    <section id="que-revisar-siempre" class="panel panel-highlight panel-sticky" data-group="estado">
-      <div class="review-rail__header">
+    <section id="que-revisar-siempre" class="panel panel-highlight" data-group="estado">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
         <div>
-          <h2>Qué revisar siempre</h2>
-          <p class="lead">Rail de control para no perder el hilo. Úsalo al retomar, antes de auditar y antes de publicar.</p>
+          <span class="eyebrow">Protocolo</span>
+          <h2>Checklist de Retoma</h2>
         </div>
-        <button class="review-rail__toggle" type="button" data-review-toggle aria-expanded="true">Ocultar</button>
+        <button class="review-rail__toggle" type="button" data-review-toggle>Ocultar</button>
       </div>
-      <div class="review-link-grid" data-review-content>
-        <a class="review-link-card" href="{escape(relative_from_generated('00_sistema_tesis/manual_operacion_humana.md'))}" target="_blank" rel="noreferrer">
-          <strong>Manual humano</strong>
-          <span>Ruta principal de operación</span>
+      <div class="stats" data-review-content style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+        <a class="panel" href="../../00_sistema_tesis/manual_operacion_humana.md" style="text-decoration: none; color: inherit; display: flex; flex-direction: column;">
+          <strong style="color: var(--accent); display: block; margin-bottom: 6px; font-size: 1.1rem;">Manual Humano</strong>
+          <span style="font-size: 0.85rem; color: var(--text); font-weight: 500; margin-bottom: 4px;">Ruta de operación</span>
+          <span style="font-size: 0.75rem; color: var(--muted); line-height: 1.4;">Protocolo de soberanía y guía de operación manual obligatoria para el tesista.</span>
         </a>
-        <a class="review-link-card" href="{escape(relative_from_generated('00_sistema_tesis/config/sistema_tesis.yaml'))}" target="_blank" rel="noreferrer">
-          <strong>Sistema</strong>
-          <span>Estado global y reglas base</span>
+        <a class="panel" href="{escape(relative_from_generated('01_planeacion/backlog.csv'))}" target="_blank" style="text-decoration: none; color: inherit; display: flex; flex-direction: column;">
+          <strong style="color: var(--accent); display: block; margin-bottom: 6px; font-size: 1.1rem;">Backlog</strong>
+          <span style="font-size: 0.85rem; color: var(--text); font-weight: 500; margin-bottom: 4px;">Tareas pendientes</span>
+          <span style="font-size: 0.75rem; color: var(--muted); line-height: 1.4;">Gestión de tareas, prioridades y estado operativo actual del proyecto de tesis.</span>
         </a>
-        <a class="review-link-card" href="{escape(relative_from_generated('01_planeacion/backlog.csv'))}" target="_blank" rel="noreferrer">
-          <strong>Backlog</strong>
-          <span>Qué sigue exactamente</span>
+        <a class="panel" href="{escape(relative_from_generated('00_sistema_tesis/bitacora/matriz_trazabilidad.md'))}" target="_blank" style="text-decoration: none; color: inherit; display: flex; flex-direction: column;">
+          <strong style="color: var(--accent); display: block; margin-bottom: 6px; font-size: 1.1rem;">Trazabilidad</strong>
+          <span style="font-size: 0.85rem; color: var(--text); font-weight: 500; margin-bottom: 4px;">Evidencia técnica</span>
+          <span style="font-size: 0.75rem; color: var(--muted); line-height: 1.4;">Mapa de vínculos inmutables entre decisiones humanas y artefactos generados.</span>
         </a>
-        <a class="review-link-card" href="{escape(relative_from_generated('01_planeacion/riesgos.csv'))}" target="_blank" rel="noreferrer">
-          <strong>Riesgos</strong>
-          <span>Qué puede romper el avance</span>
-        </a>
-        <a class="review-link-card" href="{escape(relative_from_generated('00_sistema_tesis/bitacora/matriz_trazabilidad.md'))}" target="_blank" rel="noreferrer">
-          <strong>Trazabilidad</strong>
-          <span>Validaciones y evidencia</span>
-        </a>
-        <a class="review-link-card" href="wiki/index.html">
-          <strong>Wiki</strong>
-          <span>Lectura derivada humana</span>
-        </a>
-        <a class="review-link-card" href="index.html">
-          <strong>Dashboard</strong>
-          <span>Vista operativa actual</span>
-        </a>
-        <a class="review-link-card" href="{escape(relative_from_generated(publicacion['salida']['directorio'] + '/index.md'))}" target="_blank" rel="noreferrer">
-          <strong>Público</strong>
-          <span>Bundle sanitizado</span>
+        <a class="panel" href="wiki/index.html" style="text-decoration: none; color: inherit; display: flex; flex-direction: column;">
+          <strong style="color: var(--accent); display: block; margin-bottom: 6px; font-size: 1.1rem;">Wiki Local</strong>
+          <span style="font-size: 0.85rem; color: var(--text); font-weight: 500; margin-bottom: 4px;">Documentación derivada</span>
+          <span style="font-size: 0.75rem; color: var(--muted); line-height: 1.4;">Documentación técnica detallada y guías de referencia rápida verificables.</span>
         </a>
       </div>
-      <p class="trace-row">Revisión mínima recomendada antes de retomar, auditar o publicar.</p>
     </section>
 
     <section id="seguridad-integridad" class="panel" data-group="ia">
+      <span class="eyebrow">Auditoría</span>
       <h2>Seguridad e Integridad</h2>
       <div class="stats">
         <article><span>Índice de confianza</span><strong>{trust_score}%</strong></article>
@@ -677,22 +600,23 @@ def main() -> int:
         <article><span>Críticas</span><strong>{sec_summary.get("critical_failures", 0)}</strong></article>
       </div>
       {render_table_html(["Auditoría", "Resultado", "Nivel", "Detalle"], security_rows)}
-      <p class="trace-row">Insignias: 
-        <img src="badges/security_status.svg" alt="Estado de seguridad">
-        <img src="badges/integrity.svg" alt="Estado de integridad">
-        <img src="badges/ledger.svg" alt="Estado del ledger">
-      </p>
-      <p class="trace-row">Fuentes: {source_link("security_report.json", "00_sistema_tesis/config/security_report.json")} {source_link("integrity_manifest.json", "00_sistema_tesis/config/integrity_manifest.json")}</p>
+    </section>
+
+    <section id="topologia-distribuida" class="panel" data-group="estado">
+      <span class="eyebrow">Arquitectura</span>
+      <h2>Topología Distribuida</h2>
+      <p class="lead">Configuración de nodos soberanos y operativos del sistema.</p>
+      {render_table(["Nodo", "Rol", "OS", "Servicios", "Hardware"], nodos_rows)}
     </section>
 
     <section id="bloque-activo" class="panel" data-group="estado">
-      <h2>Bloque activo</h2>
-      <p class="tag">{escape(active_block["id"])} · {escape(active_block["tipo"])} · {escape(active_block["estado"])}</p>
-      <h3>{escape(active_block["nombre"])}</h3>
-      <p>{escape(active_block["descripcion"])}</p>
-      <p><strong>Criterio de salida:</strong> {escape(active_block["criterio_salida"])}</p>
-      <p><strong>Entregables:</strong> {escape(", ".join(active_block["entregables"]))}</p>
-      <p class="trace-row">Fuentes: {source_link("sistema_tesis.yaml", "00_sistema_tesis/config/sistema_tesis.yaml")} {source_link("bloques.yaml", "00_sistema_tesis/config/bloques.yaml")}</p>
+      <span class="eyebrow">Fase Actual</span>
+      <h2>{escape(active_block["nombre"])}</h2>
+      <p class="tag">{escape(active_block["id"])} · {escape(active_block["tipo"])}</p>
+      <p class="lead">{escape(active_block["descripcion"])}</p>
+      <div style="margin-top: 20px;">
+          <strong>Criterio de salida:</strong> <span>{escape(active_block["criterio_salida"])}</span>
+      </div>
     </section>
 
     <section id="hipotesis-activas" class="panel" data-group="estado">
@@ -710,15 +634,13 @@ def main() -> int:
               for item in active_hypotheses[:6]
           ],
       )}
-      <p class="trace-row">Fuentes: {source_link("hipotesis.yaml", "00_sistema_tesis/config/hipotesis.yaml")} {source_link("bloques.yaml", "00_sistema_tesis/config/bloques.yaml")}</p>
     </section>
 
-    <section class="panel" data-group="fuentes">
+    <section id="decisiones-recientes" class="panel" data-group="fuentes">
       <h2>Decisiones recientes</h2>
       <ul class="list">
-        {''.join(f"<li><strong>{escape(item['fecha'])}</strong> · {escape(item['titulo'])}<br><span>{escape(item['archivo'])}</span></li>" for item in decisiones)}
+        {''.join(f"<li><strong>{escape(item['fecha'])}</strong> · <a href='{escape(relative_from_generated(item['archivo']))}' class='narrative-link'>{escape(item['titulo'])}</a></li>" for item in decisiones)}
       </ul>
-      <p class="trace-row">Fuente: {source_link("decisiones/", "00_sistema_tesis/decisiones")}</p>
     </section>
 
     <section id="economia-uso" class="panel" data-group="ia">
@@ -727,32 +649,6 @@ def main() -> int:
       <ul class="list">
         {''.join(f"<li>{escape(item)}</li>" for item in economy_bullets) if economy_bullets else "<li>No hay señales semanales de economía de uso registradas todavía.</li>"}
       </ul>
-      <p class="trace-row">Fuentes: {source_link("ia_gobernanza.yaml", "00_sistema_tesis/config/ia_gobernanza.yaml")} {source_link("bitacora/", "00_sistema_tesis/bitacora")} {source_link("reportes_semanales/", "00_sistema_tesis/reportes_semanales")}</p>
-    </section>
-
-    <section id="presupuesto-tokens-api" class="panel panel-highlight" data-group="ia">
-      <h2>Presupuesto y Consumo API (diario/semanal)</h2>
-      <p class="tag">Estado de sincronizacion: {escape(token_snapshot_status)} | {escape(token_generated_at)} | TZ: {escape(token_source_tz)}</p>
-      <p>{escape(token_snapshot_message)}</p>
-      {render_table(
-          ["Metrica", "Diario", "Semanal"],
-          [
-              ["Tokens presupuesto", str(daily_budget_tokens), str(weekly_budget_tokens)],
-              ["Tokens usados", str(daily_tokens_used), str(weekly_tokens_used)],
-              ["Tokens restantes", str(daily_tokens_remaining), str(weekly_tokens_remaining)],
-              ["Uso de tokens", format_ratio(daily_tokens_ratio), format_ratio(weekly_tokens_ratio)],
-              ["Costo presupuesto", format_usd(daily_budget_usd), format_usd(weekly_budget_usd)],
-              ["Costo usado", format_usd(daily_usd_used), format_usd(weekly_usd_used)],
-              ["Costo restante", format_usd(daily_usd_remaining), format_usd(weekly_usd_remaining)],
-              ["Solicitudes", str(daily_requests), str(weekly_requests)],
-          ],
-      )}
-      <p><strong>Modelos con mayor consumo semanal:</strong> {token_top_models}</p>
-      <h3>Acciones recomendadas antes de agotar cuota</h3>
-      <ul class="list">
-        {''.join(f"<li>{escape(item)}</li>" for item in token_recommendation_items)}
-      </ul>
-      <p class="trace-row">Fuentes: {source_link("token_budget.json", "00_sistema_tesis/config/token_budget.json")} {source_link("token_usage_snapshot.json", "00_sistema_tesis/config/token_usage_snapshot.json")}</p>
     </section>
 
     <section class="panel" data-group="ia">
@@ -767,7 +663,6 @@ def main() -> int:
               ["Cobertura mínima actual", "establecida" if weekly_reports_with_economy and session_logs_with_economy else "incompleta"],
           ],
       )}
-      <p class="trace-row">Fuentes: {source_link("bitacora/", "00_sistema_tesis/bitacora")} {source_link("reportes_semanales/", "00_sistema_tesis/reportes_semanales")}</p>
     </section>
 
     <section class="panel" data-group="ia">
@@ -782,16 +677,15 @@ def main() -> int:
               ["Riesgo heurístico de sobreconsumo", overconsumption_risk],
           ],
       )}
-      <p class="trace-row">Fuentes: {source_link("bitacora/", "00_sistema_tesis/bitacora")} {source_link("reportes_semanales/", "00_sistema_tesis/reportes_semanales")}</p>
     </section>
 
     <section class="panel panel-highlight" data-group="ia">
       <h2>Recomendación operativa de uso</h2>
       <p>{escape(usage_recommendation)}</p>
-      <p class="trace-row">Fuentes: {source_link("ia_gobernanza.yaml", "00_sistema_tesis/config/ia_gobernanza.yaml")} {source_link("bitacora/", "00_sistema_tesis/bitacora")} {source_link("reportes_semanales/", "00_sistema_tesis/reportes_semanales")}</p>
     </section>
 
     <section id="matriz-tareas" class="panel" data-group="ia">
+      <span class="eyebrow">Gobernanza IA</span>
       <h2>Matriz por tipo de tarea</h2>
       {render_table(
           ["Tipo de tarea", "Nivel recomendado", "Cuándo subir", "Cuándo bajar"],
@@ -809,9 +703,10 @@ def main() -> int:
     </section>
 
     <section id="politica-modelos" class="panel panel-highlight" data-group="ia">
-      <h2>Politica de modelos y razonamiento</h2>
+      <span class="eyebrow">Estrategia</span>
+      <h2>Política de modelos y razonamiento</h2>
       <p class="lead">Regla operativa: un modelo base por tramo de trabajo. Cambia solo cuando cambie la clase de tarea o el costo del error.</p>
-      {render_table(
+      {render_table_html(
           ["Tipo de tarea", "Modelo recomendado", "Nivel", "Uso", "Cuando subir", "Cuando bajar"],
           [
               [
@@ -825,72 +720,38 @@ def main() -> int:
               for item in model_policy
           ],
       )}
-      <p class="trace-row">Fuente: {source_link("ia_gobernanza.yaml", "00_sistema_tesis/config/ia_gobernanza.yaml")}</p>
     </section>
 
     <section id="backlog-prioritario" class="panel" data-group="planeacion">
+      <span class="eyebrow">Planeación</span>
       <h2>Backlog prioritario</h2>
       {render_table(
-          ["Tarea", "Bloque", "Descripción", "Prioridad", "Estado", "Fecha objetivo"],
+          ["Tarea", "Bloque", "Descripción", "Prioridad", "Estado"],
           [
-              [item["task_id"], item["bloque"], item["tarea"], item["prioridad"], item["estado"], item["fecha_objetivo"]]
+              [item["task_id"], item["bloque"], item["tarea"], item["prioridad"], item["estado"]]
               for item in top_backlog[:8]
           ],
       )}
-      <p class="trace-row">Fuentes: {source_link("backlog.csv", "01_planeacion/backlog.csv")} {source_link("entregables.csv", "01_planeacion/entregables.csv")}</p>
-    </section>
-
-    <section id="riesgos-abiertos" class="panel" data-group="planeacion">
-      <h2>Riesgos abiertos</h2>
-      {render_table(
-          ["Riesgo", "Tipo", "Probabilidad", "Impacto", "Mitigación"],
-          [
-              [item["risk_id"], item["tipo"], item["probabilidad"], item["impacto"], item["mitigacion"]]
-              for item in open_risks[:6]
-          ],
-      )}
-      <p class="trace-row">Fuente: {source_link("riesgos.csv", "01_planeacion/riesgos.csv")}</p>
-    </section>
-
-    <section id="estado-archivos-canonicos" class="panel" data-group="fuentes">
-      <h2>Estado de archivos canónicos</h2>
-      {render_table(
-          ["Clave", "Ruta", "Existe", "Última modificación"],
-          [
-              [item["clave"], item["ruta"], "sí" if item["existe"] else "no", item["modificado"]]
-              for item in file_status
-          ],
-      )}
-      <p class="trace-row">Fuente: {source_link("sistema_tesis.yaml", "00_sistema_tesis/config/sistema_tesis.yaml")}</p>
     </section>
 
     <section id="fuentes-verdad" class="panel panel-highlight" data-group="fuentes">
+      <span class="eyebrow">Trazabilidad</span>
       <h2>Explorador de fuentes de verdad</h2>
-      {render_table_html(["Clave", "Ruta canónica", "Existe", "Última modificación"], source_explorer_rows)}
+      {render_table_html(["Clave", "Ruta canónica", "Existe", "Modificado"], source_explorer_rows)}
     </section>
 
-    <section id="trazabilidad-dashboard" class="panel" data-group="fuentes">
-      <h2>Mapa de trazabilidad del dashboard</h2>
-      {render_table_html(["Panel", "Fuentes", "Qué se lee"], traceability_rows)}
-    </section>
-
-    <section id="despliegue-orange-pi" class="panel panel-highlight" data-group="fuentes">
-      <h2>Despliegue ligero y modo Orange Pi</h2>
-      <p class="lead">La interfaz se genera como artefacto estático enriquecido, con manifiesto, service worker e icono, lista para servirse localmente en una Orange Pi 5 Plus con un servidor web mínimo.</p>
-      <div class="deploy-grid">
-        <article>
-          <span>Artefactos de app</span>
-          <p>{source_link("index.html", dashboard["salida"]["html"])} {source_link("estilos.css", dashboard["salida"]["css"])} {source_link("app.js", dashboard["salida"]["js"])} {source_link("manifest.webmanifest", dashboard["salida"]["manifest"])} {source_link("sw.js", dashboard["salida"]["service_worker"])} {source_link("icon.svg", dashboard["salida"]["icon"])}</p>
-        </article>
-        <article>
-          <span>Servidor local</span>
-          <pre class="code-block">cd 06_dashboard/generado
-python -m http.server 8080</pre>
-        </article>
-        <article>
-          <span>Instalación</span>
-          <p>Abre `http://localhost:8080/` en Chromium, verifica el manifiesto y usa “Instalar aplicación” cuando el navegador lo ofrezca.</p>
-        </article>
+    <section id="narrativa-sistema" class="panel panel-highlight" data-group="fuentes">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid var(--line); padding-bottom: 15px;">
+        <div>
+          <span class="eyebrow" style="letter-spacing: 0.2em;">EXPLORADOR NARRATIVO</span>
+          <h2 style="margin: 5px 0 0; border: none; padding: 0;">Contexto del Sistema</h2>
+        </div>
+        <select id="md-selector" class="filter-btn" style="background: var(--surface-strong); color: var(--accent); border: 1px solid var(--accent); padding: 8px 15px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+          {''.join(f'<option value="{path}">{escape(label)}</option>' for path, label in narrativa_slugs.items())}
+        </select>
+      </div>
+      <div id="md-viewer" class="markdown-body">
+        <p class="muted">Cargando narrativa...</p>
       </div>
     </section>
   </main>
@@ -900,620 +761,573 @@ python -m http.server 8080</pre>
 
     css = """
 :root {
-  --bg: #f4f4f0;
-  --surface: #ffffff;
-  --surface-strong: #f0ebe1;
-  --text: #1b2430;
-  --muted: #52606d;
-  --line: #d7d2c8;
-  --accent: #0f766e;
-  --accent-soft: #d8f0eb;
-  --warning: #9a6700;
+  --bg: #020617; /* Deep Midnight */
+  --surface: rgba(15, 23, 42, 0.75);
+  --surface-strong: rgba(30, 41, 59, 0.9);
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --line: rgba(148, 163, 184, 0.2);
+  
+  /* Bluish Semantic Palette (Less Purple) */
+  --accent: #2dd4bf;        /* Aquamarine */
+  --accent-soft: rgba(45, 212, 191, 0.1);
+  --warning: #fcd34d;       /* Amber */
+  --warning-soft: rgba(252, 211, 77, 0.1);
+  --danger: #fb7185;        /* Soft Coral/Rose */
+  --danger-soft: rgba(251, 113, 133, 0.1);
+  --info: #38bdf8;          /* Sky Blue */
+  --info-soft: rgba(56, 189, 248, 0.1);
+  --purple: #3b82f6;        /* Electric Blue (Shifted from Purple) */
+  --purple-soft: rgba(59, 130, 246, 0.1);
+  --chartreuse: #a3e635;    /* Electric Lime */
+  
+  --link: #0ea5e9;
+  --sidebar-w: 260px;
+  --glass-blur: blur(20px);
+  --glass-saturate: saturate(160%);
 }
 
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: 'Inter', system-ui, sans-serif;
   color: var(--text);
-  background:
-    radial-gradient(circle at top right, rgba(15, 118, 110, 0.08), transparent 24rem),
-    linear-gradient(180deg, #f8f6f1 0%, var(--bg) 100%);
+  background: var(--bg);
+  background-image: 
+    radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 90% 90%, rgba(59, 130, 246, 0.06) 0%, transparent 50%);
+  background-attachment: fixed;
+  display: flex;
+  min-height: 100vh;
 }
 
-.hero {
-  padding: 2.5rem 1.25rem 1.5rem;
-  display: grid;
-  gap: 1rem;
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: all 0.2s;
+  border-bottom: 1px solid transparent;
+}
+
+a:hover {
+  opacity: 0.8;
+  border-bottom-color: var(--accent);
+}
+
+.panel a {
+  color: inherit;
+}
+
+/* Sidebar Layout */
+.sidebar {
+  width: var(--sidebar-w);
+  background: rgba(17, 24, 39, 0.8);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+  z-index: 100;
+}
+
+.sidebar-header {
+  padding: 1.5rem;
   border-bottom: 1px solid var(--line);
 }
 
-.topnav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-  padding: 0 1.25rem 1rem;
-}
-
-.topnav a,
-.trace-link,
-.filter-btn {
-  text-decoration: none;
-  font-family: "Segoe UI", Tahoma, sans-serif;
-  transition: 160ms ease;
-}
-
-.topnav a {
-  padding: 0.45rem 0.75rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid var(--line);
-  color: var(--muted);
-}
-
-.topnav a:hover,
-.trace-link:hover,
-.filter-btn:hover,
-.filter-btn.is-active {
-  background: var(--accent);
+.sidebar-header .logo {
+  font-weight: 800;
+  font-size: 1.25rem;
   color: #fff;
-  border-color: var(--accent);
+  letter-spacing: -0.02em;
 }
 
-.toolbar {
-  padding: 0 1.25rem 1.25rem;
-  display: grid;
-  gap: 0.75rem;
-}
-
-.toolbar-block {
-  display: grid;
-  gap: 0.45rem;
-}
-
-.toolbar-block label {
-  font-family: "Segoe UI", Tahoma, sans-serif;
+.sidebar-header .version {
+  font-size: 0.7rem;
   color: var(--muted);
-  font-size: 0.82rem;
+  margin-top: 0.2rem;
 }
 
-.toolbar input {
-  width: 100%;
-  padding: 0.95rem 1rem;
-  border-radius: 14px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.86);
-  font: inherit;
+.sidebar-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 0;
 }
 
-.toolbar-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
+.nav-group {
+  margin-bottom: 1.5rem;
 }
 
-.filter-btn {
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 0.5rem 0.8rem;
-  background: rgba(255, 255, 255, 0.78);
-  color: var(--muted);
-  cursor: pointer;
-}
-
-.eyebrow {
-  margin: 0 0 0.5rem;
+.nav-group label {
+  display: block;
+  padding: 0 1.5rem 0.5rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.78rem;
-  color: var(--accent);
-}
-
-h1, h2, h3 { margin: 0 0 0.75rem; }
-h1 { font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.15; max-width: 20ch; }
-h2 { font-size: 1.2rem; }
-h3 { font-size: 1.05rem; }
-
-.lead {
-  max-width: 72ch;
+  letter-spacing: 0.1em;
   color: var(--muted);
-  line-height: 1.6;
 }
 
-.hero-meta {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-  gap: 0.75rem;
+.nav-item {
+  display: block;
+  padding: 0.6rem 1.5rem;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: 120ms ease;
+  border-left: 3px solid transparent;
 }
 
-.meta-card, .panel {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(6px);
+.nav-item:hover {
+  background: var(--surface-strong);
+  color: #fff;
+}
+
+.nav-item.active {
+  background: var(--accent-soft);
+  color: #fff;
+  border-left-color: var(--accent);
+}
+
+.wiki-nav {
+  color: var(--warning);
+}
+
+.content-wrapper {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+}
+
+/* Enhanced Glassmorphism for Panels */
+.panel {
+  background: var(--surface);
+  backdrop-filter: var(--glass-blur) var(--glass-saturate);
+  -webkit-backdrop-filter: var(--glass-blur) var(--glass-saturate);
   border: 1px solid var(--line);
   border-radius: 16px;
-  padding: 1rem;
-  box-shadow: 0 8px 30px rgba(27, 36, 48, 0.05);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
-.meta-label, .tag, .notice, th {
-  font-family: "Segoe UI", Tahoma, sans-serif;
-}
-
-.meta-label {
-  display: block;
-  color: var(--muted);
-  font-size: 0.8rem;
-  margin-bottom: 0.35rem;
-}
-
-.layout {
-  padding: 1.25rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-  gap: 1rem;
+.panel:hover {
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .panel-highlight {
-  grid-column: 1 / -1;
-  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-strong) 100%);
+  background: linear-gradient(135deg, rgba(17, 24, 39, 0.8) 0%, rgba(31, 41, 55, 0.9) 100%);
+  border-color: var(--line);
+  position: relative;
+  overflow: hidden;
 }
 
-.panel-sticky {
-  position: sticky;
-  top: 1rem;
-  align-self: start;
-  z-index: 5;
+.panel-highlight::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 150px; height: 150px;
+  background: radial-gradient(circle at 100% 0%, var(--accent-soft) 0%, transparent 70%);
+  pointer-events: none;
 }
 
-.review-rail__header {
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  gap: 1rem;
+/* Group-Specific Accents for Visibility */
+.panel[data-group="resumen"] { --group-color: var(--info); }
+.panel[data-group="estado"]  { --group-color: var(--accent); }
+.panel[data-group="ia"]      { --group-color: var(--purple); }
+.panel[data-group="planeacion"] { --group-color: var(--warning); }
+.panel[data-group="fuentes"] { --group-color: #6366f1; } /* Indigo */
+
+.panel {
+  border-left: 4px solid var(--line); /* Default border */
 }
 
-.review-rail__toggle {
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.84);
-  color: var(--muted);
-  cursor: pointer;
-  font-family: "Segoe UI", Tahoma, sans-serif;
-  padding: 0.45rem 0.75rem;
-  transition: 160ms ease;
+.panel[data-group] {
+  border-left-color: var(--group-color);
 }
 
-.review-rail__toggle:hover {
-  background: var(--accent);
-  border-color: var(--accent);
+.panel .eyebrow {
+  color: var(--group-color) !important;
+  font-weight: 700;
+}
+
+.panel h2 {
+  background: linear-gradient(to right, #fff, var(--group-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.hero h1 {
+  background: linear-gradient(135deg, #fff 0%, var(--info) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero {
+  margin-bottom: 2rem;
+}
+
+h1, h2, h3 { 
+  margin: 0 0 1rem; 
   color: #fff;
 }
 
-.trace-row {
-  margin: 0.9rem 0 0;
+h1 { font-size: 2.2rem; }
+h2 { font-size: 1.4rem; border-bottom: 1px solid var(--line); padding-bottom: 0.5rem; }
+
+.lead {
   color: var(--muted);
-  font-family: "Segoe UI", Tahoma, sans-serif;
-  font-size: 0.84rem;
-  line-height: 1.5;
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 
+/* Trace Links */
 .trace-link {
   display: inline-flex;
   align-items: center;
-  margin-right: 0.35rem;
-  margin-top: 0.25rem;
-  padding: 0.25rem 0.6rem;
-  border-radius: 999px;
-  background: var(--accent-soft);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background: var(--surface-strong);
   color: var(--accent);
-  border: 1px solid rgba(15, 118, 110, 0.16);
+  text-decoration: none;
+  font-size: 0.85rem;
+  border: 1px solid var(--line);
+  transition: 120ms ease;
 }
 
-.deploy-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: 0.75rem;
+.trace-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
-.review-link-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.7rem;
+/* Tables */
+.table-container {
+  overflow-x: auto;
   margin-top: 1rem;
 }
 
-.review-link-grid.is-collapsed {
-  display: none;
-}
-
-.review-link-card {
-  display: grid;
-  gap: 0.2rem;
-  padding: 0.9rem;
-  border-radius: 14px;
-  text-decoration: none;
-  background: rgba(255, 255, 255, 0.84);
-  border: 1px solid rgba(15, 118, 110, 0.18);
-  color: var(--text);
-  transition: 160ms ease;
-}
-
-.review-link-card strong {
-  font-family: "Segoe UI", Tahoma, sans-serif;
-  color: var(--accent);
-  font-size: 0.88rem;
-}
-
-.review-link-card span {
-  color: var(--muted);
-  font-family: "Segoe UI", Tahoma, sans-serif;
-  font-size: 0.82rem;
-  line-height: 1.35;
-}
-
-.review-link-card:hover {
-  transform: translateY(-1px);
-  border-color: var(--accent);
-  box-shadow: 0 10px 24px rgba(15, 118, 110, 0.08);
-}
-
-.review-dock {
-  position: fixed;
-  left: 1rem;
-  top: 9.5rem;
-  z-index: 18;
-  display: grid;
-  gap: 0.45rem;
-}
-
-.review-dock__item {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.4rem;
-  height: 2.4rem;
-  border-radius: 999px;
-  border: 1px solid rgba(15, 118, 110, 0.18);
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--accent);
-  text-decoration: none;
-  font-family: "Segoe UI", Tahoma, sans-serif;
-  font-size: 0.78rem;
-  font-weight: 700;
-  box-shadow: 0 8px 20px rgba(27, 36, 48, 0.08);
-  transition: 160ms ease;
-}
-
-.review-dock__item:hover {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-  transform: translateY(-1px);
-}
-
-.deploy-grid article {
-  padding: 0.9rem;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid var(--line);
-}
-
-.deploy-grid span {
-  display: block;
-  color: var(--muted);
-  font-family: "Segoe UI", Tahoma, sans-serif;
-  font-size: 0.8rem;
-  margin-bottom: 0.35rem;
-}
-
-.code-block {
-  margin: 0;
-  padding: 0.9rem;
-  border-radius: 12px;
-  background: #112321;
-  color: #f7f6f0;
-  font-family: Consolas, "Courier New", monospace;
-  font-size: 0.88rem;
-  overflow-x: auto;
-}
-
-.panel.is-hidden {
-  display: none;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
-  gap: 0.75rem;
-  margin: 1rem 0;
-}
-
-.stats article {
-  padding: 0.85rem;
-  border-radius: 12px;
-  background: var(--accent-soft);
-  border: 1px solid rgba(15, 118, 110, 0.18);
-}
-
-.stats span {
-  display: block;
-  color: var(--muted);
-  font-family: "Segoe UI", Tahoma, sans-serif;
-  font-size: 0.82rem;
-  margin-bottom: 0.3rem;
-}
-
-.stats strong {
-  font-size: 1rem;
-}
-
-.tag {
-  display: inline-block;
-  margin-bottom: 0.75rem;
-  color: var(--accent);
-  background: var(--accent-soft);
-  border-radius: 999px;
-  padding: 0.25rem 0.75rem;
-  font-size: 0.8rem;
-}
-
-    .notice {
-      margin: 0.75rem 0 0;
-      color: var(--warning);
-    }
-
-    .token-overlay {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      z-index: 30;
-      width: min(22rem, calc(100vw - 2rem));
-      padding: 0.95rem;
-      border-radius: 18px;
-      border: 1px solid rgba(15, 118, 110, 0.22);
-      background: rgba(255, 255, 255, 0.94);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 18px 40px rgba(27, 36, 48, 0.16);
-    }
-
-    .token-overlay.is-collapsed {
-      width: 14rem;
-    }
-
-    .token-overlay.is-collapsed .token-overlay__stats,
-    .token-overlay.is-collapsed .token-overlay__field,
-    .token-overlay.is-collapsed .token-overlay__meter,
-    .token-overlay.is-collapsed .token-overlay__hint,
-    .token-overlay.is-collapsed .token-overlay__actions,
-    .token-overlay.is-collapsed .token-overlay__disclaimer {
-      display: none;
-    }
-
-    .token-overlay__header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 0.75rem;
-    }
-
-    .token-overlay__eyebrow {
-      margin: 0 0 0.3rem;
-      color: var(--accent);
-      font-family: "Segoe UI", Tahoma, sans-serif;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .token-overlay__collapse,
-    .token-overlay__actions button {
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.84);
-      color: var(--muted);
-      cursor: pointer;
-      font-family: "Segoe UI", Tahoma, sans-serif;
-      transition: 160ms ease;
-    }
-
-    .token-overlay__collapse {
-      padding: 0.4rem 0.7rem;
-      font-size: 0.8rem;
-    }
-
-    .token-overlay__disclaimer,
-    .token-overlay__hint,
-    .token-overlay__field span {
-      color: var(--muted);
-      font-family: "Segoe UI", Tahoma, sans-serif;
-      font-size: 0.82rem;
-      line-height: 1.45;
-    }
-
-    .token-overlay__disclaimer {
-      margin: 0.65rem 0 0.9rem;
-    }
-
-    .token-overlay__stats {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.55rem;
-    }
-
-    .token-overlay__stats article {
-      padding: 0.7rem;
-      border-radius: 12px;
-      background: var(--accent-soft);
-      border: 1px solid rgba(15, 118, 110, 0.14);
-    }
-
-    .token-overlay__stats span {
-      display: block;
-      margin-bottom: 0.25rem;
-      color: var(--muted);
-      font-family: "Segoe UI", Tahoma, sans-serif;
-      font-size: 0.76rem;
-    }
-
-    .token-overlay__stats strong {
-      font-size: 1rem;
-    }
-
-    .token-overlay__field {
-      display: grid;
-      gap: 0.35rem;
-      margin-top: 0.7rem;
-    }
-
-    .token-overlay__field input {
-      width: 100%;
-      padding: 0.55rem 0.7rem;
-      border-radius: 12px;
-      border: 1px solid var(--line);
-      background: #fff;
-      font: inherit;
-    }
-
-    .token-overlay__meter {
-      width: 100%;
-      height: 0.8rem;
-      margin-top: 0.75rem;
-      border: 0;
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .token-overlay__meter::-webkit-progress-bar {
-      background: #e8e3d8;
-      border-radius: 999px;
-    }
-
-    .token-overlay__meter::-webkit-progress-value {
-      background: linear-gradient(90deg, #0f766e, #4f9f93);
-      border-radius: 999px;
-    }
-
-    .token-overlay__meter::-moz-progress-bar {
-      background: linear-gradient(90deg, #0f766e, #4f9f93);
-      border-radius: 999px;
-    }
-
-    .token-overlay__actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      margin-top: 0.75rem;
-    }
-
-    .token-overlay__actions button {
-      padding: 0.42rem 0.65rem;
-      font-size: 0.8rem;
-    }
-
-    .token-overlay__actions button:hover,
-    .token-overlay__collapse:hover {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-family: "Segoe UI", Tahoma, sans-serif;
-      font-size: 0.92rem;
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
 th, td {
+  padding: 0.75rem 1rem;
   text-align: left;
-  padding: 0.6rem 0.5rem;
   border-bottom: 1px solid var(--line);
-  vertical-align: top;
 }
 
 th {
-  color: var(--muted);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  color: var(--muted);
+  letter-spacing: 0.05em;
 }
 
-.list {
-  margin: 0;
-  padding-left: 1rem;
+/* Token Overlay */
+.token-overlay {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 280px;
+  background: rgba(22, 27, 34, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.25rem;
+  z-index: 200;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
 }
 
-.list li {
-  margin-bottom: 0.9rem;
-  line-height: 1.45;
+.token-overlay.is-collapsed {
+  height: 60px;
+  overflow: hidden;
 }
 
-    .list span {
-      color: var(--muted);
-      font-family: "Segoe UI", Tahoma, sans-serif;
-      font-size: 0.88rem;
-    }
+.token-overlay__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
 
-    @media (max-width: 640px) {
-      .hero, .layout { padding: 1rem; }
-      .panel-sticky {
-        position: static;
-      }
-      .review-rail__header {
-        display: grid;
-      }
-      .review-link-grid {
-        grid-template-columns: 1fr;
-      }
-      .review-dock {
-        left: 0.75rem;
-        top: auto;
-        bottom: 1rem;
-        grid-auto-flow: column;
-      }
-      .token-overlay {
-        right: 0.75rem;
-        left: 0.75rem;
-        width: auto;
-      }
-      table { display: block; overflow-x: auto; }
-    }
+.token-overlay__eyebrow {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.token-overlay__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.token-overlay__stats article {
+  background: var(--surface-strong);
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.token-overlay__stats span {
+  display: block;
+  font-size: 0.6rem;
+  color: var(--muted);
+}
+
+.token-overlay__stats strong {
+  font-size: 1rem;
+  color: #fff;
+}
+
+.token-overlay__meter {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--line);
+  margin-bottom: 1rem;
+}
+
+.token-overlay__meter::-webkit-progress-value { background: var(--accent); }
+
+.token-overlay__actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.token-overlay__actions button, .token-overlay__collapse {
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.token-overlay__actions button:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .sidebar { width: 0; display: none; }
+  .content-wrapper { margin-left: 0; padding: 1rem; }
+}
+
+/* Premium Markdown Body Styles */
+.markdown-body {
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.3rem;
+}
+
+.markdown-body blockquote {
+  border-left: 4px solid var(--accent);
+  background: var(--accent-soft);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0 12px 12px 0;
+  font-style: italic;
+}
+
+.markdown-body code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  background: var(--surface-strong);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+  color: var(--accent);
+}
+
+.markdown-body pre {
+  background: #0f172a !important;
+  padding: 1.5rem;
+  border-radius: 12px;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  margin: 1.5rem 0;
+}
+
+.markdown-body pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: 0.9rem;
+}
+
+.markdown-body table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1.5rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.markdown-body th {
+  background: linear-gradient(135deg, var(--surface-strong) 0%, var(--surface) 100%);
+  color: var(--accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.markdown-body tr:last-child td {
+  border-bottom: none;
+}
+
+.markdown-body tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.markdown-body ul, .markdown-body ol {
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+.markdown-body li {
+  margin-bottom: 0.5rem;
+}
+
+.markdown-body {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+}
+
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+  margin-top: 2rem;
+  color: var(--accent);
+}
+
+.markdown-body h1 { font-size: 1.8rem; border-bottom: 2px solid var(--accent-soft); padding-bottom: 0.5rem; }
+.markdown-body h2 { font-size: 1.4rem; border-bottom: 1px solid var(--line); padding-bottom: 0.3rem; }
+
+.markdown-body blockquote {
+  border-left: 4px solid var(--accent);
+  background: var(--accent-soft);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0 8px 8px 0;
+  color: #fff;
+  font-style: italic;
+}
+
+.markdown-body code {
+  background: var(--surface-strong);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: var(--warning);
+}
+
+.markdown-body pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.markdown-body th {
+  background: var(--surface-strong);
+}
+
+.markdown-body img {
+  max-width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  margin: 1rem 0;
+}
+
+.mermaid {
+  background: rgba(2, 6, 23, 0.5);
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  backdrop-filter: var(--glass-blur);
+}
+
+/* Scrollbar Sidebar */
+.sidebar-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 10px;
+}
+.sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
 """
 
     js = """
 const panels = [...document.querySelectorAll('.panel')];
 const searchInput = document.getElementById('panel-search');
 const filterButtons = [...document.querySelectorAll('.filter-btn')];
-const tokenOverlay = document.getElementById('token-overlay');
 const reviewToggle = document.querySelector('[data-review-toggle]');
 const reviewContent = document.querySelector('[data-review-content]');
-const tokenBudgetDisplay = document.querySelector('[data-token-budget-display]');
-const tokenUsedDisplay = document.querySelector('[data-token-used-display]');
-const tokenRemainingDisplay = document.querySelector('[data-token-remaining-display]');
-const tokenRatioDisplay = document.querySelector('[data-token-ratio-display]');
-const tokenBudgetInput = document.querySelector('[data-token-budget-input]');
-const tokenUsedInput = document.querySelector('[data-token-used-input]');
-const tokenMeter = document.querySelector('[data-token-meter]');
-const tokenHint = document.querySelector('[data-token-hint]');
-const tokenCollapse = document.querySelector('[data-token-collapse]');
-const tokenAdjustButtons = [...document.querySelectorAll('[data-token-adjust]')];
-const tokenResetButton = document.querySelector('[data-token-reset]');
-const TOKEN_STORE_KEY = 'codex-token-budget-overlay';
-const REVIEW_RAIL_STORE_KEY = 'codex-review-rail';
-const TOKEN_DEFAULT_BUDGET = Number(tokenOverlay?.dataset.defaultBudget || 0);
-const TOKEN_DEFAULT_USED = Number(tokenOverlay?.dataset.defaultUsed || 0);
+const mdSelector = document.getElementById('md-selector');
+const mdViewer = document.getElementById('md-viewer');
+const REVIEW_RAIL_STORE_KEY = 'siot-review-rail';
+
 let reviewRailCollapsed = false;
 
-function clampTokenValue(value) {
-  const parsed = Number(value);
-  if (!Number.isFinite(parsed)) {
-    return 0;
-  }
-  return Math.max(0, Math.round(parsed));
+// Diagnóstico de carga
+function checkLibraries() {
+  const status = {
+    marked: typeof marked !== 'undefined',
+    mermaid: typeof mermaid !== 'undefined',
+    Prism: typeof Prism !== 'undefined'
+  };
+  console.log('SIOT Dashboard - Status:', status);
+  return status;
 }
 
-function todayKey() {
-  return new Date().toLocaleDateString('en-CA');
+// Configuración de Mermaid
+try {
+  if (typeof mermaid !== 'undefined') {
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'dark',
+      securityLevel: 'loose',
+      themeVariables: {
+        fontFamily: 'Inter, system-ui, sans-serif',
+        primaryColor: '#2dd4bf',
+        primaryTextColor: '#fff',
+        primaryBorderColor: '#14b8a6',
+        lineColor: '#94a3b8',
+        secondaryColor: '#3b82f6',
+        tertiaryColor: '#0f172a'
+      }
+    });
+  }
+} catch (e) {
+  console.error('Error inicializando Mermaid:', e);
 }
 
 function loadReviewRailState() {
@@ -1525,98 +1339,16 @@ function loadReviewRailState() {
 }
 
 function renderReviewRailState() {
-  if (!reviewToggle || !reviewContent) {
-    return;
-  }
-  reviewContent.classList.toggle('is-collapsed', reviewRailCollapsed);
-  reviewToggle.setAttribute('aria-expanded', String(!reviewRailCollapsed));
+  if (!reviewContent || !reviewToggle) return;
+  reviewContent.style.display = reviewRailCollapsed ? 'none' : 'grid';
   reviewToggle.textContent = reviewRailCollapsed ? 'Mostrar' : 'Ocultar';
   try {
     localStorage.setItem(REVIEW_RAIL_STORE_KEY, reviewRailCollapsed ? 'collapsed' : 'expanded');
   } catch {}
 }
 
-function loadTokenState() {
-  const fallback = {
-    budget: TOKEN_DEFAULT_BUDGET,
-    used: TOKEN_DEFAULT_USED,
-    collapsed: false,
-    date: todayKey(),
-  };
-
-  try {
-    const raw = localStorage.getItem(TOKEN_STORE_KEY);
-    if (!raw) {
-      return fallback;
-    }
-
-    const parsed = JSON.parse(raw);
-    const currentDate = todayKey();
-    if (parsed.date !== currentDate) {
-      return { ...fallback, budget: clampTokenValue(parsed.budget) || TOKEN_DEFAULT_BUDGET, date: currentDate };
-    }
-
-    return {
-      budget: clampTokenValue(parsed.budget) || TOKEN_DEFAULT_BUDGET,
-      used: clampTokenValue(parsed.used),
-      collapsed: Boolean(parsed.collapsed),
-      date: currentDate,
-    };
-  } catch {
-    return fallback;
-  }
-}
-
-let tokenState = loadTokenState();
-
-function saveTokenState() {
-  localStorage.setItem(TOKEN_STORE_KEY, JSON.stringify(tokenState));
-}
-
-function renderTokenState() {
-  const budget = clampTokenValue(tokenState.budget) || TOKEN_DEFAULT_BUDGET;
-  const used = Math.min(clampTokenValue(tokenState.used), budget);
-  const remaining = Math.max(budget - used, 0);
-  const ratio = budget > 0 ? Math.round((used / budget) * 100) : 0;
-  const mode = remaining === 0 ? 'límite alcanzado' : remaining < budget * 0.2 ? 'modo bajo' : remaining < budget * 0.5 ? 'modo medio' : 'modo amplio';
-
-  tokenState = { ...tokenState, budget, used, date: todayKey() };
-  if (tokenOverlay) {
-    tokenOverlay.classList.toggle('is-collapsed', Boolean(tokenState.collapsed));
-  }
-  if (tokenCollapse) {
-    tokenCollapse.setAttribute('aria-pressed', String(Boolean(tokenState.collapsed)));
-    tokenCollapse.textContent = tokenState.collapsed ? 'Mostrar' : 'Ocultar';
-  }
-  if (tokenBudgetDisplay) tokenBudgetDisplay.textContent = String(budget);
-  if (tokenUsedDisplay) tokenUsedDisplay.textContent = String(used);
-  if (tokenRemainingDisplay) tokenRemainingDisplay.textContent = String(remaining);
-  if (tokenRatioDisplay) tokenRatioDisplay.textContent = `${ratio}%`;
-  if (tokenBudgetInput) tokenBudgetInput.value = String(budget);
-  if (tokenUsedInput) tokenUsedInput.value = String(used);
-  if (tokenMeter) {
-    tokenMeter.max = String(budget || 1);
-    tokenMeter.value = String(used);
-    tokenMeter.setAttribute('aria-valuetext', `${remaining} restantes de ${budget}`);
-  }
-  if (tokenHint) {
-    tokenHint.textContent = `${mode}: mantiene visible el margen útil mientras trabajas.`;
-  }
-  saveTokenState();
-}
-
-function updateTokenState(patch) {
-  tokenState = {
-    ...tokenState,
-    ...patch,
-    budget: clampTokenValue(patch.budget ?? tokenState.budget),
-    used: clampTokenValue(patch.used ?? tokenState.used),
-  };
-  renderTokenState();
-}
-
 function normalize(value) {
-  return (value || '').toLowerCase().normalize('NFD').replace(/\\p{Diacritic}/gu, '');
+  return (value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
 function applyFilters() {
@@ -1625,54 +1357,126 @@ function applyFilters() {
   panels.forEach((panel) => {
     const groupMatches = activeFilter === 'all' || panel.dataset.group === activeFilter;
     const textMatches = !query || normalize(panel.innerText).includes(query);
-    panel.classList.toggle('is-hidden', !(groupMatches && textMatches));
+    panel.style.display = (groupMatches && textMatches) ? '' : 'none';
   });
 }
 
-filterButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    filterButtons.forEach((item) => item.classList.remove('is-active'));
-    button.classList.add('is-active');
-    applyFilters();
+function jumpToNarrative(path) {
+  const viewerSection = document.getElementById('narrativa-sistema');
+  if (mdSelector && window.SIOT_NARRATIVA && window.SIOT_NARRATIVA[path]) {
+    mdSelector.value = path;
+    loadMarkdown(path);
+    viewerSection?.scrollIntoView({ behavior: 'smooth' });
+    return true;
+  }
+  return false;
+}
+
+
+async function loadMarkdown(path) {
+  if (!mdViewer) return;
+  try {
+    mdViewer.innerHTML = '<p class="muted">Cargando ' + path + '...</p>';
+    if (!window.SIOT_NARRATIVA) throw new Error('No se encontraron datos de narrativa (window.SIOT_NARRATIVA)');
+    
+    const text = window.SIOT_NARRATIVA[path];
+    if (!text) throw new Error('No se encontró el contenido para ' + path);
+    
+    // 1. Renderizar Markdown a HTML
+    if (typeof marked === 'undefined') throw new Error('Marked.js no está disponible');
+    mdViewer.innerHTML = marked.parse(text);
+    
+    // 2. Preparar bloques de Mermaid
+    mdViewer.querySelectorAll('pre code.language-mermaid').forEach(code => {
+      const pre = code.parentElement;
+      const div = document.createElement('div');
+      div.className = 'mermaid';
+      div.textContent = code.textContent;
+      pre.replaceWith(div);
+    });
+
+    // 3. Resaltar sintaxis con Prism
+    if (typeof Prism !== 'undefined') {
+      Prism.highlightAllUnder(mdViewer);
+    }
+    
+    // 4. Corregir rutas de imágenes
+    mdViewer.querySelectorAll('img').forEach(img => {
+      const src = img.getAttribute('src');
+      if (src && !src.startsWith('http') && !src.startsWith('data:') && !src.startsWith('/')) {
+        // Si la ruta es interna al dashboard, quitar el prefijo
+        if (src.startsWith('06_dashboard/generado/')) {
+          img.src = src.replace('06_dashboard/generado/', '');
+        } else {
+          // Si es relativa a la raíz, subir niveles
+          img.src = '../../' + src;
+        }
+      }
+    });
+
+    // 5. Renderizar diagramas de Mermaid
+    if (typeof mermaid !== 'undefined') {
+      await mermaid.run({
+        nodes: mdViewer.querySelectorAll('.mermaid'),
+      });
+    }
+    
+  } catch (err) {
+    console.error('Error cargando markdown:', err);
+    mdViewer.innerHTML = '<div class="panel danger"><strong>Error de renderizado:</strong> ' + err.message + '</div>';
+  }
+}
+
+// Inicialización principal
+document.addEventListener('DOMContentLoaded', () => {
+  const libStatus = checkLibraries();
+  
+  if (!libStatus.marked) {
+    const err = document.createElement('div');
+    err.className = 'panel danger';
+    err.innerHTML = '<strong>Error crítico:</strong> Las librerías de renderizado no cargaron. Verifica tu conexión.';
+    document.querySelector('main')?.prepend(err);
+  }
+
+  mdSelector?.addEventListener('change', (e) => loadMarkdown(e.target.value));
+
+  filterButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      filterButtons.forEach((item) => item.classList.remove('is-active'));
+      button.classList.add('is-active');
+      applyFilters();
+    });
   });
-});
 
-searchInput?.addEventListener('input', applyFilters);
-applyFilters();
+  searchInput?.addEventListener('input', applyFilters);
 
-tokenBudgetInput?.addEventListener('change', () => {
-  updateTokenState({ budget: tokenBudgetInput.value });
-});
-
-tokenUsedInput?.addEventListener('change', () => {
-  updateTokenState({ used: tokenUsedInput.value });
-});
-
-tokenAdjustButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const delta = clampTokenValue(button.dataset.tokenAdjust);
-    const signedDelta = button.dataset.tokenAdjust?.startsWith('-') ? -delta : delta;
-    updateTokenState({ used: tokenState.used + signedDelta });
+  reviewRailCollapsed = loadReviewRailState();
+  reviewToggle?.addEventListener('click', () => {
+    reviewRailCollapsed = !reviewRailCollapsed;
+    renderReviewRailState();
   });
-});
 
-tokenResetButton?.addEventListener('click', () => {
-  updateTokenState({ used: 0 });
-});
-
-tokenCollapse?.addEventListener('click', () => {
-  tokenState = { ...tokenState, collapsed: !tokenState.collapsed };
-  renderTokenState();
-});
-
-reviewRailCollapsed = loadReviewRailState();
-reviewToggle?.addEventListener('click', () => {
-  reviewRailCollapsed = !reviewRailCollapsed;
   renderReviewRailState();
-});
 
-renderTokenState();
-renderReviewRailState();
+  // Intercepción de enlaces MD
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (href && (href.endsWith('.md') || link.classList.contains('narrative-trigger'))) {
+      const cleanPath = href.split('#')[0].replace(/^(\.\.\/)+/, '');
+      const knownPath = Object.keys(window.SIOT_NARRATIVA || {}).find(k => k === cleanPath || k.endsWith(cleanPath));
+      if (knownPath) {
+        if (jumpToNarrative(knownPath)) {
+          e.preventDefault();
+        }
+      }
+    }
+  });
+
+  // Carga inicial de narrativa
+  if (mdSelector) loadMarkdown(mdSelector.value);
+});
 
 if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
   window.addEventListener('load', () => {

@@ -11,6 +11,19 @@ __pycache__/
 mi_llave_secreta_backup.asc
 00_sistema_tesis/bitacora/audit_history/governance_gate/
 00_sistema_tesis/bitacora/audit_history/security_report_*.json
-config/backups/*.bak
-.env
+# Modelos y Binarios Pesados (Protegidos por Guardrails, fuera de Git)
+runtime/models/
+*.rknn
+*.bin
+*.onnx
+*.gguf
+*.bak
+*.exe
+*.so
+*.dll
+
+# Runtime y Cache
 runtime/openclaw/state/
+runtime/atzin/cache/
+scratch/
+.build_cache.json

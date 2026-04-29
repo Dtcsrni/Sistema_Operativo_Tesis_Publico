@@ -1,12 +1,18 @@
 import sys
 import unittest
+from unittest import mock
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
 
-from check_serena_access import build_effective_access, recommended_mode_today, recommendations  # noqa: E402
+from check_serena_access import (  # noqa: E402
+    attempt_start_http,
+    build_effective_access,
+    recommended_mode_today,
+    recommendations,
+)
 
 
 class TestCheckSerenaAccess(unittest.TestCase):
@@ -43,6 +49,18 @@ class TestCheckSerenaAccess(unittest.TestCase):
         self.assertIn("autoarranque esperado", joined)
         self.assertIn("no esta expuesto en `.vscode/mcp.json`", joined)
         self.assertNotIn("fallback cuando el endpoint HTTP no este levantado", joined)
+
+    def test_attempt_start_http_skips_when_profile_not_published(self):
+        payload = attempt_start_http(ROOT, {"serena-local": False})
+        self.assertFalse(payload["attempted"])
+        self.assertEqual(payload["status"], "skipped")
+
+    @mock.patch("check_serena_access._port_open")
+    def test_attempt_start_http_detects_listening_port(self, mocked_open):
+        mocked_open.return_value = True
+        payload = attempt_start_http(ROOT, {"serena-local": True})
+        self.assertTrue(payload["attempted"])
+        self.assertEqual(payload["status"], "already_listening")
 
 
 if __name__ == "__main__":

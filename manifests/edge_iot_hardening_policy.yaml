@@ -13,6 +13,15 @@
     "disable_bluetooth": true,
     "allow_root_login": false,
     "password_authentication": false,
+    "ssh_login_user": "tesisai",
+    "ssh_allowed_users": ["ErickV", "tesisai"],
+    "ssh_admin_users": ["ErickV", "tesisai"],
+    "ssh_admin_groups": ["adm", "sudo", "systemd-journal"],
+    "local_admin_sudo": {
+      "ErickV": "NOPASSWD:ALL",
+      "tesisai": "NOPASSWD:ALL"
+    },
+    "lock_default_orangepi_user": true,
     "edge_runtime_user": "edgeiot",
     "edge_directories": [
       "/var/lib/edge-iot",

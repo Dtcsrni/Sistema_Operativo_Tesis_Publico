@@ -1,0 +1,46 @@
+# Dockerfile.edge - Nodo Edge SIOT (Orange Pi 5 Plus)
+# Arquitectura: arm64
+# Hardware: RK3588 (NPU + GPIO)
+
+FROM python:3.11-slim
+
+# Instalar dependencias de sistema para hardware
+RUN apt-get update && apt-get install -y \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgl1-mesa-glx \
+    v4l-utils \
+    i2c-tools \
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Instalar librerías para NPU RK3588 (RKNN Lite)
+COPY ./runtime/drivers/rknn/ /tmp/rknn/
+RUN pip install --no-cache-dir /tmp/rknn/*.whl && \
+    cp /tmp/rknn/librknnrt.so /usr/lib/librknnrt.so && \
+    ln -s /usr/lib/librknnrt.so /usr/lib/librknn_api.so && \
+    cp /tmp/rknn/librkllmrt.so /usr/lib/librkllmrt.so && \
+    rm -rf /tmp/rknn
+
+ENV LD_LIBRARY_PATH=/usr/lib:$LD_LIBRARY_PATH
+
+WORKDIR /app
+COPY . .
+
+# Instalar requerimientos específicos de borde
+RUN pip install --no-cache-dir \
+    RPi.GPIO \
+    smbus2 \
+    requests \
+    paho-mqtt \
+    numpy \
+    opencv-python-headless
+
+
+# Etiqueta de arquitectura
+LABEL target.arch="arm64"
+LABEL target.device="rk3588"
+
+CMD ["python3", "runtime/edge_iot/main.py"]

@@ -1,0 +1,90 @@
+services:
+  # ---------------------------------------------------------
+  # SIOT-DOCS: Gobernanza y Dashboard
+  # ---------------------------------------------------------
+  siot-docs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: siot-docs:latest
+    container_name: siot-docs
+    init: true
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 512M
+    env_file:
+      - ${SIOT_DOCS_ENV_FILE:-config/env/tesis-os.env.example}
+    environment:
+      - SISTEMA_TESIS_RUNTIME=docker-docs
+      - PYTHONUNBUFFERED=1
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/cache/nginx
+      - /var/run
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    volumes:
+      - canon_data:/app/00_sistema_tesis:ro # Lectura del canon para el dashboard
+    networks:
+      - siot-network
+
+  # ---------------------------------------------------------
+  # SIOT-AGENT: Inteligencia (OpenClaw)
+  # ---------------------------------------------------------
+  siot-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile.agent
+    image: siot-agent:latest
+    container_name: siot-agent
+    init: true
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 1G
+    env_file:
+      - .env
+      - ${SIOT_AGENT_ENV_FILE:-config/env/openclaw.env}
+    environment:
+      - SISTEMA_TESIS_RUNTIME=docker-agent
+      - OPENCLAW_DATA_DIR=/app/runtime/openclaw/state
+      - PYTHONUNBUFFERED=1
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp
+    volumes:
+      - ./00_sistema_tesis:/app/00_sistema_tesis # Escritura en el canon (inmutable ledger)
+      - ./runtime/openclaw/state:/app/runtime/openclaw/state
+      - ./07_scripts:/app/07_scripts:ro
+      - ./tests:/app/tests:ro
+    networks:
+      - siot-network
+    depends_on:
+      siot-docs:
+        condition: service_healthy
+
+networks:
+  siot-network:
+    name: siot-network
+    driver: bridge
+
+volumes:
+  canon_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/00_sistema_tesis

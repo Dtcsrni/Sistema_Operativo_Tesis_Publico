@@ -1,0 +1,124 @@
+{
+  "extra": {
+    "lm_eval": {
+      "status": "skipped_by_operator"
+    },
+    "profile": {
+      "interval_ms": 500,
+      "measurement_iterations": 50,
+      "model": "mistral-nemo:12b",
+      "node": "pc_control",
+      "runtime": "ollama_local",
+      "valid_for_scientific_claim": true,
+      "warmup_iterations": 5
+    }
+  },
+  "generated_at": "2026-04-28T14:12:32+00:00",
+  "header": {
+    "command": "python3 07_scripts/run_pc_benchmark.py",
+    "git_commit": "56ffe5c04ccffa5934c29d5ab79d9db023f2c23a",
+    "host_fingerprint": {
+      "cpu_count": 16,
+      "disk": {
+        "free_bytes": 146040725504,
+        "path": "/mnt/v/Sistema_Operativo_Tesis_Posgrado",
+        "total_bytes": 240055742464
+      },
+      "gpu": {
+        "driver_version": "596.21",
+        "memory_free_mib": 499,
+        "memory_total_mib": 8188,
+        "memory_used_mib": 7451,
+        "name": "NVIDIA GeForce RTX 4060 Ti",
+        "status": "ok",
+        "temperature_celsius": 45,
+        "utilization_gpu_pct": 3
+      },
+      "machine": "x86_64",
+      "memory_total_bytes": 12545507328,
+      "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+      "processor": "x86_64"
+    },
+    "methodology_references": [
+      {
+        "id": "mlperf_inference",
+        "name": "MLCommons MLPerf Inference",
+        "url": "https://mlcommons.org/working-groups/benchmarks/inference/",
+        "use": "Disciplina de escenarios, reproducibilidad y reporte de rendimiento; no implica certificacion oficial."
+      },
+      {
+        "id": "lm_evaluation_harness",
+        "name": "EleutherAI lm-evaluation-harness",
+        "url": "https://github.com/EleutherAI/lm-evaluation-harness",
+        "use": "Compatibilidad con evaluacion estandarizada de LLMs cuando dependencias y datasets esten disponibles."
+      },
+      {
+        "id": "helm",
+        "name": "Stanford CRFM HELM",
+        "url": "https://crfm-helm.readthedocs.io/",
+        "use": "Reporte holistico, transparente y reproducible de prompts, salidas y metricas."
+      }
+    ],
+    "mode": "real",
+    "model": "mistral-nemo:12b",
+    "model_fingerprint": {
+      "model": "mistral-nemo:12b",
+      "ollama_id": "e7e06d107c6c",
+      "raw": "mistral-nemo:12b       e7e06d107c6c    7.1 GB    7 days ago",
+      "size": "7.1",
+      "status": "ok"
+    },
+    "node": "pc_control",
+    "profile_id": "pc_mistral_nemo_12b_extensive",
+    "promptset_hash": "903f2787d915e3f8b5ec40dee92a4441b0a1200b7c81b6de438530e8fa4853af",
+    "protocol": "PEV-02",
+    "record_type": "run_header",
+    "run_id": "BENCH-20260428T131432Z-dc957885",
+    "runtime": "ollama_local",
+    "schema_version": "siot-benchmark-run-v1",
+    "scientific_validity": "valid_candidate",
+    "started_at": "2026-04-28T13:14:32+00:00",
+    "step_id": "validación humana interna no pública"
+  },
+  "primary_jsonl": "runtime/pc_control/benchmarks/runs/BENCH-20260428T131432Z-dc957885.jsonl",
+  "schema_version": "siot-benchmark-report-v1",
+  "summary": {
+    "ended_at": "2026-04-28T14:12:32+00:00",
+    "extra": {
+      "lm_eval": {
+        "status": "skipped_by_operator"
+      },
+      "profile": {
+        "interval_ms": 500,
+        "measurement_iterations": 50,
+        "model": "mistral-nemo:12b",
+        "node": "pc_control",
+        "runtime": "ollama_local",
+        "valid_for_scientific_claim": true,
+        "warmup_iterations": 5
+      }
+    },
+    "model": "mistral-nemo:12b",
+    "node": "pc_control",
+    "previous_record_hash": "cf4bdc8847a31f4a2faa9869b0a527a7d3ed1511481a9ec8adef09fb01a9e861",
+    "profile_id": "pc_mistral_nemo_12b_extensive",
+    "record_hash": "ac6735e78ace811493594402d5d98c57445794d75ea31298f16c9799732737be",
+    "record_type": "run_summary",
+    "run_id": "BENCH-20260428T131432Z-dc957885",
+    "runtime": "ollama_local",
+    "schema_version": "siot-benchmark-run-v1",
+    "scientific_validity": "valid_scientific_evidence",
+    "statistics": {
+      "margin_error_95_ms": 132.1244,
+      "mean_latency_ms": 12738.025,
+      "mean_tokens_per_second": 7.7906,
+      "p50_latency_ms": 12304.3813,
+      "p95_latency_ms": 15141.7141,
+      "p99_latency_ms": 16339.1852,
+      "sample_size": 250,
+      "std_dev_latency_ms": 1065.8518
+    },
+    "status": "ok",
+    "step_id": "validación humana interna no pública"
+  }
+}

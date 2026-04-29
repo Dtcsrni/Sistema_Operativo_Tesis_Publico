@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import hashlib
 import json
 import posixpath
@@ -65,7 +66,20 @@ def run_command(cmd: list[str], cwd: Path, *, check: bool = True) -> subprocess.
     return subprocess.run(cmd, cwd=cwd, text=True, capture_output=True, check=check)
 
 
-def ensure_target_repo(target_dir: Path, branch: str, repo_url: str = "") -> None:
+def run_git_with_token(
+    cmd: list[str], cwd: Path, *, token: str | None, check: bool = True
+) -> subprocess.CompletedProcess[str]:
+    if token:
+        encoded = base64.b64encode(f"x-access-token:{token}".encode("utf-8")).decode("utf-8")
+        return run_command(
+            ["git", "-c", f"http.extraHeader=AUTHORIZATION: basic {encoded}", *cmd[1:]],
+            cwd=cwd,
+            check=check,
+        )
+    return run_command(cmd, cwd=cwd, check=check)
+
+
+def ensure_target_repo(target_dir: Path, branch: str, repo_url: str = "", repo_token: str = "") -> None:
     target_dir.mkdir(parents=True, exist_ok=True)
     git_dir = target_dir / ".git"
     if not git_dir.exists():
@@ -86,7 +100,12 @@ def ensure_target_repo(target_dir: Path, branch: str, repo_url: str = "") -> Non
             run_command(["git", "remote", "add", "origin", repo_url], cwd=target_dir)
 
         # Mantener el clon temporal alineado con el remoto evita rechazos non-fast-forward.
-        fetched = run_command(["git", "fetch", "origin", branch], cwd=target_dir, check=False)
+        fetched = run_git_with_token(
+            ["git", "fetch", "origin", branch],
+            cwd=target_dir,
+            token=repo_token or None,
+            check=False,
+        )
         if fetched.returncode == 0:
             remote_ref = run_command(["git", "rev-parse", f"origin/{branch}"], cwd=target_dir, check=False)
             if remote_ref.returncode == 0:
@@ -309,6 +328,10 @@ def validate_sync_payloads(payloads: dict[str, bytes]) -> list[str]:
             errors.append("El workflow de Pages no restringe el despliegue al repo público derivado.")
         if "refs/heads/main" not in pages_text:
             errors.append("El workflow de Pages no fija `main` como rama de despliegue.")
+        if "upload-pages-artifact" not in pages_text:
+            errors.append("El workflow de Pages no publica artefacto estático con `upload-pages-artifact`.")
+        if "path: 06_dashboard/publico" not in pages_text:
+            errors.append("El workflow de Pages no publica la superficie `06_dashboard/publico`.")
 
     mkdocs_payload = payloads.get("mkdocs.yml")
     if not mkdocs_payload:
@@ -468,8 +491,9 @@ def sync_target(
     push: bool,
     destination_label: str,
     commit_message: str,
+    repo_token: str,
 ) -> dict[str, object]:
-    ensure_target_repo(target_dir, branch, repo_url)
+    ensure_target_repo(target_dir, branch, repo_url, repo_token=repo_token)
     reset_content_dir(target_dir)
     copy_selected_files(payloads, target_dir)
     verify_sync(payloads, target_dir)
@@ -490,7 +514,12 @@ def sync_target(
     if not check and changed:
         run_command(["git", "commit", "-m", commit_message], cwd=target_dir)
     if not check and push:
-        push_result = run_command(["git", "push", "-u", "origin", branch], cwd=target_dir, check=False)
+        push_result = run_git_with_token(
+            ["git", "push", "-u", "origin", branch],
+            cwd=target_dir,
+            token=repo_token or None,
+            check=False,
+        )
         if push_result.returncode != 0:
             print(push_result.stdout.strip())
             print(push_result.stderr.strip())
@@ -509,6 +538,7 @@ def main() -> int:
     parser.add_argument("--target-dir", default="../Sistema_Operativo_Tesis_Publico")
     parser.add_argument("--local-mirror-dir", default=DEFAULT_LOCAL_MIRROR_DIR)
     parser.add_argument("--repo-url", default="")
+    parser.add_argument("--repo-token", default="")
     parser.add_argument("--branch", default="main")
     parser.add_argument("--contact-email", default="")
     parser.add_argument("--commit-message", default="chore: actualizar proyeccion publica sanitizada")
@@ -547,6 +577,7 @@ def main() -> int:
         push=args.push,
         destination_label="public_remote" if args.repo_url else "public_primary",
         commit_message=args.commit_message,
+        repo_token=args.repo_token,
     )
 
     local_mirror_result: dict[str, object] | None = None
@@ -565,6 +596,7 @@ def main() -> int:
                 push=False,
                 destination_label="public_local_mirror",
                 commit_message=args.commit_message,
+                repo_token="",
             )
 
     if args.check:

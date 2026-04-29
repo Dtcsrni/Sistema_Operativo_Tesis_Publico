@@ -6,7 +6,7 @@
 Bloques macro del sistema y sus criterios de salida.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-14`
+- **Fecha:** `2026-04-29`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/config/bloques.yaml`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -52,15 +52,15 @@ Bloques macro del sistema y sus criterios de salida.
 ## Lectura rápida
 
 - Bloques activos: `1`
-- Bloques no iniciados: `10`
+- Bloques no iniciados: `9`
 - Un bloque no se interpreta como completado solo por existir en la estructura; depende de su criterio de salida.
 
 ## Grafo de Dependencias
 
 ```mermaid
 graph LR
-  style B0 fill:#ff9,stroke:#333
   B0 --> B1
+  style B1 fill:#ff9,stroke:#333
   B0 --> B2
   B1 --> B2
   B2 --> B3
@@ -90,8 +90,8 @@ graph LR
 
 |ID|Nombre|Estado|Prioridad|Dependencias|Criterio de salida|
 |---|---|---|---|---|---|
-|B0|Gobierno del sistema de tesis y base operativa|activo|critica|ninguna|Existe una base operativa funcional con validadores, dashboard generado, plantillas y README de retoma rápida, además de separación verificable entre sistema_tesis edge_iot y openclaw en Orange Pi y una arquitectura interna formalizada con pruebas de conformidad.|
-|B1|Delimitación del problema y contexto de Pachuca|no_iniciado|alta|B0|Existe una definición trazable del caso de estudio y de los supuestos urbanos/intermitentes que alimentan diseño y simulación.|
+|B0|Gobierno del sistema de tesis y base operativa|cerrado|critica|ninguna|Existe una base operativa funcional con validadores, dashboard generado, plantillas y README de retoma rápida, además de separación verificable entre sistema_tesis edge_iot y openclaw en Orange Pi y una arquitectura interna formalizada con pruebas de conformidad.|
+|B1|Delimitación del problema y contexto de Pachuca|activo|alta|B0|Existe una definición trazable del caso de estudio y de los supuestos urbanos/intermitentes que alimentan diseño y simulación.|
 |B2|Diseño de arquitectura y formulación de hipótesis|no_iniciado|critica|B0, B1|La arquitectura objetivo, la línea base, los flujos críticos y las hipótesis quedan definidos con métricas y criterios de soporte.|
 |B3|Modelo de control y métricas de desempeño|no_iniciado|alta|B2|Se cuenta con definición operacional de métricas, escenarios y umbrales de comparación para simulación y experimento.|
 |B4|Simulación y escenarios de intermitencia|no_iniciado|critica|B2, B3|La simulación reproduce escenarios definidos, genera métricas comparables y deja trazabilidad de parámetros y semillas.|
@@ -102,4 +102,4 @@ graph LR
 |B9|Reproducibilidad y versión sanitizada pública|no_iniciado|media|B0, B7, B8|Se cuenta con una ruta reproducible para publicar materiales sanitizados sin romper la canonicidad privada del repositorio.|
 |B10|Cierre, defensa y transferencia|no_iniciado|media|B8, B9|La tesis, la defensa y los artefactos de cierre quedan completos, versionados y listos para consulta futura.|
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-29`._

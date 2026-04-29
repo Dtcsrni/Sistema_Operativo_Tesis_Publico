@@ -49,9 +49,13 @@ def test_bootstrap_and_smoke_install_observability_stack() -> None:
     smoke = (ROOT / "tests/smoke/test_observability_stack.sh").read_text(encoding="utf-8")
 
     assert "apt-get install -y prometheus prometheus-node-exporter logrotate" in install
+    assert "/var/log/tesis-admin/prometheus.log" in install
+    assert "/var/log/tesis-os/tesis-healthcheck.log" in install
     assert "observability_policy.yaml" in services
     assert "/var/lib/node_exporter/textfile_collector" in workspace
     assert "groupadd --system observabilidad" in workspace
+    assert "/var/log/tesis-admin/observability-collector.log" in workspace
+    assert "/var/log/edge-iot/edge-iot-watchdog.log" in workspace
     assert "test_observability_stack.sh" in postcheck
     assert "127.0.0.1:9090" in smoke
 

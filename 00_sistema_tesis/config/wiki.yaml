@@ -14,6 +14,8 @@
   },
   "fuentes_base": [
     "README_INICIO.md",
+    "00_sistema_tesis/documentacion_sistema/casos_uso_agente.md",
+    "00_sistema_tesis/documentacion_sistema/guias_tareas_agente.md",
     "00_sistema_tesis/manual_operacion_humana.md",
     "00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md",
     "00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md",
@@ -44,6 +46,15 @@
     "manifest": "06_dashboard/generado/wiki_manifest.json"
   },
   "secciones": [
+    {
+      "id": "casos_uso",
+      "titulo": "Agente y Casos de Uso",
+      "descripcion": "Arquitectura teórica, routing adaptativo y fase reflexiva del agente OpenClaw.",
+      "fuentes": [
+        "00_sistema_tesis/documentacion_sistema/casos_uso_agente.md",
+        "00_sistema_tesis/documentacion_sistema/guias_tareas_agente.md"
+      ]
+    },
     {
       "id": "sistema",
       "titulo": "Sistema",

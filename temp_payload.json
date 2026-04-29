@@ -1,0 +1,6 @@
+{
+  "bloque": "B0",
+  "resultado": "completado",
+  "arquitectura": "distribuida_docker",
+  "resilience_test": "pass"
+}

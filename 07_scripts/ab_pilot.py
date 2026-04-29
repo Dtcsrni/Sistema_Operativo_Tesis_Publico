@@ -18,7 +18,25 @@ DEFAULT_MARKDOWN_PATH = "06_dashboard/generado/ab_pilot_report.md"
 DEFAULT_TRACE_PATH = "00_sistema_tesis/bitacora/audit_history/ab_pilot_runs.jsonl"
 DEFAULT_CSV_TEMPLATE_PATH = "00_sistema_tesis/plantillas/ab_pilot_tasks_template.csv"
 
-KNOWN_ROUTES = ("serena",)
+KNOWN_ROUTES = (
+    "serena",
+    "ollama_local",
+    "pc_native_llamacpp",
+    "context7_docs",
+    "github_models_free",
+    "docker_agent",
+    "wsl_native",
+)
+
+ROUTE_METRIC_FIELDS = (
+    "input_tokens",
+    "output_tokens",
+    "cost_usd",
+    "latency_ms",
+    "accepted",
+    "gate_failures",
+    "rework",
+)
 
 
 @dataclass
@@ -97,15 +115,9 @@ def default_plan_payload() -> dict[str, Any]:
                 "task_id": "T-001",
                 "task_type": "resumen_capitulo",
                 "baseline_complexity": "media",
-                "serena": {
-                    "input_tokens": 1800,
-                    "output_tokens": 700,
-                    "cost_usd": 0.045,
-                    "latency_ms": 4200,
-                    "accepted": True,
-                    "gate_failures": 0,
-                    "rework": False,
-                },
+                "serena": _default_route_payload(1800, 700, 0.045, 4200),
+                "ollama_local": _default_route_payload(700, 300, 0.0, 8500),
+                "wsl_native": _default_route_payload(1200, 450, 0.0, 2500),
             }
         ],
     }
@@ -117,15 +129,58 @@ def default_csv_template_rows() -> list[dict[str, Any]]:
             "task_id": "T-017",
             "task_type": "documentacion",
             "baseline_complexity": "baja",
-            "serena_input_tokens": 1200,
-            "serena_output_tokens": 500,
-            "serena_cost_usd": 0.032,
-            "serena_latency_ms": 3000,
-            "serena_accepted": True,
-            "serena_gate_failures": 0,
-            "serena_rework": False,
+            **_default_csv_route("serena", 1200, 500, 0.032, 3000),
+            **_default_csv_route("ollama_local", 700, 280, 0.0, 8500),
+            **_default_csv_route("pc_native_llamacpp", 950, 420, 0.0, 4200),
+            **_default_csv_route("context7_docs", 600, 250, 0.0, 2400),
+            **_default_csv_route("github_models_free", 800, 320, 0.0, 4500),
+            **_default_csv_route("docker_agent", 900, 360, 0.0, 5000),
+            **_default_csv_route("wsl_native", 1000, 420, 0.0, 2600),
         }
     ]
+
+
+def _default_route_payload(
+    input_tokens: int,
+    output_tokens: int,
+    cost_usd: float,
+    latency_ms: int,
+    *,
+    accepted: bool = True,
+    gate_failures: int = 0,
+    rework: bool = False,
+) -> dict[str, Any]:
+    return {
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
+        "cost_usd": cost_usd,
+        "latency_ms": latency_ms,
+        "accepted": accepted,
+        "gate_failures": gate_failures,
+        "rework": rework,
+    }
+
+
+def _default_csv_route(
+    route: str,
+    input_tokens: int,
+    output_tokens: int,
+    cost_usd: float,
+    latency_ms: int,
+    *,
+    accepted: bool = True,
+    gate_failures: int = 0,
+    rework: bool = False,
+) -> dict[str, Any]:
+    return {
+        f"{route}_input_tokens": input_tokens,
+        f"{route}_output_tokens": output_tokens,
+        f"{route}_cost_usd": cost_usd,
+        f"{route}_latency_ms": latency_ms,
+        f"{route}_accepted": accepted,
+        f"{route}_gate_failures": gate_failures,
+        f"{route}_rework": rework,
+    }
 
 
 def default_execution_context() -> ExecutionContext:
@@ -139,18 +194,9 @@ def default_execution_context() -> ExecutionContext:
 def write_csv_template(csv_relative_path: str) -> Path:
     csv_path = ROOT / csv_relative_path
     csv_path.parent.mkdir(parents=True, exist_ok=True)
-    fieldnames = [
-        "task_id",
-        "task_type",
-        "baseline_complexity",
-        "serena_input_tokens",
-        "serena_output_tokens",
-        "serena_cost_usd",
-        "serena_latency_ms",
-        "serena_accepted",
-        "serena_gate_failures",
-        "serena_rework",
-    ]
+    fieldnames = ["task_id", "task_type", "baseline_complexity"]
+    for route in KNOWN_ROUTES:
+        fieldnames.extend(f"{route}_{field}" for field in ROUTE_METRIC_FIELDS)
     with csv_path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fieldnames)
         writer.writeheader()
@@ -182,15 +228,26 @@ def _parse_csv_task(row: dict[str, str], index: int) -> dict[str, Any]:
         "baseline_complexity": baseline_complexity,
     }
 
-    task["serena"] = {
-        "input_tokens": _to_int(row.get("serena_input_tokens"), f"CSV row {index}: serena_input_tokens"),
-        "output_tokens": _to_int(row.get("serena_output_tokens"), f"CSV row {index}: serena_output_tokens"),
-        "cost_usd": _to_float(row.get("serena_cost_usd"), f"CSV row {index}: serena_cost_usd"),
-        "latency_ms": _to_int(row.get("serena_latency_ms"), f"CSV row {index}: serena_latency_ms"),
-        "accepted": _parse_csv_bool(row, "serena_accepted"),
-        "gate_failures": _to_int(row.get("serena_gate_failures"), f"CSV row {index}: serena_gate_failures"),
-        "rework": _parse_csv_bool(row, "serena_rework"),
-    }
+    for route in KNOWN_ROUTES:
+        prefix = f"{route}_"
+        route_fields = [f"{prefix}{field}" for field in ROUTE_METRIC_FIELDS]
+        if not any(str(row.get(field, "")).strip() for field in route_fields):
+            continue
+        missing = [field for field in route_fields if not str(row.get(field, "")).strip()]
+        if missing:
+            raise ValidationError(f"CSV row {index}: ruta {route} incompleta: {', '.join(missing)}")
+        task[route] = {
+            "input_tokens": _to_int(row.get(f"{route}_input_tokens"), f"CSV row {index}: {route}_input_tokens"),
+            "output_tokens": _to_int(row.get(f"{route}_output_tokens"), f"CSV row {index}: {route}_output_tokens"),
+            "cost_usd": _to_float(row.get(f"{route}_cost_usd"), f"CSV row {index}: {route}_cost_usd"),
+            "latency_ms": _to_int(row.get(f"{route}_latency_ms"), f"CSV row {index}: {route}_latency_ms"),
+            "accepted": _parse_csv_bool(row, f"{route}_accepted"),
+            "gate_failures": _to_int(row.get(f"{route}_gate_failures"), f"CSV row {index}: {route}_gate_failures"),
+            "rework": _parse_csv_bool(row, f"{route}_rework"),
+        }
+
+    if not task_routes(task):
+        raise ValidationError(f"CSV row {index}: se requiere al menos una ruta conocida")
 
     return task
 
@@ -228,23 +285,31 @@ def build_plan_from_csv(
     return dump_json(plan_relative_path, payload)
 
 
+def task_routes(task: dict[str, Any]) -> list[str]:
+    return [route for route in KNOWN_ROUTES if isinstance(task.get(route), dict)]
+
+
+def _validate_route_payload(route: str, payload: dict[str, Any], index: int) -> None:
+    _to_int(payload.get("input_tokens"), f"tasks[{index}].{route}.input_tokens")
+    _to_int(payload.get("output_tokens"), f"tasks[{index}].{route}.output_tokens")
+    _to_float(payload.get("cost_usd"), f"tasks[{index}].{route}.cost_usd")
+    _to_int(payload.get("latency_ms"), f"tasks[{index}].{route}.latency_ms")
+    _to_bool(payload.get("accepted"), f"tasks[{index}].{route}.accepted")
+    _to_int(payload.get("gate_failures"), f"tasks[{index}].{route}.gate_failures")
+    _to_bool(payload.get("rework"), f"tasks[{index}].{route}.rework")
+
+
 def _validate_task(task: dict[str, Any], index: int) -> None:
     if not isinstance(task.get("task_id"), str) or not task["task_id"].strip():
         raise ValidationError(f"tasks[{index}].task_id es obligatorio")
     if not isinstance(task.get("task_type"), str) or not task["task_type"].strip():
         raise ValidationError(f"tasks[{index}].task_type es obligatorio")
 
-    if "serena" not in task or not isinstance(task["serena"], dict):
-        raise ValidationError(f"tasks[{index}].serena es obligatorio")
-
-    payload = task["serena"]
-    _to_int(payload.get("input_tokens"), f"tasks[{index}].serena.input_tokens")
-    _to_int(payload.get("output_tokens"), f"tasks[{index}].serena.output_tokens")
-    _to_float(payload.get("cost_usd"), f"tasks[{index}].serena.cost_usd")
-    _to_int(payload.get("latency_ms"), f"tasks[{index}].serena.latency_ms")
-    _to_bool(payload.get("accepted"), f"tasks[{index}].serena.accepted")
-    _to_int(payload.get("gate_failures"), f"tasks[{index}].serena.gate_failures")
-    _to_bool(payload.get("rework"), f"tasks[{index}].serena.rework")
+    routes = task_routes(task)
+    if not routes:
+        raise ValidationError(f"tasks[{index}] requiere al menos una ruta conocida")
+    for route in routes:
+        _validate_route_payload(route, task[route], index)
 
 
 def load_plan(plan_relative_path: str) -> dict[str, Any]:
@@ -273,7 +338,7 @@ def load_plan(plan_relative_path: str) -> dict[str, Any]:
 def common_routes(tasks: list[dict[str, Any]]) -> list[str]:
     if not tasks:
         return []
-    return ["serena"] if all("serena" in task for task in tasks) else []
+    return [route for route in KNOWN_ROUTES if all(isinstance(task.get(route), dict) for task in tasks)]
 
 
 def _task_type_label(task: dict[str, Any]) -> str:
@@ -335,14 +400,18 @@ def aggregate_by_task_type(tasks: list[dict[str, Any]]) -> dict[str, dict[str, R
 
     summary: dict[str, dict[str, RouteAggregate]] = {}
     for task_type, bucket in sorted(grouped.items()):
-        summary[task_type] = {"serena": aggregate_route(bucket, "serena")}
+        routes = common_routes(bucket)
+        summary[task_type] = {route: aggregate_route(bucket, route) for route in routes}
     return summary
 
 
 def aggregate_routes(tasks: list[dict[str, Any]]) -> dict[str, RouteAggregate]:
     if not tasks:
         raise ValidationError("No hay tareas para comparar")
-    return {"serena": aggregate_route(tasks, "serena")}
+    routes = common_routes(tasks)
+    if not routes:
+        raise ValidationError("No hay rutas comunes para comparar en todas las tareas")
+    return {route: aggregate_route(tasks, route) for route in routes}
 
 
 def pct_delta(reference: float, candidate: float) -> float:
@@ -351,22 +420,52 @@ def pct_delta(reference: float, candidate: float) -> float:
     return round(((reference - candidate) / reference) * 100.0, 2)
 
 
-def pick_winner(*, serena: RouteAggregate, criteria: dict[str, Any]) -> tuple[str, list[str]]:
+def pick_winner(*, route_aggregates: dict[str, RouteAggregate] | None = None, criteria: dict[str, Any], serena: RouteAggregate | None = None) -> tuple[str, list[str]]:
     min_acceptance_rate = _to_float(criteria.get("min_acceptance_rate", 0), "criteria.min_acceptance_rate")
     max_gate_failures = _to_int(criteria.get("max_gate_failures", 0), "criteria.max_gate_failures")
+    aggregates = route_aggregates or ({"serena": serena} if serena is not None else {})
+    if not aggregates:
+        raise ValidationError("No hay rutas agregadas para seleccionar ganador")
 
-    if serena.acceptance_rate >= min_acceptance_rate and serena.gate_failures <= max_gate_failures:
-        return "serena", ["Serena cumple los umbrales de calidad y gate."]
-    return "serena", ["Serena es la única ruta evaluada; se conserva como línea base operativa."]
+    eligible = {
+        route: aggregate
+        for route, aggregate in aggregates.items()
+        if aggregate.acceptance_rate >= min_acceptance_rate
+        and aggregate.gate_failures <= max_gate_failures
+        and aggregate.rework_rate == 0
+    }
+    if eligible:
+        winner = min(
+            eligible,
+            key=lambda route: (
+                eligible[route].total_cost_usd,
+                eligible[route].total_tokens,
+                eligible[route].avg_latency_ms,
+                route,
+            ),
+        )
+        return winner, [f"{winner} cumple calidad/gates y minimiza costo, tokens y latencia entre rutas elegibles."]
+
+    winner = max(
+        aggregates,
+        key=lambda route: (
+            aggregates[route].acceptance_rate,
+            -aggregates[route].gate_failures,
+            -aggregates[route].rework_rate,
+            -aggregates[route].total_cost_usd,
+            route,
+        ),
+    )
+    return winner, [f"{winner} es la ruta menos riesgosa disponible, pero no todas las rutas cumplen umbrales."]
 
 
 def summarize_route_set(task_type: str, route_aggregates: dict[str, RouteAggregate], criteria: dict[str, Any]) -> dict[str, Any]:
-    winner, reasons = pick_winner(serena=route_aggregates["serena"], criteria=criteria)
+    winner, reasons = pick_winner(route_aggregates=route_aggregates, criteria=criteria)
     return {
         "task_type": task_type,
         "winner": winner,
         "reasons": reasons,
-        "serena": _aggregate_to_dict(route_aggregates["serena"]),
+        **{route: _aggregate_to_dict(route_aggregate) for route, route_aggregate in route_aggregates.items()},
     }
 
 
@@ -395,7 +494,7 @@ def _render_markdown(
     by_task_type: dict[str, dict[str, Any]],
 ) -> str:
     lines = [
-        "# Reporte Piloto Serena",
+        "# Reporte Piloto de Rutas Agénticas",
         "",
         f"- generated_at: {now_stamp()}",
         f"- experiment_id: {experiment_id}",
@@ -404,27 +503,29 @@ def _render_markdown(
         f"- source_event_id: {context.source_event_id or 'sin_source_event_id'}",
         f"- winner: {winner}",
         "",
-        "## Resumen Serena",
+        "## Resumen por ruta",
         "",
     ]
-    aggregate = route_aggregates["serena"]
+    for route, aggregate in route_aggregates.items():
+        lines.extend([
+            f"### {route}",
+            "",
+            f"- tareas: {aggregate.tasks}",
+            f"- input_tokens: {aggregate.input_tokens}",
+            f"- output_tokens: {aggregate.output_tokens}",
+            f"- total_tokens: {aggregate.total_tokens}",
+            f"- costo total (USD): {aggregate.total_cost_usd:.6f}",
+            f"- latencia promedio (ms): {aggregate.avg_latency_ms:.2f}",
+            f"- acceptance rate: {aggregate.acceptance_rate:.4f}",
+            f"- gate failures: {aggregate.gate_failures}",
+            f"- rework rate: {aggregate.rework_rate:.4f}",
+            "",
+        ])
     lines.extend([
-        "### serena",
-        "",
-        f"- tareas: {aggregate.tasks}",
-        f"- input_tokens: {aggregate.input_tokens}",
-        f"- output_tokens: {aggregate.output_tokens}",
-        f"- total_tokens: {aggregate.total_tokens}",
-        f"- costo total (USD): {aggregate.total_cost_usd:.6f}",
-        f"- latencia promedio (ms): {aggregate.avg_latency_ms:.2f}",
-        f"- acceptance rate: {aggregate.acceptance_rate:.4f}",
-        f"- gate failures: {aggregate.gate_failures}",
-        f"- rework rate: {aggregate.rework_rate:.4f}",
-        "",
         "## Criterio",
         "",
-        "- Serena es la única ruta activa en este piloto.",
-        "- La evaluación conserva trazabilidad, costo y latencia por tarea.",
+        "- La evaluación compara solo rutas comunes a las tareas analizadas.",
+        "- El ganador debe cumplir calidad y gates antes de optimizar costo o tokens.",
         "",
     ])
     lines.extend(f"- {reason}" for reason in reasons)
@@ -438,8 +539,13 @@ def _render_markdown(
             f"### {task_type}",
             "",
             f"- winner: {data['winner']}",
-            f"- serena: costo {data['serena']['total_cost_usd']:.6f} USD, tokens {data['serena']['total_tokens']}, latencia {data['serena']['avg_latency_ms']:.2f} ms",
         ])
+        for route in sorted(route for route in data if route in KNOWN_ROUTES):
+            aggregate = data[route]
+            lines.append(
+                f"- {route}: costo {aggregate['total_cost_usd']:.6f} USD, "
+                f"tokens {aggregate['total_tokens']}, latencia {aggregate['avg_latency_ms']:.2f} ms"
+            )
         for reason in data["reasons"]:
             lines.append(f"- {reason}")
         lines.append("")
@@ -491,7 +597,7 @@ def evaluate_plan(
     tasks = payload["tasks"]
 
     route_aggregates = aggregate_routes(tasks)
-    winner, reasons = pick_winner(serena=route_aggregates["serena"], criteria=criteria)
+    winner, reasons = pick_winner(route_aggregates=route_aggregates, criteria=criteria)
     by_task_type_raw = aggregate_by_task_type(tasks)
     by_task_type = {
         task_type: summarize_route_set(task_type, summary, criteria)
@@ -542,7 +648,7 @@ def evaluate_plan(
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Piloto Serena")
+    parser = argparse.ArgumentParser(description="Piloto de rutas agénticas")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     init_cmd = subparsers.add_parser("init", help="Crear plantilla inicial del plan A/B")
@@ -587,7 +693,7 @@ def main() -> int:
             experiment_id=args.experiment_id or None,
             owner=args.owner,
         )
-        print(f"Plan Serena generado desde CSV en: {created}")
+        print(f"Plan de rutas agénticas generado desde CSV en: {created}")
         return 0
 
     if args.command == "evaluate":

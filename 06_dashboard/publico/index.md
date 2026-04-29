@@ -2,9 +2,9 @@
 
 Definir la exportación pública sanitizada, legible y reproducible del sistema operativo de tesis, exponiendo por defecto artefactos públicos y redirigiendo solo contenido verdaderamente sensible.
 
-- **Generado:** `2026-04-13`
+- **Generado:** `2026-04-29`
 - **Estado:** `ok`
-- **Fingerprint del bundle:** `31409e2fbd922e4f0867cdb08b49c23965bcc5954d84094a7411902334b25f8b`
+- **Fingerprint del bundle:** `785092cd2575bd2dc86a6c4c2737378c197f554f07effac63b81353a26666fda`
 - **Aviso:** Este bundle público es un artefacto derivado y curado editorialmente. No se corrige a mano; se reconstruye desde la base canónica.
 
 ## Superficies
@@ -15,7 +15,8 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 
 ## Rutas de navegación pública
 
-- Entrada general: `README_publico.md`.
+- Entrada general: `index.html`.
+- Entrada editorial: `README_publico.md`.
 - Estado operativo breve: `MEMORY_publico.md`.
 - Mapa del sistema y ruta base: `wiki/index.md`.
 - Propósito, módulos y flujos: `wiki/sistema.md`.
@@ -36,8 +37,10 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 - `06_dashboard/publico/MEMORY_publico.md` ← `MEMORY.md`
 - `06_dashboard/publico/wiki/bitacora.md` ← `06_dashboard/wiki/bitacora.md`
 - `06_dashboard/publico/wiki/bloques.md` ← `06_dashboard/wiki/bloques.md`
+- `06_dashboard/publico/wiki/casos_uso.md` ← `06_dashboard/wiki/casos_uso.md`
 - `06_dashboard/publico/wiki/decisiones.md` ← `06_dashboard/wiki/decisiones.md`
 - `06_dashboard/publico/wiki/experimentos.md` ← `06_dashboard/wiki/experimentos.md`
+- `06_dashboard/publico/wiki/extra/wiki_premium.css` ← `06_dashboard/wiki/extra/wiki_premium.css`
 - `06_dashboard/publico/wiki/gobernanza.md` ← `06_dashboard/wiki/gobernanza.md`
 - `06_dashboard/publico/wiki/hipotesis.md` ← `06_dashboard/wiki/hipotesis.md`
 - `06_dashboard/publico/wiki/implementacion.md` ← `06_dashboard/wiki/implementacion.md`
@@ -48,6 +51,7 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 - `06_dashboard/publico/wiki/tesis.md` ← `06_dashboard/wiki/tesis.md`
 - `06_dashboard/publico/wiki_html/bitacora.html` ← `06_dashboard/generado/wiki/bitacora.html`
 - `06_dashboard/publico/wiki_html/bloques.html` ← `06_dashboard/generado/wiki/bloques.html`
+- `06_dashboard/publico/wiki_html/casos_uso.html` ← `06_dashboard/generado/wiki/casos_uso.html`
 - `06_dashboard/publico/wiki_html/decisiones.html` ← `06_dashboard/generado/wiki/decisiones.html`
 - `06_dashboard/publico/wiki_html/experimentos.html` ← `06_dashboard/generado/wiki/experimentos.html`
 - `06_dashboard/publico/wiki_html/gobernanza.html` ← `06_dashboard/generado/wiki/gobernanza.html`
@@ -86,8 +90,9 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 ## Qué revisar siempre
 
 - `README_publico.md`
+- `index.html`
 - `dashboard/index.html`
 - `wiki/index.md`
 - `manifest_publico.json`
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-29`._

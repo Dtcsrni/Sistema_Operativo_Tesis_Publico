@@ -3,158 +3,328 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Wiki verificable</title>
+  <title>Wiki verificable | Tesis OS Wiki</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700&family=Fira+Code&family=Material+Icons&display=swap" rel="stylesheet">
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+  </script>
   <style>
+    :root {
+      --primary: #0f766e;
+      --primary-light: #14b8a6;
+      --secondary: #1e293b;
+      --accent: #06b6d4;
+      --bg: #f8fafc;
+      --surface: rgba(255, 255, 255, 0.85);
+      --border: rgba(226, 232, 240, 0.8);
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      background: #f6f3eb;
-      color: #1e293b;
-      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(15, 118, 110, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.05) 0px, transparent 50%);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      display: flex;
+      min-height: 100vh;
     }
+
+    /* Sidebar Navigation */
+    nav {
+      width: 260px;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      border-right: 1px solid var(--border);
+      padding: 2rem 1rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 100;
+    }
+
+    .nav-header {
+      padding: 0 0.75rem 1.5rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      color: var(--text-muted);
+      border-radius: var(--radius);
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-link .material-icons {
+      font-size: 20px;
+    }
+
+    /* Main Content Area */
     main {
-      max-width: 980px;
+      flex: 1;
+      padding: 3rem 4rem;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 2rem 1.25rem 3rem;
     }
+
     header {
+      margin-bottom: 3rem;
+      animation: fadeInDown 0.6s ease-out;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3rem;
+      margin: 0 0 0.5rem;
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .stamp {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Markdown Rendering Styles */
+    .markdown-body {
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+
+    .markdown-body h2 {
+      font-family: 'Outfit', sans-serif;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+      color: var(--secondary);
+    }
+
+    .markdown-body p { margin-bottom: 1.25rem; }
+
+    .markdown-body code {
+      background: rgba(15, 118, 110, 0.08);
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9em;
+      color: var(--primary);
+    }
+
+    .markdown-body a {
+      color: var(--primary);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .markdown-body a:hover {
+      border-bottom-color: var(--primary);
+    }
+
+    .markdown-body ul {
+      padding-left: 1.5rem;
       margin-bottom: 1.5rem;
     }
-    h1 {
-      margin: 0 0 0.5rem;
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
+
+    .markdown-body li {
+      margin-bottom: 0.5rem;
     }
-    .stamp {
-      color: #475569;
-      font-family: "Segoe UI", Tahoma, sans-serif;
-      font-size: 0.9rem;
+
+    /* Admonitions */
+    .admonition {
+      margin: 1.5rem 0;
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      border-left: 4px solid #ccc;
+      background: white;
+      box-shadow: var(--shadow);
     }
-    pre {
-      white-space: pre-wrap;
-      background: #fff;
-      border: 1px solid #d6d3d1;
-      border-radius: 16px;
-      padding: 1rem;
-      overflow-wrap: anywhere;
-      line-height: 1.55;
+    .admonition.success { border-left-color: #10b981; background: #ecfdf5; }
+    .admonition.warning { border-left-color: #f59e0b; background: #fffbeb; }
+    .admonition.danger { border-left-color: #ef4444; background: #fef2f2; }
+    
+    .admonition-title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
     }
-    a {
-      color: #0f766e;
+
+    @media (max-width: 768px) {
+      body { flex-direction: column; }
+      nav {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 1rem;
+      }
+      .nav-header { display: none; }
+      main { padding: 2rem 1.5rem; }
+      h1 { font-size: 2.2rem; }
     }
   </style>
 </head>
 <body>
+  <nav>
+    <div class="nav-header">
+      <span class="material-icons">architecture</span>
+      Tesis OS
+    </div>
+    <a href="casos_uso.html" class="nav-link "><span class="material-icons">smart_toy</span><span>Agente y Casos de Uso</span></a>
+<a href="sistema.html" class="nav-link "><span class="material-icons">settings</span><span>Sistema</span></a>
+<a href="gobernanza.html" class="nav-link "><span class="material-icons">gavel</span><span>Gobernanza</span></a>
+<a href="terminologia.html" class="nav-link "><span class="material-icons">book</span><span>Terminología</span></a>
+<a href="planeacion.html" class="nav-link "><span class="material-icons">event_note</span><span>Planeación</span></a>
+<a href="hipotesis.html" class="nav-link "><span class="material-icons">lightbulb</span><span>Hipótesis</span></a>
+<a href="bloques.html" class="nav-link "><span class="material-icons">grid_view</span><span>Bloques</span></a>
+<a href="decisiones.html" class="nav-link "><span class="material-icons">psychology</span><span>Decisiones</span></a>
+<a href="bitacora.html" class="nav-link "><span class="material-icons">history_edu</span><span>Bitácora</span></a>
+<a href="experimentos.html" class="nav-link "><span class="material-icons">science</span><span>Experimentos</span></a>
+<a href="implementacion.html" class="nav-link "><span class="material-icons">code</span><span>Implementación</span></a>
+<a href="tesis.html" class="nav-link "><span class="material-icons">school</span><span>Tesis</span></a>
+  </nav>
   <main>
     <header>
       <h1>Wiki verificable</h1>
-      <p class="stamp">Artefacto derivado generado el 2026-04-14</p>
+      <div class="stamp">
+        <span class="material-icons" style="font-size: 16px;">update</span>
+        Generado el 2026-04-29
+      </div>
     </header>
-    <pre># Wiki verificable del sistema operativo de tesis
-
-Definir la wiki derivada, verificable y reconstruible del sistema operativo de tesis a partir de fuentes canónicas.
-
-- **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-14`
-- **Estado:** `OK`
-- **Fuentes:** `README_INICIO.md`, `00_sistema_tesis/manual_operacion_humana.md`, `00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`, `00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`, `00_sistema_tesis/documentacion_sistema/flujos_operativos.md`, `00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`, `00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`, `00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/hipotesis.yaml`, `00_sistema_tesis/config/bloques.yaml`, `00_sistema_tesis/config/dashboard.yaml`, `00_sistema_tesis/config/ia_gobernanza.yaml`, `00_sistema_tesis/config/publicacion.yaml`, `01_planeacion/backlog.csv`, `01_planeacion/riesgos.csv`, `01_planeacion/roadmap.csv`, `01_planeacion/entregables.csv`, `00_sistema_tesis/decisiones`, `00_sistema_tesis/bitacora`, `00_sistema_tesis/reportes_semanales`, `02_experimentos`, `04_implementacion`, `05_tesis`
-- **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
-
-## Estado de verificación
-
-- Fecha de generación: `2026-04-14`
-- Estado de verificación: `ok`
-- Fuentes canónicas: `README_INICIO.md`, `00_sistema_tesis/manual_operacion_humana.md`, `00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`, `00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`, `00_sistema_tesis/documentacion_sistema/flujos_operativos.md`, `00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`, `00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`, `00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/hipotesis.yaml`, `00_sistema_tesis/config/bloques.yaml`, `00_sistema_tesis/config/dashboard.yaml`, `00_sistema_tesis/config/ia_gobernanza.yaml`, `00_sistema_tesis/config/publicacion.yaml`, `01_planeacion/backlog.csv`, `01_planeacion/riesgos.csv`, `01_planeacion/roadmap.csv`, `01_planeacion/entregables.csv`, `00_sistema_tesis/decisiones`, `00_sistema_tesis/bitacora`, `00_sistema_tesis/reportes_semanales`, `02_experimentos`, `04_implementacion`, `05_tesis`
-
-## Métrica de Soberanía Humana
-
-Actualmente, el **0.0%** de los artefactos nucleares de esta tesis han sido verificados y firmados por el tesista humano.
-
-```mermaid
-graph LR
+    <div class="markdown-body"><p><h1>Wiki verificable del sistema operativo de tesis</h1></p><p>Definir la wiki derivada, verificable y reconstruible del sistema operativo de tesis a partir de fuentes canónicas.
+<ul><li><strong>Tesista:</strong> <code>Erick Renato Vega Ceron</code></li>
+<li><strong>Fecha:</strong> <code>2026-04-29</code></li>
+<li><strong>Estado:</strong> <code>OK</code></li>
+<li><strong>Fuentes:</strong> <code>README_INICIO.md</code>, <code>00_sistema_tesis/documentacion_sistema/casos_uso_agente.md</code>, <code>00_sistema_tesis/documentacion_sistema/guias_tareas_agente.md</code>, <code>00_sistema_tesis/manual_operacion_humana.md</code>, <code>00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md</code>, <code>00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md</code>, <code>00_sistema_tesis/documentacion_sistema/flujos_operativos.md</code>, <code>00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md</code>, <code>00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md</code>, <code>00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json</code>, <code>00_sistema_tesis/config/sistema_tesis.yaml</code>, <code>00_sistema_tesis/config/hipotesis.yaml</code>, <code>00_sistema_tesis/config/bloques.yaml</code>, <code>00_sistema_tesis/config/dashboard.yaml</code>, <code>00_sistema_tesis/config/ia_gobernanza.yaml</code>, <code>00_sistema_tesis/config/publicacion.yaml</code>, <code>01_planeacion/backlog.csv</code>, <code>01_planeacion/riesgos.csv</code>, <code>01_planeacion/roadmap.csv</code>, <code>01_planeacion/entregables.csv</code>, <code>00_sistema_tesis/decisiones</code>, <code>00_sistema_tesis/bitacora</code>, <code>00_sistema_tesis/reportes_semanales</code>, <code>02_experimentos</code>, <code>04_implementacion</code>, <code>05_tesis</code></li>
+<li><strong>Aviso:</strong> Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.</li>
+</ul>
+<h2>Estado de verificación</h2>
+<ul><li>Fecha de generación: <code>2026-04-29</code></li>
+<li>Estado de verificación: <code>ok</code></li>
+<li>Fuentes canónicas: <code>README_INICIO.md</code>, <code>00_sistema_tesis/documentacion_sistema/casos_uso_agente.md</code>, <code>00_sistema_tesis/documentacion_sistema/guias_tareas_agente.md</code>, <code>00_sistema_tesis/manual_operacion_humana.md</code>, <code>00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md</code>, <code>00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md</code>, <code>00_sistema_tesis/documentacion_sistema/flujos_operativos.md</code>, <code>00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md</code>, <code>00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md</code>, <code>00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json</code>, <code>00_sistema_tesis/config/sistema_tesis.yaml</code>, <code>00_sistema_tesis/config/hipotesis.yaml</code>, <code>00_sistema_tesis/config/bloques.yaml</code>, <code>00_sistema_tesis/config/dashboard.yaml</code>, <code>00_sistema_tesis/config/ia_gobernanza.yaml</code>, <code>00_sistema_tesis/config/publicacion.yaml</code>, <code>01_planeacion/backlog.csv</code>, <code>01_planeacion/riesgos.csv</code>, <code>01_planeacion/roadmap.csv</code>, <code>01_planeacion/entregables.csv</code>, <code>00_sistema_tesis/decisiones</code>, <code>00_sistema_tesis/bitacora</code>, <code>00_sistema_tesis/reportes_semanales</code>, <code>02_experimentos</code>, <code>04_implementacion</code>, <code>05_tesis</code></li>
+</ul>
+<h2>Métrica de Soberanía Humana</h2></p><p>Actualmente, el <strong>0.0%</strong> de los artefactos nucleares de esta tesis han sido verificados y firmados por el tesista humano.</p><p><div class="mermaid-container"><pre class="mermaid">graph LR
   A[Soberanía Humana] --- B(0.0%)
-  style B fill:#f9f,stroke:#333,stroke-width:4px
-```
-
-## Índice
-
-- [Sistema](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/sistema.md)
-- [Gobernanza](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/gobernanza.md)
-- [Terminología](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/terminologia.md)
-- [Hipótesis](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/hipotesis.md)
-- [Bloques](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/bloques.md)
-- [Planeación](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/planeacion.md)
-- [Decisiones](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/decisiones.md)
-- [Bitácora](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/bitacora.md)
-- [Experimentos](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/experimentos.md)
-- [Implementación](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/implementacion.md)
-- [Tesis](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/tesis.md)
-
-## Qué explica esta documentación
-
-- Para qué y por qué existe el sistema.
-- Cuáles son sus módulos y cómo se relacionan.
-- Cuáles son sus flujos operativos principales.
-- Cómo interactúa con él el tesista.
-- Cómo puede explorarlo y evaluarlo un lector público sin acceder a superficies privadas.
-
-## Ruta de lectura
-
-- Si necesitas entender el sistema completo, empieza por [Sistema](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/sistema.md).
-- Si necesitas reglas y límites, continúa con [Gobernanza](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/gobernanza.md).
-- Si necesitas lenguaje, familias de IDs y convenciones, pasa por [Terminología](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/terminologia.md).
-- Si necesitas estado del trabajo, revisa [Planeación](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/planeacion.md), [Hipótesis](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/hipotesis.md) y [Bloques](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/bloques.md).
-- Si necesitas evidencia de avance o cobertura, revisa [Decisiones](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/decisiones.md), [Bitácora](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/bitacora.md), [Implementación](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/implementacion.md), [Experimentos](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/experimentos.md) y [Tesis](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/tesis.md).
-
-## Mapa de navegación por intención
-
-- Entender el sistema: [Sistema](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/sistema.md) -&gt; [Gobernanza](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/gobernanza.md) -&gt; [Terminología](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/terminologia.md).
-- Retomar ejecución: [Planeación](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/planeacion.md) -&gt; [Bloques](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/bloques.md) -&gt; [Hipótesis](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/hipotesis.md).
-- Rastrear decisiones y sesiones: [Decisiones](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/decisiones.md) -&gt; [Bitácora](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/bitacora.md).
-- Revisar madurez técnica: [Experimentos](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/experimentos.md) -&gt; [Implementación](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/implementacion.md) -&gt; [Tesis](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/tesis.md).
-
-## Cómo rastrear un artefacto derivado hasta su origen canónico
-
-- Empieza por la página derivada que estás leyendo.
-- Revisa su bloque `Origen canónico y artefactos relacionados`.
-- Sigue la lista de fuentes canónicas declaradas en esa misma página.
-- Si necesitas validar la cadena de publicación, cruza con `06_dashboard/generado/wiki_manifest.json` y `06_dashboard/publico/manifest_publico.json`.
-- Si necesitas trazabilidad operativa, consulta `00_sistema_tesis/bitacora/matriz_trazabilidad.md` y `00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md`.
-
-## Módulos del sistema
-
-- Gobierno y soberanía humana.
-- Trazabilidad y evidencia.
-- Planeación y control del trabajo.
-- Canon técnico y configuración.
-- Automatización y validación.
-- Publicación derivada y superficie pública.
-- Tesis IoT como objeto gobernado.
-
-## Operación humana y frontera público/privado
-
-- La superficie **canónica no pública** gobierna canon, backlog, decisiones, bitácora y auditoría completa.
-- La superficie **pública** es un bundle editorialmente curado y reproducible para divulgación y evaluación externa.
-- La **IA es opcional**: el sistema debe poder retomarse, auditarse y publicarse siguiendo rutas humanas explícitas.
-
-## Qué revisar siempre
-
-- `00_sistema_tesis/manual_operacion_humana.md`
-- `00_sistema_tesis/config/sistema_tesis.yaml`
-- `01_planeacion/backlog.csv`
-- `01_planeacion/riesgos.csv`
-- `00_sistema_tesis/bitacora/matriz_trazabilidad.md`
-- `06_dashboard/generado/wiki_manifest.json`
-- `06_dashboard/wiki/index.md`
-- `06_dashboard/generado/index.html`
-- `06_dashboard/publico/index.md`
-
-## Criterios de verificabilidad
-
-- Toda página debe declarar sus fuentes canónicas.
-- Toda página debe exponer fecha de generación y estado de verificación.
-- La wiki debe reflejar directorios vacíos como cobertura pendiente, sin inventar contenido.
-- Toda salida debe poder regenerarse de forma determinista desde scripts versionados.
-</pre>
-      <footer class="public-update"><p>Última actualización: <strong>2026-04-13</strong></p></footer>
+  style B fill:#f9f,stroke:#333,stroke-width:4px</pre></div></p><p><h2>Índice</h2>
+<ul><li><a href="casos_uso.html">Agente y Casos de Uso</a></li>
+<li><a href="sistema.html">Sistema</a></li>
+<li><a href="gobernanza.html">Gobernanza</a></li>
+<li><a href="terminologia.html">Terminología</a></li>
+<li><a href="hipotesis.html">Hipótesis</a></li>
+<li><a href="bloques.html">Bloques</a></li>
+<li><a href="planeacion.html">Planeación</a></li>
+<li><a href="decisiones.html">Decisiones</a></li>
+<li><a href="bitacora.html">Bitácora</a></li>
+<li><a href="experimentos.html">Experimentos</a></li>
+<li><a href="implementacion.html">Implementación</a></li>
+<li><a href="tesis.html">Tesis</a></li>
+</ul>
+<h2>Qué explica esta documentación</h2>
+<ul><li>Para qué y por qué existe el sistema.</li>
+<li>Cuáles son sus módulos y cómo se relacionan.</li>
+<li>Cuáles son sus flujos operativos principales.</li>
+<li>Cómo interactúa con él el tesista.</li>
+<li>Cómo puede explorarlo y evaluarlo un lector público sin acceder a superficies privadas.</li>
+</ul>
+<h2>Ruta de lectura</h2>
+<ul><li>Si necesitas entender el sistema completo, empieza por <a href="sistema.html">Sistema</a>.</li>
+<li>Si necesitas reglas y límites, continúa con <a href="gobernanza.html">Gobernanza</a>.</li>
+<li>Si necesitas lenguaje, familias de IDs y convenciones, pasa por <a href="terminologia.html">Terminología</a>.</li>
+<li>Si necesitas estado del trabajo, revisa <a href="planeacion.html">Planeación</a>, <a href="hipotesis.html">Hipótesis</a> y <a href="bloques.html">Bloques</a>.</li>
+<li>Si necesitas evidencia de avance o cobertura, revisa <a href="decisiones.html">Decisiones</a>, <a href="bitacora.html">Bitácora</a>, <a href="implementacion.html">Implementación</a>, <a href="experimentos.html">Experimentos</a> y <a href="tesis.html">Tesis</a>.</li>
+</ul>
+<h2>Mapa de navegación por intención</h2>
+<ul><li>Entender el sistema: <a href="sistema.html">Sistema</a> -&gt; <a href="gobernanza.html">Gobernanza</a> -&gt; <a href="terminologia.html">Terminología</a>.</li>
+<li>Retomar ejecución: <a href="planeacion.html">Planeación</a> -&gt; <a href="bloques.html">Bloques</a> -&gt; <a href="hipotesis.html">Hipótesis</a>.</li>
+<li>Rastrear decisiones y sesiones: <a href="decisiones.html">Decisiones</a> -&gt; <a href="bitacora.html">Bitácora</a>.</li>
+<li>Revisar madurez técnica: <a href="experimentos.html">Experimentos</a> -&gt; <a href="implementacion.html">Implementación</a> -&gt; <a href="tesis.html">Tesis</a>.</li>
+</ul>
+<h2>Cómo rastrear un artefacto derivado hasta su origen canónico</h2>
+<ul><li>Empieza por la página derivada que estás leyendo.</li>
+<li>Revisa su bloque <code>Origen canónico y artefactos relacionados</code>.</li>
+<li>Sigue la lista de fuentes canónicas declaradas en esa misma página.</li>
+<li>Si necesitas validar la cadena de publicación, cruza con <code>06_dashboard/generado/wiki_manifest.json</code> y <code>06_dashboard/publico/manifest_publico.json</code>.</li>
+<li>Si necesitas trazabilidad operativa, consulta <code>00_sistema_tesis/bitacora/matriz_trazabilidad.md</code> y <code>00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md</code>.</li>
+</ul>
+<h2>Módulos del sistema</h2>
+<ul><li>Gobierno y soberanía humana.</li>
+<li>Trazabilidad y evidencia.</li>
+<li>Planeación y control del trabajo.</li>
+<li>Canon técnico y configuración.</li>
+<li>Automatización y validación.</li>
+<li>Publicación derivada y superficie pública.</li>
+<li>Tesis IoT como objeto gobernado.</li>
+</ul>
+<h2>Operación humana y frontera público/privado</h2>
+<ul><li>La superficie <strong>privada</strong> gobierna canon, backlog, decisiones, bitácora y auditoría completa.</li>
+<li>La superficie <strong>pública</strong> es un bundle público curado, derivado y reproducible para divulgación y evaluación externa.</li>
+<li>La <strong>IA es opcional</strong>: el sistema debe poder retomarse, auditarse y publicarse siguiendo rutas humanas explícitas.</li>
+</ul>
+<h2>Qué revisar siempre</h2>
+<ul><li><code>00_sistema_tesis/manual_operacion_humana.md</code></li>
+<li><code>00_sistema_tesis/config/sistema_tesis.yaml</code></li>
+<li><code>01_planeacion/backlog.csv</code></li>
+<li><code>01_planeacion/riesgos.csv</code></li>
+<li><code>00_sistema_tesis/bitacora/matriz_trazabilidad.md</code></li>
+<li><code>06_dashboard/generado/wiki_manifest.json</code></li>
+<li><code>06_dashboard/wiki/index.md</code></li>
+<li><code>06_dashboard/generado/index.html</code></li>
+<li><code>06_dashboard/publico/index.md</code></li>
+</ul>
+<h2>Criterios de verificabilidad</h2>
+<ul><li>Toda página debe declarar sus fuentes canónicas.</li>
+<li>Toda página debe exponer fecha de generación y estado de verificación.</li>
+<li>La wiki debe reflejar directorios vacíos como cobertura pendiente, sin inventar contenido.</li>
+<li>Toda salida debe poder regenerarse de forma determinista desde scripts versionados.</li>
+</ul></p></div>
+      <footer class="public-update"><p>Última actualización: <strong>2026-04-29</strong></p></footer>
   </main>
 </body>
 </html>

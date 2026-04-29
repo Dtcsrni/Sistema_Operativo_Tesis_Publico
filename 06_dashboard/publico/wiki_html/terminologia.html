@@ -3,510 +3,627 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Terminología</title>
+  <title>Terminología | Tesis OS Wiki</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700&family=Fira+Code&family=Material+Icons&display=swap" rel="stylesheet">
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+  </script>
   <style>
+    :root {
+      --primary: #0f766e;
+      --primary-light: #14b8a6;
+      --secondary: #1e293b;
+      --accent: #06b6d4;
+      --bg: #f8fafc;
+      --surface: rgba(255, 255, 255, 0.85);
+      --border: rgba(226, 232, 240, 0.8);
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      background: #f6f3eb;
-      color: #1e293b;
-      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(15, 118, 110, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.05) 0px, transparent 50%);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      display: flex;
+      min-height: 100vh;
     }
+
+    /* Sidebar Navigation */
+    nav {
+      width: 260px;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      border-right: 1px solid var(--border);
+      padding: 2rem 1rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 100;
+    }
+
+    .nav-header {
+      padding: 0 0.75rem 1.5rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      color: var(--text-muted);
+      border-radius: var(--radius);
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-link .material-icons {
+      font-size: 20px;
+    }
+
+    /* Main Content Area */
     main {
-      max-width: 980px;
+      flex: 1;
+      padding: 3rem 4rem;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 2rem 1.25rem 3rem;
     }
+
     header {
+      margin-bottom: 3rem;
+      animation: fadeInDown 0.6s ease-out;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3rem;
+      margin: 0 0 0.5rem;
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .stamp {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Markdown Rendering Styles */
+    .markdown-body {
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+
+    .markdown-body h2 {
+      font-family: 'Outfit', sans-serif;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+      color: var(--secondary);
+    }
+
+    .markdown-body p { margin-bottom: 1.25rem; }
+
+    .markdown-body code {
+      background: rgba(15, 118, 110, 0.08);
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9em;
+      color: var(--primary);
+    }
+
+    .markdown-body a {
+      color: var(--primary);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .markdown-body a:hover {
+      border-bottom-color: var(--primary);
+    }
+
+    .markdown-body ul {
+      padding-left: 1.5rem;
       margin-bottom: 1.5rem;
     }
-    h1 {
-      margin: 0 0 0.5rem;
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
+
+    .markdown-body li {
+      margin-bottom: 0.5rem;
     }
-    .stamp {
-      color: #475569;
-      font-family: "Segoe UI", Tahoma, sans-serif;
-      font-size: 0.9rem;
+
+    /* Admonitions */
+    .admonition {
+      margin: 1.5rem 0;
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      border-left: 4px solid #ccc;
+      background: white;
+      box-shadow: var(--shadow);
     }
-    pre {
-      white-space: pre-wrap;
-      background: #fff;
-      border: 1px solid #d6d3d1;
-      border-radius: 16px;
-      padding: 1rem;
-      overflow-wrap: anywhere;
-      line-height: 1.55;
+    .admonition.success { border-left-color: #10b981; background: #ecfdf5; }
+    .admonition.warning { border-left-color: #f59e0b; background: #fffbeb; }
+    .admonition.danger { border-left-color: #ef4444; background: #fef2f2; }
+    
+    .admonition-title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
     }
-    a {
-      color: #0f766e;
+
+    @media (max-width: 768px) {
+      body { flex-direction: column; }
+      nav {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 1rem;
+      }
+      .nav-header { display: none; }
+      main { padding: 2rem 1.5rem; }
+      h1 { font-size: 2.2rem; }
     }
   </style>
 </head>
 <body>
+  <nav>
+    <div class="nav-header">
+      <span class="material-icons">architecture</span>
+      Tesis OS
+    </div>
+    <a href="casos_uso.html" class="nav-link "><span class="material-icons">smart_toy</span><span>Agente y Casos de Uso</span></a>
+<a href="sistema.html" class="nav-link "><span class="material-icons">settings</span><span>Sistema</span></a>
+<a href="gobernanza.html" class="nav-link "><span class="material-icons">gavel</span><span>Gobernanza</span></a>
+<a href="terminologia.html" class="nav-link active"><span class="material-icons">book</span><span>Terminología</span></a>
+<a href="planeacion.html" class="nav-link "><span class="material-icons">event_note</span><span>Planeación</span></a>
+<a href="hipotesis.html" class="nav-link "><span class="material-icons">lightbulb</span><span>Hipótesis</span></a>
+<a href="bloques.html" class="nav-link "><span class="material-icons">grid_view</span><span>Bloques</span></a>
+<a href="decisiones.html" class="nav-link "><span class="material-icons">psychology</span><span>Decisiones</span></a>
+<a href="bitacora.html" class="nav-link "><span class="material-icons">history_edu</span><span>Bitácora</span></a>
+<a href="experimentos.html" class="nav-link "><span class="material-icons">science</span><span>Experimentos</span></a>
+<a href="implementacion.html" class="nav-link "><span class="material-icons">code</span><span>Implementación</span></a>
+<a href="tesis.html" class="nav-link "><span class="material-icons">school</span><span>Tesis</span></a>
+  </nav>
   <main>
     <header>
       <h1>Terminología</h1>
-      <p class="stamp">Artefacto derivado generado el 2026-04-14</p>
+      <div class="stamp">
+        <span class="material-icons" style="font-size: 16px;">update</span>
+        Generado el 2026-04-29
+      </div>
     </header>
-    <pre># Terminología
-
-Glosario, familias de IDs, referencias globales y convenciones de nomenclatura del sistema.
-
-- **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-14`
-- **Estado:** `OK`
-- **Fuentes:** `00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`, `00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`, `01_planeacion/backlog_guia.md`, `00_sistema_tesis/config/ia_gobernanza.yaml`
-- **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
-
-## Navegación de esta página
-
-- [Volver al índice](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/index.md).
-- Página anterior en la ruta base: [Gobernanza](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/gobernanza.md).
-- Página siguiente en la ruta base: [Planeación](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/planeacion.md).
-- Relacionada: [Sistema](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/sistema.md).
-- Relacionada: [Gobernanza](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/gobernanza.md).
-- Relacionada: [Planeación](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/planeacion.md).
-
-## Origen canónico y artefactos relacionados
-
-### Cómo rastrear esta página hasta su origen canónico
-
-1. Esta página derivada: [`06_dashboard/wiki/terminologia.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/terminologia.md).
+    <div class="markdown-body"><p><h1>Terminología</h1></p><p>Glosario, familias de IDs, referencias globales y convenciones de nomenclatura del sistema.
+<ul><li><strong>Tesista:</strong> <code>Erick Renato Vega Ceron</code></li>
+<li><strong>Fecha:</strong> <code>2026-04-29</code></li>
+<li><strong>Estado:</strong> <code>OK</code></li>
+<li><strong>Fuentes:</strong> <code>00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md</code>, <code>00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json</code>, <code>01_planeacion/backlog_guia.md</code>, <code>00_sistema_tesis/config/ia_gobernanza.yaml</code></li>
+<li><strong>Aviso:</strong> Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.</li>
+</ul>
+<h2>Navegación de esta página</h2>
+<ul><li><a href="index.html">Volver al índice</a>.</li>
+<li>Página anterior en la ruta base: <a href="gobernanza.html">Gobernanza</a>.</li>
+<li>Página siguiente en la ruta base: <a href="planeacion.html">Planeación</a>.</li>
+<li>Relacionada: <a href="sistema.html">Sistema</a>.</li>
+<li>Relacionada: <a href="gobernanza.html">Gobernanza</a>.</li>
+<li>Relacionada: <a href="planeacion.html">Planeación</a>.</li>
+</ul>
+<h2>Origen canónico y artefactos relacionados</h2></p><p><h3>Cómo rastrear esta página hasta su origen canónico</h3></p><p>1. Esta página derivada: <a href="terminologia.html"><code>06_dashboard/wiki/terminologia.md</code></a>.
 2. Revisa la lista de fuentes canónicas que alimentan su contenido.
 3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
 4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
-5. Si necesitas cambiar el contenido, edita la fuente canónica y reconstruye; no edites esta salida a mano.
-
-### Fuentes canónicas declaradas
-
-|Fuente canónica|Tipo|Existe|
+5. Si necesitas cambiar el contenido, edita la fuente canónica y reconstruye; no edites esta salida a mano.</p><p><h3>Fuentes canónicas declaradas</h3></p><p>|Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md)|archivo|sí|
-|[`00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json)|archivo|sí|
-|[`01_planeacion/backlog_guia.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/01_planeacion/backlog_guia.md)|archivo|sí|
-|[`00_sistema_tesis/config/ia_gobernanza.yaml`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/00_sistema_tesis/config/ia_gobernanza.yaml)|archivo|sí|
-
-### Artefactos derivados relacionados
-
-- Markdown interno: [`06_dashboard/wiki/terminologia.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/terminologia.md)
-- HTML interno: [`06_dashboard/generado/wiki/terminologia.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/generado/wiki/terminologia.html)
-- Markdown público sanitizado: [`06_dashboard/publico/wiki/terminologia.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/publico/wiki/terminologia.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/terminologia.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/publico/wiki_html/terminologia.html)
-
-## Lectura rápida
-
-- Esta página es la referencia central para términos, familias de IDs y convenciones de nombre.
-- La capa canónica no pública utiliza identificadores internos que no se exponen textualmente en esta superficie pública.
-- La capa pública explica la misma semántica usando formas seguras como `VAL_STEP_{nnn}` y `EVT_{nnnn}`.
-
-## Familias de IDs más usadas
-
-|Familia|Qué representa|Fuente principal|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md"><code>00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md</code></a>|archivo|sí|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json"><code>00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json</code></a>|archivo|sí|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/01_planeacion/backlog_guia.md"><code>01_planeacion/backlog_guia.md</code></a>|archivo|sí|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/ia_gobernanza.yaml"><code>00_sistema_tesis/config/ia_gobernanza.yaml</code></a>|archivo|sí|</p><p><h3>Artefactos derivados relacionados</h3>
+<ul><li>Markdown interno: <a href="terminologia.html"><code>06_dashboard/wiki/terminologia.md</code></a></li>
+<li>HTML interno: <a href="terminologia.html"><code>06_dashboard/generado/wiki/terminologia.html</code></a></li>
+<li>Markdown público sanitizado: <a href="../wiki/terminologia.md"><code>06_dashboard/publico/wiki/terminologia.md</code></a></li>
+<li>HTML público sanitizado: <a href="terminologia.html"><code>06_dashboard/publico/wiki_html/terminologia.html</code></a></li>
+</ul>
+<h2>Lectura rápida</h2>
+<ul><li>Esta página es la referencia central para términos, familias de IDs y convenciones de nombre.</li>
+<li>La capa canónica no pública puede mostrar ejemplos concretos como <code>validación humana interna no pública</code> o <code>evento interno no público</code>.</li>
+<li>La capa pública explica la misma semántica usando formas seguras como <code>VAL_STEP_{nnn}</code> y <code>EVT_{nnnn}</code>.</li>
+</ul>
+<h2>Familias de IDs más usadas</h2></p><p>|Familia|Qué representa|Fuente principal|
 |---|---|---|
-|`VAL_STEP_{nnn}`|Validación humana o instrucción crítica trazada|`events.jsonl` + ledger/matriz|
-|`EVT_{nnnn}`|Evento canónico general|`events.jsonl`|
-|`DEC-{nnnn}`|Decisión formal|`00_sistema_tesis/decisiones/`|
-|`T-{nnn}`|Tarea del backlog|`backlog.csv`|
-|`R-{nnn}`|Riesgo|`riesgos.csv`|
-|`ENT-{nnn}`|Entregable|`entregables.csv`|
-|`B{n}`|Bloque macro|`bloques.yaml`|
-|`F{n}`|Fase del roadmap|`roadmap.csv`|
-
-## Convención de nombres de evidencia ingerida
-
-- Objetivo: Nombres autodescriptivos, legibles por humanos, estables para versionado e ingestión, evitando siglas opacas salvo que sean ampliamente reconocidas en el proyecto.
-- Patrón base: `{ambito}__{descripcion_del_contenido}__{forma_o_proposito}__{version}.{extension}`
-
-### Reglas activas
-
-- Usar minúsculas.
-- Usar palabras completas en español cuando sea posible.
-- Separar bloques semánticos con doble guion bajo (__).
-- Evitar siglas no explicadas; permitir solo IoT, APA, Overleaf y SQLite cuando el contexto ya sea inequívoco.
-- Conservar la versión al final antes de la extensión.
-- Preferir nombres orientados a función: archivo_de_contexto, registro_estructurado, catalogo_general_de_artefactos.
-
-## Glosario canónico
-
-## Glosario, terminologia y convenciones del sistema
-
-### Proposito
-
-Este glosario define el lenguaje oficial del Sistema Operativo de la Tesis.
-
-Su objetivo es evitar ambiguedades entre:
-
-- trazabilidad y evidencia;
-- evento canonico y artefacto derivado;
-- planeacion y ejecucion;
-- nomenclatura documental e ingestión de evidencia;
-- lectura privada y lectura publica.
-
-### Regla de lectura
-
-Cada entrada de este glosario indica:
-
-- que significa el termino;
-- como se usa;
-- donde vive su fuente de verdad o modulo asociado;
-- que no significa o con que no debe confundirse;
-- un ejemplo concreto.
-
-### Familias de identificadores
-
-#### `VAL_STEP_{nnn}`
-
-- **Definicion:** identificador visible de una validacion humana o instruccion humana critica registrada en el canon.
-- **Uso operativo:** vincular decisiones, implementaciones o cambios sustantivos a consentimiento humano verificable.
-- **Fuente de verdad / modulo:** `00_sistema_tesis/canon/events.jsonl` como evento de tipo `human_validation`; proyecciones en ledger y matriz.
-- **Que no significa:** no es una tarea, no es un commit, no es una evidencia por si mismo y no equivale a “verdad cientifica demostrada”.
-- **Ejemplo:** validación humana interna no pública identifica la validacion humana que autorizo cerrar pendientes secundarios de la reestructura documental.
-
-##### Validación humana interna no pública
-
-- `VAL`: familia de validacion.
-- `STEP`: paso humano trazable dentro de la cadena de soberania.
-- `530`: secuencia visible del registro.
-- **Funcion en el sistema:** dejar rastro canonico de una autorizacion, instruccion o validacion humana.
-- **Relacion con evidencia:** a partir del umbral activo, debe enlazarse a `source_event_id`.
-- **Fuente de verdad de confirmacion:** `human_validation.confirmation_text` dentro del evento canonico.
-
-#### `EVT_{nnnn}`
-
-- **Definicion:** identificador de evento canonico general.
-- **Uso operativo:** registrar eventos que no son `VAL-STEP`, por ejemplo evidencia fuente de conversacion, actividad de agente o firmas de artefacto.
-- **Fuente de verdad / modulo:** `00_sistema_tesis/canon/events.jsonl`.
-- **Que no significa:** no implica validacion humana por si mismo.
-- **Ejemplo:** evento interno no público registra una fuente de conversacion corroborable.
-
-#### `DEC-{nnnn}`
-
-- **Definicion:** identificador de una decision formal del sistema o de la tesis.
-- **Uso operativo:** fijar arquitectura, metodo, politicas o reglas relevantes.
-- **Fuente de verdad / modulo:** `00_sistema_tesis/decisiones/`.
-- **Que no significa:** no es una conversacion ni una tarea.
-- **Ejemplo:** `DEC-0018` formaliza la evidencia fuente de conversacion para confirmacion verbal.
-
-#### `T-{nnn}`
-
-- **Definicion:** identificador de una tarea del backlog.
-- **Uso operativo:** planear trabajo concreto con prioridad, dependencia e hipotesis vinculadas.
-- **Fuente de verdad / modulo:** `01_planeacion/backlog.csv`.
-- **Que no significa:** no equivale a entregable ni a bloque.
-- **Ejemplo:** `T-011` formaliza componentes, flujos y modos de degradacion de la arquitectura propuesta.
-
-#### `R-{nnn}`
-
-- **Definicion:** identificador de un riesgo.
-- **Uso operativo:** seguir amenazas al proyecto y su mitigacion.
-- **Fuente de verdad / modulo:** `01_planeacion/riesgos.csv`.
-- **Que no significa:** no es un fallo ocurrido; es una condicion de riesgo registrada.
-- **Ejemplo:** `R-004` alude a la sobrecarga operativa por exceso de documentacion.
-
-#### `ENT-{nnn}`
-
-- **Definicion:** identificador de un entregable.
-- **Uso operativo:** representar una salida mayor del sistema o de la tesis.
-- **Fuente de verdad / modulo:** `01_planeacion/entregables.csv`.
-- **Que no significa:** no describe el trabajo fino necesario para llegar a esa salida.
-- **Ejemplo:** `ENT-003` corresponde a la definicion del caso de estudio y supuestos de intermitencia.
-
-#### `B{n}`
-
-- **Definicion:** identificador de bloque macro.
-- **Uso operativo:** ordenar el proyecto por etapas mayores dependientes.
-- **Fuente de verdad / modulo:** `00_sistema_tesis/config/bloques.yaml`.
-- **Que no significa:** no es una tarea individual.
-- **Ejemplo:** `B2` corresponde a diseño de arquitectura y formulacion de hipotesis.
-
-#### `F{n}`
-
-- **Definicion:** identificador de fase o tramo del roadmap.
-- **Uso operativo:** resumir periodos temporales del avance global.
-- **Fuente de verdad / modulo:** `01_planeacion/roadmap.csv`.
-- **Que no significa:** no sustituye bloques ni tareas.
-- **Ejemplo:** `F3` corresponde a prototipo e instrumentacion experimental.
-
-### Referencias globales y etiquetas
-
-#### `LID`
-
-- **Definicion:** referencia global al ledger o libro mayor de conversaciones/validaciones.
-- **Uso operativo:** enlazar integridad de trazabilidad documental.
-- **Fuente de verdad / modulo:** referencias globales en decisiones y bitacoras.
-- **Que no significa:** no es un ID unico de evento.
-- **Ejemplo:** `[LID]` apunta al ledger del sistema.
-
-#### `GOV`
-
-- **Definicion:** referencia global a la politica de gobernanza de IA y reglas del sistema.
-- **Uso operativo:** enlazar pre-checks eticos y de gobernanza.
-- **Fuente de verdad / modulo:** `ia_gobernanza.yaml`.
-- **Que no significa:** no es una decision individual.
-- **Ejemplo:** `[GOV]` respalda el chequeo etico en plantillas.
-
-#### `AUD`
-
-- **Definicion:** referencia global al flujo de auditoria integral.
-- **Uso operativo:** enlazar verificabilidad del sistema antes de cierre o entrega.
-- **Fuente de verdad / modulo:** `build_all.py`.
-- **Que no significa:** no es una evidencia por si sola; es la ruta de verificacion.
-- **Ejemplo:** `[AUD]` se usa en pre-checks documentales.
-
-#### `source_event_id`
-
-- **Definicion:** campo que enlaza una validacion humana con un evento de evidencia fuente de conversacion.
-- **Uso operativo:** corroborar que un `VAL-STEP` se apoya en transcripcion y metadatos de sesion.
-- **Fuente de verdad / modulo:** evento `human_validation` y evento `conversation_source_registered`.
-- **Que no significa:** no reemplaza el texto de confirmacion verbal; solo lo enlaza a su evidencia.
-- **Ejemplo:** `source_event_id = evento interno no público`.
-
-#### `human_validation.confirmation_text`
-
-- **Definicion:** campo canonico que conserva el texto exacto de la confirmacion o instruccion humana.
-- **Uso operativo:** servir como fuente de verdad de confirmacion verbal.
-- **Fuente de verdad / modulo:** evento `human_validation` en el canon.
-- **Que no significa:** no es una interpretacion del agente; debe reflejar el texto humano exacto.
-- **Ejemplo:** `&quot;si, hazlo&quot;`.
-
-### Conceptos operativos del sistema
-
-#### Canon
-
-- **Definicion:** base de verdad estructurada del sistema.
-- **Uso operativo:** almacenar eventos, estado y relaciones primarias.
-- **Fuente de verdad / modulo:** `00_sistema_tesis/canon/`.
-- **Que no significa:** no es la wiki, ni el dashboard, ni el bundle publico.
-- **Ejemplo:** `events.jsonl` pertenece al canon.
-
+|<code>VAL_STEP_{nnn}</code>|Validación humana o instrucción crítica trazada|<code>events.jsonl</code> + ledger/matriz|
+|<code>EVT_{nnnn}</code>|Evento canónico general|<code>events.jsonl</code>|
+|<code>DEC-{nnnn}</code>|Decisión formal|<code>00_sistema_tesis/decisiones/</code>|
+|<code>T-{nnn}</code>|Tarea del backlog|<code>backlog.csv</code>|
+|<code>R-{nnn}</code>|Riesgo|<code>riesgos.csv</code>|
+|<code>ENT-{nnn}</code>|Entregable|<code>entregables.csv</code>|
+|<code>B{n}</code>|Bloque macro|<code>bloques.yaml</code>|
+|<code>F{n}</code>|Fase del roadmap|<code>roadmap.csv</code>|</p><p><h2>Convención de nombres de evidencia ingerida</h2>
+<ul><li>Objetivo: Nombres autodescriptivos, legibles por humanos, estables para versionado e ingestión, evitando siglas opacas salvo que sean ampliamente reconocidas en el proyecto.</li>
+<li>Patrón base: <code>{ambito}__{descripcion_del_contenido}__{forma_o_proposito}__{version}.{extension}</code></li>
+</ul>
+<h3>Reglas activas</h3>
+<ul><li>Usar minúsculas.</li>
+<li>Usar palabras completas en español cuando sea posible.</li>
+<li>Separar bloques semánticos con doble guion bajo (__).</li>
+<li>Evitar siglas no explicadas; permitir solo IoT, APA, Overleaf y SQLite cuando el contexto ya sea inequívoco.</li>
+<li>Conservar la versión al final antes de la extensión.</li>
+<li>Preferir nombres orientados a función: archivo_de_contexto, registro_estructurado, catalogo_general_de_artefactos.</li>
+</ul>
+<h2>Glosario canónico</h2></p><p><h2>Glosario, terminologia y convenciones del sistema</h2></p><p><h3>Proposito</h3></p><p>Este glosario define el lenguaje oficial del Sistema Operativo de la Tesis.</p><p>Su objetivo es evitar ambiguedades entre:
+<ul><li>trazabilidad y evidencia;</li>
+<li>evento canonico y artefacto derivado;</li>
+<li>planeacion y ejecucion;</li>
+<li>nomenclatura documental e ingestión de evidencia;</li>
+<li>lectura privada y lectura publica.</li>
+</ul>
+<h3>Regla de lectura</h3></p><p>Cada entrada de este glosario indica:
+<ul><li>que significa el termino;</li>
+<li>como se usa;</li>
+<li>donde vive su fuente de verdad o modulo asociado;</li>
+<li>que no significa o con que no debe confundirse;</li>
+<li>un ejemplo concreto.</li>
+</ul>
+<h3>Familias de identificadores</h3></p><p><div class="mermaid-container"><pre class="mermaid">graph TD
+    subgraph &quot;Nivel Estratégico&quot;
+        F[F: Fase / Roadmap]
+        B[B: Bloque Macro]
+    end</p><p>    subgraph &quot;Nivel Táctico&quot;
+        ENT[ENT: Entregable]
+        R[R: Riesgo]
+        T[T: Tarea]
+    end</p><p>    subgraph &quot;Nivel Operativo (Canon)&quot;
+        VAL[VAL-STEP: Validación Humana]
+        DEC[DEC: Decisión]
+        EVT[EVT: Evento / Evidencia]
+    end</p><p>    F --&gt; B
+    B --&gt; ENT
+    ENT --&gt; T
+    T -.-&gt; VAL
+    VAL --&gt; DEC
+    DEC --&gt; EVT</pre></div></p><p>#### <code>VAL_STEP_{nnn}</code>
+<ul><li><strong>Definicion:</strong> identificador visible de una validacion humana o instruccion humana critica registrada en el canon.</li>
+<li><strong>Uso operativo:</strong> vincular decisiones, implementaciones o cambios sustantivos a consentimiento humano verificable.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>00_sistema_tesis/canon/events.jsonl</code> como evento de tipo <code>human_validation</code>; proyecciones en ledger y matriz.</li>
+<li><strong>Que no significa:</strong> no es una tarea, no es un commit, no es una evidencia por si mismo y no equivale a “verdad cientifica demostrada”.</li>
+<li><strong>Ejemplo:</strong> <code>validación humana interna no pública</code> identifica la validacion humana que autorizo cerrar pendientes secundarios de la reestructura documental.</li>
+</ul>
+##### Desglose de <code>validación humana interna no pública</code>
+<ul><li><code>VAL</code>: familia de validacion.</li>
+<li><code>STEP</code>: paso humano trazable dentro de la cadena de soberania.</li>
+<li><code>530</code>: secuencia visible del registro.</li>
+<li><strong>Funcion en el sistema:</strong> dejar rastro canonico de una autorizacion, instruccion o validacion humana.</li>
+<li><strong>Relacion con evidencia:</strong> a partir del umbral activo, debe enlazarse a <code>source_event_id</code>.</li>
+<li><strong>Fuente de verdad de confirmacion:</strong> <code>human_validation.confirmation_text</code> dentro del evento canonico.</li>
+</ul>
+#### <code>EVT_{nnnn}</code>
+<ul><li><strong>Definicion:</strong> identificador de evento canonico general.</li>
+<li><strong>Uso operativo:</strong> registrar eventos que no son <code>VAL-STEP</code>, por ejemplo evidencia fuente de conversacion, actividad de agente o firmas de artefacto.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>00_sistema_tesis/canon/events.jsonl</code>.</li>
+<li><strong>Que no significa:</strong> no implica validacion humana por si mismo.</li>
+<li><strong>Ejemplo:</strong> <code>evento interno no público</code> registra una fuente de conversacion corroborable.</li>
+</ul>
+#### <code>DEC-{nnnn}</code>
+<ul><li><strong>Definicion:</strong> identificador de una decision formal del sistema o de la tesis.</li>
+<li><strong>Uso operativo:</strong> fijar arquitectura, metodo, politicas o reglas relevantes.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>00_sistema_tesis/decisiones/</code>.</li>
+<li><strong>Que no significa:</strong> no es una conversacion ni una tarea.</li>
+<li><strong>Ejemplo:</strong> <code>DEC-0018</code> formaliza la evidencia fuente de conversacion para confirmacion verbal.</li>
+</ul>
+#### <code>T-{nnn}</code>
+<ul><li><strong>Definicion:</strong> identificador de una tarea del backlog.</li>
+<li><strong>Uso operativo:</strong> planear trabajo concreto con prioridad, dependencia e hipotesis vinculadas.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>01_planeacion/backlog.csv</code>.</li>
+<li><strong>Que no significa:</strong> no equivale a entregable ni a bloque.</li>
+<li><strong>Ejemplo:</strong> <code>T-011</code> formaliza componentes, flujos y modos de degradacion de la arquitectura propuesta.</li>
+</ul>
+#### <code>R-{nnn}</code>
+<ul><li><strong>Definicion:</strong> identificador de un riesgo.</li>
+<li><strong>Uso operativo:</strong> seguir amenazas al proyecto y su mitigacion.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>01_planeacion/riesgos.csv</code>.</li>
+<li><strong>Que no significa:</strong> no es un fallo ocurrido; es una condicion de riesgo registrada.</li>
+<li><strong>Ejemplo:</strong> <code>R-004</code> alude a la sobrecarga operativa por exceso de documentacion.</li>
+</ul>
+#### <code>ENT-{nnn}</code>
+<ul><li><strong>Definicion:</strong> identificador de un entregable.</li>
+<li><strong>Uso operativo:</strong> representar una salida mayor del sistema o de la tesis.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>01_planeacion/entregables.csv</code>.</li>
+<li><strong>Que no significa:</strong> no describe el trabajo fino necesario para llegar a esa salida.</li>
+<li><strong>Ejemplo:</strong> <code>ENT-003</code> corresponde a la definicion del caso de estudio y supuestos de intermitencia.</li>
+</ul>
+#### <code>B{n}</code>
+<ul><li><strong>Definicion:</strong> identificador de bloque macro.</li>
+<li><strong>Uso operativo:</strong> ordenar el proyecto por etapas mayores dependientes.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>00_sistema_tesis/config/bloques.yaml</code>.</li>
+<li><strong>Que no significa:</strong> no es una tarea individual.</li>
+<li><strong>Ejemplo:</strong> <code>B2</code> corresponde a diseño de arquitectura y formulacion de hipotesis.</li>
+</ul>
+#### <code>F{n}</code>
+<ul><li><strong>Definicion:</strong> identificador de fase o tramo del roadmap.</li>
+<li><strong>Uso operativo:</strong> resumir periodos temporales del avance global.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>01_planeacion/roadmap.csv</code>.</li>
+<li><strong>Que no significa:</strong> no sustituye bloques ni tareas.</li>
+<li><strong>Ejemplo:</strong> <code>F3</code> corresponde a prototipo e instrumentacion experimental.</li>
+</ul>
+<h3>Referencias globales y etiquetas</h3></p><p>#### <code>LID</code>
+<ul><li><strong>Definicion:</strong> referencia global al ledger o libro mayor de conversaciones/validaciones.</li>
+<li><strong>Uso operativo:</strong> enlazar integridad de trazabilidad documental.</li>
+<li><strong>Fuente de verdad / modulo:</strong> referencias globales en decisiones y bitacoras.</li>
+<li><strong>Que no significa:</strong> no es un ID unico de evento.</li>
+<li><strong>Ejemplo:</strong> <code>[LID]</code> apunta al ledger del sistema.</li>
+</ul>
+#### <code>GOV</code>
+<ul><li><strong>Definicion:</strong> referencia global a la politica de gobernanza de IA y reglas del sistema.</li>
+<li><strong>Uso operativo:</strong> enlazar pre-checks eticos y de gobernanza.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>ia_gobernanza.yaml</code>.</li>
+<li><strong>Que no significa:</strong> no es una decision individual.</li>
+<li><strong>Ejemplo:</strong> <code>[GOV]</code> respalda el chequeo etico en plantillas.</li>
+</ul>
+#### <code>AUD</code>
+<ul><li><strong>Definicion:</strong> referencia global al flujo de auditoria integral.</li>
+<li><strong>Uso operativo:</strong> enlazar verificabilidad del sistema antes de cierre o entrega.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>build_all.py</code>.</li>
+<li><strong>Que no significa:</strong> no es una evidencia por si sola; es la ruta de verificacion.</li>
+<li><strong>Ejemplo:</strong> <code>[AUD]</code> se usa en pre-checks documentales.</li>
+</ul>
+#### <code>source_event_id</code>
+<ul><li><strong>Definicion:</strong> campo que enlaza una validacion humana con un evento de evidencia fuente de conversacion.</li>
+<li><strong>Uso operativo:</strong> corroborar que un <code>VAL-STEP</code> se apoya en transcripcion y metadatos de sesion.</li>
+<li><strong>Fuente de verdad / modulo:</strong> evento <code>human_validation</code> y evento <code>conversation_source_registered</code>.</li>
+<li><strong>Que no significa:</strong> no reemplaza el texto de confirmacion verbal; solo lo enlaza a su evidencia.</li>
+<li><strong>Ejemplo:</strong> <code>source_event_id = evento interno no público</code>.</li>
+</ul>
+#### <code>human_validation.confirmation_text</code>
+<ul><li><strong>Definicion:</strong> campo canonico que conserva el texto exacto de la confirmacion o instruccion humana.</li>
+<li><strong>Uso operativo:</strong> servir como fuente de verdad de confirmacion verbal.</li>
+<li><strong>Fuente de verdad / modulo:</strong> evento <code>human_validation</code> en el canon.</li>
+<li><strong>Que no significa:</strong> no es una interpretacion del agente; debe reflejar el texto humano exacto.</li>
+<li><strong>Ejemplo:</strong> <code>&quot;si, hazlo&quot;</code>.</li>
+</ul>
+<h3>Conceptos operativos del sistema</h3></p><p>#### Canon
+<ul><li><strong>Definicion:</strong> base de verdad estructurada del sistema.</li>
+<li><strong>Uso operativo:</strong> almacenar eventos, estado y relaciones primarias.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>00_sistema_tesis/canon/</code>.</li>
+<li><strong>Que no significa:</strong> no es la wiki, ni el dashboard, ni el bundle publico.</li>
+<li><strong>Ejemplo:</strong> <code>events.jsonl</code> pertenece al canon.</li>
+</ul>
 #### Proyeccion derivada
-
-- **Definicion:** salida reconstruida desde el canon o desde fuentes canonicas.
-- **Uso operativo:** ofrecer vistas legibles sin editar manualmente la salida.
-- **Fuente de verdad / modulo:** scripts de materializacion y generacion.
-- **Que no significa:** no puede convertirse en fuente primaria.
-- **Ejemplo:** `log_sesiones_trabajo_registradas.md` y `matriz_trazabilidad.md` son proyecciones del canon.
-
+<ul><li><strong>Definicion:</strong> salida reconstruida desde el canon o desde fuentes canonicas.</li>
+<li><strong>Uso operativo:</strong> ofrecer vistas legibles sin editar manualmente la salida.</li>
+<li><strong>Fuente de verdad / modulo:</strong> scripts de materializacion y generacion.</li>
+<li><strong>Que no significa:</strong> no puede convertirse en fuente primaria.</li>
+<li><strong>Ejemplo:</strong> <code>log_sesiones_trabajo_registradas.md</code> y <code>matriz_trazabilidad.md</code> son proyecciones del canon.</li>
+</ul>
 #### Artefacto derivado
-
-- **Definicion:** archivo generado desde fuentes canonicas.
-- **Uso operativo:** presentar informacion en forma legible, navegable o publicable.
-- **Fuente de verdad / modulo:** `07_scripts/`.
-- **Que no significa:** no debe editarse a mano.
-- **Ejemplo:** `README.md`, `06_dashboard/wiki/`, `06_dashboard/publico/`.
-
-#### Superficie privada
-
-- **Definicion:** capa canonica completa del sistema.
-- **Uso operativo:** operar, registrar, auditar y conservar evidencia integra.
-- **Fuente de verdad / modulo:** repositorio canónico del proyecto.
-- **Que no significa:** no es publicable sin sanitizacion.
-- **Ejemplo:** canon, ledger, evidencia privada y bitacora interna.
-
+<ul><li><strong>Definicion:</strong> archivo generado desde fuentes canonicas.</li>
+<li><strong>Uso operativo:</strong> presentar informacion en forma legible, navegable o publicable.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>07_scripts/</code>.</li>
+<li><strong>Que no significa:</strong> no debe editarse a mano.</li>
+<li><strong>Ejemplo:</strong> <code>README.md</code>, <code>06_dashboard/wiki/</code>, <code>06_dashboard/publico/</code>.</li>
+</ul>
+#### superficie canónica no pública
+<ul><li><strong>Definicion:</strong> capa canonica completa del sistema.</li>
+<li><strong>Uso operativo:</strong> operar, registrar, auditar y conservar evidencia integra.</li>
+<li><strong>Fuente de verdad / modulo:</strong> repositorio canónico del proyecto.</li>
+<li><strong>Que no significa:</strong> no es publicable sin sanitizacion.</li>
+<li><strong>Ejemplo:</strong> canon, ledger, evidencia privada y bitacora interna.</li>
+</ul>
 #### Superficie publica
-
-- **Definicion:** capa derivada, filtrada y sanitizada para lectura externa.
-- **Uso operativo:** exploracion y evaluacion tecnica.
-- **Fuente de verdad / modulo:** `06_dashboard/publico/`.
-- **Que no significa:** no es el canon.
-- **Ejemplo:** wiki publica y `README_publico.md`.
-
+<ul><li><strong>Definicion:</strong> capa derivada, filtrada y sanitizada para lectura externa.</li>
+<li><strong>Uso operativo:</strong> exploracion y evaluacion tecnica.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>06_dashboard/publico/</code>.</li>
+<li><strong>Que no significa:</strong> no es el canon.</li>
+<li><strong>Ejemplo:</strong> wiki publica y <code>README_publico.md</code>.</li>
+</ul>
 #### Enforcement
-
-- **Definicion:** condicion o regla que el sistema obliga a cumplir.
-- **Uso operativo:** endurecer trazabilidad, sanitizacion o verificaciones.
-- **Fuente de verdad / modulo:** politicas y validadores.
-- **Que no significa:** no es una recomendacion opcional.
-- **Ejemplo:** exigir `source_event_id` para nuevos `VAL-STEP` desde un umbral.
-
+<ul><li><strong>Definicion:</strong> condicion o regla que el sistema obliga a cumplir.</li>
+<li><strong>Uso operativo:</strong> endurecer trazabilidad, sanitizacion o verificaciones.</li>
+<li><strong>Fuente de verdad / modulo:</strong> politicas y validadores.</li>
+<li><strong>Que no significa:</strong> no es una recomendacion opcional.</li>
+<li><strong>Ejemplo:</strong> exigir <code>source_event_id</code> para nuevos <code>VAL-STEP</code> desde un umbral.</li>
+</ul>
 #### Evidencia fuente de conversacion
-
-- **Definicion:** registro corroborable de una conversacion humana que sostiene un `VAL-STEP`.
-- **Uso operativo:** dar evidencia fuerte a confirmaciones verbales.
-- **Fuente de verdad / modulo:** eventos `conversation_source_registered` y directorio privado de conversaciones.
-- **Que no significa:** no es el `VAL-STEP` mismo.
-- **Ejemplo:** transcripcion asociada a evento interno no público.
-
+<ul><li><strong>Definicion:</strong> registro corroborable de una conversacion humana que sostiene un <code>VAL-STEP</code>.</li>
+<li><strong>Uso operativo:</strong> dar evidencia fuerte a confirmaciones verbales.</li>
+<li><strong>Fuente de verdad / modulo:</strong> eventos <code>conversation_source_registered</code> y directorio privado de conversaciones.</li>
+<li><strong>Que no significa:</strong> no es el <code>VAL-STEP</code> mismo.</li>
+<li><strong>Ejemplo:</strong> transcripcion asociada a <code>evento interno no público</code>.</li>
+</ul>
 #### Sign-off
-
-- **Definicion:** firma o supervision humana sobre un artefacto concreto.
-- **Uso operativo:** registrar que un humano reviso y firmo un archivo.
-- **Fuente de verdad / modulo:** `sign_offs.json`.
-- **Que no significa:** no equivale a cada `VAL-STEP`.
-- **Ejemplo:** firma humana de `07_scripts/README.md`.
-
+<ul><li><strong>Definicion:</strong> firma o supervision humana sobre un artefacto concreto.</li>
+<li><strong>Uso operativo:</strong> registrar que un humano reviso y firmo un archivo.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>sign_offs.json</code>.</li>
+<li><strong>Que no significa:</strong> no equivale a cada <code>VAL-STEP</code>.</li>
+<li><strong>Ejemplo:</strong> firma humana de <code>07_scripts/README.md</code>.</li>
+</ul>
 #### Drift
-
-- **Definicion:** diferencia entre una fuente canonica y su salida esperada materializada.
-- **Uso operativo:** detectar que un artefacto derivado necesita regenerarse.
-- **Fuente de verdad / modulo:** `doctor`, `publish --check`, validadores.
-- **Que no significa:** no es necesariamente un error conceptual; puede ser salida pendiente de materializar.
-- **Ejemplo:** `bundle público con drift`.
-
-### Terminologia de planeacion
-
-#### Bloque
-
-- **Definicion:** unidad macro de avance del proyecto.
-- **Uso operativo:** gobernar dependencias mayores.
-- **Fuente de verdad / modulo:** `bloques.yaml`.
-- **Que no significa:** no es tarea fina.
-- **Ejemplo:** `B0`, `B2`.
-
+<ul><li><strong>Definicion:</strong> diferencia entre una fuente canonica y su salida esperada materializada.</li>
+<li><strong>Uso operativo:</strong> detectar que un artefacto derivado necesita regenerarse.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>doctor</code>, <code>publish --check</code>, validadores.</li>
+<li><strong>Que no significa:</strong> no es necesariamente un error conceptual; puede ser salida pendiente de materializar.</li>
+<li><strong>Ejemplo:</strong> <code>bundle público con drift</code>.</li>
+</ul>
+<h3>Terminologia de planeacion</h3></p><p>#### Bloque
+<ul><li><strong>Definicion:</strong> unidad macro de avance del proyecto.</li>
+<li><strong>Uso operativo:</strong> gobernar dependencias mayores.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>bloques.yaml</code>.</li>
+<li><strong>Que no significa:</strong> no es tarea fina.</li>
+<li><strong>Ejemplo:</strong> <code>B0</code>, <code>B2</code>.</li>
+</ul>
 #### Tarea
-
-- **Definicion:** unidad concreta de trabajo del backlog.
-- **Uso operativo:** organizar ejecucion.
-- **Fuente de verdad / modulo:** `backlog.csv`.
-- **Que no significa:** no es entregable final.
-- **Ejemplo:** `T-011`.
-
+<ul><li><strong>Definicion:</strong> unidad concreta de trabajo del backlog.</li>
+<li><strong>Uso operativo:</strong> organizar ejecucion.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>backlog.csv</code>.</li>
+<li><strong>Que no significa:</strong> no es entregable final.</li>
+<li><strong>Ejemplo:</strong> <code>T-011</code>.</li>
+</ul>
 #### Entregable
-
-- **Definicion:** salida mayor trazable del proyecto.
-- **Uso operativo:** conectar trabajo con resultados esperados.
-- **Fuente de verdad / modulo:** `entregables.csv`.
-- **Que no significa:** no explica por si solo todas las tareas necesarias.
-- **Ejemplo:** `ENT-004`.
-
+<ul><li><strong>Definicion:</strong> salida mayor trazable del proyecto.</li>
+<li><strong>Uso operativo:</strong> conectar trabajo con resultados esperados.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>entregables.csv</code>.</li>
+<li><strong>Que no significa:</strong> no explica por si solo todas las tareas necesarias.</li>
+<li><strong>Ejemplo:</strong> <code>ENT-004</code>.</li>
+</ul>
 #### Fase
-
-- **Definicion:** tramo temporal del roadmap.
-- **Uso operativo:** leer calendario agregado.
-- **Fuente de verdad / modulo:** `roadmap.csv`.
-- **Que no significa:** no sustituye prioridades o dependencias tecnicas.
-- **Ejemplo:** `F3`.
-
-### Terminologia de ingestión y evidencia
-
-#### Paquete
-
-- **Definicion:** conjunto versionado de artefactos de contexto o evidencia ingresados al sistema.
-- **Uso operativo:** agrupar y versionar material recibido.
-- **Fuente de verdad / modulo:** registros de ingestion y metadatos del paquete.
-- **Que no significa:** no implica que todo el contenido ya sea evidencia cientifica central.
-- **Ejemplo:** paquete de contexto canonico IoT `v09` o `v10`.
-
+<ul><li><strong>Definicion:</strong> tramo temporal del roadmap.</li>
+<li><strong>Uso operativo:</strong> leer calendario agregado.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>roadmap.csv</code>.</li>
+<li><strong>Que no significa:</strong> no sustituye prioridades o dependencias tecnicas.</li>
+<li><strong>Ejemplo:</strong> <code>F3</code>.</li>
+</ul>
+<h3>Terminologia de ingestión y evidencia</h3></p><p>#### Paquete
+<ul><li><strong>Definicion:</strong> conjunto versionado de artefactos de contexto o evidencia ingresados al sistema.</li>
+<li><strong>Uso operativo:</strong> agrupar y versionar material recibido.</li>
+<li><strong>Fuente de verdad / modulo:</strong> registros de ingestion y metadatos del paquete.</li>
+<li><strong>Que no significa:</strong> no implica que todo el contenido ya sea evidencia cientifica central.</li>
+<li><strong>Ejemplo:</strong> paquete de contexto canonico IoT <code>v09</code> o <code>v10</code>.</li>
+</ul>
 #### Staging
-
-- **Definicion:** area temporal aislada para revisar y verificar un paquete antes de integrarlo.
-- **Uso operativo:** comprobar integridad, clasificacion y destino.
-- **Fuente de verdad / modulo:** `evidencia_privada/staging_ingestion/`.
-- **Que no significa:** no es la ubicacion canonica final.
-- **Ejemplo:** staging previo a registrar el indice maestro.
-
+<ul><li><strong>Definicion:</strong> area temporal aislada para revisar y verificar un paquete antes de integrarlo.</li>
+<li><strong>Uso operativo:</strong> comprobar integridad, clasificacion y destino.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>evidencia_privada/staging_ingestion/</code>.</li>
+<li><strong>Que no significa:</strong> no es la ubicacion canonica final.</li>
+<li><strong>Ejemplo:</strong> staging previo a registrar el indice maestro.</li>
+</ul>
 #### Indice maestro
-
-- **Definicion:** registro consolidado que enlaza nombre original, ubicacion staging, destino canonico, modulo y hash.
-- **Uso operativo:** trazar la entrada de evidencia al sistema.
-- **Fuente de verdad / modulo:** `05_registros_de_ingestion/indice_maestro_ingestion_contexto_iot.csv`.
-- **Que no significa:** no reemplaza el archivo original ni su lectura interpretativa.
-- **Ejemplo:** una fila que mapea `columna_vertebral_de_evidencia__v09.tsv`.
-
+<ul><li><strong>Definicion:</strong> registro consolidado que enlaza nombre original, ubicacion staging, destino canonico, modulo y hash.</li>
+<li><strong>Uso operativo:</strong> trazar la entrada de evidencia al sistema.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>05_registros_de_ingestion/indice_maestro_ingestion_contexto_iot.csv</code>.</li>
+<li><strong>Que no significa:</strong> no reemplaza el archivo original ni su lectura interpretativa.</li>
+<li><strong>Ejemplo:</strong> una fila que mapea <code>columna_vertebral_de_evidencia__v09.tsv</code>.</li>
+</ul>
 #### Evidencia
-
-- **Definicion:** artefacto con valor probatorio o de soporte para la tesis o para la operacion del sistema.
-- **Uso operativo:** sustentar decisiones, estado o trazabilidad.
-- **Fuente de verdad / modulo:** depende del contexto; puede vivir en evidencia canonica o registros privados.
-- **Que no significa:** no todo archivo es evidencia central de la tesis.
-- **Ejemplo:** `columna_vertebral_de_evidencia__v09.tsv`.
-
+<ul><li><strong>Definicion:</strong> artefacto con valor probatorio o de soporte para la tesis o para la operacion del sistema.</li>
+<li><strong>Uso operativo:</strong> sustentar decisiones, estado o trazabilidad.</li>
+<li><strong>Fuente de verdad / modulo:</strong> depende del contexto; puede vivir en evidencia canonica o registros privados.</li>
+<li><strong>Que no significa:</strong> no todo archivo es evidencia central de la tesis.</li>
+<li><strong>Ejemplo:</strong> <code>columna_vertebral_de_evidencia__v09.tsv</code>.</li>
+</ul>
 #### Soporte
-
-- **Definicion:** artefacto auxiliar que ayuda a interpretar, organizar o justificar evidencia principal.
-- **Uso operativo:** complementar contexto o clasificacion.
-- **Fuente de verdad / modulo:** metadatos y catalogos.
-- **Que no significa:** no necesariamente prueba central.
-- **Ejemplo:** convencion de nombres o catalogo general de artefactos.
-
+<ul><li><strong>Definicion:</strong> artefacto auxiliar que ayuda a interpretar, organizar o justificar evidencia principal.</li>
+<li><strong>Uso operativo:</strong> complementar contexto o clasificacion.</li>
+<li><strong>Fuente de verdad / modulo:</strong> metadatos y catalogos.</li>
+<li><strong>Que no significa:</strong> no necesariamente prueba central.</li>
+<li><strong>Ejemplo:</strong> convencion de nombres o catalogo general de artefactos.</li>
+</ul>
 #### Politica
-
-- **Definicion:** documento o artefacto que fija reglas de operacion, clasificacion o publicacion.
-- **Uso operativo:** gobernar decisiones repetibles.
-- **Fuente de verdad / modulo:** decisiones, configuraciones o archivos de politica.
-- **Que no significa:** no es evidencia experimental.
-- **Ejemplo:** politica de publicacion sanitizada.
-
+<ul><li><strong>Definicion:</strong> documento o artefacto que fija reglas de operacion, clasificacion o publicacion.</li>
+<li><strong>Uso operativo:</strong> gobernar decisiones repetibles.</li>
+<li><strong>Fuente de verdad / modulo:</strong> decisiones, configuraciones o archivos de politica.</li>
+<li><strong>Que no significa:</strong> no es evidencia experimental.</li>
+<li><strong>Ejemplo:</strong> politica de publicacion sanitizada.</li>
+</ul>
 #### Modulo
-
-- **Definicion:** agrupacion logica de artefactos o funciones dentro del sistema o dentro de la evidencia ingerida.
-- **Uso operativo:** clasificar por area semantica.
-- **Fuente de verdad / modulo:** narrativa del sistema, catalogos y contexto canonico.
-- **Que no significa:** no siempre coincide con directorio fisico.
-- **Ejemplo:** `tesis_nucleo`, `arquitectura_iot`, `formacion_contextual`.
-
+<ul><li><strong>Definicion:</strong> agrupacion logica de artefactos o funciones dentro del sistema o dentro de la evidencia ingerida.</li>
+<li><strong>Uso operativo:</strong> clasificar por area semantica.</li>
+<li><strong>Fuente de verdad / modulo:</strong> narrativa del sistema, catalogos y contexto canonico.</li>
+<li><strong>Que no significa:</strong> no siempre coincide con directorio fisico.</li>
+<li><strong>Ejemplo:</strong> <code>tesis_nucleo</code>, <code>arquitectura_iot</code>, <code>formacion_contextual</code>.</li>
+</ul>
 #### Rol
-
-- **Definicion:** funcion que un artefacto cumple dentro del conjunto de evidencia.
-- **Uso operativo:** distinguir si un artefacto es antecedente, borrador vigente, soporte de negocio o implementacion parcial.
-- **Fuente de verdad / modulo:** contexto canonico y catalogos de artefactos.
-- **Que no significa:** no es una garantia de calidad.
-- **Ejemplo:** `antecedente_directo`, `vigente_borrador`, `implementacion_parcial`.
-
+<ul><li><strong>Definicion:</strong> funcion que un artefacto cumple dentro del conjunto de evidencia.</li>
+<li><strong>Uso operativo:</strong> distinguir si un artefacto es antecedente, borrador vigente, soporte de negocio o implementacion parcial.</li>
+<li><strong>Fuente de verdad / modulo:</strong> contexto canonico y catalogos de artefactos.</li>
+<li><strong>Que no significa:</strong> no es una garantia de calidad.</li>
+<li><strong>Ejemplo:</strong> <code>antecedente_directo</code>, <code>vigente_borrador</code>, <code>implementacion_parcial</code>.</li>
+</ul>
 #### Tier
-
-- **Definicion:** nivel relativo de prioridad o centralidad dentro del corpus ingerido.
-- **Uso operativo:** ayudar a ordenar peso y urgencia de tratamiento.
-- **Fuente de verdad / modulo:** contexto canonico y catalogos.
-- **Que no significa:** no reemplaza juicio metodologico.
-- **Ejemplo:** `tier=A`.
-
+<ul><li><strong>Definicion:</strong> nivel relativo de prioridad o centralidad dentro del corpus ingerido.</li>
+<li><strong>Uso operativo:</strong> ayudar a ordenar peso y urgencia de tratamiento.</li>
+<li><strong>Fuente de verdad / modulo:</strong> contexto canonico y catalogos.</li>
+<li><strong>Que no significa:</strong> no reemplaza juicio metodologico.</li>
+<li><strong>Ejemplo:</strong> <code>tier=A</code>.</li>
+</ul>
 #### Status
-
-- **Definicion:** estado clasificado de un artefacto dentro del corpus.
-- **Uso operativo:** indicar si algo es antecedente, borrador, implementacion parcial, soporte, etcetera.
-- **Fuente de verdad / modulo:** archivo de contexto canonico y catalogos.
-- **Que no significa:** no equivale automaticamente a “aprobado”.
-- **Ejemplo:** `antecedente_directo`, `borrador_vigente`, `overleaf_parcial`.
-
+<ul><li><strong>Definicion:</strong> estado clasificado de un artefacto dentro del corpus.</li>
+<li><strong>Uso operativo:</strong> indicar si algo es antecedente, borrador, implementacion parcial, soporte, etcetera.</li>
+<li><strong>Fuente de verdad / modulo:</strong> archivo de contexto canonico y catalogos.</li>
+<li><strong>Que no significa:</strong> no equivale automaticamente a “aprobado”.</li>
+<li><strong>Ejemplo:</strong> <code>antecedente_directo</code>, <code>borrador_vigente</code>, <code>overleaf_parcial</code>.</li>
+</ul>
 #### Accion
-
-- **Definicion:** instruccion operativa sugerida para tratar un artefacto ingerido.
-- **Uso operativo:** decidir si conservar, depurar, mover o auditar.
-- **Fuente de verdad / modulo:** lectura humana del contexto canonico.
-- **Que no significa:** no implica que ya fue ejecutada.
-- **Ejemplo:** `depurar_y_migrar_al_repo_canonico`.
-
+<ul><li><strong>Definicion:</strong> instruccion operativa sugerida para tratar un artefacto ingerido.</li>
+<li><strong>Uso operativo:</strong> decidir si conservar, depurar, mover o auditar.</li>
+<li><strong>Fuente de verdad / modulo:</strong> lectura humana del contexto canonico.</li>
+<li><strong>Que no significa:</strong> no implica que ya fue ejecutada.</li>
+<li><strong>Ejemplo:</strong> <code>depurar_y_migrar_al_repo_canonico</code>.</li>
+</ul>
 #### Version
-
-- **Definicion:** marcador de revision de un paquete o artefacto.
-- **Uso operativo:** distinguir iteraciones de contenido sin perder trazabilidad.
-- **Fuente de verdad / modulo:** nombre del archivo y metadatos del paquete.
-- **Que no significa:** no garantiza superioridad metodologica.
-- **Ejemplo:** `v09`, `v10`.
-
-### Convenciones de nombres de archivos
-
-- **Definicion:** reglas para construir nombres autodescriptivos, legibles y estables.
-- **Uso operativo:** facilitar versionado, ingestión y lectura humana.
-- **Fuente de verdad / modulo:** `00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`.
-- **Que no significa:** no obliga a renombrar retrospectivamente todo archivo historico externo.
-- **Ejemplo de patron:** `{ambito}__{descripcion_del_contenido}__{forma_o_proposito}__{version}.{extension}`.
-
+<ul><li><strong>Definicion:</strong> marcador de revision de un paquete o artefacto.</li>
+<li><strong>Uso operativo:</strong> distinguir iteraciones de contenido sin perder trazabilidad.</li>
+<li><strong>Fuente de verdad / modulo:</strong> nombre del archivo y metadatos del paquete.</li>
+<li><strong>Que no significa:</strong> no garantiza superioridad metodologica.</li>
+<li><strong>Ejemplo:</strong> <code>v09</code>, <code>v10</code>.</li>
+</ul>
+<h3>Convenciones de nombres de archivos</h3>
+<ul><li><strong>Definicion:</strong> reglas para construir nombres autodescriptivos, legibles y estables.</li>
+<li><strong>Uso operativo:</strong> facilitar versionado, ingestión y lectura humana.</li>
+<li><strong>Fuente de verdad / modulo:</strong> <code>00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json</code>.</li>
+<li><strong>Que no significa:</strong> no obliga a renombrar retrospectivamente todo archivo historico externo.</li>
+<li><strong>Ejemplo de patron:</strong> <code>{ambito}__{descripcion_del_contenido}__{forma_o_proposito}__{version}.{extension}</code>.</li>
+</ul>
 #### Reglas actuales de nomenclatura
-
-- usar minusculas;
-- preferir palabras completas en español;
-- separar bloques semanticos con doble guion bajo `__`;
-- evitar siglas opacas;
-- conservar la version antes de la extension;
-- preferir nombres orientados a funcion.
-
-### Diferencias que el sistema no debe confundir
-
-- **Validacion humana** no es lo mismo que **evidencia fuerte**.
-- **Evento canonico** no es lo mismo que **proyeccion derivada**.
-- **Bloque** no es lo mismo que **tarea**.
-- **Entregable** no es lo mismo que **fase**.
-- **Evidencia** no es lo mismo que **soporte**.
-- **Politica** no es lo mismo que **modulo**.
-
-### Regla publica
-
-En la capa publica pueden explicarse familias y semantica de IDs, por ejemplo `VAL_STEP_{nnn}` o `EVT_{nnnn}`, pero no deben exponerse instancias privadas completas, hashes sensibles ni rutas internas no publicables.
-
-</pre>
-      <footer class="public-update"><p>Última actualización: <strong>2026-04-13</strong></p></footer>
+<ul><li>usar minusculas;</li>
+<li>preferir palabras completas en español;</li>
+<li>separar bloques semanticos con doble guion bajo <code>__</code>;</li>
+<li>evitar siglas opacas;</li>
+<li>conservar la version antes de la extension;</li>
+<li>preferir nombres orientados a funcion.</li>
+</ul>
+<h3>Diferencias que el sistema no debe confundir</h3>
+<ul><li><strong>Validacion humana</strong> no es lo mismo que <strong>evidencia fuerte</strong>.</li>
+<li><strong>Evento canonico</strong> no es lo mismo que <strong>proyeccion derivada</strong>.</li>
+<li><strong>Bloque</strong> no es lo mismo que <strong>tarea</strong>.</li>
+<li><strong>Entregable</strong> no es lo mismo que <strong>fase</strong>.</li>
+<li><strong>Evidencia</strong> no es lo mismo que <strong>soporte</strong>.</li>
+<li><strong>Politica</strong> no es lo mismo que <strong>modulo</strong>.</li>
+</ul>
+<h3>Regla publica</h3></p><p>En la capa publica pueden explicarse familias y semantica de IDs, por ejemplo <code>VAL_STEP_{nnn}</code> o <code>EVT_{nnnn}</code>, pero no deben exponerse instancias privadas completas, hashes sensibles ni rutas internas no publicables.</p><p></p></div>
+      <footer class="public-update"><p>Última actualización: <strong>2026-04-29</strong></p></footer>
   </main>
 </body>
 </html>

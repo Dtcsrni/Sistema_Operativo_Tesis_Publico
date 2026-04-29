@@ -9,12 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Obtener código
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Configurar Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
           python-version: "3.14"
 
@@ -30,7 +30,12 @@ jobs:
 
       - name: Ejecutar shellcheck sobre bootstrap y operación
         run: |
-          find bootstrap ops runtime/openclaw tests/smoke tests/integration benchmarks/scripts -type f -name "*.sh" -print0 | xargs -0 -r shellcheck
+          rg --files bootstrap ops runtime/openclaw tests/smoke tests/integration benchmarks/scripts -g "*.sh" | xargs -r shellcheck
+
+      - name: Escaneo de secretos (gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Validar proyección pública derivada
         run: |
@@ -83,7 +88,7 @@ jobs:
 
       - name: Subir atestación de gobernanza y documentos generados
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
           name: artefactos-compuerta-gobernanza
           path: |

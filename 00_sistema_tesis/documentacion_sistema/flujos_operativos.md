@@ -18,9 +18,26 @@ Salida esperada:
 - identificar bloque activo, siguiente entregable y riesgos;
 - saber que modulo o archivo tocar despues.
 
-## Flujo 2. Registrar un cambio o una decision
-
 Objetivo: incorporar trabajo nuevo sin romper soberania ni trazabilidad.
+
+```mermaid
+sequenceDiagram
+    participant T as Tesista Humano
+    participant C as Canon (YAML/CSV/MD)
+    participant E as Evidencia (Conversación)
+    participant A as Automatización (build_all)
+    participant D as Derivados (Wiki/Dash)
+
+    T->>C: Editar fuente de verdad
+    opt Cambio Crítico
+        T->>E: Registrar evidencia fuente
+        E-->>T: source_event_id (evento interno no público)
+        T->>C: Vincular VAL-STEP a evento interno no público
+    end
+    T->>A: Ejecutar validación y auditoría
+    A->>D: Materializar proyecciones
+    D-->>T: Revisar Wiki/Dashboard
+```
 
 Secuencia:
 
@@ -219,7 +236,47 @@ Salida esperada:
 - runtime externo consumiendo el mismo contrato `serena-local`;
 - auth minima activa;
 - misma gobernanza que el MCP local;
-- traza diferenciada del host llamador.
+- traza diferenciada del host llamador;
+
+## Flujo 13. Trabajar con Caveman y Serena como politica base
+
+Objetivo: mantener el modo de trabajo conciso de Caveman y la primera capa de contexto de Serena como comportamiento normal para cualquier agente de IA en el repo.
+
+Secuencia:
+
+1. Verificar que `caveman` resuelva en el shell con `command -v caveman`.
+2. Confirmar que `caveman --help` responda y usar Caveman como modo base de ejecución y redacción.
+3. Verificar el estado de Serena con `python3 07_scripts/check_serena_access.py --json`.
+4. Si `serena-local` esta disponible y recomendado, usarlo primero para `context.fetch_compact` y `governance.preflight`.
+5. Si Serena no esta disponible, restaurarla primero antes de degradar a filesystem-only.
+6. Ejecutar `python 07_scripts/build_all.py` al cerrar cambios de politica o infraestructura.
+
+Salida esperada:
+
+- Caveman disponible y usado como modo base;
+- Serena usada como primera capa de contexto cuando el perfil recomendado este disponible;
+- trazabilidad y auditoria actualizadas sin perder la ruta operativa principal.
+
+## Flujo 14. Operar OpenClaw con PC-first y Telegram activo
+
+Objetivo: usar OpenClaw como capa asistiva sin mover la autoria principal fuera del escritorio ni degradar el edge a nodo pesado por defecto.
+
+Secuencia:
+
+1. Levantar o verificar el runtime pesado de la PC con `llama.cpp server` y confirmar `OPENCLAW_DESKTOP_RUNTIME=llamacpp`.
+2. Confirmar en `pasarela estado` que `nodes.desktop.runtime=llamacpp` y que el edge mantiene su runtime local ligero.
+3. Operar sesiones desde `CLI`, `web_local` o `telegram`; todos los canales activos deben pasar por la misma `session-layer`.
+4. Mantener `Telegram` como plano remoto activo y `Matrix` solo como compatibilidad futura, fallback latente o notificacion cuando se reactive.
+5. Si la PC no esta disponible, permitir degradacion explicita a `ollama_local` o `local`, sin promover nube por defecto.
+6. Si una tarea requiere nube premium, exigir politica de sesion compatible y traza del cambio de carril.
+7. Registrar y revisar trazas, fallback reasons, proveedor/modelo efectivos y aprobaciones antes de cerrar la operacion.
+
+Salida esperada:
+
+- carril pesado resuelto por la PC principal;
+- edge conservando continuidad 24/7 y relay remoto;
+- canales alineados sobre un mismo contrato de sesion;
+- politica `desktop-first` visible, verificable y auditable.
 
 ## Regla transversal
 
@@ -229,4 +286,4 @@ Todo flujo del sistema debe cumplir tres condiciones:
 - tener una salida humana legible;
 - poder distinguir entre superficie canónica no pública y superficie publica.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-29`._

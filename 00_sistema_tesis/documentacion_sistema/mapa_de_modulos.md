@@ -4,6 +4,28 @@
 
 El sistema se organiza por subsistemas coordinados. Cada subsistema tiene una funcion distinta, artefactos fuente, artefactos derivados y una frontera de visibilidad.
 
+```mermaid
+graph TD
+    subgraph "Gobierno y Trazabilidad"
+        M1[1. Gobierno y Soberanía] --> M2[2. Trazabilidad y Evidencia]
+    end
+
+    subgraph "Gestión del Trabajo"
+        M3[3. Planeación y Control] --> M7[7. Tesis IoT]
+        M4[4. Canon y Configuración] --> M3
+    end
+
+    subgraph "Operación y Publicación"
+        M5[5. Automatización y Validación] --> M6[6. Publicación y Superficie Pública]
+        M8[8. OpenClaw Control Plane] -.-> M5
+    end
+
+    M2 --> M3
+    M4 --> M5
+    M7 --> M5
+    M1 -.-> M8
+```
+
 ## Modulos nucleares
 
 ### 1. Gobierno y soberania humana
@@ -62,6 +84,15 @@ El sistema se organiza por subsistemas coordinados. Cada subsistema tiene una fu
 - Visible al publico: objetivo, problema, marco actual, modulos y limites.
 - Privado: evidencia no publicada, borradores internos y soportes no sanitizados.
 
+### 8. OpenClaw como plano de control asistivo PC-first
+
+- Proposito: ofrecer una capa asistiva local-first para operar sesiones, canales remotos y modelos sin sustituir el canon ni la validacion humana.
+- Fuentes principales: `runtime/openclaw/`, `docs/02_arquitectura/openclaw-control-plane.md`, `docs/03_operacion/openclaw-workspace-local.md`, `docs/03_operacion/flujo-escritorio-orange-pi.md`, `04_implementacion/gateway/`.
+- Derivados: API local, bot Telegram, trazas SQLite, estado de proveedores y cobertura de implementacion en la wiki. Matrix permanece como derivado latente.
+- Visible al publico: arquitectura general, contratos de sesion, politica `desktop-first`, Telegram como canal remoto activo y Matrix como extensión latente.
+- Privado: secretos de proveedores, tokens de Matrix/Telegram, rutas sensibles del host y evidencia operativa fina.
+- Regla operativa: la PC principal concentra el carril pesado con `pc_native_llamacpp`; `tesis-edge` mantiene continuidad 24/7, relay, Telegram y runtime ligero. Matrix queda disponible solo como extensibilidad futura.
+
 ## Relaciones clave
 
 - Gobierno define las reglas con las que opera trazabilidad.
@@ -71,6 +102,7 @@ El sistema se organiza por subsistemas coordinados. Cada subsistema tiene una fu
 - Automatizacion convierte fuentes en vistas legibles sin duplicacion manual.
 - Publicacion filtra la vista externa sin alterar la base privada.
 - La tesis IoT recibe estructura, continuidad y explicabilidad gracias a todos los modulos anteriores.
+- OpenClaw extiende la operacion asistiva del sistema, pero sigue subordinado a gobierno, trazabilidad y validacion humana.
 
 ## Regla de lectura
 
@@ -81,4 +113,4 @@ Si una persona necesita entender rapidamente el sistema:
 3. Despues revisa el flujo operativo asociado.
 4. Finalmente distingue que partes son privadas y cuales son publicas.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-29`._

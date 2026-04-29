@@ -1,0 +1,265 @@
+{
+  "host": {
+    "platform": "Linux-6.1.43-rockchip-rk3588-aarch64-with-glibc2.36",
+    "machine": "aarch64",
+    "cpu_count": 8,
+    "memory_total_bytes": 8320172032,
+    "root_disk": {
+      "path": "/home/tesisai",
+      "total_bytes": 123600695296,
+      "used_bytes": 22411661312,
+      "free_bytes": 99837517824
+    }
+  },
+  "benchmarks": {
+    "cpu_sha256": {
+      "rounds": 8,
+      "payload_mb": 128.0,
+      "elapsed_s": 0.0939,
+      "throughput_mb_s": 1363.13,
+      "digest": "a06c26cbac8b8070"
+    },
+    "memory_copy": {
+      "rounds": 12,
+      "payload_mb": 768.0,
+      "elapsed_s": 0.1344,
+      "throughput_mb_s": 5712.18
+    },
+    "disk_io": null,
+    "gpu": null,
+    "ollama": [
+      {
+        "status": "ok",
+        "model": "qwen2.5:0.5b",
+        "runs": [
+          {
+            "run": 1,
+            "status": "ok",
+            "elapsed_s": 4.0031,
+            "returncode": 0,
+            "stdout": "Listo. ¿En qué puedo ayudarte hoy?",
+            "stderr": "",
+            "memory_before": {
+              "memtotal_kib": 8125168,
+              "memavailable_kib": 7396944,
+              "swaptotal_kib": 4062580,
+              "swapfree_kib": 4062324
+            },
+            "memory_after": {
+              "memtotal_kib": 8125168,
+              "memavailable_kib": 6835048,
+              "swaptotal_kib": 4062580,
+              "swapfree_kib": 4062324
+            },
+            "gpu_before": null,
+            "gpu_after": null,
+            "gpu_samples": 0,
+            "gpu_peak_memory_used_mib": null
+          },
+          {
+            "run": 2,
+            "status": "ok",
+            "elapsed_s": 2.5039,
+            "returncode": 0,
+            "stdout": "Listo! ¿Cómo puedo asistirte hoy?",
+            "stderr": "",
+            "memory_before": {
+              "memtotal_kib": 8125168,
+              "memavailable_kib": 6835048,
+              "swaptotal_kib": 4062580,
+              "swapfree_kib": 4062324
+            },
+            "memory_after": {
+              "memtotal_kib": 8125168,
+              "memavailable_kib": 6837928,
+              "swaptotal_kib": 4062580,
+              "swapfree_kib": 4062324
+            },
+            "gpu_before": null,
+            "gpu_after": null,
+            "gpu_samples": 0,
+            "gpu_peak_memory_used_mib": null
+          }
+        ],
+        "cold_elapsed_s": 4.0031,
+        "warm_elapsed_s": 2.5039,
+        "best_elapsed_s": 2.5039,
+        "gpu_peak_memory_used_mib": null
+      },
+      {
+        "status": "ok",
+        "model": "qwen3:4b",
+        "runs": [
+          {
+            "run": 1,
+            "status": "ok",
+            "elapsed_s": 35.5225,
+            "returncode": 0,
+            "stdout": "Thinking...\nOkay, the user wants me to respond with \"listo\" only. Let me check the inst\ninstructions again.\n\nThey said \"Responde únicamente: listo\". So I need to make sure I don't add \nanything else. Just the word \"listo\" without any punctuation or extra text.\ntext.\n\nWait, in Spanish, \"listo\" means ",
+            "stderr": "",
+            "memory_before": {
+              "memtotal_kib": 8125168,
+              "memavailable_kib": 6838320,
+              "swaptotal_kib": 4062580,
+              "swapfree_kib": 4062324
+            },
+            "memory_after": {
+              "memtotal_kib": 8125168,
+              "memavailable_kib": 3405184,
+              "swaptotal_kib": 4062580,
+              "swapfree_kib": 4057972
+            },
+            "gpu_before": null,
+            "gpu_after": null,
+            "gpu_samples": 0,
+            "gpu_peak_memory_used_mib": null
+          },
+          {
+            "run": 2,
+            "status": "ok",
+            "elapsed_s": 28.5228,
+            "returncode": 0,
+            "stdout": "Thinking...\nOkay, the user wants me to respond with \"listo\" only. Let me check the inst\ninstructions again.\n\nThey said \"Responde únicamente: listo\". So I need to make sure I don't add \nanything else. Just the word \"listo\". No punctuation, no extra spaces. Let \nme confirm. The example response should",
+            "stderr": "",
+            "memory_before": {
+              "memtotal_kib": 8125168,
+              "memavailable_kib": 3405184,
+              "swaptotal_kib": 4062580,
+              "swapfree_kib": 4057972
+            },
+            "memory_after": {
+              "memtotal_kib": 8125168,
+              "memavailable_kib": 3361492,
+              "swaptotal_kib": 4062580,
+              "swapfree_kib": 4057204
+            },
+            "gpu_before": null,
+            "gpu_after": null,
+            "gpu_samples": 0,
+            "gpu_peak_memory_used_mib": null
+          }
+        ],
+        "cold_elapsed_s": 35.5225,
+        "warm_elapsed_s": 28.5228,
+        "best_elapsed_s": 28.5228,
+        "gpu_peak_memory_used_mib": null
+      },
+      {
+        "status": "ok",
+        "model": "gemma3:4b",
+        "runs": [
+          {
+            "run": 1,
+            "status": "ok",
+            "elapsed_s": 13.5145,
+            "returncode": 0,
+            "stdout": "listo",
+            "stderr": "",
+            "memory_before": {
+              "memtotal_kib": 8125168,
+              "memavailable_kib": 3362524,
+              "swaptotal_kib": 4062580,
+              "swapfree_kib": 4057204
+            },
+            "memory_after": {
+              "memtotal_kib": 8125168,
+              "memavailable_kib": 2620172,
+              "swaptotal_kib": 4062580,
+              "swapfree_kib": 4054388
+            },
+            "gpu_before": null,
+            "gpu_after": null,
+            "gpu_samples": 0,
+            "gpu_peak_memory_used_mib": null
+          },
+          {
+            "run": 2,
+            "status": "ok",
+            "elapsed_s": 3.5097,
+            "returncode": 0,
+            "stdout": "listo",
+            "stderr": "",
+            "memory_before": {
+              "memtotal_kib": 8125168,
+              "memavailable_kib": 2620172,
+              "swaptotal_kib": 4062580,
+              "swapfree_kib": 4054388
+            },
+            "memory_after": {
+              "memtotal_kib": 8125168,
+              "memavailable_kib": 2578972,
+              "swaptotal_kib": 4062580,
+              "swapfree_kib": 4054388
+            },
+            "gpu_before": null,
+            "gpu_after": null,
+            "gpu_samples": 0,
+            "gpu_peak_memory_used_mib": null
+          }
+        ],
+        "cold_elapsed_s": 13.5145,
+        "warm_elapsed_s": 3.5097,
+        "best_elapsed_s": 3.5097,
+        "gpu_peak_memory_used_mib": null
+      },
+      {
+        "status": "ok",
+        "model": "qwen2.5-coder:7b",
+        "runs": [
+          {
+            "run": 1,
+            "status": "ok",
+            "elapsed_s": 18.5223,
+            "returncode": 0,
+            "stdout": "Listo",
+            "stderr": "",
+            "memory_before": {
+              "memtotal_kib": 8125168,
+              "memavailable_kib": 2580100,
+              "swaptotal_kib": 4062580,
+              "swapfree_kib": 4054388
+            },
+            "memory_after": {
+              "memtotal_kib": 8125168,
+              "memavailable_kib": 1901524,
+              "swaptotal_kib": 4062580,
+              "swapfree_kib": 3979892
+            },
+            "gpu_before": null,
+            "gpu_after": null,
+            "gpu_samples": 0,
+            "gpu_peak_memory_used_mib": null
+          },
+          {
+            "run": 2,
+            "status": "ok",
+            "elapsed_s": 2.0039,
+            "returncode": 0,
+            "stdout": "listo",
+            "stderr": "",
+            "memory_before": {
+              "memtotal_kib": 8125168,
+              "memavailable_kib": 1901524,
+              "swaptotal_kib": 4062580,
+              "swapfree_kib": 3979892
+            },
+            "memory_after": {
+              "memtotal_kib": 8125168,
+              "memavailable_kib": 1946612,
+              "swaptotal_kib": 4062580,
+              "swapfree_kib": 3979892
+            },
+            "gpu_before": null,
+            "gpu_after": null,
+            "gpu_samples": 0,
+            "gpu_peak_memory_used_mib": null
+          }
+        ],
+        "cold_elapsed_s": 18.5223,
+        "warm_elapsed_s": 2.0039,
+        "best_elapsed_s": 2.0039,
+        "gpu_peak_memory_used_mib": null
+      }
+    ]
+  }
+}

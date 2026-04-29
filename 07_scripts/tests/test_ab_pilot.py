@@ -89,6 +89,45 @@ class TestABPilot(unittest.TestCase):
         self.assertEqual(summary["resumen_capitulo"]["serena"].total_tokens, 150)
         self.assertEqual(summary["analisis_datos"]["serena"].total_tokens, 80)
 
+    def test_evaluate_plan_selects_low_cost_route_when_quality_passes(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            repo = Path(tmp_dir)
+            (repo / "00_sistema_tesis" / "config").mkdir(parents=True, exist_ok=True)
+            (repo / "00_sistema_tesis" / "bitacora" / "audit_history").mkdir(parents=True, exist_ok=True)
+            (repo / "06_dashboard" / "generado").mkdir(parents=True, exist_ok=True)
+
+            plan_path = repo / "00_sistema_tesis" / "config" / "ab_pilot_plan.json"
+            plan_path.write_text(
+                """
+                {
+                  "metadata": {"experiment_id": "ab-routes"},
+                  "criteria": {"min_acceptance_rate": 0.9, "max_gate_failures": 0},
+                  "tasks": [
+                    {
+                      "task_id": "T-1",
+                      "task_type": "documentacion",
+                      "serena": {"input_tokens": 120, "output_tokens": 40, "cost_usd": 0.01, "latency_ms": 900, "accepted": true, "gate_failures": 0, "rework": false},
+                      "ollama_local": {"input_tokens": 80, "output_tokens": 30, "cost_usd": 0.0, "latency_ms": 1400, "accepted": true, "gate_failures": 0, "rework": false}
+                    }
+                  ]
+                }
+                """,
+                encoding="utf-8",
+            )
+
+            with patch.object(ab_pilot, "ROOT", repo), patch.object(common, "ROOT", repo):
+                _, _, _, report_payload = evaluate_plan(
+                    plan_relative_path="00_sistema_tesis/config/ab_pilot_plan.json",
+                    report_relative_path="00_sistema_tesis/config/ab_pilot_report.json",
+                    markdown_relative_path="06_dashboard/generado/ab_pilot_report.md",
+                    trace_relative_path="00_sistema_tesis/bitacora/audit_history/ab_pilot_runs.jsonl",
+                    context=ab_pilot.ExecutionContext(session_id="sesion-1", step_id="VAL-STEP-999", source_event_id="EVT-0001"),
+                )
+
+            self.assertEqual(report_payload["summary"]["winner"], "ollama_local")
+            self.assertIn("ollama_local", report_payload["summary"])
+            self.assertIn("serena", report_payload["summary"])
+
     def test_evaluate_plan_emits_trace(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
             repo = Path(tmp_dir)
@@ -150,6 +189,8 @@ class TestABPilot(unittest.TestCase):
             self.assertTrue(csv_path.exists())
             content = csv_path.read_text(encoding="utf-8")
             self.assertIn("serena_input_tokens", content)
+            self.assertIn("github_models_free_input_tokens", content)
+            self.assertIn("wsl_native_input_tokens", content)
             self.assertNotIn("modular_", content)
             self.assertNotIn("manual_", content)
 

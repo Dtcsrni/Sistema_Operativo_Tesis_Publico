@@ -2,7 +2,7 @@
   "_comentario": "SISTEMA_TESIS:PROTEGIDO",
   "identidad_proyecto": {
     "id": "tesis-iot-pachuca-resiliencia",
-    "nombre_corto": "Sistema Operativo de la Tesis IoT Pachuca",
+    "nombre_corto": "SIOT",
     "programa": "Posgrado en Ingeniería",
     "linea_investigacion": "Internet de las Cosas, resiliencia de comunicaciones y control adaptativo"
   },
@@ -13,7 +13,7 @@
   "idioma_principal": "es-MX",
   "resumen_problema": "La intermitencia urbana de conectividad y energía degrada la continuidad de telemetría y compromete acciones de control oportunas en despliegues IoT metropolitanos. El proyecto busca diseñar y validar una arquitectura que degrade con gracia, preserve variables críticas y sostenga operación útil bajo interrupciones parciales.",
   "objetivo_general": "Diseñar, simular y validar experimentalmente una arquitectura resiliente para telemetría y control adaptativo en entornos urbanos intermitentes, evaluando su aplicabilidad en escenarios representativos de la Zona Metropolitana de Pachuca.",
-  "bloque_activo": "B0",
+  "bloque_activo": "B1",
   "fase_actual": "investigacion_y_desarrollo_metodologico",
   "siguiente_entregable": "ENT-015",
   "riesgo_principal_abierto": "R-001",
@@ -41,6 +41,19 @@
     "wiki_html_generada": "06_dashboard/generado/wiki/index.html",
     "wiki_manifest_generado": "06_dashboard/generado/wiki_manifest.json",
     "readme_portada_generado": "README.md"
+  },
+  "nodos_distribuidos": {
+    "pc_hub": {
+      "rol": "coordinacion_y_gobernanza",
+      "os": "windows_wsl2",
+      "servicios": ["siot-docs", "siot-agent"]
+    },
+    "orange_pi_edge": {
+      "rol": "captura_y_control_iot",
+      "os": "ubuntu_server_arm64",
+      "hardware": "orange_pi_5_plus_rk3588",
+      "servicios": ["siot-edge-gw", "siot-llm-edge", "siot-edge-sync"]
+    }
   },
   "politicas_sistema": [
     "El repositorio canónico es la fuente de verdad del sistema operativo de tesis.",

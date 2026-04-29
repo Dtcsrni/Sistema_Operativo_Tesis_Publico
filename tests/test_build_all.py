@@ -15,6 +15,7 @@ def test_build_all_includes_wiki_step() -> None:
     assert ("Verificar evidencia fuente de conversación", "07_scripts/tesis.py", ["source", "status", "--check"]) in STEPS
     assert ("Verificar operabilidad humana", "07_scripts/tesis.py", ["doctor", "--check"]) in STEPS
     assert ("Validar publicación pública sanitizada", "07_scripts/tesis.py", ["publish", "--check"]) in STEPS
+    assert ("Auditar calidad de trazabilidad", "07_scripts/verify_traceability_quality.py", ["--strict"]) in STEPS
 
 
 def test_build_all_profiles_build_execution() -> None:

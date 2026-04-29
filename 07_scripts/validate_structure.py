@@ -37,6 +37,8 @@ REQUIRED_PATHS = [
     "00_sistema_tesis/config/dashboard.yaml",
     "00_sistema_tesis/config/ia_gobernanza.yaml",
     "00_sistema_tesis/config/publicacion.yaml",
+    "00_sistema_tesis/config/traceability_quality_policy.yaml",
+    "00_sistema_tesis/config/traceability_quality_baseline.yaml",
     "00_sistema_tesis/config/wiki.yaml",
     "00_sistema_tesis/config/backup_rotation_policy.json",
     "00_sistema_tesis/manual_operacion_humana.md",
@@ -110,6 +112,7 @@ def validate() -> list[str]:
     wiki = load_yaml_json("00_sistema_tesis/config/wiki.yaml")
     backlog = load_csv_rows("01_planeacion/backlog.csv")
     ia_policy = load_yaml_json("00_sistema_tesis/config/ia_gobernanza.yaml")
+    traceability_policy = load_yaml_json("00_sistema_tesis/config/traceability_quality_policy.yaml")
     storage_layout = load_yaml_json("manifests/storage_layout.yaml")
     service_matrix = load_yaml_json("manifests/service_matrix.yaml")
     domain_boundaries = load_yaml_json("manifests/domain_boundaries.yaml")
@@ -268,10 +271,18 @@ def validate() -> list[str]:
         activation = dict(source_policy.get("activacion", {}))
         if not str(activation.get("desde_step_id", "")).startswith("VAL-STEP-"):
             errors.append("evidencia_fuente_conversacion.activacion.desde_step_id debe ser un VAL-STEP válido")
+    ledger_policy = dict(traceability_policy.get("ledger", {}))
+    if ledger_policy.get("require_non_empty_content_between_delimiters") is not True:
+        errors.append("traceability_quality_policy.yaml debe exigir contenido no vacío en ledger")
+    if int(ledger_policy.get("min_content_chars", 0)) < 16:
+        errors.append("traceability_quality_policy.yaml debe fijar min_content_chars >= 16")
 
     for artifact in publicacion["artefactos"]:
         source = artifact["source"]
         if not (ROOT / source).exists():
+            # Permitimos que falten si son parte de lo que el build genera (evita circularidad)
+            if any(source.startswith(p) for p in ("06_dashboard/generado/", "06_dashboard/publico/", "06_dashboard/wiki/")):
+                continue
             errors.append(f"publicacion.yaml referencia una fuente inexistente: {source}")
     artifact_sources = {artifact["source"] for artifact in publicacion["artefactos"]}
     if "MEMORY.md" not in artifact_sources:
@@ -280,40 +291,51 @@ def validate() -> list[str]:
     if "00_sistema_tesis/evidencia_privada/" not in excluded_prefixes:
         errors.append("publicacion.yaml debe excluir 00_sistema_tesis/evidencia_privada/ del bundle público")
 
-    manual_humano = (ROOT / "00_sistema_tesis" / "manual_operacion_humana.md").read_text(encoding="utf-8")
-    for marker in ("Retomar", "Registrar cambio", "Auditar", "Publicación pública"):
-        if marker not in manual_humano:
-            errors.append(f"manual_operacion_humana.md no contiene el recorrido requerido: {marker}")
-    for marker in ("source register", "source verify", "evidencia fuente"):
-        if marker not in manual_humano:
-            errors.append(f"manual_operacion_humana.md no documenta el flujo requerido: {marker}")
+    def require_markers(relative_path: str, markers: tuple[str, ...], label: str) -> None:
+        content = (ROOT / relative_path).read_text(encoding="utf-8")
+        for marker in markers:
+            if marker not in content:
+                errors.append(f"{label} no contiene el marcador requerido: {marker}")
 
-    memory_text = (ROOT / "MEMORY.md").read_text(encoding="utf-8")
-    for marker in ("Últimos cambios validados", "Próximos pendientes críticos", "Referencias base"):
-        if marker not in memory_text:
-            errors.append(f"MEMORY.md no contiene el marcador requerido: {marker}")
+    require_markers(
+        "00_sistema_tesis/manual_operacion_humana.md",
+        ("Retomar", "Registrar cambio", "Auditar", "Publicación pública"),
+        "manual_operacion_humana.md",
+    )
+    require_markers(
+        "00_sistema_tesis/manual_operacion_humana.md",
+        ("source register", "source verify", "evidencia fuente"),
+        "manual_operacion_humana.md",
+    )
 
-    desktop_edge_flow = (ROOT / "docs/03_operacion/flujo-escritorio-orange-pi.md").read_text(encoding="utf-8")
-    for marker in (
-        "sync_repo_desde_desktop.sh",
-        "pull --ff-only",
-        "/srv/tesis/repo",
-        "/srv/tesis/intercambio/edge/spool",
-        "repo+postcheck",
-        "repo+restart-edge",
-    ):
-        if marker not in desktop_edge_flow:
-            errors.append(f"flujo-escritorio-orange-pi.md no contiene el marcador requerido: {marker}")
+    require_markers(
+        "MEMORY.md",
+        ("Últimos cambios validados", "Próximos pendientes críticos", "Referencias base"),
+        "MEMORY.md",
+    )
 
-    domain_contract = (ROOT / "docs/02_arquitectura/contrato-maestro-de-dominios.md").read_text(encoding="utf-8")
-    for marker in ("No HTTP interdominio", "Orange Pi es clon operativo", "archivo_draft"):
-        if marker not in domain_contract:
-            errors.append(f"contrato-maestro-de-dominios.md no contiene el marcador requerido: {marker}")
-
-    internal_arch = (ROOT / "docs/02_arquitectura/arquitectura-interna-sistema-tesis.md").read_text(encoding="utf-8")
-    for marker in ("canon", "proyecciones", "auditoria_guardrails", "publicacion"):
-        if marker not in internal_arch:
-            errors.append(f"arquitectura-interna-sistema-tesis.md no contiene el marcador requerido: {marker}")
+    require_markers(
+        "docs/03_operacion/flujo-escritorio-orange-pi.md",
+        (
+            "sync_repo_desde_desktop.sh",
+            "pull --ff-only",
+            "/srv/tesis/repo",
+            "/srv/tesis/intercambio/edge/spool",
+            "repo+postcheck",
+            "repo+restart-edge",
+        ),
+        "flujo-escritorio-orange-pi.md",
+    )
+    require_markers(
+        "docs/02_arquitectura/contrato-maestro-de-dominios.md",
+        ("No HTTP interdominio", "Orange Pi es clon operativo", "archivo_draft"),
+        "contrato-maestro-de-dominios.md",
+    )
+    require_markers(
+        "docs/02_arquitectura/arquitectura-interna-sistema-tesis.md",
+        ("canon", "proyecciones", "auditoria_guardrails", "publicacion"),
+        "arquitectura-interna-sistema-tesis.md",
+    )
 
     section_ids = {section["id"] for section in wiki["secciones"]}
     required_wiki_sections = {

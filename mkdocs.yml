@@ -21,13 +21,21 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
+  font:
+    text: Merriweather
+    code: Fira Code
+  icon:
+    repo: fontawesome/brands/github
   features:
     - navigation.tabs
     - navigation.sections
     - navigation.top
+    - navigation.tracking
+    - toc.integrate
     - search.suggest
     - search.highlight
     - content.code.copy
+    - content.tabs.link
 
 repo_url: https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico
 
@@ -38,15 +46,26 @@ plugins: []
 markdown_extensions:
   - admonition
   - pymdownx.details
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
   - attr_list
   - md_in_html
   - tables
 
+extra_css:
+  - extra/wiki_premium.css
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js
+
 nav:
   - Inicio: index.md
+  - Agente y Casos de Uso: casos_uso.md
   - Sistema: sistema.md
   - Gobernanza: gobernanza.md
   - Hipótesis: hipotesis.md

@@ -45,7 +45,8 @@ def dump_structured_path(path: Path, payload: Any) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     rendered = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
     if not path.exists() or path.read_text(encoding="utf-8") != rendered:
-        path.write_text(rendered, encoding="utf-8")
+        with path.open("w", encoding="utf-8", newline="\n") as handle:
+            handle.write(rendered)
     return path
 
 
@@ -65,13 +66,14 @@ def load_jsonl_path(path: Path) -> list[dict[str, Any]]:
 def dump_jsonl_path(path: Path, rows: list[dict[str, Any]]) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     content = "\n".join(json.dumps(row, ensure_ascii=False, sort_keys=True) for row in rows) + "\n"
-    path.write_text(content, encoding="utf-8")
+    with path.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(content)
     return path
 
 
 def append_jsonl_path(path: Path, row: dict[str, Any]) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     line = json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n"
-    with path.open("a", encoding="utf-8") as handle:
+    with path.open("a", encoding="utf-8", newline="\n") as handle:
         handle.write(line)
     return path

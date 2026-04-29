@@ -5,10 +5,10 @@
 
 ## Estado actual
 
-- **Generado:** `2026-04-14`
+- **Generado:** `2026-04-29`
 - **Versión del sistema:** `0.1.0`
 - **Estado global:** `arquitectura_formal_reforzada`
-- **Bloque activo:** `B0`
+- **Bloque activo:** `B1`
 - **Fase actual:** `investigacion_y_desarrollo_metodologico`
 - **Riesgo principal abierto:** `R-001`
 
@@ -20,11 +20,11 @@
 
 ## Últimos cambios validados
 
-- **validación humana interna no pública** · `2026-04-13` · Autorizacion humana para resolver pendientes, publicar y monitorear CI hasta despliegue correcto · soporte DEC-0014
-- **validación humana interna no pública** · `2026-04-13` · Autorización humana para asignar automáticamente el Step ID y cerrar verificación CI/publicación pública · soporte [DEC-0014]
-- **validación humana interna no pública** · `2026-04-13` · Política operativa para activar Serena primero cuando no esté disponible · soporte [DEC-0014]
-- **validación humana interna no pública** · `2026-04-12` · Cierre de trazabilidad final y preparación de publicación de Serena · soporte [DEC-0014]
-- **validación humana interna no pública** · `2026-04-12` · Optimización de traza Serena MCP por append JSONL en lugar de rewrite completo · soporte [DEC-0014]
+- **validación humana interna no pública** · `2026-04-29` · OpenClaw Telegram principal y pc_native_llamacpp PC nativo fuente reparada · soporte [DEC-0014]
+- **validación humana interna no pública** · `2026-04-29` · OpenClaw Telegram principal y pc_native_llamacpp PC nativo · soporte [DEC-0014]
+- **validación humana interna no pública** · `2026-04-28` · Mistral Nemo 12B y benchmarking cientifico trazable · soporte [DEC-0014]
+- **validación humana interna no pública** · `2026-04-28` · Formalización runtime híbrido WSL + Docker y economía de tokens agéntica · soporte [DEC-0025]
+- **validación humana interna no pública** · `2026-04-27` · Benchmark de Razonamiento Pesado PC (Llama-3-70B) · soporte [DEC-0014]
 
 ## Próximos pendientes críticos
 
@@ -51,4 +51,4 @@
 - `01_planeacion/entregables.csv`
 - `01_planeacion/riesgos.csv`
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-29`._

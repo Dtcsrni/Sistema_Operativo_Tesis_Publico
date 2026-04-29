@@ -1,0 +1,83 @@
+{
+  "latest_jsonl": "runtime/pc_control/benchmarks/runs/BENCH-20260428T131432Z-dc957885.jsonl",
+  "latest_record_hash": "ac6735e78ace811493594402d5d98c57445794d75ea31298f16c9799732737be",
+  "latest_run_id": "BENCH-20260428T131432Z-dc957885",
+  "latest_scientific_validity": "valid_scientific_evidence",
+  "latest_status": "ok",
+  "methodology_references": [
+    {
+      "id": "mlperf_inference",
+      "name": "MLCommons MLPerf Inference",
+      "url": "https://mlcommons.org/working-groups/benchmarks/inference/",
+      "use": "Disciplina de escenarios, reproducibilidad y reporte de rendimiento; no implica certificacion oficial."
+    },
+    {
+      "id": "lm_evaluation_harness",
+      "name": "EleutherAI lm-evaluation-harness",
+      "url": "https://github.com/EleutherAI/lm-evaluation-harness",
+      "use": "Compatibilidad con evaluacion estandarizada de LLMs cuando dependencias y datasets esten disponibles."
+    },
+    {
+      "id": "helm",
+      "name": "Stanford CRFM HELM",
+      "url": "https://crfm-helm.readthedocs.io/",
+      "use": "Reporte holistico, transparente y reproducible de prompts, salidas y metricas."
+    }
+  ],
+  "node": "pc_control",
+  "primary_pc_model": "mistral-nemo:12b",
+  "profiles": {
+    "edge_npu": {
+      "interval_ms": 500,
+      "measurement_iterations": 50,
+      "model": "rkllm_preconverted",
+      "node": "edge_iot",
+      "runtime": "rknn_llm_experimental",
+      "valid_for_scientific_claim": true,
+      "warmup_iterations": 5
+    },
+    "lm_eval": {
+      "model": "mistral-nemo:12b",
+      "node": "pc_control",
+      "runtime": "lm-evaluation-harness",
+      "status_if_missing": "blocked_missing_dependency",
+      "tasks": [
+        "mmlu",
+        "hellaswag"
+      ],
+      "valid_for_scientific_claim": false
+    },
+    "pc_mistral_nemo_12b_extensive": {
+      "interval_ms": 500,
+      "measurement_iterations": 50,
+      "model": "mistral-nemo:12b",
+      "node": "pc_control",
+      "runtime": "ollama_local",
+      "valid_for_scientific_claim": true,
+      "warmup_iterations": 5
+    },
+    "pc_model_comparison": {
+      "comparison_models": [
+        "qwen2.5-coder:14b",
+        "qwen3:14b",
+        "phi4:14b"
+      ],
+      "interval_ms": 500,
+      "measurement_iterations": 10,
+      "model": "mistral-nemo:12b",
+      "node": "pc_control",
+      "runtime": "ollama_local",
+      "valid_for_scientific_claim": true,
+      "warmup_iterations": 2
+    }
+  },
+  "schema_version": "siot-benchmark-run-v1",
+  "updated_at": "2026-04-28T14:12:32+00:00",
+  "hermes_benchmark": {
+    "model": "hermes3:8b",
+    "avg_tps": 51.76,
+    "avg_latency_ms": 26161.7,
+    "activate_recommended": true,
+    "benchmarked_at": "2026-04-29T09:49:06.470924+00:00"
+  }
+}

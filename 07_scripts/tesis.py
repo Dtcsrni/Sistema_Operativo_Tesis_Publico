@@ -795,12 +795,17 @@ def cmd_status(_: argparse.Namespace) -> int:
 
 
 def cmd_doctor(args: argparse.Namespace) -> int:
+    from check_agent_tooling import build_report as build_agent_tooling_report
+
     events = ensure_canon_initialized()
     canon_errors = validate_events(events)
     drift = materialize_events(events, check=True)
     publication = publication_bundle_status(build=False)
     signoffs_total, signoffs_stale = current_signoff_status()
     human_errors = human_operability_errors()
+    tooling = build_agent_tooling_report()
+    if not tooling["caveman"].get("available", False):
+        human_errors.append("caveman no esta disponible en PATH.")
     source_status = source_evidence_status(events, require_local=source_evidence_local_enabled())
     next_action = safe_next_action(
         drift=drift,
@@ -835,6 +840,8 @@ def cmd_doctor(args: argparse.Namespace) -> int:
     print(f"- Firmas humanas desactualizadas: {signoffs_stale}")
     print(f"- Bundle público con drift: {len(publication['drift'])}")
     print(f"- Bundle público con errores: {len(publication['errors'])}")
+    print(f"- Caveman: {tooling['caveman']['status']}")
+    print(f"- Serena workflow: {tooling['policy']['workflow']}")
     print(f"- Operabilidad humana: {'ok' if not human_errors else 'pendiente'}")
     print(f"- Source evidence repo status: {source_status['repo_status']}")
     print(f"- Source evidence local status: {source_status['local_status']}")

@@ -19,7 +19,7 @@ Este repositorio documenta decisiones, hipótesis, backlog, riesgos, experimento
 
 - **Versión del sistema:** `0.1.0`
 - **Estado global:** `arquitectura_formal_reforzada`
-- **Bloque activo:** `B0` - Gobierno del sistema de tesis y base operativa
+- **Bloque activo:** `B1` - Delimitación del problema y contexto de Pachuca
 - **Fase actual:** `investigacion_y_desarrollo_metodologico`
 - **Siguiente entregable:** `ENT-015` - Conformidad y eficiencia operativa del sistema de tesis
 - **Riesgo principal abierto:** `R-001`
@@ -122,9 +122,9 @@ Empieza por estos archivos:
 
 ## Decisiones recientes
 
-- **2026-04-08** · [DEC-0023 Serena MCP como Capa Comun para Agentes](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-08_DEC-0023_serena_mcp_como_capa_comun_para_agentes.md)
-- **2026-04-08** · [DEC-0022 Arquitectura Operativa Escritorio Primario y Orange Pi Edge](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-08_DEC-0022_arquitectura_operativa_escritorio_primario_y_orange_pi_edge.md)
-- **2026-03-27** · [DEC-0021 Publicacion desde Downstream Publico Sanitizado](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0021_publicacion_desde_downstream_publico_sanitizado.md)
+- **2026-04-29** · [DEC-0016: Política de Gestión de Credenciales HuggingFace](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-29_DEC-0016_politica_gestion_credenciales_hf.md)
+- **2026-04-29** · [Política de Migración Hermes 3 (hermes3:8b)](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-29_DEC-0015_politica_migracion_hermes.md)
+- **2026-04-27** · [DEC-0025 Arquitectura de Contenedores para el Nodo de Control (PC Hub)](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-27_DEC-0025_arquitectura_de_contenedores_para_el_nodo_de_control.md)
 
 ## Operación
 
@@ -218,6 +218,6 @@ python 07_scripts/report_consistency.py
 - [`06_dashboard/generado/hoja_maestra_consolidada.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/hoja_maestra_consolidada.csv)
 - [`reporte interno no publicado`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 
-_Generado automáticamente el 2026-04-14._
+_Generado automáticamente el 2026-04-29._
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-29`._

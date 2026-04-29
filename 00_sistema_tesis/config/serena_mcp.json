@@ -69,10 +69,143 @@
       "write_scope": "read_only",
       "requires_step_id": false
     },
+    "context.repo_map": {
+      "enabled": true,
+      "description": "Entrega un mapa compacto de rutas relevantes dentro de los read_roots permitidos.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "context.fetch_changes": {
+      "enabled": true,
+      "description": "Resume cambios git actuales y diffs acotados para reducir carga de contexto.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "context.trace_lookup": {
+      "enabled": true,
+      "description": "Consulta compacta de trazabilidad en bitacora, matriz y decisiones del canon.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "context.session_brief": {
+      "enabled": true,
+      "description": "Genera un brief de sesion con mapa repo, cambios y trazas relevantes.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "context.search_ranked": {
+      "enabled": true,
+      "description": "Busca coincidencias rankeadas con snippets acotados y presupuesto de caracteres.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "context.file_digest": {
+      "enabled": true,
+      "description": "Resume archivos permitidos con SHA-256, tamano, lineas y vista previa compacta.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "context.symbol_index": {
+      "enabled": true,
+      "description": "Indexa simbolos Python y encabezados Markdown sin abrir archivos completos.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "context.dependency_map": {
+      "enabled": true,
+      "description": "Extrae imports y enlaces compactos para entender dependencias locales.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "context.related_paths": {
+      "enabled": true,
+      "description": "Sugiere rutas relacionadas por nombre y proximidad semantica simple.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "context.bundle": {
+      "enabled": true,
+      "description": "Construye un paquete compacto de contexto con presupuesto, cambios y trazas opcionales.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "context.change_impact": {
+      "enabled": true,
+      "description": "Resume cambios actuales y rutas relacionadas sin ejecutar status global costoso cuando hay paths.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "context.todo_scan": {
+      "enabled": true,
+      "description": "Localiza TODO, FIXME, PENDIENTE y marcadores equivalentes en contexto permitido.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "memory.lookup": {
+      "enabled": true,
+      "description": "Consulta memoria derivada, indice de fuentes y canon sin editar MEMORY.md.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "memory.session_recap": {
+      "enabled": true,
+      "description": "Resume eventos canonicos vinculados a una sesion de trabajo.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "memory.derived_index": {
+      "enabled": true,
+      "description": "Lista artefactos derivados relevantes de dashboard, wiki y audit_history.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "memory.evidence_digest": {
+      "enabled": true,
+      "description": "Recupera evidencia compacta por consulta desde fuentes registradas y canon.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
     "governance.preflight": {
       "enabled": true,
       "description": "Clasifica la operación y devuelve requisitos de gobernanza antes de actuar.",
       "risk_level": "ALTO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "governance.step_status": {
+      "enabled": true,
+      "description": "Consulta el estado canonico de un Step ID sin promover validacion humana.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "governance.trace_gap_scan": {
+      "enabled": true,
+      "description": "Detecta fuentes de conversacion recientes sin validacion vinculada.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "governance.protected_path_check": {
+      "enabled": true,
+      "description": "Evalua alcance de escritura y marcadores SISTEMA_TESIS:PROTEGIDO por ruta.",
+      "risk_level": "MEDIO",
       "write_scope": "read_only",
       "requires_step_id": false
     },
@@ -90,6 +223,13 @@
       "write_scope": "derived",
       "requires_step_id": false
     },
+    "artifacts.write_memory_derived": {
+      "enabled": true,
+      "description": "Escribe artefactos derivados de memoria sin tocar MEMORY.md generado.",
+      "risk_level": "MEDIO",
+      "write_scope": "derived",
+      "requires_step_id": false
+    },
     "canon.prepare_change": {
       "enabled": true,
       "description": "Prepara un cambio controlado y devuelve diff, riesgos y requisitos antes de aplicar.",
@@ -100,6 +240,20 @@
     "canon.apply_controlled_change": {
       "enabled": true,
       "description": "Aplica un cambio controlado con Step ID válido, evidencia fuente y backups automáticos.",
+      "risk_level": "ALTO",
+      "write_scope": "controlled",
+      "requires_step_id": true
+    },
+    "canon.prepare_multi_change": {
+      "enabled": true,
+      "description": "Prepara multiples cambios controlados y devuelve diffs, riesgos y hashes sin escribir.",
+      "risk_level": "ALTO",
+      "write_scope": "controlled",
+      "requires_step_id": false
+    },
+    "canon.apply_multi_change": {
+      "enabled": true,
+      "description": "Aplica multiples cambios controlados solo despues de preflight completo, Step ID y backups.",
       "risk_level": "ALTO",
       "write_scope": "controlled",
       "requires_step_id": true

@@ -4,6 +4,7 @@ set -euo pipefail
 : "${TESIS_EMMC_ROOT:=/mnt/emmc}"
 : "${TESIS_BACKUP_POLICY:=/etc/tesis-os/policies/domain_backup_policy.yaml}"
 : "${TESIS_BACKUP_TMPDIR:=/tmp/tesis-backup}"
+: "${TESIS_BACKUP_SIGN_KEY:=}"
 
 ts="$(date +%Y%m%d_%H%M%S)"
 report_dir="${TESIS_EMMC_ROOT}/backups/reports"
@@ -13,10 +14,17 @@ mapfile -t DOMAINS < <(python3 - "$TESIS_BACKUP_POLICY" <<'PY'
 import json, sys
 from pathlib import Path
 policy = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+if policy.get("encryption") != "required_age_or_gpg":
+    raise SystemExit("BACKUP_FAIL:policy_encryption_must_be_required_age_or_gpg")
 for name in policy["domains"]:
     print(name)
 PY
 )
+
+if [ -z "${TESIS_BACKUP_SIGN_KEY}" ]; then
+  echo "BACKUP_FAIL:missing_TESIS_BACKUP_SIGN_KEY"
+  exit 1
+fi
 
 artifacts_json="["
 first=1
@@ -61,13 +69,16 @@ PY
 
   artifact_path="${artifact_dir}/${domain}_${ts}.tar.gz"
   checksum_path="${artifact_path}.sha256"
+  signature_path="${artifact_path}.sha256.sig"
   manifest_path="${artifact_dir}/manifest.json"
+  manifest_signature_path="${artifact_dir}/manifest.json.sig"
 
   tar --exclude-from="${exclude_file}" -czf "${artifact_path}" -C / -T "${include_file}"
   sha256sum "${artifact_path}" > "${checksum_path}"
+  printf '%s' "${artifact_path}" | openssl dgst -sha256 -hmac "${TESIS_BACKUP_SIGN_KEY}" -binary | xxd -p -c 256 > "${signature_path}"
   tar --exclude-from="${exclude_file}" -cf - -C / -T "${include_file}" | tar -xf - -C "${snapshot_target}"
 
-  python3 - "$manifest_path" "$domain" "$artifact_path" "$checksum_path" "$snapshot_target" "$critical_json" "$ts" <<'PY'
+  python3 - "$manifest_path" "$domain" "$artifact_path" "$checksum_path" "$signature_path" "$snapshot_target" "$critical_json" "$ts" <<'PY'
 import json
 import os
 import socket
@@ -80,15 +91,18 @@ payload = {
     "domain": sys.argv[2],
     "artifact_path": sys.argv[3],
     "checksum_path": sys.argv[4],
-    "snapshot_path": sys.argv[5],
-    "critical_paths": json.loads(sys.argv[6]),
-    "timestamp": sys.argv[7],
+    "checksum_signature_path": sys.argv[5],
+    "snapshot_path": sys.argv[6],
+    "critical_paths": json.loads(sys.argv[7]),
+    "timestamp": sys.argv[8],
     "host": socket.gethostname(),
     "billing_mode": "none",
+    "signature_algorithm": "hmac-sha256",
 }
 manifest_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 print(json.dumps(payload, ensure_ascii=False))
 PY
+  printf '%s' "$(cat "${manifest_path}")" | openssl dgst -sha256 -hmac "${TESIS_BACKUP_SIGN_KEY}" -binary | xxd -p -c 256 > "${manifest_signature_path}"
   artifact_payload="$(python3 - "$manifest_path" <<'PY'
 import json, sys
 from pathlib import Path

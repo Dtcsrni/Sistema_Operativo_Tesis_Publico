@@ -1,0 +1,14 @@
+version: "1.0"
+ledger:
+  require_non_empty_content_between_delimiters: true
+  min_content_chars: 24
+  allowed_audit_levels:
+    - CRITICO
+    - ALTO
+    - MEDIO
+    - BAJO
+matrix:
+  disallow_generic_descriptions:
+    - "Cambio registrado en canon"
+decisions:
+  proposal_cannot_have_implementation_checked: true

@@ -24,6 +24,33 @@ Cada entrada de este glosario indica:
 
 ## Familias de identificadores
 
+```mermaid
+graph TD
+    subgraph "Nivel Estratégico"
+        F[F: Fase / Roadmap]
+        B[B: Bloque Macro]
+    end
+
+    subgraph "Nivel Táctico"
+        ENT[ENT: Entregable]
+        R[R: Riesgo]
+        T[T: Tarea]
+    end
+
+    subgraph "Nivel Operativo (Canon)"
+        VAL[VAL-STEP: Validación Humana]
+        DEC[DEC: Decisión]
+        EVT[EVT: Evento / Evidencia]
+    end
+
+    F --> B
+    B --> ENT
+    ENT --> T
+    T -.-> VAL
+    VAL --> DEC
+    DEC --> EVT
+```
+
 ### `VAL_STEP_{nnn}`
 
 - **Definicion:** identificador visible de una validacion humana o instruccion humana critica registrada en el canon.
@@ -165,7 +192,7 @@ Cada entrada de este glosario indica:
 - **Que no significa:** no debe editarse a mano.
 - **Ejemplo:** `README.md`, `06_dashboard/wiki/`, `06_dashboard/publico/`.
 
-### Superficie privada
+### superficie canónica no pública
 
 - **Definicion:** capa canonica completa del sistema.
 - **Uso operativo:** operar, registrar, auditar y conservar evidencia integra.
@@ -375,4 +402,4 @@ Cada entrada de este glosario indica:
 
 En la capa publica pueden explicarse familias y semantica de IDs, por ejemplo `VAL_STEP_{nnn}` o `EVT_{nnnn}`, pero no deben exponerse instancias privadas completas, hashes sensibles ni rutas internas no publicables.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-29`._

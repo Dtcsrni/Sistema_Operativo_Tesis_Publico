@@ -19,7 +19,19 @@
       "session_mode": "local_runtime",
       "estimated_cost_usd": 0.0,
       "estimated_tokens": 900,
-      "domains": ["profesional", "academico"]
+      "domains": ["profesional", "academico"],
+      "measured_candidates": {
+        "node": "tesis-edge",
+        "evidence": "historial interno no público/openclaw_max_model_bench_edge_20260421.json",
+        "daily_recommended": "qwen3:4b",
+        "fallback": "qwen3:4b",
+        "experimental_ceiling": "qwen2.5-coder:7b",
+        "notes": [
+          "qwen3:4b quedo como familia de borde por defecto.",
+          "qwen2.5-coder:7b arranco y respondio en 2.0039 s caliente, pero queda como techo controlado por presion de memoria.",
+          "qwen3:4b arranco y sigue como fallback local de referencia."
+        ]
+      }
     },
     {
       "id": "rknn_llm_experimental",
@@ -29,7 +41,120 @@
       "session_mode": "local_runtime",
       "estimated_cost_usd": 0.0,
       "estimated_tokens": 700,
-      "domains": ["profesional", "academico"]
+      "domains": ["profesional", "academico"],
+      "promotion_policy": {
+        "auto_promote": false,
+        "requires_runtime_device": "/dev/rknpu*",
+        "requires_preconverted_rkllm_model": true,
+        "requires_benchmark_evidence": true,
+        "current_status": "experimental_bloqueado_por_runtime_incompleto"
+      },
+      "candidate_models": [
+        {
+          "name": "Phi-3-3.8B W8A8",
+          "role": "balanced_npu_candidate",
+          "status": "pendiente_modelo_rkllm_preconvertido"
+        },
+        {
+          "name": "ChatGLM3-6B W8A8",
+          "role": "max_reasonable_8gb_candidate",
+          "status": "pendiente_modelo_rkllm_preconvertido"
+        }
+      ]
+    },
+    {
+      "id": "desktop_compute",
+      "mode": "desktop_compute_http",
+      "model_class": "open_source_gpu_heavy",
+      "billing_mode": "estimated",
+      "session_mode": "desktop_local_runtime",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 1800,
+      "domains": ["profesional", "academico"],
+      "measured_candidates": {
+        "node": "desktop_compute",
+        "evidence": "historial interno no público/openclaw_max_model_bench_pc_post_wsl_20260421.json",
+        "comparative_evidence": "historial interno no público/openclaw_max_model_bench_pc_20260421.json",
+        "daily_recommended": "mistral-nemo:12b",
+        "coding_heavy": "qwen2.5-coder:14b",
+        "experimental_ceiling": "qwen3:14b",
+        "alternative_ceiling": "phi4:14b",
+        "benchmark_profile": "pc_mistral_nemo_12b_extensive",
+        "benchmark_primary_store": "runtime/pc_control/benchmarks/runs/*.jsonl",
+        "notes": [
+          "Benchmark post-WSL: RAM visible 11.68 GiB, swap 16 GiB, VRAM baseline 1271 MiB.",
+          "mistral-nemo:12b respondio en 1.1014 s caliente con pico GPU 7410 MiB.",
+          "qwen2.5-coder:14b respondio en 1.0782 s caliente con pico GPU 7384 MiB.",
+          "phi4:14b respondio en 2.1445 s caliente y Ollama lo reporto luego como 38% CPU / 62% GPU.",
+          "qwen3:14b arranco, pero no respeto el prompt minimo y tardo 19.0608 s caliente por plantilla thinking."
+        ]
+      }
+    },
+    {
+      "id": "pc_native_llamacpp",
+      "mode": "desktop_native_llamacpp",
+      "model_class": "open_source_gpu_heavy",
+      "billing_mode": "estimated",
+      "session_mode": "desktop_native_runtime",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 1800,
+      "domains": ["profesional", "academico"],
+      "measured_candidates": {
+        "node": "desktop_workspace",
+        "evidence": "historial interno no público/openclaw_max_model_bench_pc_post_wsl_20260421.json",
+        "comparative_evidence": "historial interno no público/openclaw_max_model_bench_pc_20260421.json",
+        "daily_recommended": "mistral-nemo:12b",
+        "coding_heavy": "qwen2.5-coder:14b",
+        "experimental_ceiling": "qwen3:14b",
+        "alternative_ceiling": "phi4:14b",
+        "benchmark_profile": "pc_mistral_nemo_12b_extensive",
+        "benchmark_primary_store": "runtime/pc_control/benchmarks/runs/*.jsonl",
+        "notes": [
+          "Carril pesado principal para la PC en host nativo via llama.cpp server.",
+          "mistral-nemo:12b y qwen2.5-coder:14b siguen siendo el baseline medido para 8 GB VRAM.",
+          "qwen3:14b permanece experimental por latencia alta con plantilla de reasoning."
+        ]
+      }
+    },
+    {
+      "id": "external_llm_router",
+      "mode": "openai_compatible_router",
+      "model_class": "router_gateway_litellm_openrouter_or_compatible",
+      "billing_mode": "router_measured",
+      "session_mode": "direct_router_call",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 1600,
+      "domains": ["profesional", "academico"],
+      "default_enabled": false,
+      "required_env_vars": ["OPENCLAW_EXTERNAL_ROUTER_BASE_URL", "OPENCLAW_EXTERNAL_ROUTER_API_KEY"],
+      "compatible_routers": [
+        {
+          "id": "litellm",
+          "official_docs": "https://docs.litellm.ai/",
+          "use": "proveedor de IA no publicado-compatible gateway with documented routing, fallbacks, load balancing, budgets and observability.",
+          "security_note": "Pin reviewed versions or use official container images; do not install unpinned packages in thesis runtime."
+        },
+        {
+          "id": "openrouter",
+          "official_docs": "https://openrouter.ai/docs/api/reference",
+          "use": "External model-routing service for public or redacted academic/professional workloads only."
+        },
+        {
+          "id": "ollama_openai_compatible",
+          "official_docs": "https://docs.ollama.com/openai",
+          "use": "Local proveedor de IA no publicado-compatible endpoint for existing clients and routers."
+        },
+        {
+          "id": "llama_cpp_openai_compatible",
+          "official_docs": "https://llama-cpp-python.readthedocs.io/en/latest/server/",
+          "use": "PC-local proveedor de IA no publicado-compatible server for GGUF inference."
+        }
+      ],
+      "privacy_policy": {
+        "allowed_privacy_classes": ["public", "redacted", "local_private_when_self_hosted"],
+        "forbidden_inputs": ["secretos", "ledger_privado", "canon_privado_sin_redaccion"],
+        "default_enabled": false
+      }
     },
     {
       "id": "groq_api",
@@ -52,6 +177,41 @@
       "domains": ["academico"]
     },
     {
+      "id": "context7_docs",
+      "mode": "external_context_mcp",
+      "model_class": "versioned_external_docs",
+      "billing_mode": "free_or_external_service",
+      "session_mode": "context_lookup_only",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 600,
+      "domains": ["profesional", "academico"],
+      "privacy_policy": {
+        "allowed_privacy_classes": ["public", "redacted"],
+        "forbidden_inputs": ["evidencia_privada", "secretos", "ledger_privado", "canon_privado"],
+        "notes": [
+          "Context7 se usa solo para documentacion externa actualizada.",
+          "Serena conserva repo/canon/gobernanza como fuente interna."
+        ]
+      }
+    },
+    {
+      "id": "github_models_free",
+      "mode": "cloud_api_free_preview",
+      "model_class": "free_public_or_redacted_prototyping",
+      "billing_mode": "free_rate_limited",
+      "session_mode": "direct_api_call",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 800,
+      "domains": ["profesional", "academico"],
+      "required_env_vars": ["GITHUB_MODELS_TOKEN", "GITHUB_TOKEN"],
+      "required_scope": "models:read",
+      "privacy_policy": {
+        "allowed_privacy_classes": ["public", "redacted"],
+        "forbidden_inputs": ["evidencia_privada", "secretos", "ledger_privado", "canon_privado", "rutas_sensibles"],
+        "default_enabled": false
+      }
+    },
+    {
       "id": "gemini_web_assisted",
       "mode": "cloud_web_assisted",
       "model_class": "cloud_assisted_mid_cost",
@@ -59,7 +219,9 @@
       "session_mode": "human_supervised_web_session",
       "estimated_cost_usd": 0.02,
       "estimated_tokens": 1200,
-      "domains": ["academico"]
+      "reasoning_tier": "intermediate",
+      "tool_use_tier": "standard",
+      "domains": ["profesional", "academico"]
     },
     {
       "id": "openai_api",
@@ -78,7 +240,9 @@
       "billing_mode": "manual_web_assisted",
       "session_mode": "human_supervised_web_session",
       "estimated_cost_usd": 0.03,
-      "estimated_tokens": 1600,
+      "estimated_tokens": 2400,
+      "reasoning_tier": "premium",
+      "tool_use_tier": "advanced",
       "domains": ["profesional", "academico"]
     }
   ]

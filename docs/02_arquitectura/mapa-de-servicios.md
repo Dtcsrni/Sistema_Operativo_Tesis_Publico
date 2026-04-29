@@ -9,6 +9,8 @@ Fuente maquina-legible: `manifests/service_matrix.yaml`.
 - `openclaw-gateway.service` como servicio opcional bajo dominio `openclaw`.
 - `ollama.service` como runtime principal local opcional bajo dominio `openclaw`.
 - Carril NPU experimental instalado por bootstrap, sin convertirse en servicio base obligatorio.
+- `openclaw-telegram-bot.service` como canal remoto activo bajo dominio `openclaw`.
+- `openclaw-matrix-bot.service` como infraestructura latente y deshabilitada por defecto bajo dominio `openclaw`.
 - `edge-iot-worker.service` como servicio genérico del dominio `edge_iot`.
 - `edge-iot-watchdog.service` + timer como watchdog híbrido para recuperación y cuarentena del dominio `edge_iot`.
 - `prometheus.service` para scraping local y retención larga bajo dominio `administrativo`.
@@ -26,4 +28,4 @@ OpenClaw no es prerequisito del sistema base ni del pipeline edge.
 - `edge_iot`: usuario `edgeiot`, sin acceso directo a canon, publicación ni SQLite de `openclaw`, con runtime de resiliencia en `/var/lib/edge-iot/runtime`.
 - La fuente máquina-legible incorpora `usuario`, `grupo`, `read_only_paths`, `read_write_paths`, `network_profile` y `hardening`.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-29`._

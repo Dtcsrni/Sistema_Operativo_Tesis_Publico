@@ -1,0 +1,47 @@
+{
+  "decision": {
+    "domain": "academico",
+    "risk_level": "medium",
+    "requires_human_gate": false,
+    "provider": "desktop_compute",
+    "mode": "desktop_compute_http",
+    "model_class": "open_source_gpu_heavy",
+    "estimated_cost": 0.0,
+    "estimated_tokens": 1800,
+    "budget_bucket": "academico",
+    "credential_scope": "academico.env",
+    "billing_mode": "estimated",
+    "session_mode": "desktop_local_runtime",
+    "fallback_chain": [
+      "ollama_local",
+      "local",
+      "offline",
+      "manual"
+    ],
+    "reason": "Proveedor seleccionado: desktop_compute para dominio academico. Evaluación: desktop_compute: seleccionado"
+  },
+  "serena": {
+    "enabled": true,
+    "mode": "auto",
+    "status": "unavailable",
+    "tool_invocations": [],
+    "available": false,
+    "transport": "http",
+    "references": [],
+    "healthcheck": {
+      "status": "unavailable",
+      "error": "Serena HTTP no disponible en http://127.0.0.1:8765/mcp: [Errno 111] Connection refused",
+      "transport": "http",
+      "config": {
+        "transport": "http",
+        "timeout_ms": 4000,
+        "url": "http://127.0.0.1:8765/mcp",
+        "server_script": "",
+        "python_bin": "",
+        "auto_enabled": true
+      }
+    },
+    "error": "Serena HTTP no disponible en http://127.0.0.1:8765/mcp: [Errno 111] Connection refused",
+    "degraded": true
+  }
+}

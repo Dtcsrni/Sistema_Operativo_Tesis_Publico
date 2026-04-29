@@ -16,25 +16,27 @@ set "PYTHONUNBUFFERED=1"
 set "PYTHONUTF8=1"
 if not defined SERENA_MCP_DEBUG_LOG set "SERENA_MCP_DEBUG_LOG=%WORKSPACE_DIR%\00_sistema_tesis\bitacora\audit_history\serena_mcp_debug.log"
 
+set "CHECK_SCRIPT=%WORKSPACE_DIR%\07_scripts\check_serena_access.py"
+
 if exist "%VENV_SCRIPTS_PY%" (
-  "%VENV_SCRIPTS_PY%" -u "%SERVER_SCRIPT%" --transport http --host 127.0.0.1 --port 8765
+  "%VENV_SCRIPTS_PY%" -u "%CHECK_SCRIPT%" --attempt-start-http
   exit /b %ERRORLEVEL%
 )
 
 if exist "%VENV_BIN_PY%" (
-  "%VENV_BIN_PY%" -u "%SERVER_SCRIPT%" --transport http --host 127.0.0.1 --port 8765
+  "%VENV_BIN_PY%" -u "%CHECK_SCRIPT%" --attempt-start-http
   exit /b %ERRORLEVEL%
 )
 
 where python >nul 2>nul
 if not errorlevel 1 (
-  python -u "%SERVER_SCRIPT%" --transport http --host 127.0.0.1 --port 8765
+  python -u "%CHECK_SCRIPT%" --attempt-start-http
   exit /b %ERRORLEVEL%
 )
 
 where py >nul 2>nul
 if not errorlevel 1 (
-  py -3 -u "%SERVER_SCRIPT%" --transport http --host 127.0.0.1 --port 8765
+  py -3 -u "%CHECK_SCRIPT%" --attempt-start-http
   exit /b %ERRORLEVEL%
 )
 

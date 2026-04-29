@@ -10,7 +10,7 @@
         "SISTEMA_TESIS_AGENT_PROVIDER": "Host Provider",
         "SISTEMA_TESIS_AGENT_MODEL_VERSION": "Model Version",
         "SISTEMA_TESIS_AGENT_RUNTIME": "Host Runtime",
-        "SISTEMA_TESIS_MCP_HOST_KIND": "vscode"
+        "SISTEMA_TESIS_MCP_HOST_KIND": "compatible_ide"
       }
     },
     "serena-local-py": {
@@ -28,7 +28,7 @@
         "SISTEMA_TESIS_AGENT_PROVIDER": "Host Provider",
         "SISTEMA_TESIS_AGENT_MODEL_VERSION": "Model Version",
         "SISTEMA_TESIS_AGENT_RUNTIME": "Host Runtime",
-        "SISTEMA_TESIS_MCP_HOST_KIND": "vscode"
+        "SISTEMA_TESIS_MCP_HOST_KIND": "compatible_ide"
       }
     }
   }

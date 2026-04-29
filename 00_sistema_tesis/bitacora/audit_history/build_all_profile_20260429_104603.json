@@ -1,0 +1,145 @@
+{
+  "generated_at_utc": "20260429_104603",
+  "total_duration_seconds": 4.242,
+  "summary": {
+    "total": 9,
+    "executed": 8,
+    "skipped": 1,
+    "failed": 2,
+    "slow": 0
+  },
+  "slow_stages": [],
+  "failed_stages": [
+    "Auditar calidad de trazabilidad",
+    "Generar reporte de consistencia"
+  ],
+  "steps": [
+    {
+      "label": "Auditar canon unificado",
+      "script": "07_scripts/tesis.py",
+      "args": [
+        "audit",
+        "--check"
+      ],
+      "group": "canon",
+      "started_at_utc": "2026-04-29",
+      "duration_seconds": 0.321,
+      "budget_seconds": 10.0,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Verificar Integridad del Sistema",
+      "script": "07_scripts/guardrails.py",
+      "args": [
+        "--verify"
+      ],
+      "group": "integridad",
+      "started_at_utc": "2026-04-29",
+      "duration_seconds": 0.083,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar No-Hardcode Runtime",
+      "script": "07_scripts/verify_no_hardcoded_runtime.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-04-29",
+      "duration_seconds": 0.0,
+      "budget_seconds": null,
+      "status": "skipped",
+      "returncode": null,
+      "cache_hit": true,
+      "skip_reason": "cache_hit"
+    },
+    {
+      "label": "Auditar Ledger IA",
+      "script": "07_scripts/verify_ledger.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-04-29",
+      "duration_seconds": 0.072,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar Cadena de Bitácoras",
+      "script": "07_scripts/verify_bitacora_chain.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-04-29",
+      "duration_seconds": 0.063,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar calidad de trazabilidad",
+      "script": "07_scripts/verify_traceability_quality.py",
+      "args": [
+        "--strict"
+      ],
+      "group": "integridad",
+      "started_at_utc": "2026-04-29",
+      "duration_seconds": 0.189,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Autoauditoría documental",
+      "script": "07_scripts/document_audit.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-04-29",
+      "duration_seconds": 0.065,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Generar reporte de consistencia",
+      "script": "07_scripts/report_consistency.py",
+      "args": [],
+      "group": "generacion",
+      "started_at_utc": "2026-04-29",
+      "duration_seconds": 0.119,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Verificar operabilidad humana",
+      "script": "07_scripts/tesis.py",
+      "args": [
+        "doctor",
+        "--check"
+      ],
+      "group": "infra",
+      "started_at_utc": "2026-04-29",
+      "duration_seconds": 3.33,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    }
+  ]
+}

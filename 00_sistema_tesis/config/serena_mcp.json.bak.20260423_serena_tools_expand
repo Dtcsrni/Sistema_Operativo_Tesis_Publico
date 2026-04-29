@@ -1,0 +1,115 @@
+{
+  "server": {
+    "name": "serena-local",
+    "version": "1.0.0",
+    "transport": "stdio",
+    "protocol_version": "2025-03-26"
+  },
+  "trace": {
+    "path": "00_sistema_tesis/bitacora/audit_history/serena_mcp_operations.jsonl"
+  },
+  "paths": {
+    "read_roots": [
+      "00_sistema_tesis",
+      "01_planeacion",
+      "06_dashboard/wiki",
+      "06_dashboard/generado",
+      "07_scripts",
+      "docs"
+    ],
+    "derived_write_roots": [
+      "00_sistema_tesis/bitacora/audit_history/",
+      "06_dashboard/generado/",
+      "06_dashboard/wiki/",
+      "06_dashboard/publico/"
+    ],
+    "derived_write_allowlist": [
+      "00_sistema_tesis/config/ab_pilot_report.json",
+      "00_sistema_tesis/config/ab_pilot_plan.json",
+      "00_sistema_tesis/plantillas/ab_pilot_tasks_template.csv"
+    ],
+    "controlled_write_roots": [
+      ".vscode/",
+      "00_sistema_tesis/",
+      "07_scripts/",
+      "docs/"
+    ]
+  },
+  "runtime_env": {
+    "agent_role": "SISTEMA_TESIS_AGENT_ROLE",
+    "provider": "SISTEMA_TESIS_AGENT_PROVIDER",
+    "model_version": "SISTEMA_TESIS_AGENT_MODEL_VERSION",
+    "runtime_label": "SISTEMA_TESIS_AGENT_RUNTIME",
+    "host_kind": "SISTEMA_TESIS_MCP_HOST_KIND"
+  },
+  "bridge": {
+    "enabled": true,
+    "bind_host": "127.0.0.1",
+    "port": 8766,
+    "endpoint": "/mcp/serena",
+    "public_bind_allowed": false,
+    "auth": {
+      "enabled": true,
+      "env_var": "SERENA_BRIDGE_BEARER_TOKEN",
+      "scheme": "Bearer"
+    },
+    "identity_headers": {
+      "agent_role": "X-Sistema-Tesis-Agent-Role",
+      "provider": "X-Sistema-Tesis-Agent-Provider",
+      "model_version": "X-Sistema-Tesis-Agent-Model-Version",
+      "runtime_label": "X-Sistema-Tesis-Agent-Runtime",
+      "host_kind": "X-Sistema-Tesis-Host-Kind"
+    }
+  },
+  "tools": {
+    "context.fetch_compact": {
+      "enabled": true,
+      "description": "Recupera contexto compacto y referencias del repositorio sin expandir documentos completos.",
+      "risk_level": "MEDIO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "governance.preflight": {
+      "enabled": true,
+      "description": "Clasifica la operación y devuelve requisitos de gobernanza antes de actuar.",
+      "risk_level": "ALTO",
+      "write_scope": "read_only",
+      "requires_step_id": false
+    },
+    "artifacts.evaluate_serena": {
+      "enabled": true,
+      "description": "Ejecuta la evaluación Serena/AB y produce artefactos derivados trazables.",
+      "risk_level": "MEDIO",
+      "write_scope": "derived",
+      "requires_step_id": false
+    },
+    "artifacts.write_derived": {
+      "enabled": true,
+      "description": "Escribe solo artefactos derivados permitidos por la configuración del MCP.",
+      "risk_level": "MEDIO",
+      "write_scope": "derived",
+      "requires_step_id": false
+    },
+    "canon.prepare_change": {
+      "enabled": true,
+      "description": "Prepara un cambio controlado y devuelve diff, riesgos y requisitos antes de aplicar.",
+      "risk_level": "ALTO",
+      "write_scope": "controlled",
+      "requires_step_id": false
+    },
+    "canon.apply_controlled_change": {
+      "enabled": true,
+      "description": "Aplica un cambio controlado con Step ID válido, evidencia fuente y backups automáticos.",
+      "risk_level": "ALTO",
+      "write_scope": "controlled",
+      "requires_step_id": true
+    },
+    "trace.append_operation": {
+      "enabled": true,
+      "description": "Agrega una entrada explícita al registro de operaciones de Serena MCP.",
+      "risk_level": "MEDIO",
+      "write_scope": "derived",
+      "requires_step_id": false
+    }
+  }
+}

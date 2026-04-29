@@ -99,7 +99,7 @@ def test_empty_scope_sections_are_marked_as_pending_coverage(isolated_repo: Path
     thesis_page = (repo / "06_dashboard" / "wiki" / "tesis.md").read_text(encoding="utf-8")
 
     assert "Sin contenido operativo aún" in experiments_page
-    assert "Sin contenido operativo aún" in implementation_page
+    assert "Sin contenido operativo aún" not in implementation_page  # Ahora tiene contenido
     assert "Sin contenido operativo aún" in thesis_page
 
 

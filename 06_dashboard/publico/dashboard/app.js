@@ -1,36 +1,45 @@
 const panels = [...document.querySelectorAll('.panel')];
 const searchInput = document.getElementById('panel-search');
 const filterButtons = [...document.querySelectorAll('.filter-btn')];
-const tokenOverlay = document.getElementById('token-overlay');
 const reviewToggle = document.querySelector('[data-review-toggle]');
 const reviewContent = document.querySelector('[data-review-content]');
-const tokenBudgetDisplay = document.querySelector('[data-token-budget-display]');
-const tokenUsedDisplay = document.querySelector('[data-token-used-display]');
-const tokenRemainingDisplay = document.querySelector('[data-token-remaining-display]');
-const tokenRatioDisplay = document.querySelector('[data-token-ratio-display]');
-const tokenBudgetInput = document.querySelector('[data-token-budget-input]');
-const tokenUsedInput = document.querySelector('[data-token-used-input]');
-const tokenMeter = document.querySelector('[data-token-meter]');
-const tokenHint = document.querySelector('[data-token-hint]');
-const tokenCollapse = document.querySelector('[data-token-collapse]');
-const tokenAdjustButtons = [...document.querySelectorAll('[data-token-adjust]')];
-const tokenResetButton = document.querySelector('[data-token-reset]');
-const TOKEN_STORE_KEY = 'codex-token-budget-overlay';
-const REVIEW_RAIL_STORE_KEY = 'codex-review-rail';
-const TOKEN_DEFAULT_BUDGET = Number(tokenOverlay?.dataset.defaultBudget || 0);
-const TOKEN_DEFAULT_USED = Number(tokenOverlay?.dataset.defaultUsed || 0);
+const mdSelector = document.getElementById('md-selector');
+const mdViewer = document.getElementById('md-viewer');
+const REVIEW_RAIL_STORE_KEY = 'siot-review-rail';
+
 let reviewRailCollapsed = false;
 
-function clampTokenValue(value) {
-  const parsed = Number(value);
-  if (!Number.isFinite(parsed)) {
-    return 0;
-  }
-  return Math.max(0, Math.round(parsed));
+// Diagnóstico de carga
+function checkLibraries() {
+  const status = {
+    marked: typeof marked !== 'undefined',
+    mermaid: typeof mermaid !== 'undefined',
+    Prism: typeof Prism !== 'undefined'
+  };
+  console.log('SIOT Dashboard - Status:', status);
+  return status;
 }
 
-function todayKey() {
-  return new Date().toLocaleDateString('en-CA');
+// Configuración de Mermaid
+try {
+  if (typeof mermaid !== 'undefined') {
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'dark',
+      securityLevel: 'loose',
+      themeVariables: {
+        fontFamily: 'Inter, system-ui, sans-serif',
+        primaryColor: '#2dd4bf',
+        primaryTextColor: '#fff',
+        primaryBorderColor: '#14b8a6',
+        lineColor: '#94a3b8',
+        secondaryColor: '#3b82f6',
+        tertiaryColor: '#0f172a'
+      }
+    });
+  }
+} catch (e) {
+  console.error('Error inicializando Mermaid:', e);
 }
 
 function loadReviewRailState() {
@@ -42,98 +51,16 @@ function loadReviewRailState() {
 }
 
 function renderReviewRailState() {
-  if (!reviewToggle || !reviewContent) {
-    return;
-  }
-  reviewContent.classList.toggle('is-collapsed', reviewRailCollapsed);
-  reviewToggle.setAttribute('aria-expanded', String(!reviewRailCollapsed));
+  if (!reviewContent || !reviewToggle) return;
+  reviewContent.style.display = reviewRailCollapsed ? 'none' : 'grid';
   reviewToggle.textContent = reviewRailCollapsed ? 'Mostrar' : 'Ocultar';
   try {
     localStorage.setItem(REVIEW_RAIL_STORE_KEY, reviewRailCollapsed ? 'collapsed' : 'expanded');
   } catch {}
 }
 
-function loadTokenState() {
-  const fallback = {
-    budget: TOKEN_DEFAULT_BUDGET,
-    used: TOKEN_DEFAULT_USED,
-    collapsed: false,
-    date: todayKey(),
-  };
-
-  try {
-    const raw = localStorage.getItem(TOKEN_STORE_KEY);
-    if (!raw) {
-      return fallback;
-    }
-
-    const parsed = JSON.parse(raw);
-    const currentDate = todayKey();
-    if (parsed.date !== currentDate) {
-      return { ...fallback, budget: clampTokenValue(parsed.budget) || TOKEN_DEFAULT_BUDGET, date: currentDate };
-    }
-
-    return {
-      budget: clampTokenValue(parsed.budget) || TOKEN_DEFAULT_BUDGET,
-      used: clampTokenValue(parsed.used),
-      collapsed: Boolean(parsed.collapsed),
-      date: currentDate,
-    };
-  } catch {
-    return fallback;
-  }
-}
-
-let tokenState = loadTokenState();
-
-function saveTokenState() {
-  localStorage.setItem(TOKEN_STORE_KEY, JSON.stringify(tokenState));
-}
-
-function renderTokenState() {
-  const budget = clampTokenValue(tokenState.budget) || TOKEN_DEFAULT_BUDGET;
-  const used = Math.min(clampTokenValue(tokenState.used), budget);
-  const remaining = Math.max(budget - used, 0);
-  const ratio = budget > 0 ? Math.round((used / budget) * 100) : 0;
-  const mode = remaining === 0 ? 'límite alcanzado' : remaining < budget * 0.2 ? 'modo bajo' : remaining < budget * 0.5 ? 'modo medio' : 'modo amplio';
-
-  tokenState = { ...tokenState, budget, used, date: todayKey() };
-  if (tokenOverlay) {
-    tokenOverlay.classList.toggle('is-collapsed', Boolean(tokenState.collapsed));
-  }
-  if (tokenCollapse) {
-    tokenCollapse.setAttribute('aria-pressed', String(Boolean(tokenState.collapsed)));
-    tokenCollapse.textContent = tokenState.collapsed ? 'Mostrar' : 'Ocultar';
-  }
-  if (tokenBudgetDisplay) tokenBudgetDisplay.textContent = String(budget);
-  if (tokenUsedDisplay) tokenUsedDisplay.textContent = String(used);
-  if (tokenRemainingDisplay) tokenRemainingDisplay.textContent = String(remaining);
-  if (tokenRatioDisplay) tokenRatioDisplay.textContent = `${ratio}%`;
-  if (tokenBudgetInput) tokenBudgetInput.value = String(budget);
-  if (tokenUsedInput) tokenUsedInput.value = String(used);
-  if (tokenMeter) {
-    tokenMeter.max = String(budget || 1);
-    tokenMeter.value = String(used);
-    tokenMeter.setAttribute('aria-valuetext', `${remaining} restantes de ${budget}`);
-  }
-  if (tokenHint) {
-    tokenHint.textContent = `${mode}: mantiene visible el margen útil mientras trabajas.`;
-  }
-  saveTokenState();
-}
-
-function updateTokenState(patch) {
-  tokenState = {
-    ...tokenState,
-    ...patch,
-    budget: clampTokenValue(patch.budget ?? tokenState.budget),
-    used: clampTokenValue(patch.used ?? tokenState.used),
-  };
-  renderTokenState();
-}
-
 function normalize(value) {
-  return (value || '').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '');
+  return (value || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 }
 
 function applyFilters() {
@@ -142,54 +69,126 @@ function applyFilters() {
   panels.forEach((panel) => {
     const groupMatches = activeFilter === 'all' || panel.dataset.group === activeFilter;
     const textMatches = !query || normalize(panel.innerText).includes(query);
-    panel.classList.toggle('is-hidden', !(groupMatches && textMatches));
+    panel.style.display = (groupMatches && textMatches) ? '' : 'none';
   });
 }
 
-filterButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    filterButtons.forEach((item) => item.classList.remove('is-active'));
-    button.classList.add('is-active');
-    applyFilters();
+function jumpToNarrative(path) {
+  const viewerSection = document.getElementById('narrativa-sistema');
+  if (mdSelector && window.SIOT_NARRATIVA && window.SIOT_NARRATIVA[path]) {
+    mdSelector.value = path;
+    loadMarkdown(path);
+    viewerSection?.scrollIntoView({ behavior: 'smooth' });
+    return true;
+  }
+  return false;
+}
+
+
+async function loadMarkdown(path) {
+  if (!mdViewer) return;
+  try {
+    mdViewer.innerHTML = '<p class="muted">Cargando ' + path + '...</p>';
+    if (!window.SIOT_NARRATIVA) throw new Error('No se encontraron datos de narrativa (window.SIOT_NARRATIVA)');
+    
+    const text = window.SIOT_NARRATIVA[path];
+    if (!text) throw new Error('No se encontró el contenido para ' + path);
+    
+    // 1. Renderizar Markdown a HTML
+    if (typeof marked === 'undefined') throw new Error('Marked.js no está disponible');
+    mdViewer.innerHTML = marked.parse(text);
+    
+    // 2. Preparar bloques de Mermaid
+    mdViewer.querySelectorAll('pre code.language-mermaid').forEach(code => {
+      const pre = code.parentElement;
+      const div = document.createElement('div');
+      div.className = 'mermaid';
+      div.textContent = code.textContent;
+      pre.replaceWith(div);
+    });
+
+    // 3. Resaltar sintaxis con Prism
+    if (typeof Prism !== 'undefined') {
+      Prism.highlightAllUnder(mdViewer);
+    }
+    
+    // 4. Corregir rutas de imágenes
+    mdViewer.querySelectorAll('img').forEach(img => {
+      const src = img.getAttribute('src');
+      if (src && !src.startsWith('http') && !src.startsWith('data:') && !src.startsWith('/')) {
+        // Si la ruta es interna al dashboard, quitar el prefijo
+        if (src.startsWith('06_dashboard/generado/')) {
+          img.src = src.replace('06_dashboard/generado/', '');
+        } else {
+          // Si es relativa a la raíz, subir niveles
+          img.src = '../../' + src;
+        }
+      }
+    });
+
+    // 5. Renderizar diagramas de Mermaid
+    if (typeof mermaid !== 'undefined') {
+      await mermaid.run({
+        nodes: mdViewer.querySelectorAll('.mermaid'),
+      });
+    }
+    
+  } catch (err) {
+    console.error('Error cargando markdown:', err);
+    mdViewer.innerHTML = '<div class="panel danger"><strong>Error de renderizado:</strong> ' + err.message + '</div>';
+  }
+}
+
+// Inicialización principal
+document.addEventListener('DOMContentLoaded', () => {
+  const libStatus = checkLibraries();
+  
+  if (!libStatus.marked) {
+    const err = document.createElement('div');
+    err.className = 'panel danger';
+    err.innerHTML = '<strong>Error crítico:</strong> Las librerías de renderizado no cargaron. Verifica tu conexión.';
+    document.querySelector('main')?.prepend(err);
+  }
+
+  mdSelector?.addEventListener('change', (e) => loadMarkdown(e.target.value));
+
+  filterButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      filterButtons.forEach((item) => item.classList.remove('is-active'));
+      button.classList.add('is-active');
+      applyFilters();
+    });
   });
-});
 
-searchInput?.addEventListener('input', applyFilters);
-applyFilters();
+  searchInput?.addEventListener('input', applyFilters);
 
-tokenBudgetInput?.addEventListener('change', () => {
-  updateTokenState({ budget: tokenBudgetInput.value });
-});
-
-tokenUsedInput?.addEventListener('change', () => {
-  updateTokenState({ used: tokenUsedInput.value });
-});
-
-tokenAdjustButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const delta = clampTokenValue(button.dataset.tokenAdjust);
-    const signedDelta = button.dataset.tokenAdjust?.startsWith('-') ? -delta : delta;
-    updateTokenState({ used: tokenState.used + signedDelta });
+  reviewRailCollapsed = loadReviewRailState();
+  reviewToggle?.addEventListener('click', () => {
+    reviewRailCollapsed = !reviewRailCollapsed;
+    renderReviewRailState();
   });
-});
 
-tokenResetButton?.addEventListener('click', () => {
-  updateTokenState({ used: 0 });
-});
-
-tokenCollapse?.addEventListener('click', () => {
-  tokenState = { ...tokenState, collapsed: !tokenState.collapsed };
-  renderTokenState();
-});
-
-reviewRailCollapsed = loadReviewRailState();
-reviewToggle?.addEventListener('click', () => {
-  reviewRailCollapsed = !reviewRailCollapsed;
   renderReviewRailState();
-});
 
-renderTokenState();
-renderReviewRailState();
+  // Intercepción de enlaces MD
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (href && (href.endsWith('.md') || link.classList.contains('narrative-trigger'))) {
+      const cleanPath = href.split('#')[0].replace(/^(\.\.\/)+/, '');
+      const knownPath = Object.keys(window.SIOT_NARRATIVA || {}).find(k => k === cleanPath || k.endsWith(cleanPath));
+      if (knownPath) {
+        if (jumpToNarrative(knownPath)) {
+          e.preventDefault();
+        }
+      }
+    }
+  });
+
+  // Carga inicial de narrativa
+  if (mdSelector) loadMarkdown(mdSelector.value);
+});
 
 if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
   window.addEventListener('load', () => {

@@ -3,107 +3,282 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Implementación</title>
+  <title>Implementación | Tesis OS Wiki</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700&family=Fira+Code&family=Material+Icons&display=swap" rel="stylesheet">
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+  </script>
   <style>
+    :root {
+      --primary: #0f766e;
+      --primary-light: #14b8a6;
+      --secondary: #1e293b;
+      --accent: #06b6d4;
+      --bg: #f8fafc;
+      --surface: rgba(255, 255, 255, 0.85);
+      --border: rgba(226, 232, 240, 0.8);
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      background: #f6f3eb;
-      color: #1e293b;
-      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(15, 118, 110, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.05) 0px, transparent 50%);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      display: flex;
+      min-height: 100vh;
     }
+
+    /* Sidebar Navigation */
+    nav {
+      width: 260px;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      border-right: 1px solid var(--border);
+      padding: 2rem 1rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 100;
+    }
+
+    .nav-header {
+      padding: 0 0.75rem 1.5rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      color: var(--text-muted);
+      border-radius: var(--radius);
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-link .material-icons {
+      font-size: 20px;
+    }
+
+    /* Main Content Area */
     main {
-      max-width: 980px;
+      flex: 1;
+      padding: 3rem 4rem;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 2rem 1.25rem 3rem;
     }
+
     header {
+      margin-bottom: 3rem;
+      animation: fadeInDown 0.6s ease-out;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3rem;
+      margin: 0 0 0.5rem;
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .stamp {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Markdown Rendering Styles */
+    .markdown-body {
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+
+    .markdown-body h2 {
+      font-family: 'Outfit', sans-serif;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+      color: var(--secondary);
+    }
+
+    .markdown-body p { margin-bottom: 1.25rem; }
+
+    .markdown-body code {
+      background: rgba(15, 118, 110, 0.08);
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9em;
+      color: var(--primary);
+    }
+
+    .markdown-body a {
+      color: var(--primary);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .markdown-body a:hover {
+      border-bottom-color: var(--primary);
+    }
+
+    .markdown-body ul {
+      padding-left: 1.5rem;
       margin-bottom: 1.5rem;
     }
-    h1 {
-      margin: 0 0 0.5rem;
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
+
+    .markdown-body li {
+      margin-bottom: 0.5rem;
     }
-    .stamp {
-      color: #475569;
-      font-family: "Segoe UI", Tahoma, sans-serif;
-      font-size: 0.9rem;
+
+    /* Admonitions */
+    .admonition {
+      margin: 1.5rem 0;
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      border-left: 4px solid #ccc;
+      background: white;
+      box-shadow: var(--shadow);
     }
-    pre {
-      white-space: pre-wrap;
-      background: #fff;
-      border: 1px solid #d6d3d1;
-      border-radius: 16px;
-      padding: 1rem;
-      overflow-wrap: anywhere;
-      line-height: 1.55;
+    .admonition.success { border-left-color: #10b981; background: #ecfdf5; }
+    .admonition.warning { border-left-color: #f59e0b; background: #fffbeb; }
+    .admonition.danger { border-left-color: #ef4444; background: #fef2f2; }
+    
+    .admonition-title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
     }
-    a {
-      color: #0f766e;
+
+    @media (max-width: 768px) {
+      body { flex-direction: column; }
+      nav {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 1rem;
+      }
+      .nav-header { display: none; }
+      main { padding: 2rem 1.5rem; }
+      h1 { font-size: 2.2rem; }
     }
   </style>
 </head>
 <body>
+  <nav>
+    <div class="nav-header">
+      <span class="material-icons">architecture</span>
+      Tesis OS
+    </div>
+    <a href="casos_uso.html" class="nav-link "><span class="material-icons">smart_toy</span><span>Agente y Casos de Uso</span></a>
+<a href="sistema.html" class="nav-link "><span class="material-icons">settings</span><span>Sistema</span></a>
+<a href="gobernanza.html" class="nav-link "><span class="material-icons">gavel</span><span>Gobernanza</span></a>
+<a href="terminologia.html" class="nav-link "><span class="material-icons">book</span><span>Terminología</span></a>
+<a href="planeacion.html" class="nav-link "><span class="material-icons">event_note</span><span>Planeación</span></a>
+<a href="hipotesis.html" class="nav-link "><span class="material-icons">lightbulb</span><span>Hipótesis</span></a>
+<a href="bloques.html" class="nav-link "><span class="material-icons">grid_view</span><span>Bloques</span></a>
+<a href="decisiones.html" class="nav-link "><span class="material-icons">psychology</span><span>Decisiones</span></a>
+<a href="bitacora.html" class="nav-link "><span class="material-icons">history_edu</span><span>Bitácora</span></a>
+<a href="experimentos.html" class="nav-link "><span class="material-icons">science</span><span>Experimentos</span></a>
+<a href="implementacion.html" class="nav-link active"><span class="material-icons">code</span><span>Implementación</span></a>
+<a href="tesis.html" class="nav-link "><span class="material-icons">school</span><span>Tesis</span></a>
+  </nav>
   <main>
     <header>
       <h1>Implementación</h1>
-      <p class="stamp">Artefacto derivado generado el 2026-04-14</p>
+      <div class="stamp">
+        <span class="material-icons" style="font-size: 16px;">update</span>
+        Generado el 2026-04-29
+      </div>
     </header>
-    <pre># Implementación
-
-Estado de cobertura de firmware, gateway y analítica.
-
-- **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-14`
-- **Estado:** `OK`
-- **Fuentes:** `04_implementacion`
-- **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
-
-## Navegación de esta página
-
-- [Volver al índice](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/index.md).
-- Página anterior en la ruta base: [Experimentos](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/experimentos.md).
-- Página siguiente en la ruta base: [Tesis](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/tesis.md).
-- Relacionada: [Bloques](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/bloques.md).
-- Relacionada: [Experimentos](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/experimentos.md).
-- Relacionada: [Tesis](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/tesis.md).
-
-## Origen canónico y artefactos relacionados
-
-### Cómo rastrear esta página hasta su origen canónico
-
-1. Esta página derivada: [`06_dashboard/wiki/implementacion.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/implementacion.md).
+    <div class="markdown-body"><p><h1>Implementación</h1></p><p>Estado de cobertura de firmware, gateway y analítica.
+<ul><li><strong>Tesista:</strong> <code>Erick Renato Vega Ceron</code></li>
+<li><strong>Fecha:</strong> <code>2026-04-29</code></li>
+<li><strong>Estado:</strong> <code>OK</code></li>
+<li><strong>Fuentes:</strong> <code>04_implementacion</code></li>
+<li><strong>Aviso:</strong> Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.</li>
+</ul>
+<h2>Navegación de esta página</h2>
+<ul><li><a href="index.html">Volver al índice</a>.</li>
+<li>Página anterior en la ruta base: <a href="experimentos.html">Experimentos</a>.</li>
+<li>Página siguiente en la ruta base: <a href="tesis.html">Tesis</a>.</li>
+<li>Relacionada: <a href="bloques.html">Bloques</a>.</li>
+<li>Relacionada: <a href="experimentos.html">Experimentos</a>.</li>
+<li>Relacionada: <a href="tesis.html">Tesis</a>.</li>
+</ul>
+<h2>Origen canónico y artefactos relacionados</h2></p><p><h3>Cómo rastrear esta página hasta su origen canónico</h3></p><p>1. Esta página derivada: <a href="implementacion.html"><code>06_dashboard/wiki/implementacion.md</code></a>.
 2. Revisa la lista de fuentes canónicas que alimentan su contenido.
 3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
 4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
-5. Si necesitas cambiar el contenido, edita la fuente canónica y reconstruye; no edites esta salida a mano.
-
-### Fuentes canónicas declaradas
-
-|Fuente canónica|Tipo|Existe|
+5. Si necesitas cambiar el contenido, edita la fuente canónica y reconstruye; no edites esta salida a mano.</p><p><h3>Fuentes canónicas declaradas</h3></p><p>|Fuente canónica|Tipo|Existe|
 |---|---|---|
-|[`04_implementacion`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/04_implementacion)|directorio|sí|
-
-### Artefactos derivados relacionados
-
-- Markdown interno: [`06_dashboard/wiki/implementacion.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/wiki/implementacion.md)
-- HTML interno: [`06_dashboard/generado/wiki/implementacion.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/generado/wiki/implementacion.html)
-- Markdown público sanitizado: [`06_dashboard/publico/wiki/implementacion.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/publico/wiki/implementacion.md)
-- HTML público sanitizado: [`06_dashboard/publico/wiki_html/implementacion.html`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/publico/wiki_html/implementacion.html)
-
-## Cómo leer esta cobertura
-
-- Esta página no inventa contenido faltante.
-- Solo reporta si la ruta existe y si ya contiene material operativo utilizable.
-- El objetivo es mostrar madurez real del subsistema, no una promesa editorial.
-
-## Estado de cobertura
-
-- Ruta: `04_implementacion`
-- Existe: `sí`
-- Cobertura: `pendiente`
-- Mensaje: Sin contenido operativo aún. La wiki refleja el estado real del repositorio y no inventa artefactos.
-</pre>
-      <footer class="public-update"><p>Última actualización: <strong>2026-04-13</strong></p></footer>
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/04_implementacion"><code>04_implementacion</code></a>|directorio|sí|</p><p><h3>Artefactos derivados relacionados</h3>
+<ul><li>Markdown interno: <a href="implementacion.html"><code>06_dashboard/wiki/implementacion.md</code></a></li>
+<li>HTML interno: <a href="implementacion.html"><code>06_dashboard/generado/wiki/implementacion.html</code></a></li>
+<li>Markdown público sanitizado: <a href="../wiki/implementacion.md"><code>06_dashboard/publico/wiki/implementacion.md</code></a></li>
+<li>HTML público sanitizado: <a href="implementacion.html"><code>06_dashboard/publico/wiki_html/implementacion.html</code></a></li>
+</ul>
+<h2>Cómo leer esta cobertura</h2>
+<ul><li>Esta página no inventa contenido faltante.</li>
+<li>Solo reporta si la ruta existe y si ya contiene material operativo utilizable.</li>
+<li>El objetivo es mostrar madurez real del subsistema, no una promesa editorial.</li>
+</ul>
+<h2>Estado de cobertura</h2>
+<ul><li>Ruta: <code>04_implementacion</code></li>
+<li>Existe: <code>sí</code></li>
+<li>Cobertura: <code>parcial_o_activa</code></li>
+</ul>
+<h2>Archivos detectados</h2>
+<ul><li><code>04_implementacion/gateway/openclaw_pc_first_matrix_runtime.md</code></li>
+</ul></p></div>
+      <footer class="public-update"><p>Última actualización: <strong>2026-04-29</strong></p></footer>
   </main>
 </body>
 </html>

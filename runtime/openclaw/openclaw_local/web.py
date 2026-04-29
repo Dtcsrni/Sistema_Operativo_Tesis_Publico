@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .runtime_status import summarize_host
+from .session_layer import build_nodes_summary, build_provider_summary, ensure_channel_session, process_channel_text, touch_session
 
 try:
     from fastapi import FastAPI, Request
@@ -80,6 +81,8 @@ def create_app(
     store_summary: dict[str, Any],
     provider_registry: dict[str, Any],
     *,
+    repo_root: Path | None = None,
+    store: Any | None = None,
     academic_packets: list[dict[str, Any]] | None = None,
     approvals: list[dict[str, Any]] | None = None,
     runtime_status: dict[str, Any] | None = None,
@@ -91,38 +94,20 @@ def create_app(
     if not fastapi_available():
         raise RuntimeError("FastAPI y Jinja2 no están disponibles en el entorno.")
 
-    app = FastAPI(title="Espacio de trabajo local de OpenClaw")
-    templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
-
-    @app.get("/", response_class=HTMLResponse)
-    async def index(request: Request) -> Any:
-        context = build_dashboard_context(
-            store_summary,
-            provider_registry,
-            academic_packets=academic_packets,
-            approvals=approvals,
-            runtime_status=runtime_status,
-            preflight=preflight,
-            secret_status=secret_status,
-            budget_status=budget_status,
-            billing_history=billing_history,
-        )
-        context["request"] = request
-        return templates.TemplateResponse("dashboard.html", context)
-
-    @app.get("/health", response_class=JSONResponse)
-    async def health() -> Any:
-        return {
-            "status": "ok",
-            "store": store_summary,
-            "host": summarize_host(),
-            "runtime_status": runtime_status or {},
-            "preflight": preflight or {},
-            "secret_status": secret_status or {},
-            "budget_status": budget_status or {},
-        }
-
-    return app
+    from .web_modular import create_app as factory
+    return factory(
+        store=store,
+        repo_root=repo_root or Path(__file__).resolve().parents[3],
+        provider_registry=provider_registry,
+        store_summary=store_summary,
+        academic_packets=academic_packets,
+        approvals=approvals,
+        runtime_status=runtime_status,
+        preflight=preflight,
+        secret_status=secret_status,
+        budget_status=budget_status,
+        billing_history=billing_history,
+    )
 
 
 def render_dashboard_html(
@@ -222,6 +207,8 @@ def serve_workspace(
     store_summary: dict[str, Any],
     provider_registry: dict[str, Any],
     *,
+    repo_root: Path | None = None,
+    store: Any | None = None,
     academic_packets: list[dict[str, Any]] | None = None,
     approvals: list[dict[str, Any]] | None = None,
     runtime_status: dict[str, Any] | None = None,
@@ -236,6 +223,8 @@ def serve_workspace(
         app = create_app(
             store_summary,
             provider_registry,
+            repo_root=repo_root,
+            store=store,
             academic_packets=academic_packets,
             approvals=approvals,
             runtime_status=runtime_status,

@@ -1,0 +1,103 @@
+{
+  "created_at": "2026-04-21T06:15:56-06:00",
+  "service_active": {
+    "cmd": "ssh tesis-edge 'systemctl is-active openclaw-gateway'",
+    "returncode": 0,
+    "stdout": "active\n",
+    "stderr": ""
+  },
+  "service_status_head": {
+    "cmd": "ssh tesis-edge \"systemctl status openclaw-gateway --no-pager -l | sed -n '1,25p'\"",
+    "returncode": 0,
+    "stdout": "● openclaw-gateway.service - OpenClaw Gateway opcional del Sistema Operativo de Tesis\n     Loaded: loaded (/etc/systemd/system/openclaw-gateway.service; enabled; preset: enabled)\n     Active: active (running) since Tue 2026-04-21 CST; 2min 40s ago\n    Process: 91772 ExecStartPre=/bin/bash -lc /srv/tesis/repo/runtime/openclaw/wrappers/openclaw-preflight.sh (code=exited, status=0/SUCCESS)\n   Main PID: 91775 (python)\n      Tasks: 1 (limit: 9342)\n     Memory: 39.6M\n        CPU: 2.219s\n     CGroup: /system.slice/openclaw-gateway.service\n             └─91775 /opt/tesis-os/venvs/openclaw/bin/python /srv/tesis/repo/runtime/openclaw/bin/openclaw_local.py pasarela servir --host 127.0.0.1 --puerto 18789\n\nApr 21 06:13:15 tesis-edge systemd[1]: Starting openclaw-gateway.service - OpenClaw Gateway opcional del Sistema Operativo de Tesis...\nApr 21 06:13:16 tesis-edge systemd[1]: Started openclaw-gateway.service - OpenClaw Gateway opcional del Sistema Operativo de Tesis.\n",
+    "stderr": ""
+  },
+  "env_selected": {
+    "cmd": "ssh tesis-edge \"sudo grep -E 'OPENCLAW_(DESKTOP_COMPUTE_MODEL|DESKTOP_COMPUTE_BASE_URL|DESKTOP_COMPUTE_ENABLED|NPU_AUTO_PROMOTE|CLOUD_ENABLED|TELEGRAM_ENABLED|TELEGRAM_CHAT_ID|DB_PATH)=' /etc/tesis-os/openclaw.env\"",
+    "returncode": 0,
+    "stdout": "OPENCLAW_DB_PATH=/var/lib/herramientas/openclaw/openclaw.db\nOPENCLAW_NPU_AUTO_PROMOTE=0\nOPENCLAW_TELEGRAM_ENABLED=1\nOPENCLAW_TELEGRAM_CHAT_ID=6866872051\nOPENCLAW_CLOUD_ENABLED=0\nOPENCLAW_DESKTOP_COMPUTE_ENABLED=1\nOPENCLAW_DESKTOP_COMPUTE_BASE_URL=http://127.0.0.1:21434\nOPENCLAW_DESKTOP_COMPUTE_MODEL=mistral-nemo:12b\n",
+    "stderr": ""
+  },
+  "desktop_tunnel": {
+    "cmd": "ssh tesis-edge \"sudo ss -lntp 'sport = :21434'; curl -sS --max-time 5 http://127.0.0.1:21434/api/tags | head -c 1500\"",
+    "returncode": 0,
+    "stdout": "State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess\nLISTEN 0      0          127.0.0.1:21434      0.0.0.0:*    users:((\"sshd\",pid=93846,fd=7))\n{\"models\":[{\"name\":\"phi4:14b\",\"model\":\"phi4:14b\",\"modified_at\":\"2026-04-21T05:34:12.788318282-06:00\",\"size\":9053116391,\"digest\":\"ac896e5b8b34a1f4efa7b14d7520725140d5512484457fab45d2a4ea14c69dba\",\"details\":{\"parent_model\":\"\",\"format\":\"gguf\",\"family\":\"phi3\",\"families\":[\"phi3\"],\"parameter_size\":\"14.7B\",\"quantization_level\":\"Q4_K_M\"}},{\"name\":\"qwen3:14b\",\"model\":\"qwen3:14b\",\"modified_at\":\"2026-04-21T05:29:01.131727848-06:00\",\"size\":9276198565,\"digest\":\"bdbd181c33f2ed1b31c972991882db3cf4d192569092138a7d29e973cd9debe8\",\"details\":{\"parent_model\":\"\",\"format\":\"gguf\",\"family\":\"qwen3\",\"families\":[\"qwen3\"],\"parameter_size\":\"14.8B\",\"quantization_level\":\"Q4_K_M\"}},{\"name\":\"qwen2.5-coder:14b\",\"model\":\"qwen2.5-coder:14b\",\"modified_at\":\"2026-04-21T05:23:45.607669419-06:00\",\"size\":8988124298,\"digest\":\"9ec8897f747e246e970bc5cfdda85d22f1123dc2e3d34978a010a75968716849\",\"details\":{\"parent_model\":\"\",\"format\":\"gguf\",\"family\":\"qwen2\",\"families\":[\"qwen2\"],\"parameter_size\":\"14.8B\",\"quantization_level\":\"Q4_K_M\"}},{\"name\":\"gemma3:12b\",\"model\":\"gemma3:12b\",\"modified_at\":\"2026-04-21T05:17:28.027013841-06:00\",\"size\":8149190253,\"digest\":\"f4031aab637d1ffa37b42570452ae0e4fad0314754d17ded67322e4b95836f8a\",\"details\":{\"parent_model\":\"\",\"format\":\"gguf\",\"family\":\"gemma3\",\"families\":[\"gemma3\"],\"parameter_size\":\"12.2B\",\"quantization_level\":\"Q4_K_M\"}},{\"name\":\"mistral-nemo:12b\",\"model\":\"mistral-nemo:12b\",\"modified_at\":\"2026-04-21T05:12:43.758114618-06:00\",\"size\":7071713227,\"digest\":\"e7e06d107c6c86ed0cf45445f1790720b50",
+    "stderr": ""
+  },
+  "gateway_health": {
+    "cmd": "ssh tesis-edge 'curl -sS --max-time 5 http://127.0.0.1:18789/health | head -c 1500'",
+    "returncode": 0,
+    "stdout": "{\"status\":\"ok\",\"store\":{\"tasks\":0,\"pending_approvals\":0,\"evidence_records\":0,\"academic_packets\":0,\"cached_contexts\":0,\"runtime_probes\":23,\"benchmark_runs\":6,\"secret_resolutions\":277,\"billing_records\":0,\"budget_snapshots\":23,\"db_path\":\"/var/lib/herramientas/openclaw/openclaw.db\"},\"host\":{\"platform\":\"Linux-6.1.43-rockchip-rk3588-aarch64-with-glibc2.36\",\"cpu_count\":8,\"machine\":\"aarch64\",\"orange_pi_model\":\"RK3588 OPi 5 Plus\",\"memory\":{\"total_bytes\":8320172032},\"disk\":{\"total_bytes\":123600695296,\"used_bytes\":22411759616,\"free_bytes\":99837419520,\"rootfs_device\":\"/dev/nvme0n1p2\",\"rootfs_fstype\":\"ext4\",\"rootfs_on_nvme\":true},\"temperature_celsius\":44.38,\"network\":{\"interfaces\":[\"br-500670e689d9\",\"docker0\",\"enP3p49s0\",\"enP4p65s0\",\"lo\",\"veth40dd529\",\"wlP2p33s0\"],\"default_route\":true},\"storage\":{\"emmc_paths_present\":[\"/mnt/emmc/backups\",\"/mnt/emmc/snapshots\"],\"emmc_available\":true},\"accelerators\":{\"rockchip_npu_present\":true,\"rk3588_compatible\":true}},\"runtime_status\":{\"state\":\"npu_experimental_ready\",\"active_runtime\":\"ollama_local\",\"service_user\":\"tesis\",\"repo_root\":\"/srv/tesis/repo\",\"env_file\":\"/etc/tesis-os/openclaw.env\",\"data_dir\":\"/var/lib/herramientas/openclaw\",\"cache_dir\":\"/var/cache/herramientas/openclaw\",\"log_dir\":\"/var/log/openclaw\",\"db_path\":\"/var/lib/herramientas/openclaw/openclaw.db\",\"paths\":{\"repo_root_exists\":true,\"env_file_exists\":true,\"data_dir_exists\":true,\"cache_dir_exists\":true,\"log_dir_exists\":true,\"db_parent_exists\":true},\"ollama\":{\"installed\":true,\"ready\":true,\"mod",
+    "stderr": ""
+  },
+  "preflight": {
+    "cmd": "ssh tesis-edge 'sudo bash -lc \\'set -a; . /etc/tesis-os/openclaw.env; set +a; cd /srv/tesis/repo; runuser -u openclaw -- \"$OPENCLAW_PYTHON_BIN\" runtime/openclaw/bin/openclaw_local.py pasarela preflight\\''",
+    "returncode": 2,
+    "stdout": "",
+    "stderr": "/bin/sh: 1: Syntax error: Unterminated quoted string\n"
+  },
+  "doctor": {
+    "cmd": "ssh tesis-edge 'sudo bash -lc \\'set -a; . /etc/tesis-os/openclaw.env; set +a; cd /srv/tesis/repo; runuser -u openclaw -- \"$OPENCLAW_PYTHON_BIN\" runtime/openclaw/bin/openclaw_local.py doctor\\''",
+    "returncode": 2,
+    "stdout": "",
+    "stderr": "/bin/sh: 1: Syntax error: Unterminated quoted string\n"
+  },
+  "provider_benchmark": {
+    "cmd": "ssh tesis-edge 'sudo bash -lc \\'set -a; . /etc/tesis-os/openclaw.env; set +a; cd /srv/tesis/repo; runuser -u openclaw -- \"$OPENCLAW_PYTHON_BIN\" runtime/openclaw/bin/openclaw_local.py proveedor medir\\''",
+    "returncode": 2,
+    "stdout": "",
+    "stderr": "/bin/sh: 1: Syntax error: Unterminated quoted string\n"
+  },
+  "routes": {
+    "heavy": {
+      "provider": "desktop_compute",
+      "mode": "desktop_compute_http",
+      "fallback_chain": [
+        "ollama_local",
+        "local",
+        "offline",
+        "manual"
+      ],
+      "reason": "Proveedor seleccionado: desktop_compute para dominio academico. Evaluación: desktop_compute: seleccionado",
+      "evidence": "historial interno no público/openclaw_route_heavy_20260421.json"
+    },
+    "medium": {
+      "provider": "ollama_local",
+      "mode": "local_model",
+      "fallback_chain": [
+        "local",
+        "offline",
+        "manual"
+      ],
+      "reason": "Proveedor seleccionado: ollama_local para dominio academico. Evaluación: ollama_local: seleccionado",
+      "evidence": "historial interno no público/openclaw_route_medium_20260421.json"
+    },
+    "edge": {
+      "provider": "local",
+      "mode": "local_rules",
+      "fallback_chain": [
+        "offline",
+        "manual"
+      ],
+      "reason": "Proveedor seleccionado: local para dominio edge. Evaluación: local: seleccionado",
+      "evidence": "historial interno no público/openclaw_route_edge_20260421.json"
+    },
+    "fallback": {
+      "provider": "ollama_local",
+      "mode": "local_model",
+      "fallback_chain": [
+        "local",
+        "offline",
+        "manual"
+      ],
+      "reason": "Proveedor seleccionado: ollama_local para dominio academico. Evaluación: ollama_local: seleccionado",
+      "evidence": "historial interno no público/openclaw_route_fallback_20260421.json"
+    }
+  },
+  "telegram_smoke": {
+    "status": "sent",
+    "channel": "telegram",
+    "detail": "sent"
+  },
+  "config_backup": "/etc/tesis-os/openclaw.env.bak.20260421_061315"
+}

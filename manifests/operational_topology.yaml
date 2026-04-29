@@ -3,6 +3,9 @@
   "topology_id": "desktop_first_orange_pi_edge",
   "primary_authoring_node": "desktop_vscode",
   "edge_execution_node": "orange_pi",
+  "edge_hostname": "tesis-edge",
+  "edge_ssh_user": "tesisai",
+  "edge_ssh_port": 22,
   "integration_mode": "git_and_artifacts",
   "allowed_remote_operations": [
     "git_sync",

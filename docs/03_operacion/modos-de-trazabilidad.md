@@ -78,6 +78,7 @@ Cuando el evento requiera soberania humana, debe incluir ademas:
 4. Si un evento carece de fuente verificable, se marca como pendiente y no como validado.
 5. Si hay validacion humana, el texto exacto de confirmacion debe conservarse sin reinterpretacion.
 6. Los resúmenes pueden ser compactos, pero nunca deben borrar la relacion entre contexto, evidencia y resultado.
+7. Cuando una validacion requiera firma humana valida sobre un commit, el flujo debe preparar y ejecutar el `git commit` correspondiente para que aparezca la interfaz de firma y el humano aplique su clave sin perder la traza del cambio.
 
 ## Flujo recomendado
 
@@ -113,4 +114,4 @@ Cuando el evento requiera soberania humana, debe incluir ademas:
 
 Esta politica es descriptiva y operativa: define el minimo aceptable para que un evento sea considerado trazable dentro del sistema operativo de tesis.
 
-_Última actualización: `2026-04-13`._
+_Última actualización: `2026-04-29`._

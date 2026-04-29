@@ -1,0 +1,46 @@
+{
+  "version": "1.0",
+  "default_policy": "hybrid_local_first",
+  "privacy_classes": ["public", "redacted", "private", "restricted"],
+  "risk_levels": ["BAJO", "MEDIO", "ALTO", "CRITICO"],
+  "default_route": "wsl_native",
+  "local_first_routes": ["serena", "ollama_local", "pc_native_llamacpp", "docker_agent", "wsl_native"],
+  "cloud_free_routes": ["github_models_free"],
+  "external_context_routes": ["context7_docs"],
+  "cloud_allowed_privacy_classes": ["public", "redacted"],
+  "context7_allowed_privacy_classes": ["public", "redacted"],
+  "github_models": {
+    "enabled_by_default": false,
+    "required_env_vars": ["GITHUB_MODELS_TOKEN", "GITHUB_TOKEN"],
+    "required_scope": "models:read",
+    "privacy_policy": "Solo contexto publico o sanitizado; nunca evidencia privada, secretos, ledger privado ni rutas sensibles."
+  },
+  "context7": {
+    "enabled_by_default": true,
+    "usage_policy": "Solo documentación externa actualizada y versionada; no sustituye Serena para repo/canon."
+  },
+  "sensitive_path_prefixes": [
+    ".env",
+    "evidencia privada no publicada/",
+    "00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md",
+    "00_sistema_tesis/bitacora/matriz_trazabilidad.md",
+    "00_sistema_tesis/canon/",
+    "identidad técnica no publicada por seguridad",
+    "config/env/",
+    "runtime/openclaw/state/"
+  ],
+  "route_preferences": {
+    "docs_external": ["context7_docs", "serena", "wsl_native"],
+    "academic_heavy": ["pc_native_llamacpp", "ollama_local", "serena", "wsl_native"],
+    "docker_runtime": ["docker_agent", "wsl_native", "serena"],
+    "repo_governance": ["serena", "wsl_native"],
+    "public_cloud": ["github_models_free", "context7_docs", "serena", "wsl_native"],
+    "default": ["serena", "ollama_local", "wsl_native"]
+  },
+  "quality_gate_defaults": {
+    "requires_evidence_refs": true,
+    "requires_risk_summary": true,
+    "max_gate_failures": 0,
+    "mutation_policy": "agent_integrates_after_gates"
+  }
+}
