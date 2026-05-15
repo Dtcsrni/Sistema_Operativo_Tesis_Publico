@@ -1400,7 +1400,7 @@ def _select_available_model(base_url: str, candidates: list[str], *, provider: s
         return candidates[0] if llamacpp_ready(base_url) and candidates else ""
     if provider == "external_llm_router":
         return candidates[0] if base_url.strip() and candidates else ""
-    ok, models = list_ollama_models(base_url)
+    ok, models = list_available_models(base_url)
     if not ok:
         return ""
     available = set(models)
@@ -2434,7 +2434,7 @@ def _status_text(repo_root: Path, store: OpenClawStore) -> str:
     if latest_backend_busy == "none" and latest_fallback_reason == "all_candidates_failed" and desktop_model:
         latest_backend_busy = f"{desktop_provider}:{desktop_model}"
         latest_backend_busy_count = 1
-    desktop_ok = llamacpp_ready(desktop_base) if desktop_provider == "pc_native_llamacpp" else list_ollama_models(desktop_base)[0]
+    desktop_ok = llamacpp_ready(desktop_base) if desktop_provider in {"llamacpp_local", "pc_native_llamacpp"} else list_available_models(desktop_base)[0]
     try:
         preflight_status = build_preflight_report(repo_root).get("status")
     except Exception as exc:
@@ -2458,14 +2458,14 @@ def _status_text(repo_root: Path, store: OpenClawStore) -> str:
 
 
 def _models_text() -> str:
-    edge_ok, edge_models = list_ollama_models(os.getenv("OPENCLAW_EDGE_OLLAMA_BASE_URL", "http://127.0.0.1:11434"))
+    edge_ok, edge_models = list_available_models(os.getenv("OPENCLAW_EDGE_INFERENCE_BASE_URL", os.getenv("OPENCLAW_EDGE_OLLAMA_BASE_URL", "http://127.0.0.1:11434")))
     desktop_provider = _desktop_provider_id()
     desktop_base = _desktop_runtime_base_url()
     if desktop_provider == "pc_native_llamacpp":
         desktop_ok = llamacpp_ready(desktop_base)
         desktop_models = [os.getenv("OPENCLAW_DESKTOP_RUNTIME_MODEL", os.getenv("OPENCLAW_DESKTOP_COMPUTE_MODEL", "mistral-nemo:12b")).strip() or "mistral-nemo:12b"]
     else:
-        desktop_ok, desktop_models = list_ollama_models(desktop_base)
+        desktop_ok, desktop_models = list_available_models(desktop_base)
     return "\n".join(
         [
             "Modelos OpenClaw:",
