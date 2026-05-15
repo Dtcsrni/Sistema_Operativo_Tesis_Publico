@@ -383,8 +383,8 @@ def test_route_task_uses_recent_feedback_to_reorder_candidates(tmp_path: Path, m
     class FakeStore:
         def get_provider_outcome_stats(self, *, domain: str | None = None, request_kind: str | None = None, limit: int = 50):
             return {
-                "llamacpp_local": {"total": 4, "success_rate": 0.1, "average_latency_ms": 1200.0},
-                "edge_inference": {"total": 5, "success_rate": 0.95, "average_latency_ms": 300.0},
+                "llamacpp_local": {"total": 4, "success_rate": 0.95, "average_latency_ms": 300.0},
+                "edge_inference": {"total": 5, "success_rate": 0.1, "average_latency_ms": 1200.0},
             }
 
     monkeypatch.setattr("openclaw_local.engine.resolve_provider_secret", fake_secret_resolution)
