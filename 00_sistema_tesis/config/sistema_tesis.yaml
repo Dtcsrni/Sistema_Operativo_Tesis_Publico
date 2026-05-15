@@ -46,7 +46,7 @@
     "pc_hub": {
       "rol": "coordinacion_y_gobernanza",
       "os": "windows_wsl2",
-      "servicios": ["siot-docs", "siot-agent"]
+      "servicios": ["tablero-gobernanza", "nucleo-openclaw", "pasarela-openclaw", "api-persistencia-misiones", "centro-control-misiones", "base-semantica-toltecayotl"]
     },
     "orange_pi_edge": {
       "rol": "captura_y_control_iot",

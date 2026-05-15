@@ -1,0 +1,25 @@
+{
+  "package": "tesis_os_ingestion_452m_tokens",
+  "version": "1.0",
+  "created_at": "2026-05-01T10:05:42Z",
+  "description": "Paquete de ingestión validado para el sistema operativo de tesis sobre caso 452M tokens, cache, agentes IA, Tezkatli y Orange Pi.",
+  "scope": {
+    "validated": "Consistencia aritmética, riesgos operativos, reglas de arquitectura y métricas de control.",
+    "not_validated": "No se verificaron dashboards privados, facturación real ni precios web vigentes durante esta generación.",
+    "recommended_use": "Ingestión RAG/Obsidian/OpenClaw/Tezkatli como knowledge object y registro de claims."
+  },
+  "schema": {
+    "jsonl": "Un chunk o registro por línea, recomendado para vectorización y RAG.",
+    "yaml": "Reglas operativas y configuración humana/máquina.",
+    "csv": "Registro tabular de claims y validaciones.",
+    "md": "Reporte compacto legible por humanos."
+  },
+  "sha256": {
+    "claims_register.csv": "cc24a1591b3a96ef5a177e652e90d7a2e88da4a1036c72cebf452266dd8a23ee",
+    "ingestion_chunks.jsonl": "45f4a4c572610e958490e10ceef4e3ad287088913ceeba1e40af84c1c290b003",
+    "claims_register.jsonl": "ba8f260edfa4e1848f2d084e8f0be5f4bc8c78791aa6516c98b89b6d66ae4a02",
+    "guardrails.yaml": "a97e8c65798f73c861b7c5c1ffbbc2e95fcc942281e83dc4bcda8dc326957282",
+    "manifest.json": "bdab145643acc1201e933f728348c6d74e9e2a6f52046337f40d9309c22404fc",
+    "README_INGESTION.md": "515b8297b70c7784d6e302532d56c2fafa17f03ba6fde8a11f30a8c37edee6ba"
+  }
+}

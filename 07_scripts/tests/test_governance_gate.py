@@ -1,8 +1,12 @@
 import sys
-import unittest
 from pathlib import Path
-from unittest.mock import patch
+sys.path.insert(0, str(Path(__file__).resolve().parents[1])) # 07_scripts root
+sys.path.insert(0, str(Path(__file__).resolve().parent))     # subdirectory siblings
 
+
+import unittest
+
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
@@ -20,7 +24,6 @@ from governance_gate import (  # noqa: E402
     validate_step_id,
     write_attestation,
 )
-
 
 class TestGovernanceGate(unittest.TestCase):
     def test_detects_protected_files_by_policy(self):
@@ -169,7 +172,7 @@ class TestGovernanceGate(unittest.TestCase):
     def test_ci_checks_include_public_downstream_verification(self):
         checks = checks_for_stage("ci")
         sync_check = next(item for item in checks if item[0] == "Verificar downstream público sanitizado")
-        self.assertIn("07_scripts/sync_public_repo.py", sync_check[1][1:])
+        self.assertIn("07_scripts/ops/sync_public_repo.py", sync_check[1][1:])
         self.assertIn("--check", sync_check[1])
         self.assertIn(public_sync_check_dir().replace("\\", "/"), [item.replace("\\", "/") for item in sync_check[1]])
 
@@ -179,7 +182,6 @@ class TestGovernanceGate(unittest.TestCase):
         labels = [item[0] for item in checks]
         self.assertNotIn("Verificar firma GPG", labels)
         self.assertIn("Pruebas", labels)
-
 
 if __name__ == "__main__":
     unittest.main()

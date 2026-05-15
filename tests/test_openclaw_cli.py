@@ -175,6 +175,73 @@ def test_openclaw_sources_ingest_and_status(tmp_path: Path) -> None:
     assert status_payload["store"]["source_records"] == 1
 
 
+def test_openclaw_toltecayotl_ingest_search_and_sync(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path / "openclaw")
+    env["TOLTECAYOTL_SYNC_DIR"] = str(tmp_path / "toltecayotl_sync")
+    env["TOLTECAYOTL_ENABLED"] = "false"
+    source = tmp_path / "paper.md"
+    source.write_text("Motor Epistémico Toltecayotl usa Weaviate y BGE-M3 para conocimiento academico trazable.", encoding="utf-8")
+
+    ingest = subprocess.run(
+        [
+            PYTHON_BIN,
+            str(CLI),
+            "toltecayotl",
+            "ingestar",
+            "--archivo",
+            str(source),
+            "--tipo",
+            "markdown",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    ingest_payload = json.loads(ingest.stdout)
+    assert ingest_payload["status"] == "ok"
+    assert ingest_payload["chunks"][0]["source_hash"]
+    assert ingest_payload["chunks"][0]["chunk_hash"]
+
+    search = subprocess.run(
+        [PYTHON_BIN, str(CLI), "toltecayotl", "buscar", "--query", "Weaviate conocimiento", "--limit", "1"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    search_payload = json.loads(search.stdout)
+    assert search_payload["status"] == "ok"
+    assert search_payload["results"][0]["source_hash"] == ingest_payload["chunks"][0]["source_hash"]
+
+    exported = subprocess.run(
+        [PYTHON_BIN, str(CLI), "toltecayotl", "sync", "exportar"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    exported_payload = json.loads(exported.stdout)
+    package_path = Path(env["TOLTECAYOTL_SYNC_DIR"]) / f"{exported_payload['package']['package_id']}.json"
+    assert package_path.exists()
+
+    imported = subprocess.run(
+        [PYTHON_BIN, str(CLI), "toltecayotl", "sync", "importar", "--archivo", str(package_path)],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    imported_payload = json.loads(imported.stdout)
+    assert imported_payload["status"] == "ok"
+    assert imported_payload["imported"] >= 1
+
+
 def test_openclaw_run_dry_run_creates_approval_for_mutation(tmp_path: Path) -> None:
     env = os.environ.copy()
     env["OPENCLAW_DATA_DIR"] = str(tmp_path)

@@ -105,6 +105,49 @@ La evidencia cruda vive en `evidencia privada no publicada/conversaciones_codex/
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | benchmark-mistral-nemo-traceable-20260428 | ok |
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260429-openclaw-telegram-llamacpp-pc-native-v1 | ok |
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260429-openclaw-telegram-llamacpp-pc-native-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260429-atzin-issue-0042-v1 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | ea01634e-a1d6-42ec-bf6a-b676768cbddc | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | b83d0d3f-c8cf-49e2-80c9-b57bef0514bf | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 4935b6ec-c82e-429d-b09c-afeefe9b6467 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | sess-2026-05-01-toltecayotl | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | sess-2026-05-01-toltecayotl | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | sess-2026-05-01-toltecayotl | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | sess-2026-05-01-toltecayotl | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 57dd390b-62ea-4566-a7b6-33ad90cd8e52 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 18f07c19-8dc1-4a22-ad7f-fa31740fa746 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 9f3d2c8b-1e5a-7d4c-6f9e-1b8a-3d5c7f9e1b3a5d7c9f1e | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | b057e5be-d2a0-4669-803f-7c10f7f25380 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | b057e5be-d2a0-4669-803f-7c10f7f25380 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 4d1f4ca1-9534-4c34-ac9f-52b369f2dc7a | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 4d1f4ca1-9534-4c34-ac9f-52b369f2dc7a | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 5c896002-ee3f-40ef-96a5-79f73d19cbca | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 5c896002-ee3f-40ef-96a5-79f73d19cbca | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 5c896002-ee3f-40ef-96a5-79f73d19cbca | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 5c896002-ee3f-40ef-96a5-79f73d19cbca | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 5c896002-ee3f-40ef-96a5-79f73d19cbca | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 888886dc-7593-4a1a-8ea7-966eb6e34cba | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 888886dc-7593-4a1a-8ea7-966eb6e34cba | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 888886dc-7593-4a1a-8ea7-966eb6e34cba | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 888886dc-7593-4a1a-8ea7-966eb6e34cba | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 61e4bfba-916e-48cd-bcda-0884bdb96a74 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 61e4bfba-916e-48cd-bcda-0884bdb96a74 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 61e4bfba-916e-48cd-bcda-0884bdb96a74 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 61e4bfba-916e-48cd-bcda-0884bdb96a74 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 61e4bfba-916e-48cd-bcda-0884bdb96a74 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 61e4bfba-916e-48cd-bcda-0884bdb96a74 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | audit-historicos | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | b6902365-5f66-4075-9106-d1f6eaaaf5d4 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | e91b42f5-da7d-4c1f-a471-0e2c196ce54f | fail |
+|  |  |  |  |  | repo_error: validación humana interna no pública no coincide con la cita registrada en evento interno no público. |
+|  |  |  |  |  | repo_error: validación humana interna no pública tiene hash de cita distinto al registrado en evento interno no público. |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | e91b42f5-da7d-4c1f-a471-0e2c196ce54f | fail |
+|  |  |  |  |  | repo_error: validación humana interna no pública no coincide con la cita registrada en evento interno no público. |
+|  |  |  |  |  | repo_error: validación humana interna no pública tiene hash de cita distinto al registrado en evento interno no público. |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | e91b42f5-da7d-4c1f-a471-0e2c196ce54f | fail |
+|  |  |  |  |  | repo_error: validación humana interna no pública no coincide con la cita registrada en evento interno no público. |
+|  |  |  |  |  | repo_error: validación humana interna no pública tiene hash de cita distinto al registrado en evento interno no público. |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | e91b42f5-da7d-4c1f-a471-0e2c196ce54f | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | e91b42f5-da7d-4c1f-a471-0e2c196ce54f | ok |
 
 **Navegación:**
 - [Volver al Ledger](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md)
@@ -114,4 +157,4 @@ La evidencia cruda vive en `evidencia privada no publicada/conversaciones_codex/
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

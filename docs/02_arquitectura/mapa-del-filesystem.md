@@ -12,4 +12,4 @@
 ## Regla
 No mezclar datos personales sensibles con bitacora tecnica ni con material publicable.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

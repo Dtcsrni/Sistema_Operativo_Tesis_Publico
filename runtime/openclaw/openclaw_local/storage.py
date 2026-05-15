@@ -6,13 +6,17 @@ from datetime import UTC, datetime
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
+from uuid import uuid4
 
 from .contracts import (
     AcademicWorkPacket,
     BenchmarkRecord,
     BillingRecord,
     BudgetSnapshot,
+    LearningEvent,
+    MemoryRecord,
     EvidenceRecord,
+    MaestroRouteDecision,
     NodeBenchmarkReport,
     ProviderProbe,
     ProviderDecision,
@@ -129,6 +133,19 @@ class OpenClawStore:
                     total_ms REAL,
                     prompt_chars INTEGER NOT NULL,
                     prompt_tokens_est INTEGER NOT NULL,
+                    payload_json TEXT NOT NULL,
+                    created_at TEXT NOT NULL
+                );
+                CREATE TABLE IF NOT EXISTS maestro_route_decisions (
+                    route_id TEXT PRIMARY KEY,
+                    session_id TEXT NOT NULL,
+                    intent TEXT NOT NULL,
+                    risk_level TEXT NOT NULL,
+                    selected_provider TEXT NOT NULL,
+                    selected_model TEXT NOT NULL,
+                    node TEXT NOT NULL,
+                    confidence REAL NOT NULL,
+                    telemetry_required INTEGER NOT NULL,
                     payload_json TEXT NOT NULL,
                     created_at TEXT NOT NULL
                 );
@@ -275,6 +292,41 @@ class OpenClawStore:
                     url TEXT NOT NULL,
                     apa_reference TEXT NOT NULL,
                     source_hash TEXT NOT NULL,
+                    payload_json TEXT NOT NULL,
+                    created_at TEXT NOT NULL
+                );
+                CREATE TABLE IF NOT EXISTS pet_bundles_ingestados (
+                    bundle_id TEXT PRIMARY KEY,
+                    package_id TEXT NOT NULL,
+                    source_system TEXT NOT NULL,
+                    source_timestamp TEXT NOT NULL,
+                    integrity_hash TEXT NOT NULL,
+                    status TEXT NOT NULL,
+                    content_literal TEXT NOT NULL,
+                    claims_matrix_csv TEXT NOT NULL,
+                    decisions_log_md TEXT NOT NULL,
+                    metadata_json TEXT NOT NULL,
+                    validation_errors TEXT NOT NULL DEFAULT '',
+                    claims_count INTEGER NOT NULL DEFAULT 0,
+                    fragments_count INTEGER NOT NULL DEFAULT 0,
+                    created_at TEXT NOT NULL
+                );
+                CREATE TABLE IF NOT EXISTS memory_records (
+                    memory_id TEXT PRIMARY KEY,
+                    memory_type TEXT NOT NULL,
+                    sensitivity TEXT NOT NULL,
+                    source TEXT NOT NULL,
+                    content_hash TEXT NOT NULL,
+                    ttl_seconds INTEGER NOT NULL,
+                    payload_json TEXT NOT NULL,
+                    created_at TEXT NOT NULL
+                );
+                CREATE TABLE IF NOT EXISTS learning_events (
+                    event_id TEXT PRIMARY KEY,
+                    scope TEXT NOT NULL,
+                    target TEXT NOT NULL,
+                    status TEXT NOT NULL,
+                    requires_human_gate INTEGER NOT NULL,
                     payload_json TEXT NOT NULL,
                     created_at TEXT NOT NULL
                 );
@@ -435,30 +487,7 @@ class OpenClawStore:
             )
         return approval_id
 
-    def list_pending_approvals(self) -> list[dict[str, Any]]:
-        with self._connect() as conn:
-            rows = conn.execute("SELECT * FROM approvals WHERE status = 'pending' ORDER BY created_at").fetchall()
-        return [
-            {
-                "approval_id": row["approval_id"],
-                "task_id": row["task_id"],
-                "diff_summary": row["diff_summary"],
-                "affected_targets": json.loads(row["affected_targets_json"]),
-                "step_id_expected": row["step_id_expected"],
-                "evidence_source_required": bool(row["evidence_source_required"]),
-                "created_at": row["created_at"],
-            }
-            for row in rows
-        ]
-
-    def get_latest_approval_for_task(self, task_id: str) -> dict[str, Any] | None:
-        with self._connect() as conn:
-            row = conn.execute(
-                "SELECT * FROM approvals WHERE task_id = ? ORDER BY created_at DESC LIMIT 1",
-                (task_id,),
-            ).fetchone()
-        if row is None:
-            return None
+    def _approval_row_to_dict(self, row: sqlite3.Row) -> dict[str, Any]:
         return {
             "approval_id": row["approval_id"],
             "task_id": row["task_id"],
@@ -470,9 +499,46 @@ class OpenClawStore:
             "created_at": row["created_at"],
         }
 
-    def mark_approval(self, approval_id: str, status: str) -> None:
+    def list_approvals(self, status: str | None = "pending") -> list[dict[str, Any]]:
         with self._connect() as conn:
-            conn.execute("UPDATE approvals SET status = ? WHERE approval_id = ?", (status, approval_id))
+            if status:
+                rows = conn.execute(
+                    "SELECT * FROM approvals WHERE status = ? ORDER BY created_at",
+                    (status,),
+                ).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM approvals ORDER BY created_at DESC").fetchall()
+        return [self._approval_row_to_dict(row) for row in rows]
+
+    def list_pending_approvals(self) -> list[dict[str, Any]]:
+        return self.list_approvals(status="pending")
+
+    def get_latest_approval_for_task(self, task_id: str) -> dict[str, Any] | None:
+        with self._connect() as conn:
+            row = conn.execute(
+                "SELECT * FROM approvals WHERE task_id = ? ORDER BY created_at DESC LIMIT 1",
+                (task_id,),
+            ).fetchone()
+        if row is None:
+            return None
+        return self._approval_row_to_dict(row)
+
+    def get_approval(self, approval_id: str) -> dict[str, Any] | None:
+        with self._connect() as conn:
+            row = conn.execute("SELECT * FROM approvals WHERE approval_id = ?", (approval_id,)).fetchone()
+        if row is None:
+            return None
+        return self._approval_row_to_dict(row)
+
+    def mark_approval(self, approval_id: str, status: str) -> bool:
+        with self._connect() as conn:
+            cursor = conn.execute("UPDATE approvals SET status = ? WHERE approval_id = ?", (status, approval_id))
+            return cursor.rowcount > 0
+
+    def clear_pending_approvals(self, status: str = "rejected") -> int:
+        with self._connect() as conn:
+            cursor = conn.execute("UPDATE approvals SET status = ? WHERE status = 'pending'", (status,))
+            return cursor.rowcount
 
     def save_evidence(self, record: EvidenceRecord) -> None:
         with self._connect() as conn:
@@ -533,6 +599,116 @@ class OpenClawStore:
         payload["_created_at"] = row["created_at"]
         return payload
 
+    def ingest_pet_bundle(
+        self,
+        bundle_id: str,
+        package_id: str,
+        source_system: str,
+        source_timestamp: str,
+        content_literal: str,
+        claims_matrix_csv: str,
+        decisions_log_md: str,
+        metadata: dict[str, Any],
+        integrity_hash: str,
+        status: str = "validated",
+        validation_errors: str = "",
+        claims_count: int = 0,
+        fragments_count: int = 0,
+    ) -> None:
+        """Registra un PET bundle ingestado de un sistema externo."""
+        with self._connect() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO pet_bundles_ingestados(
+                    bundle_id, package_id, source_system, source_timestamp,
+                    integrity_hash, status, content_literal, claims_matrix_csv,
+                    decisions_log_md, metadata_json, validation_errors,
+                    claims_count, fragments_count, created_at
+                )
+                VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    bundle_id,
+                    package_id,
+                    source_system,
+                    source_timestamp,
+                    integrity_hash,
+                    status,
+                    content_literal,
+                    claims_matrix_csv,
+                    decisions_log_md,
+                    json.dumps(metadata, ensure_ascii=False),
+                    validation_errors,
+                    claims_count,
+                    fragments_count,
+                    datetime.now(UTC).isoformat(),
+                ),
+            )
+
+    def get_pet_bundle_by_id(self, bundle_id: str) -> dict[str, Any] | None:
+        """Recupera un PET bundle ingestado por ID."""
+        with self._connect() as conn:
+            row = conn.execute(
+                "SELECT * FROM pet_bundles_ingestados WHERE bundle_id = ?",
+                (bundle_id,),
+            ).fetchone()
+        if row is None:
+            return None
+        return {
+            "bundle_id": row["bundle_id"],
+            "package_id": row["package_id"],
+            "source_system": row["source_system"],
+            "source_timestamp": row["source_timestamp"],
+            "integrity_hash": row["integrity_hash"],
+            "status": row["status"],
+            "content_literal": row["content_literal"],
+            "claims_matrix_csv": row["claims_matrix_csv"],
+            "decisions_log_md": row["decisions_log_md"],
+            "metadata": json.loads(row["metadata_json"]),
+            "validation_errors": row["validation_errors"],
+            "claims_count": row["claims_count"],
+            "fragments_count": row["fragments_count"],
+            "created_at": row["created_at"],
+        }
+
+    def list_ingested_pet_bundles(
+        self,
+        source_system: str | None = None,
+        status: str | None = None,
+        limit: int = 100,
+    ) -> list[dict[str, Any]]:
+        """Lista PETs ingestados con filtros opcionales."""
+        query = "SELECT * FROM pet_bundles_ingestados WHERE 1=1"
+        params: list[Any] = []
+
+        if source_system:
+            query += " AND source_system = ?"
+            params.append(source_system)
+        if status:
+            query += " AND status = ?"
+            params.append(status)
+
+        query += " ORDER BY created_at DESC LIMIT ?"
+        params.append(limit)
+
+        with self._connect() as conn:
+            rows = conn.execute(query, params).fetchall()
+
+        results = []
+        for row in rows:
+            results.append({
+                "bundle_id": row["bundle_id"],
+                "package_id": row["package_id"],
+                "source_system": row["source_system"],
+                "source_timestamp": row["source_timestamp"],
+                "integrity_hash": row["integrity_hash"],
+                "status": row["status"],
+                "claims_count": row["claims_count"],
+                "fragments_count": row["fragments_count"],
+                "created_at": row["created_at"],
+            })
+        return results
+
     def list_academic_packets(self, mode: str | None = None) -> list[dict[str, Any]]:
         query = "SELECT * FROM academic_packets"
         params: tuple[Any, ...] = ()
@@ -570,6 +746,71 @@ class OpenClawStore:
         if row is None:
             return None
         return json.loads(row["value_json"])
+
+    def save_memory_record(self, record: MemoryRecord) -> None:
+        with self._connect() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO memory_records(
+                    memory_id, memory_type, sensitivity, source, content_hash,
+                    ttl_seconds, payload_json, created_at
+                ) VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    record.memory_id,
+                    record.memory_type,
+                    record.sensitivity,
+                    record.source,
+                    record.content_hash,
+                    record.ttl_seconds,
+                    json.dumps(record.to_dict(), ensure_ascii=False),
+                    record.created_at,
+                ),
+            )
+
+    def list_memory_records(self, *, memory_type: str | None = None, limit: int = 50) -> list[dict[str, Any]]:
+        query = "SELECT payload_json FROM memory_records"
+        params: list[Any] = []
+        if memory_type:
+            query += " WHERE memory_type = ?"
+            params.append(memory_type)
+        query += " ORDER BY created_at DESC LIMIT ?"
+        params.append(limit)
+        with self._connect() as conn:
+            rows = conn.execute(query, tuple(params)).fetchall()
+        return [json.loads(row["payload_json"]) for row in rows]
+
+    def save_learning_event(self, event: LearningEvent) -> None:
+        with self._connect() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO learning_events(
+                    event_id, scope, target, status, requires_human_gate,
+                    payload_json, created_at
+                ) VALUES(?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    event.event_id,
+                    event.scope,
+                    event.target,
+                    event.status,
+                    1 if event.requires_human_gate else 0,
+                    json.dumps(event.to_dict(), ensure_ascii=False),
+                    event.created_at,
+                ),
+            )
+
+    def list_learning_events(self, *, status: str | None = None, limit: int = 50) -> list[dict[str, Any]]:
+        query = "SELECT payload_json FROM learning_events"
+        params: list[Any] = []
+        if status:
+            query += " WHERE status = ?"
+            params.append(status)
+        query += " ORDER BY created_at DESC LIMIT ?"
+        params.append(limit)
+        with self._connect() as conn:
+            rows = conn.execute(query, tuple(params)).fetchall()
+        return [json.loads(row["payload_json"]) for row in rows]
 
     def save_runtime_probe(self, probe: RuntimeProbe) -> None:
         with self._connect() as conn:
@@ -683,6 +924,39 @@ class OpenClawStore:
         if row is None:
             return None
         return json.loads(row["payload_json"])
+
+    def save_maestro_route_decision(self, decision: MaestroRouteDecision) -> None:
+        with self._connect() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO maestro_route_decisions(
+                    route_id, session_id, intent, risk_level, selected_provider,
+                    selected_model, node, confidence, telemetry_required,
+                    payload_json, created_at
+                ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    decision.route_id,
+                    decision.session_id,
+                    decision.intent,
+                    decision.risk_level,
+                    decision.selected_provider,
+                    decision.selected_model,
+                    decision.node,
+                    decision.confidence,
+                    1 if decision.telemetry_required else 0,
+                    json.dumps(decision.to_dict(), ensure_ascii=False),
+                    decision.created_at,
+                ),
+            )
+
+    def list_maestro_route_decisions(self, *, limit: int = 20) -> list[dict[str, Any]]:
+        with self._connect() as conn:
+            rows = conn.execute(
+                "SELECT payload_json FROM maestro_route_decisions ORDER BY created_at DESC LIMIT ?",
+                (limit,),
+            ).fetchall()
+        return [json.loads(row["payload_json"]) for row in rows]
 
     def save_provider_probe(self, probe: ProviderProbe) -> None:
         with self._connect() as conn:
@@ -1176,6 +1450,7 @@ class OpenClawStore:
             runtime_probes = conn.execute("SELECT COUNT(*) FROM runtime_probes").fetchone()[0]
             benchmark_runs = conn.execute("SELECT COUNT(*) FROM benchmark_runs").fetchone()[0]
             request_traces = conn.execute("SELECT COUNT(*) FROM request_traces").fetchone()[0]
+            maestro_route_decisions = conn.execute("SELECT COUNT(*) FROM maestro_route_decisions").fetchone()[0]
             sessions = conn.execute("SELECT COUNT(*) FROM sessions").fetchone()[0]
             session_messages = conn.execute("SELECT COUNT(*) FROM session_messages").fetchone()[0]
             provider_probes = conn.execute("SELECT COUNT(*) FROM provider_probes").fetchone()[0]
@@ -1196,6 +1471,7 @@ class OpenClawStore:
             "runtime_probes": runtime_probes,
             "benchmark_runs": benchmark_runs,
             "request_traces": request_traces,
+            "maestro_route_decisions": maestro_route_decisions,
             "sessions": sessions,
             "session_messages": session_messages,
             "provider_probes": provider_probes,

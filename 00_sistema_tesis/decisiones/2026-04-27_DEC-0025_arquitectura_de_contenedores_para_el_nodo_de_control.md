@@ -1,5 +1,5 @@
 <!-- SISTEMA_TESIS:PROTEGIDO -->
-<!-- GID: 2026-04-27_DEC-0025_ | Versión: 1.1.0 | Estado: Aceptada | Auditoría: [x] -->
+<!-- GID: DEC-0025 | 2026-04-27 | v1.1 | ACEPTADA -->
 
 # DEC-0025 Arquitectura de Contenedores para el Nodo de Control (PC Hub)
 
@@ -50,7 +50,7 @@ El stack de contenedores inicial queda estructurado así:
 5.  **Economía de tokens y orquestación agéntica**:
     *   `agent_task_router` clasifica tareas por privacidad, riesgo, complejidad, rutas objetivo y necesidad de documentación externa.
     *   Serena mantiene repo/canon/gobernanza como primera capa de contexto.
-    *   Modelos locales (`ollama_local`, `pc_native_llamacpp`) pueden ejecutar subtareas automáticas, pero no escribir directamente en el repositorio.
+    *   Modelos locales (`ollama_local`, `desktop_compute` via Ollama) pueden ejecutar subtareas automáticas, pero no escribir directamente en el repositorio.
     *   `Context7 MCP` se limita a documentación externa actualizada.
     *   `GitHub Models` se permite solo para contexto público o redactado, con token `models:read`; queda prohibido para evidencia privada, secretos, ledger privado, canon no público y rutas sensibles.
 
@@ -67,12 +67,15 @@ Maximiza la portabilidad y el aislamiento de dependencias pesadas sin perder la 
 
 ## Métricas de Éxito
 
-- [ ] Disponibilidad del Dashboard en `http://localhost:8080`.
-  - [ ] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-- [ ] Ejecución exitosa de `tests/test_docker_stack.py` dentro del contenedor.
-  - [ ] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-- [ ] Persistencia verificada del canon tras reinicio de contenedores.
-  - [ ] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+- [x] Disponibilidad del Dashboard en `http://localhost:8080`.
+  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - **Soporte operativo**: `docker compose -f docker-compose.yml up -d --build siot-docs`; `docker inspect` reportó `running healthy`; `curl -I http://127.0.0.1:8080/` devolvió `HTTP/1.1 200 OK`.
+- [x] Ejecución exitosa de `tests/test_docker_stack.py` dentro del contenedor.
+  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - **Soporte operativo**: contenedor efímero `python:3.12-slim` unido a `siot-network` con `SISTEMA_TESIS_RUNTIME=docker-test`; resultado `5 passed`.
+- [x] Persistencia verificada del canon tras reinicio de contenedores.
+  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - **Soporte operativo**: SHA-256 de `/app/00_sistema_tesis/canon/events.jsonl` dentro del contenedor coincide con `00_sistema_tesis/canon/events.jsonl` del host: `0b163578865093e5b30629478ca70f8aad8ff497ee0f07c9f0e0e47414df8ec5`.
 - [x] Política híbrida WSL + Docker formalizada sin sustituir Serena, Caveman, Git ni guardrails.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Política de nubes gratuitas formalizada: solo contexto público/redactado.
@@ -113,8 +116,8 @@ Maximiza la portabilidad y el aislamiento de dependencias pesadas sin perder la 
 - [x] Integrar política de economía de tokens con Serena, Caveman, modelos locales, Context7 MCP y GitHub Models público/redactado.
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
-[LID]: ruta local no pública
-[GOV]: ruta local no pública
-[AUD]: ruta local no pública
+[LID]:  ruta local no pública 
+[GOV]:  ruta local no pública 
+[AUD]:  ruta local no pública
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

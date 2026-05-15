@@ -1,9 +1,13 @@
 import sys
-import unittest
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1])) # 07_scripts root
+sys.path.insert(0, str(Path(__file__).resolve().parent))     # subdirectory siblings
+
+
+import unittest
+
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
-
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
@@ -12,17 +16,18 @@ import canon  # noqa: E402
 from canon import (  # noqa: E402
     append_openclaw_proposal,
     build_state,
+    events_by_id,
     materialize_events,
     projection_paths,
     render_ledger,
     render_openclaw_proposals,
     reseal_events,
     resolve_human_validation_evidence,
+    source_evidence_status,
     verify_conversation_source_for_step,
     validate_events,
     verbal_confirmation_hash,
 )
-
 
 class TestCanon(unittest.TestCase):
     def test_reseal_events_builds_hash_chain(self):
@@ -66,6 +71,30 @@ class TestCanon(unittest.TestCase):
         self.assertIn("00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md", paths)
         self.assertIn("00_sistema_tesis/config/sign_offs.json", paths)
         self.assertIn("00_sistema_tesis/canon/state.json", paths)
+
+    def test_events_by_id_skips_malformed_events_without_event_id(self):
+        indexed = events_by_id(
+            [
+                {"event_type": "human_validation", "step_id": "VAL-STEP-999"},
+                {"event_id": "EVT-0001", "event_type": "generic"},
+            ]
+        )
+        self.assertEqual(sorted(indexed), ["EVT-0001"])
+
+    def test_source_evidence_status_reports_human_validation_without_event_id(self):
+        status = source_evidence_status(
+            [
+                {
+                    "event_type": "human_validation",
+                    "step_id": "VAL-STEP-999",
+                    "human_validation": {"step_id": "VAL-STEP-999"},
+                }
+            ],
+            require_local=False,
+        )
+        self.assertEqual(status["repo_status"], "fail")
+        self.assertEqual(status["repo_failures"][0]["step_id"], "VAL-STEP-999")
+        self.assertIn("no declara event_id", status["repo_failures"][0]["repo_errors"][0])
 
     def test_build_state_tracks_latest_step(self):
         events = reseal_events(
@@ -466,7 +495,6 @@ class TestCanon(unittest.TestCase):
                 )
         self.assertEqual(event["event_type"], "openclaw_proposal")
         self.assertEqual(event["payload"]["proposal_status"], "draft_pending_human_review")
-
 
 if __name__ == "__main__":
     unittest.main()

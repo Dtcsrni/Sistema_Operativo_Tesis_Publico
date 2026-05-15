@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-24
 
 - **ID de Sesión:** codex-local-20260424-openclaw-host-real-closeout-v1
-- **Cadena de Confianza (Anterior):** `sha256/3efbcd9217b8002c1ebed7347e88420f36756532b2144746500e5e525db2d840`
+- **Cadena de Confianza (Anterior): `hash omitido:omitido````
 - **Bloque principal:** B0
 - **Tipo de sesión:** implementación | validación | administración | despliegue
 
@@ -15,15 +15,15 @@ Cerrar los pendientes host-real de OpenClaw: levantar `llama.cpp server` en la P
 
 ## Tareas del día
 - [x] Reconciliar el estado Serena/Caveman inicial y registrar el bloqueo del perfil HTTP recomendado.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Levantar `llama.cpp server` en Windows y exponerlo desde `tesis-edge` en `127.0.0.1:21434`.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Desplegar Matrix local privado con Conduit en `tesis-edge` y habilitar `openclaw-matrix-bot.service`.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Ejecutar smoke end-to-end Matrix y validar registro de sesión/mensajes en SQLite.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Ejecutar pruebas focalizadas y preparar cierre documental/canónico.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Trabajo realizado
 - Se corrigió `runtime/openclaw/wrappers/openclaw-llamacpp-server.ps1` para no usar `$host`, variable reservada de PowerShell, y permitir arranque real en Windows.
@@ -50,19 +50,19 @@ Cerrar los pendientes host-real de OpenClaw: levantar `llama.cpp server` en la P
 - **Modelo/Versión de asistencia:** modelo de IA no publicado
 - **Objetivo:** completar el cierre host-real de OpenClaw preservando soberanía local, fallback edge y trazabilidad verificable.
 - **Nivel de Razonamiento:** alto
-- **Alineación Ética:**
+- **Alineación Ática:**
     - [x] Transparencia (NIST RMF)
-      - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+      - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
     - [x] Soberanía Humana (UNESCO)
-      - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+      - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
     - [x] Responsabilidad (ISO 42001)
-      - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+      - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ### Validación de Soberanía (Handshake)
 - **Pregunta Crítica:** ¿Autorizas implementar el cierre host-real de OpenClaw con Matrix edge local y llama.cpp Windows service?
 - **Respuesta Erick Vega:** "PLEASE IMPLEMENT THIS PLAN:"
 - **Criterio de Aceptación:** [x] Validado.
-  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - [x] Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
   - **Soporte:** [validación humana interna no pública]
   - **Texto exacto de confirmación verbal:** "PLEASE IMPLEMENT THIS PLAN:"
   - **Hash de confirmación verbal:** `hash omitido:omitido`
@@ -86,4 +86,4 @@ Rotar o custodiar los tokens Matrix fuera de salida conversacional y hacer una p
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

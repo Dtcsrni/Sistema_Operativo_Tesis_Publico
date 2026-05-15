@@ -1,27 +1,28 @@
-import json
 import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1])) # 07_scripts root
+sys.path.insert(0, str(Path(__file__).resolve().parent))     # subdirectory siblings
+
+
+import json
 import tempfile
 import unittest
 from contextlib import contextmanager
-from pathlib import Path
-from unittest import mock
 
+from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
 
 import guardrails  # noqa: E402
 
-
 def write_text(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
 
-
 def write_json(path: Path, payload: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-
 
 @contextmanager
 def patched_root(repo: Path):
@@ -34,7 +35,6 @@ def patched_root(repo: Path):
     finally:
         guardrails.ROOT = previous_root
         guardrails.MANIFEST_PATH = previous_manifest
-
 
 class TestGuardrailsIncremental(unittest.TestCase):
     def test_update_manifest_for_path_adds_and_updates_protected_entry(self):
@@ -85,7 +85,6 @@ class TestGuardrailsIncremental(unittest.TestCase):
             self.assertTrue(result)
             incremental.assert_called_once()
             full.assert_not_called()
-
 
 if __name__ == "__main__":
     unittest.main()

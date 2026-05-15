@@ -21,4 +21,4 @@ Toda referencia debe clasificarse por tipo, nivel de evidencia y estado de verif
   - `python runtime/openclaw/bin/openclaw_local.py fuentes registrar --doi 10.xxxx/... --titulo "..." --autor "..." --anio 2026`
 - El campo `apa_reference` es una ayuda de render APA 7; la revision final de estilo y pertinencia sigue siendo humana.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

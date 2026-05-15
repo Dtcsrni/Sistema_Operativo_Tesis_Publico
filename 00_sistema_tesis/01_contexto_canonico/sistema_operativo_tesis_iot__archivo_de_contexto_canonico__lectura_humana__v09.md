@@ -41,7 +41,7 @@ Archivo canónico de contexto para ingestión operativa en `Sistema_Operativo_Te
 
 ## Contradicciones activas
 - **Arquitectura de comunicaciones**: abierta | severidad=Congelar una arquitectura final y etiquetar el resto como antecedente.
-- **Hardware radio**: abierta | severidad=Congelar hardware radio final; hoy SX1262/WSL V3 parece la línea más consistente.
+- **Hardware radio**: abierta | severidad=Congelar hardware radio final; actual: SX1262 con Edge Debian (no WSL) es la línea validada.
 - **Objeto del sistema**: abierta | severidad=Elegir una formulación primaria y relegar las demás a contexto/extensión.
 - **Rol de Orange Pi**: abierta | severidad=Definir si será pieza obligatoria final o antecedente fuerte.
 - **Madurez narrativa vs evidencia**: abierta | severidad=Separar resultados medidos, metas y afirmaciones proyectadas.
@@ -402,4 +402,4 @@ Archivo canónico de contexto para ingestión operativa en `Sistema_Operativo_Te
 ## Nota de integridad
 Este archivo resume contexto exhaustivamente consolidado, pero no sustituye la verificación manual de P0/P1 antes de sustentación ni la validación de citas APA 7 sobre las fuentes efectivamente usadas en el manuscrito final.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

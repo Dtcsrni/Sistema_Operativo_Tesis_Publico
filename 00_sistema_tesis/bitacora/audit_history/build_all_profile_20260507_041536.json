@@ -1,0 +1,117 @@
+{
+  "generated_at_utc": "20260507_041536",
+  "total_duration_seconds": 3.342,
+  "summary": {
+    "total": 7,
+    "executed": 7,
+    "skipped": 0,
+    "failed": 6,
+    "slow": 0
+  },
+  "slow_stages": [],
+  "failed_stages": [
+    "Verificar Integridad del Sistema",
+    "Auditar No-Hardcode Runtime",
+    "Auditar Ledger IA",
+    "Auditar Cadena de Bitácoras",
+    "Auditar calidad de trazabilidad",
+    "Autoauditoría documental"
+  ],
+  "steps": [
+    {
+      "label": "Verificar Integridad del Sistema",
+      "script": "07_scripts/audit/guardrails.py",
+      "args": [
+        "--verify"
+      ],
+      "group": "integridad",
+      "started_at_utc": "2026-05-07",
+      "duration_seconds": 0.26,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar No-Hardcode Runtime",
+      "script": "07_scripts/audit/verify_no_hardcoded_runtime.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-05-07",
+      "duration_seconds": 1.264,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar Ledger IA",
+      "script": "07_scripts/audit/verify_ledger.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-05-07",
+      "duration_seconds": 0.246,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar integridad DEC/VAL",
+      "script": "07_scripts/audit/verify_decisions_val_integrity.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-05-07",
+      "duration_seconds": 0.601,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar Cadena de Bitácoras",
+      "script": "07_scripts/audit/verify_bitacora_chain.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-05-07",
+      "duration_seconds": 0.211,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar calidad de trazabilidad",
+      "script": "07_scripts/audit/verify_traceability_quality.py",
+      "args": [
+        "--strict"
+      ],
+      "group": "integridad",
+      "started_at_utc": "2026-05-07",
+      "duration_seconds": 0.499,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Autoauditoría documental",
+      "script": "07_scripts/audit/document_audit.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-05-07",
+      "duration_seconds": 0.261,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    }
+  ]
+}

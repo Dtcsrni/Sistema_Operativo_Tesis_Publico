@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arquitectura | Tesis OS Wiki</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700&family=Fira+Code&family=Material+Icons&display=swap" rel="stylesheet">
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+  </script>
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-light: #14b8a6;
+      --secondary: #1e293b;
+      --accent: #06b6d4;
+      --bg: #f8fafc;
+      --surface: rgba(255, 255, 255, 0.85);
+      --border: rgba(226, 232, 240, 0.8);
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(15, 118, 110, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.05) 0px, transparent 50%);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Navigation */
+    nav {
+      width: 260px;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      border-right: 1px solid var(--border);
+      padding: 2rem 1rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 100;
+    }
+
+    .nav-header {
+      padding: 0 0.75rem 1.5rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      color: var(--text-muted);
+      border-radius: var(--radius);
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-link .material-icons {
+      font-size: 20px;
+    }
+
+    /* Main Content Area */
+    main {
+      flex: 1;
+      padding: 3rem 4rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 3rem;
+      animation: fadeInDown 0.6s ease-out;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3rem;
+      margin: 0 0 0.5rem;
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .stamp {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Markdown Rendering Styles */
+    .markdown-body {
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+
+    .markdown-body h2 {
+      font-family: 'Outfit', sans-serif;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+      color: var(--secondary);
+    }
+
+    .markdown-body p { margin-bottom: 1.25rem; }
+
+    .markdown-body code {
+      background: rgba(15, 118, 110, 0.08);
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9em;
+      color: var(--primary);
+    }
+
+    .markdown-body a {
+      color: var(--primary);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .markdown-body a:hover {
+      border-bottom-color: var(--primary);
+    }
+
+    .markdown-body ul {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .markdown-body li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Admonitions */
+    .admonition {
+      margin: 1.5rem 0;
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      border-left: 4px solid #ccc;
+      background: white;
+      box-shadow: var(--shadow);
+    }
+    .admonition.success { border-left-color: #10b981; background: #ecfdf5; }
+    .admonition.warning { border-left-color: #f59e0b; background: #fffbeb; }
+    .admonition.danger { border-left-color: #ef4444; background: #fef2f2; }
+    
+    .admonition-title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 768px) {
+      body { flex-direction: column; }
+      nav {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 1rem;
+      }
+      .nav-header { display: none; }
+      main { padding: 2rem 1.5rem; }
+      h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-header">
+      <span class="material-icons">architecture</span>
+      Tesis OS
+    </div>
+    <a href="casos_uso.html" class="nav-link "><span class="material-icons">smart_toy</span><span>Agente y Casos de Uso</span></a>
+<a href="sistema.html" class="nav-link "><span class="material-icons">settings</span><span>Sistema</span></a>
+<a href="gobernanza.html" class="nav-link "><span class="material-icons">gavel</span><span>Gobernanza</span></a>
+<a href="arquitectura.html" class="nav-link active"><span class="material-icons">architecture</span><span>Arquitectura</span></a>
+<a href="terminologia.html" class="nav-link "><span class="material-icons">book</span><span>Terminología</span></a>
+<a href="planeacion.html" class="nav-link "><span class="material-icons">event_note</span><span>Planeación</span></a>
+<a href="hipotesis.html" class="nav-link "><span class="material-icons">lightbulb</span><span>Hipótesis</span></a>
+<a href="bloques.html" class="nav-link "><span class="material-icons">grid_view</span><span>Bloques</span></a>
+<a href="decisiones.html" class="nav-link "><span class="material-icons">psychology</span><span>Decisiones</span></a>
+<a href="bitacora.html" class="nav-link "><span class="material-icons">history_edu</span><span>Bitácora</span></a>
+<a href="experimentos.html" class="nav-link "><span class="material-icons">science</span><span>Experimentos</span></a>
+<a href="implementacion.html" class="nav-link "><span class="material-icons">code</span><span>Implementación</span></a>
+<a href="tesis.html" class="nav-link "><span class="material-icons">school</span><span>Tesis</span></a>
+  </nav>
+  <main>
+    <header>
+      <h1>Arquitectura</h1>
+      <div class="stamp">
+        <span class="material-icons" style="font-size: 16px;">update</span>
+        Generado el 2026-05-15
+      </div>
+    </header>
+    <div class="markdown-body"><p><h1>Arquitectura</h1></p><p>Estructura del sistema, topología, contenedores y diagramas C4.
+<ul><li><strong>Tesista:</strong> <code>Erick Renato Vega Ceron</code></li>
+<li><strong>Fecha:</strong> <code>2026-05-15</code></li>
+<li><strong>Estado:</strong> <code>OK</code></li>
+<li><strong>Fuentes:</strong> <code>docs/02_arquitectura/arquitectura-general.md</code>, <code>docs/02_arquitectura/diagramas_c4.md</code>, <code>docs/02_arquitectura/mapa-de-interconexiones.md</code>, <code>docs/02_arquitectura/mapa-de-servicios.md</code></li>
+<li><strong>Aviso:</strong> Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.</li>
+</ul>
+<h2>Navegación de esta página</h2>
+<ul><li><a href="index.html">Volver al índice</a>.</li>
+<li>Página anterior en la ruta base: <a href="gobernanza.html">Gobernanza</a>.</li>
+<li>Página siguiente en la ruta base: <a href="terminologia.html">Terminología</a>.</li>
+<li>Relacionada: <a href="sistema.html">Sistema</a>.</li>
+<li>Relacionada: <a href="gobernanza.html">Gobernanza</a>.</li>
+<li>Relacionada: <a href="decisiones.html">Decisiones</a>.</li>
+</ul>
+<h2>Origen canónico y artefactos relacionados</h2></p><p><h3>Cómo rastrear esta página hasta su origen canónico</h3></p><p>1. Esta página derivada: <a href="arquitectura.html"><code>06_dashboard/wiki/arquitectura.md</code></a>.
+2. Revisa la lista de fuentes canónicas que alimentan su contenido.
+3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
+4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
+5. Si necesitas cambiar el contenido, edita la fuente canónica y reconstruye; no edites esta salida a mano.</p><p><h3>Fuentes canónicas declaradas</h3></p><p>|Fuente canónica|Tipo|Existe|
+|---|---|---|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/docs/02_arquitectura/arquitectura-general.md"><code>docs/02_arquitectura/arquitectura-general.md</code></a>|archivo|sí|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/docs/02_arquitectura/diagramas_c4.md"><code>docs/02_arquitectura/diagramas_c4.md</code></a>|archivo|sí|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/docs/02_arquitectura/mapa-de-interconexiones.md"><code>docs/02_arquitectura/mapa-de-interconexiones.md</code></a>|archivo|sí|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/docs/02_arquitectura/mapa-de-servicios.md"><code>docs/02_arquitectura/mapa-de-servicios.md</code></a>|archivo|sí|</p><p><h3>Artefactos derivados relacionados</h3>
+<ul><li>Markdown interno: <a href="arquitectura.html"><code>06_dashboard/wiki/arquitectura.md</code></a></li>
+<li>HTML interno: <a href="arquitectura.html"><code>06_dashboard/generado/wiki/arquitectura.html</code></a></li>
+<li>Markdown público sanitizado: <a href="../wiki/arquitectura.md"><code>06_dashboard/publico/wiki/arquitectura.md</code></a></li>
+<li>HTML público sanitizado: <a href="arquitectura.html"><code>06_dashboard/publico/wiki_html/arquitectura.html</code></a></li>
+</ul>
+<h1>Arquitectura General</h1></p><p><h2>Proposito</h2>
+El repositorio canónico es la fuente de verdad operacional del Sistema Operativo de Tesis. Su funcion es gobernar instalacion, operacion, seguridad, trazabilidad, soporte cientifico y despliegue sobre una topologia de trabajo con escritorio primario y nodo edge en Orange Pi 5 Plus.</p><p><h2>Topologia operativa</h2>
+<ul><li><code>desktop_workspace</code>: PC de escritorio con Visual Studio Code como estacion principal de autoria, diseno, analisis, construccion documental y mantenimiento del repositorio soberano.</li>
+<li><code>orange_pi_edge</code>: Orange Pi como nodo edge operativo para <code>edge_iot</code>, observabilidad local, servicios del stack IoT y capacidades que deban vivir cerca del hardware o del entorno fisico. El host SSH operativo del nodo se nombra <code>tesis-edge</code> y el usuario dedicado para agentes es <code>tesisai</code>.</li>
+<li>Integracion principal: <code>git_sync</code> + artefactos y contratos explicitos.</li>
+<li>Retorno desde Orange Pi: logs operativos, evidencia edge, metricas y artefactos locales derivados.</li>
+<li>No es flujo normal usar un workspace remoto montado por red ni convertir la Orange Pi en la superficie principal de redaccion o decisiones arquitectonicas.</li>
+</ul>
+<h2>Capas</h2>
+<ul><li><code>canon</code>: <code>00_sistema_tesis/canon/</code>, ledger, matriz, backlog y configuracion soberana.</li>
+<li><code>auditoria_guardrails</code>: validadores, governance gate, chequeos de estructura, conformidad y evidencia.</li>
+<li><code>proyecciones</code>: <code>README.md</code>, wiki derivada, dashboard y manifiestos generados.</li>
+<li><code>publicacion</code>: bundle publico sanitizado en <code>06_dashboard/publico/</code>.</li>
+<li><code>memoria_derivada</code>: <code>MEMORY.md</code> como resumen operativo generado desde canon y trazabilidad.</li>
+<li>Contexto complementario: <code>docs/</code>, <code>manifests/</code>, <code>bootstrap/</code>, <code>ops/</code>, <code>runtime/openclaw/</code>, <code>02_experimentos/</code>, <code>04_implementacion/</code>, <code>05_tesis/</code>.</li>
+</ul>
+<h2>Reglas</h2>
+<ul><li>El trabajo principal de tesis ocurre en <code>desktop_workspace</code>.</li>
+<li><code>orange_pi_edge</code> ejecuta edge, pruebas tecnicas locales, diagnostico operativo y control del stack IoT sin sustituir la autoria principal del escritorio.</li>
+<li>La sincronizacion entre nodos debe pasar por Git, artefactos generados, contratos de datos o evidencia edge explicitamente intercambiada.</li>
+<li>El sistema base debe operar sin OpenClaw.</li>
+<li>Toda exposicion externa sale del downstream publico sanitizado.</li>
+<li>Hardware, edge, tesis y administracion se separan por dominio.</li>
+<li>Solo el <code>canon</code> es fuente de verdad.</li>
+<li><code>proyecciones</code>, <code>publicacion</code> y <code>memoria_derivada</code> son artefactos reconstruibles y nunca deben corregirse a mano.</li>
+<li><code>auditoria_guardrails</code> puede bloquear y medir, pero no inventa estado canónico.</li>
+</ul>
+<h2>Flujos y ownership</h2>
+<ul><li><code>canon -&gt; auditoria_guardrails</code>: lectura controlada para validacion y enforcement.</li>
+<li><code>canon -&gt; proyecciones</code>: materializacion determinista de README, wiki y dashboard.</li>
+<li><code>canon -&gt; memoria_derivada</code>: resumen operativo de retoma rapida sin memoria informal del agente.</li>
+<li><code>proyecciones -&gt; publicacion</code>: build sanitizado y curado editorialmente.</li>
+<li>Ownership logico:</li>
+<li><code>canon.py</code> mantiene canon y trazabilidad materializada.</li>
+<li><code>build_*</code> generan derivados.</li>
+<li><code>publication.py</code> solo publica derivados sanitizados.</li>
+<li><code>validate_*</code> y <code>build_all.py</code> verifican, perfilan y bloquean drift.</li>
+</ul>
+<h2>Evolucion y cambios breaking</h2>
+<ul><li>Cambios aditivos al esquema canónico pueden mantenerse dentro de <code>1.x</code> si preservan compatibilidad hacia atrás.</li>
+<li>Cambios breaking requieren <code>major</code> nuevo, registro en <code>docs/05_reproducibilidad/migraciones-canonicas.md</code> y actualización de contratos.</li>
+<li>Cambios breaking en salida de <code>tesis.py</code> requieren actualizar el contrato CLI y su suite de conformidad.</li>
+</ul>
+<h2>Validacion</h2>
+<ul><li><code>python 07_scripts/validate_structure.py</code></li>
+<li><code>python 07_scripts/validate_memory.py</code></li>
+<li><code>python 07_scripts/tesis.py doctor --check</code></li>
+<li><code>python 07_scripts/build_all.py</code></li>
+</ul></p><p>---</p><p><h1>Diagramas de Arquitectura (Modelo C4)</h1></p><p>Este documento utiliza el estándar C4 para visualizar la arquitectura del Sistema Operativo de Tesis en diferentes niveles de abstracción.</p><p><h2>1. Nivel 1: Contexto del Sistema</h2>
+El diagrama de contexto muestra cómo el Sistema Operativo de Tesis interactúa con los actores humanos y otros sistemas externos.</p><p><div class="mermaid-container"><pre class="mermaid">C4Context
+    title Diagrama de Contexto - Sistema Operativo de Tesis (SOT)</p><p>    Person(tesista, &quot;Tesista Principal&quot;, &quot;Investigador y operador del sistema.&quot;)
+    System(sot, &quot;Sistema Operativo de Tesis (SOT)&quot;, &quot;Gobernanza, trazabilidad y soporte científico.&quot;)
+    System_Ext(openclaw, &quot;OpenClaw / Hermes&quot;, &quot;Capas asistivas de IA para razonamiento y síntesis.&quot;)
+    System_Ext(edge_node, &quot;Orange Pi 5 Plus (Edge)&quot;, &quot;Ejecución de workloads IoT y recolección de métricas.&quot;)
+    System_Ext(public_repo, &quot;GitHub (Público)&quot;, &quot;Repositorio derivado, sanitizado y curado.&quot;)</p><p>    Rel(tesista, sot, &quot;Define decisiones, opera scripts y autoriza cambios.&quot;)
+    Rel(sot, openclaw, &quot;Solicita asistencia epistémica y ruteo de tareas.&quot;)
+    Rel(sot, edge_node, &quot;Sincroniza configuración y extrae evidencia edge.&quot;)
+    Rel(sot, public_repo, &quot;Publica bundle curado y sanitizado.&quot;)
+    Rel(tesista, edge_node, &quot;Intervención física y diagnóstico local.&quot;)</pre></div></p><p><h2>2. Nivel 2: Contenedores</h2>
+El diagrama de contenedores detalla los componentes lógicos internos del SOT y cómo se distribuyen entre el Escritorio y el nodo Edge.</p><p><div class="mermaid-container"><pre class="mermaid">C4Container
+    title Diagrama de Contenedores - SOT</p><p>    Boundary(desktop, &quot;Escritorio Primario (Control Node)&quot;) {
+        Container(canon, &quot;Canon &amp; Ledger&quot;, &quot;JSONL, YAML, CSV&quot;, &quot;Fuente de verdad soberana e inmutable.&quot;)
+        Container(scripts, &quot;Scripts Operativos (tesis.py)&quot;, &quot;Python&quot;, &quot;CLI de gestión, auditoría y materialización.&quot;)
+        Container(wiki, &quot;Wiki &amp; Dashboard&quot;, &quot;Markdown/HTML&quot;, &quot;Proyecciones derivas para observabilidad humana.&quot;)
+        Container(atzin, &quot;Toltecayotl Engine&quot;, &quot;Weaviate/Docker&quot;, &quot;Base de conocimientos y RAG académico.&quot;)
+    }</p><p>    Boundary(edge, &quot;Orange Pi 5 Plus (Edge Node)&quot;) {
+        Container(edge_stack, &quot;IoT Stack&quot;, &quot;Docker/Python&quot;, &quot;Servicios de recolección y control local.&quot;)
+        Container(npu_inference, &quot;NPU Inference&quot;, &quot;RKLLM&quot;, &quot;Inferencia local optimizada para hardware edge.&quot;)
+    }</p><p>    Rel(scripts, canon, &quot;Lee/Escribe&quot;, &quot;I/O&quot;)
+    Rel(scripts, atzin, &quot;Consulta Contexto&quot;, &quot;gRPC/HTTP&quot;)
+    Rel(scripts, wiki, &quot;Genera&quot;, &quot;Build Pipeline&quot;)
+    Rel(scripts, edge_stack, &quot;Sincroniza&quot;, &quot;Git Sync / SSH&quot;)
+    Rel(edge_stack, npu_inference, &quot;Usa para Offloading&quot;, &quot;Shared Memory / Socket&quot;)</pre></div></p><p><h2>3. Nivel 3: Componentes (Scripts de Auditoría)</h2>
+Muestra la interacción interna de la capa de auditoría y guardrails.</p><p><div class="mermaid-container"><pre class="mermaid">graph TD
+    subgraph &quot;07_scripts/audit&quot;
+        SA[security_audit.py] --&gt; G[guardrails.py]
+        SA --&gt; VL[verify_ledger.py]
+        SA --&gt; SS[secret_scanner.py]
+        SA --&gt; DA[document_audit.py]
+    end
+    
+    G --&gt; Manifest[integrity_manifest.json]
+    VL --&gt; Ledger[log_sesiones_trabajo_registradas.md]
+    SS --&gt; AllFiles[Cualquier archivo no excluido]
+    DA --&gt; GlobalRefs[Referencias Globales LID/GOV/AUD]</pre></div></p><p>
+---</p><p><h1>Mapa de Interconexiones</h1></p><p><h2>Bloques</h2>
+<ul><li><code>desktop_workspace</code> en Windows 11 con VS Code para autoria, analisis y administracion del repo soberano.</li>
+<li>Orange Pi 5 Plus como nodo base y clon operativo del sistema de tesis en <code>/srv/tesis/repo</code>.</li>
+<li>Nodo edge y perifericos como dominio separado.</li>
+<li>Herramientas asistivas como OpenClaw en capa opcional desacoplada.</li>
+</ul>
+<h2>Canales de datos</h2>
+<ul><li><code>desktop_workspace -&gt; /srv/tesis/repo</code>: sincronizacion Git del repo canonico con <code>pull --ff-only</code>.</li>
+<li><code>desktop_workspace -&gt; edge_iot</code>: contratos y artefactos explicitamente necesarios para despliegue o validacion.</li>
+<li><code>orange_pi_edge -&gt; desktop_workspace</code>: logs, metricas, <code>outbox</code> y <code>spool</code> del dominio <code>edge_iot</code>, especialmente desde <code>/srv/tesis/intercambio/edge</code>.</li>
+<li>Entre dominios locales de Orange Pi, el intercambio sigue limitado a <code>/srv/tesis/intercambio/...</code>.</li>
+</ul>
+<h2>Perfiles operativos edge</h2>
+<ul><li><code>repo-only</code>: alineacion del clon operativo sin tocar servicios.</li>
+<li><code>repo+postcheck</code>: alineacion del clon mas validacion edge local.</li>
+<li><code>repo+restart-edge</code>: alineacion del clon, validacion edge y reinicio controlado de <code>edge-iot-worker.service</code>.</li>
+</ul>
+<h2>Regla</h2>
+Toda conexion electrica y de datos debe validarse contra datasheet y checklist pre-energizacion.</p><p>
+---</p><p><h1>Mapa de Servicios</h1></p><p>Fuente maquina-legible: <code>manifests/service_matrix.yaml</code>.</p><p><h2>Servicios previstos</h2>
+<ul><li><code>tesis-healthcheck.service</code> + timer bajo dominio <code>sistema_tesis</code>.</li>
+<li><code>tesis-backup.service</code> + timer bajo dominio <code>administrativo</code>.</li>
+<li><code>tesis-sync.service</code> + timer bajo dominio <code>sistema_tesis</code>.</li>
+<li><code>openclaw-gateway.service</code> como servicio opcional bajo dominio <code>openclaw</code>.</li>
+<li><code>ollama.service</code> como runtime principal local opcional bajo dominio <code>openclaw</code>.</li>
+<li>Carril NPU experimental instalado por bootstrap, sin convertirse en servicio base obligatorio.</li>
+<li><code>openclaw-telegram-bot.service</code> como canal remoto activo bajo dominio <code>openclaw</code>.</li>
+<li><code>openclaw-matrix-bot.service</code> como infraestructura latente y deshabilitada por defecto bajo dominio <code>openclaw</code>.</li>
+<li><code>edge-iot-worker.service</code> como servicio genérico del dominio <code>edge_iot</code>.</li>
+<li><code>edge-iot-watchdog.service</code> + timer como watchdog híbrido para recuperación y cuarentena del dominio <code>edge_iot</code>.</li>
+<li><code>prometheus.service</code> para scraping local y retención larga bajo dominio <code>administrativo</code>.</li>
+<li><code>prometheus-node-exporter.service</code> como exporter local del host y textfile collector.</li>
+<li><code>tesis-observabilidad-collector.service</code> + timer para generar métricas por dominio sin mezcla de runtime.</li>
+<li><code>tesis-backup.service</code> como orquestador administrativo de backups por dominio, snapshots locales y validación de restore.</li>
+</ul>
+<h2>Nota</h2>
+OpenClaw no es prerequisito del sistema base ni del pipeline edge.</p><p><h2>Ownership por dominio</h2>
+<ul><li><code>sistema_tesis</code>: usuario <code>tesis</code>, acceso mínimo a repo, outputs y logs del sistema.</li>
+<li><code>openclaw</code>: usuario <code>openclaw</code>, escritura solo en su namespace, en sus logs y en el intercambio controlado.</li>
+<li><code>administrativo</code>: usuarios <code>tesisadmin</code> y <code>prometheus</code>, lectura controlada de estados, observabilidad local y escritura solo a backups, snapshots, logs administrativos y textfile collector.</li>
+<li><code>edge_iot</code>: usuario <code>edgeiot</code>, sin acceso directo a canon, publicación ni SQLite de <code>openclaw</code>, con runtime de resiliencia en <code>/var/lib/edge-iot/runtime</code>.</li>
+<li>La fuente máquina-legible incorpora <code>usuario</code>, <code>grupo</code>, <code>read_only_paths</code>, <code>read_write_paths</code>, <code>network_profile</code> y <code>hardening</code>.</li>
+</ul></p><p>---
+</p></div>
+      <footer class="public-update"><p>Última actualización: <strong>2026-05-14</strong></p></footer>
+  </main>
+</body>
+</html>

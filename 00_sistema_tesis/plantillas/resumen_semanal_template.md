@@ -36,4 +36,4 @@
 2. Prioridad 2
 3. Prioridad 3
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

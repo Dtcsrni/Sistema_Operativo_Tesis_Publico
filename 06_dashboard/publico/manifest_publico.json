@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-04-29",
+  "generated_at": "2026-05-15",
   "status": "ok",
   "scope": "publico_sanitizado",
-  "bundle_fingerprint": "785092cd2575bd2dc86a6c4c2737378c197f554f07effac63b81353a26666fda",
+  "bundle_fingerprint": "275a3a7a1d0e426e43a683d19ab76c4be61c8a2162e1a11e65b181e9a0256c3a",
   "notice": "Este bundle público es un artefacto derivado y curado editorialmente. No se corrige a mano; se reconstruye desde la base canónica.",
   "artifacts": [
     {
@@ -12,6 +12,10 @@
     {
       "source": "MEMORY.md",
       "output": "06_dashboard/publico/MEMORY_publico.md"
+    },
+    {
+      "source": "06_dashboard/wiki/arquitectura.md",
+      "output": "06_dashboard/publico/wiki/arquitectura.md"
     },
     {
       "source": "06_dashboard/wiki/bitacora.md",
@@ -68,6 +72,10 @@
     {
       "source": "06_dashboard/wiki/tesis.md",
       "output": "06_dashboard/publico/wiki/tesis.md"
+    },
+    {
+      "source": "06_dashboard/generado/wiki/arquitectura.html",
+      "output": "06_dashboard/publico/wiki_html/arquitectura.html"
     },
     {
       "source": "06_dashboard/generado/wiki/bitacora.html",
@@ -156,6 +164,10 @@
     {
       "source": "06_dashboard/generado/badges/security_status.svg",
       "output": "06_dashboard/publico/dashboard/badges/security_status.svg"
+    },
+    {
+      "source": "06_dashboard/generado/observability_status_public.json",
+      "output": "06_dashboard/publico/observability_status_public.json"
     }
   ],
   "applied_rules": [

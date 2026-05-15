@@ -1,4 +1,5 @@
 <!-- SISTEMA_TESIS:PROTEGIDO -->
+<!-- GID: DEC-0023 | 2026-04-08 | v1.0 | ACEPTADA -->
 
 # DEC-0023 Serena MCP como Capa Comun para Agentes
 
@@ -37,8 +38,8 @@ Adoptar a `serena-local` como la capa oficial comun de contexto compacto, prefli
 - [operacion_serena_mcp_codex.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/operacion_serena_mcp_codex.md)
 - [openclaw-workspace-local.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/docs/03_operacion/openclaw-workspace-local.md)
 
-[LID]: ruta local no pública
-[GOV]: ruta local no pública
-[AUD]: ruta local no pública
+[LID]:  ruta local no pública 
+[GOV]:  ruta local no pública 
+[AUD]:  ruta local no pública
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

@@ -84,6 +84,17 @@
       ]
     },
     {
+      "id": "arquitectura",
+      "titulo": "Arquitectura",
+      "descripcion": "Estructura del sistema, topología, contenedores y diagramas C4.",
+      "fuentes": [
+        "docs/02_arquitectura/arquitectura-general.md",
+        "docs/02_arquitectura/diagramas_c4.md",
+        "docs/02_arquitectura/mapa-de-interconexiones.md",
+        "docs/02_arquitectura/mapa-de-servicios.md"
+      ]
+    },
+    {
       "id": "terminologia",
       "titulo": "Terminología",
       "descripcion": "Glosario, familias de IDs, referencias globales y convenciones de nomenclatura del sistema.",

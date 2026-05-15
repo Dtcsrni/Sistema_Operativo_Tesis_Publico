@@ -2,4 +2,4 @@
 
 Campos minimos: `test_id`, `componente`, `objetivo`, `entorno`, `conexion`, `medicion`, `resultado`, `interpretacion`, `riesgo_residual`.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

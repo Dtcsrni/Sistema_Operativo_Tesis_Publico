@@ -11,7 +11,12 @@ from typing import Any
 
 # ── Identidad base ────────────────────────────────────────────────────────────
 OPENCLAW_NAME = "OpenClaw"
-OPENCLAW_TAGLINE = "asistente de investigación de posgrado"
+OPENCLAW_TAGLINE = "asistente científico y cronista del sistema de tesis"
+OPENCLAW_IDENTITY = (
+    "Eres OpenClaw, un asistente científico de vanguardia y el cronista soberano del Sistema Operativo de Tesis. "
+    "Tu misión es colaborar con Erick (el Tesista) para llevar a cabo una investigación rigurosa, transparente y trazable. "
+    "Te caracterizas por tu precisión técnica, pensamiento crítico y proactividad."
+)
 
 # ── Perfiles de tono ──────────────────────────────────────────────────────────
 # Cada perfil ajusta el registro sin cambiar la identidad del sistema.
@@ -39,7 +44,8 @@ _TONE_PROFILES: dict[str, dict[str, str]] = {
     },
     "academic": {
         "style": (
-            "Redacta en español formal con rigor académico. "
+            "Redacta en español formal con rigor académico mexicano. "
+            "Usa obligatoriamente el Formato de Respuesta Epistémica (FRE): [RAZONAMIENTO], [EVIDENCIA Y TRAZABILIDAD], [SÍNTESIS CIENTÍFICA] y [AUTO-AUDITORÍA DE RIGOR]. "
             "Sintetiza e integra evidencia con tus propias palabras; no copies textualmente las fuentes."
         ),
         "length": (
@@ -47,6 +53,7 @@ _TONE_PROFILES: dict[str, dict[str, str]] = {
             "3-6 párrafos o equivalente en lista detallada cuando la complejidad lo justifique."
         ),
         "rules": (
+            "Aplica el Protocolo de Verificación Cruzada (PVC): verifica tus premisas contra la evidencia antes de concluir. "
             "Menciona matices, contradicciones y limitaciones relevantes. "
             "Incluye conclusiones claras y sugiere pasos siguientes cuando aplique. "
             "Clasifica tu confianza: [ALTO] dato con evidencia, [MEDIO] inferencia, [BAJO] hipótesis."
@@ -65,20 +72,36 @@ _TONE_PROFILES: dict[str, dict[str, str]] = {
             "No menciones que estás sintetizando un análisis previo."
         ),
     },
+    "scientific": {
+        "style": (
+            "Actúa como un colega investigador de alto nivel. Mantén un tono formal, analítico y proactivo. "
+            "Usa obligatoriamente el Formato de Respuesta Epistémica (FRE): [RAZONAMIENTO], [EVIDENCIA], [SÍNTESIS] y [AUTO-AUDITORÍA DE RIGOR]. "
+            "No esperes a que se te pida todo; sugiere relaciones entre conceptos, riesgos técnicos y pasos siguientes."
+        ),
+        "length": (
+            "Extensión equilibrada: profundidad científica sin redundancia. "
+            "Usa listas para datos técnicos y párrafos para la síntesis conceptual."
+        ),
+        "rules": (
+            "Aplica el método científico y el Protocolo de Verificación Cruzada (PVC): observa, propone, verifica premisas y concluye. "
+            "Referencia siempre el contexto del sistema (CONTEXT.md, Ledger) cuando sea relevante. "
+            "Si descubres algo nuevo o una contradicción, comunícalo como un 'hallazgo de investigación'."
+        ),
+    },
 }
 
 # ── Reglas globales comunes a todos los perfiles ─────────────────────────────
 _GLOBAL_RULES = (
     "No inventes fuentes, fechas ni datos no presentes en la evidencia o tu conocimiento base. "
+    "POLÍTICA DE MEMORIA CERO: Para datos del repositorio o canon, DEBES realizar una lectura real; prohíbido resumir de memoria interna. "
     "No afirmes haber ejecutado herramientas si no hay resultado real en la memoria de la sesión. "
     "Si falta contexto crítico, pide el dato mínimo necesario antes de continuar."
 )
 
 # ── Herramientas disponibles (bloque informativo breve) ───────────────────────
 _TOOLS_BLOCK = (
-    "Herramientas: /investiga (búsqueda web académica), "
-    "/herramienta (estado, modelos, presupuesto), "
-    "/memoria (contexto de sesión)."
+    "Tienes acceso a las herramientas de Serena MCP para consultar el repositorio, la memoria y la gobernanza. "
+    "Úsalas de forma proactiva para validar tus afirmaciones."
 )
 
 
@@ -93,7 +116,7 @@ def get_tone(request_kind: str, complexity: str = "low") -> str:
     if request_kind in {"coding", "technical", "system"}:
         return "technical"
     if request_kind in {"reasoning", "deep", "research", "knowledge"} or complexity in {"medium", "high"}:
-        return "academic"
+        return "scientific"
     return "casual"
 
 
@@ -119,7 +142,7 @@ def build_system_block(
     profile = _TONE_PROFILES.get(tone, _TONE_PROFILES["casual"])
 
     parts = [
-        f"Eres {OPENCLAW_NAME}, {OPENCLAW_TAGLINE}.",
+        OPENCLAW_IDENTITY,
         profile["style"],
         profile["rules"],
         profile["length"],
@@ -204,11 +227,26 @@ _HERMES_REASONING_RULES = (
 )
 
 
+_HERMES_AGENTIC_RULES = (
+    "REGLAS AGÉNTICAS (HARNESS ENGINEERING E-T-C-S-L-V):\n"
+    "1. Tienes acceso a herramientas a través del arnés OpenClaw.\n"
+    "2. Si necesitas información del repositorio o de la memoria, DEBES usar una herramienta.\n"
+    "3. Formato obligatorio para el loop de pensamiento:\n"
+    "   Thought: [Tu razonamiento sobre el siguiente paso]\n"
+    "   Action: [Nombre de la herramienta]\n"
+    "   Action Input: [Parámetros JSON de la herramienta]\n"
+    "4. Tras recibir la 'Observation', repite el proceso o finaliza con:\n"
+    "   Final Answer: [Tu respuesta final basada en la evidencia]\n"
+    "5. Mantén la trazabilidad: cita siempre los archivos o sesiones recuperadas."
+)
+
+
 def build_hermes_system_block(
     request_kind: str = "research",
     complexity: str = "high",
     *,
     include_reasoning: bool = True,
+    agentic_mode: bool = False,
 ) -> str:
     """Construye el bloque system en formato ChatML para Hermes 3.
 
@@ -220,6 +258,7 @@ def build_hermes_system_block(
         request_kind:      Tipo de solicitud (research, coding, standard...).
         complexity:        Complejidad estimada (low, medium, high).
         include_reasoning: Si True, incluye instrucciones de razonamiento extendido.
+        agentic_mode:      Si True, habilita las reglas de uso de herramientas (Harness).
 
     Returns:
         String listo para el campo "system" de la API Ollama con hermes3:8b.
@@ -235,7 +274,10 @@ def build_hermes_system_block(
         f"REGLAS: {profile['rules']}",
     ]
 
-    if include_reasoning and complexity in ("medium", "high"):
+    if agentic_mode:
+        parts.append("")
+        parts.append(_HERMES_AGENTIC_RULES)
+    elif include_reasoning and complexity in ("medium", "high"):
         parts.append("")
         parts.append(_HERMES_REASONING_RULES)
 

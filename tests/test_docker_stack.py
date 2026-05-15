@@ -13,7 +13,7 @@ class TestDockerStack:
     def test_environment_consistency(self):
         """Verifica que las variables de entorno críticas estén presentes."""
         runtime = os.getenv('SISTEMA_TESIS_RUNTIME')
-        assert runtime in ['docker-docs', 'docker-agent']
+        assert runtime in ['docker-docs', 'docker-agent', 'docker-test']
         assert os.getenv('PYTHONUNBUFFERED') == '1'
 
     def test_shared_canon_access(self):

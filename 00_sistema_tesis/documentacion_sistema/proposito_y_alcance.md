@@ -73,4 +73,4 @@ El sistema debe describir:
 
 El sistema no debe describir como cerrado lo que en planeacion o decisiones siga pendiente de formalizacion tecnica profunda.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

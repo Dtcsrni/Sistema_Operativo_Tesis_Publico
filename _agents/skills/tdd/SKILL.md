@@ -113,4 +113,4 @@ After all tests pass, look for refactor candidates:
 - Comportamientos prioritarios: integridad SHA-256 del Ledger, salida JSON de benchmarks, validación de modelos RKLLM
 - Decisiones de testing: respetar DEC-XXXX en el área tocada
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

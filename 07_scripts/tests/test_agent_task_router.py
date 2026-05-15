@@ -1,15 +1,18 @@
-import os
 import sys
-import unittest
 from pathlib import Path
-from unittest.mock import patch
+sys.path.insert(0, str(Path(__file__).resolve().parents[1])) # 07_scripts root
+sys.path.insert(0, str(Path(__file__).resolve().parent))     # subdirectory siblings
 
+
+import os
+import unittest
+
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
 
 import agent_task_router  # noqa: E402
-
 
 class TestAgentTaskRouter(unittest.TestCase):
     def setUp(self):
@@ -82,7 +85,6 @@ class TestAgentTaskRouter(unittest.TestCase):
         result = agent_task_router.classify_task(task, self.config)
         self.assertEqual(result["privacy_class"], "restricted")
         self.assertEqual(result["recommended_route"], "serena")
-
 
 if __name__ == "__main__":
     unittest.main()

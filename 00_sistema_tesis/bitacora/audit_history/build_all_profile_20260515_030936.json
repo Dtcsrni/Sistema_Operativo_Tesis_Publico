@@ -1,0 +1,318 @@
+{
+  "generated_at_utc": "20260515_030936",
+  "total_duration_seconds": 33.415,
+  "summary": {
+    "total": 22,
+    "executed": 22,
+    "skipped": 0,
+    "failed": 1,
+    "slow": 0
+  },
+  "slow_stages": [],
+  "failed_stages": [
+    "Verificar evidencia fuente de conversación"
+  ],
+  "steps": [
+    {
+      "label": "Materializar proyecciones del canon",
+      "script": "07_scripts/tesis.py",
+      "args": [
+        "materialize"
+      ],
+      "group": "canon",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.423,
+      "budget_seconds": 10.0,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar canon unificado",
+      "script": "07_scripts/tesis.py",
+      "args": [
+        "audit",
+        "--check"
+      ],
+      "group": "canon",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.802,
+      "budget_seconds": 10.0,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Verificar Integridad del Sistema",
+      "script": "07_scripts/audit/guardrails.py",
+      "args": [
+        "--verify"
+      ],
+      "group": "integridad",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.163,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar bypass de rutas públicas",
+      "script": "07_scripts/audit/audit_public_paths.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.331,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar integridad de bases SQLite",
+      "script": "07_scripts/audit/audit_sqlite_integrity.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 4.078,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar No-Hardcode Runtime",
+      "script": "07_scripts/audit/verify_no_hardcoded_runtime.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.183,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar Ledger IA",
+      "script": "07_scripts/audit/verify_ledger.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.092,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar integridad DEC/VAL",
+      "script": "07_scripts/audit/verify_decisions_val_integrity.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.139,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar Cadena de Bitácoras",
+      "script": "07_scripts/audit/verify_bitacora_chain.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.071,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar calidad de trazabilidad",
+      "script": "07_scripts/audit/verify_traceability_quality.py",
+      "args": [
+        "--strict"
+      ],
+      "group": "integridad",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.144,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Autoauditoría documental",
+      "script": "07_scripts/audit/document_audit.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.071,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditoría de Seguridad Unificada",
+      "script": "07_scripts/audit/security_audit.py",
+      "args": [],
+      "group": "seguridad",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 12.853,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Generar Badges de Seguridad",
+      "script": "07_scripts/utils/generate_security_badges.py",
+      "args": [],
+      "group": "seguridad",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.057,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Escaneo de secretos",
+      "script": "07_scripts/audit/secret_scanner.py",
+      "args": [],
+      "group": "seguridad",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 8.974,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Verificar firma GPG",
+      "script": "07_scripts/utils/setup_gpg_attestation.py",
+      "args": [
+        "--check"
+      ],
+      "group": "seguridad",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.142,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Validar estructura",
+      "script": "07_scripts/audit/validate_structure.py",
+      "args": [],
+      "group": "estructura",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.286,
+      "budget_seconds": 10.0,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Validar arquitectura B0 desktop-first",
+      "script": "07_scripts/audit/validate_b0_architecture.py",
+      "args": [],
+      "group": "estructura",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.152,
+      "budget_seconds": 10.0,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar Estándares Externos",
+      "script": "07_scripts/audit/verify_standards.py",
+      "args": [],
+      "group": "estructura",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 2.278,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Validar specs SDD",
+      "script": "07_scripts/audit/validate_sdd_specs.py",
+      "args": [],
+      "group": "estructura",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.099,
+      "budget_seconds": 5.0,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Sincronizar evidencia técnica",
+      "script": "07_scripts/ops/sync_evidence.py",
+      "args": [],
+      "group": "evidencia",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.204,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Verificar artefactos de benchmark científico",
+      "script": "07_scripts/audit/verify_benchmark_artifacts.py",
+      "args": [],
+      "group": "evidencia",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.238,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Verificar evidencia fuente de conversación",
+      "script": "07_scripts/tesis.py",
+      "args": [
+        "source",
+        "status",
+        "--check"
+      ],
+      "group": "evidencia",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 1.635,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    }
+  ]
+}

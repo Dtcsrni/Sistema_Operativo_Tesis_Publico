@@ -72,8 +72,9 @@ El enfoque explícito reduce riesgos de alucinación, fuga de contexto y depende
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Incorporar sección de IA en plantilla de bitácora
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-- [ ] Evaluar más adelante una vista sanitizada de trabajo asistido para anexos o metodología
-  - [ ] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+- [x] Evaluar más adelante una vista sanitizada de trabajo asistido para anexos o metodología
+  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - **Soporte operativo:** la vista sanitizada existe como bundle público derivado en `06_dashboard/publico/`, con `manifest_publico.json` en estado `ok`, `scope=publico_sanitizado`, 37 artefactos y validación `tesis.py publish --check` sin drift ni errores durante `build_all.py`.
 
 ## Referencias
 
@@ -81,8 +82,8 @@ El enfoque explícito reduce riesgos de alucinación, fuga de contexto y depende
 - UNESCO fija principios de supervisión humana, transparencia y responsabilidad para IA: [UNESCO](https://www.unesco.org/en/legal-affairs/recommendation-ethics-artificial-intelligence)
 - The Turing Way ofrece pautas prácticas de colaboración responsable y escritura asistida: [The Turing Way](https://book.the-turing-way.org/)
 
-[LID]: ruta local no pública
-[GOV]: ruta local no pública
-[AUD]: ruta local no pública
+[LID]:  ruta local no pública 
+[GOV]:  ruta local no pública 
+[AUD]:  ruta local no pública
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

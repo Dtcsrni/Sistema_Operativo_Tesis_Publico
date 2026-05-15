@@ -23,4 +23,4 @@ Si el DOI no se confirma, la referencia no se usa para afirmaciones fuertes.
 - No aceptar citas inventadas, titulos sin DOI/URL/hash, ni PDFs locales sin hash.
 - No mezclar evidencia privada con verificadores externos sin redaccion previa.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

@@ -52,4 +52,4 @@ Cuando se configure el theme *Material for MkDocs*:
 - Contraste WCAG 2.1 AA mínimo garantizado en los colores de texto y enlaces.
 - Todos los diagramas deben mantener contraste incluso en el esquema *slate* (modo oscuro).
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

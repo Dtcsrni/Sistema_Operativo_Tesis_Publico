@@ -38,5 +38,85 @@
   {
     "input": "Explica el concepto de 'Reflective Phase' en una arquitectura agéntica.",
     "target": ""
+  },
+  {
+    "input": "¿Cómo optimizar el uso de memoria CMA en el kernel Linux para RK3588?",
+    "target": ""
+  },
+  {
+    "input": "Genera un resumen científico sobre el estado del arte en IA soberana.",
+    "target": ""
+  },
+  {
+    "input": "¿Cuál es el rol de los agentes de IA en la investigación de posgrado?",
+    "target": ""
+  },
+  {
+    "input": "Define los niveles de auditoría CRÍTICO, ALTO y MEDIO en este sistema.",
+    "target": ""
+  },
+  {
+    "input": "Explica la importancia de la trazabilidad inmutable en la ciencia.",
+    "target": ""
+  },
+  {
+    "input": "¿Cómo funciona el mecanismo de atención en un Transformer?",
+    "target": ""
+  },
+  {
+    "input": "Describe la arquitectura del procesador RK3588 y su NPU de 6 TOPS.",
+    "target": ""
+  },
+  {
+    "input": "¿Qué es LoRaWAN y cómo se diferencia de LoRa P2P?",
+    "target": ""
+  },
+  {
+    "input": "Implementa un filtro de Kalman básico en pseudo-código para suavizar datos GPS.",
+    "target": ""
+  },
+  {
+    "input": "¿Cómo mitigar ataques de inyección de prompts en LLMs locales?",
+    "target": ""
+  },
+  {
+    "input": "Explica el concepto de 'Zero-copy' en la transferencia de datos a la NPU.",
+    "target": ""
+  },
+  {
+    "input": "¿Qué es un sistema operativo 'local-first'?",
+    "target": ""
+  },
+  {
+    "input": "Describe el proceso de cuantización post-entrenamiento (PTQ).",
+    "target": ""
+  },
+  {
+    "input": "¿Cómo afecta la temperatura en la generación de texto de un LLM?",
+    "target": ""
+  },
+  {
+    "input": "Analiza la eficiencia energética de la inferencia en el Edge vs Cloud.",
+    "target": ""
+  },
+  {
+    "input": "¿Qué es el protocolo MQTT y por qué es ideal para IoT?",
+    "target": ""
+  },
+  {
+    "input": "Explica la técnica de 'Speculative Decoding' para acelerar LLMs.",
+    "target": ""
+  },
+  {
+    "input": "¿Cómo gestionar el ciclo de vida de un agente de IA autónomo?",
+    "target": ""
+  },
+  {
+    "input": "Describe el uso de Docker para desplegar microservicios en ARM64.",
+    "target": ""
+  },
+  {
+    "input": "¿Qué importancia tiene la transparencia algorítmica en la tesis?",
+    "target": ""
   }
 ]

@@ -1,0 +1,41 @@
+{
+  "generated_at_utc": "20260506_061822",
+  "total_duration_seconds": 7.196,
+  "summary": {
+    "total": 2,
+    "executed": 2,
+    "skipped": 0,
+    "failed": 0,
+    "slow": 0
+  },
+  "slow_stages": [],
+  "failed_stages": [],
+  "steps": [
+    {
+      "label": "Generar snapshot de observabilidad distribuida",
+      "script": "07_scripts/ops/build_observability_snapshot.py",
+      "args": [],
+      "group": "generacion",
+      "started_at_utc": "2026-05-06",
+      "duration_seconds": 0.601,
+      "budget_seconds": 5.0,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Generar dashboard",
+      "script": "07_scripts/ops/build_dashboard.py",
+      "args": [],
+      "group": "generacion",
+      "started_at_utc": "2026-05-06",
+      "duration_seconds": 6.595,
+      "budget_seconds": 20.0,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    }
+  ]
+}

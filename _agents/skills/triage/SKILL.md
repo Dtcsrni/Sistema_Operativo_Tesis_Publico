@@ -94,4 +94,4 @@ If the maintainer says "move that to ready-for-agent", trust them and apply dire
 ## Soberanía Humana
 No marques un issue como `ready-for-agent` o `wontfix` sin confirmación explícita del Tesista. Issues tipo `ready-for-agent` con impacto en trazabilidad requieren Step ID.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

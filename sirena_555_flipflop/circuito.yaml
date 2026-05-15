@@ -1,0 +1,122 @@
+metadatos:
+  nombre: sirena_555_flipflop
+  proposito: prueba del sistema de generacion precisa de diagramas electricos, simulacion y validacion electrica
+  entorno: KiCad CLI 10.0.2
+  fecha: 2026-05-13
+  estado: EXPORTADO_SIN_APROBACION_HUMANA
+
+componentes:
+  - referencia: U1
+    valor: NE555P
+    funcion: temporizador astable
+  - referencia: U2
+    valor: 74HC74
+    funcion: flip-flop D doble, usar solo el primero
+  - referencia: Q1
+    valor: BC547
+    funcion: transistor NPN para buzzer
+  - referencia: D1
+    valor: LED rojo
+  - referencia: D2
+    valor: LED azul
+  - referencia: BZ1
+    valor: buzzer activo 5V
+  - referencia: SW1
+    valor: pulsador NA
+  - referencia: R1
+    valor: 10k
+  - referencia: R2
+    valor: 100k
+  - referencia: R3
+    valor: 47k
+  - referencia: R4
+    valor: 680R
+  - referencia: R5
+    valor: 680R
+  - referencia: R6
+    valor: 4.7k
+  - referencia: R7
+    valor: 100k
+  - referencia: C1
+    valor: 10uF
+  - referencia: C2
+    valor: 10nF
+  - referencia: C3
+    valor: 100nF
+  - referencia: C4
+    valor: 100nF
+  - referencia: C5
+    valor: 10uF
+
+redes:
+  - +5V
+  - GND
+  - CLK
+  - Q
+  - /Q
+  - BUZZER_CTRL
+  - DIS_NODE
+  - TIMING_NODE
+  - BASE_Q1
+  - CTRL_NODE
+
+conexiones:
+  U1:
+    pin1: GND
+    pin2: TIMING_NODE
+    pin3: CLK
+    pin4: +5V
+    pin5: CTRL_NODE
+    pin6: TIMING_NODE
+    pin7: DIS_NODE
+    pin8: +5V
+  U2:
+    pin1: +5V
+    pin2: /Q
+    pin3: CLK
+    pin4: +5V
+    pin5: Q
+    pin6: /Q
+    pin7: GND
+    pin8: no conectado intencionalmente
+    pin9: no conectado intencionalmente
+    pin10: +5V
+    pin11: GND
+    pin12: GND
+    pin13: +5V
+    pin14: +5V
+  Q1:
+    base: BASE_Q1
+    emisor: GND
+    colector: BZ1-
+  BZ1:
+    positivo: +5V
+
+ecuaciones:
+  D: /Q
+  LED_AZUL: Q
+  LED_ROJO: /Q
+  BUZZER_CTRL: Q
+
+valores_calculados:
+  modo_normal_hz: 0.686
+  modo_rapido_hz: 1.95
+  rb_equivalente_ohm: 31973
+
+notas_de_verificacion:
+  - ERC ejecutado con KiCad CLI 10.0.2
+  - ERC final con 0 errores y 0 advertencias
+  - Netlist KiCad comparada contra contrato esperado sin faltantes
+  - Auditoria visual-estatica confirma wires continuos en redes criticas
+  - PDF y SVG fueron exportados y no estan vacios
+  - Estado tecnico no equivale a aprobacion humana
+
+criterios_de_aprobacion:
+  - ERC sin errores criticos
+  - Alimentacion correcta
+  - CLK conectado solo entre U1 y U2
+  - D1 del flip-flop conectado a /Q
+  - LEDs con resistencia serie
+  - buzzer con transistor
+  - base con resistencia y pull-down
+  - segundo flip-flop sin entradas flotantes

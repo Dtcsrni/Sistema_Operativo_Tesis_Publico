@@ -1,0 +1,72 @@
+[50924:6512:0514/210637.300:VERBOSE1:chrome\updater\event_history.cc:167] Failed to write security descriptor for C:\Program Files (x86)\Google\GoogleUpdater\updater_history.jsonl: Acceso denegado. (0x5)
+[50924:6512:0514/210637.301:VERBOSE1:chrome\updater\updater.cc:352] Version: 149.0.7814.0, opt, x86_64, command line: "C:\Program Files (x86)\Google\Update\GoogleUpdate.exe" --help
+[50924:6512:0514/210637.301:VERBOSE1:chrome\updater\updater.cc:355] OS version: 10.0.26200.8457, arch: x86_64, System uptime (seconds): 180968, parent pid: 6336
+[50924:6512:0514/210637.302:VERBOSE1:chrome\updater\updater.cc:364] Parent process command line: "C:\Program Files\PowerShell\7\pwsh.exe" -Command "[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;
+$root='C:\Auditoria_Tezkatli'
+$ts=Get-Date -Format 'yyyyMMdd_HHmmss'
+$out=\"$root\12_Validacion_Posterior\updater_help_outputs_$ts.txt\"
+$exes=@('C:\Program Files (x86)\Microsoft\EdgeUpdate\MicrosoftEdgeUpdate.exe','C:\Program Files (x86)\Microsoft\EdgeUpdate\1.3.233.3\MicrosoftEdgeUpdate.exe','C:\Program Files (x86)\Google\GoogleUpdater\149.0.7814.0\updater.exe','C:\Program Files (x86)\Google\Update\GoogleUpdate.exe')
+foreach($e in $exes){
+  \"===== $e --help =====\" | Add-Content $out
+  if(Test-Path $e){ & $e --help 2>&1 | Select-Object -First 50 | Add-Content $out; \"exit=$LASTEXITCODE\" | Add-Content $out }
+  \"===== $e /? =====\" | Add-Content $out
+  if(Test-Path $e){ & $e /? 2>&1 | Select-Object -First 50 | Add-Content $out; \"exit=$LASTEXITCODE\" | Add-Content $out }
+}
+Get-Content $out -Raw"
+[50924:6512:0514/210637.302:VERBOSE1:chrome\updater\util\win_util.cc:571] available: 17095M, total: 60640M, phys: 16G
+[50924:6512:0514/210637.305:VERBOSE1:chrome\updater\event_history.cc:238] Failed to write history event: logging not initialized
+[49660:20836:0514/210637.336:VERBOSE1:chrome\updater\event_history.cc:167] Failed to write security descriptor for C:\Program Files (x86)\Google\GoogleUpdater\updater_history.jsonl: Acceso denegado. (0x5)
+[49660:20836:0514/210637.336:VERBOSE1:chrome\updater\updater.cc:352] Version: 149.0.7814.0, opt, x86_64, command line: "C:\Program Files (x86)\Google\Update\GoogleUpdate.exe" --crash-handler --system "--database=C:\Program Files (x86)\Google\GoogleUpdater\149.0.7814.0\Crashpad" --url=https://clients2.google.com/cr/report --annotation=prod=Update4 --annotation=ver=149.0.7814.0 "--attachment=C:\Program Files (x86)\Google\GoogleUpdater\updater.log" "--attachment=C:\Program Files (x86)\Google\GoogleUpdater\updater_history.jsonl" --initial-client-data=0x22c,0x228,0x224,0x274,0x290,0x7ff794c1bd3c,0x7ff794c1bd48,0x7ff794c1bd58
+[49660:20836:0514/210637.336:VERBOSE1:chrome\updater\updater.cc:355] OS version: 10.0.26200.8457, arch: x86_64, System uptime (seconds): 180968, parent pid: 50924
+[49660:20836:0514/210637.336:VERBOSE1:chrome\updater\updater.cc:364] Parent process command line: "C:\Program Files (x86)\Google\Update\GoogleUpdate.exe" --help
+[49660:20836:0514/210637.336:VERBOSE1:chrome\updater\util\win_util.cc:571] available: 17167M, total: 60640M, phys: 16G
+[49660:20836:0514/210637.337:VERBOSE1:chrome\updater\event_history.cc:238] Failed to write history event: logging not initialized
+[50924:6512:0514/210637.339:VERBOSE1:chrome\updater\crash_reporter.cc:124] Crash handler launched and ready.
+[50924:6512:0514/210637.339:ERROR:chrome\updater\crash_client.cc:124] Failed to fetch completed crash reports: 3
+[50924:6512:0514/210637.339:ERROR:chrome\updater\crash_client.cc:140] Failed to fetch pending crash reports: 3
+[50924:6512:0514/210637.340:VERBOSE2:chrome\updater\usage_stats_permissions_win.cc:77] usage stats enabled by app {b210701e-ffc4-49e3-932b-370728c72662}
+[50924:6512:0514/210637.341:ERROR:third_party\crashpad\crashpad\util\file\file_io_win.cc:181] CreateFile C:\Program Files (x86)\Google\GoogleUpdater\149.0.7814.0\Crashpad\settings.dat: Acceso denegado. (0x5)
+[50924:6512:0514/210637.341:ERROR:third_party\crashpad\crashpad\util\file\file_io_win.cc:181] CreateFile C:\Program Files (x86)\Google\GoogleUpdater\149.0.7814.0\Crashpad\settings.dat: Acceso denegado. (0x5)
+[50924:6512:0514/210637.342:VERBOSE1:chrome\updater\updater.cc:103] Crash reporting initialized.
+[50924:6512:0514/210637.344:VERBOSE1:chrome\updater\updater.cc:153] IsUserAdmin: 0, IsUserNonElevatedAdmin: 1, IsUACOn: 1, IsElevatedWithUACOn: 0, LUA: 1
+[50924:6512:0514/210637.345:VERBOSE1:chrome\updater\updater.cc:243] Unknown command line switch.
+[50924:6512:0514/210637.346:VERBOSE1:chrome\updater\event_history.cc:238] Failed to write history event: logging not initialized
+[50924:6512:0514/210637.346:VERBOSE1:chrome\updater\updater.cc:390] UpdaterMain (--) returned 75009.
+[49660:20836:0514/210637.352:VERBOSE1:chrome\updater\event_history.cc:238] Failed to write history event: logging not initialized
+[49660:20836:0514/210637.352:VERBOSE1:chrome\updater\updater.cc:390] UpdaterMain (--crash-handler) returned 0.
+[47424:51288:0514/210637.414:VERBOSE1:chrome\updater\event_history.cc:167] Failed to write security descriptor for C:\Program Files (x86)\Google\GoogleUpdater\updater_history.jsonl: Acceso denegado. (0x5)
+[47424:51288:0514/210637.414:VERBOSE1:chrome\updater\updater.cc:352] Version: 149.0.7814.0, opt, x86_64, command line: "C:\Program Files (x86)\Google\Update\GoogleUpdate.exe" /?
+[47424:51288:0514/210637.414:VERBOSE1:chrome\updater\updater.cc:355] OS version: 10.0.26200.8457, arch: x86_64, System uptime (seconds): 180968, parent pid: 6336
+[47424:51288:0514/210637.414:VERBOSE1:chrome\updater\updater.cc:364] Parent process command line: "C:\Program Files\PowerShell\7\pwsh.exe" -Command "[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;
+$root='C:\Auditoria_Tezkatli'
+$ts=Get-Date -Format 'yyyyMMdd_HHmmss'
+$out=\"$root\12_Validacion_Posterior\updater_help_outputs_$ts.txt\"
+$exes=@('C:\Program Files (x86)\Microsoft\EdgeUpdate\MicrosoftEdgeUpdate.exe','C:\Program Files (x86)\Microsoft\EdgeUpdate\1.3.233.3\MicrosoftEdgeUpdate.exe','C:\Program Files (x86)\Google\GoogleUpdater\149.0.7814.0\updater.exe','C:\Program Files (x86)\Google\Update\GoogleUpdate.exe')
+foreach($e in $exes){
+  \"===== $e --help =====\" | Add-Content $out
+  if(Test-Path $e){ & $e --help 2>&1 | Select-Object -First 50 | Add-Content $out; \"exit=$LASTEXITCODE\" | Add-Content $out }
+  \"===== $e /? =====\" | Add-Content $out
+  if(Test-Path $e){ & $e /? 2>&1 | Select-Object -First 50 | Add-Content $out; \"exit=$LASTEXITCODE\" | Add-Content $out }
+}
+Get-Content $out -Raw"
+[47424:51288:0514/210637.414:VERBOSE1:chrome\updater\util\win_util.cc:571] available: 17194M, total: 60640M, phys: 16G
+[47424:51288:0514/210637.416:VERBOSE1:chrome\updater\event_history.cc:238] Failed to write history event: logging not initialized
+[15372:37368:0514/210637.438:VERBOSE1:chrome\updater\event_history.cc:167] Failed to write security descriptor for C:\Program Files (x86)\Google\GoogleUpdater\updater_history.jsonl: Acceso denegado. (0x5)
+[15372:37368:0514/210637.438:VERBOSE1:chrome\updater\updater.cc:352] Version: 149.0.7814.0, opt, x86_64, command line: "C:\Program Files (x86)\Google\Update\GoogleUpdate.exe" --crash-handler --system "--database=C:\Program Files (x86)\Google\GoogleUpdater\149.0.7814.0\Crashpad" --url=https://clients2.google.com/cr/report --annotation=prod=Update4 --annotation=ver=149.0.7814.0 "--attachment=C:\Program Files (x86)\Google\GoogleUpdater\updater.log" "--attachment=C:\Program Files (x86)\Google\GoogleUpdater\updater_history.jsonl" --initial-client-data=0x280,0x284,0x288,0x27c,0x28c,0x7ff794c1bd3c,0x7ff794c1bd48,0x7ff794c1bd58
+[15372:37368:0514/210637.438:VERBOSE1:chrome\updater\updater.cc:355] OS version: 10.0.26200.8457, arch: x86_64, System uptime (seconds): 180968, parent pid: 47424
+[15372:37368:0514/210637.438:VERBOSE1:chrome\updater\updater.cc:364] Parent process command line: "C:\Program Files (x86)\Google\Update\GoogleUpdate.exe" /?
+[15372:37368:0514/210637.439:VERBOSE1:chrome\updater\util\win_util.cc:571] available: 17190M, total: 60640M, phys: 16G
+[15372:37368:0514/210637.439:VERBOSE1:chrome\updater\event_history.cc:238] Failed to write history event: logging not initialized
+[47424:51288:0514/210637.439:VERBOSE1:chrome\updater\crash_reporter.cc:124] Crash handler launched and ready.
+[47424:51288:0514/210637.440:ERROR:chrome\updater\crash_client.cc:124] Failed to fetch completed crash reports: 3
+[47424:51288:0514/210637.440:ERROR:chrome\updater\crash_client.cc:140] Failed to fetch pending crash reports: 3
+[47424:51288:0514/210637.440:VERBOSE2:chrome\updater\usage_stats_permissions_win.cc:77] usage stats enabled by app {b210701e-ffc4-49e3-932b-370728c72662}
+[47424:51288:0514/210637.440:ERROR:third_party\crashpad\crashpad\util\file\file_io_win.cc:181] CreateFile C:\Program Files (x86)\Google\GoogleUpdater\149.0.7814.0\Crashpad\settings.dat: Acceso denegado. (0x5)
+[47424:51288:0514/210637.440:ERROR:third_party\crashpad\crashpad\util\file\file_io_win.cc:181] CreateFile C:\Program Files (x86)\Google\GoogleUpdater\149.0.7814.0\Crashpad\settings.dat: Acceso denegado. (0x5)
+[47424:51288:0514/210637.440:VERBOSE1:chrome\updater\updater.cc:103] Crash reporting initialized.
+[47424:51288:0514/210637.441:VERBOSE1:chrome\updater\updater.cc:153] IsUserAdmin: 0, IsUserNonElevatedAdmin: 1, IsUACOn: 1, IsElevatedWithUACOn: 0, LUA: 1
+[47424:51288:0514/210637.441:VERBOSE1:chrome\updater\updater.cc:243] Unknown command line switch.
+[47424:51288:0514/210637.442:VERBOSE1:chrome\updater\event_history.cc:238] Failed to write history event: logging not initialized
+[47424:51288:0514/210637.442:VERBOSE1:chrome\updater\updater.cc:390] UpdaterMain (--) returned 75009.
+[15372:37368:0514/210637.449:VERBOSE1:chrome\updater\event_history.cc:238] Failed to write history event: logging not initialized
+[15372:37368:0514/210637.450:VERBOSE1:chrome\updater\updater.cc:390] UpdaterMain (--crash-handler) returned 0.

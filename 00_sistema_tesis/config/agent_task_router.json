@@ -4,7 +4,7 @@
   "privacy_classes": ["public", "redacted", "private", "restricted"],
   "risk_levels": ["BAJO", "MEDIO", "ALTO", "CRITICO"],
   "default_route": "wsl_native",
-  "local_first_routes": ["serena", "ollama_local", "pc_native_llamacpp", "docker_agent", "wsl_native"],
+  "local_first_routes": ["serena", "ollama_local", "docker_agent", "wsl_native"],
   "cloud_free_routes": ["github_models_free"],
   "external_context_routes": ["context7_docs"],
   "cloud_allowed_privacy_classes": ["public", "redacted"],
@@ -31,7 +31,7 @@
   ],
   "route_preferences": {
     "docs_external": ["context7_docs", "serena", "wsl_native"],
-    "academic_heavy": ["pc_native_llamacpp", "ollama_local", "serena", "wsl_native"],
+    "academic_heavy": ["ollama_local", "serena", "wsl_native"],
     "docker_runtime": ["docker_agent", "wsl_native", "serena"],
     "repo_governance": ["serena", "wsl_native"],
     "public_cloud": ["github_models_free", "context7_docs", "serena", "wsl_native"],

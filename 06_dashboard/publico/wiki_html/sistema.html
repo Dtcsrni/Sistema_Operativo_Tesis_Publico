@@ -220,6 +220,7 @@
     <a href="casos_uso.html" class="nav-link "><span class="material-icons">smart_toy</span><span>Agente y Casos de Uso</span></a>
 <a href="sistema.html" class="nav-link active"><span class="material-icons">settings</span><span>Sistema</span></a>
 <a href="gobernanza.html" class="nav-link "><span class="material-icons">gavel</span><span>Gobernanza</span></a>
+<a href="arquitectura.html" class="nav-link "><span class="material-icons">architecture</span><span>Arquitectura</span></a>
 <a href="terminologia.html" class="nav-link "><span class="material-icons">book</span><span>Terminología</span></a>
 <a href="planeacion.html" class="nav-link "><span class="material-icons">event_note</span><span>Planeación</span></a>
 <a href="hipotesis.html" class="nav-link "><span class="material-icons">lightbulb</span><span>Hipótesis</span></a>
@@ -235,12 +236,12 @@
       <h1>Sistema</h1>
       <div class="stamp">
         <span class="material-icons" style="font-size: 16px;">update</span>
-        Generado el 2026-04-29
+        Generado el 2026-05-15
       </div>
     </header>
     <div class="markdown-body"><p><h1>Sistema</h1></p><p>Propósito, alcance, módulos, flujos e interacción del sistema operativo de tesis.
 <ul><li><strong>Tesista:</strong> <code>Erick Renato Vega Ceron</code></li>
-<li><strong>Fecha:</strong> <code>2026-04-29</code></li>
+<li><strong>Fecha:</strong> <code>2026-05-15</code></li>
 <li><strong>Estado:</strong> <code>OK</code></li>
 <li><strong>Fuentes:</strong> <code>README_INICIO.md</code>, <code>00_sistema_tesis/manual_operacion_humana.md</code>, <code>00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md</code>, <code>00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md</code>, <code>00_sistema_tesis/documentacion_sistema/flujos_operativos.md</code>, <code>00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md</code>, <code>00_sistema_tesis/config/sistema_tesis.yaml</code>, <code>00_sistema_tesis/config/publicacion.yaml</code></li>
 <li><strong>Aviso:</strong> Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.</li>
@@ -400,7 +401,7 @@ El sistema no debe describir como cerrado lo que en planeacion o decisiones siga
 <li>Derivados: API local, bot Telegram, trazas SQLite, estado de proveedores y cobertura de implementacion en la wiki. Matrix permanece como derivado latente.</li>
 <li>Visible al publico: arquitectura general, contratos de sesion, politica <code>desktop-first</code>, Telegram como canal remoto activo y Matrix como extensión latente.</li>
 <li>Privado: secretos de proveedores, tokens de Matrix/Telegram, rutas sensibles del host y evidencia operativa fina.</li>
-<li>Regla operativa: la PC principal concentra el carril pesado con <code>pc_native_llamacpp</code>; <code>tesis-edge</code> mantiene continuidad 24/7, relay, Telegram y runtime ligero. Matrix queda disponible solo como extensibilidad futura.</li>
+<li>Regla operativa: la PC principal concentra el carril pesado con <code>desktop_compute</code> (Ollama DeepSeek) via Docker Compose; <code>tesis-edge</code> mantiene continuidad 24/7, relay, Telegram y runtime ligero. Matrix queda disponible solo como extensibilidad futura.</li>
 </ul>
 <h3>Relaciones clave</h3>
 <ul><li>Gobierno define las reglas con las que opera trazabilidad.</li>
@@ -549,7 +550,7 @@ Referencia operativa: <code>00_sistema_tesis/documentacion_sistema/operacion_ser
 <li>Serena usada como primera capa de contexto cuando el perfil recomendado este disponible;</li>
 <li>trazabilidad y auditoria actualizadas sin perder la ruta operativa principal.</li>
 </ul>
-<h3>Flujo 14. Operar OpenClaw con PC-first y Telegram activo</h3></p><p>Objetivo: usar OpenClaw como capa asistiva sin mover la autoria principal fuera del escritorio ni degradar el edge a nodo pesado por defecto.</p><p>Secuencia:</p><p>1. Levantar o verificar el runtime pesado de la PC con <code>llama.cpp server</code> y confirmar <code>OPENCLAW_DESKTOP_RUNTIME=llamacpp</code>.
+<h3>Flujo 14. Operar OpenClaw con PC-first y Telegram activo</h3></p><p>Objetivo: usar OpenClaw como capa asistiva sin mover la autoria principal fuera del escritorio ni degradar el edge a nodo pesado por defecto.</p><p>Secuencia:</p><p>1. Verificar que <code>ollama-pc</code> esté corriendo en <code>docker compose -f docker-compose.pc.yml</code> con <code>deepseek-r1:7b</code> disponible; confirmar <code>OPENCLAW_DESKTOP_COMPUTE_BASE_URL=http://ollama-pc:11434</code>.
 2. Confirmar en <code>pasarela estado</code> que <code>nodes.desktop.runtime=llamacpp</code> y que el edge mantiene su runtime local ligero.
 3. Operar sesiones desde <code>CLI</code>, <code>web_local</code> o <code>telegram</code>; todos los canales activos deben pasar por la misma <code>session-layer</code>.
 4. Mantener <code>Telegram</code> como plano remoto activo y <code>Matrix</code> solo como compatibilidad futura, fallback latente o notificacion cuando se reactive.
@@ -642,31 +643,31 @@ Referencia operativa: <code>00_sistema_tesis/documentacion_sistema/operacion_ser
 </ul>
 <h2>Estado de archivos canónicos</h2></p><p>|Clave|Ruta|Existe|Última modificación|
 |---|---|---|---|
-|sistema|00_sistema_tesis/config/sistema_tesis.yaml|sí|2026-04-27|
+|sistema|00_sistema_tesis/config/sistema_tesis.yaml|sí|2026-05-06|
 |hipotesis|00_sistema_tesis/config/hipotesis.yaml|sí|2026-03-23|
 |bloques|00_sistema_tesis/config/bloques.yaml|sí|2026-04-27|
 |dashboard|00_sistema_tesis/config/dashboard.yaml|sí|2026-03-24|
-|publicacion|00_sistema_tesis/config/publicacion.yaml|sí|2026-04-14|
+|publicacion|00_sistema_tesis/config/publicacion.yaml|sí|2026-05-14|
 |agent_identity|Identidad técnica no publicada por seguridad|sí|2026-03-26|
 |gobernanza_ia|00_sistema_tesis/config/ia_gobernanza.yaml|sí|2026-04-21|
-|wiki|00_sistema_tesis/config/wiki.yaml|sí|2026-04-29|
-|manual_operacion_humana|00_sistema_tesis/manual_operacion_humana.md|sí|2026-04-27|
-|backlog|01_planeacion/backlog.csv|sí|2026-04-14|
+|wiki|00_sistema_tesis/config/wiki.yaml|sí|2026-05-01|
+|manual_operacion_humana|00_sistema_tesis/manual_operacion_humana.md|sí|2026-05-06|
+|backlog|01_planeacion/backlog.csv|sí|2026-05-01|
 |riesgos|01_planeacion/riesgos.csv|sí|2026-03-26|
 |roadmap|01_planeacion/roadmap.csv|sí|2026-03-23|
 |entregables|01_planeacion/entregables.csv|sí|2026-04-14|
-|decisiones|00_sistema_tesis/decisiones|sí|2026-04-29|
-|bitacora|00_sistema_tesis/bitacora|sí|2026-04-29|
-|reportes_semanales|00_sistema_tesis/reportes_semanales|sí|2026-03-24|
-|dashboard_generado|06_dashboard/generado/index.html|sí|2026-04-29|
-|bundle_publico|06_dashboard/publico/index.md|sí|2026-04-29|
-|bundle_publico_manifest|06_dashboard/publico/manifest_publico.json|sí|2026-04-29|
-|wiki_markdown_generada|06_dashboard/wiki/index.md|sí|2026-04-29|
-|wiki_html_generada|06_dashboard/generado/wiki/index.html|sí|2026-04-29|
-|wiki_manifest_generado|06_dashboard/generado/wiki_manifest.json|sí|2026-04-29|
-|readme_portada_generado|README.md|sí|2026-04-29|
+|decisiones|00_sistema_tesis/decisiones|sí|2026-05-14|
+|bitacora|00_sistema_tesis/bitacora|sí|2026-05-15|
+|reportes_semanales|00_sistema_tesis/reportes_semanales|sí|2026-05-13|
+|dashboard_generado|06_dashboard/generado/index.html|sí|2026-05-15|
+|bundle_publico|06_dashboard/publico/index.md|sí|2026-05-14|
+|bundle_publico_manifest|06_dashboard/publico/manifest_publico.json|sí|2026-05-14|
+|wiki_markdown_generada|06_dashboard/wiki/index.md|sí|2026-05-07|
+|wiki_html_generada|06_dashboard/generado/wiki/index.html|sí|2026-05-07|
+|wiki_manifest_generado|06_dashboard/generado/wiki_manifest.json|sí|2026-05-07|
+|readme_portada_generado|README.md|sí|2026-05-06|
 </p></div>
-      <footer class="public-update"><p>Última actualización: <strong>2026-04-29</strong></p></footer>
+      <footer class="public-update"><p>Última actualización: <strong>2026-05-14</strong></p></footer>
   </main>
 </body>
 </html>

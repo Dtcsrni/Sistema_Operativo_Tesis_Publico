@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-21
 
 - **ID de Sesión:** codex-local-20260421-openclaw-telegram-trazabilidad-v1
-- **Cadena de Confianza (Anterior):** `sha256/28c194e9cc4a87fca97daf17d8d982b7cb8788ba89da74faebb0f29d1840b030`
+- **Cadena de Confianza (Anterior): `hash omitido:omitido````
 - **Bloque principal:** B0
 - **Tipo de sesión:** implementación | validación | administración
 
@@ -15,13 +15,13 @@ Documentar conforme a la política de trazabilidad el cierre operativo OpenClaw/
 
 ## Tareas del día
 - [x] Consolidar OpenClaw/Telegram como paquete operativo aislado.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Registrar autorización documental con fuente de conversación exacta.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Mantener la soberanía humana: no habilitar aprobaciones mutantes por Telegram ni declarar validación humana técnica adicional.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Registrar evidencia operativa y pruebas del edge/escritorio.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Trabajo realizado
 - Se implementó y publicó en la línea principal el paquete `OpenClaw/Telegram` mediante el commit `b6cb307 feat(openclaw): add safe telegram bot and desktop compute closeout`.
@@ -51,26 +51,26 @@ Documentar conforme a la política de trazabilidad el cierre operativo OpenClaw/
 - **Validación local:** `python3 -m py_compile ...` OK; `pytest -q -s tests/test_openclaw_runtime.py tests/test_openclaw_cli.py tests/test_openclaw_telegram_bot.py` -> `45 passed`.
 - **Validación edge:** `openclaw-gateway` active; `openclaw-telegram-bot` active; `openclaw-desktop-tunnel.service` active; `mistral-nemo:12b` visible desde `tesis-edge`.
 - **Validación del Sistema:** [x] Auditoría `build_all.py` aprobada en el cierre previo (`build_all_profile_20260421_151335.json`); esta regularización se reaudita en esta sesión.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Trabajo asistido con IA y gobernanza
 - **Proveedor de asistencia:** proveedor de IA no publicado
 - **Modelo/Versión de asistencia:** modelo de IA no publicado
 - **Objetivo:** documentar el cierre OpenClaw/Telegram con trazabilidad completa, sin convertir evidencia técnica en validación humana.
 - **Nivel de Razonamiento:** alto
-- **Alineación Ética:**
+- **Alineación Ática:**
     - [x] Transparencia (NIST RMF)
-      - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+      - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
     - [x] Soberanía Humana (UNESCO)
-      - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+      - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
     - [x] Responsabilidad (ISO 42001)
-      - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+      - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ### Validación de Soberanía (Handshake)
 - **Pregunta Crítica:** ¿Autorizas documentar todo el cierre OpenClaw/Telegram conforme a la política de trazabilidad?
 - **Respuesta Erick Vega:** "documenta todo según política de trazabilidad"
 - **Criterio de Aceptación:** [x] Validado con validación humana interna no pública.
-  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - [x] Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
   - **Soporte:** validación humana interna no pública
   - **Texto exacto de confirmación verbal:** "documenta todo según política de trazabilidad"
   - **Hash de confirmación verbal:** `hash omitido:omitido`
@@ -94,4 +94,4 @@ Mantener OpenClaw/Telegram en modo seguro y tratar cualquier aprobación real po
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

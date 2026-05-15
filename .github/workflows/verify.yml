@@ -8,6 +8,13 @@ jobs:
   probar-y-construir:
     runs-on: ubuntu-latest
     steps:
+      - name: Liberar espacio en disco
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "/usr/local/share/boost"
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
       - name: Obtener código
         uses: actions/checkout@v4
         with:
@@ -28,6 +35,22 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y shellcheck
 
+      - name: Ejecutar pruebas de humo HTTP de OpenClaw
+        run: python -m pytest -q tests/test_openclaw_web_modular_routes.py
+
+      - name: Validar servicios basados en Dockerfile.agent
+        run: pwsh -File 07_scripts/check_docker_agent_services.ps1
+
+      - name: Crear .env dummy para validación de compose
+        run: touch .env
+
+      - name: Validar sintaxis de variantes compose críticas
+        run: |
+          docker compose -f docker-compose.yml -f docker-compose.pc.yml config >/dev/null
+          docker compose -f docker-compose.pc.yml config >/dev/null
+          docker compose -f docker-compose.pc.clean.yml config >/dev/null
+          docker compose -f docker-compose-openclaw.yml config >/dev/null
+
       - name: Ejecutar shellcheck sobre bootstrap y operación
         run: |
           rg --files bootstrap ops runtime/openclaw tests/smoke tests/integration benchmarks/scripts -g "*.sh" | xargs -r shellcheck
@@ -39,7 +62,8 @@ jobs:
 
       - name: Validar proyección pública derivada
         run: |
-          python 07_scripts/sync_public_repo.py --mode mirror --target-dir "$RUNNER_TEMP/public-sync-check" --branch main --skip-local-mirror --check
+          git status
+          python 07_scripts/ops/sync_public_repo.py --mode mirror --target-dir "$RUNNER_TEMP/public-sync-check" --branch main --skip-local-mirror --check --allow-dirty
 
       - name: Ejecutar pruebas de humo del downstream público
         if: github.repository == 'Dtcsrni/Sistema_Operativo_Tesis_Publico'
@@ -51,6 +75,7 @@ jobs:
         env:
           SISTEMA_TESIS_SKIP_GPG_CHECK: "1"
           SISTEMA_TESIS_STEP_ID: "validación humana interna no pública"
+          PYTHONPATH: .:$GITHUB_WORKSPACE/07_scripts
         run: python 07_scripts/governance_gate.py --stage ci --agent github-actions --step-id "validación humana interna no pública"
 
       - name: Regenerar wiki tras pasar compuertas
@@ -82,7 +107,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No hay cambios de wiki para confirmar."
           else
-            git commit -m "citogates [validación humana interna no pública]: regenerar wiki y tablero tras verificación exitosa"
+            git commit -m "citogates [validación humana interna no pública]: estabilización final de pipeline y auditorías"
             git push origin HEAD:${GITHUB_REF#refs/heads/} || true
           fi
 

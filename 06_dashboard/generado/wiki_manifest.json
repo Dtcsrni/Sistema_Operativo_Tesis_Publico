@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-29",
+  "generated_at": "2026-05-15",
   "verification": {
     "status": "ok",
     "required_page_fields": [
@@ -15,6 +15,7 @@
     "casos_uso",
     "sistema",
     "gobernanza",
+    "arquitectura",
     "terminologia",
     "hipotesis",
     "bloques",
@@ -70,6 +71,19 @@
       "verified": false
     },
     {
+      "id": "arquitectura",
+      "title": "Arquitectura",
+      "markdown": "06_dashboard/wiki/arquitectura.md",
+      "html": "06_dashboard/generado/wiki/arquitectura.html",
+      "sources": [
+        "docs/02_arquitectura/arquitectura-general.md",
+        "docs/02_arquitectura/diagramas_c4.md",
+        "docs/02_arquitectura/mapa-de-interconexiones.md",
+        "docs/02_arquitectura/mapa-de-servicios.md"
+      ],
+      "verified": false
+    },
+    {
       "id": "terminologia",
       "title": "Terminología",
       "markdown": "06_dashboard/wiki/terminologia.md",
@@ -101,7 +115,7 @@
       "sources": [
         "00_sistema_tesis/config/bloques.yaml"
       ],
-      "verified": false
+      "verified": true
     },
     {
       "id": "planeacion",
@@ -189,8 +203,8 @@
     },
     {
       "path": "00_sistema_tesis/manual_operacion_humana.md",
-      "sha256": "6bb6bf7552a500a302ec9f4c564fa9b832856b9894c38759f8aaec7a0b20d805",
-      "modified": "2026-04-27",
+      "sha256": "bb5658d50156def16ecf019dd84322afed531f20b7b93ca5d390a46ea6ec327a",
+      "modified": "2026-05-06",
       "kind": "file"
     },
     {
@@ -201,14 +215,14 @@
     },
     {
       "path": "00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md",
-      "sha256": "761b922ad7fb2b2bc7026aa0d5699ee356d2d1799c8144cc4db1969ed7303779",
-      "modified": "2026-04-29",
+      "sha256": "671ea605028d68ad8d9ddddfd6d190ec9644a35b3788edc1bf028fd7ec3bdf5f",
+      "modified": "2026-05-13",
       "kind": "file"
     },
     {
       "path": "00_sistema_tesis/documentacion_sistema/flujos_operativos.md",
-      "sha256": "ebf0bb4c1dadfb5baffb8be8aac8e8c03e6697d5d3d65829b582b1e3180760e6",
-      "modified": "2026-04-29",
+      "sha256": "633fe8292aeae57d2b72438a11199df619b3cbbc88da731d753ea0075e90b97c",
+      "modified": "2026-05-13",
       "kind": "file"
     },
     {
@@ -231,8 +245,8 @@
     },
     {
       "path": "00_sistema_tesis/config/sistema_tesis.yaml",
-      "sha256": "8595316ebcc0097509973c9d94ead21760357580c6ef49a3fb60c9dcc3005790",
-      "modified": "2026-04-27",
+      "sha256": "9c308d9315d9ebe2b4a3883278470e975117fecdb0bf7cbcc7bc7c8ada377b41",
+      "modified": "2026-05-06",
       "kind": "file"
     },
     {
@@ -261,14 +275,14 @@
     },
     {
       "path": "00_sistema_tesis/config/publicacion.yaml",
-      "sha256": "0f33e5405bcb62e8c8f2eddb594248b90ef0134203487c3c0700eef2a5f1c85e",
-      "modified": "2026-04-14",
+      "sha256": "48f522fe46f0611ac7b7b6dab3bb758a78c3a622713308b84e8ab48d49353614",
+      "modified": "2026-05-14",
       "kind": "file"
     },
     {
       "path": "01_planeacion/backlog.csv",
-      "sha256": "42cb5c773c28da2a6793756772c06253323b9f48cf8504299e6d8b976f18c1f8",
-      "modified": "2026-04-14",
+      "sha256": "b3bdda24a96360a32a9289733fed0fe487d23e2bb4b80f7f7189ea6ec97ffcc1",
+      "modified": "2026-05-01",
       "kind": "file"
     },
     {
@@ -292,19 +306,19 @@
     {
       "path": "00_sistema_tesis/decisiones",
       "sha256": null,
-      "modified": "2026-04-29",
+      "modified": "2026-05-14",
       "kind": "directory"
     },
     {
       "path": "00_sistema_tesis/bitacora",
       "sha256": null,
-      "modified": "2026-04-29",
+      "modified": "2026-05-15",
       "kind": "directory"
     },
     {
       "path": "00_sistema_tesis/reportes_semanales",
       "sha256": null,
-      "modified": "2026-03-24",
+      "modified": "2026-05-13",
       "kind": "directory"
     },
     {
@@ -316,7 +330,7 @@
     {
       "path": "04_implementacion",
       "sha256": null,
-      "modified": "2026-04-24",
+      "modified": "2026-05-15",
       "kind": "directory"
     },
     {

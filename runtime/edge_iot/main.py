@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 class EdgeGateway:
     def __init__(self):
         self.node_id = os.getenv("NODE_ID", "unknown_edge")
-        self.hub_url = os.getenv("HUB_URL", "http://pc-hub:8080")
+        self.hub_url = os.getenv("HUB_URL", "http://pc-hub:4000")
         self.running = True
 
     def poll_sensors(self):

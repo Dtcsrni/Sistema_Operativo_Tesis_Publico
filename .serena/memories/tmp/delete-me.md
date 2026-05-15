@@ -1,3 +1,3 @@
 delete
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

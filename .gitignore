@@ -3,6 +3,7 @@ __pycache__/
 .pytest_cache/
 .venv/
 .env
+*.bak.*
 00_sistema_tesis/evidencia_privada/conversaciones_codex/*
 !00_sistema_tesis/evidencia_privada/conversaciones_codex/.gitkeep
 00_sistema_tesis/evidencia_privada/staging_ingestion/*
@@ -11,6 +12,13 @@ __pycache__/
 mi_llave_secreta_backup.asc
 00_sistema_tesis/bitacora/audit_history/governance_gate/
 00_sistema_tesis/bitacora/audit_history/security_report_*.json
+build_log.txt
+final_audit_v*.txt
+hash_result.txt
+real_hashes.txt
+temp_payload.json
+tmp_ledger_entry.txt
+Bóvedas_Obsidian/
 # Modelos y Binarios Pesados (Protegidos por Guardrails, fuera de Git)
 runtime/models/
 *.rknn
@@ -24,6 +32,6 @@ runtime/models/
 
 # Runtime y Cache
 runtime/openclaw/state/
-runtime/atzin/cache/
+runtime/toltecayotl/cache/
 scratch/
 .build_cache.json

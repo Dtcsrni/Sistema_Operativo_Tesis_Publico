@@ -184,4 +184,4 @@ No se corrigen manualmente los artefactos derivados. Se regeneran.
 - confirmación verbal corroborada con transcripción para `VAL-STEP` nuevos;
 - TDD para automatización, validadores y software nuevo.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

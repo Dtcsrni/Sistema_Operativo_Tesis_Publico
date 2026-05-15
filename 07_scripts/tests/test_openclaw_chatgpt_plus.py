@@ -1,10 +1,13 @@
 from __future__ import annotations
-
 import sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1])) # 07_scripts root
+sys.path.insert(0, str(Path(__file__).resolve().parent))     # subdirectory siblings
+
+
+
 
 import pytest
-
 
 ROOT = Path(__file__).resolve().parents[2]
 RUNTIME_ROOT = ROOT / "runtime" / "openclaw"
@@ -16,7 +19,6 @@ from openclaw_local.contracts import TaskEnvelope  # noqa: E402
 from openclaw_local.engine import route_task  # noqa: E402
 from openclaw_local.policies import load_domain_policies  # noqa: E402
 from openclaw_local.storage import OpenClawStore  # noqa: E402
-
 
 def test_route_task_prefers_chatgpt_plus_when_explicitly_requested(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     domains_dir = tmp_path / "domains"
@@ -49,7 +51,6 @@ def test_route_task_prefers_chatgpt_plus_when_explicitly_requested(tmp_path: Pat
     assert decision.mode == "cloud_web_assisted"
     assert decision.requires_human_gate is True
     assert decision.session_mode == "human_supervised_web_session"
-
 
 def test_route_task_does_not_default_to_chatgpt_plus_for_academic_web_tasks(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     domains_dir = tmp_path / "domains"

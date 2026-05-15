@@ -8,7 +8,7 @@ import sys
 from datetime import UTC, datetime
 from pathlib import Path
 
-from data_io import dump_structured_path, load_structured_path
+from utils.data_io import dump_structured_path, load_structured_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -239,7 +239,10 @@ def preferred_python_executable() -> str:
         ROOT / ".venv" / "Scripts" / "python",
     ]
     for candidate in candidates:
-        if not candidate.exists() or not candidate.is_file():
+        try:
+            if not candidate.exists() or not candidate.is_file():
+                continue
+        except OSError:
             continue
         # On POSIX, a Windows .exe inside WSL-mounted workspaces is not executable.
         if os.name != "nt" and candidate.suffix.lower() == ".exe":

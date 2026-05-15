@@ -1,4 +1,5 @@
 <!-- SISTEMA_TESIS:PROTEGIDO -->
+<!-- GID: DEC-0024 | 2026-04-21 | v1.0 | ACEPTADA -->
 
 # DEC-0024 Operacion ChatGPT Plus sin API en Tesista Directo
 
@@ -35,8 +36,8 @@ El tesista requiere una forma legitima y trazable de aprovechar ChatGPT Plus en 
 - [DEC-0015](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0015_protocolo_de_sanitización_para_exposición_pública.md)
 - [manual_operacion_humana.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/manual_operacion_humana.md)
 
-[LID]: ruta local no pública
-[GOV]: ruta local no pública
-[AUD]: ruta local no pública
+[LID]:  ruta local no pública 
+[GOV]:  ruta local no pública 
+[AUD]:  ruta local no pública
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

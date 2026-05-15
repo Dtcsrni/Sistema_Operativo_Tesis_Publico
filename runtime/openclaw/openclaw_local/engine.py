@@ -10,6 +10,8 @@ from uuid import uuid4
 
 from .contracts import AcademicWorkPacket, ClaimRecord, EvidenceRecord, LiteratureRecord, ProviderDecision, TaskEnvelope, WritingDraft
 from .adaptive_router import order_provider_candidates
+from .agentic_core import openrouter_allowed_for_task
+from .toltecayotl_knowledge import knowledge_context_for_task
 from .budgeting import simulate_budget_request
 from .policies import load_budget_policy, load_domain_secret_policies, load_provider_registry
 from .runtime_status import summarize_host
@@ -27,6 +29,7 @@ CLAIM_CLASSIFICATIONS = {
 CRITICAL_CLASSIFICATIONS = {"hecho_verificado", "inferencia_razonada"}
 ACADEMIC_MODES = {"estado_del_arte", "metodologia", "redaccion_tesis"}
 CLOUD_PROVIDER_MODES = {"cloud_api", "cloud_web_assisted"}
+REMOTE_PROVIDER_MODES = {"remote_openai_compatible", "openai_compatible_router"}
 HEAVY_ACADEMIC_MODES = {"estado_del_arte", "metodologia", "redaccion_tesis"}
 HEAVY_TASK_MARKERS = {
     "comparacion_literatura",
@@ -58,6 +61,7 @@ REASONING_TASK_MARKERS = {
     "reasoning",
     "sintesis_multimodal",
 }
+EDGE_PROVIDER_IDS = {"edge_inference", "rknn_llm_experimental"}
 
 
 def route_task(
@@ -72,9 +76,22 @@ def route_task(
     secret_domain_policy = load_domain_secret_policies(repo)["domains"][task.domain]
     provider_registry = load_provider_registry(repo)
     provider_index = {str(item["id"]): item for item in provider_registry.get("providers", [])}
+    if "llamacpp_local" not in provider_index and "desktop_compute" in provider_index:
+        llama_meta = dict(provider_index["desktop_compute"])
+        llama_meta.update({"id": "llamacpp_local", "mode": "local_openai_compatible", "session_mode": "local_llamacpp_runtime"})
+        provider_index["llamacpp_local"] = llama_meta
+    if "pc_native_llamacpp" not in provider_index and "llamacpp_local" in provider_index:
+        desktop_meta = dict(provider_index["llamacpp_local"])
+        desktop_meta.update({"id": "pc_native_llamacpp", "session_mode": "desktop_native_runtime"})
+        provider_index["pc_native_llamacpp"] = desktop_meta
+    elif "pc_native_llamacpp" not in provider_index and "desktop_compute" in provider_index:
+        desktop_meta = dict(provider_index["desktop_compute"])
+        desktop_meta.update({"id": "pc_native_llamacpp", "session_mode": "desktop_native_runtime"})
+        provider_index["pc_native_llamacpp"] = desktop_meta
     secret_policies = load_domain_secret_policies(repo)
     budget_policy = load_budget_policy(repo)
     academic_mode = str(task.extra_context.get("academic_mode", "")).strip()
+    knowledge_context = _maybe_build_toltecayotl_context(task, repo)
     requires_human_gate = task.mutates_state or task.risk_level in {"high", "critical"}
     if academic_mode == "redaccion_tesis" and task.target_paths:
         requires_human_gate = True
@@ -98,12 +115,22 @@ def route_task(
         if provider_meta is None:
             evaluations.append(f"{provider_id}: no_registrado")
             continue
-        if provider_id not in domain_policy.allowed_backends:
+        allowed_backends = set(domain_policy.allowed_backends)
+        if provider_id in {"pc_native_llamacpp", "llamacpp_local"} and "desktop_compute" in allowed_backends:
+            allowed_backends.add("pc_native_llamacpp")
+            allowed_backends.add("llamacpp_local")
+        if provider_id not in allowed_backends:
             evaluations.append(f"{provider_id}: bloqueado_por_dominio")
             continue
         resolution = resolve_provider_secret(task.domain, provider_id, secret_policies=secret_policies)
         mode = str(provider_meta.get("mode", "local_rules"))
         is_cloud = mode in CLOUD_PROVIDER_MODES
+        is_remote = mode in REMOTE_PROVIDER_MODES
+        if provider_id == "openrouter_remote":
+            allowed, reason = openrouter_allowed_for_task(task)
+            if not allowed:
+                evaluations.append(f"{provider_id}: {reason}")
+                continue
         if is_cloud and mode == "cloud_web_assisted":
             if not (secret_domain_policy.allow_web_assisted and _web_assisted_enabled()):
                 evaluations.append(f"{provider_id}: web_asistido_deshabilitado")
@@ -111,7 +138,7 @@ def route_task(
         elif is_cloud and not _cloud_providers_enabled(task):
             evaluations.append(f"{provider_id}: nube_deshabilitada_por_defecto")
             continue
-        if task.preferred_mode == "offline" and is_cloud:
+        if task.preferred_mode == "offline" and (is_cloud or is_remote):
             evaluations.append(f"{provider_id}: omitido_por_modo_offline")
             continue
         if resolution.status == "missing":
@@ -123,7 +150,7 @@ def route_task(
         }
         estimated_cost = float(provider_meta.get("estimated_cost_usd", 0.0))
         estimated_tokens = int(provider_meta.get("estimated_tokens", 0))
-        if is_cloud and store is not None:
+        if (is_cloud or is_remote) and store is not None:
             budget_result = simulate_budget_request(
                 store=store,
                 repo_root=repo,
@@ -133,7 +160,7 @@ def route_task(
                 estimated_cost_usd=estimated_cost,
                 estimated_tokens=estimated_tokens,
             )
-        if is_cloud and not budget_result["allowed"]:
+        if (is_cloud or is_remote) and not budget_result["allowed"]:
             evaluations.append(f"{provider_id}: presupuesto_agotado")
             continue
         chosen_meta = {
@@ -184,7 +211,21 @@ def route_task(
         fallback_chain=fallback_chain,
         reason=reason,
         reasoning_quality=reasoning_quality,
+        knowledge_context_status=str(knowledge_context.get("knowledge_context_status", "not_requested")),
+        agentic_capability=task.complexity == "high" or task.domain == "academico",
     )
+
+
+def _maybe_build_toltecayotl_context(task: TaskEnvelope, repo_root: Path) -> dict[str, Any]:
+    request_kind = str(task.extra_context.get("request_kind", task.extra_context.get("request_profile", ""))).strip().lower()
+    academic_mode = str(task.extra_context.get("academic_mode", "")).strip()
+    needs_knowledge = task.domain == "academico" or request_kind in {"knowledge", "research"}
+    if not needs_knowledge:
+        return {"knowledge_context_status": "not_requested", "results": []}
+    enabled = bool(task.extra_context.get("toltecayotl_enabled")) or bool(task.extra_context.get("knowledge_context_enabled"))
+    if not enabled:
+        return {"knowledge_context_status": "disabled", "results": []}
+    return knowledge_context_for_task(repo_root, task.objective, enabled=enabled)
 
 
 def _rank_candidates_with_feedback(
@@ -271,7 +312,25 @@ def build_academic_packet(
     traceability_links: list[str],
     writing_draft: WritingDraft | None = None,
     summary: str = "",
+    ingested_pet_bundle_ids: list[str] | None = None,
 ) -> AcademicWorkPacket:
+    """Construye un paquete académico que puede consumir PETs ingestados como contexto.
+
+    Args:
+        task: Envelope de tarea
+        question: Pregunta académica
+        scope: Alcance de investigación
+        sources: Fuentes bibliográficas
+        claims: Claims del análisis
+        literature_records: Registros de literatura
+        traceability_links: Enlaces de trazabilidad
+        writing_draft: Borrador de escritura (opcional)
+        summary: Resumen del paquete
+        ingested_pet_bundle_ids: IDs de PETs ingestados disponibles como contexto
+
+    Returns:
+        AcademicWorkPacket con referencias a PETs ingestados (no genera PET)
+    """
     mode = str(task.extra_context.get("academic_mode", "")).strip()
     if mode not in ACADEMIC_MODES:
         raise ValueError("TaskEnvelope.extra_context.academic_mode es obligatorio para paquetes académicos.")
@@ -282,6 +341,7 @@ def build_academic_packet(
         writing_draft=writing_draft,
     )
     outputs = list(task.target_paths)
+
     return AcademicWorkPacket(
         packet_id=f"AWP-{uuid4().hex[:12]}",
         task_id=task.task_id,
@@ -295,6 +355,7 @@ def build_academic_packet(
         traceability_links=traceability_links,
         writing_draft=writing_draft,
         summary=summary or build_academic_summary(mode=mode, claims=claims, literature_records=literature_records),
+        ingested_pet_bundle_ids=ingested_pet_bundle_ids or [],
     )
 
 
@@ -554,14 +615,14 @@ def _desktop_compute_enabled(task: TaskEnvelope) -> bool:
 
 def _desktop_provider_id() -> str:
     runtime = os.getenv("OPENCLAW_DESKTOP_RUNTIME", "").strip().lower()
-    if runtime == "llamacpp":
-        return "pc_native_llamacpp"
+    if runtime in {"llamacpp", "llamacpp_local", ""}:
+        return "llamacpp_local"
     return "desktop_compute"
 
 
 def _desktop_compute_requested(task: TaskEnvelope) -> bool:
     override = str(task.extra_context.get("runtime_override", "")).strip().lower()
-    if override in {"desktop_compute", "pc_native_llamacpp", "desktop"}:
+    if override in {"desktop_compute", "pc_native_llamacpp", "llamacpp_local", "desktop"}:
         return True
     if task.extra_context.get("desktop_compute") is True:
         return True
@@ -575,20 +636,27 @@ def _desktop_compute_requested(task: TaskEnvelope) -> bool:
 
 
 def _maybe_insert_external_router(order: list[str], *, after: str | None = None) -> list[str]:
+    provider = "openrouter_remote" if _openrouter_remote_configured() else "external_llm_router"
     if not _external_router_enabled():
         return order
-    if "external_llm_router" in order:
+    if provider in order:
         return order
     if after and after in order:
         index = order.index(after) + 1
-        return order[:index] + ["external_llm_router"] + order[index:]
-    return ["external_llm_router", *order]
+        return order[:index] + [provider] + order[index:]
+    return [provider, *order]
 
 
 def _external_router_enabled() -> bool:
+    if _openrouter_remote_configured():
+        return True
     return _env_flag_enabled("OPENCLAW_EXTERNAL_ROUTER_ENABLED", default=False) and bool(
         os.getenv("OPENCLAW_EXTERNAL_ROUTER_BASE_URL", "").strip()
     )
+
+
+def _openrouter_remote_configured() -> bool:
+    return bool(os.getenv("OPENROUTER_API_KEY", "").strip() or os.getenv("OPENCLAW_OPENROUTER_API_KEY", "").strip())
 
 
 def _append_npu_if_requested(order: list[str], task: TaskEnvelope) -> list[str]:
@@ -628,108 +696,110 @@ def _reasoning_quality_for(provider_id: str, provider_index: dict[str, Any]) -> 
     return "basic"
 
 
+def _task_prefers_precision(task: TaskEnvelope) -> bool:
+    request_kind = str(task.extra_context.get("request_kind", task.extra_context.get("request_profile", ""))).strip().lower()
+    if task.requires_citations or task.risk_level in {"high", "critical"} or task.complexity == "high":
+        return True
+    if task.domain == "academico":
+        return True
+    if request_kind in {"knowledge", "research", "reasoning", "coding", "analysis", "precision"}:
+        return True
+    if bool(task.extra_context.get("prefer_precision")) or bool(task.extra_context.get("scientific_claim")):
+        return True
+    return False
+
+
+def _edge_execution_requested(task: TaskEnvelope) -> bool:
+    if os.getenv("OPENCLAW_EDGE_AUTO_FALLBACK", "0").strip().lower() in {"1", "true", "yes", "on"}:
+        return True
+    target = str(task.extra_context.get("target_node") or task.extra_context.get("assigned_node") or "").strip().lower()
+    capability = str(task.extra_context.get("assigned_capability") or task.extra_context.get("agent_role") or "").strip().lower()
+    if task.domain == "edge" or target in {"edge", "orange_pi", "tesis-edge"}:
+        return True
+    return capability in {"edge", "edge_agent", "npu", "iot"}
+
+
+def _filter_edge_fallbacks(order: list[str], task: TaskEnvelope) -> list[str]:
+    return order
+
+
 def _candidate_provider_order(task: TaskEnvelope) -> list[str]:
     desktop_provider = _desktop_provider_id()
     if task.domain in {"edge", "administrativo", "personal"}:
         return ["local"]
     if task.preferred_mode == "offline" or task.extra_context.get("network_mode") == "offline":
-        order = ["local", "ollama_local"]
-        return _append_npu_if_requested(order, task)
+        order = ["local", "edge_inference"]
+        return _filter_edge_fallbacks(_append_npu_if_requested(order, task), task)
     advanced_reasoning = _task_requires_advanced_reasoning(task)
+    precision_first = _task_prefers_precision(task)
     if task.domain == "profesional":
         preferred_web = _preferred_web_assisted_provider(task)
         if preferred_web:
-            order = [preferred_web, "openai_api", "groq_api", "ollama_local", "local"]
+            order = [preferred_web, "openai_api", "groq_api", "edge_inference", "local"]
             if preferred_web != "chatgpt_plus_web_assisted":
                 order.insert(1, "chatgpt_plus_web_assisted")
-            return _append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task)
+            return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task), task)
         if advanced_reasoning:
-            order = ["chatgpt_plus_web_assisted", desktop_provider, "openai_api", "groq_api", "ollama_local", "local"]
+            order = [desktop_provider, "edge_inference", "local", "chatgpt_plus_web_assisted", "openai_api", "groq_api"]
             if not _desktop_compute_enabled(task):
                 order.remove(desktop_provider)
-            return _append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task)
-        if task.complexity == "high" or task.risk_level in {"high", "critical"}:
+            return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task), task)
+        if task.complexity == "high" or task.risk_level in {"high", "critical"} or precision_first:
             if _cloud_providers_enabled(task) and not _desktop_compute_enabled(task):
-                order = ["chatgpt_plus_web_assisted", "openai_api", "groq_api", "ollama_local", "local"]
-                return _append_npu_if_requested(_maybe_insert_external_router(order), task)
-            order = [desktop_provider, "chatgpt_plus_web_assisted", "ollama_local", "local", "groq_api", "openai_api"]
+                order = ["edge_inference", "local", "chatgpt_plus_web_assisted", "openai_api", "groq_api"]
+                return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order), task), task)
+            order = [desktop_provider, "edge_inference", "local", "chatgpt_plus_web_assisted", "groq_api", "openai_api"]
             if not _desktop_compute_enabled(task):
                 order.remove(desktop_provider)
-            return _append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task)
+            return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task), task)
         if task.complexity == "medium":
             if _cloud_providers_enabled(task) and not _desktop_compute_requested(task):
-                order = ["groq_api", "ollama_local", "openai_api", "local"]
-                return _append_npu_if_requested(_maybe_insert_external_router(order), task)
-            order = ["ollama_local", "local", desktop_provider, "groq_api", "openai_api"]
+                order = ["groq_api", "edge_inference", "openai_api", "local"]
+                return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order), task), task)
+            order = ["edge_inference", "local", desktop_provider, "groq_api", "openai_api"]
             if not _desktop_compute_enabled(task) or not _desktop_compute_requested(task):
                 order.remove(desktop_provider)
-            return _append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task)
-        order = ["local", "ollama_local", "groq_api"]
-        return _append_npu_if_requested(order, task)
+            return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task), task)
+        order = ["local", "edge_inference", "groq_api"]
+        return _filter_edge_fallbacks(_append_npu_if_requested(order, task), task)
     if task.domain == "academico":
         preferred_web = _preferred_web_assisted_provider(task)
         if preferred_web:
-            order = [preferred_web, "gemini_web_assisted", "openai_api", "gemini_api", "groq_api", desktop_provider, "ollama_local", "local"]
+            order = [preferred_web, "gemini_vertex_flash_3", "gemini_web_assisted", "openai_api", "gemini_api", "groq_api", desktop_provider, "edge_inference", "local"]
             if preferred_web != "chatgpt_plus_web_assisted":
                 order.insert(1, "chatgpt_plus_web_assisted")
             if not _desktop_compute_enabled(task):
                 order = [item for item in order if item != desktop_provider]
-            return _append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task)
+            return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task), task)
         if _task_requires_advanced_reasoning(task):
-            order = [
-                "chatgpt_plus_web_assisted",
-                "gemini_web_assisted",
-                desktop_provider,
-                "openai_api",
-                "gemini_api",
-                "groq_api",
-                "ollama_local",
-                "local",
-            ]
+            order = [desktop_provider, "gemini_vertex_flash_3", "edge_inference", "local", "chatgpt_plus_web_assisted", "gemini_web_assisted", "openai_api", "gemini_api", "groq_api"]
             if not _desktop_compute_enabled(task):
                 order = [item for item in order if item != desktop_provider]
-            return _append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task)
-        if task.complexity == "high" or task.requires_citations:
+            return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task), task)
+        if task.complexity == "high" or task.requires_citations or precision_first:
             if _cloud_providers_enabled(task) and not _desktop_compute_enabled(task):
-                order = [
-                    "gemini_api",
-                    "gemini_web_assisted",
-                    "openai_api",
-                    "chatgpt_plus_web_assisted",
-                    "groq_api",
-                    "ollama_local",
-                    "local",
-                ]
-                return _append_npu_if_requested(_maybe_insert_external_router(order), task)
-            order = [
-                desktop_provider,
-                "ollama_local",
-                "local",
-                "gemini_api",
-                "gemini_web_assisted",
-                "openai_api",
-                "chatgpt_plus_web_assisted",
-                "groq_api",
-            ]
+                order = ["gemini_vertex_flash_3", "gemini_api", "gemini_web_assisted", "openai_api", "chatgpt_plus_web_assisted", "groq_api", "edge_inference", "local"]
+                return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order), task), task)
+            order = [desktop_provider, "gemini_vertex_flash_3", "edge_inference", "local", "gemini_api", "gemini_web_assisted", "openai_api", "chatgpt_plus_web_assisted", "groq_api"]
             if not _desktop_compute_enabled(task):
                 order.remove(desktop_provider)
-            return _append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task)
+            return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task), task)
         if task.complexity == "medium":
             if _desktop_compute_enabled(task):
                 order = [desktop_provider]
                 if _cloud_providers_enabled(task):
-                    order.extend(["groq_api", "gemini_api", "gemini_web_assisted", "openai_api", "chatgpt_plus_web_assisted"])
-                order.extend(["ollama_local", "local"])
-                return _append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task)
+                    order.extend(["gemini_vertex_flash_3", "groq_api", "gemini_api", "gemini_web_assisted", "openai_api", "chatgpt_plus_web_assisted"])
+                order.extend(["edge_inference", "local"])
+                return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task), task)
             if _cloud_providers_enabled(task):
-                order = ["groq_api", "gemini_api", "gemini_web_assisted", "openai_api", "chatgpt_plus_web_assisted", "ollama_local", "local"]
-                return _append_npu_if_requested(_maybe_insert_external_router(order), task)
-            order = ["ollama_local", "local"]
-            return _append_npu_if_requested(order, task)
-        order = [desktop_provider, "groq_api", "gemini_api", "gemini_web_assisted", "openai_api", "chatgpt_plus_web_assisted", "ollama_local", "local"]
+                order = ["gemini_vertex_flash_3", "groq_api", "gemini_api", "gemini_web_assisted", "openai_api", "chatgpt_plus_web_assisted", "edge_inference", "local"]
+                return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order), task), task)
+            order = ["edge_inference", "local"]
+            return _filter_edge_fallbacks(_append_npu_if_requested(order, task), task)
+        order = [desktop_provider, "gemini_vertex_flash_3", "edge_inference", "local", "groq_api", "gemini_api", "gemini_web_assisted", "openai_api", "chatgpt_plus_web_assisted"]
         if not _desktop_compute_enabled(task):
             order = [item for item in order if item != desktop_provider]
-        return _append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task)
+        return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task), task)
     return ["local"]
 
 
@@ -758,6 +828,8 @@ def _build_fallback_chain(task: TaskEnvelope, policies: dict[str, Any], selected
 
 
 def _billing_mode_for(mode: str) -> str:
+    if mode in REMOTE_PROVIDER_MODES:
+        return "api_measured"
     if mode == "cloud_api":
         return "api_measured"
     if mode == "cloud_web_assisted":
@@ -766,6 +838,8 @@ def _billing_mode_for(mode: str) -> str:
 
 
 def _session_mode_for(mode: str) -> str:
+    if mode in REMOTE_PROVIDER_MODES:
+        return "manual_remote_api_call"
     if mode == "cloud_api":
         return "direct_api_call"
     if mode == "cloud_web_assisted":

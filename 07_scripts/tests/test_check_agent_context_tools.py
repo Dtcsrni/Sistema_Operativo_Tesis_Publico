@@ -1,14 +1,18 @@
 import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1])) # 07_scripts root
+sys.path.insert(0, str(Path(__file__).resolve().parent))     # subdirectory siblings
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "audit")) # audit scripts
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "serena")) # serena scripts
+
+
 import unittest
 from unittest import mock
-from pathlib import Path
-
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
 
 from check_agent_context_tools import compute_exit_code  # noqa: E402
-
 
 class TestCheckAgentContextTools(unittest.TestCase):
     def test_exit_code_ready(self):
@@ -40,7 +44,6 @@ class TestCheckAgentContextTools(unittest.TestCase):
         payload = caveman_report()
         self.assertTrue(payload["available"])
         self.assertEqual(payload["path"], "/root/.local/bin/caveman")
-
 
 if __name__ == "__main__":
     unittest.main()

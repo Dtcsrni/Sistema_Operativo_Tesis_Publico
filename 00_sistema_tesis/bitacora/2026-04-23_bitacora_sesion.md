@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-23
 
 - **ID de Sesión:** codex-local-20260423-openclaw-pcfirst-matrix-v1
-- **Cadena de Confianza (Anterior):** `sha256/1009b20222a10bd74c57ae57e3b97e6639c093a403c26eab43dbe72a79b31289`
+- **Cadena de Confianza (Anterior): `hash omitido:omitido````
 - **Bloque principal:** B0
 - **Tipo de sesión:** implementación | validación | documentación | despliegue
 
@@ -15,17 +15,17 @@ Implementar el rediseño OpenClaw PC-first con `session-layer` común, `Matrix` 
 
 ## Tareas del día
 - [x] Refactorizar OpenClaw para introducir sesiones compartidas entre `cli`, `web`, `telegram` y `matrix`.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Añadir soporte `pc_native_llamacpp` y mantener compatibilidad transitoria con `desktop_compute`.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Documentar arquitectura, operación local y flujo escritorio-edge.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Registrar autorización humana con evidencia fuente exacta.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Aplicar el cambio en `tesis-edge` con backup de `openclaw.env` y smoke real.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Sincronizar la wiki oficial derivada y ejecutar auditoría local completa.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Trabajo realizado
 - Se añadió `runtime/openclaw/openclaw_local/session_layer.py` y se conectó al bot Telegram, al adaptador Matrix, a la web local y al CLI.
@@ -66,19 +66,19 @@ Implementar el rediseño OpenClaw PC-first con `session-layer` común, `Matrix` 
 - **Modelo/Versión de asistencia:** modelo de IA no publicado
 - **Objetivo:** ejecutar la implementación completa solicitada, verificar regresión local, desplegar en edge sin romper el runtime existente y cerrar documentación canónica.
 - **Nivel de Razonamiento:** alto
-- **Alineación Ética:**
+- **Alineación Ática:**
   - [x] Transparencia (NIST RMF)
-    - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+    - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
   - [x] Soberanía Humana (UNESCO)
-    - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+    - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
   - [x] Responsabilidad (ISO 42001)
-    - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+    - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ### Validación de Soberanía (Handshake)
 - **Pregunta Crítica:** Instrucción humana directa para ejecutar la implementación completa de OpenClaw PC-first con Matrix soberano y runtime pesado nativo.
 - **Respuesta Erick Vega:** "PLEASE IMPLEMENT THIS PLAN:"
 - **Criterio de Aceptación:** [x] Validado con validación humana interna no pública.
-  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - [x] Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
   - **Soporte:** validación humana interna no pública
   - **Texto exacto de confirmación verbal:** "PLEASE IMPLEMENT THIS PLAN:"
   - **Hash de confirmación verbal:** `hash omitido:omitido`
@@ -103,4 +103,4 @@ Completar el tramo host-real restante:
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

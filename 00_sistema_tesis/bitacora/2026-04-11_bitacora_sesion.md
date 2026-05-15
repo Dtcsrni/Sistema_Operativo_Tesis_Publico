@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-11
 
 - **ID de Sesión:** codex-local-20260411-trazabilidad-publish-v1
-- **Cadena de Confianza (Anterior):** `sha256/66d504ac887c4b727cb992f82ed2542309cdea54580618fef5ced6d0fab0ef60`
+- **Cadena de Confianza (Anterior): `hash omitido:omitido````
 - **Bloque principal:** B0
 - **Tipo de sesión:** trazabilidad | publicación | cierre
 
@@ -15,13 +15,13 @@ Completar la política de trazabilidad, registrar la instrucción humana corresp
 
 ## Tareas del día
 - [x] Completar la política de trazabilidad pendiente.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Registrar la instrucción humana y materializar ledger/matriz.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Regenerar wiki, reportes y derivados públicos afectados por el cierre.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Cubrir la ausencia previa de bitácora diaria para esta fecha.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Trabajo realizado
 - Se consolidó la política de trazabilidad en canon y documentación.
@@ -31,32 +31,31 @@ Completar la política de trazabilidad, registrar la instrucción humana corresp
 
 ## Evidencia Técnica e Integridad
 - **Commits de referencia:** `34b18bf`, `80790ba`, `7186c77`
-- **Archivos Clave:** `00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md`, `00_sistema_tesis/bitacora/matriz_trazabilidad.md`, `README.md`, `06_dashboard/wiki`, `06_dashboard/generado`
+- **Archivos Clave:** `00_sistema_tesis/bitacora/log_conversaciones_ia.md`, `00_sistema_tesis/bitacora/matriz_trazabilidad.md`, `README.md`, `06_dashboard/wiki`, `06_dashboard/generado`
 - **Validación del Sistema:** [x] La trazabilidad del día quedó materializada y coherente con los derivados.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Uso de IA y Gobernanza
 - **Proveedor:** proveedor de IA no publicado
 - **Modelo/Versión:** modelo de IA no publicado
 - **Objetivo:** Cerrar política de trazabilidad y publicación asociada.
 - **Nivel de Razonamiento:** medio
-- **Alineación Ética:**
+- **Alineación Ática:**
     - [x] Transparencia (NIST RMF)
-      - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+      - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
     - [x] Soberanía Humana (UNESCO)
-      - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+      - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
     - [x] Responsabilidad (ISO 42001)
-      - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+      - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ### Validación de Soberanía (Handshake)
 - **Pregunta Crítica:** ¿Autorizas completar la política de trazabilidad, registrar la instrucción humana y publicar el cambio con commit y push?
 - **Respuesta Erick Vega:** "vale, completa la política de trazabilidad, realiza commit y push"
 - **Criterio de Aceptación:** [x] Validado con validación humana interna no pública.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
   - **Soporte:** validación humana interna no pública
   - **Texto exacto de confirmación verbal:** "vale, completa la política de trazabilidad, realiza commit y push"
   - **Hash de confirmación verbal:** `hash omitido:omitido`
-  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
   - **Nivel de Riesgo:** ALTO
   - **Modo:** Confirmación Verbal
 
@@ -67,8 +66,8 @@ Completar la política de trazabilidad, registrar la instrucción humana corresp
 ## Siguiente paso concreto
 Mantener el cierre diario de trazabilidad alineado con ledger, matriz y artefactos derivados.
 
-[LID]: log_sesiones_trabajo_registradas.md
+[LID]: log_conversaciones_ia.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

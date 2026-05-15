@@ -1,14 +1,16 @@
 import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1])) # 07_scripts root
+sys.path.insert(0, str(Path(__file__).resolve().parent))     # subdirectory siblings
+
+
 import tempfile
 import unittest
-from pathlib import Path
-
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
 
 from document_audit import audit_document  # noqa: E402
-
 
 class TestDocumentAudit(unittest.TestCase):
     def test_accepts_rich_prechecks_and_verbal_confirmation_block(self):
@@ -63,7 +65,6 @@ class TestDocumentAudit(unittest.TestCase):
             path.write_text(content, encoding="utf-8")
             errors = audit_document(path)
             self.assertTrue(any("no trazable en GitHub" in error for error in errors))
-
 
 if __name__ == "__main__":
     unittest.main()

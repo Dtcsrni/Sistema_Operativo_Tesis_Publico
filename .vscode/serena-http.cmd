@@ -14,29 +14,30 @@ if not exist "%SERVER_SCRIPT%" (
 set "SISTEMA_TESIS_ROOT=%WORKSPACE_DIR%"
 set "PYTHONUNBUFFERED=1"
 set "PYTHONUTF8=1"
+set "PYTHONPATH=%WORKSPACE_DIR%\07_scripts;%PYTHONPATH%"
 if not defined SERENA_MCP_DEBUG_LOG set "SERENA_MCP_DEBUG_LOG=%WORKSPACE_DIR%\00_sistema_tesis\bitacora\audit_history\serena_mcp_debug.log"
 
-set "CHECK_SCRIPT=%WORKSPACE_DIR%\07_scripts\check_serena_access.py"
+set "SUPERVISOR_SCRIPT=%WORKSPACE_DIR%\07_scripts\serena_http_supervisor.py"
 
 if exist "%VENV_SCRIPTS_PY%" (
-  "%VENV_SCRIPTS_PY%" -u "%CHECK_SCRIPT%" --attempt-start-http
+  "%VENV_SCRIPTS_PY%" -u "%SUPERVISOR_SCRIPT%"
   exit /b %ERRORLEVEL%
 )
 
 if exist "%VENV_BIN_PY%" (
-  "%VENV_BIN_PY%" -u "%CHECK_SCRIPT%" --attempt-start-http
+  "%VENV_BIN_PY%" -u "%SUPERVISOR_SCRIPT%"
   exit /b %ERRORLEVEL%
 )
 
 where python >nul 2>nul
 if not errorlevel 1 (
-  python -u "%CHECK_SCRIPT%" --attempt-start-http
+  python -u "%SUPERVISOR_SCRIPT%"
   exit /b %ERRORLEVEL%
 )
 
 where py >nul 2>nul
 if not errorlevel 1 (
-  py -3 -u "%CHECK_SCRIPT%" --attempt-start-http
+  py -3 -u "%SUPERVISOR_SCRIPT%"
   exit /b %ERRORLEVEL%
 )
 

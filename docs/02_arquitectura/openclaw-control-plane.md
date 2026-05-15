@@ -48,25 +48,49 @@
 - CLI de canales latentes: `matrix estado`, `matrix procesar`, `matrix polling`.
 
 ## Proveedores v1
-- Línea 1: `local` y `ollama_local`.
-- Línea 2 local pesada: `pc_native_llamacpp` como runtime principal en la PC con `llama.cpp server`.
-- Compatibilidad transitoria: `desktop_compute` permanece como alias operativo mientras las rutas antiguas terminan de migrar.
-- Línea 3 experimental edge: `rknn_llm_experimental`.
+- Línea 0 determinística: `deterministic_local`, con reglas, Serena, RAG local y respuestas sin LLM cuando aplique.
+- Línea 1 local soberana: `llamacpp_local` como runtime principal en la PC con `llama.cpp server` y modelos GGUF.
+- Compatibilidad transitoria: `desktop_compute` y `pc_native_llamacpp` permanecen como aliases de migración hacia `llamacpp_local`.
+- Línea 2 remota gobernada: `openrouter_remote`, proveedor de IA no publicado-compatible, manual por tarea, `free-first`, sin `openrouter/auto` sin allowlist y solo para contexto público, redactado o privado no sensible aprobado.
+- Línea 3 experimental edge: `rknn_llm_experimental`, bloqueada hasta evidencia de benchmark válida.
 - Contexto externo versionado: `context7_docs`, solo para documentación pública/externa actualizada.
-- Nube gratuita experimental: `github_models_free`, solo para contexto público o redactado y con token `models:read`.
 - Nube API formal opcional: `groq_api`, `gemini_api`, `openai_api`.
 - Web asistida supervisada opcional: `gemini_web_assisted`, `chatgpt_plus_web_assisted`.
-- Las sesiones web asistidas se clasifican como `human_supervised_web_session` y no como automatización ciega.
+- Las referencias a Ollama quedan como legado histórico; no son ruta activa del runtime v1.
 
 ## Ruteo PC pesado / Orange Pi edge
 - `edge`, `administrativo` y `personal`: permanecen en `local`.
-- `academico` de alta complejidad, con citas, estado del arte, metodologia, redaccion, RAG, sintesis larga o comparacion de literatura: prefiere `pc_native_llamacpp`.
-- `profesional` de alta complejidad o riesgo alto: prefiere `pc_native_llamacpp`.
-- Resumenes cortos y tareas ligeras: `local` u `ollama_local`.
+- `academico` de alta complejidad, con citas, estado del arte, metodologia, redaccion, RAG, sintesis larga o comparacion de literatura: prefiere `llamacpp_local`.
+- `profesional` de alta complejidad o riesgo alto: prefiere `llamacpp_local`.
+- Resumenes cortos y tareas ligeras: `deterministic_local` o `local`.
 - `rknn_llm_experimental`: solo entra si la tarea solicita NPU o existe aprobacion/benchmark explicito.
-- Si la PC pesada no esta disponible, la cadena de degradacion vuelve a `ollama_local`, `local`, `offline` y `manual` antes de bloquear el sistema base.
+- Si la PC pesada no esta disponible, la cadena de degradacion vuelve a `deterministic_local`, `local`, `offline` y `manual` antes de bloquear el sistema base.
 - Para tareas con APIs/librerías externas actuales, el router puede consultar `context7_docs` antes de ampliar contexto manual.
-- Para tareas públicas o sanitizadas de bajo riesgo, el router puede elegir `github_models_free` solo si hay credencial explícita y cuota disponible; si falta, degrada a local.
+- Para tareas públicas o sanitizadas de bajo riesgo, el router puede elegir `openrouter_remote` solo si hay credencial explícita, aprobación manual por tarea, cuota disponible y paquete de contexto no sensible; si falla por 402, 429, timeout o privacidad, degrada a `llamacpp_local`.
+
+## Roster agéntico v1
+- `Maestro Orquestador`: descompone tareas, asigna roles y decide gates.
+- `Gobernador Técnico`: privacidad, riesgo, permisos, Step ID y bloqueo de acciones sensibles.
+- `Administrador de Contexto`: memoria de trabajo, compresión, paquetes de contexto y límites de tokens.
+- `Bibliotecario Semántico`: RAG, Weaviate/JSONL, embeddings y memoria semántica.
+- `Investigador Académico`: búsqueda, fuentes, citas y matriz de evidencia.
+- `Ingeniero de Implementación`: código, scripts, pruebas y reproducibilidad.
+- `Revisor Crítico`: QA, auditoría metodológica, regresiones y riesgos.
+- `Curador de Modelos y Costos`: selección OpenRouter/llama.cpp, cuotas, benchmarks y presupuesto.
+- `Operador de Sistemas`: Docker, WSL, servicios, salud, logs y recuperación.
+
+## Memoria y aprendizaje local
+- Memoria de trabajo: últimos turnos y contexto inmediato.
+- Memoria episódica: sesiones, decisiones, resultados y trazas.
+- Memoria semántica: chunks RAG con hash, fuente y sensibilidad.
+- Memoria procedimental: prompts por rol, playbooks, skills y políticas versionadas.
+- Memoria canónica: solo con validación humana explícita.
+- El aprendizaje adaptativo puede ajustar pesos de ruteo, TTL de caché, resúmenes rolling, preferencias no sensibles y prompts por rol versionados.
+- Todo cambio que afecte canon, secretos, publicación o política de seguridad requiere gate humano y diff auditable.
+
+## Mission Control
+- Debe mostrar agente activo, rol, proveedor/modelo seleccionado, razón de ruteo, consumo de cuota/costo, contexto enviado, bloqueo o aprobación requerida, fallback usado y memoria consultada o actualizada.
+- OpenRouter se muestra siempre como proveedor remoto manual; `llamacpp_local` se muestra como ruta soberana local para contexto privado o fallback.
 
 ## Runtime PC Hub
 - WSL/VS Code es el plano de autoría y control: Codex, Caveman, Serena, Git, trazabilidad y auditoría.
@@ -87,16 +111,17 @@
 - Telegram queda como canal de notificación, compatibilidad y fallback operativo.
 
 ## Politica de proveedor
-- `local_only`: fuerza ejecución en `pc_native` o `edge_local`, sin nube.
-- `hybrid_controlled`: default del sistema; prioriza local y solo habilita nube si la política de dominio lo permite.
+- `local_only`: fuerza ejecución en `deterministic_local`, `llamacpp_local`, `pc_native` o `edge_local`, sin nube.
+- `hybrid_controlled`: default del sistema; prioriza local y solo habilita remoto si la política de dominio y la aprobación manual lo permiten.
 - `cloud_allowed`: la sesión puede usar `openai_api`, `gemini_api` o `groq_api`.
 - `premium_auto=true`: la nube entra automáticamente solo en tareas premium o cuando el operador lo permite explícitamente.
+- `openrouter_remote`: requiere aprobación manual por tarea, allowlist de modelos, cuota disponible y contexto no sensible.
 - `chatgpt_plus_web_assisted` y `gemini_web_assisted` siguen siendo carriles supervisados por humano, nunca default silencioso.
 
 ## Secretos por dominio
 - `personal`: solo local, sin nube.
-- `profesional`: `pc_native_llamacpp` sin secreto; `groq_api` y `openai_api` solo si se habilita nube.
-- `academico`: `pc_native_llamacpp` sin secreto; `groq_api`, `gemini_api`, `openai_api` y carriles web asistidos solo si se habilita nube.
+- `profesional`: `llamacpp_local` sin secreto; `openrouter_remote` solo con `OPENROUTER_API_KEY` y aprobación manual; `groq_api` y `openai_api` solo si se habilita nube.
+- `academico`: `llamacpp_local` sin secreto; `openrouter_remote` solo con `OPENROUTER_API_KEY` y aprobación manual; `groq_api`, `gemini_api`, `openai_api` y carriles web asistidos solo si se habilita nube.
 - `edge` y `administrativo`: sin nube por default.
 - El `secret-resolver` solo busca rutas conocidas y nunca imprime valores.
 
@@ -109,16 +134,16 @@
 ## Despliegue Orange Pi 5 Plus
 - Baseline objetivo: Orange Pi 5 Plus `8 GB` con Debian 12 oficial.
 - Identidad de servicio: `tesis:tesis`.
-- Runtime principal local: `Ollama`.
+- Runtime local legado: `Ollama`, conservado solo como referencia histórica mientras el runtime activo migra a `llama.cpp`/rutas determinísticas.
 - Canal remoto activo: `Telegram`.
 - Canal remoto latente: `Matrix`.
 - Ruta NPU secundaria: `RKLLM`/`RKNN-LLM` instalada desde bootstrap pero marcada como experimental.
-- `openclaw` no reemplaza el sistema base; si el gateway, Ollama o la vía NPU fallan, `tesis-os` debe seguir operando.
+- `openclaw` no reemplaza el sistema base; si el gateway, `llamacpp_local`, la vía NPU o un proveedor remoto fallan, `tesis-os` debe seguir operando.
 
 ## Despliegue PC principal
 - Runtime pesado principal: `llama.cpp server` en host nativo de la PC.
 - El endpoint operativo se publica como `OPENCLAW_DESKTOP_RUNTIME_BASE_URL`.
-- `OPENCLAW_DESKTOP_RUNTIME=llamacpp` selecciona `pc_native_llamacpp` como proveedor pesado preferido.
+- `OPENCLAW_DESKTOP_RUNTIME=llamacpp` selecciona `llamacpp_local` como proveedor pesado preferido.
 - La sesión de desarrollo actual puede seguir en WSL o tooling local, pero el cómputo pesado vive fuera de ese runtime cuando la GPU/latencia lo requieran.
 
 ## Casos de uso académicos v1
@@ -140,4 +165,4 @@
   - coincidencia exacta entre `quoted_text` y `confirmation_text`,
   - ejecución explícita de `tesis.py proposal finalize-openclaw`.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

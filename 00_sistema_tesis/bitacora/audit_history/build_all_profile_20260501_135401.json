@@ -1,0 +1,31 @@
+{
+  "generated_at_utc": "20260501_135401",
+  "total_duration_seconds": 0.147,
+  "summary": {
+    "total": 1,
+    "executed": 1,
+    "skipped": 0,
+    "failed": 0,
+    "slow": 0
+  },
+  "slow_stages": [],
+  "failed_stages": [],
+  "steps": [
+    {
+      "label": "Verificar Estado del Motor Epistémico",
+      "script": "07_scripts/tesis.py",
+      "args": [
+        "toltecayotl",
+        "status"
+      ],
+      "group": "toltecayotl",
+      "started_at_utc": "2026-05-01",
+      "duration_seconds": 0.147,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    }
+  ]
+}

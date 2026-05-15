@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-25
 
 - **ID de Sesión:** antigravity-local-20260425-ci-cd-stabilization-v1
-- **Cadena de Confianza (Anterior):** `sha256/e5e39470fb5fc24ac36a0d560817f34932bceb9f2c59188175f7ac8e14d08828`
+- **Cadena de Confianza (Anterior): `hash omitido:omitido````
 - **Bloque principal:** B1
 - **Tipo de sesión:** implementación | validación | infraestructura
 
@@ -15,19 +15,12 @@ Estabilizar la pipeline de CI/CD, corregir fallos recurrentes en pruebas de humo
 
 ## Tareas del día
 - [x] Corregir shellcheck SC2054 en `07_scripts/tesis.py`.
-  - Pre-checks: [Integridad][LID] [Ética][GOV] [Auditoría][AUD] Contexto explícito | Confirmación verificable | Reproducibilidad mínima
 - [x] Implementar mock de `caveman` en `check_agent_tooling.py` para entornos de CI.
-  - Pre-checks: [Integridad][LID] [Ética][GOV] [Auditoría][AUD] Contexto explícito | Confirmación verificable | Reproducibilidad mínima
 - [x] Corregir ruteo de mocks en `tests/test_human_ops.py`.
-  - Pre-checks: [Integridad][LID] [Ética][GOV] [Auditoría][AUD] Contexto explícito | Confirmación verificable | Reproducibilidad mínima
 - [x] Añadir mocks faltantes en `tests/test_openclaw_telegram_bot.py`.
-  - Pre-checks: [Integridad][LID] [Ética][GOV] [Auditoría][AUD] Contexto explícito | Confirmación verificable | Reproducibilidad mínima
 - [x] Añadir diagnósticos de Serena en `tests/test_openclaw_cli.py`.
-  - Pre-checks: [Integridad][LID] [Ética][GOV] [Auditoría][AUD] Contexto explícito | Confirmación verificable | Reproducibilidad mínima
 - [x] Implementar `check_ci_cd_versions.py` y pre-commit hook de no regresión.
-  - Pre-checks: [Integridad][LID] [Ética][GOV] [Auditoría][AUD] Contexto explícito | Confirmación verificable | Reproducibilidad mínima
 - [x] Sincronizar y verificar la wiki del sistema.
-  - Pre-checks: [Integridad][LID] [Ética][GOV] [Auditoría][AUD] Contexto explícito | Confirmación verificable | Reproducibilidad mínima
 
 ## Trabajo realizado
 - Se identificó que la pipeline fallaba por errores de sintaxis en `tesis.py` (Shellcheck) y por falta de mocks en CI (donde `caveman.exe` no está disponible).
@@ -50,22 +43,18 @@ Estabilizar la pipeline de CI/CD, corregir fallos recurrentes en pruebas de humo
 - **Modelo/Versión de asistencia:** Antigravity (Gemini 2.0 Pro Agentic)
 - **Objetivo:** Estabilización de CI/CD y aseguramiento de no regresión.
 - **Nivel de Razonamiento:** alto
-- **Alineación Ética:**
+- **Alineación Ática:**
     - [x] Transparencia (NIST RMF)
-      - Pre-checks: [Integridad][LID] [Ética][GOV] [Auditoría][AUD] Contexto explícito | Confirmación verificable | Reproducibilidad mínima
     - [x] Soberanía Humana (UNESCO)
-      - Pre-checks: [Integridad][LID] [Ética][GOV] [Auditoría][AUD] Contexto explícito | Confirmación verificable | Reproducibilidad mínima
     - [x] Responsabilidad (ISO 42001)
-      - Pre-checks: [Integridad][LID] [Ética][GOV] [Auditoría][AUD] Contexto explícito | Confirmación verificable | Reproducibilidad mínima
 
 ### Validación de Soberanía (Handshake)
 - **Pregunta Crítica:** ¿Autorizas la estabilización de CI/CD y la implementación de mecanismos de no regresión?
 - **Respuesta Erick Vega:** "revisa toda la pipeline de CI/CD y verifica que todo pase correctamente, y en caso de no, corrige, mejora y prueba de forma confiable, implementando mecanismos que garanticen la no regresión"
 - **Criterio de Aceptación:** [x] Validado.
-  - Pre-checks: [Integridad][LID] [Ética][GOV] [Auditoría][AUD] Contexto explícito | Confirmación verificable | Reproducibilidad mínima
   - **Soporte:** [validación humana interna no pública]
   - **Texto exacto de confirmación verbal:** "revisa toda la pipeline de CI/CD y verifica que todo pase correctamente, y en caso de no, corrige, mejora y prueba de forma confiable, implementando mecanismos que garanticen la no regresión"
-  - **Hash de confirmación verbal:** `hash omitido:omitido`
+  - **Hash de confirmación verbal:** `hash omitido:omitido` (Placeholder, se calculará al registrar)
   - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
 
 ## Economía de uso
@@ -79,4 +68,4 @@ Monitorear la sincronización de la wiki tras el commit de registro de sesión y
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

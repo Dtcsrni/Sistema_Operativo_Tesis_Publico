@@ -86,4 +86,4 @@ El host compatible con VS Code debe ver nombres con `_` en `tools/list`. Interna
 - `docs/03_operacion/openclaw-workspace-local.md`
 - `docs/03_operacion/serena-mcp-host-template.json`
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

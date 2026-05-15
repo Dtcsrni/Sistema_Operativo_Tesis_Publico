@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from common import ROOT, apply_agent_identity_placeholders, file_sha256, load_agent_identity, load_yaml_json, now_stamp
-from data_io import canonical_json, dump_jsonl_path, dump_structured_path, load_jsonl_path, load_structured_path
+from utils.data_io import canonical_json, dump_jsonl_path, dump_structured_path, load_jsonl_path, load_structured_path
 
 
 CANON_DIR = ROOT / "00_sistema_tesis" / "canon"
@@ -115,7 +115,11 @@ def resolve_human_validation_source_metadata(event: dict[str, Any]) -> dict[str,
 
 
 def events_by_id(events: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
-    return {str(event["event_id"]): event for event in events}
+    return {
+        str(event["event_id"]): event
+        for event in events
+        if str(event.get("event_id", "")).strip()
+    }
 
 
 def sanitize_session_id_for_path(session_id: str) -> str:
@@ -228,7 +232,11 @@ def reseal_events(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 
 def load_events() -> list[dict[str, Any]]:
-    return load_jsonl_path(EVENTS_PATH)
+    events = load_jsonl_path(EVENTS_PATH)
+    for event in events:
+        if not str(event.get("event_id", "")).strip() and str(event.get("step_id", "")).strip():
+            event["event_id"] = str(event["step_id"]).strip()
+    return events
 
 
 def projection_paths(events: list[dict[str, Any]] | None = None) -> list[str]:
@@ -430,11 +438,31 @@ def source_evidence_status(
     require_local: bool = True,
 ) -> dict[str, Any]:
     items = load_events() if events is None else events
-    validations = [event for event in items if event["event_type"] == "human_validation"]
+    validations = [
+        event
+        for event in items
+        if event.get("event_type") == "human_validation" and str(event.get("event_id", "")).strip()
+    ]
     results = [
         verify_conversation_source_for_step(str(event["event_id"]), items, require_local=require_local)
         for event in validations
     ]
+    for index, event in enumerate(items, start=1):
+        if event.get("event_type") == "human_validation" and not str(event.get("event_id", "")).strip():
+            step_id = str(event.get("step_id") or event.get("human_validation", {}).get("step_id") or f"evento-{index}")
+            results.append(
+                {
+                    "step_id": step_id,
+                    "source_event_id": "",
+                    "session_id": str(event.get("session_id", "")).strip(),
+                    "provenance_status": "",
+                    "quote_verification_status": "",
+                    "repo_status": "fail",
+                    "local_status": "fail" if require_local else "skipped",
+                    "repo_errors": [f"Evento human_validation {index} no declara event_id."],
+                    "local_errors": [],
+                }
+            )
     repo_failures = [result for result in results if result["repo_status"] == "fail"]
     local_failures = [result for result in results if result["local_status"] == "fail"]
     return {
@@ -891,7 +919,7 @@ def render_ledger(events: list[dict[str, Any]]) -> str:
     human_events = [event for event in events if event["event_type"] == "human_validation"]
     human_ids = [str(event["event_id"]) for event in human_events]
     for index, event in enumerate(human_events):
-        payload = event["payload"]
+        payload = dict(event.get("payload", {}))
         evidence = resolve_human_validation_evidence(event)
         source_meta = resolve_human_validation_source_metadata(event)
         step_id = str(event["event_id"])
@@ -906,7 +934,7 @@ def render_ledger(events: list[dict[str, Any]]) -> str:
                 f"## [{step_id}]",
                 f"- **Proveedor:** {payload.get('provider', '')}",
                 f"- **Modelo/Versión:** {payload.get('model_version', '')}",
-                f"- **Fecha:** {payload.get('date', str(event['occurred_at'])[:10])}",
+                f"- **Fecha:** {payload.get('date', str(event.get('occurred_at', ''))[:10])}",
                 f"- **Vínculo:** {payload.get('linked_reference', '[DEC-0014]')}",
                 f"- **Hash:** `sha256:{block_hash}`",
                 f"- **Audit Level:** {payload.get('audit_level', event.get('risk_level', 'MEDIO'))}",
@@ -955,10 +983,11 @@ def render_matrix(events: list[dict[str, Any]]) -> str:
     human_events = [event for event in events if event["event_type"] == "human_validation"]
     for event in human_events:
         step_id = str(event["event_id"])
-        matrix_row = dict(event.get("payload", {}).get("matrix_row", {}))
+        # Intentar obtener matrix_row de payload o de links (compatibilidad de esquemas)
+        matrix_row = dict(event.get("payload", {}).get("matrix_row") or event.get("links", {}).get("matrix_row") or {})
         lines.append(
             "| {date} | [{step}] | {reference} | {summary} | {risk} | {ethics} | {state} | [Log](log_sesiones_trabajo_registradas.md#{anchor}) |".format(
-                date=matrix_row.get("date", str(event["occurred_at"])[:10]),
+                date=matrix_row.get("date", str(event.get("occurred_at", ""))[:10]),
                 step=step_id,
                 reference=matrix_row.get("reference", event.get("links", {}).get("reference", "[DEC-0014]")),
                 summary=matrix_row.get("summary", "Cambio registrado en canon"),
@@ -1076,7 +1105,7 @@ def render_openclaw_proposals(events: list[dict[str, Any]]) -> str:
 
 
 def render_journal(events: list[dict[str, Any]]) -> dict[str, Any]:
-    records = [dict(event["payload"]["record"]) for event in events if event["event_type"] == "agent_activity"]
+    records = [dict(event.get("payload", {}).get("record", {})) for event in events if event["event_type"] == "agent_activity"]
     return {"journal": records}
 
 
@@ -1085,7 +1114,7 @@ def render_signoffs(events: list[dict[str, Any]]) -> dict[str, Any]:
     for event in events:
         if event["event_type"] != "artifact_signed":
             continue
-        record = dict(event["payload"]["record"])
+        record = dict(event.get("payload", {}).get("record", {}))
         path = str(record.get("archivo", "")).strip()
         if path:
             latest_by_path[path] = record
@@ -1098,9 +1127,10 @@ def render_session_files(events: list[dict[str, Any]]) -> dict[str, str]:
     for event in events:
         if event["event_type"] != "session_recorded":
             continue
-        path = normalize_path(str(event["payload"].get("path", "")))
-        content = normalize_text(str(event["payload"].get("content", "")))
-        if path and not (path.startswith("00_sistema_tesis/bitacora/") and "bitacora_sesion" in path):
+        payload = dict(event.get("payload", {}))
+        path = normalize_path(str(payload.get("path", "")))
+        content = normalize_text(str(payload.get("content", "")))
+        if path:
             sessions[path] = content
     return sessions
 
@@ -1123,11 +1153,28 @@ def materialize_events(events: list[dict[str, Any]] | None = None, *, check: boo
     items = load_events() if events is None else events
     outputs = projected_payloads(items)
     drift: list[str] = []
+    uncommitted_mods = set()
+    if not check:
+        try:
+            res = subprocess.run(["git", "-C", str(ROOT), "status", "--porcelain"], capture_output=True, text=True, check=False)
+            for line in res.stdout.splitlines():
+                if len(line) > 2 and (line[1] in ("M", "A") or line[0] in ("M", "A")):
+                    path = line[3:].strip()
+                    uncommitted_mods.add(path)
+        except Exception:
+            pass
+
     for rel_path, content in outputs.items():
         target = ROOT / rel_path
         target.parent.mkdir(parents=True, exist_ok=True)
         normalized = normalize_text(content) if target.suffix.lower() == ".md" else content
         if not target.exists() or target.read_text(encoding="utf-8") != normalized:
+            if not check and rel_path in uncommitted_mods:
+                raise RuntimeError(
+                    f"¡Peligro! El archivo {rel_path} tiene cambios manuales sin commitear "
+                    "que serían sobrescritos por el canon. Sincroniza primero con `tesis.py event append` "
+                    "o realiza el commit de tus cambios manuales si son intencionales."
+                )
             drift.append(rel_path)
             if not check:
                 target.write_text(normalized, encoding="utf-8")

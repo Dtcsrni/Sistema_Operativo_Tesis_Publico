@@ -3,7 +3,7 @@
 Propósito, alcance, módulos, flujos e interacción del sistema operativo de tesis.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-29`
+- **Fecha:** `2026-05-15`
 - **Estado:** `OK`
 - **Fuentes:** `README_INICIO.md`, `00_sistema_tesis/manual_operacion_humana.md`, `00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`, `00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`, `00_sistema_tesis/documentacion_sistema/flujos_operativos.md`, `00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/publicacion.yaml`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -244,7 +244,7 @@ graph TD
 - Derivados: API local, bot Telegram, trazas SQLite, estado de proveedores y cobertura de implementacion en la wiki. Matrix permanece como derivado latente.
 - Visible al publico: arquitectura general, contratos de sesion, politica `desktop-first`, Telegram como canal remoto activo y Matrix como extensión latente.
 - Privado: secretos de proveedores, tokens de Matrix/Telegram, rutas sensibles del host y evidencia operativa fina.
-- Regla operativa: la PC principal concentra el carril pesado con `pc_native_llamacpp`; `tesis-edge` mantiene continuidad 24/7, relay, Telegram y runtime ligero. Matrix queda disponible solo como extensibilidad futura.
+- Regla operativa: la PC principal concentra el carril pesado con `desktop_compute` (Ollama DeepSeek) via Docker Compose; `tesis-edge` mantiene continuidad 24/7, relay, Telegram y runtime ligero. Matrix queda disponible solo como extensibilidad futura.
 
 ### Relaciones clave
 
@@ -531,7 +531,7 @@ Objetivo: usar OpenClaw como capa asistiva sin mover la autoria principal fuera 
 
 Secuencia:
 
-1. Levantar o verificar el runtime pesado de la PC con `llama.cpp server` y confirmar `OPENCLAW_DESKTOP_RUNTIME=llamacpp`.
+1. Verificar que `ollama-pc` esté corriendo en `docker compose -f docker-compose.pc.yml` con `deepseek-r1:7b` disponible; confirmar `OPENCLAW_DESKTOP_COMPUTE_BASE_URL=http://ollama-pc:11434`.
 2. Confirmar en `pasarela estado` que `nodes.desktop.runtime=llamacpp` y que el edge mantiene su runtime local ligero.
 3. Operar sesiones desde `CLI`, `web_local` o `telegram`; todos los canales activos deben pasar por la misma `session-layer`.
 4. Mantener `Telegram` como plano remoto activo y `Matrix` solo como compatibilidad futura, fallback latente o notificacion cuando se reactive.
@@ -654,28 +654,28 @@ Toda documentacion mejorada del sistema debe responder implicitamente a estas pr
 
 |Clave|Ruta|Existe|Última modificación|
 |---|---|---|---|
-|sistema|00_sistema_tesis/config/sistema_tesis.yaml|sí|2026-04-27|
+|sistema|00_sistema_tesis/config/sistema_tesis.yaml|sí|2026-05-06|
 |hipotesis|00_sistema_tesis/config/hipotesis.yaml|sí|2026-03-23|
 |bloques|00_sistema_tesis/config/bloques.yaml|sí|2026-04-27|
 |dashboard|00_sistema_tesis/config/dashboard.yaml|sí|2026-03-24|
-|publicacion|00_sistema_tesis/config/publicacion.yaml|sí|2026-04-14|
+|publicacion|00_sistema_tesis/config/publicacion.yaml|sí|2026-05-14|
 |agent_identity|Identidad técnica no publicada por seguridad|sí|2026-03-26|
 |gobernanza_ia|00_sistema_tesis/config/ia_gobernanza.yaml|sí|2026-04-21|
-|wiki|00_sistema_tesis/config/wiki.yaml|sí|2026-04-29|
-|manual_operacion_humana|00_sistema_tesis/manual_operacion_humana.md|sí|2026-04-27|
-|backlog|01_planeacion/backlog.csv|sí|2026-04-14|
+|wiki|00_sistema_tesis/config/wiki.yaml|sí|2026-05-01|
+|manual_operacion_humana|00_sistema_tesis/manual_operacion_humana.md|sí|2026-05-06|
+|backlog|01_planeacion/backlog.csv|sí|2026-05-01|
 |riesgos|01_planeacion/riesgos.csv|sí|2026-03-26|
 |roadmap|01_planeacion/roadmap.csv|sí|2026-03-23|
 |entregables|01_planeacion/entregables.csv|sí|2026-04-14|
-|decisiones|00_sistema_tesis/decisiones|sí|2026-04-29|
-|bitacora|00_sistema_tesis/bitacora|sí|2026-04-29|
-|reportes_semanales|00_sistema_tesis/reportes_semanales|sí|2026-03-24|
-|dashboard_generado|06_dashboard/generado/index.html|sí|2026-04-29|
-|bundle_publico|06_dashboard/publico/index.md|sí|2026-04-29|
-|bundle_publico_manifest|06_dashboard/publico/manifest_publico.json|sí|2026-04-29|
-|wiki_markdown_generada|06_dashboard/wiki/index.md|sí|2026-04-29|
-|wiki_html_generada|06_dashboard/generado/wiki/index.html|sí|2026-04-29|
-|wiki_manifest_generado|06_dashboard/generado/wiki_manifest.json|sí|2026-04-29|
-|readme_portada_generado|README.md|sí|2026-04-29|
+|decisiones|00_sistema_tesis/decisiones|sí|2026-05-14|
+|bitacora|00_sistema_tesis/bitacora|sí|2026-05-15|
+|reportes_semanales|00_sistema_tesis/reportes_semanales|sí|2026-05-13|
+|dashboard_generado|06_dashboard/generado/index.html|sí|2026-05-15|
+|bundle_publico|06_dashboard/publico/index.md|sí|2026-05-14|
+|bundle_publico_manifest|06_dashboard/publico/manifest_publico.json|sí|2026-05-14|
+|wiki_markdown_generada|06_dashboard/wiki/index.md|sí|2026-05-07|
+|wiki_html_generada|06_dashboard/generado/wiki/index.html|sí|2026-05-07|
+|wiki_manifest_generado|06_dashboard/generado/wiki_manifest.json|sí|2026-05-07|
+|readme_portada_generado|README.md|sí|2026-05-06|
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-14`._

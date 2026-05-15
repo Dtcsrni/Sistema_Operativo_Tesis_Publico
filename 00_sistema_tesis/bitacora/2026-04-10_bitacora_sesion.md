@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-10
 
 - **ID de Sesión:** codex-local-20260410-serena-dual-y-bridge
-- **Cadena de Confianza (Anterior):** `sha256/1113a8926f9dcd7d4c2a948e12b090e841070182eec3f4a29b19ca19a7822747`
+- **Cadena de Confianza (Anterior): `hash omitido:omitido````
 - **Bloque principal:** B0
 - **Tipo de sesión:** integración | arquitectura | documentación
 
@@ -15,13 +15,13 @@ Consolidar la habilitación dual de Serena MCP para VS Code/Codex, exponer el br
 
 ## Tareas del día
 - [x] Habilitar `serena-local` HTTP y `serena-local-py` por `stdio` como rutas operativas coherentes.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Documentar la frontera entre host MCP local y runtimes externos.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Incorporar un bridge HTTP autenticado para reexportar Serena cuando el runtime del chat no herede tools del host.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Registrar esta fecha como bitácora diaria faltante vinculándola a las validaciones ya existentes.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Trabajo realizado
 - Se añadió el bridge autenticado de Serena MCP para runtimes externos.
@@ -33,30 +33,29 @@ Consolidar la habilitación dual de Serena MCP para VS Code/Codex, exponer el br
 - **Commits de referencia:** `78005db`, `00d1546`, `3efbb58`
 - **Archivos Clave:** `runtime/serena_bridge/`, `.vscode/mcp.json`, `00_sistema_tesis/documentacion_sistema/operacion_serena_mcp_codex.md`, `00_sistema_tesis/documentacion_sistema/contrato_serena_mcp_agentes.md`
 - **Validación del Sistema:** [x] Coherencia documental y operativa cubierta por validaciones humanas del día.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Uso de IA y Gobernanza
 - **Proveedor:** proveedor de IA no publicado
 - **Modelo/Versión:** modelo de IA no publicado
 - **Objetivo:** Consolidar Serena dual, bridge externo y frontera runtime/host.
 - **Nivel de Razonamiento:** medio
-- **Alineación Ética:**
+- **Alineación Ática:**
     - [x] Transparencia (NIST RMF)
-      - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+      - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
     - [x] Soberanía Humana (UNESCO)
-      - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+      - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
     - [x] Responsabilidad (ISO 42001)
-      - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+      - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ### Validación de Soberanía (Handshake)
 - **Pregunta Crítica:** Instrucciones humanas directas para implementar Serena dual y bridge HTTP autenticado.
 - **Respuesta Erick Vega:** "PLEASE IMPLEMENT THIS PLAN:"
 - **Criterio de Aceptación:** [x] Validado con validación humana interna no pública, validación humana interna no pública y validación humana interna no pública.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
   - **Soporte:** validación humana interna no pública + validación humana interna no pública + validación humana interna no pública
   - **Texto exacto de confirmación verbal:** "PLEASE IMPLEMENT THIS PLAN:"
   - **Hash de confirmación verbal:** `hash omitido:omitido`
-  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
   - **Nivel de Riesgo:** ALTO
   - **Modo:** Confirmación Verbal
 
@@ -67,8 +66,8 @@ Consolidar la habilitación dual de Serena MCP para VS Code/Codex, exponer el br
 ## Siguiente paso concreto
 Mantener la verificación reproducible de acceso Serena desde host, fallback `stdio` y bridge externo.
 
-[LID]: log_sesiones_trabajo_registradas.md
+[LID]: log_conversaciones_ia.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

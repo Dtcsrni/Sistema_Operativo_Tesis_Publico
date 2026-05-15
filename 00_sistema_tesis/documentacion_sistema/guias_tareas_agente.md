@@ -72,4 +72,4 @@ Uso de herramientas CLI integradas para mantener la integridad de la tesis.
 > [!IMPORTANT]
 > Recuerda que toda acción significativa debe quedar reflejada en el Ledger. La IA propone, pero el Tesista Soberano certifica.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

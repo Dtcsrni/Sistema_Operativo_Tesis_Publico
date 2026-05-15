@@ -120,18 +120,18 @@
     <p class="section-desc">Estado de los motores de lenguaje locales (LLM) y hardware dedicado.</p>
     
     <div class="runtime-grid">
-        <!-- PC Native -->
-        <div class="glass runtime-card {% if runtime_status.llamacpp.ready %}online{% elif runtime_status.llamacpp.probe_status == 'degraded' %}loading{% else %}offline{% endif %}">
+        <!-- Desktop Compute -->
+        <div class="glass runtime-card {% if runtime_status.desktop_compute.ready %}online{% elif runtime_status.desktop_compute.probe_status == 'degraded' %}loading{% else %}offline{% endif %}">
             <div class="runtime-header">
-                <span class="runtime-name">PC Native (llama.cpp)</span>
-                <span class="status-pill {% if runtime_status.llamacpp.ready %}online{% else %}offline{% endif %}">
-                    {{ "Online" if runtime_status.llamacpp.ready else "Offline" }}
+                <span class="runtime-name">Desktop Compute (DeepSeek/Ollama)</span>
+                <span class="status-pill {% if runtime_status.desktop_compute.ready %}online{% else %}offline{% endif %}">
+                    {{ "Online" if runtime_status.desktop_compute.ready else "Offline" }}
                 </span>
             </div>
             <div class="meta-info">
-                <div class="meta-item"><span class="meta-label">Modelo:</span> <span>{{ runtime_status.llamacpp.model }}</span></div>
-                <div class="meta-item"><span class="meta-label">Latencia:</span> <span>{{ runtime_status.llamacpp.probe_latency_ms }}ms</span></div>
-                <div class="meta-item"><span class="meta-label">Endpoint:</span> <span>{{ runtime_status.llamacpp.base_url }}</span></div>
+                <div class="meta-item"><span class="meta-label">Modelo:</span> <span>{{ runtime_status.desktop_compute.model }}</span></div>
+                <div class="meta-item"><span class="meta-label">Latencia:</span> <span>{{ runtime_status.desktop_compute.probe_latency_ms }}ms</span></div>
+                <div class="meta-item"><span class="meta-label">Endpoint:</span> <span>{{ runtime_status.desktop_compute.base_url }}</span></div>
             </div>
         </div>
 
@@ -209,4 +209,4 @@
     }
 </script>
 {% endblock %}
-<footer class="public-update"><p>Última actualización: <strong>2026-04-29</strong></p></footer>
+<footer class="public-update"><p>Última actualización: <strong>2026-05-15</strong></p></footer>

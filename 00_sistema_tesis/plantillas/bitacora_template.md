@@ -1,7 +1,7 @@
 # Bitácora de sesión YYYY-MM-DD
 
 - **ID de Sesión:** [ID-SESION-GUID]
-- **Cadena de Confianza (Anterior):** `sha256/[hash_bitacora_previa_o_INICIO]`
+- **Cadena de Confianza (Anterior):** `hash omitido:[hash_bitacora_previa_o_INICIO]`
 - **Bloque principal:** [B0|B1|B2|B3|B4|B5]
 - **Tipo de sesión:** [lectura | diseño | simulación | implementación | redacción | validación | administración]
 
@@ -63,4 +63,4 @@
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

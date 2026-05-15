@@ -35,3 +35,30 @@ fi
 
 sudo apt-get update
 sudo apt-get install -y git curl ca-certificates python3 python3-venv python3-pip jq rsync
+
+# --- Optimización de Bootloader y Memoria (Toltecayotl) ---
+# Se busca armbianEnv.txt o orangepiEnv.txt según la distribución instalada.
+ENV_FILE="/boot/armbianEnv.txt"
+[ ! -f "${ENV_FILE}" ] && ENV_FILE="/boot/orangepiEnv.txt"
+
+if [ -f "${ENV_FILE}" ]; then
+  echo "[BOOT] Configurando persistencia de CMA en ${ENV_FILE}..."
+  # Asegurar que extraargs incluya cma y panic
+  if ! grep -q "extraargs=" "${ENV_FILE}"; then
+    echo "extraargs=cma=2048M panic=10" | sudo tee -a "${ENV_FILE}" >/dev/null
+  else
+    # Si ya existe extraargs, nos aseguramos de que tenga cma=2048M
+    if ! grep -q "cma=" "${ENV_FILE}"; then
+      sudo sed -i 's/extraargs=/extraargs=cma=2048M /' "${ENV_FILE}"
+    else
+      sudo sed -i 's/cma=[^ ]*/cma=2048M/' "${ENV_FILE}"
+    fi
+    # Añadir panic=10 si no está
+    if ! grep -q "panic=" "${ENV_FILE}"; then
+      sudo sed -i 's/extraargs=/extraargs=panic=10 /' "${ENV_FILE}"
+    fi
+  fi
+  echo "[BOOT] CMA persistente configurado a 2048M."
+else
+  echo "[WARNING] No se encontró archivo de entorno del bootloader (/boot/*Env.txt)."
+fi

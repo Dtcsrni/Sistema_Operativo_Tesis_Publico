@@ -8,6 +8,7 @@ import re
 import subprocess
 import sys
 import tempfile
+from uuid import uuid4
 
 from canon import (
     EVENTS_PATH,
@@ -32,8 +33,8 @@ from canon import (
     verify_conversation_source_for_step,
 )
 from common import ROOT, file_sha256, load_csv_rows, load_yaml_json, preferred_python_executable
-from governance_gate import extract_step_ids_from_diff
-from publication import publication_bundle_status
+from audit.governance_gate import extract_step_ids_from_diff
+from ops.publication import publication_bundle_status
 
 
 SECOND_LEVEL_DERIVED_PREFIXES = (
@@ -489,7 +490,7 @@ def run_gate_pre_commit_step(*, step_id: str, agent: str = "") -> None:
     if agent:
         env["SISTEMA_TESIS_AGENT"] = agent
     result = run_command(
-        [preferred_python_executable(), "07_scripts/governance_gate.py", "--stage", "pre-commit"],
+        [preferred_python_executable(), "07_scripts/audit/governance_gate.py", "--stage", "pre-commit"],
         check=False,
         env=env,
     )
@@ -592,7 +593,7 @@ def build_gate_env(args: argparse.Namespace) -> dict[str, str]:
 def run_gate_pre_commit(args: argparse.Namespace) -> None:
     env = build_gate_env(args)
     result = run_command(
-        [preferred_python_executable(), "07_scripts/governance_gate.py", "--stage", "pre-commit"],
+        [preferred_python_executable(), "07_scripts/audit/governance_gate.py", "--stage", "pre-commit"],
         check=False,
         env=env,
     )
@@ -795,7 +796,7 @@ def cmd_status(_: argparse.Namespace) -> int:
 
 
 def cmd_doctor(args: argparse.Namespace) -> int:
-    from check_agent_tooling import build_report as build_agent_tooling_report
+    from audit.check_agent_tooling import build_report as build_agent_tooling_report
 
     events = ensure_canon_initialized()
     canon_errors = validate_events(events)
@@ -1189,6 +1190,198 @@ def cmd_event_append(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_toltecayotl_status(_: argparse.Namespace) -> int:
+    print("--- TOLTECAYOTL: Estado del Motor Epistémico ---")
+    # 1. Verificar Weaviate (Local)
+    import socket
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(2)
+    try:
+        s.connect(("127.0.0.1", 8080))
+        print("[OK] Weaviate (PC): En línea (Puerto 8080)")
+    except Exception:
+        print("[ERR] Weaviate (PC): Fuera de línea")
+    finally:
+        s.close()
+    
+    # 2. Verificar Salud del Orquestador
+    orchestrator_path = ROOT / "07_scripts" / "toltecayotl" / "toltecayotl_orchestrator.py"
+    if orchestrator_path.exists():
+        print(f"[OK] Orquestador: {orchestrator_path.name} localizado.")
+    else:
+        print("[ERR] Orquestador: No se encontró toltecayotl_orchestrator.py")
+    
+    return 0
+
+
+def cmd_toltecayotl_ingest(args: argparse.Namespace) -> int:
+    print(f"--- TOLTECAYOTL: Ingestión de Acervo ({args.mode}) ---")
+    script = "07_scripts/toltecayotl/ingest_context_package.py"
+    cmd = ["--mode", args.mode, "--source", args.file]
+    try:
+        run_python_script(script, *cmd)
+        return 0
+    except Exception as e:
+        print(f"[ERR] Fallo en la ingestión: {e}")
+        return 1
+
+
+def cmd_toltecayotl_sync_edge(_: argparse.Namespace) -> int:
+    print("--- TOLTECAYOTL: Sincronización PC -> Edge ---")
+    print("[INFO] Iniciando transferencia de acervo epistémico (TEB)...")
+    
+    script = "07_scripts/ops/sync_toltecayotl_to_edge.sh"
+    
+    if os.name == 'nt':
+        print("[WARN] Ejecución desde Windows detectada.")
+        print("[INFO] Se recomienda ejecutar vía WSL para soporte nativo de rsync/ssh.")
+        print(f"[CMD] wsl bash {script}")
+        # Intentamos ejecutar vía WSL si está disponible
+        try:
+            subprocess.run(["wsl", "bash", script], cwd=ROOT, check=True)
+            return 0
+        except Exception as e:
+            print(f"[ERR] No se pudo ejecutar vía WSL: {e}")
+            return 1
+    else:
+        try:
+            subprocess.run(["bash", script], cwd=ROOT, check=True)
+            return 0
+        except Exception as e:
+            print(f"[ERR] Fallo en la sincronización: {e}")
+            return 1
+
+
+def cmd_pet_ingest(args: argparse.Namespace) -> int:
+    """Ingesta un PET bundle desde un archivo JSON externo."""
+    from pathlib import Path
+    from datetime import datetime, UTC
+    
+    sys.path.insert(0, str((ROOT / "runtime" / "openclaw").resolve()))
+    from openclaw_local.storage import OpenClawStore
+    from openclaw_local.epistemic import ingest_pet_bundle, sha256_dict
+    
+    bundle_path = Path(args.bundle_file)
+    if not bundle_path.exists():
+        print(f"[ERROR] Archivo no encontrado: {bundle_path}")
+        return 1
+    
+    try:
+        with open(bundle_path, "r", encoding="utf-8") as f:
+            bundle_data = json.load(f)
+    except json.JSONDecodeError as e:
+        print(f"[ERROR] JSON inválido en {bundle_path}: {e}")
+        return 1
+    except Exception as e:
+        print(f"[ERROR] No se pudo leer el archivo: {e}")
+        return 1
+    
+    # Extraer campos del bundle
+    try:
+        bundle_id = bundle_data.get("bundle_id", f"PEB-{uuid4().hex[:12]}")
+        package_id = bundle_data.get("package_id", "")
+        source_system = bundle_data.get("source_system", "unknown")
+        source_timestamp = bundle_data.get("source_timestamp", datetime.now(UTC).isoformat())
+        content_literal = bundle_data.get("content_literal", "")
+        claims_matrix_csv = bundle_data.get("claims_matrix_csv", "")
+        decisions_log_md = bundle_data.get("decisions_log_md", "")
+        metadata = bundle_data.get("metadata", {})
+        integrity_hash = bundle_data.get("integrity_hash", "")
+    except KeyError as e:
+        print(f"[ERROR] Campo requerido faltante en bundle: {e}")
+        return 1
+    
+    # Ingestar en storage
+    db_path = ROOT / "runtime" / "openclaw" / "openclaw_store.db"
+    store = OpenClawStore(db_path)
+    
+    record, errors = ingest_pet_bundle(
+        bundle_id=bundle_id,
+        package_id=package_id,
+        source_system=source_system,
+        source_timestamp=source_timestamp,
+        content_literal=content_literal,
+        claims_matrix_csv=claims_matrix_csv,
+        decisions_log_md=decisions_log_md,
+        metadata=metadata,
+        integrity_hash=integrity_hash,
+    )
+    
+    if errors:
+        print(f"[WARN] Errores durante validación:")
+        for error in errors:
+            print(f"  - {error}")
+    
+    # Guardar en storage
+    store.ingest_pet_bundle(
+        bundle_id=record.bundle_id,
+        package_id=record.package_id,
+        source_system=record.source_system,
+        source_timestamp=record.source_timestamp,
+        content_literal=content_literal,
+        claims_matrix_csv=claims_matrix_csv,
+        decisions_log_md=decisions_log_md,
+        metadata=metadata,
+        integrity_hash=record.integrity_hash,
+        status=record.status,
+        validation_errors=record.validation_errors,
+        claims_count=record.claims_count,
+        fragments_count=record.fragments_count,
+    )
+    
+    print(f"[OK] PET bundle ingestado:")
+    print(f"  - Bundle ID: {record.bundle_id}")
+    print(f"  - Package ID: {record.package_id}")
+    print(f"  - Sistema origen: {record.source_system}")
+    print(f"  - Estado: {record.status}")
+    print(f"  - Claims: {record.claims_count}")
+    print(f"  - Fragmentos: {record.fragments_count}")
+    
+    if record.validation_errors:
+        print(f"  - Errores: {record.validation_errors}")
+    
+    return 0
+
+
+def cmd_pet_list(args: argparse.Namespace) -> int:
+    """Lista los PET bundles ingestados."""
+    sys.path.insert(0, str((ROOT / "runtime" / "openclaw").resolve()))
+    from openclaw_local.storage import OpenClawStore
+    
+    db_path = ROOT / "runtime" / "openclaw" / "openclaw_store.db"
+    store = OpenClawStore(db_path)
+    
+    source_system = args.source_system if hasattr(args, 'source_system') and args.source_system else None
+    status = args.status if hasattr(args, 'status') and args.status else None
+    limit = args.limit if hasattr(args, 'limit') and args.limit else 100
+    
+    bundles = store.list_ingested_pet_bundles(
+        source_system=source_system,
+        status=status,
+        limit=limit,
+    )
+    
+    if not bundles:
+        print("[INFO] No hay PET bundles ingestados")
+        return 0
+    
+    print(f"[OK] {len(bundles)} PET bundles ingestados:")
+    print()
+    
+    for bundle in bundles:
+        print(f"  Bundle ID: {bundle['bundle_id']}")
+        print(f"    - Package: {bundle['package_id']}")
+        print(f"    - Sistema: {bundle['source_system']}")
+        print(f"    - Timestamp: {bundle['source_timestamp']}")
+        print(f"    - Estado: {bundle['status']}")
+        print(f"    - Claims: {bundle['claims_count']}")
+        print(f"    - Fragmentos: {bundle['fragments_count']}")
+        print(f"    - Creado: {bundle['created_at']}")
+        print()
+    
+    return 0
+
+
 def cmd_task_close(args: argparse.Namespace) -> int:
     ensure_canon_initialized()
     backlog_path = ROOT / "01_planeacion" / "backlog.csv"
@@ -1369,6 +1562,7 @@ def build_parser() -> argparse.ArgumentParser:
     task_close.add_argument("--comment", required=True)
     task_close.add_argument("--session-id", default="workflow_assistant")
     task_close.add_argument("--rebuild", action="store_true")
+
     task_close.set_defaults(func=cmd_task_close)
 
     sync = subparsers.add_parser("sync")
@@ -1388,6 +1582,33 @@ def build_parser() -> argparse.ArgumentParser:
     split_staged.add_argument("--agent", default="")
     split_staged.add_argument("--no-sign", action="store_true")
     split_staged.set_defaults(func=cmd_split_staged)
+
+    toltecayotl = subparsers.add_parser("toltecayotl")
+    toltecayotl_subparsers = toltecayotl.add_subparsers(dest="toltecayotl_command", required=True)
+
+    t_status = toltecayotl_subparsers.add_parser("status")
+    t_status.set_defaults(func=cmd_toltecayotl_status)
+
+    t_ingest = toltecayotl_subparsers.add_parser("ingestar")
+    t_ingest.add_argument("file", help="Archivo PDF o ZIP a ingestar en el acervo epistémico.")
+    t_ingest.add_argument("--mode", choices=["check", "apply"], default="check")
+    t_ingest.set_defaults(func=cmd_toltecayotl_ingest)
+
+    t_sync = toltecayotl_subparsers.add_parser("sync-edge")
+    t_sync.set_defaults(func=cmd_toltecayotl_sync_edge)
+
+    pet = subparsers.add_parser("pet")
+    pet_subparsers = pet.add_subparsers(dest="pet_command", required=True)
+
+    pet_ingest = pet_subparsers.add_parser("ingest")
+    pet_ingest.add_argument("bundle_file", help="Ruta del archivo JSON del bundle PET a ingestar")
+    pet_ingest.set_defaults(func=cmd_pet_ingest)
+
+    pet_list = pet_subparsers.add_parser("list")
+    pet_list.add_argument("--source-system", default="", help="Filtrar por sistema de origen (opcional)")
+    pet_list.add_argument("--status", choices=["validated", "rejected", "ingested"], default="", help="Filtrar por estado (opcional)")
+    pet_list.add_argument("--limit", type=int, default=100, help="Máximo número de resultados")
+    pet_list.set_defaults(func=cmd_pet_list)
 
     return parser
 

@@ -15,7 +15,7 @@ def test_domain_backup_policy_declares_expected_domains_and_artifacts() -> None:
     policy = _load_json("manifests/domain_backup_policy.yaml")
 
     assert policy["format"] == "mixed_tar_snapshot"
-    assert policy["encryption"] == "none_permissions_only"
+    assert policy["encryption"] == "required_age_or_gpg"
     assert {"sistema_tesis", "openclaw", "edge_iot"} == set(policy["domains"].keys())
     assert policy["domains"]["openclaw"]["snapshot_dir"] == "/mnt/emmc/snapshots/openclaw"
 

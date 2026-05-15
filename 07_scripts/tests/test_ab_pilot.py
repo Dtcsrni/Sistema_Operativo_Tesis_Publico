@@ -1,9 +1,13 @@
 import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1])) # 07_scripts root
+sys.path.insert(0, str(Path(__file__).resolve().parent))     # subdirectory siblings
+
+
 import tempfile
 import unittest
-from pathlib import Path
-from unittest.mock import patch
 
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
@@ -11,7 +15,6 @@ sys.path.insert(0, str(ROOT / "07_scripts"))
 import common  # noqa: E402
 import ab_pilot  # noqa: E402
 from ab_pilot import aggregate_by_task_type, aggregate_route, build_plan_from_csv, default_execution_context, evaluate_plan, write_csv_template  # noqa: E402
-
 
 class TestABPilot(unittest.TestCase):
     def test_aggregate_route(self):
@@ -239,7 +242,6 @@ T-2,analisis,alta,80,40,0.015,900,true,0,false
                         csv_relative_path="tasks.csv",
                         plan_relative_path="plan.json",
                     )
-
 
 if __name__ == "__main__":
     unittest.main()

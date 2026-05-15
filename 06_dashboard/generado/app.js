@@ -73,6 +73,20 @@ function applyFilters() {
   });
 }
 
+function initializeNocTabs() {
+  const tabs = [...document.querySelectorAll('[data-noc-tab]')];
+  const tabPanels = [...document.querySelectorAll('[data-noc-panel]')];
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.nocTab;
+      tabs.forEach((item) => item.classList.toggle('is-active', item === tab));
+      tabPanels.forEach((panel) => {
+        panel.classList.toggle('is-active', panel.dataset.nocPanel === target);
+      });
+    });
+  });
+}
+
 function jumpToNarrative(path) {
   const viewerSection = document.getElementById('narrativa-sistema');
   if (mdSelector && window.SIOT_NARRATIVA && window.SIOT_NARRATIVA[path]) {
@@ -83,7 +97,6 @@ function jumpToNarrative(path) {
   }
   return false;
 }
-
 
 async function loadMarkdown(path) {
   if (!mdViewer) return;
@@ -169,6 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   renderReviewRailState();
+  initializeNocTabs();
 
   // Intercepción de enlaces MD
   document.addEventListener('click', (e) => {

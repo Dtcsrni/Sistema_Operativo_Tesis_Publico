@@ -1,0 +1,32 @@
+{
+  "generated_at_utc": "20260515_030033",
+  "total_duration_seconds": 0.434,
+  "summary": {
+    "total": 1,
+    "executed": 1,
+    "skipped": 0,
+    "failed": 1,
+    "slow": 0
+  },
+  "slow_stages": [],
+  "failed_stages": [
+    "Materializar proyecciones del canon"
+  ],
+  "steps": [
+    {
+      "label": "Materializar proyecciones del canon",
+      "script": "07_scripts/tesis.py",
+      "args": [
+        "materialize"
+      ],
+      "group": "canon",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.434,
+      "budget_seconds": 10.0,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    }
+  ]
+}

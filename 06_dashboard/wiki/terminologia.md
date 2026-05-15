@@ -3,7 +3,7 @@
 Glosario, familias de IDs, referencias globales y convenciones de nomenclatura del sistema.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-29`
+- **Fecha:** `2026-05-15`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`, `00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`, `01_planeacion/backlog_guia.md`, `00_sistema_tesis/config/ia_gobernanza.yaml`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -11,7 +11,7 @@ Glosario, familias de IDs, referencias globales y convenciones de nomenclatura d
 ## Navegación de esta página
 
 - [Volver al índice](../publico/wiki/index.md).
-- Página anterior en la ruta base: [Gobernanza](../publico/wiki/gobernanza.md).
+- Página anterior en la ruta base: [Arquitectura](../publico/wiki/arquitectura.md).
 - Página siguiente en la ruta base: [Planeación](../publico/wiki/planeacion.md).
 - Relacionada: [Sistema](../publico/wiki/sistema.md).
 - Relacionada: [Gobernanza](../publico/wiki/gobernanza.md).
@@ -482,4 +482,4 @@ graph TD
 
 En la capa publica pueden explicarse familias y semantica de IDs, por ejemplo `VAL_STEP_{nnn}` o `EVT_{nnnn}`, pero no deben exponerse instancias privadas completas, hashes sensibles ni rutas internas no publicables.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

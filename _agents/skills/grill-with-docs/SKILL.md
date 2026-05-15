@@ -77,4 +77,4 @@ If any of the three is missing, skip the DEC. File goes in `00_sistema_tesis/dec
 ## Soberanía Humana
 No marques ninguna decisión como validada. Toda decisión técnica sustantiva requiere Step ID del Tesista antes de cerrarse.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

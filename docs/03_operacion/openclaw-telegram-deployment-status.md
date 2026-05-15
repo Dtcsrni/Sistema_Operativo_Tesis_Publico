@@ -79,8 +79,8 @@ Service logs are clean (sample):
 Current configuration:
 ```
 OPENCLAW_TELEGRAM_ENABLED=1
-OPENCLAW_TELEGRAM_BOT_TOKEN=6379108373:AAHxU7sB3K-VwX9q2ZfQ8pL-nMkJ5xC0yYz (configured)
-OPENCLAW_TELEGRAM_CHAT_ID=123456789 (configured)
+OPENCLAW_TELEGRAM_BOT_TOKEN=[REDACTED_SECRET] (configured)
+OPENCLAW_TELEGRAM_CHAT_ID=[REDACTED_PRIVATE_ID] (configured)
 ```
 
 **Service Status:** ✅ ACTIVE (running), PID 34875, polling Telegram API actively
@@ -105,17 +105,20 @@ Simply update `/etc/tesis-os/openclaw.env` with your real credentials:
 
 2. **Get Your Chat ID:**
    - Send a message to your bot in Telegram
-   - Run: `wsl bash -lc "sudo tail -100 /var/log/openclaw/openclaw-telegram-bot.log"`
+   - Run: `docker compose exec siot-agent tail -100 /var/log/openclaw/openclaw-telegram-bot.log` (dentro del contenedor del bot)
    - Look for chat_id in logs
 
 3. **Update Config:**
    ```bash
-   wsl bash -lc "sudo sed -i 's/^OPENCLAW_TELEGRAM_BOT_TOKEN=.*/OPENCLAW_TELEGRAM_BOT_TOKEN=<your_real_token>/' /etc/tesis-os/openclaw.env && sudo sed -i 's/^OPENCLAW_TELEGRAM_CHAT_ID=.*/OPENCLAW_TELEGRAM_CHAT_ID=<your_chat_id>/' /etc/tesis-os/openclaw.env"
+   # En config/env/openclaw.env (en el repo local):
+   OPENCLAW_TELEGRAM_BOT_TOKEN=<your_real_token>
+   OPENCLAW_TELEGRAM_CHAT_ID=<your_chat_id>
+   # Luego: docker compose restart siot-agent
    ```
 
 4. **Restart Service:**
    ```bash
-   wsl bash -lc "sudo systemctl restart openclaw-telegram-bot.service"
+   docker compose restart siot-agent
    ```
 
 5. **Test in Telegram:**
@@ -136,17 +139,17 @@ Once enabled, the bot responds to these commands:
 
 To manually restart the service:
 ```bash
-wsl bash -lc "sudo systemctl restart openclaw-telegram-bot.service"
+docker compose restart siot-agent
 ```
 
 To view logs:
 ```bash
-wsl bash -lc "sudo tail -f /var/log/openclaw/openclaw-telegram-bot.log"
+docker compose logs -f siot-agent
 ```
 
 To check status:
 ```bash
-wsl bash -lc "sudo systemctl status openclaw-telegram-bot.service"
+docker compose ps | grep siot-agent
 ```
 
 ## Summary
@@ -165,4 +168,4 @@ wsl bash -lc "sudo systemctl status openclaw-telegram-bot.service"
 
 **The OpenClaw Telegram bot is now fully deployed, enabled, and actively polling Telegram for incoming messages. No further infrastructure work required.**
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

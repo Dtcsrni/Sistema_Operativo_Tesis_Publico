@@ -1,9 +1,9 @@
 # serve_wiki.ps1
-# Script para iniciar MkDocs automáticamente dentro del entorno nativo WSL2.
+# Script para iniciar la wiki desde Docker Compose.
 
-Write-Host "Iniciando entorno WSL2 para MkDocs..." -ForegroundColor Cyan
-Write-Host "El servidor estará disponible en http://127.0.0.1:8000/" -ForegroundColor Green
-Write-Host "Presiona Ctrl+C para detener el servidor.`n" -ForegroundColor Yellow
+Write-Host "Iniciando siot-docs en Docker Compose..." -ForegroundColor Cyan
+Write-Host "La documentación estará disponible en http://127.0.0.1:8081/" -ForegroundColor Green
+Write-Host "Presiona Ctrl+C para detener el seguimiento de salida.`n" -ForegroundColor Yellow
 
-# Ejecuta mkdocs dentro de WSL, activando previamente el entorno virtual.
-wsl bash -c "source .venv/bin/activate && mkdocs serve"
+docker compose up -d --build siot-docs
+docker compose logs -f --no-log-prefix siot-docs

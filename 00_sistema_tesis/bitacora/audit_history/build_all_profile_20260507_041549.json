@@ -1,0 +1,28 @@
+{
+  "generated_at_utc": "20260507_041549",
+  "total_duration_seconds": 0.165,
+  "summary": {
+    "total": 1,
+    "executed": 1,
+    "skipped": 0,
+    "failed": 0,
+    "slow": 0
+  },
+  "slow_stages": [],
+  "failed_stages": [],
+  "steps": [
+    {
+      "label": "Auditar Ledger IA",
+      "script": "07_scripts/audit/verify_ledger.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-05-07",
+      "duration_seconds": 0.165,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    }
+  ]
+}

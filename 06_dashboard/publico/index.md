@@ -2,9 +2,9 @@
 
 Definir la exportación pública sanitizada, legible y reproducible del sistema operativo de tesis, exponiendo por defecto artefactos públicos y redirigiendo solo contenido verdaderamente sensible.
 
-- **Generado:** `2026-04-29`
+- **Generado:** `2026-05-15`
 - **Estado:** `ok`
-- **Fingerprint del bundle:** `785092cd2575bd2dc86a6c4c2737378c197f554f07effac63b81353a26666fda`
+- **Fingerprint del bundle:** `275a3a7a1d0e426e43a683d19ab76c4be61c8a2162e1a11e65b181e9a0256c3a`
 - **Aviso:** Este bundle público es un artefacto derivado y curado editorialmente. No se corrige a mano; se reconstruye desde la base canónica.
 
 ## Superficies
@@ -35,6 +35,7 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 
 - `06_dashboard/publico/README_publico.md` ← `README.md`
 - `06_dashboard/publico/MEMORY_publico.md` ← `MEMORY.md`
+- `06_dashboard/publico/wiki/arquitectura.md` ← `06_dashboard/wiki/arquitectura.md`
 - `06_dashboard/publico/wiki/bitacora.md` ← `06_dashboard/wiki/bitacora.md`
 - `06_dashboard/publico/wiki/bloques.md` ← `06_dashboard/wiki/bloques.md`
 - `06_dashboard/publico/wiki/casos_uso.md` ← `06_dashboard/wiki/casos_uso.md`
@@ -49,6 +50,7 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 - `06_dashboard/publico/wiki/sistema.md` ← `06_dashboard/wiki/sistema.md`
 - `06_dashboard/publico/wiki/terminologia.md` ← `06_dashboard/wiki/terminologia.md`
 - `06_dashboard/publico/wiki/tesis.md` ← `06_dashboard/wiki/tesis.md`
+- `06_dashboard/publico/wiki_html/arquitectura.html` ← `06_dashboard/generado/wiki/arquitectura.html`
 - `06_dashboard/publico/wiki_html/bitacora.html` ← `06_dashboard/generado/wiki/bitacora.html`
 - `06_dashboard/publico/wiki_html/bloques.html` ← `06_dashboard/generado/wiki/bloques.html`
 - `06_dashboard/publico/wiki_html/casos_uso.html` ← `06_dashboard/generado/wiki/casos_uso.html`
@@ -71,6 +73,7 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 - `06_dashboard/publico/dashboard/badges/integrity.svg` ← `06_dashboard/generado/badges/integrity.svg`
 - `06_dashboard/publico/dashboard/badges/ledger.svg` ← `06_dashboard/generado/badges/ledger.svg`
 - `06_dashboard/publico/dashboard/badges/security_status.svg` ← `06_dashboard/generado/badges/security_status.svg`
+- `06_dashboard/publico/observability_status_public.json` ← `06_dashboard/generado/observability_status_public.json`
 
 ## Reglas aplicadas
 
@@ -95,4 +98,4 @@ Definir la exportación pública sanitizada, legible y reproducible del sistema 
 - `wiki/index.md`
 - `manifest_publico.json`
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

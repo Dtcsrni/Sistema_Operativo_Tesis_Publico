@@ -3,7 +3,7 @@
 Registro de decisiones de arquitectura, método y operación.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-04-29`
+- **Fecha:** `2026-05-15`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/decisiones`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -48,9 +48,21 @@ Registro de decisiones de arquitectura, método y operación.
 
 ## Decisiones registradas
 
-- `2026-04-29` [DEC-0017: Arquitectura del Atzin Scientific Engine](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-29_DEC-0017_atzin_scientific_engine_architecture.md)
-- `2026-04-29` [DEC-0016: Política de Gestión de Credenciales HuggingFace](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-29_DEC-0016_politica_gestion_credenciales_hf.md)
-- `2026-04-29` [Política de Migración Hermes 3 (hermes3:8b)](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-29_DEC-0015_politica_migracion_hermes.md)
+- `2026-05-13` [DEC-0043: IntegraciÃ³n de Jira en el Centro de Control de Misiones](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-13_DEC-0043_integracion_jira_control_misiones.md)
+- `2026-05-08` [DEC-0042: Políticas de Estandarización y Calidad Agnóstica (FRE/PVC)](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-08_DEC-0042_politicas_de_estandarizacion_y_calidad_agnostica.md)
+- `2026-05-08` [DEC-0041: Motor de Calidad Toltecayotl (MCT) - Evaluación de Calidad Epistémica](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-08_DEC-0041_motor_de_evaluacion_de_calidad_epistemica.md)
+- `2026-05-08` [DEC-0040: Protocolo de Evaluación Pre-Ingestión Bibliográfica](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-08_DEC-0040_protocolo_evaluacion_pre-ingestion.md)
+- `2026-05-07` [DEC-0038 Integración de OpenCode como Executor Subordinado con RAG Weaviate Obligatorio](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-07_DEC-0038_opencode_executor_subordinado.md)
+- `2026-05-05` [DEC-0037: Estandarización de Telemetría Remota y Monitoreo de Progreso](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-05_DEC-0037_estandarizacion_telemetria_remota.md)
+- `2026-05-05` [DEC-0036: Restricción de RAM en Nodo Edge y Selección de Modelos](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-05_DEC-0036_restriccion_ram_edge.md)
+- `2026-05-05` [DEC-0035: Optimización de VRAM y Poda de Modelos de Razonamiento](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-05_DEC-0035_optimizacion_vram_y_poda_de_modelos.md)
+- `2026-05-02` [DEC-0032: Arquitectura de Ingesta y Consumo de PET Bundles en OpenClaw](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-02_DEC-0032_arquitectura_ingesta_consumption_pets.md)
+- `2026-05-02` [DEC-0031 Adopción de Mission Control para Supervisión Agéntica](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-02_DEC-0031_adopcion_mission_control.md)
+- `2026-05-01` [DEC-0030: Adopción de Arquitectura Local-First y Soberanía Epistémica](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-01_DEC-0030_adopcion_arquitectura_local_first.md)
+- `2026-05-01` [DEC-0029: Estandarización del Formato de Ingestión Paquete Epistémico Toltecayotl (PET)](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-01_DEC-0029_estandarizacion_formato_pet.md)
+- `2026-04-29` [DEC-0028: Arquitectura del Motor Epistémico de Inferencia "Toltecayotl"](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-29_DEC-0028_toltecayotl_epistemic_inference_engine_architecture.md)
+- `2026-04-29` [DEC-0027: Política de Gestión de Credenciales HuggingFace](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-29_DEC-0027_politica_gestion_credenciales_hf.md)
+- `2026-04-29` [Política de Migración Hermes 3 (hermes3:8b)](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-29_DEC-0026_politica_migracion_hermes.md)
 - `2026-04-27` [DEC-0025 Arquitectura de Contenedores para el Nodo de Control (PC Hub)](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-27_DEC-0025_arquitectura_de_contenedores_para_el_nodo_de_control.md)
 - `2026-04-21` [DEC-0024 Operacion ChatGPT Plus sin API en Tesista Directo](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-21_DEC-0024_operacion_chatgpt_plus_sin_api_en_tesista_directo.md)
 - `2026-04-08` [DEC-0023 Serena MCP como Capa Comun para Agentes](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-08_DEC-0023_serena_mcp_como_capa_comun_para_agentes.md)
@@ -77,4 +89,4 @@ Registro de decisiones de arquitectura, método y operación.
 - `2026-03-23` [DEC-0002 Gobernanza de IA instrumental y registro de uso](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-23_DEC-0002_gobernanza_ia_instrumental.md)
 - `2026-03-23` [DEC-0001 Arquitectura base del sistema operativo de tesis](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-23_DEC-0001_arquitectura_sistema_tesis.md)
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

@@ -159,4 +159,4 @@ Get-Content historial interno no público/build_all_profile_latest.json | Conver
 Ejecutar `python 07_scripts/build_all.py` sin argumentos es identico al comportamiento
 anterior del script monolitico. Todos los 36 pasos se ejecutan en el mismo orden.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

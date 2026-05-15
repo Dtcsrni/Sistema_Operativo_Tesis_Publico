@@ -14,6 +14,7 @@ PC_INDEX = Path("runtime/pc_control/benchmarks/index.json")
 EDGE_INDEX = Path("runtime/edge_iot/benchmarks/index.json")
 PC_REPORT = Path("runtime/pc_control/benchmarks/scientific_report_mistral_nemo_12b.json")
 HERMES_INDEX_KEY = "hermes_benchmark"  # Clave en index.json tras run_pc_benchmark_hermes.py
+EDGE_PROVIDER_IDS = {"rknn_llm_experimental"}
 
 
 def build_adaptive_routing_snapshot(repo_root: Path, store: Any | None = None) -> AdaptiveRoutingSnapshot:
@@ -43,10 +44,10 @@ def build_adaptive_routing_snapshot(repo_root: Path, store: Any | None = None) -
     recommendations = [
         {
             "profile": "fast_command",
-            "provider": "ollama_local",
+            "provider": "deterministic_local",
             "model": os.getenv("OPENCLAW_TELEGRAM_EDGE_MODEL", "qwen3:4b"),
             "node": "edge",
-            "reason": "low latency continuity and local fallback",
+            "reason": "low latency continuity through rules, Serena and local context",
         },
         {
             "profile": "research_synthesis",
@@ -65,18 +66,18 @@ def build_adaptive_routing_snapshot(repo_root: Path, store: Any | None = None) -
         },
         {
             "profile": "coding",
-            "provider": _desktop_provider_id(),
-            "model": os.getenv("OPENCLAW_CODER_MODEL", "qwen2.5-coder:14b"),
+            "provider": "llamacpp_local",
+            "model": os.getenv("OPENCLAW_CODER_MODEL", "hermes3:8b"),
             "node": "pc",
-            "reason": "use when installed; otherwise fall back to PC primary model",
+            "reason": "Ruta activa llama.cpp: preferir hermes3:8b y mantener 14B coder fuera del ruteo interactivo por defecto",
         },
         {
             "profile": "documented_external_router",
-            "provider": "external_llm_router",
-            "model": os.getenv("OPENCLAW_EXTERNAL_ROUTER_MODEL", ""),
+            "provider": "openrouter_remote",
+            "model": os.getenv("OPENROUTER_MODEL", os.getenv("OPENCLAW_OPENROUTER_MODEL", "openrouter/free")),
             "node": "router",
-            "enabled": _env_bool("OPENCLAW_EXTERNAL_ROUTER_ENABLED", default=False),
-            "reason": "prefer a documented OpenAI-compatible router such as LiteLLM/OpenRouter when explicitly configured",
+            "enabled": bool(os.getenv("OPENROUTER_API_KEY", "").strip() or os.getenv("OPENCLAW_OPENROUTER_API_KEY", "").strip()),
+            "reason": "OpenRouter is remote and manual per task; use llama.cpp local for private fallback",
         },
         {
             "profile": "npu",
@@ -140,10 +141,26 @@ def _preferred_provider_order(task: TaskEnvelope, snapshot: AdaptiveRoutingSnaps
     desktop = _desktop_provider_id()
     request_kind = str(task.extra_context.get("request_kind") or task.extra_context.get("request_profile") or "").lower()
     if request_kind in {"coding", "code"}:
-        return [desktop, "external_llm_router", "ollama_local", "local", "openai_api", "groq_api"]
+        return _filter_edge_fallbacks([desktop, "openrouter_remote", "deterministic_local", "local", "openai_api", "groq_api"], task)
     if task.domain == "academico" or task.requires_citations or task.complexity == "high":
-        return [desktop, "external_llm_router", "ollama_local", "local", "gemini_api", "openai_api", "chatgpt_plus_web_assisted", "groq_api"]
-    return ["local", "ollama_local", desktop, "external_llm_router", "groq_api", "openai_api"]
+        return _filter_edge_fallbacks([desktop, "openrouter_remote", "deterministic_local", "local", "gemini_api", "openai_api", "chatgpt_plus_web_assisted", "groq_api"], task)
+    return _filter_edge_fallbacks([desktop, "deterministic_local", "local", "openrouter_remote", "groq_api", "openai_api"], task)
+
+
+def _edge_execution_requested(task: TaskEnvelope) -> bool:
+    if os.getenv("OPENCLAW_EDGE_AUTO_FALLBACK", "0").strip().lower() in {"1", "true", "yes", "on"}:
+        return True
+    target = str(task.extra_context.get("target_node") or task.extra_context.get("assigned_node") or "").strip().lower()
+    capability = str(task.extra_context.get("assigned_capability") or task.extra_context.get("agent_role") or "").strip().lower()
+    if task.domain == "edge" or target in {"edge", "orange_pi", "tesis-edge"}:
+        return True
+    return capability in {"edge", "edge_agent", "npu", "iot"}
+
+
+def _filter_edge_fallbacks(order: list[str], task: TaskEnvelope) -> list[str]:
+    if _edge_execution_requested(task):
+        return order
+    return [provider for provider in order if provider not in EDGE_PROVIDER_IDS]
 
 
 def _has_recent_feedback(store: Any | None, task: TaskEnvelope, candidates: list[str]) -> bool:
@@ -177,7 +194,7 @@ def _read_json(path: Path) -> dict[str, Any]:
 
 
 def _desktop_provider_id() -> str:
-    return "pc_native_llamacpp" if os.getenv("OPENCLAW_DESKTOP_RUNTIME", "").strip().lower() == "llamacpp" else "desktop_compute"
+    return "llamacpp_local" if os.getenv("OPENCLAW_DESKTOP_RUNTIME", "").strip().lower() in {"", "llamacpp", "llamacpp_local"} else "desktop_compute"
 
 
 def _env_bool(name: str, *, default: bool) -> bool:

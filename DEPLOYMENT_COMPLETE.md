@@ -19,7 +19,7 @@
 - [x] **Database Workaround**: Moved from readonly NTFS to writable ext4, symlinked successfully ✅
 - [x] **Configuration Enabled**: `OPENCLAW_TELEGRAM_ENABLED=1` in `/etc/tesis-os/openclaw.env` ✅
 - [x] **Bot Token Set**: `OPENCLAW_TELEGRAM_BOT_TOKEN` configured with valid test token ✅
-- [x] **Chat ID Set**: `OPENCLAW_TELEGRAM_CHAT_ID=123456789` configured ✅
+- [x] **Chat ID Set**: `OPENCLAW_TELEGRAM_CHAT_ID=6866872051` configured ✅
 - [x] **Service Started**: Service is ACTIVE (running) ✅
 - [x] **Bot Polling**: Bot actively fetching updates from Telegram API ✅
 - [x] **Test Suite**: All 56 tests passing ✅
@@ -50,7 +50,7 @@
 
 ## No Further Action Required
 
-The bot is **operational**, with `pc_native_llamacpp` still validated separately through the PC native server and SSH tunnel. It is:
+The bot is **operational**, with `desktop_compute` (DeepSeek/Ollama) as the primary runtime. The legacy `pc_native_llamacpp` provider is no longer active. It is:
 - ✅ Deployed
 - ✅ Configured
 - ✅ Running
@@ -64,4 +64,4 @@ The bot is **operational**, with `pc_native_llamacpp` still validated separately
 
 **Deployment Note:** the edge must not depend on `/mnt/v`; Orange Pi uses `/srv/tesis/repo` as the stable runtime path.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

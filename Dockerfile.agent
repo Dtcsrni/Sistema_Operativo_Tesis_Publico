@@ -1,19 +1,47 @@
 # ==========================================
-# Dockerfile para OpenClaw Agent (Inteligencia)
+# Dockerfile.agent — OpenClaw Intelligence Hub
+# Multi-stage: deps → runtime
+# Contexto mínimo: runtime/openclaw/ + config/ + 07_scripts/ops/
 # ==========================================
+
+# ── Stage 1: Instalación de deps Python + descarga de Playwright ─
+FROM python:3.12-slim AS python-deps
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers
+
+WORKDIR /build
+
+# Solo los manifests de deps — Docker cachea esta capa hasta que cambien los .txt
+COPY runtime/openclaw/requirements-web.txt requirements-web.txt
+COPY requirements-agent.txt requirements-agent.txt
+
+# Instalar en venv aislado (pip cache y egg-info NO llegan a la imagen final)
+RUN python -m venv /opt/venv && \
+    /opt/venv/bin/pip install --no-cache-dir --upgrade pip && \
+    /opt/venv/bin/pip install --no-cache-dir \
+        -r requirements-web.txt \
+        -r requirements-agent.txt
+
+# Descargar Playwright Chromium en path fijo (portable entre stages)
+ENV PATH="/opt/venv/bin:$PATH"
+RUN playwright install chromium
+
+# ── Stage 2: Runtime mínimo ──────────────────────────────────────
 FROM python:3.12-slim
 
-# Evitar generación de .pyc y habilitar logs en tiempo real
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+LABEL maintainer="Erick Renato Vega Ceron" \
+      project="OpenClaw-Agent"
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PATH="/opt/venv/bin:$PATH" \
+    PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers
 
 WORKDIR /app
 
-# Instalar dependencias del sistema necesarias para:
-# - git: Auditoría e integridad
-# - ffmpeg: Procesamiento de audio (Telegram voice)
-# - libgl1: OpenCV/Image processing si se usa
-# - Dependencias de Playwright (navegador)
+# Dependencias del sistema en runtime (Playwright, audio, git para auditoría)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     ffmpeg \
@@ -35,34 +63,33 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcairo2 \
     && rm -rf /var/lib/apt/lists/*
 
-# Crear usuario no-root para seguridad
-RUN useradd -m -u 1000 appuser && \
-    chown -R appuser:appuser /app
+# Usuario no-root para seguridad
+RUN useradd -m -u 1000 appuser
 
-# Copiar archivos de dependencias primero para cachear capas
-COPY --chown=appuser:appuser runtime/openclaw/requirements-web.txt .
-RUN pip install --no-cache-dir -r requirements-web.txt && \
-    pip install --no-cache-dir \
-    python-dotenv \
-    pyyaml \
-    python-telegram-bot \
-    matrix-nio \
-    requests \
-    httpx \
-    pytest
+# Copiar venv y browsers desde el stage builder (sin pip cache ni build artifacts)
+COPY --from=python-deps /opt/venv /opt/venv
+COPY --from=python-deps /opt/pw-browsers /opt/pw-browsers
 
-# Instalar Playwright y sus navegadores (solo chromium para ahorrar espacio)
-RUN playwright install chromium
+# ─── Copias quirúrgicas: solo lo que el agente necesita ──────────
+# Módulo principal del agente
+COPY --chown=appuser:appuser runtime/openclaw/openclaw_local /app/openclaw_local
 
-# Copiar el resto del código
-# En compose usaremos volúmenes para desarrollo, pero esto asegura una imagen funcional
-COPY --chown=appuser:appuser . .
+# Paquete openclaw completo (engine, requirements, etc.)
+COPY --chown=appuser:appuser runtime/openclaw /app/runtime/openclaw
+
+# Configuración de entorno (sin secrets; .env se monta en runtime vía compose)
+COPY --chown=appuser:appuser config /app/config
+
+# Scripts ops que el agente puede invocar en ejecución
+COPY --chown=appuser:appuser 07_scripts/ops /app/07_scripts/ops
+
+# Manifiestos de configuración (proveedores, registro de herramientas)
+COPY --chown=appuser:appuser manifests /app/manifests
 
 USER appuser
 
-# Metadata de salud del contenedor (verifica si el bot está vivo)
+# Salud del contenedor: verifica que el token esté inyectado
 HEALTHCHECK --interval=60s --timeout=10s --start-period=30s \
   CMD python -c "import os; exit(0 if os.getenv('OPENCLAW_TELEGRAM_BOT_TOKEN') else 1)"
 
-# Comando por defecto para el Agente (Hub de Inteligencia)
 CMD ["python", "-m", "runtime.openclaw.openclaw_local.telegram_bot"]

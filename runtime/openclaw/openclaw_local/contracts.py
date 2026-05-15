@@ -41,6 +41,8 @@ class ProviderDecision:
     fallback_chain: list[str]
     reason: str
     reasoning_quality: str = "basic"
+    knowledge_context_status: str = "not_requested"
+    agentic_capability: bool = False
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -106,6 +108,90 @@ class DomainSecretPolicy:
 
 
 @dataclass(slots=True)
+class AgentProfile:
+    profile_id: str
+    name: str
+    role: str
+    description: str
+    is_orchestrator: bool = False
+    allowed_tools: list[str] = field(default_factory=list)
+    allowed_memory_types: list[str] = field(default_factory=list)
+    preferred_provider: str = "llamacpp_local"
+    fallback_providers: list[str] = field(default_factory=list)
+    max_context_tokens: int = 8192
+    requires_human_gate_for_mutation: bool = True
+    prompt_policy: str = "versioned_local_adaptive"
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(slots=True)
+class ProviderPolicy:
+    provider_id: str
+    mode: str
+    privacy_classes: list[str]
+    quota_policy: dict[str, Any] = field(default_factory=dict)
+    fallback_chain: list[str] = field(default_factory=list)
+    requires_manual_approval: bool = False
+    supports_tool_calling: bool = False
+    supports_json_schema: bool = False
+    cost_policy: str = "estimated"
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(slots=True)
+class ContextPacket:
+    packet_id: str
+    objective: str
+    sensitivity: str
+    source_refs: list[str]
+    summary: str
+    chunks: list[dict[str, Any]] = field(default_factory=list)
+    token_budget: int = 4096
+    allowed_providers: list[str] = field(default_factory=list)
+    blocked_reason: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(slots=True)
+class LearningEvent:
+    event_id: str
+    scope: str
+    target: str
+    proposed_change: dict[str, Any]
+    evidence: dict[str, Any]
+    status: str = "proposed"
+    reversible: bool = True
+    requires_human_gate: bool = False
+    created_at: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(slots=True)
+class MemoryRecord:
+    memory_id: str
+    memory_type: str
+    sensitivity: str
+    source: str
+    content: str
+    content_hash: str
+    ttl_seconds: int
+    allowed_roles: list[str] = field(default_factory=list)
+    allowed_providers: list[str] = field(default_factory=list)
+    created_at: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(slots=True)
 class LiteratureRecord:
     record_id: str
     tema: str
@@ -151,6 +237,24 @@ class WritingDraft:
 
 
 @dataclass(slots=True)
+class PETBundle:
+    """Paquete de Evidencia Trazable ingestado de sistemas externos."""
+    bundle_id: str
+    package_id: str  # Identificador del sistema que lo generó
+    title: str
+    source_system: str
+    source_timestamp: str
+    content_literal: str  # Fragmentos con HASH_SHA256
+    claims_matrix_csv: str  # Matriz de claims auditados
+    decisions_log_md: str  # Bitácora de decisiones
+    integrity_hash: str  # SHA-256 del bundle completo
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(slots=True)
 class AcademicWorkPacket:
     packet_id: str
     task_id: str
@@ -164,6 +268,7 @@ class AcademicWorkPacket:
     traceability_links: list[str] = field(default_factory=list)
     writing_draft: WritingDraft | None = None
     summary: str = ""
+    ingested_pet_bundle_ids: list[str] = field(default_factory=list)  # Referencias a PET ingestados
 
     def to_dict(self) -> dict[str, Any]:
         payload = asdict(self)
@@ -441,6 +546,27 @@ class AdaptiveRoutingSnapshot:
     recommendations: list[dict[str, Any]]
     warnings: list[str]
     payload: dict[str, Any]
+    created_at: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(slots=True)
+class MaestroRouteDecision:
+    route_id: str
+    session_id: str
+    intent: str
+    risk_level: str
+    selected_provider: str
+    selected_model: str
+    node: str
+    confidence: float
+    evidence_refs: list[str]
+    fallback_chain: list[str]
+    telemetry_required: bool
+    decision_reason: str
+    agentic_capability: bool
     created_at: str
 
     def to_dict(self) -> dict[str, Any]:

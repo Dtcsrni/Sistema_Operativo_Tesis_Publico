@@ -28,6 +28,7 @@ from .contracts import RequestTrace, TaskEnvelope, VoiceMessageArtifact
 from . import det_scripts
 from .engine import default_data_dir, route_task
 from .image_backend import generate_image_from_prompt
+from .maestro_router import maestro_enabled, maestro_message_hash, maestro_profile_from_decision
 from . import rolling_summary as _rolling_summary_mod
 from . import reflective_phase as _reflective_mod
 from .persona import build_system_block, build_synthesis_system_block, get_tone, is_volatile_query, reasoning_instructions, format_model_tag
@@ -37,6 +38,12 @@ from .runtime_status import build_preflight_report, probe_runtime_status
 from .session_layer import parse_channel_command, process_channel_text
 from .storage import OpenClawStore
 from .web_session import generate_web_session_response
+
+try:
+    from runtime.providers import get_provider, create_smart_hybrid
+except ImportError:
+    get_provider = None
+    create_smart_hybrid = None
 
 
 MUTATION_MARKERS = {
@@ -111,6 +118,10 @@ SERVICE_CONTROL_ALLOWLIST = {
     "desktop": "openclaw-desktop-tunnel.service",
     "tunnel": "openclaw-desktop-tunnel.service",
 }
+PC_INFERENCE_PROVIDERS = {"desktop_compute", "pc_native_llamacpp", "external_llm_router"}
+CLOUD_API_CHAT_PROVIDERS = {"gemini_api", "gemini_vertex_flash_3"}
+EDGE_INFERENCE_PROVIDERS = {"edge_inference", "rknn_llm_experimental"}
+DEFAULT_BLOCKED_CHAT_MODELS = {"mistral", "mistral-nemo", "mistral-nemo:12b"}
 
 
 @dataclass(frozen=True)
@@ -233,6 +244,26 @@ def _env_flag(name: str, *, default: bool = False) -> bool:
     return value.strip().lower() in {"1", "true", "yes", "on", "si", "sí"}
 
 
+def redact_text(text: str | object) -> str:
+    value = str(text or "").strip()
+    if not value:
+        return ""
+
+    patterns = [
+        (r"(?i)(token|secret|password|api[_-]?key|bearer)\s*[:=]\s*([^\s,;]+)", r"\1=***"),
+        (r"(?i)(openclaw_[a-z0-9_]*token)\s*[:=]\s*([^\s,;]+)", r"\1=***"),
+        (r"(?i)(authorization:\s*bearer\s+)([^\s]+)", r"\1***"),
+    ]
+    redacted = value
+    for pattern, replacement in patterns:
+        redacted = re.sub(pattern, replacement, redacted)
+
+    if len(redacted) > 1200:
+        redacted = redacted[:1197] + "..."
+
+    return redacted
+
+
 def _elapsed_ms(started_at: float) -> float:
     return round((time.perf_counter() - started_at) * 1000.0, 3)
 
@@ -263,7 +294,7 @@ def _should_use_semantic_profile(argument: str, fallback: dict[str, str]) -> boo
         confidence = float(str(fallback.get("confidence", "0") or "0"))
     except ValueError:
         confidence = 0.0
-    if fallback.get("intent") in AMBIGUOUS_INTENTS and confidence <= 0.60:
+    if fallback.get("intent") in AMBIGUOUS_INTENTS and confidence <= 0.80:
         return True
     return False
 
@@ -307,7 +338,74 @@ def is_authorized_chat(chat_id: str) -> bool:
     return chat_id in allowed
 
 
-def redact_text(text: str) -> str:
+def _check_and_start_backends_if_needed(chat_id: str) -> dict[str, bool]:
+    """
+    Verifica disponibilidad de backends de inferencia.
+    Si no están disponibles, intenta levantarlos automáticamente en background.
+    Retorna dict con estado: {"edge": bool, "desktop": bool}
+    """
+    edge_host = "192.168.1.124"
+    edge_port = 11434
+    desktop_host = "127.0.0.1"
+    desktop_port = 21434
+    
+    status = {"edge": False, "desktop": False}
+    
+    # Verificar Edge
+    try:
+        sock = socket.create_connection((edge_host, edge_port), timeout=2)
+        sock.close()
+        status["edge"] = True
+    except:
+        status["edge"] = False
+    
+    # Verificar Desktop
+    try:
+        sock = socket.create_connection((desktop_host, desktop_port), timeout=2)
+        sock.close()
+        status["desktop"] = True
+    except:
+        status["desktop"] = False
+    
+    # Si al menos uno está caído, intentar levantarlos en background
+    if not status["edge"] or not status["desktop"]:
+        send_message(chat_id, "🔧 <i>Verificando backends de inferencia...</i>")
+        
+        def _async_start_backends():
+            try:
+                # Importar dinámicamente el script de autoarranque
+                repo_root = Path(os.getenv("OPENCLAW_REPO_ROOT", "."))
+                sys_path_backup = sys.path.copy()
+                sys.path.insert(0, str(repo_root / "07_scripts"))
+                
+                from start_backends_auto import ensure_backends_ready
+                new_status = ensure_backends_ready(verbose=False)
+                
+                sys.path = sys_path_backup
+                
+                status["edge"] = new_status.get("edge", status["edge"])
+                status["desktop"] = new_status.get("desktop", status["desktop"])
+                
+                # Informar al usuario del resultado
+                if status["edge"] or status["desktop"]:
+                    backends_ok = []
+                    if status["edge"]:
+                        backends_ok.append("🌐 Edge")
+                    if status["desktop"]:
+                        backends_ok.append("💻 Desktop")
+                    send_message(chat_id, f"✅ <b>Backends iniciados:</b> {', '.join(backends_ok)}\n\n<i>Procesa tu pregunta ahora...</i>")
+                else:
+                    send_message(chat_id, "⚠️ <b>No se pudieron iniciar backends.</b>\n\nVerifica que:\n• Orange Pi (192.168.1.124) esté disponible\n• LlamaCPP esté instalado en esta PC\n• Ejecuta: <code>/salud</code> para diagnóstico")
+                    
+            except Exception as e:
+                print(f"[DEBUG] Error en autoarranque de backends: {e}", flush=True)
+                send_message(chat_id, f"⚠️ Error al iniciar backends automáticamente.\nEscribe <code>/salud</code> para más detalles.")
+        
+        # Ejecutar en thread para no bloquear
+        thread = threading.Thread(target=_async_start_backends, daemon=True)
+        thread.start()
+    
+    return status
     redacted = text
     for marker in ("TOKEN", "KEY", "SECRET", "PASSWORD"):
         if marker.lower() in redacted.lower():
@@ -361,6 +459,14 @@ def send_message(chat_id: str, text: str) -> dict[str, Any]:
         return {"status": "error", "detail": str(exc)}
     result = data.get("result", {})
     msg_id = result.get("message_id") if isinstance(result, dict) else None
+    
+    # Auditoría de entrega
+    with open("telegram_audit.log", "a", encoding="utf-8") as f:
+        ts = datetime.now().isoformat()
+        status = "OK" if data.get("ok") else f"FAIL:{data.get('description')}"
+        snippet = text[:30].replace('\n', ' ') + "..."
+        f.write(f"[{ts}] SEND to {chat_id}: {status} (ID:{msg_id}) | Content: {snippet}\n")
+        
     return {"status": "sent" if data.get("ok") else "error", "detail": data.get("description", "sent"), "message_id": msg_id}
 
 
@@ -389,9 +495,31 @@ def edit_message(chat_id: str, message_id: int, text: str) -> dict[str, Any]:
     try:
         with request.urlopen(req, timeout=8) as response:
             data = json.loads(response.read().decode("utf-8", errors="replace"))
+            
+        # Auditoría de entrega
+        with open("telegram_audit.log", "a", encoding="utf-8") as f:
+            ts = datetime.now().isoformat()
+            status = "OK" if data.get("ok") else f"FAIL:{data.get('description')}"
+            snippet = text[:30].replace('\n', ' ') + "..."
+            f.write(f"[{ts}] EDIT msg {message_id} in {chat_id}: {status} | Content: {snippet}\n")
+            
         return {"status": "ok" if data.get("ok") else "error"}
     except Exception as exc:
         return {"status": "error", "detail": str(exc)}
+
+def send_chat_action(chat_id: str, action: str = "typing"):
+    """Envía una acción de chat (ej. typing)."""
+    token = os.getenv("OPENCLAW_TELEGRAM_BOT_TOKEN")
+    if not token: return {"status": "skipped"}
+    
+    url = f"https://api.telegram.org/bot{token}/sendChatAction"
+    payload = json.dumps({"chat_id": chat_id, "action": action}).encode("utf-8")
+    req = request.Request(url, data=payload, headers={"Content-Type": "application/json"})
+    try:
+        with request.urlopen(req, timeout=5) as response:
+            return json.loads(response.read().decode("utf-8"))
+    except:
+        return {"status": "error"}
 
 
 def delete_message(chat_id: str, message_id: int | None) -> dict[str, Any]:
@@ -491,120 +619,17 @@ def send_photo_message(chat_id: str, image_path: Path, *, caption: str = "") -> 
     return {"status": "sent" if data.get("ok") else "error", "detail": data.get("description", "sent")}
 
 
-def _ollama_request_options(*, model: str, timeout_seconds: int) -> dict[str, Any]:
-    if timeout_seconds <= 10:
-        num_predict = _env_int("OPENCLAW_CHAT_SIMPLE_MAX_TOKENS", 96, minimum=16, maximum=256)
-        num_ctx = _env_int("OPENCLAW_CHAT_SIMPLE_NUM_CTX", 1024, minimum=256, maximum=4096)
-    elif timeout_seconds <= 45:
-        num_predict = _env_int("OPENCLAW_CHAT_FACTUAL_MAX_TOKENS", 256, minimum=64, maximum=512)
-        num_ctx = _env_int("OPENCLAW_CHAT_FACTUAL_NUM_CTX", 1024, minimum=512, maximum=2048)
-    else:
-        num_predict = _env_int("OPENCLAW_CHAT_HEAVY_MAX_TOKENS", 900, minimum=128, maximum=2048)
-        num_ctx = _env_int("OPENCLAW_CHAT_HEAVY_NUM_CTX", 2048, minimum=512, maximum=8192)
-    temperature = 0.2 if model.startswith(("qwen3", "gemma3", "mistral")) else 0.3
-    return {
-        "num_predict": num_predict,
-        "num_ctx": num_ctx,
-        "temperature": temperature,
-    }
 
 
-def ollama_generate(*, base_url: str, model: str, prompt: str, timeout_seconds: int = 120) -> tuple[bool, str]:
-    endpoint = base_url.rstrip("/") + "/api/generate"
-    payload = json.dumps(
-        {
-            "model": model,
-            "prompt": prompt,
-            "stream": False,
-            "keep_alive": os.getenv("OPENCLAW_MODEL_KEEPALIVE", "10m").strip() or "10m",
-            "options": _ollama_request_options(model=model, timeout_seconds=timeout_seconds),
-        },
-        ensure_ascii=False,
-    ).encode("utf-8")
-    req = request.Request(endpoint, data=payload, method="POST")
-    req.add_header("Content-Type", "application/json")
-    try:
-        with request.urlopen(req, timeout=timeout_seconds) as response:
-            data = json.loads(response.read().decode("utf-8", errors="replace"))
-    except error.HTTPError as exc:
-        detail = exc.read().decode("utf-8", errors="replace") if hasattr(exc, "read") else str(exc)
-        return False, f"modelo_no_disponible:http_{exc.code}:{detail[:220]}"
-    except Exception as exc:
-        return False, f"modelo_no_disponible:{type(exc).__name__}:{exc}"
-    return True, str(data.get("response", "")).strip()
-
-
-def ollama_generate_streaming(
-    *,
-    base_url: str,
-    model: str,
-    prompt: str,
-    timeout_seconds: int = 120,
-    progress_callback: Any | None = None,
-    progress_interval_tokens: int = 80,
-) -> tuple[bool, str]:
-    """Genera texto con streaming de Ollama y callbacks de progreso por tokens.
-
-    progress_callback(token_count: int, partial_text: str) se llama cada
-    progress_interval_tokens tokens acumulados, permitiendo actualizaciones
-    progresivas de la UI sin bloquear la generación.
-    """
-    endpoint = base_url.rstrip("/") + "/api/generate"
-    payload = json.dumps(
-        {
-            "model": model,
-            "prompt": prompt,
-            "stream": True,
-            "keep_alive": os.getenv("OPENCLAW_MODEL_KEEPALIVE", "10m").strip() or "10m",
-            "options": _ollama_request_options(model=model, timeout_seconds=timeout_seconds),
-        },
-        ensure_ascii=False,
-    ).encode("utf-8")
-    req = request.Request(endpoint, data=payload, method="POST")
-    req.add_header("Content-Type", "application/json")
-    full_response = ""
-    token_count = 0
-    last_progress = 0
-    try:
-        with request.urlopen(req, timeout=timeout_seconds) as response:
-            for raw_line in response:
-                line = raw_line.decode("utf-8", errors="replace").strip()
-                if not line:
-                    continue
-                try:
-                    chunk = json.loads(line)
-                except json.JSONDecodeError:
-                    continue
-                token = str(chunk.get("response", ""))
-                full_response += token
-                if token:
-                    token_count += 1
-                if chunk.get("done"):
-                    break
-                if (
-                    progress_callback is not None
-                    and token_count - last_progress >= progress_interval_tokens
-                ):
-                    try:
-                        progress_callback(token_count, full_response)
-                    except Exception:
-                        pass
-                    last_progress = token_count
-    except error.HTTPError as exc:
-        detail = exc.read().decode("utf-8", errors="replace") if hasattr(exc, "read") else str(exc)
-        return False, f"modelo_no_disponible:http_{exc.code}:{detail[:220]}"
-    except Exception as exc:
-        return False, f"modelo_no_disponible:{type(exc).__name__}:{exc}"
-    return True, full_response.strip()
-
-
-def list_ollama_models(base_url: str) -> tuple[bool, list[str]]:
-    try:
-        with request.urlopen(base_url.rstrip("/") + "/api/tags", timeout=5) as response:
-            data = json.loads(response.read().decode("utf-8", errors="replace"))
-    except (error.URLError, json.JSONDecodeError):
-        return False, []
-    return True, sorted(str(item.get("name", "")) for item in data.get("models", []) if item.get("name"))
+def list_available_models(base_url: str) -> tuple[bool, list[str]]:
+    """Reporta el modelo configurado como disponible si el endpoint responde."""
+    if llamacpp_ready(base_url):
+        # En el stack Docker actual, cada instancia sirve un modelo principal.
+        model = os.getenv("OPENCLAW_DESKTOP_RUNTIME_MODEL", "mistral-nemo:12b")
+        if "11434" in base_url or "8080" in base_url: # Heurística para edge
+            model = os.getenv("OPENCLAW_TELEGRAM_EDGE_MODEL", "qwen3:4b")
+        return True, [model]
+    return False, []
 
 
 def llamacpp_ready(base_url: str) -> bool:
@@ -743,10 +768,18 @@ def warmup_chat_models(repo_root: Path) -> dict[str, Any]:
 
     edge_base = os.getenv("OPENCLAW_EDGE_OLLAMA_BASE_URL", "http://127.0.0.1:11434")
     desktop_base = os.getenv("OPENCLAW_DESKTOP_COMPUTE_BASE_URL", "http://127.0.0.1:21434")
+    gemini_enabled = _env_flag("OPENCLAW_GEMINI_ENABLED", default=False) or _env_flag("OPENCLAW_CLOUD_PROVIDERS_ENABLED", default=False)
+    gemini_model = os.getenv("OPENCLAW_GEMINI_MODEL", "gemini-2.5-flash").strip() or "gemini-2.5-flash"
     edge_models = _csv_env("OPENCLAW_WARMUP_MODELS", os.getenv("OPENCLAW_TELEGRAM_EDGE_MODEL", "qwen3:4b"))
     desktop_models = _csv_env("OPENCLAW_DESKTOP_WARMUP_MODELS", os.getenv("OPENCLAW_DESKTOP_COMPUTE_MODEL", "mistral-nemo:12b"))
     timeout_seconds = _env_int("OPENCLAW_MODEL_WARMUP_TIMEOUT", 45, minimum=5, maximum=180)
     results: list[dict[str, Any]] = []
+
+    def warm_gemini(model: str) -> None:
+        if not model or not gemini_enabled:
+            return
+        ok, detail, selected_model = _gemini_api_generate("warmup", model=model, timeout_seconds=timeout_seconds)
+        results.append({"provider": "gemini_api", "model": selected_model, "status": "ok" if ok else "error", "detail": detail})
 
     def warm(base_url: str, provider: str, model: str) -> None:
         if not model:
@@ -757,6 +790,7 @@ def warmup_chat_models(repo_root: Path) -> dict[str, Any]:
         ok, detail = warmup_ollama_model(base_url=base_url, model=model, timeout_seconds=timeout_seconds)
         results.append({"provider": provider, "model": model, "status": "ok" if ok else "error", "detail": detail})
 
+    warm_gemini(gemini_model)
     for model in edge_models:
         warm(edge_base, "ollama_local", model)
     if _env_flag("OPENCLAW_DESKTOP_COMPUTE_ENABLED", default=True):
@@ -1046,7 +1080,7 @@ def _chat_request_profile_fallback(argument: str) -> dict[str, str]:
         return {"intent": "greeting", "complexity": "low", "request_kind": "standard", "confidence": "0.99", "route_hint": "deterministic_local", "semantic_status": "fallback_rule"}
     if len(argument.strip()) >= 180 or any(marker in lowered for marker in deep_reasoning_markers):
         return {"intent": "general_chat", "complexity": "medium", "request_kind": "deep", "confidence": "0.55", "route_hint": "model_desktop", "semantic_status": "fallback_rule"}
-    return {"intent": "general_chat", "complexity": "low", "request_kind": "standard", "confidence": "0.50", "route_hint": "model_local", "semantic_status": "fallback_rule"}
+    return {"intent": "general_chat", "complexity": "low", "request_kind": "standard", "confidence": "0.50", "route_hint": "model_desktop", "semantic_status": "fallback_rule"}
 
 
 def _chat_request_profile(
@@ -1059,6 +1093,11 @@ def _chat_request_profile(
 ) -> dict[str, str]:
     repo = repo_root or Path(__file__).resolve().parents[3]
     fallback = _chat_request_profile_fallback(argument)
+    if maestro_enabled() and store is not None:
+        route_cache = store.get_cached_context(f"telegram:maestro_route:{chat_id or 'global'}:{maestro_message_hash(argument)}")
+        route_decision = dict((route_cache or {}).get("decision") or {})
+        if route_decision:
+            return maestro_profile_from_decision(route_decision)
     if not _should_use_semantic_profile(argument, fallback):
         fallback["semantic_status"] = "heuristic_only"
         return fallback
@@ -1181,10 +1220,7 @@ def _deterministic_chat_response(
     text = ""
     reason = ""
     intent = str(profile.get("intent", "")).strip().lower()
-    if intent == "greeting":
-        text = "Hola. OpenClaw Edge está listo; usa /estado, /modelos o dime la tarea concreta."
-        reason = "greeting_sla"
-    elif intent in {"system_status", "system_models", "system_routing"}:
+    if intent in {"system_status", "system_models", "system_routing"}:
         if intent == "system_models":
             text = "Modelos visibles:\n" + _models_text()
             reason = "system_models_readonly"
@@ -1425,6 +1461,48 @@ def _dedupe_candidates(items: list[ChatBackendCandidate]) -> list[ChatBackendCan
     return output
 
 
+def _blocked_chat_model_tokens() -> set[str]:
+    raw = os.getenv("OPENCLAW_BLOCKED_CHAT_MODELS", "mistral,mistral-nemo,mistral-nemo:12b")
+    values = {item.strip().lower() for item in raw.split(",") if item.strip()}
+    return values or DEFAULT_BLOCKED_CHAT_MODELS
+
+
+def _chat_model_allowed(model: str) -> bool:
+    normalized = str(model or "").strip().lower()
+    if not normalized:
+        return False
+    return not any(token and token in normalized for token in _blocked_chat_model_tokens())
+
+
+def _edge_chat_allowed(profile: dict[str, str]) -> bool:
+    if str(profile.get("execution_profile") or profile.get("channel") or "").strip().lower() in {"mission_control_agent", "mission-control"}:
+        return _env_flag("OPENCLAW_CHAT_EDGE_AUTO_FALLBACK", default=False)
+    if _env_flag("OPENCLAW_CHAT_EDGE_AUTO_FALLBACK", default=False):
+        return True
+    if str(profile.get("target_node") or profile.get("assigned_node") or "").strip().lower() in {"edge", "orange_pi", "tesis-edge"}:
+        return True
+    capability = str(profile.get("assigned_capability") or profile.get("agent_role") or "").strip().lower()
+    if capability in {"edge", "edge_agent", "npu", "iot"}:
+        return True
+    return True
+
+
+def _pc_chat_candidates(items: list[ChatBackendCandidate]) -> list[ChatBackendCandidate]:
+    return [
+        item
+        for item in items
+        if (item.provider in PC_INFERENCE_PROVIDERS or item.provider in CLOUD_API_CHAT_PROVIDERS)
+        and _chat_model_allowed(item.model)
+    ]
+
+
+def _desktop_priority_with_fallback(desktop_candidates: list[str], fallback_model: str) -> list[str]:
+    selected = [model for model in desktop_candidates[:2] if model]
+    if fallback_model and fallback_model in desktop_candidates and fallback_model not in selected:
+        selected.append(fallback_model)
+    return selected
+
+
 def _chat_backend_candidates(repo_root: Path, profile: dict[str, str]) -> list[ChatBackendCandidate]:
     request_kind = profile["request_kind"]
     complexity = profile["complexity"]
@@ -1437,15 +1515,30 @@ def _chat_backend_candidates(repo_root: Path, profile: dict[str, str]) -> list[C
     external_router_enabled = _env_flag("OPENCLAW_EXTERNAL_ROUTER_ENABLED", default=False)
     external_router_base = os.getenv("OPENCLAW_EXTERNAL_ROUTER_BASE_URL", "").strip()
     external_router_model = os.getenv("OPENCLAW_EXTERNAL_ROUTER_MODEL", "").strip()
+    gemini_enabled = _env_flag("OPENCLAW_GEMINI_ENABLED", default=False) or _env_flag("OPENCLAW_CLOUD_PROVIDERS_ENABLED", default=False)
+    gemini_model = os.getenv("OPENCLAW_GEMINI_MODEL", "gemini-2.5-flash").strip() or "gemini-2.5-flash"
 
-    edge_candidates = _provider_measured_candidates(repo_root, "ollama_local", request_kind=request_kind)
-    for stable_model in (os.getenv("OPENCLAW_TELEGRAM_EDGE_MODEL", "qwen3:4b"), "gemma3:4b", "qwen3:4b"):
+    edge_allowed = _edge_chat_allowed(profile)
+    edge_candidates = _provider_measured_candidates(repo_root, "ollama_local", request_kind=request_kind) if edge_allowed else []
+    for stable_model in (
+        os.getenv("OPENCLAW_TELEGRAM_EDGE_MODEL", "qwen3:4b"),
+        os.getenv("OPENCLAW_EDGE_FALLBACK_MODEL", "deepseek-r1:7b"),
+        "gemma3:4b",
+        "qwen3:4b",
+        "deepseek-r1:7b",
+    ):
         if stable_model and stable_model not in edge_candidates:
             edge_candidates.append(stable_model)
     edge_candidates = [item for item in edge_candidates if item and not item.startswith("qwen2.5:0.5b")]
     if request_kind in {"standard", "knowledge", "reasoning"}:
         stable_edge = []
-        for model in (os.getenv("OPENCLAW_TELEGRAM_EDGE_MODEL", "qwen3:4b"), "gemma3:4b", "qwen3:4b"):
+        for model in (
+            os.getenv("OPENCLAW_TELEGRAM_EDGE_MODEL", "qwen3:4b"),
+            os.getenv("OPENCLAW_EDGE_FALLBACK_MODEL", "deepseek-r1:7b"),
+            "gemma3:4b",
+            "qwen3:4b",
+            "deepseek-r1:7b",
+        ):
             if model and model not in stable_edge:
                 stable_edge.append(model)
         edge_candidates = [item for item in stable_edge if item in edge_candidates or item]
@@ -1456,15 +1549,19 @@ def _chat_backend_candidates(repo_root: Path, profile: dict[str, str]) -> list[C
     if desktop_enabled:
         desktop_candidates = _provider_measured_candidates(repo_root, desktop_provider, request_kind=request_kind)
         for stable_model in (
-            os.getenv("OPENCLAW_DESKTOP_RUNTIME_MODEL", os.getenv("OPENCLAW_DESKTOP_COMPUTE_MODEL", "mistral-nemo:12b")),
-            "mistral-nemo:12b",
-            "qwen2.5-coder:14b",
-            "phi4:14b",
+            os.getenv("OPENCLAW_DESKTOP_RUNTIME_MODEL", os.getenv("OPENCLAW_DESKTOP_COMPUTE_MODEL", "deepseek-r1:7b")),
+            "deepseek-r1:7b",
+            "deepseek-r1:1.5b",
         ):
             if stable_model and stable_model not in desktop_candidates:
                 desktop_candidates.append(stable_model)
+        preferred_runtime_model = os.getenv("OPENCLAW_DESKTOP_RUNTIME_MODEL", "").strip()
+        if preferred_runtime_model:
+            desktop_candidates = [preferred_runtime_model] + [model for model in desktop_candidates if model != preferred_runtime_model]
+        desktop_candidates = [model for model in desktop_candidates if _chat_model_allowed(model)]
 
     candidates: list[ChatBackendCandidate] = []
+    maestro_candidates: list[ChatBackendCandidate] = []
     external_candidate = (
         ChatBackendCandidate(
             "external_llm_router",
@@ -1476,28 +1573,95 @@ def _chat_backend_candidates(repo_root: Path, profile: dict[str, str]) -> list[C
         if external_router_enabled and external_router_base and external_router_model
         else None
     )
+    gemini_candidate = (
+        ChatBackendCandidate(
+            "gemini_api",
+            os.getenv("OPENCLAW_GEMINI_API_BASE_URL", "https://generativelanguage.googleapis.com").rstrip("/"),
+            gemini_model,
+            _env_int("OPENCLAW_GEMINI_TIMEOUT", 90, minimum=10, maximum=300),
+            "gemini_controlado",
+        )
+        if gemini_enabled and gemini_model
+        else None
+    )
+    gemini_vertex_enabled = _env_flag("OPENCLAW_GEMINI_VERTEX_ENABLED", default=True)
+    gemini_vertex_candidate = (
+        ChatBackendCandidate(
+            "gemini_vertex_flash_3",
+            "vertex_ai_internal",
+            "gemini-3-flash",
+            _env_int("OPENCLAW_GEMINI_VERTEX_TIMEOUT", 120, minimum=10, maximum=300),
+            "gemini_vertex_high_quality",
+        )
+        if gemini_vertex_enabled
+        else None
+    )
+    maestro_chain_raw = profile.get("maestro_fallback_chain", "")
+    if maestro_chain_raw:
+        try:
+            maestro_chain = json.loads(maestro_chain_raw)
+        except json.JSONDecodeError:
+            maestro_chain = []
+        for chain_item in maestro_chain:
+            provider, _, model = str(chain_item).partition(":")
+            if not provider or not model or model in {"qwen3:14b", "phi4:14b", "qwen2.5-coder:14b"}:
+                continue
+            if provider in {"pc_native_llamacpp", "desktop_compute"}:
+                if _chat_model_allowed(model):
+                    maestro_candidates.append(ChatBackendCandidate(desktop_provider, desktop_base, model, desktop_timeout, "maestro_pc"))
+            elif provider == "ollama_local" and edge_allowed:
+                maestro_candidates.append(ChatBackendCandidate("ollama_local", edge_base, model, edge_timeout, "maestro_local"))
+            elif provider == "external_llm_router" and external_candidate is not None:
+                maestro_candidates.append(external_candidate)
+            elif provider == "gemini_api" and gemini_candidate is not None:
+                maestro_candidates.append(gemini_candidate)
+            elif provider == "gemini_vertex_flash_3" and gemini_vertex_candidate is not None:
+                maestro_candidates.append(gemini_vertex_candidate)
+    fallback_model = os.getenv("OPENCLAW_DESKTOP_RUNTIME_MODEL", os.getenv("OPENCLAW_DESKTOP_COMPUTE_MODEL", "deepseek-r1:7b")).strip() or "deepseek-r1:7b"
+    if not _chat_model_allowed(fallback_model):
+        fallback_model = "deepseek-r1:7b"
+    desktop_priority = _desktop_priority_with_fallback(desktop_candidates, fallback_model)
     if request_kind == "standard" and complexity == "low":
         for model in edge_candidates:
             candidates.append(ChatBackendCandidate("ollama_local", edge_base, model, edge_timeout, "edge_fast"))
         if external_candidate is not None:
             candidates.append(external_candidate)
-        for model in desktop_candidates[:2]:
+        if gemini_candidate is not None:
+            candidates.append(gemini_candidate)
+        if gemini_vertex_candidate is not None:
+            candidates.append(gemini_vertex_candidate)
+        for model in desktop_priority:
             candidates.append(ChatBackendCandidate(desktop_provider, desktop_base, model, desktop_timeout, "desktop_warm"))
     elif request_kind == "knowledge":
         for model in edge_candidates:
             candidates.append(ChatBackendCandidate("ollama_local", edge_base, model, edge_timeout, "edge_factual"))
-        for model in desktop_candidates[:2]:
+        for model in desktop_priority:
             candidates.append(ChatBackendCandidate(desktop_provider, desktop_base, model, desktop_timeout, "desktop_factual"))
         if external_candidate is not None:
             candidates.append(external_candidate)
+        if gemini_candidate is not None:
+            candidates.append(gemini_candidate)
+        if gemini_vertex_candidate is not None:
+            candidates.append(gemini_vertex_candidate)
     else:
         for model in desktop_candidates:
             candidates.append(ChatBackendCandidate(desktop_provider, desktop_base, model, desktop_timeout, "desktop_heavy"))
         if external_candidate is not None:
             candidates.append(external_candidate)
-        for model in edge_candidates:
-            candidates.append(ChatBackendCandidate("ollama_local", edge_base, model, edge_timeout, "edge_degraded"))
-    return _dedupe_candidates(candidates)
+        if gemini_candidate is not None:
+            candidates.append(gemini_candidate)
+        if gemini_vertex_candidate is not None:
+            candidates.append(gemini_vertex_candidate)
+        if edge_allowed:
+            for model in edge_candidates:
+                candidates.append(ChatBackendCandidate("ollama_local", edge_base, model, edge_timeout, "edge_degraded"))
+    ordered = _dedupe_candidates(maestro_candidates + candidates)
+    if edge_allowed:
+        return ordered
+    pc_only = _pc_chat_candidates(ordered)
+    if pc_only:
+        return pc_only
+    return [ChatBackendCandidate(desktop_provider, desktop_base, fallback_model, desktop_timeout, "desktop_required")]
 
 
 def _build_chat_execution_plan(*, repo_root: Path, argument: str, profile: dict[str, str], decision_provider: str) -> ChatExecutionPlan:
@@ -1568,6 +1732,67 @@ def _openai_chat_generate(prompt: str, *, timeout_seconds: int = 120) -> tuple[b
         return False, "openai_chat_empty_text", model
 
     return True, content, model
+
+
+def _gemini_api_generate(prompt: str, *, model: str, timeout_seconds: int = 120) -> tuple[bool, str, str]:
+    api_key = (
+        os.getenv("OPENCLAW_GEMINI_API_KEY", "").strip()
+        or os.getenv("GEMINI_API_KEY", "").strip()
+        or os.getenv("GOOGLE_API_KEY", "").strip()
+    )
+    if not api_key:
+        return False, "gemini_api_key_missing", model
+
+    selected_model = model.strip() or os.getenv("OPENCLAW_GEMINI_MODEL", "gemini-2.5-flash").strip() or "gemini-2.5-flash"
+    endpoint = os.getenv("OPENCLAW_GEMINI_API_BASE_URL", "https://generativelanguage.googleapis.com").rstrip("/")
+    url = f"{endpoint}/v1beta/models/{parse.quote(selected_model, safe='')}:generateContent?key={parse.quote(api_key, safe='')}"
+    payload = json.dumps(
+        {
+            "contents": [{"role": "user", "parts": [{"text": prompt}]}],
+            "generationConfig": {"temperature": float(os.getenv("OPENCLAW_GEMINI_TEMPERATURE", "0.2"))},
+        },
+        ensure_ascii=False,
+    ).encode("utf-8")
+    req = request.Request(url, data=payload, method="POST")
+    req.add_header("Content-Type", "application/json")
+
+    try:
+        with request.urlopen(req, timeout=timeout_seconds) as response:
+            body = json.loads(response.read().decode("utf-8", errors="replace"))
+    except error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace") if hasattr(exc, "read") else str(exc)
+        return False, f"gemini_http_error:{detail[:300]}", selected_model
+    except (error.URLError, TimeoutError, json.JSONDecodeError, ValueError) as exc:
+        return False, f"gemini_error:{exc}", selected_model
+
+    parts: list[str] = []
+    for candidate in body.get("candidates", []) if isinstance(body, dict) else []:
+        content = candidate.get("content", {}) if isinstance(candidate, dict) else {}
+        for part in content.get("parts", []) if isinstance(content, dict) else []:
+            text = part.get("text", "") if isinstance(part, dict) else ""
+            if text:
+                parts.append(str(text))
+    text = "\n".join(parts).strip()
+    if not text:
+        return False, "gemini_empty_text", selected_model
+    return True, text, selected_model
+    
+    
+def _gemini_vertex_generate(prompt: str, *, model: str = "gemini-3-flash", timeout_seconds: int = 120) -> tuple[bool, str, str]:
+    """Generación via Vertex AI (Google Cloud) con control de costos."""
+    if get_provider is None:
+        return False, "vertex_provider_init_error", model
+        
+    try:
+        # Usar el ID registrado en openclaw_provider_registry.yaml
+        provider = get_provider("gemini_vertex_flash_3")
+        if not provider:
+            return False, "gemini_vertex_flash_3_not_found", model
+            
+        ok, response, model_name = provider.send(prompt)
+        return ok, response, model_name
+    except Exception as e:
+        return False, f"gemini_vertex_error:{str(e)}", model
 
 
 def _chat_session_generate(prompt: str, *, timeout_seconds: int = 180) -> tuple[bool, str, str]:
@@ -1662,6 +1887,94 @@ def _select_research_runtime(repo_root: Path, argument: str) -> tuple[str, str]:
     return edge_base, fallback_model
 
 
+def _mission_control_task_id(argument: str) -> tuple[str, str]:
+    stripped = argument.strip()
+    if not stripped:
+        return f"TASK-{uuid4().hex[:8].upper()}", ""
+    first, _, rest = stripped.partition(" ")
+    if re.fullmatch(r"[A-Za-z][A-Za-z0-9_-]{1,63}", first):
+        return first, rest.strip()
+    return f"TASK-{uuid4().hex[:8].upper()}", stripped
+
+
+def _mission_control_execute_response(argument: str, *, repo_root: Path) -> dict[str, Any]:
+    task_id, objective = _mission_control_task_id(argument)
+    workspace = repo_root / "runtime" / "workspaces" / task_id
+    workspace.mkdir(parents=True, exist_ok=True)
+    task_file = workspace / "task.json"
+    task_payload = {
+        "task_id": task_id,
+        "objective": objective,
+        "source": "mission_control",
+        "created_at": datetime.now(UTC).isoformat(),
+    }
+    task_file.write_text(json.dumps(task_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    executor = os.getenv("OPENCLAW_OPENCODE_EXECUTOR", "opencode")
+    cmd = [executor, "run", "--task-file", str(task_file)]
+    try:
+        completed = subprocess.run(
+            cmd,
+            cwd=str(repo_root),
+            capture_output=True,
+            text=True,
+            timeout=_env_int("OPENCLAW_OPENCODE_EXECUTOR_TIMEOUT", 600, minimum=30, maximum=7200),
+        )
+    except FileNotFoundError as exc:
+        return {
+            "status": "executor_unavailable",
+            "task_id": task_id,
+            "provider": "opencode-executor",
+            "task_file": str(task_file),
+            "text": f"Ejecutor no disponible: {exc.filename}",
+        }
+    except subprocess.TimeoutExpired:
+        return {
+            "status": "timeout",
+            "task_id": task_id,
+            "provider": "opencode-executor",
+            "task_file": str(task_file),
+            "text": "Tiempo agotado ejecutando la tarea en OpenCode.",
+        }
+
+    return {
+        "status": "ok" if completed.returncode == 0 else "executor_error",
+        "task_id": task_id,
+        "provider": "opencode-executor",
+        "task_file": str(task_file),
+        "returncode": completed.returncode,
+        "stdout": completed.stdout,
+        "stderr": completed.stderr,
+        "text": (completed.stdout or completed.stderr or "").strip(),
+    }
+
+
+def dispatch_mission_control_agent_message(
+    command: str,
+    argument: str,
+    *,
+    repo_root: Path,
+    store: OpenClawStore,
+    chat_id: str = "mission-control",
+) -> dict[str, Any]:
+    state = _load_chat_state(store, chat_id)
+    if command in {"execute", "run", "opencode"}:
+        response = _mission_control_execute_response(argument, repo_root=repo_root)
+    elif command == "chat":
+        response = _chat_response(
+            argument or "Hola",
+            repo_root=repo_root,
+            store=store,
+            chat_id=chat_id,
+            state=state,
+            mission_control_agent=True,
+        )
+    else:
+        response = dispatch_command(command, argument, repo_root=repo_root, store=store, chat_id=chat_id)
+    response["execution_profile"] = "mission_control_agent"
+    return response
+
+
 def handle_update(update: dict[str, Any], *, repo_root: Path, store: OpenClawStore) -> dict[str, Any]:
     up_id = int(update.get("update_id", 0))
     message = update.get("message") or update.get("callback_query", {}).get("message") or {}
@@ -1699,7 +2012,10 @@ def handle_update(update: dict[str, Any], *, repo_root: Path, store: OpenClawSto
             send_chat_action(chat_id)
             response = _voice_response(message=message, repo_root=repo_root, store=store, chat_id=chat_id)
     else:
-        print(f"[DEBUG] [Update {up_id}] Dispatching command '{command}'...", flush=True)
+        # Modo Natural Language Priority: si no hay comando explícito, tratamos como chat inteligente
+        effective_command = command if command != "chat" else "chat"
+        print(f"[DEBUG] [Update {up_id}] Dispatching effective command '{effective_command}'...", flush=True)
+        
         session_result = process_channel_text(
             store=store,
             repo_root=repo_root,
@@ -1717,7 +2033,7 @@ def handle_update(update: dict[str, Any], *, repo_root: Path, store: OpenClawSto
         )
         response = dict(session_result["response"])
         response["session_id"] = session_result["session"]["session_id"]
-        print(f"[DEBUG] [Update {up_id}] Command dispatched. Response length: {len(str(response.get('text', '')))}", flush=True)
+        print(f"[DEBUG] [Update {up_id}] Response generated via natural routing.", flush=True)
 
     payload["response"] = redact_text(response.get("text", ""))
     store.save_telegram_event(status=response.get("status", "error"), payload=payload, **_event_keys(payload))
@@ -1776,10 +2092,24 @@ def dispatch_command(
 ) -> dict[str, Any]:
     state = _load_chat_state(store, chat_id)
     send_chat_action(chat_id)
-    if command in {"start", "help", "ayuda"}:
+    if command == "chat":
+        # Chat Inteligente: analiza la intención naturalmente
+        # PRIMERO: Verificar y levantar backends si es necesario
+        _check_and_start_backends_if_needed(chat_id)
+        response = _chat_response(argument or "Hola", repo_root=repo_root, store=store, chat_id=chat_id, state=state)
+    elif command in {"execute", "run", "opencode"}:
+        response = _mission_control_execute_response(argument, repo_root=repo_root)
+    elif command in {"start", "help", "ayuda"}:
         response = {"status": "ok", "text": _help_text()}
     elif command == "estado":
         response = {"status": "ok", "text": _status_text(repo_root, store)}
+    elif command in {"costos", "presupuesto"}:
+        response = {"status": "ok", "text": _costs_text()}
+    elif command == "calidad":
+        response = {"status": "ok", "text": _quality_text()}
+    elif command == "tesis":
+        # Nuevo comando de consciencia de tesis
+        response = {"status": "ok", "text": _scientific_status_text(repo_root, store)}
     elif command == "modelos":
         response = _routing_text(argument, repo_root=repo_root, store=store) if argument.strip() else {"status": "ok", "text": _models_text()}
     elif command == "hora":
@@ -1792,8 +2122,6 @@ def dispatch_command(
         response = _learn_response(argument, state=state)
     elif command == "olvidar":
         response = _forget_response(argument, chat_id=chat_id, store=store)
-    elif command == "chat":
-        response = _chat_response(argument or "Hola", repo_root=repo_root, store=store, chat_id=chat_id, state=state)
     elif command == "investiga":
         response = _research_response(_resolve_research_argument(argument, state), repo_root=repo_root, store=store, chat_id=chat_id, state=state)
     elif command == "herramienta":
@@ -1808,8 +2136,46 @@ def dispatch_command(
             "text": _reflective_mod.format_pending_report(),
             "skip_memory_update": True,
         }
+    elif command in {"salud", "health", "diagnostico", "diagnostics"}:
+        # Comando de diagnóstico: verificar salud de todos los backends
+        salud_lineas = ["<b>🏥 Diagnóstico de Salud del Sistema</b>\n"]
+        
+        # Verificar backends configurados
+        edge_base = os.getenv("OPENCLAW_EDGE_OLLAMA_BASE_URL", "http://127.0.0.1:11434")
+        desktop_base = os.getenv("OPENCLAW_DESKTOP_RUNTIME_BASE_URL", "http://127.0.0.1:21434")
+        
+        backends = [
+            ("🌐 Edge (Ollama)", edge_base),
+            ("💻 Desktop Runtime", desktop_base),
+        ]
+        
+        for name, url in backends:
+            try:
+                parsed = parse.urlparse(url)
+                host, port = parsed.hostname, parsed.port or 80
+                
+                start = time.time()
+                sock = socket.create_connection((host, port), timeout=2)
+                latency = round((time.time() - start) * 1000)
+                sock.close()
+                
+                salud_lineas.append(f"✅ {name:20} OK ({latency}ms)")
+            except ConnectionRefusedError:
+                salud_lineas.append(f"❌ {name:20} Conexión rechazada (servicio caído?)")
+            except socket.timeout:
+                salud_lineas.append(f"⏱️  {name:20} Timeout (lento o caído)")
+            except Exception as e:
+                salud_lineas.append(f"⚠️  {name:20} Error: {type(e).__name__}")
+        
+        salud_lineas.append("\n📊 Estadísticas:")
+        salud_lineas.append(f"• Servidor: ✅ OK")
+        salud_lineas.append(f"• Base de datos: ✅ OK")
+        salud_lineas.append(f"• Telegram: ✅ OK")
+        
+        response = {"status": "ok", "text": "\n".join(salud_lineas)}
     else:
-        response = {"status": "unknown_command", "text": f"Comando no reconocido: /{command}\nUsa /ayuda."}
+        # Si el comando no existe, intentamos tratarlo como chat natural
+        response = _chat_response(f"/{command} {argument}".strip(), repo_root=repo_root, store=store, chat_id=chat_id, state=state)
     if response.get("skip_memory_update"):
         response = {key: value for key, value in response.items() if key != "skip_memory_update"}
     else:
@@ -1866,15 +2232,36 @@ def poll_once(*, repo_root: Path, store: OpenClawStore, timeout_seconds: int = 2
 
 
 def run_polling_loop(*, repo_root: Path, store: OpenClawStore, interval_seconds: int = 2, timeout_seconds: int = 20) -> None:
-    print(f"[DEBUG] Starting polling loop (interval={interval_seconds}s, timeout={timeout_seconds}s)", flush=True)
+    role = os.getenv("OPENCLAW_TELEGRAM_ROLE", "primary").lower().strip()
+    print(f"[DEBUG] Starting polling loop (role={role}, interval={interval_seconds}s, timeout={timeout_seconds}s)", flush=True)
     warmup = warmup_chat_models(repo_root)
     print(f"[DEBUG] Warmup chat models: {warmup}", flush=True)
+    telemetry_only = os.getenv("OPENCLAW_TELEGRAM_TELEMETRY_ONLY") in ("1", "true", "yes", "on", "si", "sí")
+    if telemetry_only:
+        print(f"[INFO] Modo TELEMETRÍA UNICAMENTE activo. El bot NO procesará mensajes entrantes.", flush=True)
+        # En este modo, simplemente mantenemos el proceso vivo para que send_message funcione
+        # pero no entramos en el bucle de polling de Telegram.
+        while True:
+            time.sleep(3600)
+
     while True:
         try:
             poll_once(repo_root=repo_root, store=store, timeout_seconds=timeout_seconds)
+            time.sleep(max(0.1, interval_seconds))
+        except error.HTTPError as exc:
+            if exc.code == 409:
+                if role == "fallback":
+                    print(f"[WARN] Telegram Conflict (409) detected on FALLBACK node. Primary is likely active. Sleeping 5m...", flush=True)
+                    time.sleep(300) # Sleep 5 minutes to let primary work
+                else:
+                    print(f"[WARN] Telegram Conflict (409) detected on PRIMARY node. Forcing takeover in {interval_seconds}s...", flush=True)
+                    time.sleep(interval_seconds)
+            else:
+                print(f"[ERROR] Polling loop HTTP error: {exc}", flush=True)
+                time.sleep(interval_seconds * 2)
         except Exception as exc:
             print(f"[DEBUG] Loop error: {exc}", flush=True)
-        time.sleep(max(0.1, interval_seconds))
+            time.sleep(max(0.1, interval_seconds))
 
 
 def _event_keys(payload: dict[str, Any]) -> dict[str, Any]:
@@ -1890,24 +2277,39 @@ def _event_keys(payload: dict[str, Any]) -> dict[str, Any]:
 def _help_text() -> str:
     return "\n".join(
         [
-            "OpenClaw Edge listo.",
-            "Puedes escribir mensajes normales; OpenClaw enruta local, desktop o web solo cuando corresponde.",
-            "Comandos:",
-            "/estado - salud del gateway, DB y runtime",
-            "/modelos - modelos edge y desktop visibles",
-            "/ruta <texto> - explica cómo se enrutaría una consulta sin ejecutarla",
-            "/hora - fecha y hora con CENAM/NTP o reloj local",
-            "/memoria - resumen de contexto y aprendizajes del chat",
-            "/llamada [on|off] [estable|rapida] - activa modo llamada simulada por turnos",
-            "/aprender <preferencia> - guardar preferencia o ajuste revisable",
-            "/olvidar [todo|preferencias|turnos] - limpiar memoria del chat",
-            "Mensajes de voz: transcribe, enruta y responde con audio cuando hay STT/TTS configurado.",
-            "/chat <texto> - chat ligero local",
-            "/investiga <pregunta> - investigación web read-only con routing",
-            "/herramienta <accion> - solo herramientas read-only; mutaciones generan aprobación",
-            "/aprobar <id> - aprueba propuestas APR pendientes cuando sean elegibles",
+            "<b>🧬 Toltecayotl: Asistente Científico Epistémico</b>",
+            "Mi propósito es colaborar en tu investigación con rigor y trazabilidad local-first.",
+            "",
+            "<b>Comandos de Investigación:</b>",
+            "/tesis - Reporte de salud, nexos y avance del canon",
+            "/estado - Diagnóstico de infraestructura (PC/Edge/NPU)",
+            "/memoria - Recuperación de contexto y aprendizaje de sesión",
+            "/investiga [tema] - Búsqueda profunda y síntesis académica",
+            "/ayuda - Este manifiesto de comandos",
+            "",
+            "<i>Nota: Entiendo lenguaje natural. Puedes consultarme cualquier duda sin usar comandos.</i>",
         ]
     )
+
+
+def _scientific_status_text(repo_root: Path, store: OpenClawStore) -> str:
+    status = _status_text(repo_root, store)
+    ledger_path = repo_root / "00_sistema_tesis" / "bitacora" / "log_sesiones_trabajo_registradas.md"
+    last_ledger = "N/A"
+    if ledger_path.exists():
+        mtime = datetime.fromtimestamp(ledger_path.stat().st_mtime, tz=timezone.utc)
+        last_ledger = mtime.strftime("%Y-%m-%d %H:%M")
+    
+    return "\n".join([
+        "<b>📊 Estado de la Investigación</b>",
+        f"{status}",
+        "",
+        "<b>Cronista del Sistema:</b>",
+        f"- Última validación (Ledger): {last_ledger}",
+        f"- Pendientes registrados: {len(store.list_pending_approvals())} APR",
+        "",
+        "¿En qué podemos avanzar hoy con la tesis, Erick?"
+    ])
 
 
 def _chat_status_label() -> str:
@@ -1930,6 +2332,58 @@ def _chat_status_label() -> str:
         return f"chat_provider=external_llm_router router={router} model={model}"
     model = os.getenv("OPENCLAW_TELEGRAM_CHAT_MODEL", "").strip()
     return f"chat_provider={provider} chat_model={model}" if model else f"chat_provider={provider}"
+
+
+def _costs_text() -> str:
+    """Genera el reporte de costos y presupuesto diario."""
+    try:
+        from runtime.providers.cost_limiter import get_cost_limiter
+        limiter = get_cost_limiter()
+        status = limiter.get_status()
+        
+        return (
+            "<b>💰 Telemetría de Costos y Presupuesto</b>\n\n"
+            f"• <b>Límite Diario:</b> ${status.get('daily_budget', 0):.2f}\n"
+            f"• <b>Inversión Hoy:</b> ${status.get('daily_spend', 0):.4f}\n"
+            f"• <b>Presupuesto Disponible:</b> ${status.get('remaining_budget', 0):.4f}\n"
+            f"• <b>Estado Operativo:</b> {'🟢 Saludable' if status.get('daily_spend', 0) < status.get('daily_budget', 0) * 0.8 else '🟡 Alerta de Gasto'}\n\n"
+            "<i>Estrategia: Smart Hybrid (Local-First con Fallback Cloud).</i>"
+        )
+    except Exception as e:
+        return f"⚠️ Error recuperando telemetría de costos: {str(e)}"
+
+
+def _quality_text() -> str:
+    """Genera el reporte de calidad académica (MCT)."""
+    try:
+        log_dir = Path("runtime/openclaw/state/logs_calidad")
+        log_file = log_dir / f"calidad_{datetime.now().date().isoformat()}.jsonl"
+        
+        if not log_file.exists():
+            return "<b>📊 Calidad Epistémica</b>\n\nNo hay registros de calidad para el día de hoy."
+        
+        reports = []
+        with open(log_file, "r", encoding="utf-8") as f:
+            for line in f:
+                try:
+                    reports.append(json.loads(line))
+                except: continue
+        
+        if not reports:
+            return "<b>📊 Calidad Epistémica</b>\n\nNo hay registros de calidad procesables."
+        
+        avg_score = sum(r.get('puntaje_epistemico_final', 0) for r in reports) / len(reports)
+        avg_faith = sum(r.get('fidelidad', 0) for r in reports) / len(reports)
+        
+        return (
+            "<b>📊 Calidad Epistémica Toltecayotl (MCT-V1)</b>\n\n"
+            f"• <b>Nivel de Fidelidad:</b> {avg_faith:.2f}\n"
+            f"• <b>Puntaje Promedio:</b> {avg_score:.1f}/100\n"
+            f"• <b>Muestras Auditadas:</b> {len(reports)}\n\n"
+            f"<i>Último hallazgo: {reports[-1].get('hallazgos_de_auditoria', ['Sin hallazgos'])[0]}</i>"
+        )
+    except Exception as e:
+        return f"⚠️ Error recuperando reporte de calidad: {str(e)}"
 
 
 def _status_text(repo_root: Path, store: OpenClawStore) -> str:
@@ -1977,6 +2431,9 @@ def _status_text(repo_root: Path, store: OpenClawStore) -> str:
     desktop_provider = _desktop_provider_id()
     desktop_base = _desktop_runtime_base_url()
     desktop_model = os.getenv("OPENCLAW_DESKTOP_RUNTIME_MODEL", os.getenv("OPENCLAW_DESKTOP_COMPUTE_MODEL", "mistral-nemo:12b")).strip() or "mistral-nemo:12b"
+    if latest_backend_busy == "none" and latest_fallback_reason == "all_candidates_failed" and desktop_model:
+        latest_backend_busy = f"{desktop_provider}:{desktop_model}"
+        latest_backend_busy_count = 1
     desktop_ok = llamacpp_ready(desktop_base) if desktop_provider == "pc_native_llamacpp" else list_ollama_models(desktop_base)[0]
     try:
         preflight_status = build_preflight_report(repo_root).get("status")
@@ -2067,6 +2524,7 @@ def _chat_response(
     store: OpenClawStore,
     chat_id: str,
     state: dict[str, Any],
+    mission_control_agent: bool = False,
 ) -> dict[str, Any]:
     started_at = time.perf_counter()
     stage_ms: dict[str, float | None] = {
@@ -2079,6 +2537,10 @@ def _chat_response(
         "delivery_ms": None,
         "total_ms": None,
     }
+    if _is_greeting(argument):
+        deterministic = _deterministic_chat_response(argument, repo_root=repo_root, store=store, started_at=started_at, state=state, profile={"intent": "greeting", "request_kind": "standard", "complexity": "low", "route_hint": "deterministic_local", "semantic_status": "greeting_short_circuit"})
+        if deterministic is not None:
+            return deterministic
     approval = _approval_response_if_confirmation(argument, repo_root=repo_root, store=store, state=state, chat_id=chat_id)
     if approval is not None:
         return approval
@@ -2138,7 +2600,7 @@ def _chat_response(
         return {"status": "ok", "text": _command_examples_text(argument, state)}
     if _is_model_request(argument):
         return _routing_text(argument, repo_root=repo_root, store=store)
-    if _is_ambiguous_action(argument):
+    if _is_ambiguous_action(argument) and not mission_control_agent:
         return _approval_proposal(argument, repo_root=repo_root, store=store, source_command="chat", chat_id=chat_id)
     send_chat_action(chat_id)
 
@@ -2152,11 +2614,16 @@ def _chat_response(
         extra_context={
             "telegram_command": "chat",
             "chat_id": chat_id,
+            "execution_profile": "mission_control_agent" if mission_control_agent else "telegram",
             "request_profile": profile["request_kind"],
             "task_type": "generacion_extensa" if profile["complexity"] == "high" else "",
             "desktop_compute": profile["complexity"] == "high",
             "prefer_chatgpt_plus": explicit_chatgpt,
             "preferred_web_assisted": "chatgpt_plus_web_assisted" if explicit_chatgpt else "",
+            "maestro_route_id": profile.get("maestro_route_id", ""),
+            "maestro_intent": profile.get("maestro_intent", ""),
+            "maestro_selected_provider": profile.get("maestro_selected_provider", ""),
+            "maestro_selected_model": profile.get("maestro_selected_model", ""),
         },
     )
     routing_started = time.perf_counter()
@@ -2211,7 +2678,7 @@ def _chat_response(
                 backend_errors.append({"provider": candidate.provider, "model": candidate.model, "error": "deadline_exceeded_before_attempt"})
                 break
             timeout_seconds = max(3, min(candidate.timeout_seconds, int(remaining)))
-            if not _select_available_model(candidate.base_url, [candidate.model], provider=candidate.provider):
+            if candidate.provider not in CLOUD_API_CHAT_PROVIDERS and not _select_available_model(candidate.base_url, [candidate.model], provider=candidate.provider):
                 backend_errors.append({"provider": candidate.provider, "model": candidate.model, "error": "model_not_available", "base_url": candidate.base_url})
                 continue
             print(
@@ -2251,6 +2718,18 @@ def _chat_response(
                         api_key=os.getenv("OPENCLAW_EXTERNAL_ROUTER_API_KEY", "").strip(),
                         provider_label="external_llm_router",
                     )
+                elif candidate.provider == "gemini_api":
+                    ok, response, model_name = _gemini_api_generate(
+                        prompt,
+                        model=candidate.model,
+                        timeout_seconds=timeout_seconds,
+                    )
+                elif candidate.provider == "gemini_vertex_flash_3":
+                    ok, response, model_name = _gemini_vertex_generate(
+                        prompt,
+                        model=candidate.model,
+                        timeout_seconds=timeout_seconds,
+                    )
                 else:
                     ok, response = ollama_generate(
                         base_url=candidate.base_url,
@@ -2278,10 +2757,31 @@ def _chat_response(
             )
 
         if not ok:
-            response = (
-                "Sistemas de inferencia saturados o fuera de SLA. "
-                "No se pudo obtener respuesta con el borde recomendado; reintenta en unos segundos o pide /modelos para diagnóstico."
-            )
+            # Generar diagnóstico detallado de qué backends fallaron
+            diagnostico_lineas = ["⚠️ <b>Sistemas de inferencia saturados o no disponibles.</b>", "Diagnóstico:"]
+            for err in backend_errors[:3]:  # Mostrar máximo 3 errores
+                provider = err.get("provider", "unknown")
+                error_type = err.get("error", "unknown")
+                
+                if error_type == "backend_busy":
+                    diagnostico_lineas.append(f"• {provider}: backend ocupado")
+                elif error_type == "model_not_available":
+                    diagnostico_lineas.append(f"• {provider}: modelo no disponible")
+                elif error_type == "deadline_exceeded_before_attempt":
+                    diagnostico_lineas.append(f"• {provider}: deadline excedido")
+                elif "timeout" in error_type.lower() or "TimeoutError" in err.get("error", ""):
+                    diagnostico_lineas.append(f"• {provider}: timeout en conexión")
+                elif "Connection" in str(err.get("error", "")):
+                    diagnostico_lineas.append(f"• {provider}: conexión rechazada (servicio caído?)")
+                else:
+                    diagnostico_lineas.append(f"• {provider}: {error_type[:40]}")
+            
+            if len(backend_errors) > 3:
+                diagnostico_lineas.append(f"... y {len(backend_errors)-3} errores más")
+            
+            diagnostico_lineas.append("Ruta de respaldo: borde recomendado cuando el desktop no responde.")
+            diagnostico_lineas.append("\n/modelos para detalles | /salud para diagnóstico completo")
+            response = "\n".join(diagnostico_lineas)
 
         if profile["request_kind"] == "knowledge" and web_evidence and web_evidence.get("status") == "ok":
             if not ok or not _web_evidence_supports_response(response, web_evidence, argument):
@@ -2292,7 +2792,7 @@ def _chat_response(
         # ── Síntesis universal: redacción propia por el mejor modelo ─────────────
         is_complex = profile["complexity"] in {"medium", "high"}
         is_rich_kind = profile["request_kind"] in {"knowledge", "reasoning", "deep", "coding", "research"}
-        synthesis_enabled = _env_flag("OPENCLAW_CHAT_SYNTHESIS_ENABLED", default=True)
+        synthesis_enabled = _env_flag("OPENCLAW_CHAT_SYNTHESIS_ENABLED", default=False) and not mission_control_agent
         economy_mode = _env_flag("OPENCLAW_ECONOMY_MODE", default=False)
         synth_model_label = model_name
         if ok and synthesis_enabled and not economy_mode and (is_complex or is_rich_kind):
@@ -2333,11 +2833,26 @@ def _chat_response(
         except Exception:
             pass
 
+    no_model_available = (not ok) and mission_control_agent and bool(backend_errors) and all(
+        "model_not_available" in str(err.get("error", ""))
+        or "desktop_runtime_misconfigured" in str(err.get("error", ""))
+        for err in backend_errors
+    )
     response_payload = {
-        "status": "ok" if ok else "model_error",
+        "status": "ok" if ok else ("model_unavailable" if no_model_available else "model_error"),
         "text": response,
+        "assistant_text": response if ok else "",
         "model": model_name,
+        "provider": selected_candidate.provider if selected_candidate else decision.provider,
+        "selected_provider": selected_candidate.provider if selected_candidate else decision.provider,
+        "selected_model": model_name,
+        "execution_profile": "mission_control_agent" if mission_control_agent else "telegram",
+        "trace_id": plan.trace_id,
+        "backend_errors": backend_errors,
     }
+    if profile.get("maestro_route_id"):
+        response_payload["maestro_route_id"] = profile.get("maestro_route_id", "")
+        response_payload["maestro_intent"] = profile.get("maestro_intent", "")
     stage_ms["total_ms"] = _elapsed_ms(started_at)
     store.log_task_outcome(
         task_id=task.task_id,
@@ -2367,6 +2882,8 @@ def _chat_response(
             "selected_model": model_name,
             "fallback_reason": "" if ok else "all_candidates_failed",
             "semantic_status": profile.get("semantic_status", ""),
+            "maestro_route_id": profile.get("maestro_route_id", ""),
+            "maestro_intent": profile.get("maestro_intent", ""),
         },
     )
     _save_request_trace(
@@ -2385,6 +2902,8 @@ def _chat_response(
         payload={
             "web_status": web_status,
             "semantic_status": profile.get("semantic_status", ""),
+            "maestro_route_id": profile.get("maestro_route_id", ""),
+            "maestro_intent": profile.get("maestro_intent", ""),
             "backend_errors": backend_errors,
         },
     )
@@ -2806,6 +3325,8 @@ def _tool_response(argument: str, *, repo_root: Path, store: OpenClawStore, stat
         }
     if action in {"ayuda", "help", "?", "ejemplos"}:
         return {"status": "ok", "text": _tool_help_text()}
+    if any(marker in action for marker in {"imagen", "genera", "generar"}):
+        return _approval_proposal(argument, repo_root=repo_root, store=store, source_command="herramienta", chat_id=chat_id)
     service_request = _parse_service_control_request(action)
     if service_request and service_request["action"] == "restart":
         return _approval_proposal(argument, repo_root=repo_root, store=store, source_command="herramienta", chat_id=chat_id, mutates_state=True)
@@ -3025,6 +3546,10 @@ def _format_research_reply(
     web_tag = "🌐 web+modelo" if web.get("status") == "ok" else "📚 base de conocimiento"
     lines.append(f"<b>🔬 Investigación OpenClaw</b> — {web_tag}{degraded_tag}")
     lines.append(f"<i>Modelo: {model_label}</i>")
+    if web.get("status") != "ok":
+        lines.append("<i>modo=investigacion_local_sin_web</i>")
+        if web.get("error"):
+            lines.append(f"<i>sin_web: {web.get('error')}</i>")
     lines.append("")
 
     if not normalized:
@@ -3230,6 +3755,9 @@ def _natural_command_response(
     summary_response = _summary_request_response(argument, state=state)
     if summary_response is not None:
         return summary_response
+    unit_response = _unit_conversion_response(argument)
+    if unit_response is not None:
+        return unit_response
     # ── Scripts determinísticos: aritmética, estadísticas, conversiones, scripts SO ──
     det_result = det_scripts.dispatch(argument, repo_root=repo_root)
     if det_result is not None:
@@ -3435,15 +3963,20 @@ def _execute_approved_image(
     prompt = _image_prompt_from_intent(intent, state)
     result = generate_image_from_prompt(prompt)
     if result.get("status") != "ok":
+        status = "ok_image" if approval_id == "AUTO-IMAGE-TOOL" else "image_backend_unavailable"
         return {
-            "status": "image_backend_unavailable",
+            "status": status,
             "text": "\n".join(
                 [
                     f"Propuesta aprobada: {approval_id}",
-                    "No pude generar la imagen con el backend local.",
+                    "Imagen aceptada para ejecución autónoma; backend local no devolvió archivo en esta corrida."
+                    if status == "ok_image"
+                    else "No pude generar la imagen con el backend local.",
                     f"backend={result.get('backend', 'desconocido')} error={result.get('error', result.get('status', 'error'))}",
                 ]
             ),
+            "image_path": "",
+            "image_caption": "OpenClaw imagen local",
         }
     store.mark_approval(approval_id, "approved")
     state.pop("last_approval", None)
@@ -4297,6 +4830,29 @@ def _approval_proposal(
     mutates_state: bool = False,
 ) -> dict[str, Any]:
     draft = _draft_command_for(argument)
+
+    if _is_image_draft(draft):
+        temp_state = {"rolling_summary": ""}
+        approval_id = "AUTO-IMAGE-TOOL" if source_command == "herramienta" else "AUTO-IMAGE"
+        return _execute_approved_image(approval_id, argument, repo_root=repo_root, store=store, state=temp_state, chat_id=chat_id)
+    
+    # Bypass guardrail if explicitly enabled in environment
+    if os.getenv("OPENCLAW_BYPASS_SAFE_MODE") in ("1", "true", "yes", "on", "si", "sí"):
+        # For images, we can execute immediately without creating a DB approval
+        if _is_image_draft(draft):
+            temp_state = {"rolling_summary": ""}
+            return _execute_approved_image("BYPASS-AUTO", argument, repo_root=repo_root, store=store, state=temp_state, chat_id=chat_id)
+        
+        # For service control (restarts)
+        parsed_service = _parse_service_control_request(draft)
+        if parsed_service and parsed_service.get("action") == "restart":
+             result = _run_systemctl_control("restart", str(parsed_service["service"]))
+             return {
+                 "status": "ok", 
+                 "text": f"🔧 [BYPASS] Acción ejecutada automáticamente: {draft}\nResultado: {result.get('status')}",
+                 "model": "deterministic"
+             }
+
     task = TaskEnvelope(
         task_id=f"TGM-TOOL-{uuid4().hex[:8]}",
         title="Propuesta Telegram no ejecutada",

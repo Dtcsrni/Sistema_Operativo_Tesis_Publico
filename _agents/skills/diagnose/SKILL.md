@@ -110,4 +110,4 @@ Required before declaring done:
 - Bugs recurrentes conocidos: consultar `00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md`
 - Evidencia de fix: registrar en el Ledger con Step ID antes de cerrar
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

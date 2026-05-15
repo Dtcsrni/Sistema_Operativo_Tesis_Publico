@@ -79,9 +79,21 @@ python 07_scripts/tesis.py split-staged --commit
 - Requiere árbol privado limpio para garantizar sincronía exacta con el commit canónico (`--allow-dirty` solo bajo uso explícito).
 - `install_hooks.py`: instala hooks `pre-commit`, `pre-push`, `post-commit` y `post-merge`; `pre-push` corre gate, luego `signoff sync` y después sincroniza automáticamente el repo público (`sync_public_repo.py --push`) usando `PUBLIC_REPO_PAT`; los últimos resincronizan automáticamente el espejo local en `main`.
 
-## Scripts de soporte
+## Estructura del Directorio
 
-- `build_all.py`: auditoría integral del sistema.
+Tras la reorganización (ISSUE-0044), los scripts se agrupan por responsabilidad lógica:
+
+- `audit/`: Validación, integridad, seguridad y cumplimiento (ej. `guardrails.py`, `governance_gate.py`).
+- `benchmarks/`: Pruebas de rendimiento PC/Edge (ej. `standardized_benchmark_runner.py`).
+- `ops/`: Sincronización, publicación y despliegue (ej. `publish.py`, `sync_public_repo.py`).
+- `utils/`: Utilidad general y plantillas (ej. `new_decision.py`, `generate_security_badges.py`).
+- `serena/`: Integración con Serena MCP.
+- `toltecayotl/`: Motor de inferencia epistémica.
+- `ai_tools/`: Gestión de modelos y compilación RKLLM.
+- `tests/`: Pruebas unitarias e integración.
+- `build_runner/`: Motor de build incremental.
+
+- `build_all.py`: Auditoría integral del sistema (Raíz).
 - `agent_task_router.py`: clasifica subtareas por privacidad, riesgo, complejidad y runtime para economía de tokens local-first.
 - `check_agent_tooling.py`: diagnóstico conjunto de `caveman` y Serena para fijar el modo de trabajo conciso y la primera capa de contexto.
 - `check_serena_access.py`: verifica la salud técnica de `serena-local` por `http` y de `serena-local-py` por `stdio`, distingue perfiles expuestos en el workspace vs backends solo saludables, y comprueba si `serena-local` sigue disponible como ruta operativa esperada del workspace.
@@ -109,4 +121,4 @@ python 07_scripts/tesis.py split-staged --commit
 - La IA es opcional; la operación principal debe seguir siendo legible para humanos.
 - Si un cambio afecta gobernanza, arquitectura o método, registra decisión y vuelve a auditar.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

@@ -18,8 +18,8 @@ graph LR
         VS[VS Code + Scripts]
         REPO[(repositorio canónico)]
         subgraph DOCKER ["Stack Docker Hub"]
-            SD[siot-docs:8080]
-            SA[siot-agent]
+            SD[tablero-gobernanza:8081]
+            SA[nucleo-openclaw]
         end
     end
 
@@ -77,6 +77,14 @@ graph LR
 5. Revisar wiki y dashboard generados si se necesita lectura rápida humana.
 6. El snapshot de tokens es opcional y local por defecto; no requiere `OPENAI_ADMIN_KEY` mientras no exista presupuesto para API externa.
 
+### Limpieza periódica
+
+1. Ejecutar `python 07_scripts/auto_cleanup.py --dry-run` antes de cualquier borrado.
+2. Mantener solo los 3 backups más recientes por archivo crítico.
+3. Eliminar temporales y logs obsoletos solo si aparecen en el reporte de dry-run.
+4. No borrar evidencia privada, bitácoras activas ni artefactos de trazabilidad sin Step ID humano.
+5. Registrar en bitácora cualquier limpieza real que afecte archivos rastreados.
+
 ### Preparar despliegue en Orange Pi
 
 1. Revisar `docs/02_arquitectura/arquitectura-general.md` y `docs/02_arquitectura/topologia-de-almacenamiento.md`.
@@ -113,9 +121,13 @@ El sistema ahora corre principalmente en contenedores en la PC. Para gestionarlo
 
 1. **Iniciar stack PC Hub**: `docker compose -f docker-compose.pc.yml up -d`
 2. **Ver estado PC Hub**: `docker compose -f docker-compose.pc.yml ps`
-3. **Ver logs del agente**: `docker logs -f siot-agent`
-4. **Ejecutar pruebas internas**: `docker exec siot-agent pytest tests/test_docker_stack.py`
-5. **Reconstruir imágenes PC Hub**: `docker compose -f docker-compose.pc.yml build`
+3. **Ver logs del tablero**: `docker logs -f tablero-gobernanza`
+4. **Ver logs del núcleo IA**: `docker logs -f nucleo-openclaw`
+5. **Ver logs de la pasarela**: `docker logs -f pasarela-openclaw`
+6. **Ver logs de la API de persistencia**: `docker logs -f api-persistencia-misiones`
+7. **Ver logs del centro de control**: `docker logs -f centro-control-misiones`
+8. **Ejecutar pruebas internas**: `docker exec nucleo-openclaw pytest tests/test_docker_stack.py`
+9. **Reconstruir imágenes PC Hub**: `docker compose -f docker-compose.pc.yml build`
 
 Para operación exclusiva del Nodo Edge (Orange Pi):
 
@@ -130,7 +142,7 @@ Variables recomendadas para separar secretos por dominio:
 - `SIOT_AGENT_ENV_FILE=config/env/openclaw.env`
 - `SIOT_EDGE_ENV_FILE=config/env/domains/edge.env.example`
 
-El Dashboard generado por el contenedor está disponible en `http://localhost:8080`.
+El tablero generado por el contenedor está disponible en `http://localhost:8081`.
 
 ## Evidencia fuente de conversación
 
@@ -205,4 +217,4 @@ La firma humana no se autoemite desde IA sin contexto trazable. Si un artefacto 
    - `python 07_scripts/build_all.py`
    - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

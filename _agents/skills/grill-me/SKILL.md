@@ -16,4 +16,4 @@ If a question can be answered by exploring the codebase, explore the codebase in
 ## Soberanía Humana
 No marques ninguna decisión como validada durante la sesión. Las decisiones sustantivas requieren Step ID del Tesista.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

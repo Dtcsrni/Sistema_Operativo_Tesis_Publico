@@ -1,4 +1,5 @@
 services:
+  # Gateway IoT del edge: sensores, actuadores y telemetría local
   siot-edge-gw:
     build:
       context: .
@@ -25,7 +26,7 @@ services:
       - ./runtime/edge_iot/logs:/app/logs
     environment:
       - NODE_ID=orange_pi_5_plus
-      - HUB_URL=${SIOT_HUB_URL:-http://pc-hub:8080}
+      - HUB_URL=${SIOT_HUB_URL:-http://pc-hub:4000}
     networks:
       - siot-iot-net
       - siot-inference-net
@@ -36,6 +37,7 @@ services:
       retries: 3
     command: ["python3", "runtime/edge_iot/main.py"]
 
+  # Inferencia local RKLLM en el edge
   siot-llm-edge:
     build:
       context: .
@@ -58,6 +60,7 @@ services:
       - siot-inference-net
     command: ["python3", "01_servicios/edge/siot-llm-edge/main.py"]
 
+  # Sincronizador hacia el hub del PC
   siot-edge-sync:
     build:
       context: .
@@ -69,7 +72,7 @@ services:
     env_file:
       - ${SIOT_EDGE_ENV_FILE:-config/env/domains/edge.env.example}
     environment:
-      - HUB_URL=${SIOT_HUB_URL:-http://pc-hub:8080}
+      - HUB_URL=${SIOT_HUB_URL:-http://pc-hub:4000}
       - SYNC_INTERVAL=300
     volumes:
       - ./00_sistema_tesis/canon:/app/canon
@@ -80,7 +83,7 @@ services:
       siot-edge-gw:
         condition: service_healthy
     command: ["python3", "runtime/edge_sync/sync_manager.py"]
-
+  
 networks:
   siot-iot-net:
     driver: bridge

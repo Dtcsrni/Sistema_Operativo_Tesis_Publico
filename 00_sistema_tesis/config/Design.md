@@ -41,4 +41,4 @@ Este documento define los estándares estéticos, estructurales y de interacció
 - [ ] ¿La tipografía tiene jerarquía clara (H1, H2, H3)?
 - [ ] ¿El diseño se siente "vivo" al interactuar con él?
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

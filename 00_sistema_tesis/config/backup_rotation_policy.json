@@ -1,47 +1,54 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "backup_rotation": {
     "enabled": true,
+    "description": "Git-first policy: minimizar .bak locales, solo críticos bajo PCB (Pre-Change Backup) protocol",
     "retention_days": {
-      "critico": 180,
-      "alto": 90,
-      "operativo": 30
+      "critico": 14,
+      "alto": 7,
+      "operativo": 3
     },
     "limits": {
-      "max_files": 500,
-      "max_total_size_mb": 1024,
+      "max_files": 100,
+      "max_total_size_mb": 256,
       "min_protected_days": 7
+    },
+    "compression": {
+      "enabled": true,
+      "algorithm": "gzip",
+      "trigger_age_days": 7,
+      "compression_level": 6
+    },
+    "deduplication": {
+      "enabled": true,
+      "method": "sha256_content_hash",
+      "keep_newer": true
     },
     "risk_patterns": {
       "critico": [
         "00_sistema_tesis_decisiones_",
         "00_sistema_tesis_canon_events.jsonl",
         "00_sistema_tesis_config_ia_gobernanza.yaml",
-        "00_sistema_tesis_config_integrity_manifest.json"
+        "00_sistema_tesis_config_integrity_manifest.json",
+        "log_sesiones_trabajo_registradas.md",
+        "matriz_trazabilidad.md"
       ],
       "alto": [
-        "00_sistema_tesis_bitacora_log_sesiones_trabajo_registradas.md",
-        "00_sistema_tesis_bitacora_matriz_trazabilidad.md",
-        "00_sistema_tesis_bitacora_"
+        "00_sistema_tesis_bitacora_",
+        "config_env_",
+        "openclaw.env"
       ],
       "operativo": []
     },
-    "economia_tokens": {
-      "operacion_semanal": {
-        "accion": "dry_run_y_purga_controlada",
-        "modelo_recomendado": "GPT-5.1-Codex-Mini",
-        "nivel_razonamiento": "bajo"
-      },
-      "implementacion_script": {
-        "accion": "cambios_en_codigo_y_pruebas",
-        "modelo_recomendado": "GPT-5.3-Codex",
-        "nivel_razonamiento": "medio"
-      },
-      "cambios_politica": {
-        "accion": "actualizacion_de_gobernanza_y_decisiones",
-        "modelo_recomendado": "GPT-5.4",
-        "nivel_razonamiento": "alto"
-      }
+    "logging": {
+      "enabled": true,
+      "output": "config/logs/backup_rotation.log",
+      "level": "INFO",
+      "retention_days": 30
+    },
+    "telemetry": {
+      "enabled": true,
+      "trigger_purge_size_mb": 50
     }
   }
 }

@@ -120,4 +120,4 @@ After drafting, verify:
 ## Registro de Nuevo Skill
 Tras crear un skill nuevo, actualizar AGENTS.md §7 con la entrada correspondiente. Si el skill tiene impacto en políticas del sistema, crear DEC-XXXX en `00_sistema_tesis/decisiones/`.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

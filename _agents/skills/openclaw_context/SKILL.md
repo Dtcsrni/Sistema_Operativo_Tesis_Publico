@@ -5,7 +5,7 @@ description: >
   Úsala antes de abrir archivos del repo para obtener el mapa de módulos,
   convenciones de prompts y variables de entorno clave.
   Ahorra ~50-60% de tokens frente a explorar el repo desde cero.
-version: "1.1"
+version: "1.2"
 applies_to:
   - openai_agents
   - vscode_agents
@@ -33,12 +33,12 @@ runtime/openclaw/openclaw_local/
 ├── adaptive_router.py   # Routing adaptativo basado en benchmarks históricos
 ├── budgeting.py         # Presupuesto de tokens. simulate_budget_request()
 ├── policies.py          # Carga manifests YAML: dominios, proveedores, presupuesto
-├── persona.py           # [NUEVO] Tono adaptativo. build_system_block(kind, complexity)
-├── response_cache.py    # [NUEVO] Caché TTL. ResponseCache(store).get/put()
+├── persona.py           # Tono adaptativo. build_system_block(kind, complexity)
+├── response_cache.py    # Caché TTL. ResponseCache(store).get/put()
 ├── sources.py           # Gestión de referencias APA, DOI, Crossref
 ├── storage.py           # OpenClawStore: SQLite + caché de contexto
 ├── session_layer.py     # Canales externos (Matrix, canal)
-├── runtime_status.py    # Estado del sistema, modelos disponibles
+├── runtime_status.py    # Estado del sistema, modelos disponibles (probas Docker)
 ├── audio_engine.py      # TTS/STT para mensajes de voz
 └── contracts.py         # Dataclasses: TaskEnvelope, ProviderDecision, etc.
 
@@ -65,8 +65,8 @@ _agents/skills/             # Skills de agente (esta carpeta)
 mensaje → _chat_request_profile() → request_kind, complexity
         → ResponseCache.get() → [HIT] devuelve directamente
         → [MISS] _safe_prompt() via persona.build_system_block()
-        → ollama_generate() con modelo seleccionado por _select_chat_model()
-        → [complexity=medium/high] _select_best_synthesis_model() → ollama_generate()
+        → llamacpp_generate() con modelo seleccionado por _select_chat_model()
+        → [complexity=medium/high] _select_best_synthesis_model() → llamacpp_generate()
         → _format_chat_reply() → send_message()
         → ResponseCache.put()
 ```
@@ -76,9 +76,9 @@ mensaje → _chat_request_profile() → request_kind, complexity
 ```
 query → send_message(estado) × 3
       → web_search() → resultados
-      → _research_prompt() → ollama_generate() [análisis estructurado, 180s]
+      → _research_prompt() → llamacpp_generate() [análisis estructurado, 180s]
       → _select_best_synthesis_model() → _build_synthesis_prompt()
-      → ollama_generate() [síntesis prose, 120s]
+      → llamacpp_generate() [síntesis prose, 120s]
       → _format_research_reply(is_synthesized=True) → send_message()
 ```
 
@@ -87,14 +87,14 @@ query → send_message(estado) × 3
 | Variable | Descripción | Default |
 |----------|-------------|---------|
 | `OPENCLAW_DESKTOP_COMPUTE_ENABLED` | Habilitar PC como nodo de inferencia | `true` |
-| `OPENCLAW_DESKTOP_COMPUTE_BASE_URL` | URL del modelo desktop | `http://PC:11434` |
+| `OPENCLAW_DESKTOP_COMPUTE_BASE_URL` | URL del modelo desktop (Docker) | `http://inferencia-llamacpp:8080/v1` |
 | `OPENCLAW_DESKTOP_RUNTIME_MODEL` | Modelo principal en desktop | `mistral-nemo:12b` |
-| `OPENCLAW_EDGE_OLLAMA_BASE_URL` | URL Ollama edge | `http://127.0.0.1:11434` |
+| `OPENCLAW_EDGE_INFERENCE_BASE_URL` | URL inferencia edge (Docker) | `http://inferencia-llamacpp:8080/v1` |
 | `OPENCLAW_TELEGRAM_EDGE_MODEL` | Modelo edge por defecto | `qwen3:4b` |
 | `OPENCLAW_CHAT_SYNTHESIS_ENABLED` | Síntesis universal en /chat | `1` |
 | `OPENCLAW_RESEARCH_SYNTHESIS_TIMEOUT` | Timeout síntesis investigación | `120` |
 | `OPENCLAW_ECONOMY_MODE` | Forzar modo economía | `0` |
-| `OPENCLAW_CHAT_HEAVY_MAX_TOKENS` | Tokens máx para heavy chat | `900` |
+| `OPENCLAW_CHAT_HEAVY_MAX_TOKENS` | Tokens máx para heavy chat | `1024` |
 
 ## Patrones establecidos que NO cambiar
 
@@ -117,4 +117,4 @@ python -m py_compile runtime/openclaw/openclaw_local/telegram_bot.py
 python 07_scripts/build_all.py
 ```
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

@@ -1,0 +1,48 @@
+{
+  "generated_at_utc": "20260515_025835",
+  "total_duration_seconds": 1.363,
+  "summary": {
+    "total": 2,
+    "executed": 2,
+    "skipped": 0,
+    "failed": 1,
+    "slow": 0
+  },
+  "slow_stages": [],
+  "failed_stages": [
+    "Auditar canon unificado"
+  ],
+  "steps": [
+    {
+      "label": "Materializar proyecciones del canon",
+      "script": "07_scripts/tesis.py",
+      "args": [
+        "materialize"
+      ],
+      "group": "canon",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.921,
+      "budget_seconds": 10.0,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar canon unificado",
+      "script": "07_scripts/tesis.py",
+      "args": [
+        "audit",
+        "--check"
+      ],
+      "group": "canon",
+      "started_at_utc": "2026-05-15",
+      "duration_seconds": 0.442,
+      "budget_seconds": 10.0,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    }
+  ]
+}

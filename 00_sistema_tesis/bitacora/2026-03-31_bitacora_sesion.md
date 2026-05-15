@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-03-31
 
 - **ID de Sesión:** codex-local-20260331-source-evidence
-- **Cadena de Confianza (Anterior):** `sha256/2cc127f24c79b72a8516070fc5e82a56e2115757f0ede9a7e6825acb4e1f7621`
+- **Cadena de Confianza (Anterior): `hash omitido:omitido````
 - **Bloque principal:** B0
 - **Tipo de sesión:** administración | validación
 
@@ -15,9 +15,7 @@ Registrar evidencia fuente de conversación para fortalecer corroboración de va
 
 ## Tareas del día
 - [x] Registrar `conversation_source_registered` en canon.
-  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Materializar proyecciones derivadas.
-  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Trabajo realizado
 - Se incorporó evidencia fuente trazable para conversación relevante del sistema.
@@ -27,27 +25,23 @@ Registrar evidencia fuente de conversación para fortalecer corroboración de va
 - **Commits:** N/A (registro documental retrospectivo)
 - **Archivos Clave:** `00_sistema_tesis/canon/events.jsonl`, `00_sistema_tesis/bitacora/indice_fuentes_conversacion.md`
 - **Validación del Sistema:** [x] Auditoría `build_all.py` aprobada.
-  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Uso de IA y Gobernanza
 - **Proveedor:** proveedor de IA no publicado
 - **Modelo/Versión:** modelo de IA no publicado
 - **Objetivo:** Registro y trazabilidad de evidencia fuente de conversación.
 - **Nivel de Razonamiento:** medio
-- **Alineación Ética:**
+- **Alineación Ática:**
     - [x] Transparencia (NIST RMF)
-      - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
     - [x] Soberanía Humana (UNESCO)
-      - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
     - [x] Responsabilidad (ISO 42001)
-      - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ### Validación de Soberanía (Handshake)
 - **Pregunta Crítica:** N/A (sesión de registro operativo).
 - **Respuesta Erick Vega:** N/A.
-- **Criterio de Aceptación:** [x] Validado.
-  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-  - **Soporte:** No existe validación humana interna no pública para esta sesión; registro operativo sin validación humana nueva.
+- **Criterio de Aceptación:** [ ] Validado.
+  - [ ] Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - **Soporte:** [validación humana interna no pública]
   - **Hash (Contenido):** `hash omitido:[pendiente]`
   - **Fingerprint:** `hash omitido:[pendiente]`
   - **Nivel de Riesgo:** Medio
@@ -65,8 +59,8 @@ Registrar evidencia fuente de conversación para fortalecer corroboración de va
 ## Siguiente paso concreto
 Mantener sincronizadas las bitácoras diarias con cada fecha de actividad canónica.
 
-[LID]: log_sesiones_trabajo_registradas.md
+[LID]: log_conversaciones_ia.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

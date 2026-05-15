@@ -1,8 +1,11 @@
 import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1])) # 07_scripts root
+sys.path.insert(0, str(Path(__file__).resolve().parent))     # subdirectory siblings
+
+
 import unittest
 from unittest import mock
-from pathlib import Path
-
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
@@ -13,7 +16,6 @@ from check_serena_access import (  # noqa: E402
     recommended_mode_today,
     recommendations,
 )
-
 
 class TestCheckSerenaAccess(unittest.TestCase):
     def test_recommended_mode_prefers_http_when_workspace_exposes_serena_local(self):
@@ -61,7 +63,6 @@ class TestCheckSerenaAccess(unittest.TestCase):
         payload = attempt_start_http(ROOT, {"serena-local": True})
         self.assertTrue(payload["attempted"])
         self.assertEqual(payload["status"], "already_listening")
-
 
 if __name__ == "__main__":
     unittest.main()

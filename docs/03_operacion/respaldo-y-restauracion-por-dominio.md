@@ -30,4 +30,4 @@ Respaldar y restaurar `sistema_tesis`, `openclaw` y `edge_iot` de forma independ
 - No se respaldan modelos pesados de `Ollama` ni `RKNN-LLM` en esta fase.
 - `administrativo` orquesta el proceso, pero no se trata como dominio restaurable completo.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

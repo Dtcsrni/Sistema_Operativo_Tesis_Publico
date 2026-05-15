@@ -1,7 +1,12 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1])) # 07_scripts root
+sys.path.insert(0, str(Path(__file__).resolve().parent))     # subdirectory siblings
+
+
 import json
 import os
 import subprocess
-import sys
 import tempfile
 import time
 import unittest
@@ -9,11 +14,8 @@ import socket
 from contextlib import suppress
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
-from pathlib import Path
-
 
 ROOT = Path(__file__).resolve().parents[2]
-
 
 def close_process(process: subprocess.Popen[bytes]) -> None:
     if process.poll() is None:
@@ -29,11 +31,9 @@ def close_process(process: subprocess.Popen[bytes]) -> None:
             with suppress(Exception):
                 stream.close()
 
-
 def encode_message(payload: dict) -> bytes:
     body = json.dumps(payload).encode("utf-8")
     return f"Content-Length: {len(body)}\r\n\r\n".encode("ascii") + body
-
 
 def read_message(stream) -> dict:
     headers = {}
@@ -50,16 +50,13 @@ def read_message(stream) -> dict:
     body = stream.read(length)
     return json.loads(body.decode("utf-8"))
 
-
 def write_json(path: Path, payload: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-
 def write_jsonl(path: Path, rows: list[dict]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(json.dumps(row, ensure_ascii=False) for row in rows) + "\n", encoding="utf-8")
-
 
 def minimal_repo(repo: Path) -> None:
     write_json(
@@ -263,7 +260,6 @@ def minimal_repo(repo: Path) -> None:
     doc.write_text("Linea uno\nSerena MCP permite contexto compacto.\n", encoding="utf-8")
     protected = repo / "docs" / "protegido.md"
     protected.write_text("<!-- SISTEMA_TESIS:PROTEGIDO -->\nOriginal\n", encoding="utf-8")
-
 
 class TestSerenaMCP(unittest.TestCase):
     def test_stdio_server_lists_and_calls_tools(self):
@@ -647,7 +643,6 @@ class TestSerenaMCP(unittest.TestCase):
                 self.assertEqual(rows[-1]["identity"]["provider"], "External Host")
             finally:
                 close_process(process)
-
 
 if __name__ == "__main__":
     unittest.main()

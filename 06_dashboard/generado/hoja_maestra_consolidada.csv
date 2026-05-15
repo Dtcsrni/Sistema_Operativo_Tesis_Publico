@@ -43,16 +43,16 @@ tarea,T-023,"Implementar asistente de flujo de trabajo, escáner de secretos y G
 tarea,T-024,Institucionalizar la operación humano-primero con manual CLI guiada y separación privado/público,hecho,alta,B0,ENT-001,Reduce dependencia operativa de IA y mejora legibilidad para colaboradores y jurado
 tarea,T-025,Implementar bundle público sanitizado reproducible y validable desde la base privada,hecho,alta,B0,ENT-001,Cierra la exposición pública sin duplicación manual del repositorio
 tarea,T-026,Verificar rutas mínimas de retoma auditoría y publicación sin IA obligatoria,hecho,media,B0,ENT-001,Introduce `doctor` `next` y chequeos de operabilidad humana
-tarea,T-027,Definir arquitectura de separación obligatoria entre sistema_tesis edge_iot y openclaw con contratos de interfaz,pendiente,critica,B0,ENT-013,Incluye límites de responsabilidad y prohibiciones de acoplamiento cruzado
-tarea,T-028,Implementar estructura física por dominio con guardrails de no mezcla y ownership explícito,pendiente,alta,B0,ENT-013,Validar que scripts de un dominio no escriban en otro
-tarea,T-029,Separar gestión de secretos y variables por dominio con rutas y políticas independientes,pendiente,critica,B0,ENT-013,Usar archivos de entorno separados y rotación mínima
-tarea,T-030,Definir aislamiento de red y runtime por dominio en Orange Pi con comunicación solo por contratos explícitos,pendiente,critica,B0,ENT-013,Segmentación mínima de puertos y rutas permitidas
+tarea,T-027,Definir arquitectura de separación obligatoria entre sistema_tesis edge_iot y openclaw con contratos de interfaz,hecho,critica,B0,ENT-013,Incluye límites de responsabilidad y prohibiciones de acoplamiento cruzado
+tarea,T-028,Implementar estructura física por dominio con guardrails de no mezcla y ownership explícito,hecho,alta,B0,ENT-013,Validar que scripts de un dominio no escriban en otro
+tarea,T-029,Separar gestión de secretos y variables por dominio con rutas y políticas independientes,hecho,critica,B0,ENT-013,Usar archivos de entorno separados y rotación mínima
+tarea,T-030,Definir aislamiento de red y runtime por dominio en Orange Pi con comunicación solo por contratos explícitos,hecho,critica,B0,ENT-013,Segmentación mínima de puertos y rutas permitidas
 tarea,T-031,Aplicar hardening del SO de Orange Pi para el dominio edge_iot sin afectar sistema_tesis ni openclaw,pendiente,critica,B0,ENT-013,SSH firewall fail2ban actualizaciones y mínimo privilegio
 tarea,T-032,Configurar servicios systemd de edge_iot con healthchecks restart policy y dependencias seguras,pendiente,alta,B0,ENT-013,No compartir unidades de servicio con otros dominios
 tarea,T-033,Implementar logging y métricas separadas por dominio con retención y rutas independientes,pendiente,alta,B0,ENT-013,Evidencia operativa sin mezcla de bitácoras técnicas
 tarea,T-034,Implementar watchdog auto-recovery y manejo de intermitencia para servicios de edge_iot,pendiente,alta,B0,ENT-013,Recuperación automática ante cortes parciales
 tarea,T-035,Implementar backup y restore independiente para sistema_tesis edge_iot y openclaw con prueba real de restauración,pendiente,alta,B0,ENT-013,Incluye prueba de recuperación en Orange Pi
-tarea,T-036,Validar que la integración entre dominios use solo APIs o colas definidas y bloquear accesos internos directos,pendiente,critica,B0,ENT-013,Incluir pruebas negativas de acceso cruzado
+tarea,T-036,Validar que la integración entre dominios use solo APIs o colas definidas y bloquear accesos internos directos,hecho,critica,B0,ENT-013,Incluir pruebas negativas de acceso cruzado
 tarea,T-037,Ejecutar benchmark base de latencia throughput CPU RAM temperatura y energía en edge_iot,pendiente,media,B0,ENT-013,Establece línea base operativa antes de B1 B2
 tarea,T-038,Emitir checklist de aceptación para instalación productiva en Orange Pi con evidencia trazable,pendiente,critica,B0,ENT-013,Formaliza criterio de edge listo
 tarea,T-039,Definir arquitectura modular del sistema operativo de tesis con límites entre canon proyecciones auditoría publicación y memoria derivada,hecho,critica,B0,ENT-014,Debe separar capas y eliminar acoplamiento implícito

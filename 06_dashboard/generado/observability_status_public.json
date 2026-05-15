@@ -1,0 +1,212 @@
+{
+  "schema_version": "siot-observability-dashboard-v1",
+  "generated_at": "2026-05-15T09:59:18+00:00",
+  "mode": "public",
+  "access": {
+    "private_lan": false,
+    "auth": "sanitized_public",
+    "read_only": true,
+    "control_mode": "none",
+    "executes_actions": false
+  },
+  "overall_status": "stale",
+  "status_counts": {
+    "unknown": 23,
+    "stale": 2,
+    "ok": 1
+  },
+  "nodes": [
+    {
+      "id": "pc_hub",
+      "label": "PC Hub",
+      "status": "unknown",
+      "service_count": 9,
+      "source": "00_sistema_tesis/config/sistema_tesis.yaml"
+    },
+    {
+      "id": "orange_pi_edge",
+      "label": "Orange Pi Edge",
+      "status": "unknown",
+      "service_count": 2,
+      "source": "manifests/operational_topology.yaml"
+    }
+  ],
+  "domains": [
+    "administrativo",
+    "edge_iot",
+    "openclaw",
+    "sistema_tesis"
+  ],
+  "compose_stack": [
+    {
+      "id": "visor-canon-docs",
+      "status": "unknown",
+      "depends_on": [],
+      "source": "docker-compose.yml"
+    },
+    {
+      "id": "db-vectorial-weaviate",
+      "status": "unknown",
+      "depends_on": [],
+      "source": "docker-compose.yml"
+    },
+    {
+      "id": "inferencia-llamacpp",
+      "status": "unknown",
+      "depends_on": [],
+      "source": "docker-compose.yml"
+    },
+    {
+      "id": "servidor-contexto-serena",
+      "status": "unknown",
+      "depends_on": [],
+      "source": "docker-compose.yml"
+    },
+    {
+      "id": "bot-agente-telegram",
+      "status": "unknown",
+      "depends_on": [
+        "db-vectorial-weaviate",
+        "inferencia-llamacpp",
+        "servidor-contexto-serena"
+      ],
+      "source": "docker-compose.yml"
+    },
+    {
+      "id": "gateway-orchestrator-api",
+      "status": "unknown",
+      "depends_on": [],
+      "source": "docker-compose.yml"
+    },
+    {
+      "id": "api-persistencia-pet",
+      "status": "unknown",
+      "depends_on": [],
+      "source": "docker-compose.yml"
+    },
+    {
+      "id": "hub-misiones-web",
+      "status": "unknown",
+      "depends_on": [
+        "api-persistencia-pet",
+        "gateway-orchestrator-api"
+      ],
+      "source": "docker-compose.yml"
+    },
+    {
+      "id": "executor-codigo-rag",
+      "status": "unknown",
+      "depends_on": [
+        "db-vectorial-weaviate",
+        "inferencia-llamacpp"
+      ],
+      "source": "docker-compose.yml"
+    },
+    {
+      "id": "monitor-telemetria",
+      "status": "unknown",
+      "depends_on": [],
+      "source": "docker-compose.yml"
+    }
+  ],
+  "runtime": {
+    "orchestrator": "OpenClaw",
+    "state": "openclaw_ready",
+    "active_runtime": "local",
+    "openclaw_status": "ok",
+    "serena_status": "down",
+    "telegram_status": "degraded"
+  },
+  "benchmarks": [
+    {
+      "node": "pc_control",
+      "status": "stale",
+      "latest_validity": "valid_scientific_evidence",
+      "source": "runtime/pc_control/benchmarks/index.json"
+    },
+    {
+      "node": "edge_iot",
+      "status": "stale",
+      "latest_validity": "invalid_for_scientific_claim",
+      "source": "runtime/edge_iot/benchmarks/index.json"
+    }
+  ],
+  "publication": {
+    "status": "ok",
+    "bundle_path": "06_dashboard/publico/",
+    "manifest_exists": true,
+    "age_seconds": 4506,
+    "files": 0,
+    "source": "06_dashboard/publico/manifest_publico.json"
+  },
+  "alerts": [
+    {
+      "severity": "down",
+      "owner": "openclaw",
+      "impact": "serena_status",
+      "next_step": "Revisar pestaña OpenClaw/Agentes."
+    },
+    {
+      "severity": "stale",
+      "owner": "pc_control",
+      "impact": "benchmark no nominal o stale",
+      "next_step": "Revisar evidencia antes de usar claims cientificos."
+    },
+    {
+      "severity": "stale",
+      "owner": "edge_iot",
+      "impact": "benchmark no nominal o stale",
+      "next_step": "Revisar evidencia antes de usar claims cientificos."
+    },
+    {
+      "severity": "degraded",
+      "owner": "openclaw",
+      "impact": "telegram_status",
+      "next_step": "Revisar pestaña OpenClaw/Agentes."
+    }
+  ],
+  "sources": [
+    {
+      "path": "manifests/service_matrix.yaml",
+      "exists": true,
+      "sha256": "6e48865d746da71396b79c3bc60944869b518bed0a453ef5815863fde68e5932",
+      "updated_at": "2026-04-12T06:58:52+00:00"
+    },
+    {
+      "path": "manifests/operational_topology.yaml",
+      "exists": true,
+      "sha256": "de1b17f0466b3613ba45966dee49e80d3b47f8a5a3c29213331ccb3e60e905c2",
+      "updated_at": "2026-04-20T23:53:02+00:00"
+    },
+    {
+      "path": "manifests/observability_policy.yaml",
+      "exists": true,
+      "sha256": "87aaa0daedb23c538b962b35e2084947fd8526c64e727b2683ab7aa36ecb34c2",
+      "updated_at": "2026-04-07T10:00:53+00:00"
+    },
+    {
+      "path": "00_sistema_tesis/config/openclaw_status.json",
+      "exists": true,
+      "sha256": "8e2b8ba504640995d27379f656ac7360c5de6f72ba298fc0eb8e98555036c9a3",
+      "updated_at": "2026-05-15T07:25:40+00:00"
+    },
+    {
+      "path": "runtime/pc_control/benchmarks/index.json",
+      "exists": true,
+      "sha256": "5b7d99755495c258dc0d637b78fd182374d5096def42cd9fb2648de8465cbbca",
+      "updated_at": "2026-05-05T03:43:21+00:00"
+    },
+    {
+      "path": "runtime/edge_iot/benchmarks/index.json",
+      "exists": true,
+      "sha256": "2b40088030e765328650ed56f65f334b105e182c4853d3fd4bcc837623e67ba9",
+      "updated_at": "2026-04-29T05:18:39+00:00"
+    },
+    {
+      "path": "06_dashboard/publico/manifest_publico.json",
+      "exists": true,
+      "sha256": "9c57823e3b50e2f73e11337c312381a2ac9a32729b9773f3c23160083d84ceec",
+      "updated_at": "2026-05-15T08:44:11+00:00"
+    }
+  ]
+}

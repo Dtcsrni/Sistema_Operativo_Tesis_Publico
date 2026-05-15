@@ -18,7 +18,7 @@
         "latency_ms": 4331.2,
         "tokens_per_second": 53.38,
         "output_tokens": 150,
-        "output_preview": "Para analizar la situación y determinar la acción adecuada, consideremos los datos proporcionadoruta local no pública Temperatura = 38°C: Esta temperatura es alta para un nodo IoT, lo que podría indicar problemas o c",
+        "output_preview": "Para analizar la situación y determinar la acción adecuada, consideremos los datos proporcionado ruta local no pública  Temperatura = 38°C: Esta temperatura es alta para un nodo IoT, lo que podría indicar problemas o c",
         "task_id": "iot_reasoning",
         "category": "Razonamiento IoT",
         "weight": 1.0
@@ -28,7 +28,7 @@
         "latency_ms": 5945.0,
         "tokens_per_second": 51.63,
         "output_tokens": 250,
-        "output_preview": "```python\ndef find_anomalies(iot_readings):\n    \"\"\"\n    Find anomalies in a list of IoT readings.\n\n    Argruta local no pública        iot_readings (list): A list of dictionaries containing 'sensor_id', 'value', and 't",
+        "output_preview": "```python\ndef find_anomalies(iot_readings):\n    \"\"\"\n    Find anomalies in a list of IoT readings.\n\n    Arg ruta local no pública         iot_readings (list): A list of dictionaries containing 'sensor_id', 'value', and 't",
         "task_id": "code_generation",
         "category": "Generacion de Codigo",
         "weight": 1.0
@@ -38,7 +38,7 @@
         "latency_ms": 3313.2,
         "tokens_per_second": 52.24,
         "output_tokens": 120,
-        "output_preview": "Para elegir el modelo adecuado para la generación de resúmenes rollo (rolling summary) en el nodo edge Orange Pi 5 Plus, debemos considerar varios factoreruta local no pública Capacidad de procesamiento: El Orange P",
+        "output_preview": "Para elegir el modelo adecuado para la generación de resúmenes rollo (rolling summary) en el nodo edge Orange Pi 5 Plus, debemos considerar varios factore ruta local no pública  Capacidad de procesamiento: El Orange P",
         "task_id": "context_fidelity",
         "category": "Fidelidad de Contexto",
         "weight": 1.0

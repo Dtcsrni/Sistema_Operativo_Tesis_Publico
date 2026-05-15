@@ -1,7 +1,10 @@
 import sys
-import unittest
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1])) # 07_scripts root
+sys.path.insert(0, str(Path(__file__).resolve().parent))     # subdirectory siblings
 
+
+import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
@@ -17,7 +20,6 @@ from tesis import (  # noqa: E402
     resolve_openclaw_validation_context,
     validate_signoff_sync_context,
 )
-
 
 class TestTesisSync(unittest.TestCase):
     def test_parse_porcelain_paths_handles_rename(self):
@@ -233,7 +235,6 @@ diff --git a/a b/b
                 confirmation_text="texto distinto",
                 events=events,
             )
-
 
 if __name__ == "__main__":
     unittest.main()

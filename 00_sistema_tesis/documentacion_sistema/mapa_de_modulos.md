@@ -91,7 +91,7 @@ graph TD
 - Derivados: API local, bot Telegram, trazas SQLite, estado de proveedores y cobertura de implementacion en la wiki. Matrix permanece como derivado latente.
 - Visible al publico: arquitectura general, contratos de sesion, politica `desktop-first`, Telegram como canal remoto activo y Matrix como extensión latente.
 - Privado: secretos de proveedores, tokens de Matrix/Telegram, rutas sensibles del host y evidencia operativa fina.
-- Regla operativa: la PC principal concentra el carril pesado con `pc_native_llamacpp`; `tesis-edge` mantiene continuidad 24/7, relay, Telegram y runtime ligero. Matrix queda disponible solo como extensibilidad futura.
+- Regla operativa: la PC principal concentra el carril pesado con `desktop_compute` (Ollama DeepSeek) via Docker Compose; `tesis-edge` mantiene continuidad 24/7, relay, Telegram y runtime ligero. Matrix queda disponible solo como extensibilidad futura.
 
 ## Relaciones clave
 
@@ -113,4 +113,4 @@ Si una persona necesita entender rapidamente el sistema:
 3. Despues revisa el flujo operativo asociado.
 4. Finalmente distingue que partes son privadas y cuales son publicas.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

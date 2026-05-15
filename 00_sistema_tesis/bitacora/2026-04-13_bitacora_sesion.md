@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-13
 
 - **ID de Sesión:** codex-local-20260413-actions-public-sync-v1
-- **Cadena de Confianza (Anterior):** `sha256/4b55a651b58d01cc3b5e6c7852dd91934ba35daea1daa5371b254f2045a433f1`
+- **Cadena de Confianza (Anterior): `hash omitido:omitido````
 - **Bloque principal:** B1
 - **Tipo de sesión:** validación | administración | publicación
 
@@ -15,11 +15,11 @@ Verificar el estado real de GitHub Actions, corregir la compuerta CI hasta elimi
 
 ## Tareas del día
 - [x] Verificar el estado del repo fuente, el repo público y GitHub Pages.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Aislar y corregir el fallo reproducible de `pytest` en la compuerta CI.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-- [x] Registrar validación humana interna no pública, cerrar trazabilidad y publicar el estado actualizado.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+- [ ] Registrar validación humana interna no pública, cerrar trazabilidad y publicar el estado actualizado.
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Trabajo realizado
 - Se verificó que `origin/main` está por delante del downstream público `Dtcsrni/Sistema_Operativo_Tesis_Publico/main`.
@@ -32,26 +32,26 @@ Verificar el estado real de GitHub Actions, corregir la compuerta CI hasta elimi
 - **Commits de referencia:** `dd9b0e2`
 - **Archivos Clave:** `07_scripts/governance_gate.py`, `07_scripts/tests/test_governance_gate.py`, `06_dashboard/wiki/*`, `06_dashboard/generado/*`
 - **Validación del Sistema:** [x] Auditoría `build_all.py` aprobada.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Uso de IA y Gobernanza
 - **Proveedor:** proveedor de IA no publicado
 - **Modelo/Versión:** modelo de IA no publicado
 - **Objetivo:** Diagnóstico de CI/publicación y corrección de compuerta operativa.
 - **Nivel de Razonamiento:** alto
-- **Alineación Ética:**
+- **Alineación Ática:**
     - [x] Transparencia (NIST RMF)
-      - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+      - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
     - [x] Soberanía Humana (UNESCO)
-      - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+      - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
     - [x] Responsabilidad (ISO 42001)
-      - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+      - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ### Validación de Soberanía (Handshake)
 - **Pregunta Crítica:** ¿Puedo continuar el cierre asignando automáticamente el Step ID para registrar esta instrucción crítica y completar trazabilidad, commit y publicación?
 - **Respuesta Erick Vega:** "Continúa, decide siempre automáticamente el step id"
 - **Criterio de Aceptación:** [x] Validado con validación humana interna no pública.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
   - **Soporte:** validación humana interna no pública
   - **Texto exacto de confirmación verbal:** "Continúa, decide siempre automáticamente el step id"
   - **Hash de confirmación verbal:** `hash omitido:omitido`
@@ -66,8 +66,8 @@ Verificar el estado real de GitHub Actions, corregir la compuerta CI hasta elimi
 ## Siguiente paso concreto
 Registrar validación humana interna no pública, ejecutar `build_all.py`, hacer commit/push del fix y sincronizar manualmente el repo público atrasado.
 
-[LID]: log_sesiones_trabajo_registradas.md
+[LID]: log_conversaciones_ia.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

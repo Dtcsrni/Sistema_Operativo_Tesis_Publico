@@ -173,7 +173,7 @@ Resultado esperado:
 1. Caveman reduce ruido de salida y mantiene instrucciones de agente en modo conciso.
 2. Serena resuelve contexto interno, mapa repo, trazabilidad y preflight.
 3. `07_scripts/agent_task_router.py` clasifica tareas por privacidad, riesgo, complejidad, rutas objetivo y necesidad de documentacion externa.
-4. Modelos locales (`ollama_local` o `pc_native_llamacpp`) pueden ejecutar subtareas automaticas, pero no escriben directo al repositorio; el agente principal integra solo tras gates.
+4. Modelos locales (`ollama_local` o `desktop_compute` via `ollama-pc`) pueden ejecutar subtareas automáticas, pero no escriben directo al repositorio; el agente principal integra solo tras gates.
 5. `context7_docs` se usa solo para documentacion externa actualizada y versionada.
 6. `github_models_free` queda inactivo por defecto y solo puede recibir contexto `public` o `redacted` con token `models:read`; evidencia privada, secretos, ledger privado y rutas sensibles quedan bloqueadas.
 7. `ab_pilot.py` compara rutas por tokens, costo, latencia, aceptacion, fallos de gate y retrabajo antes de promover una ruta.
@@ -199,4 +199,4 @@ Resultado esperado:
 6. Si el host sigue sin ver tools MCP aunque HTTP responda bien, asumir primero una limitacion del host/runtime antes que un fallo de negocio en Serena.
 7. Si un host externo no puede registrar `127.0.0.1`, desplegar el bridge detras de un tunel o reverse proxy con auth y registrar esa URL publica.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

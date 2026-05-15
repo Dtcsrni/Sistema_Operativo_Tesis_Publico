@@ -91,8 +91,8 @@ La alternativa elegida reduce dependencia cognitiva de la IA, mejora legibilidad
 - [DEC-0015](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0015_protocolo_de_sanitización_para_exposición_pública.md)
 - [DEC-0016](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-26_DEC-0016_canon_unificado_de_eventos_y_proyecciones.md)
 
-[LID]: ruta local no pública
-[GOV]: ruta local no pública
-[AUD]: ruta local no pública
+[LID]:  ruta local no pública 
+[GOV]:  ruta local no pública 
+[AUD]:  ruta local no pública
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

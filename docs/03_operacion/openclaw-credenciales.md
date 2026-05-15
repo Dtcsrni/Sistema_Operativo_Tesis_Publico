@@ -138,4 +138,4 @@ OPENCLAW_WEB_SESSION_HEADLESS=0 "$OPENCLAW_PYTHON_BIN" runtime/openclaw/bin/open
 - Synapse Admin API: https://matrix-org.github.io/synapse/latest/usage/administration/admin_api/
 - GitHub Models quickstart: https://docs.github.com/en/github-models/quickstart
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

@@ -12,8 +12,13 @@ Ofrecer una superficie híbrida `CLI + web + Telegram` para operar `openclaw` co
 6. Operar sesiones por web local, CLI o Telegram usando la misma `session-layer`.
 7. Revisar aprobaciones pendientes y trazas con `/sessions`, `/traces/{id}` y la auditoría SQLite.
 
+## Estado operativo 2026-05-12
+- La pasarela `pasarela-openclaw` quedó recreada en Compose con estado `healthy`.
+- El arranque del bot/pasarela ahora prioriza `OPENCLAW_GEMINI_MODEL` en el warmup y luego continúa con los modelos locales.
+- El servicio de pasarela ya volvió al esquema de imagen reconstruida; el workaround de bind mount quedó retirado.
+
 ## Runtime hibrido PC Hub
-- Usar WSL/VS Code como plano normal de autoria, Git, Serena, Caveman y cierre con `build_all.py`.
+- Usar Docker Compose (en PC) / VS Code como plano normal de autoría, Git, Serena, Caveman y cierre con `build_all.py`. Histórico: Se solía usar WSL; ahora todo es contenedorizado.
 - Usar Docker Compose como plano reproducible de servicios (`siot-docs`, `siot-agent`) y pruebas E2E.
 - No tratar el contenedor como repositorio soberano ni como sustituto de los guardrails.
 - Antes de mover cargas pesadas a Docker desde rutas `/mnt/*`, medir rendimiento; si el bind mount degrada, usar clon operativo en filesystem Linux/ext4 o volúmenes nombrados para estado/cache.
@@ -120,10 +125,10 @@ Ofrecer una superficie híbrida `CLI + web + Telegram` para operar `openclaw` co
 - El runtime principal es `Ollama`; la vía `RKLLM`/`RKNN-LLM` se instala como carril experimental secundario.
 - La Orange Pi aloja `openclaw` como nodo asistivo local-first; no sustituye al escritorio como superficie principal de investigación documental.
 - No usar `OPENCLAW_PROFILE=academico` como habilitación amplia: el comportamiento efectivo depende del dominio de la tarea, secretos disponibles, presupuesto y riesgo.
-- Orden operativo por defecto para el asistente científico:
+ - Orden operativo por defecto para el asistente científico:
   1. `local`
   2. `ollama_local`
-  3. `pc_native_llamacpp` para tareas academicas/profesionales pesadas cuando la PC este disponible
+  3. `desktop_compute` (runtime pesado de escritorio; preferencia actual: Ollama). `pc_native_llamacpp`/`llama.cpp` se consideran legacy y ya no son la opción por defecto.
   4. nube academica/profesional solo con `OPENCLAW_CLOUD_ENABLED=1` o permiso explicito por tarea
   5. `rknn_llm_experimental` solo tras benchmark exitoso y decisión explícita
 - En la fase local-first actual, `OPENCLAW_CLOUD_ENABLED=0` es el valor esperado.
@@ -172,28 +177,25 @@ Ofrecer una superficie híbrida `CLI + web + Telegram` para operar `openclaw` co
 - El hardening SSH del edge solo necesita permitir el listener remoto del runtime pesado para `tesisai`: `PermitListen 127.0.0.1:21434`.
 - Recuperación del túnel PC: ejecutar `systemctl --user restart openclaw-desktop-tunnel.service` en el escritorio y comprobar desde `tesis-edge` con `curl -s http://127.0.0.1:21434/health`.
 
-## Runtime pesado en la PC
-- Wrapper Windows:
-  - `runtime/openclaw/wrappers/openclaw-llamacpp-server.cmd`
-  - `runtime/openclaw/wrappers/openclaw-llamacpp-server.ps1`
-- Config mínima:
-  - `OPENCLAW_DESKTOP_RUNTIME=llamacpp`
-  - `OPENCLAW_DESKTOP_RUNTIME_BASE_URL=http://127.0.0.1:21434`
-  - `OPENCLAW_DESKTOP_RUNTIME_MODEL=<modelo.gguf o alias operativo>`
+ ## Runtime pesado en la PC
+ Wrapper Windows (legacy):
+  - `runtime/openclaw/wrappers/openclaw-llamacpp-server.cmd` (histórico)
+  - `runtime/openclaw/wrappers/openclaw-llamacpp-server.ps1` (histórico)
+ Config mínima (nota: la ruta preferida actual es `desktop_compute` con Ollama):
+  - `OPENCLAW_DESKTOP_RUNTIME=desktop_compute`  # usar `desktop_compute` en lugar de `llamacpp`
+  - `OPENCLAW_DESKTOP_RUNTIME_BASE_URL=http://127.0.0.1:11434`  # apunta al proveedor de escritorio (ej. Ollama)
+  - `OPENCLAW_DESKTOP_RUNTIME_MODEL=<modelo>`
   - `OPENCLAW_DESKTOP_NATIVE_HOST=windows`
-- `OPENCLAW_LLAMACPP_MODEL_NAME=mistral-nemo:12b` permite derivar el blob actual desde Ollama si no se especifica `OPENCLAW_LLAMACPP_MODEL_PATH`.
-- `OPENCLAW_LLAMACPP_BIND_PORT=21435` separa el puerto local del servidor Windows del puerto remoto expuesto en el edge.
-- La persistencia host-real vive en la tarea programada Windows `\OpenClawLlamaCppServer`, con `BootTrigger`, usuario `SYSTEM` y `RunLevel=HighestAvailable`; no depende del script Startup de usuario.
-- El runtime pesado vive en host nativo de la PC; OpenClaw solo consume su HTTP health/generate y lo trata como `pc_native_llamacpp`.
+ Nota: las variables `OPENCLAW_LLAMACPP_*` y los wrappers `openclaw-llamacpp-*` se conservan solo para referencia histórica y no son necesarios en despliegues actuales.
 
 ## Selección local de modelos medida 2026-04-21
-- Evidencia PC principal post-WSL: `historial interno no público/openclaw_max_model_bench_pc_post_wsl_20260421.json`.
-- Evidencia PC comparativa pre-WSL: `historial interno no público/openclaw_max_model_bench_pc_20260421.json`.
+- Evidencia PC principal (histórico post-WSL shutdown): `historial interno no público/openclaw_max_model_bench_pc_post_wsl_20260421.json`.
+- Evidencia PC comparativa (histórico pre-WSL optimización): `historial interno no público/openclaw_max_model_bench_pc_20260421.json`.
 - Evidencia Orange Pi CPU: `historial interno no público/openclaw_max_model_bench_edge_20260421.json`.
 - PC `pc_native_llamacpp`: usar `mistral-nemo:12b` como modelo pesado diario; usar `qwen2.5-coder:14b` para tareas de código; tratar `qwen3:14b` y `phi4:14b` como techo experimental/agresivo.
 - Orange Pi por Ollama CPU: mantener `qwen3:4b` como fallback mínimo y candidato diario de borde; tratar `qwen2.5-coder:7b` como techo experimental controlado.
 - Mantener Qwen 3 en el camino por defecto del borde para alinear el comportamiento con la preferencia operativa actual.
-- La medición PC posterior a `wsl --shutdown` aplicó `.wslconfig`: WSL pasó a 11.68 GiB visibles y 16 GiB de swap; la VRAM base bajó a ~1271 MiB usados antes de cargar modelos.
+- Histórico: La medición PC posterior a `wsl --shutdown` mostró mejora de recursos. Actual: Docker Compose maneja la alocación de memoria de forma más predecible sin dependencia de WSL.
 - RKNN/RKLLM sigue en carril experimental: hay `librknnrt.so`, `librkllmrt.so` y `rknn_server`, pero no se observó `/dev/rknpu*` ni demo RKLLM preconvertido listo. No promover NPU hasta tener device/permisos/modelo `.rkllm` y benchmark TTFT/tokens/s/memoria.
 
 ## Aislamiento T-030
@@ -216,4 +218,4 @@ Ofrecer una superficie híbrida `CLI + web + Telegram` para operar `openclaw` co
 - La salida de `openclaw` se considera propuesta operativa hasta revisión humana.
 - La evidencia fuente y el `Step ID` se preservan fuera de la cola automática.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

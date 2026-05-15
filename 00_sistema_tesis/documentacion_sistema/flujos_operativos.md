@@ -263,7 +263,7 @@ Objetivo: usar OpenClaw como capa asistiva sin mover la autoria principal fuera 
 
 Secuencia:
 
-1. Levantar o verificar el runtime pesado de la PC con `llama.cpp server` y confirmar `OPENCLAW_DESKTOP_RUNTIME=llamacpp`.
+1. Verificar que `ollama-pc` esté corriendo en `docker compose -f docker-compose.pc.yml` con `deepseek-r1:7b` disponible; confirmar `OPENCLAW_DESKTOP_COMPUTE_BASE_URL=http://ollama-pc:11434`.
 2. Confirmar en `pasarela estado` que `nodes.desktop.runtime=llamacpp` y que el edge mantiene su runtime local ligero.
 3. Operar sesiones desde `CLI`, `web_local` o `telegram`; todos los canales activos deben pasar por la misma `session-layer`.
 4. Mantener `Telegram` como plano remoto activo y `Matrix` solo como compatibilidad futura, fallback latente o notificacion cuando se reactive.
@@ -286,4 +286,4 @@ Todo flujo del sistema debe cumplir tres condiciones:
 - tener una salida humana legible;
 - poder distinguir entre superficie canónica no pública y superficie publica.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

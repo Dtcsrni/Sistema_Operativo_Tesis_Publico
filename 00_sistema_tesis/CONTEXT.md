@@ -64,6 +64,26 @@ Framework de Rockchip para ejecutar modelos LLM en la NPU del RK3588. Requiere c
 ### PC (Nodo de Control)
 Equipo de escritorio principal del Tesista. Usado para compilación RKLLM, benchmarks comparativos (GPU CUDA) y trabajo agéntico local.
 
+### Motor Epistémico de Inferencia "Toltecayotl"
+Núcleo GraphRAG y repositorio de sabiduría del proyecto (antes Atzin Scientific Engine).
+
+### Cápsula de Conocimiento Trazable
+Fragmento de información asimilada en Toltecayotl (chunk), validado por el tesista y firmado criptográficamente para evitar alucinaciones.
+
+### Asimilador Documental de Datos
+Herramienta de ingesta manual por CLI para extraer, firmar y cargar conocimiento al Motor Toltecayotl.
+
+### Sincronización de Acervo Operativo
+Mecanismo de replicación de Cápsulas desde la base maestra (PC) hacia el almacenamiento local del Edge (Orange Pi) para inferencia offline.
+
+### Respaldo Bibliográfico
+Exigencia operativa para que toda inferencia generada a partir de Toltecayotl incluya citas verificables en formato APA basadas en los metadatos de la Cápsula.
+
+### Sistema de Telemetría Remota (DEC-0037)
+### Integración con Jira (DEC-0042)
+Extensión del CCM para la sincronización de tareas con issues externos de Jira. Permite la trazabilidad bidireccional entre la gobernanza agéntica interna y los sistemas corporativos de gestión de proyectos. Incluye soporte para vinculación de issues, visualización de estados en tiempo real y badges de sincronización.
+Función básica obligatoria para supervisión de procesos largos (>30s) vía Telegram. Implementa el estándar "Total Awareness": latido de actividad (Typing/Spinner), métricas de carga (CPU/RAM/Disco), trazabilidad (VAL-STEP/PID) y log de auditoría. En la arquitectura actual, Telegram es un canal **Push-Only (Solo Monitoreo)**; la interacción bidireccional está desactivada.
+
 ---
 
 ## Gobernanza y Trazabilidad
@@ -118,4 +138,4 @@ Directorio con el contexto estructurado v09 del proyecto (`.md`, `.jsonl`, `.sql
 ### pendientes/
 Directorio de issues locales del sistema de triage (`00_sistema_tesis/pendientes/`). Gestionado por el skill `triage`.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

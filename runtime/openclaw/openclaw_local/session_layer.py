@@ -8,12 +8,13 @@ import unicodedata
 from uuid import uuid4
 
 from .contracts import SessionEnvelope, SessionMessage
+from .maestro_router import build_maestro_route_decision, maestro_enabled, maestro_message_hash
 from .policies import load_provider_registry
 from .runtime_status import probe_runtime_status
 from .storage import OpenClawStore
 
 
-DispatchHandler = Callable[[str, str], dict[str, Any]]
+DispatchHandler = Callable[..., dict[str, Any]]
 
 
 def parse_channel_command(text: str) -> tuple[str, str]:
@@ -152,6 +153,7 @@ def process_channel_text(
     text: str,
     dispatcher: DispatchHandler,
     operator_identity: str = "",
+    progress_callback: Any | None = None,
 ) -> dict[str, Any]:
     command, argument = parse_channel_command(text)
     session = ensure_channel_session(
@@ -167,6 +169,33 @@ def process_channel_text(
         title_hint=argument or text or str(session.get("title", "")),
         payload_update={"last_command": command, "last_text": text[:500]},
     )
+    maestro_decision: dict[str, Any] | None = None
+    if channel == "telegram" and maestro_enabled():
+        decision = build_maestro_route_decision(
+            repo_root=repo_root,
+            session_id=str(session["session_id"]),
+            channel=channel,
+            peer_id=peer_id,
+            command=command,
+            text=argument or text,
+            store=store,
+        )
+        store.save_maestro_route_decision(decision)
+        maestro_decision = decision.to_dict()
+        message_hash = maestro_message_hash(argument or text)
+        store.cache_context(
+            f"{channel}:maestro_route:{peer_id}:{message_hash}",
+            {"message_hash": message_hash, "decision": maestro_decision},
+        )
+        session = touch_session(
+            store=store,
+            session=session,
+            payload_update={
+                "last_maestro_route_id": decision.route_id,
+                "last_maestro_intent": decision.intent,
+                "last_maestro_model": decision.selected_model,
+            },
+        )
     inbound = record_session_message(
         store=store,
         session_id=str(session["session_id"]),
@@ -177,9 +206,17 @@ def process_channel_text(
         provider="user",
         model="user",
         status="received",
-        payload={"argument": argument},
+        payload={"argument": argument, "maestro_decision": maestro_decision},
     )
-    response = dispatcher(command, argument)
+    try:
+        response = dispatcher(command, argument, progress_callback=progress_callback)
+    except TypeError as exc:
+        if "progress_callback" not in str(exc):
+            raise
+        response = dispatcher(command, argument)
+    if maestro_decision is not None:
+        response = dict(response)
+        response["maestro_route"] = maestro_decision
     provider = str(response.get("provider") or response.get("selected_provider") or "openclaw")
     model = str(response.get("model") or response.get("selected_model") or "sin_modelo")
     outbound = record_session_message(

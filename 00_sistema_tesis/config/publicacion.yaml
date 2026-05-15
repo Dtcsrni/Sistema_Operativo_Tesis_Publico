@@ -56,6 +56,10 @@
     {
       "source": "06_dashboard/generado/badges",
       "target": "dashboard/badges"
+    },
+    {
+      "source": "06_dashboard/generado/observability_status_public.json",
+      "target": "observability_status_public.json"
     }
   ],
   "sanitizacion": {
@@ -93,7 +97,7 @@
       },
       {
         "nombre": "hashes_sha256",
-        "patron": "sha256:[0-9a-fA-F]{8,64}",
+        "patron": "sha256[:/][0-9a-fA-F]{8,64}",
         "reemplazo": "sha256:[redactado]"
       },
       {

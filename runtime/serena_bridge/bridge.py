@@ -17,9 +17,9 @@ SCRIPTS_DIR = ROOT / "07_scripts"
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
-from serena_mcp import LOGGER as SERENA_LOGGER  # noqa: E402
-from serena_mcp import SerenaMCPServer, _jsonrpc_error  # noqa: E402
-from serena_policy import load_serena_config, resolve_root  # noqa: E402
+from serena.serena_mcp import LOGGER as SERENA_LOGGER  # noqa: E402
+from serena.serena_mcp import SerenaMCPServer, _jsonrpc_error  # noqa: E402
+from serena.serena_policy import load_serena_config, resolve_root  # noqa: E402
 
 
 LOGGER = logging.getLogger("serena_bridge")

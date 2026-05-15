@@ -16,7 +16,7 @@ agnostic: true
 
 ## Estructura de workspace
 
-El workspace VS Code esta en `ruta local no pública`.
+El workspace VS Code esta en ` ruta local no pública `.
 Configuracion MCP en `.vscode/mcp.json` — verificar disponibilidad de Serena antes de usar filesystem raw.
 
 ## Modulos OpenClaw (runtime/openclaw/openclaw_local/)
@@ -103,7 +103,7 @@ $env:OPENCLAW_HERMES_ENABLED = "1"
 python 07_scripts/build_all.py --group openclaw
 ```
 
-Ver `00_sistema_tesis/decisiones/2026-04-29_DEC-0015_politica_migracion_hermes.md`.
+Ver `00_sistema_tesis/decisiones/2026-04-29_DEC-0026_politica_migracion_hermes.md`.
 
 ## Patrones prohibidos en telegram_bot.py
 
@@ -166,4 +166,4 @@ Esta skill funciona con cualquier agente compatible con el formato SKILL.md:
 No asumas herramientas especificas de un proveedor. Usa siempre las APIs
 declaradas en `contracts.py` y los modulos de `openclaw_local/`.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

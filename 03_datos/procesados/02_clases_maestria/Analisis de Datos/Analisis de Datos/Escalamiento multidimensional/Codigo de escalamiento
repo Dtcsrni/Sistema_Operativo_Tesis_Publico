@@ -1,0 +1,104 @@
+######-----Creanción del Índice de Actividad Humana------####
+
+library(psych)
+library(corrplot)
+library(tseries)
+library(lmtest)
+library(car)
+library(nortest)
+library(MASS)
+library(faraway)
+library(forecast)
+library(moments)
+library(readxl)
+library(dplyr)
+library(ggplot2)
+library(GGally)
+library(Hmisc)
+library(corrplot)
+library(PerformanceAnalytics)
+
+##--Variables originales
+
+# Tp = Temperatura media del planeta
+# t = Tiempo (1880 a 2021, bimestral)
+# Dd = Tasa de crecimiento demografico
+# Pp = Produccion de barriles en crudo
+# Ce = Consumo de energia (KWH)
+# Mn = Mineria (produccion de metales en toneladas)
+# Cg = Cabezas de ganado 
+# Ft = Utilizacion de fertilizantes (en toneladas)
+# Ct = Produccion de cemento (en toneladas)
+# Pm = Produccion de motores de combustion
+# Pa = Produccion de alimentos (en toneladas)
+# Tm = Turismo (desplazamiento de personas)
+# Rs = Desechos solidos (en toneladas)
+
+####Trasformado la base a matriz######
+Dd=base$Dd
+Pp=base$Pp
+Ce=base$Ce
+Mn=base$Mn
+Cg=base$Cg
+Ft=base$Ft
+Ct=base$Ct
+Pm=base$Pm
+Pa=base$Pa
+Tm=base$Tm
+Rs=base$Rs
+
+matriz=cbind(Dd,Pp,Ce,Mn,Cg,Ft,Ct,Pm,Pa,Tm,Rs)
+matriz
+
+#Matriz Correlación
+chart.Correlation(matriz, histogram = F, pch = 19)
+
+###---ESCALAMIENTO MULTIDIMENCIONAL
+library(magrittr)
+library(dplyr)
+library(ggpubr)
+
+#--Estaradizando los datos
+provMap_s=scale(matriz)
+provMap_s
+
+#--Creando grupos de variables
+print(cor(matriz),2)
+X=(as.dist(1-cor(matriz),2))
+X
+par(mfcol=c(1,1))
+plot(hclust(as.dist(1-cor(matriz))),main="Dendograma de nuevas variables")#dendograma
+D= (1-cor(matriz))
+D
+corrplot(D, method="number", type="upper")
+
+#--Obteniendo distancias
+provMap_d=dist(provMap_s)
+provMap_d
+provMap_r=cmdscale(provMap_d,eig=TRUE, k=4)
+provMap_r
+
+#--coordenadas
+A3=provMap_r$points
+A3
+
+#--Cumplimiento de supuestos
+summary(A3) #Valor esperado 
+C=cor(A3)
+corrplot(C, cex = 1.2 , main ="Matriz de correlación")
+V=var(A3)
+corPlot(V, cex = 1.2, main = "Matriz de varianza y covarianzas")
+
+#---Nombrando las dimensiones 
+G1=A3[,1]
+G2=A3[,2]
+G3=A3[,3]
+G4=A3[,4]
+
+IDA3=G1+G2+G3+G4
+IDA3
+
+modeloa<-ts(IDA3,start=1880,frequency=12, end=c(2022,12))
+plot.ts(modeloa, col="10", xlab ="Tiempo", lwd = 3, ylab="Grados (°C)", 
+        main = "Indice Activadad Humana (Ah)")
+

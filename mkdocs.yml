@@ -45,6 +45,9 @@ plugins: []
 
 markdown_extensions:
   - admonition
+  - attr_list
+  - md_in_html
+  - tables
   - pymdownx.details
   - pymdownx.superfences:
       custom_fences:
@@ -53,9 +56,14 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
-  - attr_list
-  - md_in_html
-  - tables
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
 
 extra_css:
   - extra/wiki_premium.css
@@ -65,6 +73,7 @@ extra_javascript:
 
 nav:
   - Inicio: index.md
+  - Arquitectura Toltecayotl: arquitectura.md
   - Agente y Casos de Uso: casos_uso.md
   - Sistema: sistema.md
   - Gobernanza: gobernanza.md

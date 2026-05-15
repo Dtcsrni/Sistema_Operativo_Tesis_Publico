@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-03
 
 - **ID de Sesión:** codex-local-20260403-publicacion-downstream-hardening
-- **Cadena de Confianza (Anterior):** `sha256/72f3c777c056558061c74a118edcb412093100f96a54d231ba7ff77853d02ca1`
+- **Cadena de Confianza (Anterior): `hash omitido:omitido````
 - **Bloque principal:** B0
 - **Tipo de sesión:** publicación | ci/cd | endurecimiento | regularización
 
@@ -15,13 +15,13 @@ Endurecer la publicación downstream y la superficie pública, estabilizando enl
 
 ## Tareas del día
 - [x] Endurecer la automatización de sincronización y publicación pública.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Corregir validación de enlaces y referencias absolutas del repo en CI y superficies públicas.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Curar la redacción y la cabecera de la wiki pública IoT para reducir regresiones editoriales.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Regularizar retrospectivamente la cobertura diaria de esta fecha con apoyo de validación humana interna no pública.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Trabajo realizado
 - Se reforzó la sincronización downstream y se resincronizó la publicación pública.
@@ -33,30 +33,29 @@ Endurecer la publicación downstream y la superficie pública, estabilizando enl
 - **Commits de referencia:** `6c10f0b`, `f0576a4`, `6142e8e`, `4c1f410`, `acd289b`, `300c473`, `2954f87`, `5a30db4`, `dcb30d3`, `d3ae4ad`, `058a250`, `8143ab2`, `865901e`, `8f44713`
 - **Archivos Clave:** `.github/workflows/verify.yml`, `07_scripts/validate_links.py`, `07_scripts/publication.py`, `06_dashboard/publico`, `06_dashboard/wiki`
 - **Validación del Sistema:** [x] Cobertura retrospectiva regularizada y coherente con el historial Git.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Uso de IA y Gobernanza
 - **Proveedor:** proveedor de IA no publicado
 - **Modelo/Versión:** modelo de IA no publicado
 - **Objetivo:** Blindar publicación pública y corregir regresiones de enlaces/sanitización.
 - **Nivel de Razonamiento:** alto
-- **Alineación Ética:**
+- **Alineación Ática:**
     - [x] Transparencia (NIST RMF)
-      - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+      - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
     - [x] Soberanía Humana (UNESCO)
-      - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+      - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
     - [x] Responsabilidad (ISO 42001)
-      - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+      - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ### Validación de Soberanía (Handshake)
 - **Pregunta Crítica:** Regularización retrospectiva autorizada para cubrir días de trabajo faltantes detectados contra Git.
 - **Respuesta Erick Vega:** "si, cubre todo lo faltante"
 - **Criterio de Aceptación:** [x] Validado retrospectivamente con validación humana interna no pública.
-  - Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
   - **Soporte:** validación humana interna no pública
   - **Texto exacto de confirmación verbal:** "si, cubre todo lo faltante"
   - **Hash de confirmación verbal:** `hash omitido:omitido`
-  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
   - **Nivel de Riesgo:** ALTO
   - **Modo:** Regularización Retrospectiva
 
@@ -67,8 +66,8 @@ Endurecer la publicación downstream y la superficie pública, estabilizando enl
 ## Siguiente paso concreto
 Mantener la cobertura diaria sincronizada con la actividad real de Git para que este tipo de regularización no vuelva a acumularse.
 
-[LID]: log_sesiones_trabajo_registradas.md
+[LID]: log_conversaciones_ia.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

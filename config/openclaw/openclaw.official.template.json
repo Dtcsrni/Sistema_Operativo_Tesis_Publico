@@ -3,9 +3,11 @@
     "defaults": {
       "maxConcurrent": 1,
       "model": {
-        "primary": "ollama/qwen3:4b",
+        "primary": "llamacpp/mistral-nemo:12b",
         "fallbacks": [
-          "ollama/gemma3:4b"
+          "llamacpp/qwen2.5-coder:7b",
+          "llamacpp/gemma3:4b",
+          "openrouter/openrouter/free"
         ]
       },
       "embeddedHarness": {
@@ -18,43 +20,51 @@
   "models": {
     "mode": "merge",
     "providers": {
-      "ollama": {
-        "api": "ollama",
-        "baseUrl": "http://127.0.0.1:11434",
+      "llamacpp": {
+        "api": "openai-compatible",
+        "baseUrl": "http://inferencia-llamacpp:8080/v1",
         "models": [
           {
-            "id": "qwen3:4b",
-            "name": "qwen3:4b edge daily",
-            "reasoning": false,
-            "input": [
-              "text"
-            ],
-            "contextWindow": 32768,
-            "contextTokens": 4096,
-            "maxTokens": 800,
-            "cost": {
-              "input": 0,
-              "output": 0,
-              "cacheRead": 0,
-              "cacheWrite": 0
-            }
+            "id": "mistral-nemo:12b",
+            "name": "mistral-nemo:12b llama.cpp local",
+            "reasoning": true,
+            "input": ["text"],
+            "contextWindow": 8192,
+            "contextTokens": 8192,
+            "maxTokens": 4096,
+            "cost": {"input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0}
           },
           {
-            "id": "gemma3:4b",
-            "name": "gemma3:4b edge fallback",
+            "id": "qwen2.5-coder:7b",
+            "name": "qwen2.5-coder:7b llama.cpp local",
             "reasoning": false,
-            "input": [
-              "text"
-            ],
+            "input": ["text"],
+            "contextWindow": 32768,
+            "contextTokens": 8192,
+            "maxTokens": 4096,
+            "cost": {"input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0}
+          }
+        ]
+      },
+      "openrouter": {
+        "api": "openai-compatible",
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "manualApproval": true,
+        "freeTier": {
+          "requestsPerMinute": 20,
+          "dailyWithout10UsdCredits": 50,
+          "dailyWith10UsdCredits": 1000
+        },
+        "models": [
+          {
+            "id": "openrouter/free",
+            "name": "OpenRouter free router (manual, non-sensitive only)",
+            "reasoning": true,
+            "input": ["text"],
             "contextWindow": 131072,
-            "contextTokens": 4096,
-            "maxTokens": 800,
-            "cost": {
-              "input": 0,
-              "output": 0,
-              "cacheRead": 0,
-              "cacheWrite": 0
-            }
+            "contextTokens": 8192,
+            "maxTokens": 2048,
+            "cost": {"input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0}
           }
         ]
       }
@@ -73,9 +83,6 @@
     "port": 18789
   },
   "tools": {
-    "deny": [
-      "group:web",
-      "browser"
-    ]
+    "deny": []
   }
 }

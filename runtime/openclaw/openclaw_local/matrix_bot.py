@@ -10,7 +10,8 @@ from uuid import uuid4
 
 from .session_layer import process_channel_text
 from .storage import OpenClawStore
-from .telegram_bot import dispatch_command
+from .orchestrator import Orchestrator
+from .channels import MatrixChannel
 
 
 def matrix_configured() -> bool:
@@ -94,13 +95,22 @@ def process_matrix_event(event: dict[str, Any], *, room_id: str, repo_root: Path
     text = str((event.get("content") or {}).get("body", "")).strip()
     if not text:
         return {"status": "ignored", "reason": "empty_body"}
+    orchestrator = Orchestrator(repo_root, store)
+    channel = MatrixChannel(room_id)
     result = process_channel_text(
         store=store,
         repo_root=repo_root,
         channel="matrix",
         peer_id=room_id,
         text=text,
-        dispatcher=lambda command, argument: dispatch_command(command, argument, repo_root=repo_root, store=store, chat_id=f"matrix:{room_id}"),
+        dispatcher=lambda cmd, arg, **kw: orchestrator.dispatch_command(
+            command=cmd,
+            argument=arg,
+            channel=channel,
+            chat_id=f"matrix:{room_id}",
+            operator_identity=sender or room_id,
+            **kw
+        ),
         operator_identity=sender or room_id,
     )
     response = dict(result["response"])

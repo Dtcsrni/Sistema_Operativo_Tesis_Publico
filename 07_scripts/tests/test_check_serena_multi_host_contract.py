@@ -1,15 +1,17 @@
 import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1])) # 07_scripts root
+sys.path.insert(0, str(Path(__file__).resolve().parent))     # subdirectory siblings
+
+
 import tempfile
 import unittest
-from pathlib import Path
-
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
 
 import check_serena_multi_host_contract as contract  # noqa: E402
-from data_io import dump_structured_path  # noqa: E402
-
+from utils.data_io import dump_structured_path  # noqa: E402
 
 class TestSerenaMultiHostContract(unittest.TestCase):
     def test_current_repo_contract_is_ok(self):
@@ -49,7 +51,6 @@ class TestSerenaMultiHostContract(unittest.TestCase):
             report = contract.build_report(repo)
         self.assertEqual(report["status"], "degraded")
         self.assertEqual(report["missing_config_tools"], ["trace.append_operation"])
-
 
 if __name__ == "__main__":
     unittest.main()

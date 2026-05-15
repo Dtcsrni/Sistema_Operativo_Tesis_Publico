@@ -1,0 +1,27 @@
+{
+  "board": {
+    "layer_pairs": [],
+    "viewports": []
+  },
+  "boards": [],
+  "cvpcb": {
+    "equivalence_files": []
+  },
+  "erc": {
+    "erc_exclusions": [],
+    "meta": {
+      "version": 0
+    },
+    "pin_map": []
+  },
+  "meta": {
+    "filename": "sirena_555_flipflop.kicad_pro",
+    "version": 1
+  },
+  "schematic": {
+    "annotate_start_num": 1,
+    "legacy_lib_dir": "",
+    "legacy_lib_list": []
+  },
+  "text_variables": {}
+}

@@ -1,20 +1,124 @@
+# ================================================================
+# .dockerignore — OpenClaw Agent Build Context Filter
+# Política: excluir TODO lo que no sea necesario para el agente.
+# Mantener contexto < 50 MB para rebuilds rápidos del dashboard.
+# ================================================================
+
+# ── Control de versiones y herramientas de desarrollo ───────────
 .git
+.gitattributes
+.github
+.gitignore
+.pre-commit-config.yaml
 .vscode
 .gemini
+.serena
 .venv
-__pycache__
+.venv/
+.venv/**
+.pytest_cache
+
+# ── Artefactos Python ────────────────────────────────────────────
+__pycache__/
+**/__pycache__/
 *.pyc
 *.pyo
 *.pyd
-.db
-.ipynb_checkpoints
-07_scripts/__pycache__
-06_dashboard/generado/*
-06_dashboard/publico/*
-06_dashboard/wiki/*
-00_sistema_tesis/bitacora/audit_history/*
+*.egg-info/
+dist/
+build/
+
+# ── Modelos y pesos (nunca van en imagen) ───────────────────────
+runtime/models/
+*.safetensors
+*.rkllm
+*.gguf
+*.onnx
+*.pt
+*.pth
+*.bin
+*.ckpt
+
+# ── Cachés y logs de runtime ─────────────────────────────────────
+runtime/**/cache/
+runtime/**/logs/
+runtime/**/benchmarks/
+
+# ── Directorios de tesis / investigación (necesarios para el build del dashboard) ─
+!00_sistema_tesis/
+!06_dashboard/
+01_planeacion/
+01_servicios/
+02_experimentos/
+03_datos/
+04_datos/
+04_implementacion/
+05_tesis/
+05_tesis_latex/
+bootstrap/
+data_contracts/
+docs/
+!manifests/
+tests/
+_agents/
+ops/
+V/
+
+# ── Datos sensibles y secretos ───────────────────────────────────
+.env
+*.env
+config/backups/
+config/env/*.env
+
+# ── Basura y temporales ──────────────────────────────────────────
+scratch/
 *.bak
 *.tmp
-node_modules
+*.log
+node_modules/
 .dockerignore
-.env
+Bóvedas_Obsidian/
+agent_package.zip
+*.txt
+!runtime/openclaw/requirements*.txt
+!requirements-agent.txt
+
+# ── Archivos raíz no esenciales ──────────────────────────────────
+*.md
+!README.md
+*.ps1
+*.cmd
+*.yaml
+!docker-compose*.yml
+
+# ── Dashboard generado ───────────────────────────────────────────
+06_dashboard/generado/
+06_dashboard/publico/
+06_dashboard/wiki/
+00_sistema_tesis/bitacora/audit_history/
+
+# ── Runtime state: Chromium web_session_profile (~4 GB) ──────────
+runtime/openclaw/state/web_session_profile/
+runtime/openclaw/state/web_session_profile/**
+
+# ── Runtime state: RAG chunks locales (~1.2 GB) ──────────────────
+runtime/openclaw/state/toltecayotl_sync/
+
+# ── Runtime state: bases de datos locales ────────────────────────
+runtime/openclaw/state/*.db
+runtime/openclaw/state/*.jsonl
+
+# ── Opencode executor y playground ───────────────────────────────
+runtime/opencode_executor_image/
+runtime/opencode/
+
+# ── Directorios de hardware/prototipado no relevantes para agente ─
+sirena_555_flipflop/
+benchmarks/
+brain/
+
+# ── node_modules anidados ─────────────────────────────────────────
+**/node_modules/
+
+# ── Evidencia privada y conversaciones (pesadas, no van en imagen) ─
+00_sistema_tesis/evidencia_privada/

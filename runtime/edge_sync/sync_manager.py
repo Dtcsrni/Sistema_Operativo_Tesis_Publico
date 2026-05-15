@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 class SyncManager:
     def __init__(self):
-        self.hub_url = os.getenv("HUB_URL", "http://pc-hub:8080")
+        self.hub_url = os.getenv("HUB_URL", "http://pc-hub:4000")
         self.local_buffer_dir = Path(os.getenv("BUFFER_DIR", "/app/buffer"))
         self.local_buffer_dir.mkdir(parents=True, exist_ok=True)
         self.sync_interval = int(os.getenv("SYNC_INTERVAL", "60"))

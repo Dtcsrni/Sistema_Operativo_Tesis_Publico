@@ -1,0 +1,33 @@
+{
+  "generated_at_utc": "20260509_192707",
+  "total_duration_seconds": 0.082,
+  "summary": {
+    "total": 1,
+    "executed": 1,
+    "skipped": 0,
+    "failed": 1,
+    "slow": 0
+  },
+  "slow_stages": [],
+  "failed_stages": [
+    "Mantenimiento DB Mission Control"
+  ],
+  "steps": [
+    {
+      "label": "Mantenimiento DB Mission Control",
+      "script": "07_scripts/ops/db_maintenance.py",
+      "args": [
+        "04_implementacion/control_mission/mission-control.db",
+        "--repair"
+      ],
+      "group": "openclaw",
+      "started_at_utc": "2026-05-09",
+      "duration_seconds": 0.082,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    }
+  ]
+}

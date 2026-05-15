@@ -7,7 +7,12 @@ from typing import Any
 from .contracts import DomainPolicy, DomainSecretPolicy
 
 
-ROOT = Path(__file__).resolve().parents[3]
+# Resilient ROOT resolution for host vs container
+_potential_root = Path(__file__).resolve().parents[1]
+if (_potential_root / "manifests").exists():
+    ROOT = _potential_root
+else:
+    ROOT = Path(__file__).resolve().parents[3]
 
 
 def _load_json_document(path: Path) -> dict[str, Any]:

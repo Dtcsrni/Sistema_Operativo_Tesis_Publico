@@ -22,4 +22,4 @@ Campos minimos: `reference_id`, `titulo`, `autores`, `fuente`, `tipo_fuente`, `a
 
 La fuente de verdad primaria es JSONL append-only; SQLite es espejo operativo para busqueda y dashboard.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

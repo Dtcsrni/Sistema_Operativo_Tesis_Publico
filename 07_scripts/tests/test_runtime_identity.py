@@ -1,14 +1,16 @@
 import sys
-import unittest
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1])) # 07_scripts root
+sys.path.insert(0, str(Path(__file__).resolve().parent))     # subdirectory siblings
 
+
+import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
 
 from common import apply_agent_identity_placeholders, load_agent_identity  # noqa: E402
 from verify_no_hardcoded_runtime import find_hardcoded_literals  # noqa: E402
-
 
 class TestRuntimeIdentity(unittest.TestCase):
     def test_agent_identity_has_required_fields(self):
@@ -24,7 +26,6 @@ class TestRuntimeIdentity(unittest.TestCase):
 
     def test_scanned_paths_have_no_hardcoded_runtime_literals(self):
         self.assertEqual([], find_hardcoded_literals())
-
 
 if __name__ == "__main__":
     unittest.main()

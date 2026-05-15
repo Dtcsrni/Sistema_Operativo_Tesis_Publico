@@ -1,0 +1,27 @@
+# ================================================================
+# requirements-agent.txt — OpenClaw Agent Runtime Dependencies
+# Versiones pinneadas (~=) para cache Docker estable.
+# Actualizar con: pip-compile requirements-agent.txt
+# ================================================================
+
+# Configuración y serialización
+python-dotenv~=1.0
+pyyaml~=6.0
+
+# Interfaz Telegram (bot principal del agente)
+python-telegram-bot~=21.0
+
+# Procesamiento de documentos (Token Economy)
+markitdown~=0.1.5
+pypdf~=4.1
+docling~=2.0  # Motor principal de alta fidelidad (IBM)
+
+# Protocolo Matrix (canal secundario)
+matrix-nio~=0.21
+
+# HTTP clients
+requests~=2.32
+httpx~=0.27
+
+# Testing (incluido en imagen para diagnóstico en caliente)
+pytest~=8.0

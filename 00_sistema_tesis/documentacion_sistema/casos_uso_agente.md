@@ -101,4 +101,4 @@ sequenceDiagram
 
 Esta mecánica asegura que el agente desarrolle herramientas específicas (como monitores hardware o parsers de datos) de forma orgánica según las necesidades reales del investigador, pero exigiendo siempre un `[VAL-STEP]` explícito del tesista para activar la nueva habilidad.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

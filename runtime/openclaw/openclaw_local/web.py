@@ -50,7 +50,7 @@ def build_dashboard_context(
     budget = budget_status or {}
     billing = billing_history or []
     return {
-        "title": "Espacio de trabajo local de OpenClaw",
+        "title": "OpenClaw",
         "host": summarize_host(),
         "store": store_summary,
         "providers": provider_registry.get("providers", []),
@@ -61,19 +61,7 @@ def build_dashboard_context(
         "secret_status": secrets,
         "budget_status": budget,
         "billing_history": billing[:10],
-        "panels": [
-            "bandeja_de_tareas",
-            "matriz_de_literatura",
-            "matriz_de_afirmaciones",
-            "diff_markdown_latex",
-            "aprobaciones",
-            "trazabilidad",
-            "costos",
-            "secretos_por_dominio",
-            "host",
-            "servicios",
-            "benchmarks_locales",
-        ],
+        "panels": ["tareas", "aprobaciones", "evidencia", "host"],
     }
 
 
@@ -133,32 +121,12 @@ def render_dashboard_html(
         budget_status=budget_status,
         billing_history=billing_history,
     )
-    providers = "".join(
-        f"<li>{provider['id']} · {provider['mode']}</li>"
-        for provider in context["providers"]
-    )
+    providers = "".join(f"<li>{provider['id']} · {provider['mode']}</li>" for provider in context["providers"])
     panels = "".join(f"<li>{panel}</li>" for panel in context["panels"])
-    packets = "".join(
-        f"<li>{packet['mode']} · {packet['task_id']} · {packet.get('summary', '')}</li>"
-        for packet in context["academic_packets"]
-    ) or "<li>Sin paquetes académicos</li>"
     approvals_html = "".join(
         f"<li>{item['task_id']} · {item['step_id_expected']} · {item['diff_summary']}</li>"
         for item in context["approvals"]
     ) or "<li>Sin aprobaciones pendientes</li>"
-    secrets_html = "".join(
-        f"<li>{domain} · red={payload.get('network_mode', 'sin_dato')} · faltantes={sum(1 for provider in payload.get('providers', {}).values() if provider.get('status') == 'missing')}</li>"
-        for domain, payload in context["secret_status"].get("domains", {}).items()
-    ) or "<li>Sin estado de secretos</li>"
-    budget_global = context["budget_status"].get("global", {})
-    budget_domains_html = "".join(
-        f"<li>{domain} · accion={payload.get('action', 'sin_dato')} · diario={payload.get('daily', {}).get('status', 'sin_dato')}</li>"
-        for domain, payload in context["budget_status"].get("domains", {}).items()
-    ) or "<li>Sin estado presupuestal</li>"
-    billing_html = "".join(
-        f"<li>{item.get('domain', 'sin_dominio')} · {item.get('provider', 'sin_proveedor')} · {item.get('estimated_cost_usd', 0.0)} USD · {item.get('billing_mode', 'estimated')}</li>"
-        for item in context["billing_history"]
-    ) or "<li>Sin registros de costo</li>"
     return f"""<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -166,35 +134,28 @@ def render_dashboard_html(
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{context['title']}</title>
   <style>
-    body {{ font-family: Georgia, serif; margin: 0; background: #f3efe6; color: #1f2421; }}
+    body {{ font-family: Arial, sans-serif; margin: 0; background: #111827; color: #f9fafb; }}
     main {{ max-width: 1100px; margin: 0 auto; padding: 24px; }}
     .grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }}
-    .card {{ background: #fffaf2; border: 1px solid #d8c9b8; border-radius: 18px; padding: 18px; }}
-    .metric {{ font-size: 1.75rem; color: #8a3b12; }}
+    .card {{ background: #1f2937; border: 1px solid #374151; border-radius: 16px; padding: 18px; }}
+    .metric {{ font-size: 1.75rem; color: #f59e0b; }}
+    .muted {{ color: #cbd5e1; }}
   </style>
 </head>
 <body>
   <main>
     <h1>{context['title']}</h1>
-    <p>Espacio de trabajo local de OpenClaw para tareas, aprobaciones, costos y trazabilidad.</p>
+    <p class="muted">Panel local por defecto de OpenClaw.</p>
     <section class="grid">
-      <article class="card"><h2>Cola Operativa</h2><div class="metric">{context['store']['tasks']}</div></article>
+      <article class="card"><h2>Estado</h2><div class="metric">{context['runtime_status'].get('state', 'sin_dato')}</div></article>
+      <article class="card"><h2>Tareas</h2><div class="metric">{context['store']['tasks']}</div></article>
       <article class="card"><h2>Aprobaciones</h2><div class="metric">{context['store']['pending_approvals']}</div></article>
-      <article class="card"><h2>Evidencia</h2><div class="metric">{context['store']['evidence_records']}</div></article>
-      <article class="card"><h2>Paquetes Académicos</h2><div class="metric">{context['store']['academic_packets']}</div></article>
-      <article class="card"><h2>Despliegue</h2><div class="metric">{context['runtime_status'].get('state', 'sin_dato')}</div></article>
     </section>
     <section class="grid" style="margin-top: 16px;">
       <article class="card"><h3>Paneles</h3><ul>{panels}</ul></article>
       <article class="card"><h3>Proveedores</h3><ul>{providers}</ul></article>
-      <article class="card"><h3>Stack web</h3><p>{web_stack_name()}</p><p>DB: {context['store']['db_path']}</p><p>Runtime activo: {context['runtime_status'].get('active_runtime', 'local')}</p></article>
-      <article class="card"><h3>Paquetes recientes</h3><ul>{packets}</ul></article>
       <article class="card"><h3>Aprobaciones</h3><ul>{approvals_html}</ul></article>
-      <article class="card"><h3>Preflight</h3><p>{context['preflight'].get('status', 'sin_dato')}</p></article>
-      <article class="card"><h3>Secretos por dominio</h3><ul>{secrets_html}</ul></article>
-      <article class="card"><h3>Presupuesto global</h3><p>Acción: {budget_global.get('action', 'sin_dato')}</p><p>Diario: {budget_global.get('daily', {}).get('status', 'sin_dato')}</p><p>Semanal: {budget_global.get('weekly', {}).get('status', 'sin_dato')}</p></article>
-      <article class="card"><h3>Presupuesto por dominio</h3><ul>{budget_domains_html}</ul></article>
-      <article class="card"><h3>Costos recientes</h3><ul>{billing_html}</ul></article>
+      <article class="card"><h3>Stack web</h3><p>{web_stack_name()}</p><p>DB: {context['store']['db_path']}</p></article>
     </section>
   </main>
 </body>

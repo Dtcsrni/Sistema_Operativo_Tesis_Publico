@@ -1,0 +1,175 @@
+{
+  "generated_at_utc": "20260504_085846",
+  "total_duration_seconds": 2.256,
+  "summary": {
+    "total": 11,
+    "executed": 11,
+    "skipped": 0,
+    "failed": 6,
+    "slow": 0
+  },
+  "slow_stages": [],
+  "failed_stages": [
+    "Verificar Integridad del Sistema",
+    "Auditar Ledger IA",
+    "Auditar integridad DEC/VAL",
+    "Auditar Cadena de Bitácoras",
+    "Autoauditoría documental",
+    "Validar enlaces derivados y públicos"
+  ],
+  "steps": [
+    {
+      "label": "Verificar Integridad del Sistema",
+      "script": "07_scripts/audit/guardrails.py",
+      "args": [
+        "--verify"
+      ],
+      "group": "integridad",
+      "started_at_utc": "2026-05-04",
+      "duration_seconds": 0.106,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar No-Hardcode Runtime",
+      "script": "07_scripts/audit/verify_no_hardcoded_runtime.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-05-04",
+      "duration_seconds": 0.183,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar Ledger IA",
+      "script": "07_scripts/audit/verify_ledger.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-05-04",
+      "duration_seconds": 0.08,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar integridad DEC/VAL",
+      "script": "07_scripts/audit/verify_decisions_val_integrity.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-05-04",
+      "duration_seconds": 0.122,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar Cadena de Bitácoras",
+      "script": "07_scripts/audit/verify_bitacora_chain.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-05-04",
+      "duration_seconds": 0.065,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar calidad de trazabilidad",
+      "script": "07_scripts/audit/verify_traceability_quality.py",
+      "args": [
+        "--strict"
+      ],
+      "group": "integridad",
+      "started_at_utc": "2026-05-04",
+      "duration_seconds": 0.127,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Autoauditoría documental",
+      "script": "07_scripts/audit/document_audit.py",
+      "args": [],
+      "group": "integridad",
+      "started_at_utc": "2026-05-04",
+      "duration_seconds": 0.077,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Sincronizar publicación pública sanitizada",
+      "script": "07_scripts/tesis.py",
+      "args": [
+        "publish",
+        "--build"
+      ],
+      "group": "publicacion",
+      "started_at_utc": "2026-05-04",
+      "duration_seconds": 0.505,
+      "budget_seconds": 30.0,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Validar enlaces derivados y públicos",
+      "script": "07_scripts/audit/validate_links.py",
+      "args": [],
+      "group": "publicacion",
+      "started_at_utc": "2026-05-04",
+      "duration_seconds": 0.364,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Validar calidad editorial pública",
+      "script": "07_scripts/audit/validate_public_text.py",
+      "args": [],
+      "group": "publicacion",
+      "started_at_utc": "2026-05-04",
+      "duration_seconds": 0.174,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Validar publicación pública sanitizada",
+      "script": "07_scripts/tesis.py",
+      "args": [
+        "publish",
+        "--check"
+      ],
+      "group": "publicacion",
+      "started_at_utc": "2026-05-04",
+      "duration_seconds": 0.453,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    }
+  ]
+}

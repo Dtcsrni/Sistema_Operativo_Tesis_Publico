@@ -77,6 +77,10 @@ def _build_parser() -> argparse.ArgumentParser:
         "--fail-fast", action="store_true",
         help="Detener el build en el primer fallo (salvo soft_fail).",
     )
+    p.add_argument(
+        "--no-serena-gate", action="store_true",
+        help="Omitir la comprobación previa 'serena gate' (solo use si sabe lo que hace).",
+    )
     return p
 
 
@@ -154,6 +158,24 @@ def main() -> int:
     args = parser.parse_args()
 
     python_exe = preferred_python_executable()
+
+    # ── Preflight Serena gate (fail-closed) ─────────────────────────────────
+    if not args.dry_run and not getattr(args, "no_serena_gate", False):
+        import subprocess
+        gate_script = Path(__file__).parent / "ops" / "serena_gate.py"
+        try:
+            p = subprocess.run([python_exe, str(gate_script)], capture_output=True, text=True, timeout=60)
+        except Exception as e:
+            print(f"[ERROR] fallo al ejecutar la puerta Serena: {e}")
+            return 2
+
+        if p.returncode != 0:
+            print("[ERROR] Serena gate failed — abortando build.")
+            if p.stdout:
+                print(p.stdout)
+            if p.stderr:
+                print(p.stderr, file=sys.stderr)
+            return 2
 
     # ── Caché ─────────────────────────────────────────────────────────────────
     use_cache = not args.no_cache and not args.dry_run

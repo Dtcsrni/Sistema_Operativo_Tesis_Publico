@@ -30,4 +30,4 @@ Se ha ejecutado la suite maestra de benchmarks con un tamaño de muestra **N=50*
 - La latencia P95 se mantiene por debajo de los 165ms para todas las tareas de inferencia edge.
 - La integridad del sistema ha sido verificada y restaurada tras la ejecución.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

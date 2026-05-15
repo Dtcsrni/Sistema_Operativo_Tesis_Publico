@@ -12,7 +12,7 @@ Dejar instalada la base operativa completa del sistema de tesis con fuentes can�
 ## Tareas del día
 
 - [x] Tareas de infraestructura base (B0)
-  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - [x] Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Trabajo realizado
 
@@ -67,4 +67,4 @@ Abrir B1 y B2 con definición de línea base, escenarios urbanos de intermitenci
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

@@ -1,15 +1,17 @@
 import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1])) # 07_scripts root
+sys.path.insert(0, str(Path(__file__).resolve().parent))     # subdirectory siblings
+
+
 import tempfile
 import unittest
 from datetime import datetime, timedelta
-from pathlib import Path
-
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
 
 from rotate_backups import classify_risk, plan_rotation, read_backups  # noqa: E402
-
 
 def base_policy() -> dict:
     return {
@@ -24,7 +26,6 @@ def base_policy() -> dict:
             },
         }
     }
-
 
 class TestRotateBackups(unittest.TestCase):
     def test_classify_risk(self):
@@ -56,7 +57,6 @@ class TestRotateBackups(unittest.TestCase):
                 self.assertEqual(summary["to_delete_count"], 1)
             finally:
                 mod.BACKUP_DIR = prev
-
 
 if __name__ == "__main__":
     unittest.main()

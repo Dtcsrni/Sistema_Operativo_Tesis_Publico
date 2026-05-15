@@ -96,8 +96,8 @@ La alternativa elegida reduce duplicidad operativa, baja el riesgo de inconsiste
 - Event sourcing y snapshots derivados para auditoría reproducible.
 - Prácticas FAIR y trazabilidad de artefactos reproducibles en investigación.
 
-[LID]: ruta local no pública
-[GOV]: ruta local no pública
-[AUD]: ruta local no pública
+[LID]:  ruta local no pública 
+[GOV]:  ruta local no pública 
+[AUD]:  ruta local no pública
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

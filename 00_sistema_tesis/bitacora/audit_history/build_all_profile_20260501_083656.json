@@ -1,0 +1,129 @@
+{
+  "generated_at_utc": "20260501_083656",
+  "total_duration_seconds": 2.967,
+  "summary": {
+    "total": 8,
+    "executed": 8,
+    "skipped": 0,
+    "failed": 6,
+    "slow": 0
+  },
+  "slow_stages": [],
+  "failed_stages": [
+    "Validar estructura",
+    "Validar arquitectura B0 desktop-first",
+    "Validar memoria operativa",
+    "Validar enlaces derivados y públicos",
+    "Validar calidad editorial pública",
+    "Validar publicación pública sanitizada"
+  ],
+  "steps": [
+    {
+      "label": "Validar estructura",
+      "script": "07_scripts/audit/validate_structure.py",
+      "args": [],
+      "group": "estructura",
+      "started_at_utc": "2026-05-01",
+      "duration_seconds": 0.065,
+      "budget_seconds": 10.0,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Validar arquitectura B0 desktop-first",
+      "script": "07_scripts/audit/validate_b0_architecture.py",
+      "args": [],
+      "group": "estructura",
+      "started_at_utc": "2026-05-01",
+      "duration_seconds": 0.037,
+      "budget_seconds": 10.0,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Auditar Estándares Externos",
+      "script": "07_scripts/audit/verify_standards.py",
+      "args": [],
+      "group": "estructura",
+      "started_at_utc": "2026-05-01",
+      "duration_seconds": 2.585,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Validar memoria operativa",
+      "script": "07_scripts/audit/validate_memory.py",
+      "args": [],
+      "group": "generacion",
+      "started_at_utc": "2026-05-01",
+      "duration_seconds": 0.03,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Validar estándares UI/UX",
+      "script": "07_scripts/audit/verify_ui_ux_standards.py",
+      "args": [],
+      "group": "ux",
+      "started_at_utc": "2026-05-01",
+      "duration_seconds": 0.047,
+      "budget_seconds": null,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Validar enlaces derivados y públicos",
+      "script": "07_scripts/audit/validate_links.py",
+      "args": [],
+      "group": "publicacion",
+      "started_at_utc": "2026-05-01",
+      "duration_seconds": 0.036,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Validar calidad editorial pública",
+      "script": "07_scripts/audit/validate_public_text.py",
+      "args": [],
+      "group": "publicacion",
+      "started_at_utc": "2026-05-01",
+      "duration_seconds": 0.028,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    },
+    {
+      "label": "Validar publicación pública sanitizada",
+      "script": "07_scripts/tesis.py",
+      "args": [
+        "publish",
+        "--check"
+      ],
+      "group": "publicacion",
+      "started_at_utc": "2026-05-01",
+      "duration_seconds": 0.139,
+      "budget_seconds": null,
+      "status": "failed",
+      "returncode": 1,
+      "cache_hit": false,
+      "skip_reason": null
+    }
+  ]
+}

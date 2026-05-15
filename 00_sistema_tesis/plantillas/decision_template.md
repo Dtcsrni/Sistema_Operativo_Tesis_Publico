@@ -70,8 +70,8 @@ Explica por qué la alternativa elegida reduce riesgo, complejidad o ambigüedad
 
 Lista aquí normas, artículos, documentación o decisiones previas relevantes.
 
-[LID]: ruta local no pública
-[GOV]: ruta local no pública
-[AUD]: ruta local no pública
+[LID]:  ruta local no pública 
+[GOV]:  ruta local no pública 
+[AUD]:  ruta local no pública
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

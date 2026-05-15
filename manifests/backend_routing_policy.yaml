@@ -2,9 +2,8 @@
   "version": "1.0",
   "jerarquia": [
     "reglas_y_scripts_locales",
-    "modelos_locales_ligeros",
-    "pc_nativa_llamacpp",
     "nodo_desktop_compute",
+    "modelos_locales_ligeros",
     "proveedores_gratuitos",
     "proveedores_costo_intermedio",
     "modelos_premium"
@@ -29,16 +28,7 @@
       "comparative_evidence": "historial interno no público/openclaw_max_model_bench_pc_20260421.json",
       "caveat": "Resultados post-WSL con memory=12GB aplicado; mantener margen porque la RTX 4060 Ti tiene 8GB VRAM y los 14B usan offload parcial."
     },
-    "pc_native_llamacpp": {
-      "daily_recommended": "mistral-nemo:12b",
-      "coding_heavy": "qwen2.5-coder:14b",
-      "experimental_ceiling": "qwen3:14b",
-      "alternative_ceiling": "phi4:14b",
-      "benchmark_profile": "pc_mistral_nemo_12b_extensive",
-      "evidence": "historial interno no público/openclaw_max_model_bench_pc_post_wsl_20260421.json",
-      "comparative_evidence": "historial interno no público/openclaw_max_model_bench_pc_20260421.json",
-      "caveat": "Carril pesado principal previsto para la PC en host nativo via llama.cpp server; mantener alias desktop_compute mientras dura la transicion."
-    },
+    
     "orange_pi_edge_cpu": {
       "daily_recommended": "qwen3:4b",
       "fallback": "qwen3:4b",
@@ -65,11 +55,10 @@
       ]
     },
     "academico": {
-      "preferencia": [
+        "preferencia": [
         "reglas_y_scripts_locales",
-        "modelos_locales_ligeros",
+        "llamacpp_local",
         "router_externo_documentado",
-        "pc_nativa_llamacpp",
         "nodo_desktop_compute",
         "proveedores_gratuitos",
         "proveedores_costo_intermedio",
@@ -77,11 +66,10 @@
       ]
     },
     "profesional": {
-      "preferencia": [
+        "preferencia": [
         "reglas_y_scripts_locales",
-        "modelos_locales_ligeros",
+        "llamacpp_local",
         "router_externo_documentado",
-        "pc_nativa_llamacpp",
         "nodo_desktop_compute",
         "proveedores_gratuitos",
         "proveedores_costo_intermedio"
@@ -102,15 +90,14 @@
   ],
   "router_policy": {
     "default_backend": "openclaw_internal_governed_router",
-    "external_router_provider": "external_llm_router",
-    "external_router_priority": "opcional_si_configurado_y_permitido_por_dominio",
+    "external_router_provider": "openrouter_remote",
+    "external_router_priority": "manual_por_tarea_si_configurado_y_permitido_por_privacidad",
     "known_documented_routers": [
       "LiteLLM Router/Proxy",
       "OpenRouter",
-      "Ollama proveedor de IA no publicado-compatible API",
       "llama.cpp/llama-cpp-python proveedor de IA no publicado-compatible server"
     ],
-    "governance_note": "OpenClaw conserva gates, trazabilidad, presupuestos y privacidad; el router externo solo ejecuta selección/fallback de modelo cuando está habilitado explícitamente."
+    "governance_note": "OpenClaw conserva gates, trazabilidad, presupuestos y privacidad; OpenRouter se usa como proveedor remoto manual por tarea y llama.cpp local queda como fallback soberano."
   },
   "scientific_benchmark_policy": {
     "primary_pc_model": "mistral-nemo:12b",

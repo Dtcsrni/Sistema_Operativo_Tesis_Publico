@@ -1,0 +1,20 @@
+referencia,cantidad,valor,componente,notas
+U1,1,NE555P,temporizador astable,simbolo local Sirena:SIR_NE555P
+U2,1,74HC74,flip-flop D doble,usar solo primer flip-flop
+Q1,1,BC547,transistor NPN,conmuta buzzer
+D1,1,LED rojo,LED,serie R4 680R
+D2,1,LED azul,LED,serie R5 680R
+BZ1,1,buzzer activo 5V,buzzer,conmutado por Q1
+SW1,1,pulsador NA,pulsador,acelera reloj
+R1,1,10k,resistencia,RA del 555
+R2,1,100k,resistencia,RB del 555
+R3,1,47k,resistencia,ramo rapido en paralelo con R2
+R4,1,680R,resistencia,serie LED rojo
+R5,1,680R,resistencia,serie LED azul
+R6,1,4.7k,resistencia,base de Q1
+R7,1,100k,resistencia,pull-down base Q1
+C1,1,10uF,capacitor,temporizacion
+C2,1,10nF,capacitor,pin CONTROL
+C3,1,100nF,capacitor,desacoplo U1
+C4,1,100nF,capacitor,desacoplo U2
+C5,1,10uF,capacitor,bulk opcional

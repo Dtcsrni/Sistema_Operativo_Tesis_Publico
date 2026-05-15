@@ -1,0 +1,42 @@
+[
+  {
+    "input": "¿Qué es la resiliencia en sistemas operativos embebidos?",
+    "target": ""
+  },
+  {
+    "input": "Explica el funcionamiento de un ruteador adaptativo para IoT.",
+    "target": ""
+  },
+  {
+    "input": "Resume las ventajas de usar una NPU en el borde para inferencia de LLMs.",
+    "target": ""
+  },
+  {
+    "input": "¿Cómo se asegura la soberanía humana en sistemas asistidos por IA?",
+    "target": ""
+  },
+  {
+    "input": "Diferencia entre computación en la nube y computación en el borde (edge computing).",
+    "target": ""
+  },
+  {
+    "input": "Escribe un código simple en Python para calcular la latencia de una petición HTTP.",
+    "target": ""
+  },
+  {
+    "input": "¿Cuál es el impacto de la latencia en aplicaciones críticas de telemetría?",
+    "target": ""
+  },
+  {
+    "input": "Describe el protocolo DEC-0014 de colaboración humano-agente.",
+    "target": ""
+  },
+  {
+    "input": "¿Qué es el entrenamiento con cuantización para modelos de lenguaje?",
+    "target": ""
+  },
+  {
+    "input": "Explica el concepto de 'Reflective Phase' en una arquitectura agéntica.",
+    "target": ""
+  }
+]

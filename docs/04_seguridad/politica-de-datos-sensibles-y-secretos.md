@@ -5,4 +5,4 @@
 - Usar `.env`, systemd `EnvironmentFile` o vault.
 - Redactar rutas privadas, hashes internos y evidencia fuente.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

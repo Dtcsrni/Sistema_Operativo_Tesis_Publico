@@ -35,16 +35,16 @@
 ## 3. Tabla de ingestión
 | archivo | ruta_origen | ruta_destino | rol | prioridad | hash_sha256 | estado_verificacion |
 | --- | --- | --- | --- | --- | --- | --- |
-| sistema_operativo_tesis_iot__archivo_de_contexto_canonico__lectura_humana__v09.md | ruta local no pública | 00_sistema_tesis/01_contexto_canonico/sistema_operativo_tesis_iot__archivo_de_contexto_canonico__lectura_humana__v09.md | Vista legible primaria del contexto canónico | P0 | hash omitido:omitido | verificado |
-| sistema_operativo_tesis_iot__archivo_de_contexto_canonico__lectura_maquina__v09.jsonl | ruta local no pública | 00_sistema_tesis/01_contexto_canonico/sistema_operativo_tesis_iot__archivo_de_contexto_canonico__lectura_maquina__v09.jsonl | Vista máquina del contexto canónico | P0 | hash omitido:omitido | verificado |
-| sistema_operativo_tesis_iot__registro_estructurado_del_contexto__v09.sqlite | ruta local no pública | 00_sistema_tesis/01_contexto_canonico/sistema_operativo_tesis_iot__registro_estructurado_del_contexto__v09.sqlite | Base estructurada principal del contexto | P0 | hash omitido:omitido | verificado |
-| sistema_operativo_tesis_iot__catalogo_general_de_artefactos__v09.json | ruta local no pública | 00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__catalogo_general_de_artefactos__v09.json | Catálogo general de inventario | P1 | hash omitido:omitido | verificado |
-| sistema_operativo_tesis_iot__columna_vertebral_de_evidencia__v09.tsv | ruta local no pública | 00_sistema_tesis/02_evidencia/sistema_operativo_tesis_iot__columna_vertebral_de_evidencia__v09.tsv | Columna vertebral de evidencia para defensa | P1 | hash omitido:omitido | verificado |
-| sistema_operativo_tesis_iot__convencion_de_nombres__v09.json | ruta local no pública | 00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json | Convención de nombres y normalización | P1 | hash omitido:omitido | verificado |
-| sistema_operativo_tesis_iot__guia_de_ingestion__v09.md | ruta local no pública | 00_sistema_tesis/04_politicas_y_gobernanza/sistema_operativo_tesis_iot__guia_de_ingestion__v09.md | Guía operativa de ingestión | P1 | hash omitido:omitido | verificado |
-| sistema_operativo_tesis_iot__justificacion_de_inclusion_por_archivo__v09.tsv | ruta local no pública | 00_sistema_tesis/02_evidencia/sistema_operativo_tesis_iot__justificacion_de_inclusion_por_archivo__v09.tsv | Justificación de inclusión por archivo | P1 | hash omitido:omitido | verificado |
-| sistema_operativo_tesis_iot__politica_de_valor_documental__v09.md | ruta local no pública | 00_sistema_tesis/04_politicas_y_gobernanza/sistema_operativo_tesis_iot__politica_de_valor_documental__v09.md | Política de valor documental | P1 | hash omitido:omitido | verificado |
-| sistema_operativo_tesis_iot__politica_de_estatus_del_overleaf_actual__v09.md | ruta local no pública | 00_sistema_tesis/04_politicas_y_gobernanza/sistema_operativo_tesis_iot__politica_de_estatus_del_overleaf_actual__v09.md | Política de estatus de Overleaf actual (borrador no canónico) | P1 | hash omitido:omitido | verificado |
+| sistema_operativo_tesis_iot__archivo_de_contexto_canonico__lectura_humana__v09.md |  ruta local no pública  | 00_sistema_tesis/01_contexto_canonico/sistema_operativo_tesis_iot__archivo_de_contexto_canonico__lectura_humana__v09.md | Vista legible primaria del contexto canónico | P0 | hash omitido:omitido | verificado |
+| sistema_operativo_tesis_iot__archivo_de_contexto_canonico__lectura_maquina__v09.jsonl |  ruta local no pública  | 00_sistema_tesis/01_contexto_canonico/sistema_operativo_tesis_iot__archivo_de_contexto_canonico__lectura_maquina__v09.jsonl | Vista máquina del contexto canónico | P0 | hash omitido:omitido | verificado |
+| sistema_operativo_tesis_iot__registro_estructurado_del_contexto__v09.sqlite |  ruta local no pública  | 00_sistema_tesis/01_contexto_canonico/sistema_operativo_tesis_iot__registro_estructurado_del_contexto__v09.sqlite | Base estructurada principal del contexto | P0 | hash omitido:omitido | verificado |
+| sistema_operativo_tesis_iot__catalogo_general_de_artefactos__v09.json |  ruta local no pública  | 00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__catalogo_general_de_artefactos__v09.json | Catálogo general de inventario | P1 | hash omitido:omitido | verificado |
+| sistema_operativo_tesis_iot__columna_vertebral_de_evidencia__v09.tsv |  ruta local no pública  | 00_sistema_tesis/02_evidencia/sistema_operativo_tesis_iot__columna_vertebral_de_evidencia__v09.tsv | Columna vertebral de evidencia para defensa | P1 | hash omitido:omitido | verificado |
+| sistema_operativo_tesis_iot__convencion_de_nombres__v09.json |  ruta local no pública  | 00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json | Convención de nombres y normalización | P1 | hash omitido:omitido | verificado |
+| sistema_operativo_tesis_iot__guia_de_ingestion__v09.md |  ruta local no pública  | 00_sistema_tesis/04_politicas_y_gobernanza/sistema_operativo_tesis_iot__guia_de_ingestion__v09.md | Guía operativa de ingestión | P1 | hash omitido:omitido | verificado |
+| sistema_operativo_tesis_iot__justificacion_de_inclusion_por_archivo__v09.tsv |  ruta local no pública  | 00_sistema_tesis/02_evidencia/sistema_operativo_tesis_iot__justificacion_de_inclusion_por_archivo__v09.tsv | Justificación de inclusión por archivo | P1 | hash omitido:omitido | verificado |
+| sistema_operativo_tesis_iot__politica_de_valor_documental__v09.md |  ruta local no pública  | 00_sistema_tesis/04_politicas_y_gobernanza/sistema_operativo_tesis_iot__politica_de_valor_documental__v09.md | Política de valor documental | P1 | hash omitido:omitido | verificado |
+| sistema_operativo_tesis_iot__politica_de_estatus_del_overleaf_actual__v09.md |  ruta local no pública  | 00_sistema_tesis/04_politicas_y_gobernanza/sistema_operativo_tesis_iot__politica_de_estatus_del_overleaf_actual__v09.md | Política de estatus de Overleaf actual (borrador no canónico) | P1 | hash omitido:omitido | verificado |
 
 ## 4. Hallazgos y riesgos
 ### Errores encontrados
@@ -67,4 +67,4 @@
 4. Integrar referencias de evidencia experimental futuras contra `02_evidencia/` y el índice maestro.
 5. Definir pipeline de sincronización futura con Overleaf, manteniendo estatus de borrador no canónico hasta nueva decisión formal.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

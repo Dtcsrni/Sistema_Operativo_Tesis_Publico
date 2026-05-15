@@ -77,8 +77,9 @@ La política explícita reduce desperdicio de uso, mejora previsibilidad operati
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Actualizar backlog y riesgos asociados
   - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
-- [ ] Evaluar en resúmenes semanales si la política reduce retrabajo y mejora cierre de piezas funcionales
-  - [ ] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+- [x] Evaluar en resúmenes semanales si la política reduce retrabajo y mejora cierre de piezas funcionales
+  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - **Soporte operativo:** `00_sistema_tesis/reportes_semanales/2026-S13_resumen_semanal.md` incluye sección de economía de uso con tareas de mejor avance por unidad de uso, sobreconsumo evitado y ajuste recomendado; `00_sistema_tesis/config/ab_pilot_report.json` registra `acceptance_rate=1.0`, `gate_failures=0` y `rework_rate=0.0`; `token_usage_snapshot.json` conserva presupuesto semanal local.
 
 ## Referencias
 
@@ -86,8 +87,8 @@ La política explícita reduce desperdicio de uso, mejora previsibilidad operati
 - La guía de prompting para GPT-5 enfatiza instrucciones claras, contratos de salida y escalamiento de complejidad según necesidad real: [Prompt guidance](https://developers.openai.com/api/docs/guides/prompt-guidance)
 - The Turing Way favorece procesos reproducibles y decisiones explícitas sobre herramientas y flujos de trabajo: [The Turing Way](https://book.the-turing-way.org/)
 
-[LID]: ruta local no pública
-[GOV]: ruta local no pública
-[AUD]: ruta local no pública
+[LID]:  ruta local no pública 
+[GOV]:  ruta local no pública 
+[AUD]:  ruta local no pública
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

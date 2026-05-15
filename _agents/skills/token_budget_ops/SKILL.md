@@ -110,4 +110,4 @@ Si `simulate_budget_request` bloquea:
 /herramienta estado
 ```
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

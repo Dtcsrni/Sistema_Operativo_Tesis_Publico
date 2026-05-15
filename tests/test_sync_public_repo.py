@@ -6,8 +6,8 @@ from pathlib import Path
 
 from common import ROOT
 from sync_public_repo import (
-    _render_payloads,
-    _source_map_mirror,
+    render_payloads,
+    source_map_mirror,
     bundle_fingerprint,
     sync_target,
     validate_sync_payloads,
@@ -15,19 +15,19 @@ from sync_public_repo import (
 
 
 def test_mirror_source_map_excludes_private_surfaces() -> None:
-    source_map = _source_map_mirror(ROOT)
+    source_map = source_map_mirror(ROOT)
     assert "00_sistema_tesis/canon/events.jsonl" in source_map
     assert "00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md" in source_map
     assert "00_sistema_tesis/config/sign_offs.json" not in source_map
 
 
 def test_public_sync_payloads_pass_current_policy() -> None:
-    payloads = _render_payloads(_source_map_mirror(ROOT), sanitize=True)
+    payloads = render_payloads(source_map_mirror(ROOT), sanitize=True)
     assert validate_sync_payloads(payloads) == []
 
 
 def test_public_sync_rewrites_links_to_public_targets() -> None:
-    payloads = _render_payloads(_source_map_mirror(ROOT), sanitize=True)
+    payloads = render_payloads(source_map_mirror(ROOT), sanitize=True)
     bitacora_text = payloads["06_dashboard/wiki/bitacora.md"].decode("utf-8")
     pages_note_text = payloads["06_dashboard/wiki/nota_seguridad_y_acceso.md"].decode("utf-8")
     assert "[bitacora_privada]" not in bitacora_text
@@ -45,7 +45,7 @@ def test_validate_sync_payloads_rejects_placeholder_hrefs() -> None:
 
 
 def test_public_sync_payloads_keep_pages_guarded_to_public_repo() -> None:
-    payloads = _render_payloads(_source_map_mirror(ROOT), sanitize=True)
+    payloads = render_payloads(source_map_mirror(ROOT), sanitize=True)
     pages_text = payloads[".github/workflows/pages.yml"].decode("utf-8")
     assert "Dtcsrni/Sistema_Operativo_Tesis_Publico" in pages_text
     assert "refs/heads/main" in pages_text
@@ -54,7 +54,7 @@ def test_public_sync_payloads_keep_pages_guarded_to_public_repo() -> None:
 
 
 def test_public_sync_payloads_preserve_operational_publication_regexes() -> None:
-    payloads = _render_payloads(_source_map_mirror(ROOT), sanitize=True)
+    payloads = render_payloads(source_map_mirror(ROOT), sanitize=True)
     publication_text = payloads["00_sistema_tesis/config/publicacion.yaml"].decode("utf-8")
     assert "[ruta_local_redactada])" not in publication_text
     assert "CUR[ruta_local_redactada]" not in publication_text
@@ -71,7 +71,7 @@ def test_public_sync_payloads_preserve_operational_publication_regexes() -> None
 
 
 def test_public_sync_payloads_are_editorially_clean() -> None:
-    payloads = _render_payloads(_source_map_mirror(ROOT), sanitize=True)
+    payloads = render_payloads(source_map_mirror(ROOT), sanitize=True)
     readme_text = payloads["README.md"].decode("utf-8")
     dashboard_text = payloads["06_dashboard/publico/dashboard/index.html"].decode("utf-8")
     assert "repositorio privado" not in readme_text.lower()
@@ -89,7 +89,7 @@ def test_sync_public_workflow_only_publishes_from_main() -> None:
 
 
 def test_bundle_fingerprint_is_stable_for_same_payloads() -> None:
-    payloads = _render_payloads(_source_map_mirror(ROOT), sanitize=True)
+    payloads = render_payloads(source_map_mirror(ROOT), sanitize=True)
     assert bundle_fingerprint(payloads) == bundle_fingerprint(payloads)
 
 

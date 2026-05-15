@@ -84,6 +84,7 @@ def send_telegram_message(
         {
             "chat_id": chat_id,
             "text": text,
+            "parse_mode": "HTML",
             "disable_web_page_preview": "true",
         }
     ).encode("utf-8")
@@ -202,3 +203,17 @@ def dispatch_test_notification(*, message: str) -> dict[str, Any]:
         "channel": channel,
         "detail": details,
     }
+
+
+def broadcast_discovery(title: str, text: str) -> dict[str, Any]:
+    """Envía un mensaje de descubrimiento científico proactivo."""
+    emoji = "🧬"
+    formatted = f"<b>{emoji} [HALLAZGO CIENTÍFICO]</b> ➸ <i>{title}</i>\n\n{text}"
+    return dispatch_test_notification(message=formatted)
+
+
+def broadcast_nudge(text: str) -> dict[str, Any]:
+    """Envía un recordatorio proactivo del asistente."""
+    emoji = "💡"
+    formatted = f"<b>{emoji} [SUGERENCIA OPENCLAW]</b> ➸ {text}"
+    return dispatch_test_notification(message=formatted)

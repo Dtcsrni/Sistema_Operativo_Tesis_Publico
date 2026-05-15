@@ -2,12 +2,12 @@
   "state": "openclaw_ready",
   "active_runtime": "local",
   "service_user": "tesis",
-  "repo_root": "ruta local no pública",
-  "env_file": "ruta local no pública",
-  "data_dir": "ruta local no pública",
-  "cache_dir": "ruta local no pública",
-  "log_dir": "ruta local no pública",
-  "db_path": "ruta local no pública",
+  "repo_root": " ruta local no pública ",
+  "env_file": " ruta local no pública ",
+  "data_dir": " ruta local no pública ",
+  "cache_dir": " ruta local no pública ",
+  "log_dir": " ruta local no pública ",
+  "db_path": " ruta local no pública ",
   "paths": {
     "repo_root_exists": true,
     "env_file_exists": true,
@@ -25,19 +25,34 @@
     "models_dir": "/mnt/emmc/models/ollama"
   },
   "llamacpp": {
-    "installed": true,
+    "installed": false,
     "ready": false,
-    "mode": "desktop_native_llamacpp",
-    "runtime": "llamacpp",
-    "base_url": "http://127.0.0.1:21434",
-    "configured_base_url": "http://127.0.0.1:21434",
+    "mode": "desktop_compute",
+    "runtime": "none",
+    "base_url": "http://127.0.0.1:11434",
+    "configured_base_url": "http://127.0.0.1:11434",
     "local_base_url": "http://127.0.0.1:21435",
-    "local_fallback_enabled": true,
+    "local_fallback_enabled": false,
     "fallback_used": false,
     "model": "mistral-nemo:12b",
-    "probe_status": "unavailable",
-    "probe_latency_ms": 2002.373,
-    "probe_error": "URLError:<urlopen error timed out>"
+    "probe_status": "degraded",
+    "probe_latency_ms": 30.275,
+    "probe_error": "http_404"
+  },
+  "desktop_compute": {
+    "installed": false,
+    "ready": false,
+    "mode": "desktop_compute",
+    "runtime": "none",
+    "base_url": "http://127.0.0.1:11434",
+    "configured_base_url": "http://127.0.0.1:11434",
+    "local_base_url": "http://127.0.0.1:21435",
+    "local_fallback_enabled": false,
+    "fallback_used": false,
+    "model": "mistral-nemo:12b",
+    "probe_status": "degraded",
+    "probe_latency_ms": 30.275,
+    "probe_error": "http_404"
   },
   "npu": {
     "installed": false,
@@ -57,8 +72,8 @@
     },
     "disk": {
       "total_bytes": 240055742464,
-      "used_bytes": 138557243392,
-      "free_bytes": 101498499072,
+      "used_bytes": 124045852672,
+      "free_bytes": 116009889792,
       "rootfs_device": "",
       "rootfs_fstype": "",
       "rootfs_on_nvme": false
@@ -83,27 +98,27 @@
       {
         "name": "repo_root",
         "status": "ok",
-        "detail": "ruta local no pública"
+        "detail": " ruta local no pública "
       },
       {
         "name": "gateway_wrapper",
         "status": "ok",
-        "detail": "ruta local no pública"
+        "detail": " ruta local no pública "
       },
       {
         "name": "env_file",
         "status": "ok",
-        "detail": "ruta local no pública"
+        "detail": " ruta local no pública "
       },
       {
         "name": "data_dir",
         "status": "ok",
-        "detail": "ruta local no pública"
+        "detail": " ruta local no pública "
       },
       {
         "name": "db_parent",
         "status": "ok",
-        "detail": "ruta local no pública"
+        "detail": " ruta local no pública "
       },
       {
         "name": "python_bin",
@@ -112,5 +127,5 @@
       }
     ]
   },
-  "generated_at": "2026-04-29"
+  "generated_at": "2026-05-15"
 }

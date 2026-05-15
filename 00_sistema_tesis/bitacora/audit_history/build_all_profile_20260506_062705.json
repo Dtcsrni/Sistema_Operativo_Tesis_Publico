@@ -1,0 +1,28 @@
+{
+  "generated_at_utc": "20260506_062705",
+  "total_duration_seconds": 0.115,
+  "summary": {
+    "total": 1,
+    "executed": 1,
+    "skipped": 0,
+    "failed": 0,
+    "slow": 0
+  },
+  "slow_stages": [],
+  "failed_stages": [],
+  "steps": [
+    {
+      "label": "Validar specs SDD",
+      "script": "07_scripts/audit/validate_sdd_specs.py",
+      "args": [],
+      "group": "estructura",
+      "started_at_utc": "2026-05-06",
+      "duration_seconds": 0.115,
+      "budget_seconds": 5.0,
+      "status": "ok",
+      "returncode": 0,
+      "cache_hit": false,
+      "skip_reason": null
+    }
+  ]
+}

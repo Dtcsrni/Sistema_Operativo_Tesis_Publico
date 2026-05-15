@@ -92,4 +92,4 @@ En modo economy:
 | Prompts >1500 chars sin caché | Frecuente | <20% de llamadas |
 | Latencia P90 respuesta knowledge | ~45s | <60s con síntesis |
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

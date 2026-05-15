@@ -114,4 +114,4 @@ Cuando el evento requiera soberania humana, debe incluir ademas:
 
 Esta politica es descriptiva y operativa: define el minimo aceptable para que un evento sea considerado trazable dentro del sistema operativo de tesis.
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

@@ -1,7 +1,7 @@
 # Bitácora de sesión 2026-04-04
 
 - **ID de Sesión:** codex-local-20260404-trazabilidad-cierre
-- **Cadena de Confianza (Anterior):** `sha256/9a41600a32b7521e367199615e1fd80310f16fe5522be3e3309f8f3ab0960e30`
+- **Cadena de Confianza (Anterior): `hash omitido:omitido````
 - **Bloque principal:** B0
 - **Tipo de sesión:** administración | implementación | validación
 
@@ -15,13 +15,9 @@ Completar trazabilidad de avances pendientes e implementar automatización en ho
 
 ## Tareas del día
 - [x] Registrar firmas humanas relevantes y actualizar métrica de soberanía.
-  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Implementar `signoff sync` con validación `VAL-STEP` + `source_event_id`.
-  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Extender `pre-push` para ejecutar gate, auto-firma y sincronización al repo público.
-  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 - [x] Registrar evidencia fuente y validación humana de esta instrucción.
-  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Trabajo realizado
 - Se implementó automatización controlada en `pre-push` con enforcement de trazabilidad.
@@ -32,35 +28,31 @@ Completar trazabilidad de avances pendientes e implementar automatización en ho
 - **Commits:** pendiente de consolidación Git local
 - **Archivos Clave:** `07_scripts/tesis.py`, `07_scripts/install_hooks.py`, `07_scripts/pre_push_hook.py`, `00_sistema_tesis/canon/events.jsonl`
 - **Validación del Sistema:** [x] Auditoría `build_all.py` aprobada.
-  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ## Uso de IA y Gobernanza
 - **Proveedor:** proveedor de IA no publicado
 - **Modelo/Versión:** modelo de IA no publicado
 - **Objetivo:** Cierre trazable de avances y automatización operativa bajo soberanía humana.
 - **Nivel de Razonamiento:** alto
-- **Alineación Ética:**
+- **Alineación Ática:**
     - [x] Transparencia (NIST RMF)
-      - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
     - [x] Soberanía Humana (UNESCO)
-      - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
     - [x] Responsabilidad (ISO 42001)
-      - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
 
 ### Validación de Soberanía (Handshake)
 - **Pregunta Crítica:** "¿Registrar todos los avances no registrados con base en políticas de trazabilidad?"
 - **Respuesta Erick Vega:** "registra todos los avances no registrados con base en las políticas de trazabilidad"
 - **Criterio de Aceptación:** [x] Validado.
-  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+  - [x] Pre-checks: [Integridad][LID] · [Ática][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
   - **Soporte:** [validación humana interna no pública]
-  - **Texto exacto de confirmación verbal:** "registra todos los avances no registrados con base en las políticas de trazabilidad"
-  - **Hash de confirmación verbal:** `hash omitido:omitido`
-  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
   - **Hash (Contenido):** `hash omitido:omitido`
   - **Fingerprint:** `hash omitido:omitido`
   - **Nivel de Riesgo:** ALTO
   - **Modo:** Confirmación Verbal
   - **Pregunta crítica o disparador:** Instrucción humana directa para registrar avances pendientes.
+  - **Texto exacto de confirmación verbal:** "registra todos los avances no registrados con base en las políticas de trazabilidad"
+  - **Hash de confirmación verbal:** `hash omitido:omitido`
+  - **Fuente de verdad de confirmación:** `00_sistema_tesis/canon/events.jsonl :: validación humana interna no pública :: human_validation.confirmation_text`
 
 ## Economía de uso
 - Presupuesto vs Avance: Se concentró el esfuerzo en automatizar y cerrar trazabilidad en una sola sesión.
@@ -70,8 +62,8 @@ Completar trazabilidad de avances pendientes e implementar automatización en ho
 ## Siguiente paso concreto
 Consolidar cambios en commit firmado y ejecutar push con variables de entorno requeridas por `pre-push`.
 
-[LID]: log_sesiones_trabajo_registradas.md
+[LID]: log_conversaciones_ia.md
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

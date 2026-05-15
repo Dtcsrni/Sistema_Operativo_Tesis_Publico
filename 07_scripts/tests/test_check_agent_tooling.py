@@ -1,16 +1,19 @@
 from __future__ import annotations
-
 import sys
-import unittest
 from pathlib import Path
-from unittest.mock import patch
+sys.path.insert(0, str(Path(__file__).resolve().parents[1])) # 07_scripts root
+sys.path.insert(0, str(Path(__file__).resolve().parent))     # subdirectory siblings
 
+
+
+import unittest
+
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
 
 import check_agent_tooling  # noqa: E402
-
 
 class TestCheckAgentTooling(unittest.TestCase):
     def test_build_report_prioritizes_caveman_before_serena(self) -> None:
@@ -39,7 +42,6 @@ class TestCheckAgentTooling(unittest.TestCase):
             report = check_agent_tooling.build_report(ROOT)
 
         self.assertEqual(report["policy"]["workflow"], "caveman -> filesystem -> restore serena")
-
 
 if __name__ == "__main__":
     unittest.main()

@@ -84,8 +84,8 @@ La opción elegida minimiza complejidad operativa, preserva trazabilidad bajo co
 - The Turing Way documenta prácticas reales de reproducibilidad, colaboración y gobernanza en proyectos de investigación: [The Turing Way](https://book.the-turing-way.org/)
 - NASA Systems Engineering Handbook formaliza gestión de configuración, riesgos y trazabilidad en proyectos complejos: [NASA SP-2016-6105 Rev2](https://www.nasa.gov/reference/systems-engineering-handbook/)
 
-[LID]: ruta local no pública
-[GOV]: ruta local no pública
-[AUD]: ruta local no pública
+[LID]:  ruta local no pública 
+[GOV]:  ruta local no pública 
+[AUD]:  ruta local no pública
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._

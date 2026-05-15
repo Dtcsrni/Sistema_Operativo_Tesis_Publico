@@ -154,6 +154,15 @@ class SerenaClient:
         }
         return payload
 
+    def list_tools(self) -> list[dict[str, Any]]:
+        try:
+            # En la implementación actual de _run_sequence, herramientas se obtienen de tools/list
+            # Necesitamos asegurarnos de que el payload las contenga.
+            payload = self._run_sequence([])
+            return payload.get("tool_definitions", [])
+        except Exception:
+            return []
+
     def healthcheck(self) -> dict[str, Any]:
         try:
             sequence = self._run_sequence([])
@@ -231,6 +240,30 @@ class SerenaClient:
         result["transport"] = self.transport
         return result
 
+    def call_tool(self, name: str, arguments: dict[str, Any]) -> dict[str, Any]:
+        """Ejecuta una herramienta de Serena con normalización de nombre y manejo de errores.
+        
+        Args:
+            name: Nombre de la herramienta (se normaliza si usa alias legacy).
+            arguments: Argumentos para la herramienta.
+            
+        Returns:
+            Resultado estructurado de la herramienta.
+            
+        Raises:
+            SerenaToolError: Si la herramienta no existe o falla.
+            SerenaTransportError: Si hay problemas de conexión.
+            SerenaProtocolError: Si la respuesta no es válida.
+        """
+        normalized_name = _normalize_tool_name(name)
+        payload = self._run_sequence([(normalized_name, arguments)])
+        if not payload.get("calls"):
+            raise SerenaProtocolError(f"Serena no devolvió resultado para {normalized_name}.")
+        result = payload["calls"][0]["response"]
+        result["tool_name"] = normalized_name
+        result["transport"] = self.transport
+        return result
+
     def _run_sequence(self, calls: list[tuple[str, dict[str, Any]]]) -> dict[str, Any]:
         if self.transport == "http":
             return self._run_http_sequence(calls)
@@ -264,6 +297,7 @@ class SerenaClient:
             "server": dict(init.get("result", {}).get("serverInfo", {})),
             "protocol_version": str(init.get("result", {}).get("protocolVersion", "")),
             "tool_names": [str(item["name"]) for item in tools.get("result", {}).get("tools", [])],
+            "tool_definitions": tools.get("result", {}).get("tools", []),
             "calls": responses,
         }
 
@@ -305,6 +339,7 @@ class SerenaClient:
                 "server": dict(init.get("result", {}).get("serverInfo", {})),
                 "protocol_version": str(init.get("result", {}).get("protocolVersion", "")),
                 "tool_names": [str(item["name"]) for item in tools.get("result", {}).get("tools", [])],
+                "tool_definitions": tools.get("result", {}).get("tools", []),
                 "calls": responses,
             }
         finally:

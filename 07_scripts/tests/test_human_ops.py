@@ -1,11 +1,15 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1])) # 07_scripts root
+sys.path.insert(0, str(Path(__file__).resolve().parent))     # subdirectory siblings
+
+
 import argparse
 import io
-import sys
 import unittest
 from contextlib import redirect_stdout
-from pathlib import Path
-from unittest.mock import patch
 
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
@@ -16,7 +20,6 @@ from build_wiki import build_wiki  # noqa: E402
 from canon import materialize_events  # noqa: E402
 from publication import load_publication_config, publication_bundle_status, sanitize_text  # noqa: E402
 from tesis import cmd_doctor, cmd_next, cmd_publish, cmd_source_status, cmd_status  # noqa: E402
-
 
 class TestHumanOperationalLayer(unittest.TestCase):
     def test_sanitize_text_redacts_private_markers(self):
@@ -101,7 +104,6 @@ class TestHumanOperationalLayer(unittest.TestCase):
         self.assertIn("review-link-card", html)
         self.assertIn('id="review-dock"', html)
         self.assertIn("data-review-toggle", html)
-
 
 if __name__ == "__main__":
     unittest.main()

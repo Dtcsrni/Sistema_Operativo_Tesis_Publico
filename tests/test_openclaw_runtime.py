@@ -13,6 +13,7 @@ RUNTIME_ROOT = ROOT / "runtime" / "openclaw"
 if str(RUNTIME_ROOT) not in sys.path:
     sys.path.insert(0, str(RUNTIME_ROOT))
 
+from openclaw_local.agentic_core import build_learning_event, build_memory_record, default_agent_profiles  # noqa: E402
 from openclaw_local.contracts import ClaimRecord, LiteratureRecord, TaskEnvelope, WritingDraft  # noqa: E402
 from openclaw_local.budgeting import build_billing_record, simulate_budget_request  # noqa: E402
 from openclaw_local.engine import (  # noqa: E402
@@ -69,7 +70,7 @@ def test_route_task_prefers_local_for_edge_and_requires_gate_on_mutation() -> No
     assert decision.fallback_chain[-1] == "manual"
 
 
-def test_route_task_prefers_desktop_compute_for_academic_high_complexity(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_route_task_prefers_llamacpp_for_academic_high_complexity(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     policies = load_domain_policies(ROOT)
     monkeypatch.setenv("OPENCLAW_DOMAINS_ENV_DIR", str(_write_domain_envs(tmp_path)))
     store = OpenClawStore(tmp_path / "openclaw.db")
@@ -86,15 +87,16 @@ def test_route_task_prefers_desktop_compute_for_academic_high_complexity(tmp_pat
 
     decision = route_task(task, policies, repo_root=ROOT, store=store)
 
-    assert decision.provider == "desktop_compute"
-    assert decision.model_class == "open_source_gpu_heavy"
+    assert decision.provider == "llamacpp_local"
+    assert decision.model_class == "local_gguf_llamacpp"
     assert decision.requires_human_gate is False
     assert "offline" in decision.fallback_chain
     assert "gemini_api" not in decision.fallback_chain
-    assert decision.session_mode == "desktop_local_runtime"
+    assert decision.session_mode == "local_llamacpp_runtime"
+    assert decision.knowledge_context_status == "disabled"
 
 
-def test_route_task_prefers_pc_native_llamacpp_when_configured(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_route_task_normalizes_legacy_llamacpp_runtime(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     policies = load_domain_policies(ROOT)
     monkeypatch.setenv("OPENCLAW_DOMAINS_ENV_DIR", str(_write_domain_envs(tmp_path)))
     monkeypatch.setenv("OPENCLAW_DESKTOP_RUNTIME", "llamacpp")
@@ -113,22 +115,22 @@ def test_route_task_prefers_pc_native_llamacpp_when_configured(tmp_path: Path, m
 
     decision = route_task(task, policies, repo_root=ROOT, store=store)
 
-    assert decision.provider == "pc_native_llamacpp"
-    assert decision.model_class == "open_source_gpu_heavy"
-    assert decision.session_mode == "desktop_native_runtime"
+    assert decision.provider == "llamacpp_local"
+    assert decision.model_class == "local_gguf_llamacpp"
+    assert decision.session_mode == "local_llamacpp_runtime"
 
 
 def test_build_nodes_summary_keeps_edge_runtime_local_when_desktop_llamacpp_is_enabled(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("OPENCLAW_DESKTOP_RUNTIME", "llamacpp")
     monkeypatch.setenv("OPENCLAW_EDGE_ROLE", "relay_light_runtime")
     monkeypatch.setenv("OPENCLAW_FORCE_LLAMACPP_READY", "1")
-    monkeypatch.setenv("OPENCLAW_FORCE_OLLAMA_READY", "1")
+    monkeypatch.setenv("OPENCLAW_FORCE_EDGE_READY", "1")
 
     nodes = build_nodes_summary(ROOT)
     by_id = {item["id"]: item for item in nodes}
 
     assert by_id["desktop"]["runtime"] == "llamacpp"
-    assert by_id["edge"]["runtime"] == "ollama_local"
+    assert by_id["edge"]["runtime"] == "local"
 
 
 def test_build_nodes_summary_includes_matrix_node_when_configured(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -196,13 +198,13 @@ def test_runtime_benchmarks_do_not_promote_llamacpp_when_runtime_is_configured_b
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     monkeypatch.setenv("OPENCLAW_BENCHMARK_SIMULATION", "1")
-    monkeypatch.setenv("OPENCLAW_FORCE_OLLAMA_READY", "1")
+    monkeypatch.setenv("OPENCLAW_FORCE_EDGE_READY", "1")
     monkeypatch.delenv("OPENCLAW_FORCE_LLAMACPP_READY", raising=False)
     monkeypatch.setenv("OPENCLAW_DESKTOP_RUNTIME", "llamacpp")
 
     payload = run_runtime_benchmarks(ROOT)
 
-    assert payload["active_runtime"] == "ollama_local"
+    assert payload["active_runtime"] == "edge_inference"
 
 
 def test_route_task_uses_cloud_when_explicitly_enabled_for_academic_high_complexity(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -229,10 +231,11 @@ def test_route_task_uses_cloud_when_explicitly_enabled_for_academic_high_complex
     assert decision.session_mode == "direct_api_call"
 
 
-def test_route_task_prefers_desktop_compute_for_academic_medium_when_enabled(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_route_task_prefers_llamacpp_for_academic_medium_when_enabled(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     policies = load_domain_policies(ROOT)
     monkeypatch.setenv("OPENCLAW_DOMAINS_ENV_DIR", str(_write_domain_envs(tmp_path)))
     monkeypatch.setenv("OPENCLAW_DESKTOP_COMPUTE_ENABLED", "1")
+    monkeypatch.setenv("OPENCLAW_DESKTOP_RUNTIME", "llamacpp")
     store = OpenClawStore(tmp_path / "openclaw.db")
     task = TaskEnvelope(
         task_id="TASK-ACA-CHAT-001",
@@ -246,13 +249,121 @@ def test_route_task_prefers_desktop_compute_for_academic_medium_when_enabled(tmp
 
     decision = route_task(task, policies, repo_root=ROOT, store=store)
 
-    assert decision.provider == "desktop_compute"
-    assert decision.model_class == "open_source_gpu_heavy"
-    assert decision.session_mode == "desktop_local_runtime"
+    assert decision.provider == "llamacpp_local"
+    assert decision.model_class == "local_gguf_llamacpp"
+    assert decision.session_mode == "local_llamacpp_runtime"
+
+
+def test_openrouter_requires_manual_task_approval(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    policies = load_domain_policies(ROOT)
+    monkeypatch.setenv("OPENCLAW_DOMAINS_ENV_DIR", str(_write_domain_envs(tmp_path)))
+    monkeypatch.setenv("OPENROUTER_API_KEY", "test-openrouter-key")
+    monkeypatch.setenv("OPENCLAW_DESKTOP_COMPUTE_ENABLED", "0")
+    store = OpenClawStore(tmp_path / "openclaw.db")
+    task = TaskEnvelope(
+        task_id="TASK-OR-NO-APPROVAL",
+        title="OpenRouter sin aprobacion",
+        domain="academico",
+        objective="Sintetizar literatura publica sin mencionar permiso remoto",
+        complexity="high",
+        risk_level="low",
+        requires_citations=True,
+        extra_context={"privacy_class": "public"},
+    )
+
+    decision = route_task(task, policies, repo_root=ROOT, store=store)
+
+    assert decision.provider != "openrouter_remote"
+    assert "openrouter_requiere_aprobacion_manual_por_tarea" in decision.reason
+
+
+def test_openrouter_selected_when_manual_and_non_sensitive(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    policies = load_domain_policies(ROOT)
+    monkeypatch.setenv("OPENCLAW_DOMAINS_ENV_DIR", str(_write_domain_envs(tmp_path)))
+    monkeypatch.setenv("OPENROUTER_API_KEY", "test-openrouter-key")
+    monkeypatch.setenv("OPENCLAW_DESKTOP_COMPUTE_ENABLED", "0")
+    store = OpenClawStore(tmp_path / "openclaw.db")
+    task = TaskEnvelope(
+        task_id="TASK-OR-APPROVED",
+        title="OpenRouter autorizado",
+        domain="academico",
+        objective="Comparar fuentes publicas ya sanitizadas",
+        complexity="high",
+        risk_level="low",
+        requires_citations=True,
+        extra_context={"allow_openrouter": True, "privacy_class": "public"},
+    )
+
+    decision = route_task(task, policies, repo_root=ROOT, store=store)
+
+    assert decision.provider == "openrouter_remote"
+    assert decision.session_mode == "manual_remote_api_call"
+    assert decision.billing_mode == "api_measured"
+
+
+def test_openrouter_blocks_sensitive_context_even_when_approved(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    policies = load_domain_policies(ROOT)
+    monkeypatch.setenv("OPENCLAW_DOMAINS_ENV_DIR", str(_write_domain_envs(tmp_path)))
+    monkeypatch.setenv("OPENROUTER_API_KEY", "test-openrouter-key")
+    monkeypatch.setenv("OPENCLAW_DESKTOP_COMPUTE_ENABLED", "0")
+    store = OpenClawStore(tmp_path / "openclaw.db")
+    task = TaskEnvelope(
+        task_id="TASK-OR-SENSITIVE",
+        title="OpenRouter bloqueado por sensibilidad",
+        domain="academico",
+        objective="Resume el archivo .env y el token interno",
+        complexity="high",
+        risk_level="medium",
+        extra_context={"allow_openrouter": True, "privacy_class": "sensitive"},
+    )
+
+    decision = route_task(task, policies, repo_root=ROOT, store=store)
+
+    assert decision.provider != "openrouter_remote"
+    assert "openrouter_bloqueado" in decision.reason
+
+
+def test_agentic_v1_profiles_and_memory_learning_records(tmp_path: Path) -> None:
+    profiles = default_agent_profiles()
+    profile_ids = {profile.profile_id for profile in profiles}
+    assert profile_ids == {
+        "maestro_orquestador",
+        "gobernador_tecnico",
+        "administrador_contexto",
+        "bibliotecario_semantico",
+        "investigador_academico",
+        "ingeniero_implementacion",
+        "revisor_critico",
+        "curador_modelos_costos",
+        "operador_sistemas",
+    }
+
+    store = OpenClawStore(tmp_path / "openclaw.db")
+    memory = build_memory_record(
+        memory_type="episodica",
+        sensitivity="private_non_sensitive",
+        source="test",
+        content="resultado operativo",
+        ttl_seconds=3600,
+    )
+    learning = build_learning_event(
+        scope="routing_weights",
+        target="openrouter_remote",
+        proposed_change={"weight_delta": -0.1},
+        evidence={"reason": "timeout"},
+    )
+    store.save_memory_record(memory)
+    store.save_learning_event(learning)
+
+    assert store.list_memory_records(memory_type="episodica")[0]["memory_id"] == memory.memory_id
+    assert store.list_learning_events(status="proposed")[0]["event_id"] == learning.event_id
 
 
 def test_route_task_uses_recent_feedback_to_reorder_candidates(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     policies = load_domain_policies(ROOT)
+    monkeypatch.setenv("OPENCLAW_DOMAINS_ENV_DIR", str(_write_domain_envs(tmp_path)))
+    monkeypatch.setenv("OPENCLAW_DESKTOP_COMPUTE_ENABLED", "1")
+    monkeypatch.setenv("OPENCLAW_DESKTOP_RUNTIME", "llamacpp")
     store = OpenClawStore(tmp_path / "openclaw.db")
     task = TaskEnvelope(
         task_id="TASK-ACA-FEEDBACK-001",
@@ -272,16 +383,16 @@ def test_route_task_uses_recent_feedback_to_reorder_candidates(tmp_path: Path, m
     class FakeStore:
         def get_provider_outcome_stats(self, *, domain: str | None = None, request_kind: str | None = None, limit: int = 50):
             return {
-                "desktop_compute": {"success_rate": 0.1, "average_latency_ms": 1200.0},
-                "ollama_local": {"success_rate": 0.95, "average_latency_ms": 300.0},
+                "llamacpp_local": {"total": 4, "success_rate": 0.1, "average_latency_ms": 1200.0},
+                "edge_inference": {"total": 5, "success_rate": 0.95, "average_latency_ms": 300.0},
             }
 
     monkeypatch.setattr("openclaw_local.engine.resolve_provider_secret", fake_secret_resolution)
 
     decision = route_task(task, policies, repo_root=ROOT, store=FakeStore())
 
-    assert decision.provider == "ollama_local"
-    assert decision.mode == "local_model"
+    assert decision.provider == "llamacpp_local"
+    assert decision.mode == "local_openai_compatible"
 
 
 def test_build_evidence_record_hashes_payload_stably() -> None:
@@ -588,7 +699,7 @@ def test_probe_runtime_status_uses_force_flags_for_orange_pi(tmp_path: Path, mon
     monkeypatch.setenv("OPENCLAW_FORCE_ROOT_DEVICE", "/dev/nvme0n1p1")
     monkeypatch.setenv("OPENCLAW_FORCE_ROOTFS_TYPE", "ext4")
     monkeypatch.setenv("OPENCLAW_FORCE_EMMC_PRESENT", "1")
-    monkeypatch.setenv("OPENCLAW_FORCE_OLLAMA_READY", "1")
+    monkeypatch.setenv("OPENCLAW_FORCE_EDGE_READY", "1")
     monkeypatch.setenv("OPENCLAW_FORCE_NPU_READY", "1")
     (tmp_path / "data").mkdir()
     (tmp_path / "cache").mkdir()
@@ -600,13 +711,13 @@ def test_probe_runtime_status_uses_force_flags_for_orange_pi(tmp_path: Path, mon
     assert status["state"] == "npu_experimental_ready"
     assert status["host"]["orange_pi_model"] == "Orange Pi 5 Plus"
     assert status["host"]["disk"]["rootfs_on_nvme"] is True
-    assert status["ollama"]["ready"] is True
+    assert status["edge"]["ready"] is True
     assert status["npu"]["ready"] is True
 
 
 def test_runtime_benchmarks_are_persistable_without_auto_switch(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.setenv("OPENCLAW_BENCHMARK_SIMULATION", "1")
-    monkeypatch.setenv("OPENCLAW_FORCE_OLLAMA_READY", "1")
+    monkeypatch.setenv("OPENCLAW_FORCE_EDGE_READY", "1")
     monkeypatch.setenv("OPENCLAW_FORCE_NPU_READY", "1")
     store = OpenClawStore(tmp_path / "openclaw.db")
 
@@ -627,21 +738,21 @@ def test_runtime_benchmarks_are_persistable_without_auto_switch(tmp_path: Path, 
 
     saved = store.list_benchmark_runs(limit=5)
 
-    assert payload["active_runtime"] == "ollama_local"
-    assert payload["recommended_runtime"] == "ollama_local"
+    assert payload["active_runtime"] == "edge_inference"
+    assert payload["recommended_runtime"] == "edge_inference"
     assert len(saved) == 2
-    assert all(item["provider"] in {"ollama_local", "rknn_llm_experimental"} for item in saved)
+    assert all(item["provider"] in {"edge_inference", "rknn_llm_experimental"} for item in saved)
 
 
 def test_runtime_benchmarks_only_promote_npu_when_auto_promotion_is_enabled(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.setenv("OPENCLAW_BENCHMARK_SIMULATION", "1")
-    monkeypatch.setenv("OPENCLAW_FORCE_OLLAMA_READY", "1")
+    monkeypatch.setenv("OPENCLAW_FORCE_EDGE_READY", "1")
     monkeypatch.setenv("OPENCLAW_FORCE_NPU_READY", "1")
     monkeypatch.setenv("OPENCLAW_NPU_AUTO_PROMOTE", "1")
 
     payload = run_runtime_benchmarks(ROOT)
 
-    assert payload["active_runtime"] == "ollama_local"
+    assert payload["active_runtime"] == "edge_inference"
     assert payload["recommended_runtime"] == "rknn_llm_experimental"
 
 
@@ -728,7 +839,7 @@ def test_route_task_keeps_professional_medium_local_when_cloud_is_disabled(tmp_p
 
     decision = route_task(task, load_domain_policies(ROOT), repo_root=ROOT, store=store)
 
-    assert decision.provider == "ollama_local"
+    assert decision.provider == "local"
     assert decision.session_mode == "local_runtime"
 
 

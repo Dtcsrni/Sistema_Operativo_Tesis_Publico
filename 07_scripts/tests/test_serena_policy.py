@@ -1,10 +1,13 @@
-import json
 import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1])) # 07_scripts root
+sys.path.insert(0, str(Path(__file__).resolve().parent))     # subdirectory siblings
+
+
+import json
 import tempfile
 import unittest.mock as mock
 import unittest
-from pathlib import Path
-
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
@@ -12,16 +15,13 @@ sys.path.insert(0, str(ROOT / "07_scripts"))
 from serena_core import apply_controlled_change, append_trace_record  # noqa: E402
 from serena_policy import classify_write_scope, preflight, validate_step_and_source  # noqa: E402
 
-
 def write_json(path: Path, payload: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-
 def write_jsonl(path: Path, rows: list[dict]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(json.dumps(row, ensure_ascii=False) for row in rows) + "\n", encoding="utf-8")
-
 
 def minimal_repo(repo: Path) -> None:
     write_json(
@@ -118,7 +118,6 @@ def minimal_repo(repo: Path) -> None:
         ],
     )
     write_json(repo / "00_sistema_tesis" / "config" / "integrity_manifest.json", {})
-
 
 class TestSerenaPolicy(unittest.TestCase):
     def test_classify_write_scope(self):
@@ -230,7 +229,6 @@ class TestSerenaPolicy(unittest.TestCase):
             self.assertEqual(len(rows), 2)
             self.assertIn('"tool": "seed"', rows[0])
             self.assertIn('"tool": "canon.apply_controlled_change"', rows[1])
-
 
 if __name__ == "__main__":
     unittest.main()

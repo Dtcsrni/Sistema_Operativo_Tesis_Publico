@@ -1,80 +1,185 @@
 services:
-  # ---------------------------------------------------------
-  # SIOT-DOCS: Gobernanza y Dashboard
-  # ---------------------------------------------------------
-  siot-docs:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: siot-docs:latest
-    container_name: siot-docs
-    init: true
+  # Core: vector DB / semantic store (Weaviate)
+  base-semantica-toltecayotl:
+    image: cr.weaviate.io/semitechnologies/weaviate:1.31.4
+    container_name: base-semantica-toltecayotl
     ports:
-      - "8080:80"
+      - "8080:8080"
+      - "50051:50051"
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 512M
-    env_file:
-      - ${SIOT_DOCS_ENV_FILE:-config/env/tesis-os.env.example}
     environment:
-      - SISTEMA_TESIS_RUNTIME=docker-docs
-      - PYTHONUNBUFFERED=1
-    read_only: true
-    tmpfs:
-      - /tmp
-      - /var/cache/nginx
-      - /var/run
-    security_opt:
-      - no-new-privileges:true
-    cap_drop:
-      - ALL
+      QUERY_DEFAULTS_LIMIT: "25"
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "true"
+      PERSISTENCE_DATA_PATH: "/var/lib/weaviate"
+      DEFAULT_VECTORIZER_MODULE: "none"
+      ENABLE_MODULES: "text2vec-openai,generative-openai"
+      CLUSTER_HOSTNAME: "base-semantica-toltecayotl"
+      RAFT_BOOTSTRAP_EXPECT: "1"
+      DISABLE_TELEMETRY: "true"
     volumes:
-      - canon_data:/app/00_sistema_tesis:ro # Lectura del canon para el dashboard
+      - toltecayotl_weaviate_data:/var/lib/weaviate
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/v1/.well_known/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
     networks:
       - siot-network
 
-  # ---------------------------------------------------------
-  # SIOT-AGENT: Inteligencia (OpenClaw)
-  # ---------------------------------------------------------
-  siot-agent:
-    build:
-      context: .
-      dockerfile: Dockerfile.agent
-    image: siot-agent:latest
-    container_name: siot-agent
-    init: true
+  # Dashboard / docs (read-only access to canon)
+  tablero-gobernanza:
+    image: tablero-gobernanza:latest
+    container_name: tablero-gobernanza
+    ports:
+      - "8081:80"
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: '4.0'
-          memory: 1G
+    env_file:
+      - ${SIOT_DOCS_ENV_FILE:-config/env/tesis-os.env.example}
+    volumes:
+      - canon_data:/app/00_sistema_tesis:ro
+    networks:
+      - siot-network
+
+  # Agent core (OpenClaw) — requiere acceso a 00_sistema_tesis y runtime
+  nucleo-openclaw:
+    image: nucleo-openclaw:latest
+    container_name: nucleo-openclaw
+    restart: unless-stopped
+    command:
+      - python
+      - -m
+      - runtime.openclaw.openclaw_local.telegram_bot
     env_file:
       - .env
       - ${SIOT_AGENT_ENV_FILE:-config/env/openclaw.env}
     environment:
       - SISTEMA_TESIS_RUNTIME=docker-agent
-      - OPENCLAW_DATA_DIR=/app/runtime/openclaw/state
       - PYTHONUNBUFFERED=1
-    security_opt:
-      - no-new-privileges:true
-    cap_drop:
-      - ALL
-    tmpfs:
-      - /tmp
     volumes:
-      - ./00_sistema_tesis:/app/00_sistema_tesis # Escritura en el canon (inmutable ledger)
+      - ./00_sistema_tesis:/app/00_sistema_tesis
       - ./runtime/openclaw/state:/app/runtime/openclaw/state
-      - ./07_scripts:/app/07_scripts:ro
-      - ./tests:/app/tests:ro
+      - ./07_scripts/ops:/app/07_scripts/ops:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import importlib,os,sys; importlib.import_module('runtime.openclaw.openclaw_local.telegram_bot'); sys.exit(0 if os.getenv('OPENCLAW_TELEGRAM_BOT_TOKEN') else 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
     networks:
       - siot-network
     depends_on:
-      siot-docs:
-        condition: service_healthy
+      - tablero-gobernanza
+      - base-semantica-toltecayotl
+
+  # Gateway for OpenClaw (keeps API boundary explicit)
+  pasarela-openclaw:
+    image: pasarela-openclaw:latest
+    container_name: pasarela-openclaw
+    command:
+      - python
+      - runtime/openclaw/bin/openclaw_cli.py
+      - pasarela
+      - servir
+      - --host
+      - 0.0.0.0
+      - --port
+      - "18789"
+    ports:
+      - "18789:18789"
+    restart: unless-stopped
+    env_file:
+      - .env
+      - ${SIOT_AGENT_ENV_FILE:-config/env/openclaw.env}
+    volumes:
+      - ./00_sistema_tesis:/app/00_sistema_tesis
+      - ./runtime/openclaw/state:/app/runtime/openclaw/state
+      - ./07_scripts:/app/07_scripts:ro
+    networks:
+      - siot-network
+    depends_on:
+      - tablero-gobernanza
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:18789/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  # Optional: local LLM host (Ollama) — include only if PC provides GPU and models
+  ollama-pc:
+    image: ollama/ollama:latest
+    container_name: ollama-pc
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data_pc:/root/.ollama
+      - ./runtime/models:/models_import:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    networks:
+      - siot-network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  # Executor subordinado para tareas complejas con RAG obligatorio
+  opencode-executor:
+    build:
+      context: ./runtime/opencode_executor_image
+      dockerfile: Dockerfile
+    image: opencode-executor:latest
+    container_name: opencode-executor
+    ports:
+      - "4096:4096"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '3.0'
+          memory: 2G
+    env_file:
+      - .env
+      - ${SIOT_AGENT_ENV_FILE:-config/env/openclaw.env}
+    environment:
+      - SISTEMA_TESIS_RUNTIME=docker-executor
+      - OPENCLAW_REPO_ROOT=/app
+      - OPENCODE_MODEL=deepseek-r1:7b
+      - OPENCODE_PROVIDER=ollama
+      - OPENCODE_BASE_URL=http://ollama-pc:11434/v1
+      - OPENCODE_SERVER_URL=http://opencode-executor:4096
+      - OPENCODE_TIMEOUT_SEC=180
+      - RAG_ENDPOINT=http://base-semantica-toltecayotl:8080
+      - RAG_REQUIRED=true
+      # MODO LOCAL-ONLY (SIN COSTES)
+      # Descomenta abajo SOLO si quieres usar Gemini (GENERA COSTES)
+      # - GOOGLE_GENAI_USE_VERTEXAI=true
+      # - GOOGLE_CLOUD_PROJECT=project-d72bb17e-5918-431c-ba5
+      # - GOOGLE_CLOUD_LOCATION=us-central1
+      # - GOOGLE_APPLICATION_CREDENTIALS=/secrets/adc.json
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./00_sistema_tesis:/app/00_sistema_tesis:ro
+      - ./runtime/opencode:/app/runtime/opencode
+      - ./runtime/workspaces:/app/runtime/workspaces
+      - ./07_scripts:/app/07_scripts:ro
+      # OPCIONAL: Montar ADC solo si usas Gemini (descomenta las líneas de envs arriba)
+      # - ${APPDATA}/gcloud/application_default_credentials.json:/secrets/adc.json:ro
+      - ./opencode.json:/app/opencode.json:ro
+    networks:
+      - siot-network
+    depends_on:
+      - ollama-pc
+      - base-semantica-toltecayotl
 
 networks:
   siot-network:
@@ -82,9 +187,13 @@ networks:
     driver: bridge
 
 volumes:
+  toltecayotl_weaviate_data:
+    driver: local
   canon_data:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: ${PWD}/00_sistema_tesis
+  ollama_data_pc:
+    driver: local

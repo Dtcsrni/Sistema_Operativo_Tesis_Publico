@@ -1,4 +1,5 @@
 <!-- SISTEMA_TESIS:PROTEGIDO -->
+<!-- GID: DEC-0022 | 2026-04-08 | v1.0 | ACEPTADA -->
 
 # DEC-0022 Arquitectura Operativa Escritorio Primario y Orange Pi Edge
 
@@ -36,8 +37,8 @@ La Orange Pi si puede ejecutar operacion tecnica extendida del stack IoT, diagno
 - [DEC-0019](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0019_reestructura_operativa_y_despliegue_orangepi.md)
 - [DEC-0020](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0020_openclaw_como_capa_asistiva_opcional_y_evaluable.md)
 
-[LID]: ruta local no pública
-[GOV]: ruta local no pública
-[AUD]: ruta local no pública
+[LID]:  ruta local no pública 
+[GOV]:  ruta local no pública 
+[AUD]:  ruta local no pública
 
-_Última actualización: `2026-04-29`._
+_Última actualización: `2026-05-15`._
