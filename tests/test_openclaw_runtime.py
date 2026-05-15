@@ -130,7 +130,7 @@ def test_build_nodes_summary_keeps_edge_runtime_local_when_desktop_llamacpp_is_e
     by_id = {item["id"]: item for item in nodes}
 
     assert by_id["desktop"]["runtime"] == "llamacpp"
-    assert by_id["edge"]["runtime"] == "local"
+    assert by_id["edge"]["runtime"] == "edge_inference"
 
 
 def test_build_nodes_summary_includes_matrix_node_when_configured(monkeypatch: pytest.MonkeyPatch) -> None:

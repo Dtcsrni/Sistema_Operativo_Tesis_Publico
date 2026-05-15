@@ -118,7 +118,7 @@ SERVICE_CONTROL_ALLOWLIST = {
     "desktop": "openclaw-desktop-tunnel.service",
     "tunnel": "openclaw-desktop-tunnel.service",
 }
-PC_INFERENCE_PROVIDERS = {"desktop_compute", "pc_native_llamacpp", "external_llm_router"}
+PC_INFERENCE_PROVIDERS = {"desktop_compute", "pc_native_llamacpp", "llamacpp_local", "external_llm_router", "openrouter_remote"}
 CLOUD_API_CHAT_PROVIDERS = {"gemini_api", "gemini_vertex_flash_3"}
 EDGE_INFERENCE_PROVIDERS = {"edge_inference", "rknn_llm_experimental"}
 DEFAULT_BLOCKED_CHAT_MODELS = {"mistral", "mistral-nemo", "mistral-nemo:12b"}
@@ -1355,7 +1355,7 @@ def _provider_measured_candidates(repo_root: Path, provider_id: str, *, request_
         if candidate and candidate not in candidates:
             candidates.append(candidate)
 
-    if provider_id in {"desktop_compute", "pc_native_llamacpp"}:
+    if provider_id in {"desktop_compute", "pc_native_llamacpp", "llamacpp_local"}:
         if request_kind == "coding":
             append(measured.get("coding_heavy"))
             append(measured.get("daily_recommended"))
@@ -1437,7 +1437,7 @@ def _model_timeout_for(request_kind: str, complexity: str, *, backend: str) -> i
     if request_kind == "knowledge":
         return _env_int("OPENCLAW_CHAT_FACTUAL_TIMEOUT", 90, minimum=10, maximum=180)
     if request_kind in {"coding", "deep", "reasoning", "system"}:
-        default = 120 if backend in {"desktop_compute", "pc_native_llamacpp"} else 90
+        default = 120 if backend in {"desktop_compute", "pc_native_llamacpp", "llamacpp_local"} else 90
         return _env_int("OPENCLAW_CHAT_HEAVY_TIMEOUT", default, minimum=10, maximum=300)
     return _env_int("OPENCLAW_CHAT_MEDIUM_TIMEOUT", 40, minimum=10, maximum=120)
 
@@ -1584,7 +1584,7 @@ def _chat_backend_candidates(repo_root: Path, profile: dict[str, str]) -> list[C
         if gemini_enabled and gemini_model
         else None
     )
-    gemini_vertex_enabled = _env_flag("OPENCLAW_GEMINI_VERTEX_ENABLED", default=True)
+    gemini_vertex_enabled = _env_flag("OPENCLAW_GEMINI_VERTEX_ENABLED", default=False)
     gemini_vertex_candidate = (
         ChatBackendCandidate(
             "gemini_vertex_flash_3",
@@ -1683,7 +1683,7 @@ def _build_chat_execution_plan(*, repo_root: Path, argument: str, profile: dict[
 
 
 def _backend_semaphore(candidate: ChatBackendCandidate) -> threading.BoundedSemaphore:
-    return _DESKTOP_SEMAPHORE if candidate.provider in {"desktop_compute", "pc_native_llamacpp"} else _EDGE_SEMAPHORE
+    return _DESKTOP_SEMAPHORE if candidate.provider in {"desktop_compute", "pc_native_llamacpp", "llamacpp_local"} else _EDGE_SEMAPHORE
 
 
 def _openai_chat_generate(prompt: str, *, timeout_seconds: int = 120) -> tuple[bool, str, str]:
@@ -2702,7 +2702,7 @@ def _chat_response(
             last_attempted_model = candidate.model
             attempt_started = time.perf_counter()
             try:
-                if candidate.provider == "pc_native_llamacpp":
+                if candidate.provider in {"llamacpp_local", "pc_native_llamacpp"}:
                     ok, response = llamacpp_generate(
                         base_url=candidate.base_url,
                         model=candidate.model,

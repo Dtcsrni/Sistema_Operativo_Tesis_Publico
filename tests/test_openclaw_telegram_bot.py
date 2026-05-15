@@ -514,7 +514,7 @@ def test_pc_native_llamacpp_uses_openai_compatible_chat_endpoint(tmp_path: Path,
 
     assert payload["status"] == "ok"
     assert calls == [("http://pc-runtime:21435", "deepseek-r1:7b")]
-    assert payload["provider"] == "pc_native_llamacpp"
+    assert payload["provider"] == "llamacpp_local"
     assert payload["assistant_text"] == "respuesta pc native"
 
 
@@ -527,7 +527,7 @@ def test_chat_backend_defaults_to_pc_docker_without_edge_fallback(monkeypatch) -
     candidates = _chat_backend_candidates(ROOT, profile)
 
     assert candidates
-    assert all(candidate.provider in {"desktop_compute", "pc_native_llamacpp", "external_llm_router"} for candidate in candidates)
+    assert all(candidate.provider in {"desktop_compute", "llamacpp_local", "pc_native_llamacpp", "external_llm_router"} for candidate in candidates)
     assert all("mistral" not in candidate.model.lower() for candidate in candidates)
 
 
