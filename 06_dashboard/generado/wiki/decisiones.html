@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Decisiones | Tesis OS Wiki</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700&family=Fira+Code&family=Material+Icons&display=swap" rel="stylesheet">
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+  </script>
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-light: #14b8a6;
+      --secondary: #1e293b;
+      --accent: #06b6d4;
+      --bg: #f8fafc;
+      --surface: rgba(255, 255, 255, 0.85);
+      --border: rgba(226, 232, 240, 0.8);
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(15, 118, 110, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.05) 0px, transparent 50%);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Navigation */
+    nav {
+      width: 260px;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      border-right: 1px solid var(--border);
+      padding: 2rem 1rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 100;
+    }
+
+    .nav-header {
+      padding: 0 0.75rem 1.5rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      color: var(--text-muted);
+      border-radius: var(--radius);
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-link .material-icons {
+      font-size: 20px;
+    }
+
+    /* Main Content Area */
+    main {
+      flex: 1;
+      padding: 3rem 4rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 3rem;
+      animation: fadeInDown 0.6s ease-out;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3rem;
+      margin: 0 0 0.5rem;
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .stamp {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Markdown Rendering Styles */
+    .markdown-body {
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+
+    .markdown-body h2 {
+      font-family: 'Outfit', sans-serif;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+      color: var(--secondary);
+    }
+
+    .markdown-body p { margin-bottom: 1.25rem; }
+
+    .markdown-body code {
+      background: rgba(15, 118, 110, 0.08);
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9em;
+      color: var(--primary);
+    }
+
+    .markdown-body a {
+      color: var(--primary);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .markdown-body a:hover {
+      border-bottom-color: var(--primary);
+    }
+
+    .markdown-body ul {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .markdown-body li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Admonitions */
+    .admonition {
+      margin: 1.5rem 0;
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      border-left: 4px solid #ccc;
+      background: white;
+      box-shadow: var(--shadow);
+    }
+    .admonition.success { border-left-color: #10b981; background: #ecfdf5; }
+    .admonition.warning { border-left-color: #f59e0b; background: #fffbeb; }
+    .admonition.danger { border-left-color: #ef4444; background: #fef2f2; }
+    
+    .admonition-title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 768px) {
+      body { flex-direction: column; }
+      nav {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 1rem;
+      }
+      .nav-header { display: none; }
+      main { padding: 2rem 1.5rem; }
+      h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-header">
+      <span class="material-icons">architecture</span>
+      Tesis OS
+    </div>
+    <a href="../../publico/wiki_html/casos_uso.html" class="nav-link "><span class="material-icons">smart_toy</span><span>Agente y Casos de Uso</span></a>
+<a href="../../publico/wiki_html/sistema.html" class="nav-link "><span class="material-icons">settings</span><span>Sistema</span></a>
+<a href="../../publico/wiki_html/gobernanza.html" class="nav-link "><span class="material-icons">gavel</span><span>Gobernanza</span></a>
+<a href="../../publico/wiki_html/arquitectura.html" class="nav-link "><span class="material-icons">architecture</span><span>Arquitectura</span></a>
+<a href="../../publico/wiki_html/terminologia.html" class="nav-link "><span class="material-icons">book</span><span>Terminología</span></a>
+<a href="../../publico/wiki_html/planeacion.html" class="nav-link "><span class="material-icons">event_note</span><span>Planeación</span></a>
+<a href="../../publico/wiki_html/hipotesis.html" class="nav-link "><span class="material-icons">lightbulb</span><span>Hipótesis</span></a>
+<a href="../../publico/wiki_html/bloques.html" class="nav-link "><span class="material-icons">grid_view</span><span>Bloques</span></a>
+<a href="../../publico/wiki_html/decisiones.html" class="nav-link active"><span class="material-icons">psychology</span><span>Decisiones</span></a>
+<a href="../../publico/wiki_html/bitacora.html" class="nav-link "><span class="material-icons">history_edu</span><span>Bitácora</span></a>
+<a href="../../publico/wiki_html/experimentos.html" class="nav-link "><span class="material-icons">science</span><span>Experimentos</span></a>
+<a href="../../publico/wiki_html/implementacion.html" class="nav-link "><span class="material-icons">code</span><span>Implementación</span></a>
+<a href="../../publico/wiki_html/tesis.html" class="nav-link "><span class="material-icons">school</span><span>Tesis</span></a>
+  </nav>
+  <main>
+    <header>
+      <h1>Decisiones</h1>
+      <div class="stamp">
+        <span class="material-icons" style="font-size: 16px;">update</span>
+        Generado el 2026-05-15
+      </div>
+    </header>
+    <div class="markdown-body"><p><h1>Decisiones</h1></p><p>Registro de decisiones de arquitectura, método y operación.
+<ul><li><strong>Tesista:</strong> <code>Erick Renato Vega Ceron</code></li>
+<li><strong>Fecha:</strong> <code>2026-05-15</code></li>
+<li><strong>Estado:</strong> <code>OK</code></li>
+<li><strong>Fuentes:</strong> <code>00_sistema_tesis/decisiones</code></li>
+<li><strong>Aviso:</strong> Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.</li>
+</ul>
+<h2>Navegación de esta página</h2>
+<ul><li><a href="../../publico/wiki_html/index.html">Volver al índice</a>.</li>
+<li>Página anterior en la ruta base: <a href="../../publico/wiki_html/bloques.html">Bloques</a>.</li>
+<li>Página siguiente en la ruta base: <a href="../../publico/wiki_html/bitacora.html">Bitácora</a>.</li>
+<li>Relacionada: <a href="../../publico/wiki_html/bitacora.html">Bitácora</a>.</li>
+<li>Relacionada: <a href="../../publico/wiki_html/planeacion.html">Planeación</a>.</li>
+<li>Relacionada: <a href="../../publico/wiki_html/sistema.html">Sistema</a>.</li>
+</ul>
+<h2>Origen canónico y artefactos relacionados</h2></p><p><h3>Cómo rastrear esta página hasta su origen canónico</h3></p><p>1. Esta página derivada: <a href="../../publico/wiki_html/decisiones.html"><code>06_dashboard/wiki/decisiones.md</code></a>.
+2. Revisa la lista de fuentes canónicas que alimentan su contenido.
+3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
+4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
+5. Si necesitas cambiar el contenido, edita la fuente canónica y reconstruye; no edites esta salida a mano.</p><p><h3>Fuentes canónicas declaradas</h3></p><p>|Fuente canónica|Tipo|Existe|
+|---|---|---|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones"><code>00_sistema_tesis/decisiones</code></a>|directorio|sí|</p><p><h3>Artefactos derivados relacionados</h3>
+<ul><li>Markdown interno: <a href="../../publico/wiki_html/decisiones.html"><code>06_dashboard/wiki/decisiones.md</code></a></li>
+<li>HTML interno: <a href="../../publico/wiki_html/decisiones.html"><code>06_dashboard/generado/wiki/decisiones.html</code></a></li>
+<li>Markdown público sanitizado: <a href="../../publico/wiki/decisiones.md"><code>06_dashboard/publico/wiki/decisiones.md</code></a></li>
+<li>HTML público sanitizado: <a href="../../publico/wiki_html/decisiones.html"><code>06_dashboard/publico/wiki_html/decisiones.html</code></a></li>
+</ul>
+<h2>Qué resuelve este subsistema</h2>
+<ul><li>Conserva decisiones de arquitectura, método y operación como piezas defendibles y fechadas.</li>
+<li>Evita que cambios estructurales queden solo en conversaciones o commits sin narrativa.</li>
+<li>Se interpreta como registro de criterio, no como lista genérica de notas.</li>
+</ul>
+<h2>Decisiones registradas</h2>
+<ul><li><code>2026-05-13</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-13_DEC-0043_integracion_jira_control_misiones.md">DEC-0043: IntegraciÃ³n de Jira en el Centro de Control de Misiones</a></li>
+<li><code>2026-05-08</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-08_DEC-0042_politicas_de_estandarizacion_y_calidad_agnostica.md">DEC-0042: Políticas de Estandarización y Calidad Agnóstica (FRE/PVC)</a></li>
+<li><code>2026-05-08</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-08_DEC-0041_motor_de_evaluacion_de_calidad_epistemica.md">DEC-0041: Motor de Calidad Toltecayotl (MCT) - Evaluación de Calidad Epistémica</a></li>
+<li><code>2026-05-08</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-08_DEC-0040_protocolo_evaluacion_pre-ingestion.md">DEC-0040: Protocolo de Evaluación Pre-Ingestión Bibliográfica</a></li>
+<li><code>2026-05-07</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-07_DEC-0038_opencode_executor_subordinado.md">DEC-0038 Integración de OpenCode como Executor Subordinado con RAG Weaviate Obligatorio</a></li>
+<li><code>2026-05-05</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-05_DEC-0037_estandarizacion_telemetria_remota.md">DEC-0037: Estandarización de Telemetría Remota y Monitoreo de Progreso</a></li>
+<li><code>2026-05-05</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-05_DEC-0036_restriccion_ram_edge.md">DEC-0036: Restricción de RAM en Nodo Edge y Selección de Modelos</a></li>
+<li><code>2026-05-05</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-05_DEC-0035_optimizacion_vram_y_poda_de_modelos.md">DEC-0035: Optimización de VRAM y Poda de Modelos de Razonamiento</a></li>
+<li><code>2026-05-02</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-02_DEC-0032_arquitectura_ingesta_consumption_pets.md">DEC-0032: Arquitectura de Ingesta y Consumo de PET Bundles en OpenClaw</a></li>
+<li><code>2026-05-02</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-02_DEC-0031_adopcion_mission_control.md">DEC-0031 Adopción de Mission Control para Supervisión Agéntica</a></li>
+<li><code>2026-05-01</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-01_DEC-0030_adopcion_arquitectura_local_first.md">DEC-0030: Adopción de Arquitectura Local-First y Soberanía Epistémica</a></li>
+<li><code>2026-05-01</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-01_DEC-0029_estandarizacion_formato_pet.md">DEC-0029: Estandarización del Formato de Ingestión Paquete Epistémico Toltecayotl (PET)</a></li>
+<li><code>2026-04-29</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-29_DEC-0028_toltecayotl_epistemic_inference_engine_architecture.md">DEC-0028: Arquitectura del Motor Epistémico de Inferencia &quot;Toltecayotl&quot;</a></li>
+<li><code>2026-04-29</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-29_DEC-0027_politica_gestion_credenciales_hf.md">DEC-0027: Política de Gestión de Credenciales HuggingFace</a></li>
+<li><code>2026-04-29</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-29_DEC-0026_politica_migracion_hermes.md">Política de Migración Hermes 3 (hermes3:8b)</a></li>
+<li><code>2026-04-27</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-27_DEC-0025_arquitectura_de_contenedores_para_el_nodo_de_control.md">DEC-0025 Arquitectura de Contenedores para el Nodo de Control (PC Hub)</a></li>
+<li><code>2026-04-21</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-21_DEC-0024_operacion_chatgpt_plus_sin_api_en_tesista_directo.md">DEC-0024 Operacion ChatGPT Plus sin API en Tesista Directo</a></li>
+<li><code>2026-04-08</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-08_DEC-0023_serena_mcp_como_capa_comun_para_agentes.md">DEC-0023 Serena MCP como Capa Comun para Agentes</a></li>
+<li><code>2026-04-08</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-08_DEC-0022_arquitectura_operativa_escritorio_primario_y_orange_pi_edge.md">DEC-0022 Arquitectura Operativa Escritorio Primario y Orange Pi Edge</a></li>
+<li><code>2026-03-27</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0021_publicacion_desde_downstream_publico_sanitizado.md">DEC-0021 Publicacion desde Downstream Publico Sanitizado</a></li>
+<li><code>2026-03-27</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0020_openclaw_como_capa_asistiva_opcional_y_evaluable.md">DEC-0020 OpenClaw como Capa Asistiva Opcional y Evaluable</a></li>
+<li><code>2026-03-27</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-27_DEC-0019_reestructura_operativa_y_despliegue_orangepi.md">DEC-0019 Reestructura Operativa y Despliegue Orange Pi</a></li>
+<li><code>2026-03-26</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-26_DEC-0018_evidencia_fuente_conversacion_codex_para_confirmacion_verbal.md">DEC-0018 Evidencia Fuente de Conversación Codex para Confirmación Verbal</a></li>
+<li><code>2026-03-26</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-26_DEC-0017_operacion_humana_dual_y_superficies_privada_publica.md">DEC-0017 Operación Humana Dual y Superficies Privada/Pública</a></li>
+<li><code>2026-03-26</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-26_DEC-0016_canon_unificado_de_eventos_y_proyecciones.md">DEC-0016 Canon unificado de eventos y proyecciones derivadas</a></li>
+<li><code>2026-03-24</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0015_protocolo_de_sanitización_para_exposición_pública.md">DEC-0015 Protocolo de Sanitización para Exposición Pública</a></li>
+<li><code>2026-03-24</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md">DEC-0014 Protocolo de Colaboración Humano-Agente</a></li>
+<li><code>2026-03-24</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0013_integracion_latex.md">Decisión Arq: Integración Nativa con LaTeX (DEC-0013)</a></li>
+<li><code>2026-03-24</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0012_gestion_referencias.md">Decisión Arq: Gestión de Referencias (DEC-0012)</a></li>
+<li><code>2026-03-24</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0011_soberania_biometrica.md">DEC-0011: Soberanía Biométrica e Integración de Firma GPG</a></li>
+<li><code>2026-03-24</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0010_excelencia_operativa.md">DEC-0010: Excelencia Operativa y Seguridad Preventiva (Cierre de B0)</a></li>
+<li><code>2026-03-24</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0009_agencia_auditada.md">DEC-0009: Integración de Agencia Auditada (Cierre de B0)</a></li>
+<li><code>2026-03-24</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0008_trazabilidad_auditoria.md">DEC-0008: Infraestructura de Trazabilidad y Auditoría (Sign-off)</a></li>
+<li><code>2026-03-24</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0007_refuerzo_qol.md">DEC-0007: Refuerzo QoL y Estandarización Final de B0</a></li>
+<li><code>2026-03-24</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0006_mkdocs_wiki.md">DEC-0006: Integración de MkDocs Material y GitHub Pages</a></li>
+<li><code>2026-03-24</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0005_orangepi_como_base.md">DEC-0005: Orange Pi 5 Plus como base experimental y operativa</a></li>
+<li><code>2026-03-24</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0004_endurecimiento_b0.md">DEC-0004: Endurecimiento de la infraestructura del Bloque 0</a></li>
+<li><code>2026-03-24</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0003_economia_de_uso_y_seleccion_de_razonamiento.md">DEC-0003 Economía de uso y selección de razonamiento</a></li>
+<li><code>2026-03-23</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-23_DEC-0002_gobernanza_ia_instrumental.md">DEC-0002 Gobernanza de IA instrumental y registro de uso</a></li>
+<li><code>2026-03-23</code> <a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-23_DEC-0001_arquitectura_sistema_tesis.md">DEC-0001 Arquitectura base del sistema operativo de tesis</a></li>
+</ul></p></div>
+      <footer class="public-update"><p>Última actualización: <strong>2026-05-15</strong></p></footer>
+  </main>
+</body>
+</html>

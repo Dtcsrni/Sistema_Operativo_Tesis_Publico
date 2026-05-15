@@ -1,0 +1,11 @@
+{
+  "task_id": "TASK-E2E-003",
+  "label": "TASK-E2E-003",
+  "description": "Genera un resumen técnico de 3 líneas usando contexto RAG de Toltecayotl",
+  "instruction": "Genera un resumen técnico de 3 líneas usando contexto RAG de Toltecayotl",
+  "prompt": "Genera un resumen técnico de 3 líneas usando contexto RAG de Toltecayotl",
+  "requires_rag": true,
+  "rag_question": "¿Qué evidencia confirma que la colección ToltecayotlKnowledgeChunk está operativa y con recuperación de chunks?",
+  "rag_context": "mission_control",
+  "created_by": "mission_control"
+}

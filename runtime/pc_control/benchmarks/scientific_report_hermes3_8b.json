@@ -1,0 +1,137 @@
+{
+  "generated_at": "2026-04-29T09:49:06.446770+00:00",
+  "hermes": {
+    "model": "hermes3:8b",
+    "tasks": [
+      {
+        "status": "ok",
+        "latency_ms": 91057.3,
+        "tokens_per_second": 49.78,
+        "output_tokens": 200,
+        "output_preview": "El aprendizaje federado ha revolucionado la forma en cómo los sistemas Internet of Things (IoT) manejan el procesamiento de datos con restricciones de privacidad y ancho de banda. Este enfoque permite",
+        "task_id": "academic_synthesis",
+        "category": "Sintesis Academica",
+        "weight": 1.5
+      },
+      {
+        "status": "ok",
+        "latency_ms": 4331.2,
+        "tokens_per_second": 53.38,
+        "output_tokens": 150,
+        "output_preview": "Para analizar la situación y determinar la acción adecuada, consideremos los datos proporcionado ruta local no pública  Temperatura = 38°C: Esta temperatura es alta para un nodo IoT, lo que podría indicar problemas o c",
+        "task_id": "iot_reasoning",
+        "category": "Razonamiento IoT",
+        "weight": 1.0
+      },
+      {
+        "status": "ok",
+        "latency_ms": 5945.0,
+        "tokens_per_second": 51.63,
+        "output_tokens": 250,
+        "output_preview": "```python\ndef find_anomalies(iot_readings):\n    \"\"\"\n    Find anomalies in a list of IoT readings.\n\n    Arg ruta local no pública         iot_readings (list): A list of dictionaries containing 'sensor_id', 'value', and 't",
+        "task_id": "code_generation",
+        "category": "Generacion de Codigo",
+        "weight": 1.0
+      },
+      {
+        "status": "ok",
+        "latency_ms": 3313.2,
+        "tokens_per_second": 52.24,
+        "output_tokens": 120,
+        "output_preview": "Para elegir el modelo adecuado para la generación de resúmenes rollo (rolling summary) en el nodo edge Orange Pi 5 Plus, debemos considerar varios factore ruta local no pública  Capacidad de procesamiento: El Orange P",
+        "task_id": "context_fidelity",
+        "category": "Fidelidad de Contexto",
+        "weight": 1.0
+      }
+    ],
+    "summary": {
+      "ok": 4,
+      "total": 4,
+      "avg_tps": 51.76,
+      "avg_latency_ms": 26161.7
+    }
+  },
+  "decision_d2": {
+    "hermes_wins": 4,
+    "total_tasks": 4,
+    "activate_hermes": true,
+    "decision": "ACTIVAR hermes3:8b como candidato en router",
+    "comparisons": [
+      {
+        "task_id": "academic_synthesis",
+        "winner": "hermes3:8b",
+        "hermes_tps": 49.78,
+        "baseline_tps": 78.16
+      },
+      {
+        "task_id": "iot_reasoning",
+        "winner": "hermes3:8b",
+        "hermes_tps": 53.38,
+        "baseline_tps": 83.99
+      },
+      {
+        "task_id": "code_generation",
+        "winner": "hermes3:8b",
+        "hermes_tps": 51.63,
+        "baseline_tps": 81.03
+      },
+      {
+        "task_id": "context_fidelity",
+        "winner": "hermes3:8b",
+        "hermes_tps": 52.24,
+        "baseline_tps": 82.19
+      }
+    ]
+  },
+  "baseline": {
+    "model": "qwen3:4b",
+    "tasks": [
+      {
+        "status": "ok",
+        "latency_ms": 27064.7,
+        "tokens_per_second": 78.16,
+        "output_tokens": 200,
+        "output_preview": "",
+        "task_id": "academic_synthesis",
+        "category": "Sintesis Academica",
+        "weight": 1.5
+      },
+      {
+        "status": "ok",
+        "latency_ms": 2216.7,
+        "tokens_per_second": 83.99,
+        "output_tokens": 150,
+        "output_preview": "",
+        "task_id": "iot_reasoning",
+        "category": "Razonamiento IoT",
+        "weight": 1.0
+      },
+      {
+        "status": "ok",
+        "latency_ms": 3346.1,
+        "tokens_per_second": 81.03,
+        "output_tokens": 250,
+        "output_preview": "",
+        "task_id": "code_generation",
+        "category": "Generacion de Codigo",
+        "weight": 1.0
+      },
+      {
+        "status": "ok",
+        "latency_ms": 1761.2,
+        "tokens_per_second": 82.19,
+        "output_tokens": 120,
+        "output_preview": "",
+        "task_id": "context_fidelity",
+        "category": "Fidelidad de Contexto",
+        "weight": 1.0
+      }
+    ],
+    "summary": {
+      "ok": 4,
+      "total": 4,
+      "avg_tps": 81.34,
+      "avg_latency_ms": 8597.2
+    }
+  }
+}

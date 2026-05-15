@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agente y Casos de Uso | Tesis OS Wiki</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700&family=Fira+Code&family=Material+Icons&display=swap" rel="stylesheet">
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+  </script>
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-light: #14b8a6;
+      --secondary: #1e293b;
+      --accent: #06b6d4;
+      --bg: #f8fafc;
+      --surface: rgba(255, 255, 255, 0.85);
+      --border: rgba(226, 232, 240, 0.8);
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(15, 118, 110, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.05) 0px, transparent 50%);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Navigation */
+    nav {
+      width: 260px;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      border-right: 1px solid var(--border);
+      padding: 2rem 1rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 100;
+    }
+
+    .nav-header {
+      padding: 0 0.75rem 1.5rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      color: var(--text-muted);
+      border-radius: var(--radius);
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-link .material-icons {
+      font-size: 20px;
+    }
+
+    /* Main Content Area */
+    main {
+      flex: 1;
+      padding: 3rem 4rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 3rem;
+      animation: fadeInDown 0.6s ease-out;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3rem;
+      margin: 0 0 0.5rem;
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .stamp {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Markdown Rendering Styles */
+    .markdown-body {
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+
+    .markdown-body h2 {
+      font-family: 'Outfit', sans-serif;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+      color: var(--secondary);
+    }
+
+    .markdown-body p { margin-bottom: 1.25rem; }
+
+    .markdown-body code {
+      background: rgba(15, 118, 110, 0.08);
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9em;
+      color: var(--primary);
+    }
+
+    .markdown-body a {
+      color: var(--primary);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .markdown-body a:hover {
+      border-bottom-color: var(--primary);
+    }
+
+    .markdown-body ul {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .markdown-body li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Admonitions */
+    .admonition {
+      margin: 1.5rem 0;
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      border-left: 4px solid #ccc;
+      background: white;
+      box-shadow: var(--shadow);
+    }
+    .admonition.success { border-left-color: #10b981; background: #ecfdf5; }
+    .admonition.warning { border-left-color: #f59e0b; background: #fffbeb; }
+    .admonition.danger { border-left-color: #ef4444; background: #fef2f2; }
+    
+    .admonition-title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 768px) {
+      body { flex-direction: column; }
+      nav {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 1rem;
+      }
+      .nav-header { display: none; }
+      main { padding: 2rem 1.5rem; }
+      h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-header">
+      <span class="material-icons">architecture</span>
+      Tesis OS
+    </div>
+    <a href="casos_uso.html" class="nav-link active"><span class="material-icons">smart_toy</span><span>Agente y Casos de Uso</span></a>
+<a href="sistema.html" class="nav-link "><span class="material-icons">settings</span><span>Sistema</span></a>
+<a href="gobernanza.html" class="nav-link "><span class="material-icons">gavel</span><span>Gobernanza</span></a>
+<a href="arquitectura.html" class="nav-link "><span class="material-icons">architecture</span><span>Arquitectura</span></a>
+<a href="terminologia.html" class="nav-link "><span class="material-icons">book</span><span>Terminología</span></a>
+<a href="planeacion.html" class="nav-link "><span class="material-icons">event_note</span><span>Planeación</span></a>
+<a href="hipotesis.html" class="nav-link "><span class="material-icons">lightbulb</span><span>Hipótesis</span></a>
+<a href="bloques.html" class="nav-link "><span class="material-icons">grid_view</span><span>Bloques</span></a>
+<a href="decisiones.html" class="nav-link "><span class="material-icons">psychology</span><span>Decisiones</span></a>
+<a href="bitacora.html" class="nav-link "><span class="material-icons">history_edu</span><span>Bitácora</span></a>
+<a href="experimentos.html" class="nav-link "><span class="material-icons">science</span><span>Experimentos</span></a>
+<a href="implementacion.html" class="nav-link "><span class="material-icons">code</span><span>Implementación</span></a>
+<a href="tesis.html" class="nav-link "><span class="material-icons">school</span><span>Tesis</span></a>
+  </nav>
+  <main>
+    <header>
+      <h1>Agente y Casos de Uso</h1>
+      <div class="stamp">
+        <span class="material-icons" style="font-size: 16px;">update</span>
+        Generado el 2026-05-15
+      </div>
+    </header>
+    <div class="markdown-body"><p><h1>Agente y Casos de Uso</h1></p><p>Arquitectura teórica, routing adaptativo y fase reflexiva del agente OpenClaw.
+<ul><li><strong>Tesista:</strong> <code>Erick Renato Vega Ceron</code></li>
+<li><strong>Fecha:</strong> <code>2026-05-15</code></li>
+<li><strong>Estado:</strong> <code>OK</code></li>
+<li><strong>Fuentes:</strong> <code>00_sistema_tesis/documentacion_sistema/casos_uso_agente.md</code>, <code>00_sistema_tesis/documentacion_sistema/guias_tareas_agente.md</code></li>
+<li><strong>Aviso:</strong> Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.</li>
+</ul>
+<h2>Navegación de esta página</h2>
+<ul><li><a href="index.html">Volver al índice</a>.</li>
+<li>Página siguiente en la ruta base: <a href="sistema.html">Sistema</a>.</li>
+<li>Relacionada: <a href="sistema.html">Sistema</a>.</li>
+<li>Relacionada: <a href="gobernanza.html">Gobernanza</a>.</li>
+<li>Relacionada: <a href="decisiones.html">Decisiones</a>.</li>
+</ul>
+<h2>Origen canónico y artefactos relacionados</h2></p><p><h3>Cómo rastrear esta página hasta su origen canónico</h3></p><p>1. Esta página derivada: <a href="casos_uso.html"><code>06_dashboard/wiki/casos_uso.md</code></a>.
+2. Revisa la lista de fuentes canónicas que alimentan su contenido.
+3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
+4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
+5. Si necesitas cambiar el contenido, edita la fuente canónica y reconstruye; no edites esta salida a mano.</p><p><h3>Fuentes canónicas declaradas</h3></p><p>|Fuente canónica|Tipo|Existe|
+|---|---|---|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/casos_uso_agente.md"><code>00_sistema_tesis/documentacion_sistema/casos_uso_agente.md</code></a>|archivo|sí|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/guias_tareas_agente.md"><code>00_sistema_tesis/documentacion_sistema/guias_tareas_agente.md</code></a>|archivo|sí|</p><p><h3>Artefactos derivados relacionados</h3>
+<ul><li>Markdown interno: <a href="casos_uso.html"><code>06_dashboard/wiki/casos_uso.md</code></a></li>
+<li>HTML interno: <a href="casos_uso.html"><code>06_dashboard/generado/wiki/casos_uso.html</code></a></li>
+<li>Markdown público sanitizado: <a href="../wiki/casos_uso.md"><code>06_dashboard/publico/wiki/casos_uso.md</code></a></li>
+<li>HTML público sanitizado: <a href="casos_uso.html"><code>06_dashboard/publico/wiki_html/casos_uso.html</code></a></li>
+</ul>
+<h1>Arquitectura y Casos de Uso del Agente OpenClaw</h1></p><p>Este documento establece la base teórica y técnica del funcionamiento del agente soberano <strong>OpenClaw</strong> dentro del Sistema Operativo de Tesis. Describe cómo el agente procesa tareas, enruta la inferencia de manera adaptativa, consolida su memoria y evalúa su propia utilidad.</p><p><h2>1. El Paradigma de Soberanía Híbrida</h2></p><p>OpenClaw no es un simple envoltorio alrededor de un LLM. Es un <strong>sistema de orquestación agéntica local</strong> diseñado para operar con autonomía funcional, pero gobernanza estricta. Su rol principal es reducir la fricción en la ejecución de la tesis sin violar la trazabilidad inmutable del Ledger.</p><p>El sistema se fundamenta en tres pilares arquitectónicos:
+<ul><li><strong>Routing Adaptativo:</strong> Decisión en tiempo real del motor de inferencia (CPU, GPU o Edge NPU) según la carga cognitiva requerida.</li>
+<li><strong>Ventana de Contexto Persistente (Rolling Summary):</strong> Mantenimiento de memoria a largo plazo bajo un presupuesto de tokens finito.</li>
+<li><strong>Fase Reflexiva:</strong> Capacidad de analizar patrones de interacción y proponer nuevas habilidades (<em>Skills</em>) codificadas.</li>
+</ul>
+---</p><p><h2>2. Flujo de Vida de una Tarea</h2></p><p>Cuando el tesista emite un comando estructurado (ej. <code>/investiga</code> o <code>/chat</code>), OpenClaw inicia un pipeline riguroso de validación, enrutamiento, síntesis y registro.</p><p><div class="mermaid-container"><pre class="mermaid">graph TD
+    A([Comando del Tesista]) --&gt; B{Gobernanza}
+    B -- Violación --&gt; C[Rechazo Inmediato]
+    B -- Permitido --&gt; D[Recuperación de Contexto]
+    D --&gt; E[Inyección de Persona y Límites]
+    E --&gt; F[Routing Adaptativo]
+    F --&gt; G[Inferencia LLM]
+    G --&gt; H[Acumulador de Tokens]
+    H --&gt; I[Fase Reflexiva y Rolling Summary]
+    I --&gt; J([Respuesta Final])</p><p>    style A fill:#00BCD4,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#FF5252,stroke:#333,stroke-width:2px,color:#fff
+    style F fill:#008080,stroke:#333,stroke-width:2px,color:#fff
+    style J fill:#00BCD4,stroke:#333,stroke-width:2px,color:#fff</pre></div></p><p><h3>Explicación del Pipeline</h3>
+1. <strong>Gobernanza Inmediata:</strong> Antes de cualquier inferencia, el sistema verifica si la solicitud compromete archivos protegidos sin autorización.
+2. <strong>Contexto y Persona:</strong> Se ensambla el <em>system prompt</em> usando formato ChatML (optimizado para Hermes 3 y Qwen 2.5), inyectando el estado actual de la tesis y las reglas operativas.
+3. <strong>Presupuesto de Tokens:</strong> La inferencia es observada por un monitor de tokens que debita el uso del presupuesto diario del nodo.</p><p>---</p><p><h2>3. Arquitectura de Routing Adaptativo (Edge vs. PC)</h2></p><p>Uno de los aportes tecnológicos del sistema es la capacidad de decidir dinámicamente qué hardware ejecutará el modelo fundacional, balanceando latencia, consumo energético y calidad de síntesis.</p><p><div class="mermaid-container"><pre class="mermaid">graph LR
+    subgraph Orquestador Local
+        R[Router Adaptativo]
+        idx[(index.json)]
+    end</p><p>    subgraph PC Control (CUDA)
+        H8B[Hermes 3: 8B]
+        Q4B_PC[Qwen 2.5: 4B]
+    end</p><p>    subgraph Nodo Edge IoT (NPU)
+        Q3B[Qwen 2.5: 3B RKLLM]
+    end</p><p>    R -. Lee Benchmark .-&gt; idx
+    R -- Tarea Compleja / Síntesis --&gt; H8B
+    R -- Tarea Simple / Alta Velocidad --&gt; Q4B_PC
+    R -- Operación Desconectada / IoT --&gt; Q3B</p><p>    classDef tech fill:#f9f9f9,stroke:#666,stroke-width:1px;
+    class H8B,Q4B_PC,Q3B tech;</pre></div></p><p><h3>Criterios de Enrutamiento</h3>
+<ul><li><strong>Hermes 3 (8B):</strong> Se selecciona si el archivo de benchmark (<code>index.json</code>) determina que el modelo supera los <strong>25 Tokens Por Segundo (TPS)</strong>. Al ser un modelo más grande, garantiza mayor calidad en síntesis académica, revisión de literatura y análisis complejo, siempre que la GPU local (RTX) soporte la carga eficientemente.</li>
+<li><strong>Qwen 2.5 (3B/4B):</strong> Actúan como baselines ultrarrápidos (hasta 85 TPS). Se priorizan para tareas mecánicas, consultas rápidas de estado, o cuando se opera desde el nodo Edge (Orange Pi 5 Plus usando inferencia nativa NPU).</li>
+</ul>
+---</p><p><h2>4. La Fase Reflexiva y Generación de Skills</h2></p><p>Para evitar el estancamiento evolutivo, OpenClaw implementa una <strong>fase reflexiva no bloqueante</strong> al final de los ciclos de interacción.</p><p><div class="mermaid-container"><pre class="mermaid">sequenceDiagram
+    participant T as Tesista
+    participant B as Telegram Bot
+    participant R as Modulo Reflectivo
+    participant FS as Sistema de Archivos</p><p>    T-&gt;&gt;B: Iteraciones constantes
+    B-&gt;&gt;R: maybe_reflect(turnos_recientes)
+    Note over R: Análisis de Patrones&lt;br/&gt;(Ej. comandos repetitivos)
+    R--&gt;&gt;R: Detecta patrón candidato
+    R-&gt;&gt;FS: Escribe _agents/skills/proposed/skill_NAME.md
+    R-&gt;&gt;T: Notifica: &quot;Nueva habilidad propuesta. Usa /skills_pendientes&quot;
+    T-&gt;&gt;B: /aprobar skill_NAME
+    B-&gt;&gt;FS: Mueve a _agents/skills/
+    Note over B: OpenClaw aprende nueva capacidad</pre></div></p><p>Esta mecánica asegura que el agente desarrolle herramientas específicas (como monitores hardware o parsers de datos) de forma orgánica según las necesidades reales del investigador, pero exigiendo siempre un <code>[VAL-STEP]</code> explícito del tesista para activar la nueva habilidad.</p><p>---
+<h1>Guías de Tareas con el Agente OpenClaw</h1></p><p>Esta sección proporciona tutoriales prácticos y guías de tareas para maximizar el uso del agente soberano en el flujo de investigación de la tesis.</p><p><h2>1. Investigación y Síntesis Académica (<code>/investiga</code>)</h2></p><p>El comando <code>/investiga</code> está diseñado para realizar búsquedas profundas y síntesis académicas utilizando el modelo más capaz (actualmente <strong>Hermes 3: 8B</strong> en el PC).</p><p><h3>Escenario: Revisión de Literatura</h3>
+1. <strong>Prompt:</strong> <code>/investiga &quot;Estado del arte sobre sistemas operativos embebidos para IoT con enfoque en resiliencia 2023-2026&quot;</code>
+2. <strong>Lo que hace OpenClaw:</strong>
+<ul><li>Realiza búsquedas web multi-fuente.</li>
+<li>Filtra por relevancia académica.</li>
+<li>Genera un reporte estructurado con citas y referencias.</li>
+<li>Inyecta la trazabilidad en el ledger (<code>[VAL-STEP]</code>).</li>
+</ul>
+<h3>Buenas Prácticas</h3>
+<ul><li>Usa comillas para términos específicos.</li>
+<li>Especifica el rango de años para forzar actualidad.</li>
+<li>Solicita formatos específicos (ej. &quot;Resume en una tabla comparativa&quot;).</li>
+</ul>
+---</p><p><h2>2. Depuración de Datos IoT y Sensores (<code>/debug</code>)</h2></p><p>Cuando el nodo Edge detecta anomalías en los sensores (intermitencia), OpenClaw puede ayudar a diagnosticar la causa raíz.</p><p><h3>Escenario: Fallo de Conectividad en Pachuca</h3>
+1. <strong>Prompt:</strong> <code>/chat &quot;Analiza los últimos logs de conectividad del nodo B1 y busca patrones de caída de energía&quot;</code>
+2. <strong>Lo que hace OpenClaw:</strong>
+<ul><li>Recupera logs de <code>00_sistema_tesis/bitacora/</code>.</li>
+<li>Cruza datos con la taxonomía de intermitencia urbana.</li>
+<li>Sugiere si el fallo es por red o por suministro eléctrico local.</li>
+</ul>
+---</p><p><h2>3. Gobernanza y Gestión de Decisiones (<code>/decision</code>)</h2></p><p>OpenClaw asiste en la creación de registros formales que cumplen con los guardrails del sistema.</p><p><h3>Escenario: Cambio de Política de Inferencia</h3>
+1. <strong>Flujo de Trabajo:</strong>
+<ul><li>Discute la idea con el agente en <code>/chat</code>.</li>
+<li>Solicita: <code>&quot;Genera un borrador de DEC-XXXX siguiendo la política de soberanía para cambiar el modelo base a Qwen 2.5&quot;</code>.</li>
+<li>El agente genera el Markdown con los bloques de auditoría obligatorios (<code>[LID]</code>, <code>[GOV]</code>, <code>[AUD]</code>).</li>
+</ul>2. <strong>Validación:</strong>
+<ul><li>Revisa el archivo generado.</li>
+<li>Firma digitalmente (Step ID).</li>
+</ul>
+---</p><p><h2>4. Automatización de Backups y Salud del Sistema</h2></p><p>Uso de herramientas CLI integradas para mantener la integridad de la tesis.</p><p><h3>Comandos Rápidos vía Bot</h3>
+<ul><li><code>/status</code>: Reporte rápido de salud (Storage, VRAM, Token Budget).</li>
+<li><code>/backup</code>: Inicia el pipeline de respaldo encriptado.</li>
+<li><code>/audit</code>: Ejecuta <code>build_all.py</code> y reporta fallos de trazabilidad.</li>
+</ul>
+---</p><p><h2>Cuadro Maestro de Capacidades</h2></p><p>| Categoría | Comando | Modelo Recomendado | Nivel de Autonomía |
+|-----------|---------|-------------------|--------------------|
+| <strong>Investigación</strong> | <code>/investiga</code> | Hermes 3 (8B) | Supervisada |
+| <strong>Consultas</strong> | <code>/chat</code> | Qwen 2.5 (3B/4B) | Alta |
+| <strong>Codificación</strong> | <code>/chat</code> | Qwen 2.5-Coder | Media |
+| <strong>Diagnóstico</strong> | <code>/status</code> | N/A (Scripts) | Total |</p><p>&gt; [!IMPORTANT]
+&gt; Recuerda que toda acción significativa debe quedar reflejada en el Ledger. La IA propone, pero el Tesista Soberano certifica.
+</p></div>
+      <footer class="public-update"><p>Última actualización: <strong>2026-05-14</strong></p></footer>
+  </main>
+</body>
+</html>

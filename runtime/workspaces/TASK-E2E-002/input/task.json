@@ -1,0 +1,11 @@
+{
+  "task_id": "TASK-E2E-002",
+  "label": "TASK-E2E-002",
+  "description": "Genera resumen breve de validacion",
+  "instruction": "Genera resumen breve de validacion",
+  "prompt": "Genera resumen breve de validacion",
+  "requires_rag": false,
+  "rag_question": "Genera resumen breve de validacion",
+  "rag_context": "mission_control",
+  "created_by": "mission_control"
+}

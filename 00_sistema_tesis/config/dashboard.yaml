@@ -1,0 +1,95 @@
+{
+  "idioma": "es-MX",
+  "estilo": "hibrido_serio",
+  "build": {
+    "timestamp_fuente": "auto",
+    "zona_horaria": "America/Mexico_City"
+  },
+  "paneles_visibles": [
+    {
+      "id": "resumen_general",
+      "orden": 1,
+      "titulo": "Resumen general",
+      "visible": true
+    },
+    {
+      "id": "bloque_activo",
+      "orden": 2,
+      "titulo": "Bloque activo",
+      "visible": true
+    },
+    {
+      "id": "hipotesis_activas",
+      "orden": 3,
+      "titulo": "Hipótesis activas",
+      "visible": true
+    },
+    {
+      "id": "decisiones_recientes",
+      "orden": 4,
+      "titulo": "Decisiones recientes",
+      "visible": true
+    },
+    {
+      "id": "backlog_prioritario",
+      "orden": 5,
+      "titulo": "Backlog prioritario",
+      "visible": true
+    },
+    {
+      "id": "riesgos_abiertos",
+      "orden": 6,
+      "titulo": "Riesgos abiertos",
+      "visible": true
+    },
+    {
+      "id": "estado_archivos_canonicos",
+      "orden": 7,
+      "titulo": "Estado de archivos canónicos",
+      "visible": true
+    }
+  ],
+  "colores_estado": {
+    "activo": "#0f766e",
+    "no_iniciado": "#475569",
+    "en_revision": "#9a6700",
+    "bloqueado": "#b42318",
+    "cerrado": "#1d4ed8",
+    "pendiente": "#64748b",
+    "en_progreso": "#0f766e",
+    "hecho": "#1d4ed8"
+  },
+  "rutas_entrada": {
+    "sistema": "00_sistema_tesis/config/sistema_tesis.yaml",
+    "hipotesis": "00_sistema_tesis/config/hipotesis.yaml",
+    "bloques": "00_sistema_tesis/config/bloques.yaml",
+    "backlog": "01_planeacion/backlog.csv",
+    "riesgos": "01_planeacion/riesgos.csv",
+    "decisiones": "00_sistema_tesis/decisiones"
+  },
+  "salida": {
+    "html": "06_dashboard/generado/index.html",
+    "css": "06_dashboard/generado/estilos.css",
+    "js": "06_dashboard/generado/app.js",
+    "manifest": "06_dashboard/generado/manifest.webmanifest",
+    "service_worker": "06_dashboard/generado/sw.js",
+    "icon": "06_dashboard/generado/icon.svg",
+    "modo_local": {
+      "habilitado": true,
+      "base_url": "."
+    },
+    "modo_remoto": {
+      "habilitado": true,
+      "base_url": "./"
+    }
+  },
+    "reglas": {
+    "editable_directamente": false,
+    "aviso_no_editar": "Este dashboard es un artefacto generado. Edita las fuentes canónicas y vuelve a construir."
+  },
+  "despliegue_ligero": {
+    "pwa_preparada": true,
+    "objetivo_dispositivo": "orange_pi_5_plus",
+    "modo_preferido": "servidor_estatico_local"
+  }
+}

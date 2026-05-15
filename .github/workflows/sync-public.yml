@@ -1,0 +1,59 @@
+name: sincronizar-espejo-publico
+
+on:
+  workflow_run:
+    workflows: ["verificar"]
+    types: [completed]
+    branches:
+      - main
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+permissions:
+  contents: read
+
+jobs:
+  sincronizar-publico:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.repository == 'Dtcsrni/Sistema_Operativo_Tesis_Posgrado' &&
+      github.event.workflow_run.head_branch == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtener commit validado
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Configurar identidad git para sincronización pública
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Sincronizar espejo sanitizado al repositorio público
+        env:
+          PUBLIC_REPO_PAT: ${{ secrets.PUBLIC_REPO_PAT }}
+        run: |
+          if [ -z "${PUBLIC_REPO_PAT}" ]; then
+            echo "PUBLIC_REPO_PAT no está configurado en Secrets." >&2
+            exit 1
+          fi
+          python 07_scripts/sync_public_repo.py \
+            --mode mirror \
+            --target-dir "$RUNNER_TEMP/Sistema_Operativo_Tesis_Publico" \
+            --repo-url "https://x-access-token:${PUBLIC_REPO_PAT}@github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git" \
+            --branch main \
+            --skip-local-mirror \
+            --push

@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% block header_title %}Operaciones de Inteligencia{% endblock %}
+{% block header_subtitle %}Resumen ejecutivo del estado cognitivo y operativo del nodo local.{% endblock %}
+
+{% block extra_css %}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+.stat-card {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 8px 0;
+}
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.runtime-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+.runtime-card {
+  border-left: 4px solid var(--surface-border);
+  transition: border-color 0.3s;
+}
+.runtime-card.online { border-left-color: var(--success); }
+.runtime-card.offline { border-left-color: var(--danger); }
+.runtime-card.loading { border-left-color: var(--accent); }
+
+.runtime-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.runtime-name { font-weight: 600; font-size: 1.1rem; }
+.status-pill {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.status-pill.online { background: rgba(42, 157, 143, 0.1); color: var(--success); }
+.status-pill.offline { background: rgba(230, 57, 70, 0.1); color: var(--danger); }
+
+.meta-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+}
+.meta-item { display: flex; justify-content: space-between; }
+.meta-label { opacity: 0.5; }
+
+.action-section { margin-top: 48px; }
+.section-title { font-size: 1.4rem; margin-bottom: 8px; }
+
+.approval-list { display: flex; flex-direction: column; gap: 16px; }
+.approval-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: center;
+}
+.approval-content h4 { margin: 0 0 4px; font-size: 1rem; }
+.approval-content p { margin: 0; font-size: 0.9rem; color: var(--ink-dim); }
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+.btn-success { background: var(--success); color: white; }
+.btn-danger { background: rgba(230, 57, 70, 0.1); color: var(--danger); border-color: rgba(230, 57, 70, 0.2); }
+.btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="stats-grid">
+        <div class="glass stat-card" data-tooltip="Total de tareas procesadas o en cola en la base de datos local.">
+            <span class="stat-label">Capacidad de Tareas</span>
+            <div class="stat-value">{{ store.tasks }}</div>
+            <p style="font-size: 0.85rem; color: var(--ink-dim);">Cola operativa activa</p>
+        </div>
+        <div class="glass stat-card" data-tooltip="Acciones críticas que requieren consentimiento humano explícito (Soberanía Humana).">
+            <span class="stat-label">Validaciones Pendientes</span>
+            <div class="stat-value">{{ store.pending_approvals }}</div>
+            <p style="font-size: 0.85rem; color: var(--ink-dim);">Protocolo Handshake DEC-0014</p>
+        </div>
+        <div class="glass stat-card" data-tooltip="Registros con hash criptográfico SHA-256 para auditoría inmutable.">
+            <span class="stat-label">Evidencia Digital</span>
+            <div class="stat-value">{{ store.evidence_records }}</div>
+            <p style="font-size: 0.85rem; color: var(--ink-dim);">Trazabilidad de Grado Tesis</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">Infraestructura de Inferencia</h2>
+    <p class="section-desc">Estado de los motores de lenguaje locales (LLM) y hardware dedicado.</p>
+    
+    <div class="runtime-grid">
+        <!-- Desktop Compute -->
+        <div class="glass runtime-card {% if runtime_status.desktop_compute.ready %}online{% elif runtime_status.desktop_compute.probe_status == 'degraded' %}loading{% else %}offline{% endif %}">
+            <div class="runtime-header">
+                <span class="runtime-name">Desktop Compute (DeepSeek/Ollama)</span>
+                <span class="status-pill {% if runtime_status.desktop_compute.ready %}online{% else %}offline{% endif %}">
+                    {{ "Online" if runtime_status.desktop_compute.ready else "Offline" }}
+                </span>
+            </div>
+            <div class="meta-info">
+                <div class="meta-item"><span class="meta-label">Modelo:</span> <span>{{ runtime_status.desktop_compute.model }}</span></div>
+                <div class="meta-item"><span class="meta-label">Latencia:</span> <span>{{ runtime_status.desktop_compute.probe_latency_ms }}ms</span></div>
+                <div class="meta-item"><span class="meta-label">Endpoint:</span> <span>{{ runtime_status.desktop_compute.base_url }}</span></div>
+            </div>
+        </div>
+
+        <!-- Edge Node -->
+        <div class="glass runtime-card {% if runtime_status.ollama.ready %}online{% else %}offline{% endif %}">
+            <div class="runtime-header">
+                <span class="runtime-name">Edge Node (Ollama)</span>
+                <span class="status-pill {% if runtime_status.ollama.ready %}online{% else %}offline{% endif %}">
+                    {{ "Ready" if runtime_status.ollama.ready else "Standby" }}
+                </span>
+            </div>
+            <div class="meta-info">
+                <div class="meta-item"><span class="meta-label">Modo:</span> <span>{{ runtime_status.ollama.mode }}</span></div>
+                <div class="meta-item"><span class="meta-label">Ubicación:</span> <span>Orange Pi 5 Plus</span></div>
+            </div>
+        </div>
+
+        <!-- NPU -->
+        <div class="glass runtime-card {% if runtime_status.npu.ready %}online{% else %}offline{% endif %}">
+            <div class="runtime-header">
+                <span class="runtime-name">Hardware NPU (Rockchip)</span>
+                <span class="status-pill {% if runtime_status.npu.ready %}online{% else %}offline{% endif %}">
+                    {{ "Active" if runtime_status.npu.ready else "Inactive" }}
+                </span>
+            </div>
+            <div class="meta-info">
+                <div class="meta-item"><span class="meta-label">Device:</span> <span>RK3588 NPU</span></div>
+                <div class="meta-item"><span class="meta-label">Status:</span> <span>{{ "Experimental Ready" if runtime_status.npu.ready else "Not Present" }}</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="action-section">
+    <div class="glass">
+        <h2 class="section-title">Handshake de Soberanía</h2>
+        <p class="section-desc">Autorizaciones críticas requeridas por el agente para proceder con herramientas restringidas.</p>
+        
+        <div class="approval-list">
+            {% for approval in approvals %}
+            <div class="approval-item">
+                <div class="approval-content">
+                    <h4 data-tooltip="Step ID: {{ approval.step_id_expected }}">{{ approval.task_id }}</h4>
+                    <p>{{ approval.diff_summary }}</p>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <button onclick="approve('{{ approval.task_id }}', 'approved')" class="btn btn-success">Autorizar</button>
+                    <button onclick="approve('{{ approval.task_id }}', 'rejected')" class="btn btn-danger">Denegar</button>
+                </div>
+            </div>
+            {% endfor %}
+            {% if not approvals %}
+            <p style="opacity: 0.5; text-align: center; padding: 20px;">No hay solicitudes de handshake pendientes.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<script>
+    async function approve(taskId, status) {
+        try {
+            const response = await fetch('/approvals/' + taskId, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: status })
+            });
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('Error al procesar la autorización');
+            }
+        } catch (e) {
+            alert('Error de conexión con el Control Plane');
+        }
+    }
+</script>
+{% endblock %}
+<footer class="public-update"><p>Última actualización: <strong>2026-05-15</strong></p></footer>

@@ -1,0 +1,18 @@
+{
+  "timezone": "America/Mexico_City",
+  "daily": {
+    "tokens": 40000,
+    "usd": 8.0
+  },
+  "weekly": {
+    "tokens": 240000,
+    "usd": 48.0
+  },
+  "alerts": {
+    "warning_ratio": 0.75,
+    "critical_ratio": 0.9
+  },
+  "policy": {
+    "goal": "Maximizar avance funcional verificable por token y por dolar sin degradar calidad metodologica ni trazabilidad."
+  }
+}

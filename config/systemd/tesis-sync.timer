@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer de sincronizacion publica sanitizada
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+Unit=tesis-sync.service
+
+[Install]
+WantedBy=timers.target

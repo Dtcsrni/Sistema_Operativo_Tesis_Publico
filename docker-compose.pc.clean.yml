@@ -1,0 +1,135 @@
+version: '3.8'
+
+services:
+  # Core: vector DB / semantic store (Weaviate)
+  base-semantica-toltecayotl:
+    image: cr.weaviate.io/semitechnologies/weaviate:1.31.4
+    container_name: base-semantica-toltecayotl
+    ports:
+      - "8080:8080"
+      - "50051:50051"
+    restart: unless-stopped
+    environment:
+      QUERY_DEFAULTS_LIMIT: "25"
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "true"
+      PERSISTENCE_DATA_PATH: "/var/lib/weaviate"
+      DISABLE_TELEMETRY: "true"
+    volumes:
+      - toltecayotl_weaviate_data:/var/lib/weaviate
+    networks:
+      - siot-network
+
+  # Dashboard / docs (read-only access to canon)
+  tablero-gobernanza:
+    image: tablero-gobernanza:latest
+    container_name: tablero-gobernanza
+    ports:
+      - "8081:80"
+    restart: unless-stopped
+    env_file:
+      - ${SIOT_DOCS_ENV_FILE:-config/env/tesis-os.env.example}
+    volumes:
+      - canon_data:/app/00_sistema_tesis:ro
+    networks:
+      - siot-network
+
+  # Agent core (OpenClaw) — requiere acceso a 00_sistema_tesis y runtime
+  nucleo-openclaw:
+    image: nucleo-openclaw:latest
+    container_name: nucleo-openclaw
+    restart: unless-stopped
+    command:
+      - python
+      - -m
+      - runtime.openclaw.openclaw_local.telegram_bot
+    env_file:
+      - .env
+      - ${SIOT_AGENT_ENV_FILE:-config/env/openclaw.env}
+    environment:
+      - SISTEMA_TESIS_RUNTIME=docker-agent
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./00_sistema_tesis:/app/00_sistema_tesis
+      - ./runtime/openclaw/state:/app/runtime/openclaw/state
+      - ./07_scripts/ops:/app/07_scripts/ops:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import importlib,os,sys; importlib.import_module('runtime.openclaw.openclaw_local.telegram_bot'); sys.exit(0 if os.getenv('OPENCLAW_TELEGRAM_BOT_TOKEN') else 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    networks:
+      - siot-network
+    depends_on:
+      - tablero-gobernanza
+      - base-semantica-toltecayotl
+
+  # Gateway for OpenClaw (keeps API boundary explicit)
+  pasarela-openclaw:
+    image: pasarela-openclaw:latest
+    container_name: pasarela-openclaw
+    command:
+      - python
+      - runtime/openclaw/bin/openclaw_cli.py
+      - pasarela
+      - servir
+      - --host
+      - 0.0.0.0
+      - --port
+      - "18789"
+    ports:
+      - "18789:18789"
+    restart: unless-stopped
+    env_file:
+      - .env
+      - ${SIOT_AGENT_ENV_FILE:-config/env/openclaw.env}
+    volumes:
+      - ./00_sistema_tesis:/app/00_sistema_tesis
+      - ./runtime/openclaw/state:/app/runtime/openclaw/state
+      - ./07_scripts:/app/07_scripts:ro
+    networks:
+      - siot-network
+    depends_on:
+      - tablero-gobernanza
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:18789/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  # Optional: local LLM host (Ollama) — include only if PC provides GPU and models
+  ollama-pc:
+    image: ollama/ollama:latest
+    container_name: ollama-pc
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data_pc:/root/.ollama
+      - ./runtime/models:/models_import:ro
+    networks:
+      - siot-network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+networks:
+  siot-network:
+    driver: bridge
+
+volumes:
+  toltecayotl_weaviate_data:
+    driver: local
+  canon_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/00_sistema_tesis
+  ollama_data_pc:
+    driver: local

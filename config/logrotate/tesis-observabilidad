@@ -1,0 +1,15 @@
+/var/log/tesis-os/*.log
+/var/log/openclaw/*.log
+/var/log/edge-iot/*.log
+/var/log/tesis-admin/*.log {
+    daily
+    rotate 90
+    size 50M
+    missingok
+    notifempty
+    compress
+    delaycompress
+    copytruncate
+    dateext
+    su root root
+}

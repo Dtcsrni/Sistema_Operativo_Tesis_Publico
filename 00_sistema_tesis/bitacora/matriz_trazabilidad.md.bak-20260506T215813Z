@@ -1,0 +1,274 @@
+<!-- SISTEMA_TESIS:PROTEGIDO -->
+# Matriz de Trazabilidad Maestra (Índice de Integridad)
+
+Este archivo es el índice central de todas las validaciones de soberanía humana y trazabilidad técnica en el sistema operativo de la tesis.
+
+## Estado General de Integridad
+- [x] Firma GPG de Infraestructura
+- [x] Verificación de Ledger (Libro Mayor)
+- [x] Consistencia de Matriz
+- [/] Cadena de Bitácoras (En proceso de mejora)
+
+## Registro de Validaciones de Soberanía (Handshake)
+
+| Fecha | Step ID | Referencia | Intención / Resumen del Cambio | Nivel de Riesgo | Alineación Ética | Estado | Evidencia (Ledger) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 2026-03-24 | [VAL-STEP-210] | [DEC-0014] | Definición de soberanía humana estricta | CRÁTICO | Transparencia (NIST) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-210) |
+| 2026-03-24 | [VAL-STEP-278] | [DEC-0014] | Aprobación de pre-checklists y handshakes | ALTO | Responsabilidad (UNESCO) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-278) |
+| 2026-03-24 | [VAL-STEP-300] | [WIKI-AUD] | Auditoría de funcionalidad y estado de wiki | MEDIO | Transparencia (NIST) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-300) |
+| 2026-03-24 | [VAL-STEP-305] | [GOV-FIX] | Rectificación de diagnóstico de red y audit | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-305) |
+| 2026-03-24 | [VAL-STEP-380] | [BIT-IMP] | Mejora del sistema de bitácora y cadena | ALTO | Integridad (UNESCO) | [/] En curso | [Log](log_sesiones_trabajo_registradas.md#val-step-380) |
+| 2026-03-24 | [VAL-STEP-400] | [BIT-DIAG] | Análisis de preparación arquitectónica | MEDIO | Transparencia (NIST) | [/] Producido | [Log](log_sesiones_trabajo_registradas.md#val-step-400) |
+| 2026-03-26 | [VAL-STEP-410] | [DEC-0014] | Instrucción explícita para implementar el governance gate agnóstico de agente | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-410) |
+| 2026-03-26 | [VAL-STEP-420] | [DEC-0014] | Política general para prohibir hardcodes operativos y de trazabilidad | ALTO | Integridad (UNESCO) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-420) |
+| 2026-03-26 | [VAL-STEP-430] | [DEC-0014] | Cierre estricto de la conversación con bitácora diaria, hooks locales, auditoría final y commit firmado | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-430) |
+| 2026-03-26 | [VAL-STEP-440] | [DEC-0014] | Corrección del governance gate para no confundir referencias de cadena con el Step ID principal del diff protegido | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-440) |
+| 2026-03-26 | [VAL-STEP-450] | [DEC-0014] | Corrección de política del governance gate para permitir múltiples Step IDs válidos en `pre-push` y `ci` | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-450) |
+| 2026-03-26 | [VAL-STEP-460] | [DEC-0016] | Implementación autorizada del rediseño v2 con canon unificado, CLI canónica y gate centrado en eventos | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-460) |
+| 2026-03-26 | [VAL-STEP-470] | [DEC-0017] | Implementación autorizada del modelo humano primero, publicación sanitizada y simplificación operativa | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-470) |
+| 2026-03-26 | [VAL-STEP-480] | [DEC-0017] | Cierre trazable de la conversación con bitácora, auditoría final y relevo preparado para siguiente sesión | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-480) |
+| 2026-03-26 | [VAL-STEP-490] | [DEC-0014] | Refuerzo de prechecks y confirmación verbal canónica | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-490) |
+| 2026-03-26 | [VAL-STEP-500] | [DEC-0018] | Implementación de evidencia fuente de conversación Codex para confirmación verbal | ALTO | Responsabilidad (ISO 42001) + trazabilidad científica fuerte | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-500) |
+| 2026-03-26 | [VAL-STEP-510] | [DEC-0018] | Ingestión canónica del paquete IoT v10 ejecutada con staging, trazabilidad y registro maestro. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-510) |
+| 2026-03-26 | [VAL-STEP-520] | [DEC-0014] | Implementación autorizada de la reestructura integral de documentación del Sistema Operativo de Tesis | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-520) |
+| 2026-03-26 | [VAL-STEP-530] | [DEC-0014] | Implementación autorizada del cierre de pendientes secundarios de la reestructura documental | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-530) |
+| 2026-03-27 | [VAL-STEP-540] | [DEC-0014] | Implementación autorizada del sistema de terminología, convenciones e identificadores | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-540) |
+| 2026-03-27 | [VAL-STEP-550] | [DEC-0014] | Mejora de navegación y trazabilidad hacia orígenes canónicos | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-550) |
+| 2026-03-27 | [VAL-STEP-560] | [DEC-0018] | Corrección autorizada del mapeo de evidencia para VAL-STEP-540 hacia interacción real y prompts relacionados | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-560) |
+| 2026-03-27 | [VAL-STEP-570] | [DEC-0018] | Normalización global autorizada de evidencias mínimas o descontextualizadas | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-570) |
+| 2026-03-27 | [VAL-STEP-580] | [DEC-0017] | Implementación autorizada de la migración arquitectónica integral del Sistema Operativo de Tesis | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-580) |
+| 2026-03-27 | [VAL-STEP-590] | [DEC-0021] | Implementación autorizada del cierre de pendientes de publicación downstream, gobernanza Git y CI/CD | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-590) |
+| 2026-04-01 | [VAL-STEP-600] | [WIKI-MOD] | Modernización visual y guardrails de trazabilidad | ALTO | Transparencia (NIST) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-600) |
+| 2026-04-01 | [VAL-STEP-610] | [B0-CLOSE] | Cierre de B0 y habilitación de IA en hardware | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-610) |
+| 2026-04-01 | [VAL-STEP-620] | [B1-INIT] | Transición formal a fase B1 y análisis inicial | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-620) |
+| 2026-04-01 | [VAL-STEP-630] | [DEC-0014] | Cierre de trazabilidad de la conversación actual solicitado por el tesista | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-630) |
+| 2026-04-02 | [VAL-STEP-640] | [DEC-0014] | Regularización de trazabilidad para actividades recientes posteriores a VAL-STEP-630 | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-640) |
+| 2026-04-04 | [VAL-STEP-650] | [DEC-0014] | Registro integral de avances pendientes con trazabilidad canónica y evidencia fuente. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-650) |
+| 2026-04-07 | [VAL-STEP-660] | [DEC-0014] | Implementación autorizada de Serena MCP v1 proveedor-agnóstico para el Sistema Operativo de Tesis | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-660) |
+| 2026-04-08 | [VAL-STEP-663] | [DEC-0022] | Implementación autorizada de la arquitectura operativa escritorio primario y Orange Pi edge integrado | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-663) |
+| 2026-04-08 | [VAL-STEP-662] | [DEC-0014] | Implementación autorizada de Serena MCP v1.1 para cierre E2E en VS Code con Codex | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-662) |
+| 2026-04-08 | [VAL-STEP-664] | [DEC-0023] | Autorización de DEC-0023 para formalizar Serena MCP como capa común agéntica | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-664) |
+| 2026-04-08 | [VAL-STEP-665] | [DEC-0023] | Regularización documental de la implementación Serena MCP común para OpenClaw y hosts compatibles | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-665) |
+| 2026-04-10 | [VAL-STEP-666] | [DEC-0023] | Implementación autorizada de la habilitación dual de Serena MCP para VS Code/Codex con `serena-local` HTTP y `serena-local-py` stdio. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-666) |
+| 2026-04-10 | [VAL-STEP-667] | [DEC-0014] | Autorizacion humana para consolidar serena-local y serena-local-py en VS Code y documentar la frontera con este runtime. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-667) |
+| 2026-04-10 | [VAL-STEP-668] | [DEC-0014] | Autorizacion humana para exponer Serena por bridge HTTP autenticado, conservar stdio como fallback local y documentar el acceso desde runtimes externos. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-668) |
+| 2026-04-11 | [VAL-STEP-669] | [DEC-0014] | Completar la política de trazabilidad, registrar la instrucción humana y publicar el cambio con commit y push | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-669) |
+| 2026-04-12 | [VAL-STEP-670] | [DEC-0014] | Autorización humana para registrar el cierre B0 desde escritorio con Step ID asignado por el agente e instalar pytest local | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-670) |
+| 2026-04-12 | [VAL-STEP-671] | [DEC-0014] | Autorización humana para regularizar todas las bitácoras faltantes detectadas contra la actividad real de Git | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-671) |
+| 2026-04-12 | [VAL-STEP-672] | [DEC-0014] | Política operativa Serena por capas y deshabilitado temporal de serena-local-py en el workspace activo | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-672) |
+| 2026-04-12 | [VAL-STEP-673] | [DEC-0014] | Alineación operativa de Serena para autoarranque HTTP y disponibilidad esperada durante trabajo agéntico | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-673) |
+| 2026-04-12 | [VAL-STEP-674] | [DEC-0014] | Habilitar auto tareas VS Code para autoarranque Serena HTTP | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-674) |
+| 2026-04-12 | [VAL-STEP-675] | [DEC-0014] | Comparativa autorizada entre escritura derivada y cambio controlado Serena sobre la misma ruta | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-675) |
+| 2026-04-12 | [VAL-STEP-676] | [DEC-0014] | Optimización incremental exacta del manifest de integridad con alcance global en guardrails | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-676) |
+| 2026-04-12 | [VAL-STEP-677] | [DEC-0014] | Optimización de traza Serena MCP por append JSONL en lugar de rewrite completo | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-677) |
+| 2026-04-12 | [VAL-STEP-678] | [DEC-0014] | Cierre de trazabilidad final y preparación de publicación de Serena | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-678) |
+| 2026-04-13 | [VAL-STEP-679] | [DEC-0014] | Política operativa para activar Serena primero cuando no esté disponible | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-679) |
+| 2026-04-13 | [VAL-STEP-680] | [DEC-0014] | Autorización humana para asignar automáticamente el Step ID y cerrar verificación CI/publicación pública | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-680) |
+| 2026-04-13 | [VAL-STEP-681] | DEC-0014 | Autorizacion humana para resolver pendientes, publicar y monitorear CI hasta despliegue correcto | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-681) |
+| 2026-04-14 | [VAL-STEP-682] | [DEC-0014] | Autorización humana para continuar y cerrar la trazabilidad canónica de la reformalización ENT-014 y ENT-015 | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-682) |
+| 2026-04-20 | [VAL-STEP-683] | [DEC-0014] | Politica base conjunta para priorizar Caveman como modo operativo y Serena como primera capa de contexto compacto | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-683) |
+| 2026-04-20 | [VAL-STEP-684] | [DEC-0014] | Toda acción que produzca cambios o sea relevante debe trazarse conforme la política de trazabilidad | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-684) |
+| 2026-04-21 | [VAL-STEP-685] | [DEC-0014] | Autorización humana para documentar el cierre OpenClaw/Telegram conforme a la política de trazabilidad | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-685) |
+| 2026-04-21 | [VAL-STEP-686] | [DEC-0020] | Implementación autorizada de mejoras del chat Telegram de OpenClaw: memoria por chat, hora determinística, investigación web read-only, routing automático explicado y propuestas APR para acciones ambiguas. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-686) |
+| 2026-04-21 | [VAL-STEP-687] | [DEC-0020] | Continuacion autorizada para ampliar el chat Telegram de OpenClaw con aprendizaje por chat, memoria resumida, comandos naturales, herramientas read-only adicionales y smoke CLI por chat-id. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-687) |
+| 2026-04-21 | [VAL-STEP-688] | [DEC-0014] | Corrección autorizada de vulnerabilidad Dependabot GHSA-6w46-j5rx-g56g en pytest mediante actualización de requirements-dev.txt a pytest 9.0.3. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-688) |
+| 2026-04-21 | [VAL-STEP-689] | [DEC-0014] | Implementacion autorizada de routing web_assisted en OpenClaw y configuracion push SSH. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-689) |
+| 2026-04-21 | [VAL-STEP-690] | [DEC-0014] | Validacion remota de mejoras OpenClaw en tesis-edge por acceso SSH. | MEDIO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-690) |
+| 2026-04-21 | [VAL-STEP-691] | [DEC-0020] | Implementación autorizada de correcciones OpenClaw Telegram para contexto conversacional, aprobación simplificada en chat e imagen local con ComfyUI. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-691) |
+| 2026-04-21 | [VAL-STEP-692] | [DEC-0020] | Despliegue autorizado en tesis-edge de OpenClaw Telegram con aprobación simplificada e imagen local ComfyUI. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-692) |
+| 2026-04-21 | [VAL-STEP-693] | [DEC-0020] | Configuración autorizada del túnel ComfyUI PC -> tesis-edge y variables OpenClaw para generación local de imágenes. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-693) |
+| 2026-04-21 | [VAL-STEP-697] | [DEC-0020] | Implementación de RAG automático y señal de actividad persistente en OpenClaw Telegram. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-697) |
+| 2026-04-21 | [VAL-STEP-698] | [DEC-0020] | Corrección de NameError y endurecimiento de resiliencia en ruteo OpenClaw Telegram ante fallos de nube. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-698) |
+| 2026-04-21 | [VAL-STEP-699] | [DEC-0020] | Corrección integral de ruteo OpenClaw Telegram/Edge con SLA, concurrencia serial, fallbacks semánticos seguros y configuración oficial OpenClaw trazable. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-699) |
+| 2026-04-23 | [VAL-STEP-700] | [DEC-0023] | Cierre trazable de mejoras Serena/Caveman: health gate unificado, nuevas tools de contexto y guía operativa de uso. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-700) |
+| 2026-04-23 | [VAL-STEP-701] | [DEC-0022] | Implementación autorizada de OpenClaw PC-first con session layer común, Matrix remoto principal, Telegram secundario y runtime pesado pc_native_llamacpp. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-701) |
+| 2026-04-24 | [VAL-STEP-702] | [DEC-0014] | Autorización humana para cerrar pendientes host-real de OpenClaw: Matrix local en tesis-edge y llama.cpp Windows expuesto al edge. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-702) |
+| 2026-04-25 | [VAL-STEP-703] | [DEC-0014] | Estabilización de CI/CD y mecanismos de no regresión. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-703) |
+| 2026-04-26 | [VAL-STEP-704] | DEC-0014 | Cambio registrado en canon | operativo | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-704) |
+| 2026-04-26 | [VAL-STEP-705] | DEC-0014 | Cambio registrado en canon | MEDIO | Transparencia (NIST) e Integridad documental | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-705) |
+| 2026-04-27 | [VAL-STEP-706] | [DEC-0014] | Integración de NPU RK3588 (RKNN Toolkit Lite 2) | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-706) |
+| 2026-04-27 | [VAL-STEP-711] | [DEC-0014] | Arquitectura de Dominios (T-027) y Benchmarking RKLLM | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-711) |
+| 2026-04-27 | [VAL-STEP-712] | [DEC-0014] | Servicio de Inferencia LLM y Aislamiento de Red (T-027) | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-712) |
+| 2026-04-27 | [VAL-STEP-713] | [DEC-0014] | Suite de Pruebas Integrales Edge (B1) | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-713) |
+| 2026-04-27 | [VAL-STEP-714] | [DEC-0014] | Benchmarking y Consolidacin de Resultados (B1) | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-714) |
+| 2026-04-27 | [VAL-STEP-715] | [DEC-0014] | Anlisis de Escalabilidad y Estrs NPU (B1) | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-715) |
+| 2026-04-27 | [VAL-STEP-716] | [DEC-0014] | Seleccin de Modelo para Envolvente de 8GB RAM (B1) | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-716) |
+| 2026-04-27 | [VAL-STEP-717] | [DEC-0014] | Limpieza de Modelos y Documentacin Tcnica (B1) | MEDIO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-717) |
+| 2026-04-27 | [VAL-STEP-718] | [DEC-0014] | Diseo de Arquitectura de Inferencia en Cascada (B1+) | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-718) |
+| 2026-04-27 | [VAL-STEP-719] | [DEC-0014] | Pivot a Calidad de Inferencia Premium (B1+) | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-719) |
+| 2026-04-27 | [VAL-STEP-720] | [DEC-0014] | Validacin por Casos de Uso y Benchmark de Tareas (B1+) | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-720) |
+| 2026-04-27 | [VAL-STEP-721] | [DEC-0014] | Suite de Estrs Riguroso y Resiliencia (B1+) | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-721) |
+| 2026-04-27 | [VAL-STEP-722] | [DEC-0014] | Análisis Estadístico y Verificacin Rigurosa (B1+) | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-722) |
+| 2026-04-27 | [VAL-STEP-723] | [DEC-0014] | Informe Final de Benchmarking y Validacin (B1) | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-723) |
+| 2026-04-27 | [VAL-STEP-724] | [DEC-0014] | Validación Científica Rigurosa PEV-01 (B1+) | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-724) |
+| 2026-04-27 | [VAL-STEP-725] | [DEC-0014] | Cierre de Validación Científica Rigurosa (N=50) | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-725) |
+| 2026-04-27 | [VAL-STEP-726] | [DEC-0014] | Regeneración Científica Endurecida (High Precision) | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-726) |
+| 2026-04-27 | [VAL-STEP-727] | [DEC-0014] | Establecimiento de Línea Base PC (Control Node) | MEDIO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-727) |
+| 2026-04-27 | [VAL-STEP-728] | [DEC-0014] | Benchmark de Razonamiento Pesado PC (Llama-3-70B) | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-728) |
+| 2026-04-28 | [VAL-STEP-729] | [DEC-0025] | Formalización runtime híbrido WSL + Docker y economía de tokens agéntica | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-729) |
+| 2026-04-28 | [VAL-STEP-730] | [DEC-0014] | Mistral Nemo 12B y benchmarking cientifico trazable | ALTO | Responsabilidad (ISO 42001) | [ ] Implementado; pendiente de validacion humana de resultados | [Log](log_sesiones_trabajo_registradas.md#val-step-730) |
+| 2026-04-29 | [VAL-STEP-731] | [DEC-0014] | OpenClaw Telegram principal y pc_native_llamacpp PC nativo | ALTO | Responsabilidad (ISO 42001) | [ ] Implementado; pendiente de validacion humana de resultados operativos | [Log](log_sesiones_trabajo_registradas.md#val-step-731) |
+| 2026-04-29 | [VAL-STEP-732] | [DEC-0014] | OpenClaw Telegram principal y pc_native_llamacpp PC nativo fuente reparada | ALTO | Responsabilidad (ISO 42001) | [ ] Implementado; pendiente de validacion humana de resultados operativos | [Log](log_sesiones_trabajo_registradas.md#val-step-732) |
+| 2026-04-29 | [VAL-STEP-735] | [DEC-0028] | Implementacion tecnica completa de ISSUE-0042 Atzin Scientific Engine | ALTO | Responsabilidad (ISO 42001) | [ ] Implementado/auditado pendiente de aceptacion humana | [Log](log_sesiones_trabajo_registradas.md#val-step-735) |
+| 2026-05-01 | [VAL-STEP-736] | [DEC-0022] | Autorización del Plan Integral de Limpieza y Mejora del Repositorio | CRÁTICO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-736) |
+| 2026-05-01 | [VAL-STEP-737] | [DEC-0022] | Ejecución de las Fases 5-7 del Plan de Limpieza y Modernización | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-737) |
+| 2026-05-01 | [VAL-STEP-738] | [DEC-0022] | Ingestión PET v2.2 Harness Engineering | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-738) |
+| 2026-05-01 | [VAL-STEP-739] | [DEC-0030] | Autorización de mejoras en bootloader | MEDIO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-739) |
+| 2026-05-01 | [VAL-STEP-740] | [DEC-0030] | Validación de endurecimiento bootloader | MEDIO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-740) |
+| 2026-05-01 | [VAL-STEP-741] | [DEC-0030] | Sincronización TEB hacia Edge | MEDIO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-741) |
+| 2026-05-01 | [VAL-STEP-742] | [B0] | CIERRE FORMAL FASE B0 | MEDIO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-742) |
+| 2026-05-02 | [VAL-STEP-743] | [DEC-0028] | Validación operativa y refinamiento del Motor Epistémico Toltecayotl | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-743) |
+| 2026-05-02 | [VAL-STEP-744] | [DEC-0031] | Inicio de implementación e integración de Mission Control | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-744) |
+| 2026-05-02 | [VAL-STEP-745] | [DEC-0032] | Implementación de ingesta, validación y consumo de PET Bundles | CRÍTICO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-745) |
+| 2026-05-03 | [VAL-STEP-746] | [DEC-0022] | Sincronización de gateway token y estabilización OpenClaw | MEDIO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-746) |
+| 2026-05-03 | [VAL-STEP-747] | [DEC-0022] | Configuración de Ollama como modelo primario y resolución de conflictos de ruteo | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-747) |
+| 2026-05-04 | [VAL-STEP-748] | [ISSUE-0045] | Aprobación del stack Convex/Next.js y plan de validación de hardware. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-748) |
+| 2026-05-04 | [VAL-STEP-749] | [ISSUE-0043] | Solicitud humana de sincronización física completa PC-Edge. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-749) |
+| 2026-05-04 | [VAL-STEP-750] | [ISSUE-0046] | ¿Autoriza el inicio de la Fase I del ISSUE-0046? | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-750) |
+| 2026-05-04 | [VAL-STEP-751] | [ISSUE-0046] | Instrucción humana para implementar el arquetipo de 'Diálogo' con enfoque en privacidad. | CRÍTICO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-751) |
+| 2026-05-04 | [VAL-STEP-752] | [ISSUE-0046] | Implementación de la Fase II del Plan Maestro (Persistencia Epistémica Acumulativa). | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-752) |
+| 2026-05-04 | [VAL-STEP-753] | [ISSUE-0046] | Investigación y análisis de algoritmos de enrutamiento distribuido. | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-753) |
+| 2026-05-04 | [VAL-STEP-754] | [ISSUE-0046] | Implementación de la Fase IV (Orquestación Multi-Agente). | CRÍTICO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-754) |
+| 2026-05-04 | [VAL-STEP-755] | [DEC-0014] | Handshake VAL-STEP-755 | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-755) |
+| 2026-05-04 | [VAL-STEP-756] | [DEC-0014] | Handshake VAL-STEP-756 | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-756) |
+| 2026-05-04 | [VAL-STEP-757] | [DEC-0014] | Handshake VAL-STEP-757 | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-757) |
+| 2026-05-04 | [VAL-STEP-758] | [DEC-0014] | Handshake VAL-STEP-758 | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-758) |
+| 2026-05-05 | [VAL-STEP-759] | [BENCH-ANALYSIS] | Cambio registrado en canon | MEDIO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-759) |
+| 2026-05-05 | [VAL-STEP-760] | [DEC-0035] | Cambio registrado en canon | MEDIO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-760) |
+| 2026-05-05 | [VAL-STEP-761] | [DEC-0036] | Cambio registrado en canon | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-761) |
+| 2026-05-05 | [VAL-STEP-762] | [DEC-0036] | Cambio registrado en canon | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-762) |
+| 2026-05-05 | [VAL-STEP-763] | [BENCH-ANALYSIS] | Cambio registrado en canon | MEDIO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-763) |
+| 2026-05-05 | [VAL-STEP-764] | [INC-0024] | Cambio registrado en canon | MEDIO | Responsabilidad (ISO 42001) | [x] Validado | [Log](log_sesiones_trabajo_registradas.md#val-step-764) |
+
+---
+**Navegación:**
+- [Volver al Inicio](../../README.md)
+- [Consultar Libro Mayor](log_sesiones_trabajo_registradas.md)
+- [Auditoría del Sistema](../../06_dashboard/generado/reporte_consistencia.md)
+
+[VAL-STEP-210]: log_sesiones_trabajo_registradas.md#val-step-210
+[VAL-STEP-278]: log_sesiones_trabajo_registradas.md#val-step-278
+[VAL-STEP-300]: log_sesiones_trabajo_registradas.md#val-step-300
+[VAL-STEP-305]: log_sesiones_trabajo_registradas.md#val-step-305
+[VAL-STEP-380]: log_sesiones_trabajo_registradas.md#val-step-380
+[VAL-STEP-400]: log_sesiones_trabajo_registradas.md#val-step-400
+[VAL-STEP-410]: log_sesiones_trabajo_registradas.md#val-step-410
+[VAL-STEP-420]: log_sesiones_trabajo_registradas.md#val-step-420
+[VAL-STEP-430]: log_sesiones_trabajo_registradas.md#val-step-430
+[VAL-STEP-440]: log_sesiones_trabajo_registradas.md#val-step-440
+[VAL-STEP-450]: log_sesiones_trabajo_registradas.md#val-step-450
+[VAL-STEP-460]: log_sesiones_trabajo_registradas.md#val-step-460
+[VAL-STEP-470]: log_sesiones_trabajo_registradas.md#val-step-470
+[VAL-STEP-480]: log_sesiones_trabajo_registradas.md#val-step-480
+[VAL-STEP-490]: log_sesiones_trabajo_registradas.md#val-step-490
+[VAL-STEP-500]: log_sesiones_trabajo_registradas.md#val-step-500
+[VAL-STEP-510]: log_sesiones_trabajo_registradas.md#val-step-510
+[VAL-STEP-520]: log_sesiones_trabajo_registradas.md#val-step-520
+[VAL-STEP-530]: log_sesiones_trabajo_registradas.md#val-step-530
+[VAL-STEP-540]: log_sesiones_trabajo_registradas.md#val-step-540
+[VAL-STEP-550]: log_sesiones_trabajo_registradas.md#val-step-550
+[VAL-STEP-560]: log_sesiones_trabajo_registradas.md#val-step-560
+[VAL-STEP-570]: log_sesiones_trabajo_registradas.md#val-step-570
+[VAL-STEP-580]: log_sesiones_trabajo_registradas.md#val-step-580
+[VAL-STEP-590]: log_sesiones_trabajo_registradas.md#val-step-590
+[VAL-STEP-600]: log_sesiones_trabajo_registradas.md#val-step-600
+[VAL-STEP-610]: log_sesiones_trabajo_registradas.md#val-step-610
+[VAL-STEP-620]: log_sesiones_trabajo_registradas.md#val-step-620
+[VAL-STEP-630]: log_sesiones_trabajo_registradas.md#val-step-630
+[VAL-STEP-640]: log_sesiones_trabajo_registradas.md#val-step-640
+[VAL-STEP-650]: log_sesiones_trabajo_registradas.md#val-step-650
+[VAL-STEP-660]: log_sesiones_trabajo_registradas.md#val-step-660
+[VAL-STEP-663]: log_sesiones_trabajo_registradas.md#val-step-663
+[VAL-STEP-662]: log_sesiones_trabajo_registradas.md#val-step-662
+[VAL-STEP-664]: log_sesiones_trabajo_registradas.md#val-step-664
+[VAL-STEP-665]: log_sesiones_trabajo_registradas.md#val-step-665
+[VAL-STEP-666]: log_sesiones_trabajo_registradas.md#val-step-666
+[VAL-STEP-667]: log_sesiones_trabajo_registradas.md#val-step-667
+[VAL-STEP-668]: log_sesiones_trabajo_registradas.md#val-step-668
+[VAL-STEP-669]: log_sesiones_trabajo_registradas.md#val-step-669
+[VAL-STEP-670]: log_sesiones_trabajo_registradas.md#val-step-670
+[VAL-STEP-671]: log_sesiones_trabajo_registradas.md#val-step-671
+[VAL-STEP-672]: log_sesiones_trabajo_registradas.md#val-step-672
+[VAL-STEP-673]: log_sesiones_trabajo_registradas.md#val-step-673
+[VAL-STEP-674]: log_sesiones_trabajo_registradas.md#val-step-674
+[VAL-STEP-675]: log_sesiones_trabajo_registradas.md#val-step-675
+[VAL-STEP-676]: log_sesiones_trabajo_registradas.md#val-step-676
+[VAL-STEP-677]: log_sesiones_trabajo_registradas.md#val-step-677
+[VAL-STEP-678]: log_sesiones_trabajo_registradas.md#val-step-678
+[VAL-STEP-679]: log_sesiones_trabajo_registradas.md#val-step-679
+[VAL-STEP-680]: log_sesiones_trabajo_registradas.md#val-step-680
+[VAL-STEP-681]: log_sesiones_trabajo_registradas.md#val-step-681
+[VAL-STEP-682]: log_sesiones_trabajo_registradas.md#val-step-682
+[VAL-STEP-683]: log_sesiones_trabajo_registradas.md#val-step-683
+[VAL-STEP-684]: log_sesiones_trabajo_registradas.md#val-step-684
+[VAL-STEP-685]: log_sesiones_trabajo_registradas.md#val-step-685
+[VAL-STEP-686]: log_sesiones_trabajo_registradas.md#val-step-686
+[VAL-STEP-687]: log_sesiones_trabajo_registradas.md#val-step-687
+[VAL-STEP-688]: log_sesiones_trabajo_registradas.md#val-step-688
+[VAL-STEP-689]: log_sesiones_trabajo_registradas.md#val-step-689
+[VAL-STEP-690]: log_sesiones_trabajo_registradas.md#val-step-690
+[VAL-STEP-691]: log_sesiones_trabajo_registradas.md#val-step-691
+[VAL-STEP-692]: log_sesiones_trabajo_registradas.md#val-step-692
+[VAL-STEP-693]: log_sesiones_trabajo_registradas.md#val-step-693
+[VAL-STEP-697]: log_sesiones_trabajo_registradas.md#val-step-697
+[VAL-STEP-698]: log_sesiones_trabajo_registradas.md#val-step-698
+[VAL-STEP-699]: log_sesiones_trabajo_registradas.md#val-step-699
+[VAL-STEP-700]: log_sesiones_trabajo_registradas.md#val-step-700
+[VAL-STEP-701]: log_sesiones_trabajo_registradas.md#val-step-701
+[VAL-STEP-702]: log_sesiones_trabajo_registradas.md#val-step-702
+[VAL-STEP-703]: log_sesiones_trabajo_registradas.md#val-step-703
+[VAL-STEP-704]: log_sesiones_trabajo_registradas.md#val-step-704
+[VAL-STEP-705]: log_sesiones_trabajo_registradas.md#val-step-705
+[VAL-STEP-706]: log_sesiones_trabajo_registradas.md#val-step-706
+[VAL-STEP-711]: log_sesiones_trabajo_registradas.md#val-step-711
+[VAL-STEP-712]: log_sesiones_trabajo_registradas.md#val-step-712
+[VAL-STEP-713]: log_sesiones_trabajo_registradas.md#val-step-713
+[VAL-STEP-714]: log_sesiones_trabajo_registradas.md#val-step-714
+[VAL-STEP-715]: log_sesiones_trabajo_registradas.md#val-step-715
+[VAL-STEP-716]: log_sesiones_trabajo_registradas.md#val-step-716
+[VAL-STEP-717]: log_sesiones_trabajo_registradas.md#val-step-717
+[VAL-STEP-718]: log_sesiones_trabajo_registradas.md#val-step-718
+[VAL-STEP-719]: log_sesiones_trabajo_registradas.md#val-step-719
+[VAL-STEP-720]: log_sesiones_trabajo_registradas.md#val-step-720
+[VAL-STEP-721]: log_sesiones_trabajo_registradas.md#val-step-721
+[VAL-STEP-722]: log_sesiones_trabajo_registradas.md#val-step-722
+[VAL-STEP-723]: log_sesiones_trabajo_registradas.md#val-step-723
+[VAL-STEP-724]: log_sesiones_trabajo_registradas.md#val-step-724
+[VAL-STEP-725]: log_sesiones_trabajo_registradas.md#val-step-725
+[VAL-STEP-726]: log_sesiones_trabajo_registradas.md#val-step-726
+[VAL-STEP-727]: log_sesiones_trabajo_registradas.md#val-step-727
+[VAL-STEP-728]: log_sesiones_trabajo_registradas.md#val-step-728
+[VAL-STEP-729]: log_sesiones_trabajo_registradas.md#val-step-729
+[VAL-STEP-730]: log_sesiones_trabajo_registradas.md#val-step-730
+[VAL-STEP-731]: log_sesiones_trabajo_registradas.md#val-step-731
+[VAL-STEP-732]: log_sesiones_trabajo_registradas.md#val-step-732
+[VAL-STEP-735]: log_sesiones_trabajo_registradas.md#val-step-735
+[VAL-STEP-736]: log_sesiones_trabajo_registradas.md#val-step-736
+[VAL-STEP-737]: log_sesiones_trabajo_registradas.md#val-step-737
+[VAL-STEP-738]: log_sesiones_trabajo_registradas.md#val-step-738
+[VAL-STEP-739]: log_sesiones_trabajo_registradas.md#val-step-739
+[VAL-STEP-740]: log_sesiones_trabajo_registradas.md#val-step-740
+[VAL-STEP-741]: log_sesiones_trabajo_registradas.md#val-step-741
+[VAL-STEP-742]: log_sesiones_trabajo_registradas.md#val-step-742
+[VAL-STEP-743]: log_sesiones_trabajo_registradas.md#val-step-743
+[VAL-STEP-744]: log_sesiones_trabajo_registradas.md#val-step-744
+[VAL-STEP-745]: log_sesiones_trabajo_registradas.md#val-step-745
+[VAL-STEP-746]: log_sesiones_trabajo_registradas.md#val-step-746
+[VAL-STEP-747]: log_sesiones_trabajo_registradas.md#val-step-747
+[VAL-STEP-748]: log_sesiones_trabajo_registradas.md#val-step-748
+[VAL-STEP-749]: log_sesiones_trabajo_registradas.md#val-step-749
+[VAL-STEP-750]: log_sesiones_trabajo_registradas.md#val-step-750
+[VAL-STEP-751]: log_sesiones_trabajo_registradas.md#val-step-751
+[VAL-STEP-752]: log_sesiones_trabajo_registradas.md#val-step-752
+[VAL-STEP-753]: log_sesiones_trabajo_registradas.md#val-step-753
+[VAL-STEP-754]: log_sesiones_trabajo_registradas.md#val-step-754
+[VAL-STEP-755]: log_sesiones_trabajo_registradas.md#val-step-755
+[VAL-STEP-756]: log_sesiones_trabajo_registradas.md#val-step-756
+[VAL-STEP-757]: log_sesiones_trabajo_registradas.md#val-step-757
+[VAL-STEP-758]: log_sesiones_trabajo_registradas.md#val-step-758
+[VAL-STEP-759]: log_sesiones_trabajo_registradas.md#val-step-759
+[VAL-STEP-760]: log_sesiones_trabajo_registradas.md#val-step-760
+[VAL-STEP-761]: log_sesiones_trabajo_registradas.md#val-step-761
+[VAL-STEP-762]: log_sesiones_trabajo_registradas.md#val-step-762
+[VAL-STEP-763]: log_sesiones_trabajo_registradas.md#val-step-763
+[VAL-STEP-764]: log_sesiones_trabajo_registradas.md#val-step-764

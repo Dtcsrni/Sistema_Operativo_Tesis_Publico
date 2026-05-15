@@ -1,0 +1,309 @@
+# ==============================================================================
+# Sistema Operativo de Tesis (SIOT) — Infraestructura Unificada (DEC-0045)
+# ==============================================================================
+# Este archivo orquesta el stack completo en modo 100% Docker, eliminando
+# dependencias nativas y utilizando una nomenclatura semántica clara.
+# ==============================================================================
+
+networks:
+  siot-network:
+    name: siot-network
+    driver: bridge
+
+volumes:
+  # Persistencia inmutable y canon (Bind mount al host)
+  siot_canon_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/00_sistema_tesis
+
+  # Datos semánticos y bases de datos (Named volumes para resiliencia)
+  siot_weaviate_data:
+    driver: local
+  siot_mission_control_data:
+    driver: local
+  siot_openclaw_state:
+    driver: local
+  siot_models_cache:
+    driver: local
+
+services:
+
+  # 1. VISOR DE DOCUMENTACIÓN Y CANÓN (Gobernanza)
+  visor-canon-docs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: siot-visor-docs:latest
+    container_name: visor-canon-docs
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 10s
+    ports:
+      - "8081:80"
+    environment:
+      - SISTEMA_TESIS_RUNTIME=docker-docs
+    read_only: true
+    tmpfs:
+      - /tmp:uid=101,gid=101,mode=1777
+      - /var/cache/nginx:uid=101,gid=101,mode=1777
+      - /var/run:uid=101,gid=101,mode=1777
+    volumes:
+      - siot_canon_data:/app/00_sistema_tesis:ro
+    networks:
+      - siot-network
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # 2. BASE SEMÁNTICA (Toltecayotl GraphRAG)
+  db-vectorial-weaviate:
+    image: cr.weaviate.io/semitechnologies/weaviate:1.31.4
+    container_name: db-vectorial-weaviate
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 30s
+    ports:
+      - "8080:8080"
+      - "50051:50051"
+    environment:
+      QUERY_DEFAULTS_LIMIT: 25
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
+      PERSISTENCE_DATA_PATH: /var/lib/weaviate
+      DEFAULT_VECTORIZER_MODULE: none
+      ENABLE_MODULES: 'text2vec-openai,generative-openai'
+      CLUSTER_HOSTNAME: 'db-vectorial-weaviate'
+      RAFT_BOOTSTRAP_EXPECT: 1
+      DISABLE_TELEMETRY: 'true'
+    volumes:
+      - siot_weaviate_data:/var/lib/weaviate
+    networks:
+      - siot-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:8080/v1/.well-known/ready"]
+      interval: 20s
+      timeout: 10s
+      retries: 3
+
+  # 3. INFERENCIA LOCAL (llama.cpp Direct GGUF)
+  inferencia-llamacpp:
+    image: ghcr.io/ggerganov/llama.cpp:full
+    container_name: inferencia-llamacpp
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 30s
+    ports:
+      - "8085:8080" # Puerto 8080 interno expuesto como 8085 en host
+    volumes:
+      - ./runtime/models:/models:ro
+      - siot_models_cache:/.cache
+    # Argumentos para el servidor: API compatible con proveedor de IA no publicado
+    command:
+      - --server
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8080"
+      - --model
+      - /models/${SIOT_DEFAULT_MODEL_GGUF:-deepseek-r1-7b.gguf}
+      - --ctx-size
+      - "8192"
+      - --n-gpu-layers
+      - "${SIOT_GPU_LAYERS:-32}"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    networks:
+      - siot-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # 4. SERVIDOR DE CONTEXTO (Serena MCP)
+  servidor-contexto-serena:
+    build:
+      context: .
+      dockerfile: Dockerfile.serena
+    image: siot-serena-mcp:latest
+    container_name: servidor-contexto-serena
+    init: true
+    restart: unless-stopped
+    ports:
+      - "8765:8765"
+    environment:
+      - SERENA_MCP_DEBUG_LOG=/app/runtime/logs/serena_mcp_debug.log
+    volumes:
+      - siot_canon_data:/app/00_sistema_tesis
+      - ./06_dashboard:/app/06_dashboard
+      - ./runtime:/app/runtime
+    networks:
+      - siot-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8765/mcp"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # 5. BOT AGENTE TELEGRAM (Cerebro Operativo)
+  bot-agente-telegram:
+    build:
+      context: .
+      dockerfile: Dockerfile.agent
+    image: siot-agente-core:latest
+    container_name: bot-agente-telegram
+    init: true
+    restart: unless-stopped
+    command: ["python", "-m", "runtime.openclaw.openclaw_local.telegram_bot"]
+    env_file:
+      - .env
+      - config/env/openclaw.env
+    environment:
+      - SISTEMA_TESIS_RUNTIME=docker-agent-bot
+      - OPENCLAW_SERENA_URL=http://servidor-contexto-serena:8765/mcp
+      - OPENCLAW_DESKTOP_COMPUTE_BASE_URL=http://inferencia-llamacpp:8080/v1
+    volumes:
+      - siot_canon_data:/app/00_sistema_tesis
+      - siot_openclaw_state:/app/runtime/openclaw/state
+      - ./runtime/openclaw/logs:/app/runtime/openclaw/logs
+      - ./runtime/openclaw/openclaw_local:/app/runtime/openclaw/openclaw_local:ro
+      - ./07_scripts:/app/07_scripts:ro
+    depends_on:
+      db-vectorial-weaviate:
+        condition: service_healthy
+      servidor-contexto-serena:
+        condition: service_healthy
+      inferencia-llamacpp:
+        condition: service_healthy
+    networks:
+      - siot-network
+
+  # 6. GATEWAY ORCHESTRATOR API (Pasarela)
+  gateway-orchestrator-api:
+    image: siot-agente-core:latest
+    container_name: gateway-orchestrator-api
+    init: true
+    restart: unless-stopped
+    command: ["python", "runtime/openclaw/bin/openclaw_cli.py", "pasarela", "servir", "--host", "0.0.0.0", "--port", "18789"]
+    ports:
+      - "18789:18789"
+    env_file:
+      - .env
+      - config/env/openclaw.env
+    environment:
+      - SISTEMA_TESIS_RUNTIME=docker-gateway
+    volumes:
+      - siot_canon_data:/app/00_sistema_tesis
+      - siot_openclaw_state:/app/runtime/openclaw/state
+      - ./07_scripts:/app/07_scripts:ro
+    networks:
+      - siot-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:18789/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 7. API PERSISTENCIA PET (Evidencia)
+  api-persistencia-pet:
+    image: siot-agente-core:latest
+    container_name: api-persistencia-pet
+    init: true
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    env_file:
+      - .env
+      - config/env/openclaw.env
+    command: ["python", "07_scripts/pet_api_server.py", "--host", "0.0.0.0", "--port", "8001", "--db", "/app/runtime/openclaw/state/openclaw_store.db"]
+    volumes:
+      - siot_openclaw_state:/app/runtime/openclaw/state
+      - ./07_scripts:/app/07_scripts:ro
+    networks:
+      - siot-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 8. HUB DE MISIONES (Web UI)
+  hub-misiones-web:
+    build:
+      context: ./04_implementacion/control_mission
+      dockerfile: Dockerfile
+    image: siot-hub-misiones:latest
+    container_name: hub-misiones-web
+    init: true
+    ports:
+      - "4000:4000"
+    restart: unless-stopped
+    environment:
+      - DATABASE_PATH=/app/data/mission-control.db
+      - NEXT_PUBLIC_PET_API_BASE_URL=http://localhost:8001
+      - OPENCLAW_GATEWAY_URL=ws://gateway-orchestrator-api:18789
+    volumes:
+      - ./04_implementacion/control_mission/mission-control.db:/app/data/mission-control.db
+      - siot_mission_control_data:/app/workspace
+    networks:
+      - siot-network
+    depends_on:
+      gateway-orchestrator-api:
+        condition: service_healthy
+      api-persistencia-pet:
+        condition: service_healthy
+
+  # 9. EXECUTOR CÓDIGO RAG (OpenCode)
+  executor-codigo-rag:
+    build:
+      context: .
+      dockerfile: Dockerfile.opencode-executor
+    image: siot-executor-opencode:latest
+    container_name: executor-codigo-rag
+    init: true
+    restart: unless-stopped
+    ports:
+      - "4096:4096"
+    env_file:
+      - .env
+      - config/env/openclaw.env
+    environment:
+      - OPENCODE_BASE_URL=http://inferencia-llamacpp:8080/v1
+      - RAG_ENDPOINT=http://db-vectorial-weaviate:8080
+    volumes:
+      - siot_canon_data:/app/00_sistema_tesis:ro
+      - ./runtime/workspaces:/app/runtime/workspaces
+    networks:
+      - siot-network
+    depends_on:
+      inferencia-llamacpp:
+        condition: service_healthy
+      db-vectorial-weaviate:
+        condition: service_healthy
+
+  # 10. MONITOR DE TELEMETRÍA (Observabilidad)
+  monitor-telemetria:
+    image: siot-agente-core:latest
+    container_name: monitor-telemetria
+    init: true
+    restart: unless-stopped
+    ports:
+      - "8082:8082"
+    env_file:
+      - .env
+      - config/env/openclaw.env
+    command: ["python", "07_scripts/ops/serve_observability_dashboard.py"]
+    volumes:
+      - ./06_dashboard/generado:/app/06_dashboard/generado
+      - ./runtime/observability:/app/runtime/observability
+    networks:
+      - siot-network

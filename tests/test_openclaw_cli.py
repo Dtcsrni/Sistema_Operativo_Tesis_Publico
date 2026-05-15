@@ -1,0 +1,968 @@
+from __future__ import annotations
+
+import json
+import os
+import subprocess
+from pathlib import Path
+
+from common import preferred_python_executable
+
+
+ROOT = Path(__file__).resolve().parents[1]
+CLI = ROOT / "runtime" / "openclaw" / "bin" / "openclaw_local.py"
+PYTHON_BIN = preferred_python_executable()
+
+
+def _write_domain_envs(tmp_path: Path) -> Path:
+    domains_dir = tmp_path / "domains"
+    domains_dir.mkdir(parents=True)
+    (domains_dir / "personal.env").write_text("", encoding="utf-8")
+    (domains_dir / "profesional.env").write_text("GROQ_API_KEY=groq-prof\nOPENAI_API_KEY=openai-prof\n", encoding="utf-8")
+    (domains_dir / "academico.env").write_text(
+        "GROQ_API_KEY=groq-acad\nGEMINI_API_KEY=gemini-acad\nOPENAI_API_KEY=openai-acad\nOPENCLAW_GEMINI_STUDENT_ENABLED=1\nOPENCLAW_CHATGPT_PLUS_ENABLED=1\n",
+        encoding="utf-8",
+    )
+    (domains_dir / "edge.env").write_text("", encoding="utf-8")
+    (domains_dir / "administrativo.env").write_text("", encoding="utf-8")
+    return domains_dir
+
+
+def test_openclaw_doctor_reports_domains_and_store(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path)
+    env["OPENCLAW_CACHE_DIR"] = str(tmp_path / "cache")
+    env["OPENCLAW_LOG_DIR"] = str(tmp_path / "log")
+    env["OPENCLAW_ENV_FILE"] = str(tmp_path / "openclaw.env")
+    env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
+    env["OPENCLAW_FORCE_ORANGE_PI_MODEL"] = "Orange Pi 5 Plus"
+    env["OPENCLAW_FORCE_ROOT_DEVICE"] = "/dev/nvme0n1p1"
+    env["OPENCLAW_FORCE_OLLAMA_READY"] = "1"
+    Path(env["OPENCLAW_CACHE_DIR"]).mkdir()
+    Path(env["OPENCLAW_LOG_DIR"]).mkdir()
+    Path(env["OPENCLAW_ENV_FILE"]).write_text("OPENCLAW_PORT=18789\n", encoding="utf-8")
+    result = subprocess.run(
+        [PYTHON_BIN, str(CLI), "doctor"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["status"] == "ok"
+    assert payload["deployment_state"] in {"ollama_ready", "npu_experimental_ready"}
+    assert "academico" in payload["domains"]
+    assert "local" in payload["proveedores"]
+    assert payload["store"]["db_path"].endswith("openclaw.db")
+    assert payload["secretos"]["domains"]["academico"]["providers"]["gemini_api"]["status"] == "ready"
+    assert "gemini-acad" not in result.stdout
+
+
+def test_openclaw_web_session_status_reports_manual_login_policy(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path)
+    env["OPENCLAW_WEB_SESSION_USER_DATA_DIR"] = str(tmp_path / "web-session-profile")
+    env["OPENCLAW_TELEGRAM_CHAT_PROVIDER"] = "chatgpt_plus_web_session"
+
+    result = subprocess.run(
+        [PYTHON_BIN, str(CLI), "sesion-web", "estado"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["provider"] == "chatgpt_plus_web_session"
+    assert payload["provider_supported"] is True
+    assert payload["user_data_dir"] == env["OPENCLAW_WEB_SESSION_USER_DATA_DIR"]
+    assert payload["credential_policy"] == "manual_login_only_no_tokens_in_repo"
+
+
+def test_openclaw_web_session_login_requires_gui_or_x11_forwarding(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path)
+    env["OPENCLAW_WEB_SESSION_USER_DATA_DIR"] = str(tmp_path / "web-session-profile")
+    env.pop("DISPLAY", None)
+    env.pop("WAYLAND_DISPLAY", None)
+
+    result = subprocess.run(
+        [PYTHON_BIN, str(CLI), "sesion-web", "login", "--timeout", "5"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert result.returncode == 1
+    assert payload["status"] == "error"
+    assert payload["detail"] == "web_session_requires_gui_or_x11_forwarding"
+    assert payload["web_session"]["gui_session_available"] is False
+
+
+def test_openclaw_gateway_notify_ready_skips_without_credentials(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path)
+    env["OPENCLAW_TELEGRAM_ENABLED"] = "0"
+
+    result = subprocess.run(
+        [
+            PYTHON_BIN,
+            str(CLI),
+            "pasarela",
+            "notificar-listo",
+            "--mensaje",
+            "OpenClaw listo para ordenes.",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["status"] == "skipped"
+    assert payload["channel"] == "telegram"
+
+
+def test_openclaw_sources_ingest_and_status(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path)
+    env["OPENCLAW_SOURCE_JSONL"] = str(tmp_path / "references.jsonl")
+    ingest = subprocess.run(
+        [
+            PYTHON_BIN,
+            str(CLI),
+            "fuentes",
+            "registrar",
+            "--sin-red",
+            "--tipo",
+            "article",
+            "--titulo",
+            "Traceable edge AI",
+            "--autor",
+            "Jane Doe",
+            "--anio",
+            "2026",
+            "--doi",
+            "10.1234/edge.2026",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    payload = json.loads(ingest.stdout)
+    assert payload["status"] == "ok"
+    assert payload["reference"]["doi"] == "10.1234/edge.2026"
+    assert Path(env["OPENCLAW_SOURCE_JSONL"]).exists()
+
+    status = subprocess.run(
+        [PYTHON_BIN, str(CLI), "fuentes", "estado"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    status_payload = json.loads(status.stdout)
+    assert status_payload["status"] == "ok"
+    assert status_payload["store"]["source_records"] == 1
+
+
+def test_openclaw_toltecayotl_ingest_search_and_sync(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path / "openclaw")
+    env["TOLTECAYOTL_SYNC_DIR"] = str(tmp_path / "toltecayotl_sync")
+    env["TOLTECAYOTL_ENABLED"] = "false"
+    source = tmp_path / "paper.md"
+    source.write_text("Motor Epistémico Toltecayotl usa Weaviate y BGE-M3 para conocimiento academico trazable.", encoding="utf-8")
+
+    ingest = subprocess.run(
+        [
+            PYTHON_BIN,
+            str(CLI),
+            "toltecayotl",
+            "ingestar",
+            "--archivo",
+            str(source),
+            "--tipo",
+            "markdown",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    ingest_payload = json.loads(ingest.stdout)
+    assert ingest_payload["status"] == "ok"
+    assert ingest_payload["chunks"][0]["source_hash"]
+    assert ingest_payload["chunks"][0]["chunk_hash"]
+
+    search = subprocess.run(
+        [PYTHON_BIN, str(CLI), "toltecayotl", "buscar", "--query", "Weaviate conocimiento", "--limit", "1"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    search_payload = json.loads(search.stdout)
+    assert search_payload["status"] == "ok"
+    assert search_payload["results"][0]["source_hash"] == ingest_payload["chunks"][0]["source_hash"]
+
+    exported = subprocess.run(
+        [PYTHON_BIN, str(CLI), "toltecayotl", "sync", "exportar"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    exported_payload = json.loads(exported.stdout)
+    package_path = Path(env["TOLTECAYOTL_SYNC_DIR"]) / f"{exported_payload['package']['package_id']}.json"
+    assert package_path.exists()
+
+    imported = subprocess.run(
+        [PYTHON_BIN, str(CLI), "toltecayotl", "sync", "importar", "--archivo", str(package_path)],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    imported_payload = json.loads(imported.stdout)
+    assert imported_payload["status"] == "ok"
+    assert imported_payload["imported"] >= 1
+
+
+def test_openclaw_run_dry_run_creates_approval_for_mutation(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path)
+    env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
+    result = subprocess.run(
+        [
+            PYTHON_BIN,
+            str(CLI),
+            "ejecutar",
+            "--simulacion",
+            "--id-tarea",
+            "TASK-CLI-001",
+            "--titulo",
+            "Borrador arquitectónico",
+            "--dominio",
+            "academico",
+            "--objetivo",
+            "Preparar diff sin publicar",
+            "--complejidad",
+            "high",
+            "--nivel-riesgo",
+            "high",
+            "--muta-estado",
+            "--rutas-objetivo",
+            "docs/02_arquitectura/openclaw-control-plane.md",
+            "--step-id-esperado",
+            "VAL-STEP-901",
+            "--requiere-evidencia-fuente",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["dry_run"] is True
+    assert payload["decision"]["requires_human_gate"] is True
+    assert payload["approval_id"].startswith("APR-")
+    assert payload["decision"]["provider"] == "desktop_compute"
+    if payload["serena"]["status"] != "ok":
+        print(f"\nSERENA FAILURE IN {payload['task']['task_id']}: {payload['serena'].get('error')}")
+        print(f"SERENA HEALTH: {payload['serena'].get('healthcheck')}")
+    assert payload["serena"]["status"] == "ok"
+    assert "context.fetch_compact" in payload["serena"]["tool_invocations"]
+    assert "governance.preflight" in payload["serena"]["tool_invocations"]
+
+
+def test_openclaw_matrix_status_reports_not_configured(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path)
+
+    result = subprocess.run(
+        [PYTHON_BIN, str(CLI), "matrix", "estado"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert result.returncode == 1
+    assert payload["status"] == "not_configured"
+
+
+def test_openclaw_matrix_process_creates_session(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path)
+    env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
+    env["OPENCLAW_DESKTOP_RUNTIME"] = "llamacpp"
+    env["OPENCLAW_FORCE_LLAMACPP_READY"] = "1"
+
+    result = subprocess.run(
+        [
+            PYTHON_BIN,
+            str(CLI),
+            "matrix",
+            "procesar",
+            "--room-id",
+            "!room:test",
+            "--sender",
+            "@alice:test",
+            "--texto",
+            "/estado",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["status"] == "ok"
+    assert payload["session_id"].startswith("OCS-")
+
+
+def test_openclaw_run_blocks_when_serena_is_required_and_unavailable(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path)
+    env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
+    env["OPENCLAW_SERENA_TRANSPORT"] = "http"
+    env["OPENCLAW_SERENA_URL"] = "http://127.0.0.1:9/mcp"
+    env["OPENCLAW_SERENA_TIMEOUT_MS"] = "300"
+    result = subprocess.run(
+        [
+            PYTHON_BIN,
+            str(CLI),
+            "ejecutar",
+            "--id-tarea",
+            "TASK-CLI-001B",
+            "--titulo",
+            "Cambio controlado",
+            "--dominio",
+            "academico",
+            "--objetivo",
+            "Preparar cambio con Serena obligatoria",
+            "--complejidad",
+            "high",
+            "--nivel-riesgo",
+            "high",
+            "--muta-estado",
+            "--rutas-objetivo",
+            "docs/02_arquitectura/openclaw-control-plane.md",
+            "--modo-serena",
+            "required",
+        ],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert result.returncode == 1
+    assert payload["serena"]["status"] == "unavailable"
+    assert payload["serena"]["blocked"] is True
+
+
+def test_openclaw_proposal_export_writes_draft_to_canon(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path / "openclaw")
+    env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
+    result_run = subprocess.run(
+        [
+            PYTHON_BIN,
+            str(CLI),
+            "ejecutar",
+            "--simulacion",
+            "--id-tarea",
+            "TASK-CLI-002",
+            "--titulo",
+            "Propuesta exportable",
+            "--dominio",
+            "academico",
+            "--objetivo",
+            "Preparar draft para canon",
+            "--complejidad",
+            "high",
+            "--nivel-riesgo",
+            "high",
+            "--muta-estado",
+            "--rutas-objetivo",
+            "docs/02_arquitectura/openclaw-control-plane.md",
+            "--step-id-esperado",
+            "VAL-STEP-902",
+            "--requiere-evidencia-fuente",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    payload_run = json.loads(result_run.stdout)
+
+    result_export = subprocess.run(
+        [
+            PYTHON_BIN,
+            str(CLI),
+            "propuesta",
+            "exportar",
+            "--simulacion",
+            "--id-tarea",
+            "TASK-CLI-002",
+            "--id-sesion",
+            "SESSION-CLI-002",
+            "--referencia-vinculada",
+            "[DEC-0020]",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload_export = json.loads(result_export.stdout)
+    assert payload_export["event"]["event_type"] == "openclaw_proposal"
+    assert payload_export["event"]["payload"]["proposal_status"] == "draft_pending_human_review"
+    assert payload_run["approval_id"].startswith("APR-")
+
+
+def test_openclaw_prepare_validation_package_contains_canonical_commands(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path / "openclaw")
+    env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
+    subprocess.run(
+        [
+            PYTHON_BIN,
+            str(CLI),
+            "ejecutar",
+            "--simulacion",
+            "--id-tarea",
+            "TASK-CLI-003",
+            "--titulo",
+            "Preparar validación",
+            "--dominio",
+            "academico",
+            "--objetivo",
+            "Preparar paquete de aprobación humana",
+            "--complejidad",
+            "high",
+            "--nivel-riesgo",
+            "high",
+            "--muta-estado",
+            "--rutas-objetivo",
+            "docs/02_arquitectura/openclaw-control-plane.md",
+            "--step-id-esperado",
+            "VAL-STEP-903",
+            "--requiere-evidencia-fuente",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    result = subprocess.run(
+        [
+            PYTHON_BIN,
+            str(CLI),
+            "propuesta",
+            "preparar-validacion",
+            "--id-tarea",
+            "TASK-CLI-003",
+            "--id-sesion",
+            "SESSION-CLI-003",
+            "--referencia-vinculada",
+            "[DEC-0020]",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["step_id"] == "VAL-STEP-903"
+    assert "source scaffold" in payload["commands"]["scaffold"]
+    assert "finalize-openclaw" in payload["commands"]["finalize"]
+
+
+def test_openclaw_academic_literature_builds_packet_and_cache(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path / "openclaw")
+    env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
+    input_path = tmp_path / "literature.json"
+    input_path.write_text(
+        json.dumps(
+            {
+                "sources": ["doi:10.1000/test"],
+                "traceability_links": ["[DEC-0014]"],
+                "claims": [
+                    {
+                        "claim_id": "CLM-001",
+                        "claim_text": "Existe contradicción relevante.",
+                        "classification": "inferencia_razonada",
+                        "source_refs": ["doi:10.1000/test"],
+                        "confidence": "alto",
+                        "verification_status": "fuente_primaria",
+                        "impact_on_thesis": "Ajusta la hipótesis.",
+                    }
+                ],
+                "literature_records": [
+                    {
+                        "record_id": "LIT-001",
+                        "tema": "Intermitencia",
+                        "pregunta": "¿Qué contradicciones hay?",
+                        "fuente": "Fuente primaria",
+                        "anio": "2025",
+                        "doi": "10.1000/test",
+                        "nivel_evidencia": "alto",
+                        "hallazgos_clave": ["Hallazgo 1"],
+                        "contradicciones": ["Contradicción A"],
+                        "relacion_con_hipotesis": "Afecta el diseño.",
+                        "estado_verificacion": "verificado",
+                    }
+                ],
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+
+    result = subprocess.run(
+        [
+            PYTHON_BIN,
+            str(CLI),
+            "academico",
+            "estado-del-arte",
+            "--id-tarea",
+            "TASK-ACA-CLI-001",
+            "--titulo",
+            "Estado del arte",
+            "--objetivo",
+            "Triage de literatura",
+            "--pregunta",
+            "¿Qué contradicciones importan?",
+            "--alcance",
+            "Fuentes primarias",
+            "--archivo-entrada-json",
+            str(input_path),
+            "--id-sesion",
+            "SESSION-ACA-001",
+            "--step-id-esperado",
+            "VAL-STEP-950",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["task"]["extra_context"]["academic_mode"] == "estado_del_arte"
+    assert payload["cache_hit"] is False
+    assert "matriz-de-literatura.md" in " ".join(payload["artifacts"])
+    if payload["serena"]["status"] != "ok":
+        print(f"\nSERENA FAILURE IN {payload['task']['task_id']}: {payload['serena'].get('error')}")
+        print(f"SERENA HEALTH: {payload['serena'].get('healthcheck')}")
+    assert payload["serena"]["status"] == "ok"
+    assert payload["serena"]["references"]
+
+
+def test_openclaw_academic_writing_materializes_parallel_outputs(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path / "openclaw")
+    env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
+    input_path = tmp_path / "writing.json"
+    input_path.write_text(
+        json.dumps(
+            {
+                "sources": ["doi:10.1000/test"],
+                "traceability_links": ["[DEC-0020]"],
+                "claims": [
+                    {
+                        "claim_id": "CLM-101",
+                        "claim_text": "El problema requiere resiliencia.",
+                        "classification": "pendiente_de_validacion",
+                        "source_refs": ["doi:10.1000/test"],
+                        "confidence": "medio",
+                        "verification_status": "pendiente_de_validacion",
+                        "impact_on_thesis": "Introduce el problema.",
+                    }
+                ],
+                "writing_draft": {
+                    "section_id": "introduccion_openclaw_test",
+                    "purpose": "Introducción",
+                    "source_refs": ["doi:10.1000/test"],
+                    "open_questions": ["Cerrar objetivo específico"],
+                    "paragraphs": [
+                        {
+                            "text": "La tesis aborda resiliencia en telemetría urbana.",
+                            "source_refs": ["doi:10.1000/test"],
+                        },
+                        {
+                            "text": "Esta síntesis conecta el problema con la motivación experimental.",
+                            "non_factual": True,
+                        },
+                    ],
+                },
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+
+    result = subprocess.run(
+        [
+            PYTHON_BIN,
+            str(CLI),
+            "academico",
+            "redaccion",
+            "--id-tarea",
+            "TASK-ACA-CLI-002",
+            "--titulo",
+            "Borrador introducción",
+            "--objetivo",
+            "Preparar introducción trazable",
+            "--pregunta",
+            "¿Cómo abrir la tesis?",
+            "--alcance",
+            "Capítulo de introducción",
+            "--archivo-entrada-json",
+            str(input_path),
+            "--id-sesion",
+            "SESSION-ACA-002",
+            "--step-id-esperado",
+            "VAL-STEP-951",
+            "--escribir-artefactos",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    md_path = ROOT / "runtime" / "openclaw" / "state" / "academico" / "drafts" / "introduccion_openclaw_test.md"
+    tex_path = ROOT / "05_tesis_latex" / "sections" / "introduccion_openclaw_test.tex"
+
+    try:
+        assert payload["approval_id"].startswith("APR-")
+        assert md_path.exists()
+        assert tex_path.exists()
+        assert "Fuentes: doi:10.1000/test" in md_path.read_text(encoding="utf-8")
+        assert "\\textit{Fuentes: doi:10.1000/test}." in tex_path.read_text(encoding="utf-8")
+    finally:
+        if md_path.exists():
+            md_path.unlink()
+        if tex_path.exists():
+            tex_path.unlink()
+
+
+def test_openclaw_academic_export_proposal_includes_academic_metadata(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path / "openclaw")
+    input_path = tmp_path / "methodology.json"
+    input_path.write_text(
+        json.dumps(
+            {
+                "sources": ["fuente-a.md"],
+                "traceability_links": ["[DEC-0014]"],
+                "summary": "Comparación metodológica inicial.",
+                "claims": [
+                    {
+                        "claim_id": "CLM-201",
+                        "claim_text": "El enfoque comparativo es adecuado.",
+                        "classification": "recomendacion_tentativa",
+                        "source_refs": ["fuente-a.md"],
+                        "confidence": "medio",
+                        "verification_status": "pendiente_de_validacion",
+                        "impact_on_thesis": "Ayuda a decidir el marco metodológico.",
+                    }
+                ],
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+    subprocess.run(
+        [
+            PYTHON_BIN,
+            str(CLI),
+            "academico",
+            "metodologia",
+            "--id-tarea",
+            "TASK-ACA-CLI-003",
+            "--titulo",
+            "Paquete metodológico",
+            "--objetivo",
+            "Comparar enfoques",
+            "--pregunta",
+            "¿Qué enfoque es más defendible?",
+            "--alcance",
+            "Primera iteración",
+            "--archivo-entrada-json",
+            str(input_path),
+            "--id-sesion",
+            "SESSION-ACA-003",
+            "--step-id-esperado",
+            "VAL-STEP-952",
+            "--cambia-metodologia",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    result = subprocess.run(
+        [
+            PYTHON_BIN,
+            str(CLI),
+            "academico",
+            "exportar-propuesta",
+            "--id-tarea",
+            "TASK-ACA-CLI-003",
+            "--id-sesion",
+            "SESSION-ACA-003",
+            "--simulacion",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["event"]["payload"]["academic_mode"] == "metodologia"
+    assert payload["event"]["payload"]["scientific_support_summary"] == "Comparación metodológica inicial."
+
+
+def test_openclaw_provider_status_and_benchmark_reflect_local_runtimes(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path / "openclaw")
+    env["OPENCLAW_CACHE_DIR"] = str(tmp_path / "cache")
+    env["OPENCLAW_LOG_DIR"] = str(tmp_path / "log")
+    env["OPENCLAW_ENV_FILE"] = str(tmp_path / "openclaw.env")
+    env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
+    env["OPENCLAW_FORCE_OLLAMA_READY"] = "1"
+    env["OPENCLAW_FORCE_NPU_READY"] = "1"
+    env["OPENCLAW_BENCHMARK_SIMULATION"] = "1"
+    Path(env["OPENCLAW_CACHE_DIR"]).mkdir(parents=True)
+    Path(env["OPENCLAW_LOG_DIR"]).mkdir(parents=True)
+    Path(env["OPENCLAW_ENV_FILE"]).write_text("OPENCLAW_PORT=18789\n", encoding="utf-8")
+
+    status = subprocess.run(
+        [PYTHON_BIN, str(CLI), "proveedor", "estado"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    benchmark = subprocess.run(
+        [PYTHON_BIN, str(CLI), "proveedor", "medir"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    status_payload = json.loads(status.stdout)
+    benchmark_payload = json.loads(benchmark.stdout)
+
+    assert status_payload["runtime_status"]["state"] == "npu_experimental_ready"
+    assert benchmark_payload["active_runtime"] == "ollama_local"
+    assert benchmark_payload["recommended_runtime"] == "ollama_local"
+    assert status_payload["secretos"]["domains"]["profesional"]["providers"]["groq_api"]["status"] == "ready"
+
+
+def test_openclaw_provider_benchmark_can_promote_npu_only_when_enabled(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path / "openclaw")
+    env["OPENCLAW_CACHE_DIR"] = str(tmp_path / "cache")
+    env["OPENCLAW_LOG_DIR"] = str(tmp_path / "log")
+    env["OPENCLAW_ENV_FILE"] = str(tmp_path / "openclaw.env")
+    env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
+    env["OPENCLAW_FORCE_OLLAMA_READY"] = "1"
+    env["OPENCLAW_FORCE_NPU_READY"] = "1"
+    env["OPENCLAW_BENCHMARK_SIMULATION"] = "1"
+    env["OPENCLAW_NPU_AUTO_PROMOTE"] = "1"
+    Path(env["OPENCLAW_CACHE_DIR"]).mkdir(parents=True)
+    Path(env["OPENCLAW_LOG_DIR"]).mkdir(parents=True)
+    Path(env["OPENCLAW_ENV_FILE"]).write_text("OPENCLAW_PORT=18789\n", encoding="utf-8")
+
+    benchmark = subprocess.run(
+        [PYTHON_BIN, str(CLI), "proveedor", "medir"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    benchmark_payload = json.loads(benchmark.stdout)
+
+    assert benchmark_payload["active_runtime"] == "ollama_local"
+    assert benchmark_payload["recommended_runtime"] == "rknn_llm_experimental"
+
+
+def test_openclaw_gateway_preflight_fails_without_env_file(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path / "openclaw")
+    env["OPENCLAW_DB_PATH"] = str(tmp_path / "openclaw" / "openclaw.db")
+    env["OPENCLAW_ENV_FILE"] = str(tmp_path / "missing.env")
+    Path(env["OPENCLAW_DATA_DIR"]).mkdir(parents=True)
+
+    result = subprocess.run(
+        [PYTHON_BIN, str(CLI), "pasarela", "preflight"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert result.returncode == 1
+    assert payload["status"] == "fail"
+
+
+def test_openclaw_secretos_estado_hides_values(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path / "openclaw")
+    env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
+
+    result = subprocess.run(
+        [PYTHON_BIN, str(CLI), "secretos", "estado"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["domains"]["academico"]["providers"]["gemini_api"]["status"] == "ready"
+    assert "gemini-acad" not in result.stdout
+    assert "openai-prof" not in result.stdout
+
+
+def test_openclaw_presupuesto_estado_y_simulacion(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path / "openclaw")
+    env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
+
+    status = subprocess.run(
+        [PYTHON_BIN, str(CLI), "presupuesto", "estado"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    simulate = subprocess.run(
+        [
+            PYTHON_BIN,
+            str(CLI),
+            "presupuesto",
+            "simular",
+            "--dominio",
+            "academico",
+            "--proveedor",
+            "gemini_api",
+            "--costo-estimado",
+            "0.05",
+            "--tokens-estimados",
+            "100",
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    status_payload = json.loads(status.stdout)
+    simulate_payload = json.loads(simulate.stdout)
+
+    assert "global" in status_payload
+    assert simulate_payload["domain"] == "academico"
+    assert simulate_payload["provider"] == "gemini_api"
+
+
+def test_openclaw_diagnostico_medir_persists_node_report(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path / "openclaw")
+    env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
+    env["OPENCLAW_BENCHMARK_SIMULATION"] = "1"
+    env["OPENCLAW_FORCE_OLLAMA_READY"] = "1"
+
+    result = subprocess.run(
+        [PYTHON_BIN, str(CLI), "diagnostico", "medir", "--node", "tesis-edge"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["status"] == "ok"
+    assert payload["node"] == "tesis-edge"
+    assert "report_id" in payload
+
+
+def test_openclaw_diagnostico_report_exports_otel_jsonl(tmp_path: Path) -> None:
+    env = os.environ.copy()
+    env["OPENCLAW_DATA_DIR"] = str(tmp_path / "openclaw")
+    env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
+    env["OPENCLAW_TELEGRAM_EDGE_MODEL"] = "qwen3:4b"
+
+    subprocess.run(
+        [PYTHON_BIN, str(CLI), "diagnostico", "medir"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    destination = tmp_path / "otel" / "traces.jsonl"
+    result = subprocess.run(
+        [PYTHON_BIN, str(CLI), "diagnostico", "reporte", "--json", "--otel-jsonl", str(destination)],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["status"] == "ok"
+    assert payload["otel_export"]["status"] == "ok"
+    assert destination.exists()

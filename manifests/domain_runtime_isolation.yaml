@@ -1,0 +1,81 @@
+{
+  "version": "1.1",
+  "baseline": "mixto_fuerte",
+  "dominios": {
+    "sistema_tesis": {
+      "usuario": "tesis",
+      "grupo": "tesis",
+      "servicios": ["tesis-healthcheck", "tesis-sync"],
+      "rutas_read_only": ["/srv/tesis/repo"],
+      "rutas_read_write": ["/var/log/tesis-os", "/srv/tesis/outputs"],
+      "rutas_prohibidas": [
+        "/var/lib/herramientas/openclaw",
+        "/var/cache/herramientas/openclaw",
+        "/var/lib/edge-iot",
+        "/srv/tesis/workspace/openclaw",
+        "/srv/tesis/workspace/edge"
+      ],
+      "secretos": [],
+      "network_profile": "salida_minima"
+    },
+    "openclaw": {
+      "usuario": "openclaw",
+      "grupo": "openclaw",
+      "servicios": ["openclaw-gateway", "ollama", "rknn-llm-experimental"],
+      "rutas_read_only": ["/srv/tesis/repo", "/etc/tesis-os/openclaw.env", "/etc/tesis-os/domains"],
+      "rutas_read_write": [
+        "/var/lib/herramientas/openclaw",
+        "/var/cache/herramientas/openclaw",
+        "/var/log/openclaw",
+        "/srv/tesis/intercambio/openclaw"
+      ],
+      "rutas_prohibidas": [
+        "/var/lib/edge-iot",
+        "/var/lib/edge-iot/runtime",
+        "/srv/tesis/outputs",
+        "/srv/tesis/workspace/edge",
+        "/etc/tesis-os/domains/edge.env",
+        "/etc/tesis-os/domains/administrativo.env"
+      ],
+      "secretos": ["/etc/tesis-os/openclaw.env", "/etc/tesis-os/domains/academico.env", "/etc/tesis-os/domains/profesional.env"],
+      "network_profile": "egress_controlado_localhost_in"
+    },
+    "edge_iot": {
+      "usuario": "edgeiot",
+      "grupo": "edgeiot",
+      "servicios": ["edge-iot-worker", "edge-iot-watchdog"],
+      "rutas_read_only": [],
+      "rutas_read_write": ["/var/lib/edge-iot", "/var/lib/edge-iot/runtime", "/var/log/edge-iot", "/srv/tesis/workspace/edge", "/srv/tesis/intercambio/edge"],
+      "rutas_prohibidas": [
+        "/var/lib/herramientas/openclaw",
+        "/var/cache/herramientas/openclaw",
+        "/srv/tesis/workspace/openclaw",
+        "/etc/tesis-os/domains/academico.env",
+        "/etc/tesis-os/domains/profesional.env",
+        "/srv/tesis/repo/00_sistema_tesis/canon"
+      ],
+      "secretos": ["/etc/tesis-os/edge-iot.env"],
+      "network_profile": "edge_restringido"
+    },
+    "administrativo": {
+      "usuario": "tesisadmin",
+      "grupo": "tesisadmin",
+      "servicios": ["tesis-backup", "prometheus", "prometheus-node-exporter", "tesis-observabilidad-collector"],
+      "rutas_read_only": ["/srv/tesis/repo", "/var/lib/tesis-os", "/var/lib/herramientas/openclaw", "/var/lib/edge-iot"],
+      "rutas_read_write": ["/mnt/emmc/backups", "/var/log/tesis-admin", "/var/lib/node_exporter/textfile_collector", "/var/lib/tesis-observabilidad"],
+      "rutas_prohibidas": ["/srv/tesis/workspace/openclaw", "/srv/tesis/workspace/edge"],
+      "secretos": ["/etc/tesis-os/domains/administrativo.env", "/etc/tesis-os/observabilidad.env"],
+      "network_profile": "sin_nube"
+    },
+    "personal": {
+      "usuario": "personal",
+      "grupo": "personal",
+      "servicios": [],
+      "rutas_read_only": [],
+      "rutas_read_write": ["/srv/tesis/workspace/personal"],
+      "rutas_prohibidas": ["/srv/tesis/repo", "/srv/tesis/workspace/openclaw", "/srv/tesis/workspace/edge"],
+      "secretos": ["/etc/tesis-os/domains/personal.env"],
+      "network_profile": "offline_logico"
+    }
+  }
+}

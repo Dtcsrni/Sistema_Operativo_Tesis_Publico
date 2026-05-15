@@ -1,0 +1,25 @@
+[Unit]
+Description=Watchdog híbrido del dominio edge_iot
+After=edge-iot-worker.service
+Wants=edge-iot-worker.service
+ConditionPathExists=/srv/tesis/repo/ops/edge/edge-iot-watchdog.sh
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/tesis-os/edge-iot.env
+ExecStart=/bin/bash -lc '/srv/tesis/repo/ops/edge/edge-iot-watchdog.sh'
+User=edgeiot
+Group=edgeiot
+WorkingDirectory=/srv/tesis/workspace/edge
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectControlGroups=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+RestrictAddressFamilies=AF_UNIX
+ReadOnlyPaths=/srv/tesis/repo /etc/tesis-os/edge-iot.env
+ReadWritePaths=/var/lib/edge-iot /var/log/edge-iot /srv/tesis/workspace/edge /srv/tesis/intercambio/edge
+StandardOutput=append:/var/log/edge-iot/edge-iot-watchdog.log
+StandardError=append:/var/log/edge-iot/edge-iot-watchdog.log

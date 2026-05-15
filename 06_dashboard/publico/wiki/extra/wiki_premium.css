@@ -1,0 +1,162 @@
+/* 1. TIPOGRAFÍA GLOBAL Y VARIABLES (Refinadas para mayor contraste) */
+:root {
+  --md-text-font: "Merriweather", "Lora", serif;
+  --md-code-font: "Fira Code", monospace;
+  --md-primary-fg-color: #008080;
+  --md-accent-fg-color: #00BCD4;
+  --distill-bg-light: #ffffff;
+  --distill-text-color: #121212;
+  --distill-subtext-color: #4a4a4a;
+  --distill-border-subtle: rgba(0, 0, 0, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-blur: 12px;
+}
+
+[data-md-color-scheme="slate"] {
+  --distill-bg-light: #0d1117;
+  --distill-text-color: #c9d1d9;
+  --distill-subtext-color: #8b949e;
+  --distill-border-subtle: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(13, 17, 23, 0.8);
+}
+
+body {
+  background-color: var(--distill-bg-light);
+  color: var(--distill-text-color);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+  background-attachment: fixed;
+}
+
+/* 2. EFECTO GLASSMORPHISM EN HEADER Y NAVEGACIÓN */
+.md-header {
+  background-color: var(--glass-bg) !important;
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-bottom: 1px solid var(--distill-border-subtle);
+  color: var(--md-default-fg-color);
+}
+
+.md-tabs {
+  background-color: var(--glass-bg) !important;
+  backdrop-filter: blur(var(--glass-blur));
+}
+
+/* Sidebar Glassmorphism */
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--primary .md-sidebar__inner {
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border-right: 1px solid var(--distill-border-subtle);
+    border-radius: 0 12px 12px 0;
+  }
+}
+
+/* 3. HEADINGS (CABECERAS LIMPIAS SANS-SERIF) */
+h1, h2, h3, h4, h5, h6, 
+.md-nav__title, .md-nav__item, .md-tabs__item, .md-header__title {
+  font-family: "Outfit", "Inter", sans-serif !important;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: 2.8rem;
+  margin-top: 1em;
+  margin-bottom: 0.6em;
+  background: linear-gradient(45deg, var(--md-primary-fg-color), var(--md-accent-fg-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  border-bottom: 2px solid var(--distill-border-subtle);
+  padding-bottom: 0.4em;
+}
+
+h2 {
+  font-size: 1.9rem;
+  margin-top: 2.2em;
+  border-left: 4px solid var(--md-primary-fg-color);
+  padding-left: 0.6em;
+}
+
+/* 4. MICRO-ANIMACIONES Y HOVER EFFECTS */
+.md-nav__link {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.md-nav__link:hover {
+  color: var(--md-primary-fg-color) !important;
+  transform: translateX(4px);
+}
+
+.md-typeset a {
+  color: var(--md-primary-fg-color);
+  text-decoration: none;
+  background-image: linear-gradient(var(--md-primary-fg-color), var(--md-primary-fg-color));
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  transition: background-size 0.3s ease, color 0.3s ease;
+}
+
+.md-typeset a:hover {
+  background-size: 100% 2px;
+  color: var(--md-accent-fg-color);
+}
+
+/* 5. DIAGRAMAS MERMAID (Elevados) */
+.md-typeset .mermaid {
+  background-color: var(--glass-bg) !important;
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--distill-border-subtle);
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 3em -2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.md-typeset .mermaid:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 15px 50px rgba(0, 128, 128, 0.12);
+  border-color: var(--md-accent-fg-color);
+}
+
+/* 6. ADMONITIONS (Premium Cards) */
+.md-typeset .admonition {
+  border-radius: 10px;
+  border-left-width: 6px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease;
+}
+
+.md-typeset .admonition:hover {
+  transform: scale(1.005);
+}
+
+/* 7. TABLAS (Clean and Spaced) */
+.md-typeset table:not([class]) {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.md-typeset table:not([class]) th {
+  background-color: rgba(0, 128, 128, 0.05);
+  padding: 1.2rem;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--distill-bg-light);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--md-primary-fg-color);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--md-accent-fg-color);
+}

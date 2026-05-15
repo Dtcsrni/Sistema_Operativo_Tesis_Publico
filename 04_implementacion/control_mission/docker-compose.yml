@@ -1,0 +1,45 @@
+services:
+  centro-control-misiones:
+    container_name: centro-control-misiones
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: centro-control-misiones:latest
+    ports:
+      - "4000:4000"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      NODE_ENV: production
+      DATABASE_PATH: /app/data/mission-control.db
+      WORKSPACE_BASE_PATH: /app/workspace
+      PROJECTS_PATH: /app/workspace/projects
+      NEXT_PUBLIC_PET_API_BASE_URL: ${NEXT_PUBLIC_PET_API_BASE_URL:-http://localhost:8001}
+      OPENCLAW_GATEWAY_URL: http://host.docker.internal:18789
+    volumes:
+      - ./mission-control.db:/app/data/mission-control.db
+      - mission-control-workspace:/app/workspace
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          memory: 128M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  mission-control-data:
+  mission-control-workspace:

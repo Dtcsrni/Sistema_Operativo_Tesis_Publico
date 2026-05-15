@@ -1,0 +1,123 @@
+{
+  "latest_jsonl": "runtime\\pc_control\\benchmarks\\runs\\BENCH-20260505T034215Z-1e2c138c.jsonl",
+  "latest_record_hash": "c9d72e929f1eb4776176360290bc0341c95e9e6046fad40a07679e62e63a5b3f",
+  "latest_run_id": "BENCH-20260505T034215Z-1e2c138c",
+  "latest_scientific_validity": "valid_scientific_evidence",
+  "latest_status": "ok",
+  "methodology_references": [
+    {
+      "id": "iso_iec_25059_2023",
+      "name": "ISO/IEC 25059:2023 - Software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Quality model for AI systems",
+      "url": "https://www.iso.org/standard/80655.html",
+      "use": "Modelo de calidad primario para evaluacion de caracteristicas de IA (Robustez, Eficiencia, Fiabilidad)."
+    },
+    {
+      "id": "iso_iec_30141_2024",
+      "name": "ISO/IEC 30141:2024 - Internet of Things (IoT) — Reference Architecture",
+      "url": "https://www.iso.org/standard/84042.html",
+      "use": "Marco de referencia arquitectonico para la validacion del despliegue distribuido PC-Edge."
+    },
+    {
+      "id": "mlperf_inference",
+      "name": "MLCommons MLPerf Inference",
+      "url": "https://mlcommons.org/working-groups/benchmarks/inference/",
+      "use": "Disciplina de escenarios, reproducibilidad y reporte de rendimiento; no implica certificacion oficial."
+    },
+    {
+      "id": "lm_evaluation_harness",
+      "name": "EleutherAI lm-evaluation-harness",
+      "url": "https://github.com/EleutherAI/lm-evaluation-harness",
+      "use": "Compatibilidad con evaluacion estandarizada de LLMs cuando dependencias y datasets esten disponibles."
+    },
+    {
+      "id": "helm",
+      "name": "Stanford CRFM HELM",
+      "url": "https://crfm-helm.readthedocs.io/",
+      "use": "Reporte holistico, transparente y reproducible de prompts, salidas y metricas."
+    }
+  ],
+  "node": "pc_control",
+  "primary_pc_model": "mistral-nemo:12b",
+  "profiles": {
+    "edge_npu": {
+      "interval_ms": 500,
+      "measurement_iterations": 50,
+      "model": "rkllm_preconverted",
+      "node": "edge_iot",
+      "runtime": "rknn_llm_experimental",
+      "valid_for_scientific_claim": true,
+      "warmup_iterations": 5
+    },
+    "lm_eval": {
+      "model": "mistral-nemo:12b",
+      "node": "pc_control",
+      "runtime": "lm-evaluation-harness",
+      "status_if_missing": "blocked_missing_dependency",
+      "tasks": [
+        "mmlu",
+        "hellaswag"
+      ],
+      "valid_for_scientific_claim": false
+    },
+    "pc_mistral_nemo_12b_extensive": {
+      "interval_ms": 500,
+      "measurement_iterations": 50,
+      "model": "mistral-nemo:12b",
+      "node": "pc_control",
+      "runtime": "ollama_local",
+      "valid_for_scientific_claim": true,
+      "warmup_iterations": 5
+    },
+    "pc_model_comparison": {
+      "comparison_models": [
+        "qwen2.5-coder:14b",
+        "qwen3:14b",
+        "phi4:14b"
+      ],
+      "interval_ms": 500,
+      "measurement_iterations": 10,
+      "model": "mistral-nemo:12b",
+      "node": "pc_control",
+      "runtime": "ollama_local",
+      "valid_for_scientific_claim": true,
+      "warmup_iterations": 2
+    },
+    "pc_moe_precision_battery": {
+      "interval_ms": 500,
+      "measurement_iterations": 8,
+      "model": "mistral-nemo:12b",
+      "models": [
+        "mistral-nemo:12b",
+        "hermes3:8b",
+        "qwen2.5-coder:14b",
+        "phi4:14b",
+        "qwen3:14b",
+        "qwen3:4b",
+        "hermes3:3b",
+        "qwen2.5:1.5b",
+        "qwen2.5:0.5b"
+      ],
+      "node": "pc_control",
+      "precision_policy": {
+        "latency_guard_ms": 30000,
+        "minimum_confidence": 0.8,
+        "prefer_specialist_over_fast_route": true,
+        "primary_objective": "precision",
+        "secondary_objective": "groundedness"
+      },
+      "runtime": "ollama_local",
+      "task_families": [
+        "precision_factual",
+        "scientific_synthesis",
+        "coding_specialist",
+        "ambiguous_instruction",
+        "long_context_retrieval",
+        "router_decision"
+      ],
+      "valid_for_scientific_claim": false,
+      "warmup_iterations": 2
+    }
+  },
+  "schema_version": "siot-benchmark-run-v1",
+  "updated_at": "2026-05-05T03:43:21+00:00"
+}

@@ -1,0 +1,123 @@
+"""
+Interfaz de Telegram para OpenClaw.
+Proporciona handlers asincrónicos y interfaz sincrónica para CLI.
+"""
+from __future__ import annotations
+
+import asyncio
+import logging
+import os
+from pathlib import Path
+from typing import Any
+
+from .orchestrator import CommunicationChannel, Orchestrator
+from .storage import OpenClawStore
+
+logger = logging.getLogger("openclaw.telegram")
+
+
+class CLIChannel(CommunicationChannel):
+    """Canal sincrónico para CLI."""
+    def send_message(self, msg: str, **kwargs) -> Any:
+        return {"sent": msg}
+    def send_action(self, action: str) -> None:
+        pass
+    def update_message(self, message_id: Any, text: str) -> None:
+        pass
+    def send_photo(self, image_path: Path, caption: str = "") -> Any:
+        return {"photo": str(image_path)}
+
+
+def _get_token() -> str:
+    return (
+        os.getenv("OPENCLAW_TELEGRAM_BOT_TOKEN", "").strip()
+        or os.getenv("OPENCLAW_TELEGRAM_TOKEN", "").strip()
+    )
+
+
+def dispatch_command(
+    command: str,
+    text: str,
+    *,
+    repo_root: Path | str,
+    store: OpenClawStore,
+    chat_id: str = "cli"
+) -> dict[str, Any]:
+    """Despacha comando de chat al Orchestrator (interfaz CLI)."""
+    if not isinstance(repo_root, Path):
+        repo_root = Path(repo_root)
+
+    try:
+        orchestrator = Orchestrator(repo_root, store)
+        channel = CLIChannel()
+        return orchestrator.dispatch_command(
+            command=command,
+            argument=text,
+            channel=channel,
+            chat_id=chat_id,
+            operator_identity="cli"
+        )
+    except Exception as exc:
+        import traceback
+        return {
+            "status": "error",
+            "error": str(exc),
+            "details": traceback.format_exc(),
+            "command": command,
+            "text_sample": text[:100] if text else "",
+        }
+
+
+def handle_update(update: dict[str, Any], *, repo_root: Path | str, store: OpenClawStore) -> dict[str, Any]:
+    """Maneja actualización de Telegram (interfaz sincrónica)."""
+    try:
+        if not isinstance(repo_root, Path):
+            repo_root = Path(repo_root)
+        
+        message_text = update.get("message", {}).get("text", "")
+        chat_id = str(update.get("message", {}).get("chat", {}).get("id", ""))
+        
+        if not message_text:
+            return {"status": "ok", "reason": "No message text"}
+        
+        return dispatch_command(
+            command="chat",
+            text=message_text,
+            repo_root=repo_root,
+            store=store,
+            chat_id=chat_id
+        )
+    except Exception as exc:
+        return {"status": "error", "error": str(exc), "update_id": update.get("update_id")}
+
+
+def run_polling_loop(
+    *,
+    repo_root: Path | str,
+    store: OpenClawStore,
+    interval_seconds: int = 30,
+    timeout_seconds: int = 300,
+) -> None:
+    """Loop de polling (stub)."""
+    logger.info("run_polling_loop() stub - usa run_bot() para versión completa")
+
+
+def poll_once(
+    *,
+    repo_root: Path | str,
+    store: OpenClawStore,
+    timeout_seconds: int = 300,
+    limit: int = 10,
+) -> dict[str, Any]:
+    """Polling una vez (stub)."""
+    return {"status": "ok", "updates_processed": 0, "reason": "Stub"}
+
+
+async def run_bot() -> None:
+    """Ejecuta bot de Telegram (asincrónico)."""
+    logger.info("run_bot() - implementación pendiente")
+
+
+def telegram_configured() -> bool:
+    """Verifica si Telegram está configurado."""
+    return bool(_get_token())

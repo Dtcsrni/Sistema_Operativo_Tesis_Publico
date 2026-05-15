@@ -1,0 +1,164 @@
+{
+  "cases": [
+    {
+      "command": "chat",
+      "expected_intent": "chat_fast",
+      "id": "spanish_fast_chat",
+      "text": "hola, dame una respuesta breve"
+    },
+    {
+      "command": "chat",
+      "expected_intent": "coding",
+      "id": "spanish_coding_debug",
+      "text": "Tengo un traceback de Python y necesito depurar un error en JSONL con hashes encadenados"
+    },
+    {
+      "command": "chat",
+      "expected_intent": "ops",
+      "id": "edge_ops_status",
+      "text": "revisa el estado del edge, servicios, modelos y telemetría de la Orange Pi"
+    },
+    {
+      "command": "chat",
+      "expected_intent": "research_synthesis",
+      "id": "research_synthesis",
+      "text": "Analiza la evidencia de benchmarks y sintetiza implicaciones para la tesis con trazabilidad"
+    },
+    {
+      "command": "chat",
+      "expected_intent": "ops",
+      "expected_risk": "high",
+      "id": "mutating_guard",
+      "text": "reinicia el servicio openclaw-telegram-bot y modifica la configuración"
+    },
+    {
+      "command": "chat",
+      "expect_no_npu": true,
+      "expected_intent": "ops",
+      "id": "npu_blocked",
+      "text": "usa la NPU del edge para una síntesis pesada si está disponible"
+    }
+  ],
+  "failures": [],
+  "generated_at": "2026-05-05T08:34:24+00:00",
+  "header": {
+    "command": "python3 07_scripts/benchmarks/run_maestro_moe_benchmark.py",
+    "git_commit": "86fda291a737134ad2aca19ad8370878719a49bf",
+    "host_fingerprint": {
+      "cpu_count": 16,
+      "disk": {
+        "free_bytes": 99763900416,
+        "path": "/mnt/v/Sistema_Operativo_Tesis_Posgrado",
+        "total_bytes": 240055742464
+      },
+      "gpu": {
+        "driver_version": "596.36",
+        "memory_free_mib": 5681,
+        "memory_total_mib": 8188,
+        "memory_used_mib": 2269,
+        "name": "NVIDIA GeForce RTX 4060 Ti",
+        "status": "ok",
+        "temperature_celsius": 44,
+        "utilization_gpu_pct": 16
+      },
+      "machine": "x86_64",
+      "memory_total_bytes": 14659436544,
+      "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+      "processor": "x86_64"
+    },
+    "methodology_references": [
+      {
+        "id": "iso_iec_25059_2023",
+        "name": "ISO/IEC 25059:2023 - Software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Quality model for AI systems",
+        "url": "https://www.iso.org/standard/80655.html",
+        "use": "Modelo de calidad primario para evaluacion de caracteristicas de IA (Robustez, Eficiencia, Fiabilidad)."
+      },
+      {
+        "id": "iso_iec_30141_2024",
+        "name": "ISO/IEC 30141:2024 - Internet of Things (IoT) — Reference Architecture",
+        "url": "https://www.iso.org/standard/84042.html",
+        "use": "Marco de referencia arquitectonico para la validacion del despliegue distribuido PC-Edge."
+      },
+      {
+        "id": "mlperf_inference",
+        "name": "MLCommons MLPerf Inference",
+        "url": "https://mlcommons.org/working-groups/benchmarks/inference/",
+        "use": "Disciplina de escenarios, reproducibilidad y reporte de rendimiento; no implica certificacion oficial."
+      },
+      {
+        "id": "lm_evaluation_harness",
+        "name": "EleutherAI lm-evaluation-harness",
+        "url": "https://github.com/EleutherAI/lm-evaluation-harness",
+        "use": "Compatibilidad con evaluacion estandarizada de LLMs cuando dependencias y datasets esten disponibles."
+      },
+      {
+        "id": "helm",
+        "name": "Stanford CRFM HELM",
+        "url": "https://crfm-helm.readthedocs.io/",
+        "use": "Reporte holistico, transparente y reproducible de prompts, salidas y metricas."
+      }
+    ],
+    "mode": "real",
+    "model": "maestro-router-integrated",
+    "model_fingerprint": {
+      "model": "maestro-router-integrated",
+      "status": "list_failed",
+      "stderr": "Error: could not connect to ollama server, run 'ollama serve' to start it"
+    },
+    "node": "pc_control",
+    "profile_id": "maestro_moe_benchmark",
+    "promptset_hash": "e54df6670d68f9672db076d74f2efa78ff6f199ce38924b6ffa6bc2ce1cd31a1",
+    "protocol": "PEV-02",
+    "record_type": "run_header",
+    "run_id": "BENCH-20260505T083417Z-d5e8ece2",
+    "runtime": "maestro_router",
+    "schema_version": "siot-benchmark-run-v1",
+    "scientific_validity": "valid_candidate",
+    "started_at": "2026-05-05T08:34:18+00:00",
+    "step_id": "validación humana interna no pública"
+  },
+  "primary_jsonl": "runtime/pc_control/benchmarks/runs/BENCH-20260505T083417Z-d5e8ece2.jsonl",
+  "schema_version": "siot-maestro-moe-report-v1",
+  "summary": {
+    "ended_at": "2026-05-05T08:34:24+00:00",
+    "extra": {
+      "cases": [
+        "spanish_fast_chat",
+        "spanish_coding_debug",
+        "edge_ops_status",
+        "research_synthesis",
+        "mutating_guard",
+        "npu_blocked"
+      ],
+      "failures": [],
+      "primary_jsonl": "runtime/pc_control/benchmarks/runs/BENCH-20260505T083417Z-d5e8ece2.jsonl",
+      "realtime_blocked_models": [
+        "phi4:14b",
+        "qwen2.5-coder:14b",
+        "qwen3:14b"
+      ]
+    },
+    "model": "maestro-router-integrated",
+    "node": "pc_control",
+    "previous_record_hash": "535b2bcc7d449264c58aa962525bb7be35f5cbe7466ecfe524f48c12c9dd066c",
+    "profile_id": "maestro_moe_benchmark",
+    "record_hash": "09b67f39749847768fec65566eb3876411cc6d7198a9563dbe8627602c57c1fc",
+    "record_type": "run_summary",
+    "run_id": "BENCH-20260505T083417Z-d5e8ece2",
+    "runtime": "maestro_router",
+    "schema_version": "siot-benchmark-run-v1",
+    "scientific_validity": "valid_scientific_evidence",
+    "statistics": {
+      "margin_error_95_ms": 0.4081,
+      "mean_latency_ms": 62.1562,
+      "mean_tokens_per_second": null,
+      "p50_latency_ms": 62.0404,
+      "p95_latency_ms": 63.8048,
+      "p99_latency_ms": 63.8048,
+      "sample_size": 18,
+      "std_dev_latency_ms": 0.8834
+    },
+    "status": "ok",
+    "step_id": "validación humana interna no pública"
+  }
+}

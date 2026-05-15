@@ -1,0 +1,25 @@
+[Unit]
+Description=Recoleccion local de metricas por dominio para Prometheus
+After=prometheus-node-exporter.service
+Wants=prometheus-node-exporter.service
+ConditionPathExists=/srv/tesis/repo/ops/observabilidad/recolectar-metricas.sh
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/tesis-os/observabilidad.env
+ExecStart=/bin/bash -lc '/srv/tesis/repo/ops/observabilidad/recolectar-metricas.sh'
+User=tesisadmin
+Group=tesisadmin
+WorkingDirectory=/srv/tesis/repo
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectControlGroups=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+RestrictAddressFamilies=AF_UNIX
+ReadOnlyPaths=/srv/tesis/repo /etc/tesis-os/observabilidad.env /var/log/tesis-os /var/log/openclaw /var/log/edge-iot /var/log/tesis-admin /var/lib/tesis-os /var/lib/herramientas/openclaw /var/lib/edge-iot
+ReadWritePaths=/var/lib/node_exporter/textfile_collector /var/log/tesis-admin
+StandardOutput=append:/var/log/tesis-admin/observabilidad-collector.log
+StandardError=append:/var/log/tesis-admin/observabilidad-collector.log

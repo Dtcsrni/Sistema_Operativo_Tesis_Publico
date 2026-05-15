@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer de backup operacional del Sistema Operativo de Tesis
+
+[Timer]
+OnCalendar=*-*-* 02:30:00
+Persistent=true
+Unit=tesis-backup.service
+
+[Install]
+WantedBy=timers.target

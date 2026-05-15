@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "principios": [
+    "seguridad_primero",
+    "datasheet_primero",
+    "validacion_incremental",
+    "no_asumir_pinouts",
+    "validar_voltajes_y_corrientes"
+  ],
+  "checklist_pre_energizacion": [
+    "polaridad_confirmada",
+    "voltaje_confirmado",
+    "corriente_suficiente",
+    "niveles_logicos_confirmados",
+    "riesgo_documentado"
+  ],
+  "evidencia": [
+    "foto_montaje",
+    "tabla_conexiones",
+    "resultado_prueba",
+    "riesgo_residual"
+  ]
+}

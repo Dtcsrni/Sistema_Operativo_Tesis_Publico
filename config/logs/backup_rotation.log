@@ -1,0 +1,32 @@
+[2026-05-13 01:32:25,912] INFO: Detectados 23 backups en V:\Sistema_Operativo_Tesis_Posgrado\config\backups
+[2026-05-13 01:32:25,913] INFO: Comprimido: .env.example.observability_command_center.20260506T060723Z.bak (777B -> 588B, -(24.3%)) -> .env.example.observability_command_center.20260506T060723Z.bak.gz
+[2026-05-13 01:32:25,914] INFO: Comprimido: .env.observability_command_center.20260506T062749Z.bak (110B -> 174B, -(-58.2%)) -> .env.observability_command_center.20260506T062749Z.bak.gz
+[2026-05-13 01:32:25,927] INFO: Comprimido: 00_sistema_tesis_canon_events.jsonl.20260504_025840.bak (833219B -> 112694B, -(86.5%)) -> 00_sistema_tesis_canon_events.jsonl.20260504_025840.bak.gz
+[2026-05-13 01:32:25,928] INFO: Comprimido: 00_sistema_tesis_decisiones_2026-05-02_DEC-0031_adopcion_mission_control.md.20260504_025840.bak (2788B -> 1575B, -(43.5%)) -> 00_sistema_tesis_decisiones_2026-05-02_DEC-0031_adopcion_mission_control.md.20260504_025840.bak.gz
+[2026-05-13 01:32:25,929] INFO: Comprimido: 00_sistema_tesis_decisiones_2026-05-02_DEC-0032_arquitectura_ingesta_consumption_pets.md.20260504_025840.bak (6462B -> 2728B, -(57.8%)) -> 00_sistema_tesis_decisiones_2026-05-02_DEC-0032_arquitectura_ingesta_consumption_pets.md.20260504_025840.bak.gz
+[2026-05-13 01:32:25,930] INFO: Comprimido: 07_scripts_build_runner_registry.py.observability_command_center.20260506T061343Z.bak (14093B -> 2731B, -(80.6%)) -> 07_scripts_build_runner_registry.py.observability_command_center.20260506T061343Z.bak.gz
+[2026-05-13 01:32:25,932] INFO: Comprimido: 07_scripts_ops_build_dashboard.py.20260506T060241Z.bak (58828B -> 15244B, -(74.1%)) -> 07_scripts_ops_build_dashboard.py.20260506T060241Z.bak.gz
+[2026-05-13 01:32:25,932] INFO: Comprimido: check_stack_status.py.bak.20260506-llamacpp-remove (7196B -> 2488B, -(65.4%)) -> check_stack_status.py.bak.20260506-llamacpp-remove.gz
+[2026-05-13 01:32:25,933] INFO: Comprimido: docker-compose.yml.bak.20260506-llamacpp-remove (11598B -> 2674B, -(76.9%)) -> docker-compose.yml.bak.20260506-llamacpp-remove.gz
+[2026-05-13 01:32:25,934] INFO: Comprimido: docker-compose.yml.observability_command_center.20260506T060723Z.bak (9807B -> 2289B, -(76.7%)) -> docker-compose.yml.observability_command_center.20260506T060723Z.bak.gz
+[2026-05-13 01:32:25,935] INFO: Comprimido: openclaw.env.bak.20260505-llamacpp-disable (2728B -> 1250B, -(54.2%)) -> openclaw.env.bak.20260505-llamacpp-disable.gz
+[2026-05-13 01:32:25,935] INFO: Comprimido: openclaw.env.bak.20260506-llamacpp-remove (2728B -> 1246B, -(54.3%)) -> openclaw.env.bak.20260506-llamacpp-remove.gz
+[2026-05-13 01:32:25,936] INFO: Comprimido: openclaw.env.example.maestro_moe_20260505T083039Z.bak (4834B -> 1669B, -(65.5%)) -> openclaw.env.example.maestro_moe_20260505T083039Z.bak.gz
+[2026-05-13 01:32:25,937] INFO: Comprimido: sistema_tesis.yaml.bak.20260506-llamacpp-remove (6102B -> 2495B, -(59.1%)) -> sistema_tesis.yaml.bak.20260506-llamacpp-remove.gz
+[2026-05-13 01:32:25,938] INFO: Comprimido: start_backends_auto.py.bak.20260506-llamacpp-remove (12328B -> 3240B, -(73.7%)) -> start_backends_auto.py.bak.20260506-llamacpp-remove.gz
+[2026-05-13 01:32:26,017] INFO: [BACKUP-ROTATE] Modo: DRY-RUN | Archivos: 23 -> 23 | MB: 0.43 -> 0.43
+[2026-05-13 01:32:26,017] INFO: [BACKUP-ROTATE] Candidatos a borrar: 0
+[2026-05-13 01:32:26,017] INFO: [BACKUP-ROTATE] Sin cambios requeridos.
+[2026-05-13 01:32:26,017] INFO: Resumen JSON: {"generated_at": "2026-05-13 01:32:26", "total_files_before": 23, "total_size_mb_before": 0.43, "total_files_after": 23, "total_size_mb_after": 0.43, "to_delete_count": 0, "to_delete_by_risk": {"critico": 0, "alto": 0, "operativo": 0}, "deduplication": {"enabled": true, "duplicates_found": 0}, "limits": {"max_files": 100, "max_total_size_mb": 256.0, "min_protected_days": 7}}
+[2026-05-13 01:33:19,613] INFO: Detectados 5 backups en V:\Sistema_Operativo_Tesis_Posgrado\config\backups
+[2026-05-13 01:33:19,614] INFO: [BACKUP-ROTATE] Modo: DRY-RUN | Archivos: 5 -> 5 | MB: 0.37 -> 0.37
+[2026-05-13 01:33:19,614] INFO: [BACKUP-ROTATE] Candidatos a borrar: 0
+[2026-05-13 01:33:19,614] INFO: [BACKUP-ROTATE] Sin cambios requeridos.
+[2026-05-13 01:33:19,614] INFO: Resumen JSON: {"generated_at": "2026-05-13 01:33:19", "total_files_before": 5, "total_size_mb_before": 0.37, "total_files_after": 5, "total_size_mb_after": 0.37, "to_delete_count": 0, "to_delete_by_risk": {"critico": 0, "alto": 0, "operativo": 0}, "deduplication": {"enabled": true, "duplicates_found": 0}, "limits": {"max_files": 100, "max_total_size_mb": 256.0, "min_protected_days": 7}}
+[2026-05-14 21:16:04,625] INFO: Detectados 9 backups en V:\Sistema_Operativo_Tesis_Posgrado\config\backups
+[2026-05-14 21:16:04,626] INFO: Comprimido: Dockerfile.tablero-gobernanza.20260514_backup.bak (1901B -> 1051B, -(44.7%)) -> Dockerfile.tablero-gobernanza.20260514_backup.bak.gz
+[2026-05-14 21:16:04,631] INFO: Comprimido: log_sesiones_trabajo_registradas.md.20260507T041421Z.bak (234179B -> 43003B, -(81.6%)) -> log_sesiones_trabajo_registradas.md.20260507T041421Z.bak.gz
+[2026-05-14 21:16:04,633] INFO: Comprimido: matriz_trazabilidad.md.20260507T041421Z.bak (38997B -> 6697B, -(82.8%)) -> matriz_trazabilidad.md.20260507T041421Z.bak.gz
+[2026-05-14 21:16:04,658] INFO: [BACKUP-ROTATE] Modo: DRY-RUN | Archivos: 9 -> 9 | MB: 0.39 -> 0.39
+[2026-05-14 21:16:04,658] INFO: [BACKUP-ROTATE] Candidatos a borrar: 0
+[2026-05-14 21:16:04,658] INFO: [BACKUP-ROTATE] Sin cambios requeridos.

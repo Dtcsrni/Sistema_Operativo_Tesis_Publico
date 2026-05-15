@@ -1,0 +1,60 @@
+{
+  "generated_at": "2026-05-15",
+  "canon": {
+    "event_count": 334,
+    "latest_event_id": "validación humana interna no pública",
+    "latest_step_id": "validación humana interna no pública",
+    "projection_paths": [
+      "00_sistema_tesis/bitacora/2026-03-23_bitacora_base_operativa.md",
+      "00_sistema_tesis/bitacora/2026-03-24_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-03-26_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-03-26_bitacora_sesion_1.md",
+      "00_sistema_tesis/bitacora/2026-03-26_bitacora_sesion_2.md",
+      "00_sistema_tesis/bitacora/2026-03-31_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-04-03_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-04-04_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-04-07_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-04-08_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-04-10_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-04-11_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-04-12_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-04-13_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-04-20_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-04-21_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-04-23_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-04-24_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/2026-04-25_bitacora_sesion.md",
+      "00_sistema_tesis/bitacora/indice_fuentes_conversacion.md",
+      "00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md",
+      "00_sistema_tesis/bitacora/matriz_trazabilidad.md",
+      "00_sistema_tesis/bitacora/openclaw_proposals.md",
+      "00_sistema_tesis/canon/state.json",
+      "firmas humanas no publicadas",
+      "journal de IA no público"
+    ]
+  },
+  "counts_by_type": {
+    "agent_activity": 33,
+    "artifact_signed": 8,
+    "canon_repair": 2,
+    "conversation": 1,
+    "conversation_source": 1,
+    "conversation_source_registered": 129,
+    "handshake": 1,
+    "human_validation": 133,
+    "operational_deployment": 6,
+    "session_recorded": 19,
+    "technical_trace_registered": 1
+  },
+  "source_evidence": {
+    "enforcement_from_step_id": "validación humana interna no pública",
+    "registered_sources": 129,
+    "human_validations_with_source": 117,
+    "human_validations_requiring_source": 117,
+    "legacy_without_source": 16
+  },
+  "openclaw": {
+    "proposal_count": 0,
+    "pending_human_review": 0
+  }
+}

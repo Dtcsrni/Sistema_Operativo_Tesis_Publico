@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "flujo": [
+    "captura",
+    "metadatos_basicos",
+    "verificacion_doi",
+    "clasificacion_nivel_fuente",
+    "pertinencia",
+    "registro_en_matriz"
+  ],
+  "campos_minimos": [
+    "titulo",
+    "autores",
+    "anio",
+    "fuente",
+    "doi",
+    "nivel_evidencia",
+    "pertinencia",
+    "estado_verificacion"
+  ],
+  "permitir_zotero_mendeley_bibtex": true
+}

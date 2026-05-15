@@ -1,0 +1,439 @@
+"""
+Interfaz de Telegram para OpenClaw.
+
+Proporciona:
+- Handlers asincrónicos para la aplicación de Telegram PTB (v21+)
+- Interfaz sincrónica dispatch_command() para CLI
+- Stubs para polling y actualizaciones
+"""
+from __future__ import annotations
+
+import asyncio
+import json
+import logging
+import os
+import sys
+from datetime import UTC, datetime
+from pathlib import Path
+from typing import Any
+
+# Librería de Telegram (PTB v21+)
+try:
+    from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, constants
+from telegram.ext import (
+    ApplicationBuilder,
+    CommandHandler,
+    MessageHandler,
+    CallbackQueryHandler,
+    ContextTypes,
+    filters,
+)
+
+# Componentes OpenClaw
+from .audio_engine import download_telegram_file, synthesize_speech, transcribe_audio
+from .contracts import TaskEnvelope
+from .storage import OpenClawStore
+from .session_layer import process_channel_text
+from .orchestrator import Orchestrator, CommunicationChannel
+from . import inference
+
+# Configuración de Logging
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
+logger = logging.getLogger("openclaw.telegram")
+
+class TelegramAsyncChannel(CommunicationChannel):
+    """Implementación asíncrona de CommunicationChannel para Telegram."""
+    def __init__(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        self.update = update
+        self.context = context
+        self.chat_id = update.effective_chat.id if update.effective_chat else None
+
+    async def send_message(self, text: str, **kwargs) -> Any:
+        if not self.chat_id: return
+        return await self.context.bot.send_message(
+            chat_id=self.chat_id,
+            text=text,
+            parse_mode=constants.ParseMode.HTML,
+            **kwargs
+        )
+
+    async def send_action(self, action: str) -> None:
+        if not self.chat_id: return
+        # Mapeo de acciones (typing, upload_photo, etc)
+        await self.context.bot.send_chat_action(chat_id=self.chat_id, action=action)
+
+    async def update_message(self, message_id: Any, text: str) -> None:
+        if not self.chat_id: return
+        await self.context.bot.edit_message_text(
+            chat_id=self.chat_id,
+            message_id=message_id,
+            text=text,
+            parse_mode=constants.ParseMode.HTML
+        )
+
+    async def send_photo(self, image_path: Path, caption: str = "") -> Any:
+        if not self.chat_id or not image_path.exists(): return
+        with open(image_path, 'rb') as photo:
+            return await self.context.bot.send_photo(
+                chat_id=self.chat_id,
+                photo=photo,
+                caption=caption,
+                parse_mode=constants.ParseMode.HTML
+            )
+
+# --- Handlers de Comandos ---
+
+async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Comando /start - Bienvenida y estado inicial."""
+    ready_msg = os.getenv("OPENCLAW_TELEGRAM_READY_MESSAGE", "<b>🧬 OpenClaw Edge: Activo</b>")
+    await update.message.reply_html(
+        f"{ready_msg}\n\n"
+        "Soy tu interfaz operativa móvil. Puedo ayudarte a:\n"
+        "• Gestionar misiones (<code>/status</code>)\n"
+        "• Aprobar tareas críticas (<code>/approvals</code>)\n"
+        "• Investigar temas complejos (Envíame un mensaje directo)"
+    )
+
+async def cmd_status(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Comando /status - Resumen del sistema."""
+    store = context.application.bot_data["store"]
+    repo_root = context.application.bot_data["repo_root"]
+    
+    # Simular un resumen rápido
+    tasks_count = len(store.list_approvals(status=None))
+    pending = len(store.list_pending_approvals())
+    
+    status_text = (
+        "<b>📊 Estado del Sistema OpenClaw</b>\n\n"
+        f"• <b>Tareas Registradas:</b> {tasks_count}\n"
+        f"• <b>Aprobaciones Pendientes:</b> {pending}\n"
+        f"• <b>Inferencia:</b> {'Activada (RTX)' if os.getenv('OPENCLAW_DESKTOP_COMPUTE_ENABLED') == '1' else 'Local (NPU)'}\n"
+        f"• <b>Sincronización:</b> {'Online' if os.getenv('OPENCLAW_SENTINEL_ENABLED') == '1' else 'Offline'}"
+    )
+    
+    keyboard = [[InlineKeyboardButton("Ver Aprobaciones", callback_data="list_approvals")]]
+    await update.message.reply_html(status_text, reply_markup=InlineKeyboardMarkup(keyboard))
+
+async def cmd_approvals(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Comando /approvals - Listado interactivo de aprobaciones."""
+    store = context.application.bot_data["store"]
+    approvals = store.list_pending_approvals()
+    
+    if not approvals:
+        await update.message.reply_html("✅ No hay aprobaciones pendientes en este momento.")
+        return
+
+    for apr in approvals[:5]:  # Mostrar las primeras 5
+        text = (
+            f"⚠️ <b>Aprobación Requerida</b>\n"
+            f"• <b>Tarea:</b> {apr['task_id']}\n"
+            f"• <b>Esperado:</b> <code>{apr['step_id_expected']}</code>\n"
+            f"• <b>Resumen:</b> {apr['diff_summary'][:200]}..."
+        )
+        keyboard = [
+            [
+                InlineKeyboardButton("✅ Aprobar", callback_data=f"apr_approve_{apr['approval_id']}"),
+                InlineKeyboardButton("❌ Rechazar", callback_data=f"apr_reject_{apr['approval_id']}")
+            ],
+            [InlineKeyboardButton("🔍 Ver Detalles", callback_data=f"apr_detail_{apr['approval_id']}")]
+        ]
+        await update.message.reply_html(text, reply_markup=InlineKeyboardMarkup(keyboard))
+
+async def handle_callback_query(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Manejo de botones interactivos."""
+    query = update.callback_query
+    await query.answer()
+    
+    store = context.application.bot_data["store"]
+    data = query.data
+    
+    if data == "list_approvals":
+        await cmd_approvals(update, context)
+        return
+
+    if data.startswith("apr_"):
+        parts = data.split("_")
+        action = parts[1]
+        approval_id = parts[2]
+        
+        if action == "approve":
+            # Aquí se integraría con la lógica de validación real ( Ledger / SHA-256 )
+            await query.edit_message_text(
+                text=f"✅ <b>Aprobado:</b> {approval_id}\nProcesando validación en Ledger...",
+                parse_mode=constants.ParseMode.HTML
+            )
+            # Simulación de actualización de estado
+            if hasattr(store, "mark_approval"):
+                store.mark_approval(approval_id, "approved")
+        
+        elif action == "reject":
+            await query.edit_message_text(
+                text=f"❌ <b>Rechazado:</b> {approval_id}\nTarea cancelada.",
+                parse_mode=constants.ParseMode.HTML
+            )
+            if hasattr(store, "mark_approval"):
+                store.mark_approval(approval_id, "rejected")
+        
+        elif action == "detail":
+            apr = next((a for a in store.list_approvals(status=None) if a["approval_id"] == approval_id), None)
+            if apr:
+                detail_text = (
+                    f"🔍 <b>Detalles de Aprobación</b>\n\n"
+                    f"• <b>ID:</b> {apr['approval_id']}\n"
+                    f"• <b>Targets:</b> {', '.join(apr['affected_targets'])}\n"
+                    f"• <b>Evidencia:</b> {'Requerida' if apr['evidence_source_required'] else 'No requerida'}\n\n"
+                    f"<b>Diff Summary:</b>\n<code>{apr['diff_summary']}</code>"
+                )
+                await query.message.reply_html(detail_text)
+
+# --- Manejo de Mensajes de Texto ---
+
+async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Manejo de mensajes directos a través del Orquestador."""
+    if not update.message or not update.message.text: return
+    
+    text = update.message.text
+    chat_id = str(update.effective_chat.id)
+    repo_root = context.application.bot_data["repo_root"]
+    store = context.application.bot_data["store"]
+    
+    # Solo procesar si no es un comando (ya manejados arriba)
+    if text.startswith("/"): return
+
+    # Feedback visual inicial
+    await context.bot.send_chat_action(chat_id=chat_id, action="typing")
+    
+    channel = TelegramAsyncChannel(update, context)
+    orchestrator = Orchestrator(repo_root, store)
+    
+    def _progress_sync(token_count: int, delta: str, stream_type: str):
+        # El orquestador es síncrono internamente por ahora, pero llamamos a async vía bridge
+        pass
+
+    # Llamada al Bridge de Capa de Sesión (process_channel_text)
+    # Nota: process_channel_text es síncrona, la envolvemos en run_in_executor
+    loop = asyncio.get_event_loop()
+    response = await loop.run_in_executor(
+        None,
+        lambda: process_channel_text(
+            store=store,
+            repo_root=repo_root,
+            channel="telegram",
+            peer_id=chat_id,
+            text=text,
+            dispatcher=lambda cmd, arg, **kw: orchestrator.dispatch_command(
+                command=cmd,
+                argument=arg,
+                channel=channel,
+                chat_id=chat_id,
+                operator_identity=f"telegram:{chat_id}",
+                **kw
+            ),
+            progress_callback=_progress_sync
+        )
+    )
+    
+    if response and response.get("text"):
+        await update.message.reply_html(response["text"])
+
+# --- Aplicación Principal ---
+
+def _get_token() -> str:
+    return os.getenv("OPENCLAW_TELEGRAM_BOT_TOKEN", "").strip() or os.getenv("OPENCLAW_TELEGRAM_TOKEN", "").strip()
+
+
+def dispatch_command(
+    command: str,
+    text: str,
+    *,
+    repo_root: Path | str,
+    store: OpenClawStore,
+    chat_id: str = "cli"
+) -> dict[str, Any]:
+    """Despacha un comando de chat a través del Orchestrator (interfaz sincrónica para CLI).
+    
+    Args:
+        command: Comando a ejecutar (ej. 'chat', 'estado', etc.)
+        text: Texto del comando o pregunta
+        repo_root: Raíz del repositorio
+        store: Almacenamiento de OpenClaw
+        chat_id: ID de sesión de chat
+        
+    Returns:
+        Diccionario con la respuesta del comando
+    """
+    if not isinstance(repo_root, Path):
+        repo_root = Path(repo_root)
+    
+    try:
+        orchestrator = Orchestrator(repo_root, store)
+        
+        # Crear un canal sincrónico dummy para CLI
+        class CLIChannel(CommunicationChannel):
+            def send_message(self, msg: str, **kwargs) -> Any:
+                return {"sent": msg}
+            def send_action(self, action: str) -> None:
+                pass
+            def update_message(self, message_id: Any, text: str) -> None:
+                pass
+            def send_photo(self, image_path: Path, caption: str = "") -> Any:
+                return {"photo": str(image_path)}
+        
+        channel = CLIChannel()
+        return orchestrator.dispatch_command(
+            command=command,
+            argument=text,
+            channel=channel,
+            chat_id=chat_id,
+            operator_identity="cli"
+        )
+    except Exception as exc:
+        import traceback
+        return {
+            "status": "error",
+            "error": str(exc),
+            "details": traceback.format_exc(),
+            "command": command,
+            "text_sample": text[:100] if text else "",
+        }
+
+
+async def run_bot():
+    token = _get_token()
+    if not token:
+        logger.error("No se encontró OPENCLAW_TELEGRAM_BOT_TOKEN")
+        return
+
+    repo_root = Path(os.getenv("OPENCLAW_REPO_ROOT", "/app"))
+    store = OpenClawStore(repo_root / "runtime" / "openclaw" / "state" / "openclaw.db")
+    
+    # Warmup de modelos (opcional, puede ser lento al inicio)
+    inference.warmup_chat_models(repo_root)
+
+    app = ApplicationBuilder().token(token).build()
+    
+    # Inyectar datos globales
+    app.bot_data["store"] = store
+    app.bot_data["repo_root"] = repo_root
+
+    # Añadir Handlers
+    app.add_handler(CommandHandler("start", cmd_start))
+    app.add_handler(CommandHandler("status", cmd_status))
+    app.add_handler(CommandHandler("approvals", cmd_approvals))
+    app.add_handler(CallbackQueryHandler(handle_callback_query))
+    app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), handle_text))
+
+    logger.info("Bot de Telegram (Async) iniciado")
+    await app.initialize()
+    await app.start()
+    await app.updater.start_polling()
+    
+    # Mantener vivo - Control-C para terminar
+    try:
+        await asyncio.sleep(1e10)
+    finally:
+        await app.stop()
+
+    """Maneja una actualización de Telegram en formato JSON (interfaz sincrónica).
+    
+    Args:
+        update: Diccionario de actualización de Telegram
+        repo_root: Raíz del repositorio
+        store: Almacenamiento de OpenClaw
+        
+    Returns:
+        Diccionario con el resultado del manejo
+    """
+    try:
+        if not isinstance(repo_root, Path):
+            repo_root = Path(repo_root)
+        
+        # Extraer información del mensaje
+        message_text = update.get("message", {}).get("text", "")
+        chat_id = str(update.get("message", {}).get("chat", {}).get("id", ""))
+        
+        if not message_text:
+            return {"status": "ok", "reason": "No message text"}
+        
+        # Procesar como comando de chat
+        return dispatch_command(
+            command="chat",
+            text=message_text,
+            repo_root=repo_root,
+            store=store,
+            chat_id=chat_id
+        )
+    except Exception as exc:
+        return {
+            "status": "error",
+            "error": str(exc),
+            "update_id": update.get("update_id"),
+        }
+
+
+def run_polling_loop(
+    *,
+    repo_root: Path | str,
+    store: OpenClawStore,
+    interval_seconds: int = 30,
+    timeout_seconds: int = 300,
+) -> None:
+    """Loop de polling para Telegram (interfaz sincrónica stub).
+    
+    Esta función es un placeholder para la implementación asincrónica real
+    que se ejecutaría en una aplicación de larga duración.
+    """
+    logger.info("run_polling_loop() es un stub en esta versión. Usa run_bot() para la versión completa.")
+    pass
+
+
+def poll_once(
+    *,
+    repo_root: Path | str,
+    store: OpenClawStore,
+    timeout_seconds: int = 300,
+    limit: int = 10,
+) -> dict[str, Any]:
+    """Ejecuta una sola iteración de polling (interfaz sincrónica stub).
+    
+    Returns:
+        Diccionario con el resultado del polling
+    """
+    return {
+        "status": "ok",
+        "updates_processed": 0,
+        "reason": "Polling stub - no updates available",
+        "message": "Para polling real, usa run_bot() con aplicación asincrónica."
+    }
+
+    # Inyectar datos globales
+    app.bot_data["store"] = store
+    app.bot_data["repo_root"] = repo_root
+
+    # Añadir Handlers
+    app.add_handler(CommandHandler("start", cmd_start))
+    app.add_handler(CommandHandler("status", cmd_status))
+    app.add_handler(CommandHandler("approvals", cmd_approvals))
+    app.add_handler(CallbackQueryHandler(handle_callback_query))
+    app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), handle_text))
+
+    logger.info("Bot de Telegram (Async) iniciado")
+    await app.initialize()
+    await app.start()
+    await app.updater.start_polling()
+    
+    # Mantener vivo
+    while True:
+        await asyncio.sleep(3600)
+
+if __name__ == "__main__":
+    try:
+        asyncio.run(run_bot())
+    except KeyboardInterrupt:
+        sys.exit(0)
+    except Exception as e:
+        logger.error(f"Error fatal en bot: {e}")
+        sys.exit(1)

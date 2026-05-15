@@ -1,0 +1,277 @@
+{
+  "version": "1.0",
+  "providers": [
+    {
+      "id": "local",
+      "mode": "local_rules",
+      "model_class": "rules_or_local_model",
+      "billing_mode": "estimated",
+      "session_mode": "local_runtime",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 0,
+      "domains": ["personal", "profesional", "academico", "edge", "administrativo"]
+    },
+    {
+      "id": "deterministic_local",
+      "mode": "local_rules",
+      "model_class": "rules_rag_serena_no_llm",
+      "billing_mode": "estimated",
+      "session_mode": "local_runtime",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 0,
+      "domains": ["personal", "profesional", "academico", "edge", "administrativo"],
+      "privacy_policy": {
+        "allowed_privacy_classes": ["public", "redacted", "private_non_sensitive", "sensitive", "canonical_private"],
+        "notes": ["Ruta sin proveedor LLM externo: reglas, Serena, RAG local y respuesta manual si aplica."]
+      }
+    },
+    {
+      "id": "llamacpp_local",
+      "mode": "local_openai_compatible",
+      "model_class": "local_gguf_llamacpp",
+      "billing_mode": "estimated",
+      "session_mode": "local_llamacpp_runtime",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 1800,
+      "domains": ["profesional", "academico"],
+      "default_enabled": true,
+      "required_env_vars": ["OPENCLAW_DESKTOP_COMPUTE_BASE_URL", "OPENCLAW_DESKTOP_RUNTIME_MODEL"],
+      "privacy_policy": {
+        "allowed_privacy_classes": ["public", "redacted", "private_non_sensitive", "sensitive", "canonical_private"],
+        "default_for_private_context": true
+      }
+    },
+    {
+      "id": "openrouter_remote",
+      "mode": "remote_openai_compatible",
+      "model_class": "openrouter_remote_free_first_manual",
+      "billing_mode": "api_measured",
+      "session_mode": "manual_remote_api_call",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 1800,
+      "domains": ["profesional", "academico"],
+      "default_enabled": false,
+      "required_env_vars": ["OPENROUTER_API_KEY"],
+      "default_model_env": "OPENROUTER_MODEL",
+      "free_tier_policy": {
+        "requests_per_minute": 20,
+        "daily_requests_without_10usd_credits": 50,
+        "daily_requests_with_10usd_credits": 1000,
+        "strategy": "free_first_with_reserved_quota"
+      },
+      "privacy_policy": {
+        "allowed_privacy_classes": ["public", "redacted", "private_non_sensitive"],
+        "forbidden_inputs": ["secretos", "tokens", ".env", "ssh", "ledger_privado", "canon_privado_sensible", "rutas_sensibles"],
+        "requires_manual_approval_per_task": true,
+        "forbid_openrouter_auto_without_allowlist": true
+      }
+    },
+    {
+      "id": "rknn_llm_experimental",
+      "mode": "npu_experimental_secondary",
+      "model_class": "local_rag_and_summary",
+      "billing_mode": "estimated",
+      "session_mode": "local_runtime",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 700,
+      "domains": ["profesional", "academico"],
+      "promotion_policy": {
+        "auto_promote": false,
+        "requires_runtime_device": "/dev/rknpu*",
+        "requires_preconverted_rkllm_model": true,
+        "requires_benchmark_evidence": true,
+        "current_status": "experimental_bloqueado_por_runtime_incompleto"
+      },
+      "candidate_models": [
+        {
+          "name": "Phi-3-3.8B W8A8",
+          "role": "balanced_npu_candidate",
+          "status": "pendiente_modelo_rkllm_preconvertido"
+        },
+        {
+          "name": "ChatGLM3-6B W8A8",
+          "role": "max_reasonable_8gb_candidate",
+          "status": "pendiente_modelo_rkllm_preconvertido"
+        }
+      ]
+    },
+    {
+      "id": "desktop_compute",
+      "mode": "desktop_compute_http",
+      "model_class": "open_source_gpu_heavy",
+      "billing_mode": "estimated",
+      "session_mode": "desktop_local_runtime",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 1800,
+      "domains": ["profesional", "academico"],
+      "measured_candidates": {
+        "node": "desktop_compute",
+        "evidence": "historial interno no público/openclaw_max_model_bench_pc_post_wsl_20260421.json",
+        "comparative_evidence": "historial interno no público/openclaw_max_model_bench_pc_20260421.json",
+        "daily_recommended": "mistral-nemo:12b",
+        "coding_heavy": "qwen2.5-coder:14b",
+        "experimental_ceiling": "qwen3:14b",
+        "alternative_ceiling": "phi4:14b",
+        "benchmark_profile": "pc_mistral_nemo_12b_extensive",
+        "benchmark_primary_store": "runtime/pc_control/benchmarks/runs/*.jsonl",
+        "notes": [
+          "Benchmark post-WSL: RAM visible 11.68 GiB, swap 16 GiB, VRAM baseline 1271 MiB.",
+          "mistral-nemo:12b respondio en 1.1014 s caliente con pico GPU 7410 MiB.",
+          "qwen2.5-coder:14b respondio en 1.0782 s caliente con pico GPU 7384 MiB.",
+          "phi4:14b respondio en 2.1445 s caliente y Ollama lo reporto luego como 38% CPU / 62% GPU.",
+          "qwen3:14b arranco, pero no respeto el prompt minimo y tardo 19.0608 s caliente por plantilla thinking."
+        ]
+      }
+    },
+    
+    {
+      "id": "external_llm_router",
+      "mode": "openai_compatible_router",
+      "model_class": "router_gateway_litellm_openrouter_or_compatible",
+      "billing_mode": "router_measured",
+      "session_mode": "direct_router_call",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 1600,
+      "domains": ["profesional", "academico"],
+      "default_enabled": false,
+      "required_env_vars": ["OPENCLAW_EXTERNAL_ROUTER_BASE_URL", "OPENCLAW_EXTERNAL_ROUTER_API_KEY"],
+      "compatible_routers": [
+        {
+          "id": "litellm",
+          "official_docs": "https://docs.litellm.ai/",
+          "use": "proveedor de IA no publicado-compatible gateway with documented routing, fallbacks, load balancing, budgets and observability.",
+          "security_note": "Pin reviewed versions or use official container images; do not install unpinned packages in thesis runtime."
+        },
+        {
+          "id": "openrouter",
+          "official_docs": "https://openrouter.ai/docs/api/reference",
+          "use": "External model-routing service for public or redacted academic/professional workloads only."
+        },
+        {
+          "id": "llama_cpp_openai_compatible",
+          "official_docs": "https://llama-cpp-python.readthedocs.io/en/latest/server/",
+          "use": "PC-local proveedor de IA no publicado-compatible server for GGUF inference."
+        }
+      ],
+      "privacy_policy": {
+        "allowed_privacy_classes": ["public", "redacted", "local_private_when_self_hosted"],
+        "forbidden_inputs": ["secretos", "ledger_privado", "canon_privado_sin_redaccion"],
+        "default_enabled": false
+      }
+    },
+    {
+      "id": "groq_api",
+      "mode": "cloud_api",
+      "model_class": "cloud_assisted_low_cost",
+      "billing_mode": "api_measured",
+      "session_mode": "direct_api_call",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 800,
+      "domains": ["profesional", "academico"]
+    },
+    {
+      "id": "gemini_vertex_flash_3",
+      "mode": "cloud_api",
+      "model_class": "cloud_assisted_premium",
+      "billing_mode": "api_measured",
+      "session_mode": "direct_api_call",
+      "estimated_cost_usd": 0.015,
+      "estimated_tokens": 1600,
+      "domains": ["academico", "profesional"],
+      "default_enabled": true,
+      "required_env_vars": ["GOOGLE_CLOUD_PROJECT", "GOOGLE_APPLICATION_CREDENTIALS"],
+      "privacy_policy": {
+        "allowed_privacy_classes": ["public", "redacted"],
+        "forbidden_inputs": ["evidencia_privada", "secretos", "ledger_privado", "canon_privado", "rutas_sensibles"],
+        "default_enabled": true
+      }
+    },
+    {
+      "id": "gemini_api",
+      "mode": "cloud_api",
+      "model_class": "cloud_assisted_mid_cost",
+      "billing_mode": "api_measured",
+      "session_mode": "direct_api_call",
+      "estimated_cost_usd": 0.05,
+      "estimated_tokens": 1400,
+      "domains": ["academico"],
+      "default_enabled": false,
+      "required_env_vars": ["OPENCLAW_GEMINI_ENABLED", "OPENCLAW_GEMINI_API_KEY"],
+      "default_model_env": "OPENCLAW_GEMINI_MODEL",
+      "privacy_policy": {
+        "allowed_privacy_classes": ["public", "redacted"],
+        "forbidden_inputs": ["evidencia_privada", "secretos", "ledger_privado", "canon_privado", "rutas_sensibles"],
+        "default_enabled": false
+      }
+    },
+    {
+      "id": "context7_docs",
+      "mode": "external_context_mcp",
+      "model_class": "versioned_external_docs",
+      "billing_mode": "free_or_external_service",
+      "session_mode": "context_lookup_only",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 600,
+      "domains": ["profesional", "academico"],
+      "privacy_policy": {
+        "allowed_privacy_classes": ["public", "redacted"],
+        "forbidden_inputs": ["evidencia_privada", "secretos", "ledger_privado", "canon_privado"],
+        "notes": [
+          "Context7 se usa solo para documentacion externa actualizada.",
+          "Serena conserva repo/canon/gobernanza como fuente interna."
+        ]
+      }
+    },
+    {
+      "id": "github_models_free",
+      "mode": "cloud_api_free_preview",
+      "model_class": "free_public_or_redacted_prototyping",
+      "billing_mode": "free_rate_limited",
+      "session_mode": "direct_api_call",
+      "estimated_cost_usd": 0.0,
+      "estimated_tokens": 800,
+      "domains": ["profesional", "academico"],
+      "required_env_vars": ["GITHUB_MODELS_TOKEN", "GITHUB_TOKEN"],
+      "required_scope": "models:read",
+      "privacy_policy": {
+        "allowed_privacy_classes": ["public", "redacted"],
+        "forbidden_inputs": ["evidencia_privada", "secretos", "ledger_privado", "canon_privado", "rutas_sensibles"],
+        "default_enabled": false
+      }
+    },
+    {
+      "id": "gemini_web_assisted",
+      "mode": "cloud_web_assisted",
+      "model_class": "cloud_assisted_mid_cost",
+      "billing_mode": "manual_web_assisted",
+      "session_mode": "human_supervised_web_session",
+      "estimated_cost_usd": 0.02,
+      "estimated_tokens": 1200,
+      "reasoning_tier": "intermediate",
+      "tool_use_tier": "standard",
+      "domains": ["profesional", "academico"]
+    },
+    {
+      "id": "openai_api",
+      "mode": "cloud_api",
+      "model_class": "cloud_assisted_premium",
+      "billing_mode": "api_measured",
+      "session_mode": "direct_api_call",
+      "estimated_cost_usd": 0.25,
+      "estimated_tokens": 1800,
+      "domains": ["profesional", "academico"]
+    },
+    {
+      "id": "chatgpt_plus_web_assisted",
+      "mode": "cloud_web_assisted",
+      "model_class": "cloud_assisted_premium",
+      "billing_mode": "manual_web_assisted",
+      "session_mode": "human_supervised_web_session",
+      "estimated_cost_usd": 0.03,
+      "estimated_tokens": 2400,
+      "reasoning_tier": "premium",
+      "tool_use_tier": "advanced",
+      "domains": ["profesional", "academico"]
+    }
+  ]
+}

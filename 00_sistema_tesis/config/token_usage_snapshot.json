@@ -1,0 +1,41 @@
+{
+  "generated_at": "2026-04-20",
+  "timezone": "America/Mexico_City",
+  "status": "local_only",
+  "message": "Sin API: snapshot local estimado a partir de presupuesto configurado.",
+  "source": {
+    "usage_endpoint": "https://api.openai.com/v1/organization/usage/completions",
+    "costs_endpoint": "https://api.openai.com/v1/organization/costs",
+    "lookback_days": 31
+  },
+  "budgets": {
+    "daily": {
+      "tokens": 40000,
+      "usd": 8.0
+    },
+    "weekly": {
+      "tokens": 240000,
+      "usd": 48.0
+    }
+  },
+  "windows": {
+    "daily": {
+      "tokens_used": 0,
+      "tokens_remaining": 40000,
+      "usd_used": 0.0,
+      "usd_remaining": 8.0,
+      "requests": 0
+    },
+    "weekly": {
+      "tokens_used": 0,
+      "tokens_remaining": 240000,
+      "usd_used": 0.0,
+      "usd_remaining": 48.0,
+      "requests": 0
+    }
+  },
+  "recommendations": [
+    "Mantener el overlay local como referencia operativa sin sincronización remota.",
+    "No usar API externa mientras no exista presupuesto disponible."
+  ]
+}

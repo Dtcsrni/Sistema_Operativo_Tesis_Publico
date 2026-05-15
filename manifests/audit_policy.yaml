@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "comandos_automaticos": [
+    ".venv/bin/python -m pytest -q",
+    "python 07_scripts/validate_structure.py",
+    "python 07_scripts/tesis.py doctor --check",
+    "python 07_scripts/tesis.py publish --check",
+    "python 07_scripts/build_all.py"
+  ],
+  "validaciones_manuales": [
+    "arranque_real_en_orangepi",
+    "montaje_nvme_y_emmc",
+    "revisión_wifi_bluetooth",
+    "checklist_pre_energizacion_hardware"
+  ],
+  "politica": {
+    "sin_auto_validacion": true,
+    "vincular_a_step_id": true,
+    "fallar_cerrado_si_integridad_rompe": true
+  }
+}

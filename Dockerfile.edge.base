@@ -1,0 +1,28 @@
+# Dockerfile.edge.base - Runtime base para gateway y sync en edge (sin NPU RKNN)
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    libgl1 \
+    i2c-tools \
+    v4l-utils \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY . .
+
+# Dependencias compartidas para runtime edge base.
+RUN pip install --no-cache-dir \
+    requests \
+    paho-mqtt \
+    smbus2 \
+    numpy \
+    opencv-python-headless
+
+CMD ["python3", "runtime/edge_iot/main.py"]

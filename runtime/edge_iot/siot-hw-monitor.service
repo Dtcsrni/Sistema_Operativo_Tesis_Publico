@@ -1,0 +1,17 @@
+[Unit]
+Description=Orange Pi LED Hardware Status Monitor
+After=network.target docker.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+User=root
+WorkingDirectory=/home/tesisai/Sistema_Operativo_Tesis_Posgrado/runtime/edge_iot
+ExecStart=/usr/bin/python3 /home/tesisai/Sistema_Operativo_Tesis_Posgrado/runtime/edge_iot/hw_status_daemon.py
+StandardOutput=append:/tmp/hw_daemon_debug.log
+StandardError=append:/tmp/hw_daemon_debug.log
+
+[Install]
+WantedBy=multi-user.target

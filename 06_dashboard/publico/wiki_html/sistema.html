@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sistema | Tesis OS Wiki</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700&family=Fira+Code&family=Material+Icons&display=swap" rel="stylesheet">
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+  </script>
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-light: #14b8a6;
+      --secondary: #1e293b;
+      --accent: #06b6d4;
+      --bg: #f8fafc;
+      --surface: rgba(255, 255, 255, 0.85);
+      --border: rgba(226, 232, 240, 0.8);
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(15, 118, 110, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.05) 0px, transparent 50%);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Navigation */
+    nav {
+      width: 260px;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      border-right: 1px solid var(--border);
+      padding: 2rem 1rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 100;
+    }
+
+    .nav-header {
+      padding: 0 0.75rem 1.5rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      color: var(--text-muted);
+      border-radius: var(--radius);
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-link .material-icons {
+      font-size: 20px;
+    }
+
+    /* Main Content Area */
+    main {
+      flex: 1;
+      padding: 3rem 4rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 3rem;
+      animation: fadeInDown 0.6s ease-out;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3rem;
+      margin: 0 0 0.5rem;
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .stamp {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Markdown Rendering Styles */
+    .markdown-body {
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+
+    .markdown-body h2 {
+      font-family: 'Outfit', sans-serif;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+      color: var(--secondary);
+    }
+
+    .markdown-body p { margin-bottom: 1.25rem; }
+
+    .markdown-body code {
+      background: rgba(15, 118, 110, 0.08);
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9em;
+      color: var(--primary);
+    }
+
+    .markdown-body a {
+      color: var(--primary);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .markdown-body a:hover {
+      border-bottom-color: var(--primary);
+    }
+
+    .markdown-body ul {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .markdown-body li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Admonitions */
+    .admonition {
+      margin: 1.5rem 0;
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      border-left: 4px solid #ccc;
+      background: white;
+      box-shadow: var(--shadow);
+    }
+    .admonition.success { border-left-color: #10b981; background: #ecfdf5; }
+    .admonition.warning { border-left-color: #f59e0b; background: #fffbeb; }
+    .admonition.danger { border-left-color: #ef4444; background: #fef2f2; }
+    
+    .admonition-title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 768px) {
+      body { flex-direction: column; }
+      nav {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 1rem;
+      }
+      .nav-header { display: none; }
+      main { padding: 2rem 1.5rem; }
+      h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-header">
+      <span class="material-icons">architecture</span>
+      Tesis OS
+    </div>
+    <a href="casos_uso.html" class="nav-link "><span class="material-icons">smart_toy</span><span>Agente y Casos de Uso</span></a>
+<a href="sistema.html" class="nav-link active"><span class="material-icons">settings</span><span>Sistema</span></a>
+<a href="gobernanza.html" class="nav-link "><span class="material-icons">gavel</span><span>Gobernanza</span></a>
+<a href="arquitectura.html" class="nav-link "><span class="material-icons">architecture</span><span>Arquitectura</span></a>
+<a href="terminologia.html" class="nav-link "><span class="material-icons">book</span><span>Terminología</span></a>
+<a href="planeacion.html" class="nav-link "><span class="material-icons">event_note</span><span>Planeación</span></a>
+<a href="hipotesis.html" class="nav-link "><span class="material-icons">lightbulb</span><span>Hipótesis</span></a>
+<a href="bloques.html" class="nav-link "><span class="material-icons">grid_view</span><span>Bloques</span></a>
+<a href="decisiones.html" class="nav-link "><span class="material-icons">psychology</span><span>Decisiones</span></a>
+<a href="bitacora.html" class="nav-link "><span class="material-icons">history_edu</span><span>Bitácora</span></a>
+<a href="experimentos.html" class="nav-link "><span class="material-icons">science</span><span>Experimentos</span></a>
+<a href="implementacion.html" class="nav-link "><span class="material-icons">code</span><span>Implementación</span></a>
+<a href="tesis.html" class="nav-link "><span class="material-icons">school</span><span>Tesis</span></a>
+  </nav>
+  <main>
+    <header>
+      <h1>Sistema</h1>
+      <div class="stamp">
+        <span class="material-icons" style="font-size: 16px;">update</span>
+        Generado el 2026-05-15
+      </div>
+    </header>
+    <div class="markdown-body"><p><h1>Sistema</h1></p><p>Propósito, alcance, módulos, flujos e interacción del sistema operativo de tesis.
+<ul><li><strong>Tesista:</strong> <code>Erick Renato Vega Ceron</code></li>
+<li><strong>Fecha:</strong> <code>2026-05-15</code></li>
+<li><strong>Estado:</strong> <code>OK</code></li>
+<li><strong>Fuentes:</strong> <code>README_INICIO.md</code>, <code>00_sistema_tesis/manual_operacion_humana.md</code>, <code>00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md</code>, <code>00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md</code>, <code>00_sistema_tesis/documentacion_sistema/flujos_operativos.md</code>, <code>00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md</code>, <code>00_sistema_tesis/config/sistema_tesis.yaml</code>, <code>00_sistema_tesis/config/publicacion.yaml</code></li>
+<li><strong>Aviso:</strong> Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.</li>
+</ul>
+<h2>Navegación de esta página</h2>
+<ul><li><a href="index.html">Volver al índice</a>.</li>
+<li>Página anterior en la ruta base: <a href="casos_uso.html">Agente y Casos de Uso</a>.</li>
+<li>Página siguiente en la ruta base: <a href="gobernanza.html">Gobernanza</a>.</li>
+<li>Relacionada: <a href="gobernanza.html">Gobernanza</a>.</li>
+<li>Relacionada: <a href="terminologia.html">Terminología</a>.</li>
+<li>Relacionada: <a href="planeacion.html">Planeación</a>.</li>
+</ul>
+<h2>Origen canónico y artefactos relacionados</h2></p><p><h3>Cómo rastrear esta página hasta su origen canónico</h3></p><p>1. Esta página derivada: <a href="sistema.html"><code>06_dashboard/wiki/sistema.md</code></a>.
+2. Revisa la lista de fuentes canónicas que alimentan su contenido.
+3. Si necesitas la versión visual derivada, consulta el HTML hermano generado.
+4. Si necesitas divulgación o evaluación externa, consulta el artefacto público sanitizado equivalente.
+5. Si necesitas cambiar el contenido, edita la fuente canónica y reconstruye; no edites esta salida a mano.</p><p><h3>Fuentes canónicas declaradas</h3></p><p>|Fuente canónica|Tipo|Existe|
+|---|---|---|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/README_INICIO.md"><code>README_INICIO.md</code></a>|archivo|sí|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/manual_operacion_humana.md"><code>00_sistema_tesis/manual_operacion_humana.md</code></a>|archivo|sí|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md"><code>00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md</code></a>|archivo|sí|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md"><code>00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md</code></a>|archivo|sí|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/flujos_operativos.md"><code>00_sistema_tesis/documentacion_sistema/flujos_operativos.md</code></a>|archivo|sí|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md"><code>00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md</code></a>|archivo|sí|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/sistema_tesis.yaml"><code>00_sistema_tesis/config/sistema_tesis.yaml</code></a>|archivo|sí|
+|<a href="https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/config/publicacion.yaml"><code>00_sistema_tesis/config/publicacion.yaml</code></a>|archivo|sí|</p><p><h3>Artefactos derivados relacionados</h3>
+<ul><li>Markdown interno: <a href="sistema.html"><code>06_dashboard/wiki/sistema.md</code></a></li>
+<li>HTML interno: <a href="sistema.html"><code>06_dashboard/generado/wiki/sistema.html</code></a></li>
+<li>Markdown público sanitizado: <a href="../wiki/sistema.md"><code>06_dashboard/publico/wiki/sistema.md</code></a></li>
+<li>HTML público sanitizado: <a href="sistema.html"><code>06_dashboard/publico/wiki_html/sistema.html</code></a></li>
+</ul>
+<h2>Identidad del proyecto</h2>
+<ul><li>ID: <code>tesis-iot-pachuca-resiliencia</code></li>
+<li>Nombre corto: SIOT</li>
+<li>Programa: Posgrado en Ingeniería</li>
+<li>Línea de investigación: Internet de las Cosas, resiliencia de comunicaciones y control adaptativo</li>
+</ul>
+<h2>Verificación de identidad humana</h2>
+<ul><li>Tesista: <code>Erick Renato Vega Ceron</code></li>
+<li>CURP (único registro en wiki): <code>CURP no publicada por seguridad</code></li>
+</ul>
+<h2>Estado operativo</h2>
+<ul><li>Versión: <code>0.1.0</code></li>
+<li>Estado global: <code>arquitectura_formal_reforzada</code></li>
+<li>Bloque activo: <code>B1</code></li>
+<li>Fase actual: <code>investigacion_y_desarrollo_metodologico</code></li>
+<li>Siguiente entregable: <code>ENT-015</code></li>
+</ul>
+<h2>Arquitectura base</h2>
+<ul><li>Patrón general: <code>repositorio_fuente_de_verdad_mas_dashboard_estatico_generado</code></li>
+<li>Formatos fuente: <code>markdown</code>, <code>yaml</code>, <code>csv</code></li>
+<li>Formatos derivados: <code>html</code>, <code>csv</code>, <code>markdown</code></li>
+<li>Criterio de bajo rozamiento: retomar el proyecto en menos de 3 minutos desde README_INICIO.md</li>
+</ul>
+<h2>Narrativa del sistema</h2></p><p><h2>Proposito y alcance del sistema</h2></p><p><h3>Que es</h3></p><p>El Sistema Operativo de la Tesis es la capa de gobierno documental, tecnico y operativo que permite conducir una tesis de posgrado sin perder soberania humana, trazabilidad de evidencia ni capacidad de explicacion publica.</p><p><div class="mermaid-container"><pre class="mermaid">graph LR
+    H[Tesista Humano] -- &quot;Autoría / Validación&quot; --&gt; S[Sistema Operativo]
+    S -- &quot;Gobernanza / Trazabilidad&quot; --&gt; T[Tesis IoT]
+    T -- &quot;Evidencia Técnica&quot; --&gt; S
+    S -- &quot;Proyección Pública&quot; --&gt; P[Evaluación Externa]</pre></div></p><p>No sustituye la tesis. Gobierna la tesis.</p><p><h3>Por que existe</h3></p><p>Existe para resolver cuatro problemas simultaneos:</p><p>1. Evitar que decisiones, cambios y resultados queden dispersos o dependan de memoria informal.
+2. Mantener control humano explicito cuando se usa automatizacion o asistencia con IA.
+3. Separar con rigor la base privada canonica de la superficie publica divulgable.
+4. Permitir retomar, auditar, defender y publicar el sistema sin reconstruir contexto desde cero.</p><p><h3>Que protege</h3></p><p>Protege:
+<ul><li>la autoria y soberania del tesista;</li>
+<li>la trazabilidad de decisiones, evidencia y validaciones;</li>
+<li>la coherencia entre backlog, riesgos, decisiones, implementacion y redaccion;</li>
+<li>la frontera entre informacion privada y exposicion publica;</li>
+<li>la reproducibilidad documental y tecnica del trabajo.</li>
+</ul>
+<h3>Que gobierna</h3></p><p>El sistema gobierna:
+<ul><li>decisiones y criterios de aceptacion;</li>
+<li>hipotesis, bloques, backlog, riesgos y entregables;</li>
+<li>bitacora, ledger y matriz de trazabilidad;</li>
+<li>evidencia tecnica, evidencia conversacional y registros de ingestion;</li>
+<li>scripts de validacion, materializacion y publicacion;</li>
+<li>wiki, dashboard y bundle publico sanitizado;</li>
+<li>la relacion entre la tesis IoT como objeto de estudio y la infraestructura documental que la sostiene.</li>
+</ul>
+<h3>Alcance editorial</h3></p><p>La documentacion del sistema debe permitir dos lecturas validas:
+<ul><li>lectura interna del tesista: operar, registrar, auditar y publicar;</li>
+<li>lectura publica: explorar, entender y evaluar el sistema sin acceder a superficies privadas.</li>
+</ul>
+<h3>Limites</h3></p><p>El sistema no debe:
+<ul><li>inventar arquitectura IoT que aun no sea canonica;</li>
+<li>presentar la asistencia con IA como autora o validadora final;</li>
+<li>mezclar evidencia privada con la superficie publica;</li>
+<li>reemplazar fuentes canonicas con artefactos derivados.</li>
+</ul>
+<h3>Estado actual de la arquitectura IoT</h3></p><p>La tesis IoT documentada por este sistema tiene como nucleo vigente el diseno de una arquitectura resiliente para telemetria y control adaptativo en entornos urbanos intermitentes.</p><p>El sistema debe describir:
+<ul><li>objetivo general y problema de investigacion;</li>
+<li>modulos actuales y relacion entre evidencia, backlog, hipotesis e implementacion;</li>
+<li>limites y pendientes canonicos todavia abiertos.</li>
+</ul>
+El sistema no debe describir como cerrado lo que en planeacion o decisiones siga pendiente de formalizacion tecnica profunda.</p><p><h2>Mapa de modulos del sistema</h2></p><p><h3>Vista general</h3></p><p>El sistema se organiza por subsistemas coordinados. Cada subsistema tiene una funcion distinta, artefactos fuente, artefactos derivados y una frontera de visibilidad.</p><p><div class="mermaid-container"><pre class="mermaid">graph TD
+    subgraph &quot;Gobierno y Trazabilidad&quot;
+        M1[1. Gobierno y Soberanía] --&gt; M2[2. Trazabilidad y Evidencia]
+    end</p><p>    subgraph &quot;Gestión del Trabajo&quot;
+        M3[3. Planeación y Control] --&gt; M7[7. Tesis IoT]
+        M4[4. Canon y Configuración] --&gt; M3
+    end</p><p>    subgraph &quot;Operación y Publicación&quot;
+        M5[5. Automatización y Validación] --&gt; M6[6. Publicación y Superficie Pública]
+        M8[8. OpenClaw Control Plane] -.-&gt; M5
+    end</p><p>    M2 --&gt; M3
+    M4 --&gt; M5
+    M7 --&gt; M5
+    M1 -.-&gt; M8</pre></div></p><p><h3>Modulos nucleares</h3></p><p>#### 1. Gobierno y soberania humana
+<ul><li>Proposito: asegurar que toda decision sustantiva quede vinculada a consentimiento humano y a trazabilidad explicita.</li>
+<li>Fuentes principales: decisiones, <code>ia_gobernanza.yaml</code>, ledger, matriz.</li>
+<li>Derivados: proyecciones del canon, auditorias, indicadores.</li>
+<li>Visible al publico: principios generales y politica de supervision.</li>
+<li>Privado: confirmaciones verbales exactas, hashes, soporte fino de validacion.</li>
+</ul>
+#### 2. Trazabilidad y evidencia
+<ul><li>Proposito: conservar cadena verificable entre instruccion, evidencia, sesion, cambio y artefacto.</li>
+<li>Fuentes principales: canon, ledger, matriz, evidencia privada, registros de ingestion.</li>
+<li>Derivados: indices, reportes de consistencia, estado de evidencia.</li>
+<li>Visible al publico: existencia del mecanismo y su papel metodologico.</li>
+<li>Privado: archivos de evidencia, transcripciones, rutas sensibles, hashes y correlaciones internas.</li>
+</ul>
+#### 3. Planeacion y control del trabajo
+<ul><li>Proposito: traducir objetivos de tesis a backlog, riesgos, roadmap y entregables.</li>
+<li>Fuentes principales: <code>backlog.csv</code>, <code>riesgos.csv</code>, <code>roadmap.csv</code>, <code>entregables.csv</code>.</li>
+<li>Derivados: resumenes, dashboard, portada README.</li>
+<li>Visible al publico: estado de avance de alto nivel y prioridades visibles.</li>
+<li>Privado: trazabilidad operativa fina cuando corresponda.</li>
+</ul>
+#### 4. Canon tecnico y configuracion
+<ul><li>Proposito: definir identidad, reglas, parametros y rutas canonicas del sistema.</li>
+<li>Fuentes principales: <code>sistema_tesis.yaml</code>, <code>bloques.yaml</code>, <code>hipotesis.yaml</code>, <code>publicacion.yaml</code>, <code>wiki.yaml</code>.</li>
+<li>Derivados: wiki, dashboard, bundle publico, chequeos automáticos.</li>
+<li>Visible al publico: estructura general del sistema y politicas de publicacion.</li>
+<li>Privado: configuraciones sensibles, identidad de agente y metadatos restringidos.</li>
+</ul>
+#### 5. Automatizacion y validacion
+<ul><li>Proposito: materializar, verificar y regenerar artefactos sin edicion manual de salidas derivadas.</li>
+<li>Fuentes principales: <code>07_scripts/</code>.</li>
+<li>Derivados: README generado, wiki generada, dashboard, badges, bundle publico.</li>
+<li>Visible al publico: que la salida es derivada, reproducible y auditable.</li>
+<li>Privado: auditorias completas, evidencia local y rutas internas.</li>
+</ul>
+#### 6. Publicacion derivada y superficie publica
+<ul><li>Proposito: exponer una vista tecnica util para evaluacion externa sin romper la frontera de seguridad.</li>
+<li>Fuentes principales: politica de publicacion y artefactos generados.</li>
+<li>Derivados: <code>06_dashboard/publico/</code>, wiki publica, manifest y nota de seguridad.</li>
+<li>Visible al publico: casi todo el modulo, salvo reglas internas de enforcement y superficies privadas.</li>
+<li>Privado: canon bruto y evidencia fuente.</li>
+</ul>
+#### 7. Tesis IoT como objeto gobernado
+<ul><li>Proposito: usar el sistema para dar continuidad al trabajo de tesis sobre resiliencia de telemetria y control adaptativo.</li>
+<li>Fuentes principales: hipotesis, bloques, backlog, evidencia, implementacion y manuscrito.</li>
+<li>Derivados: narrativa publica del proyecto, seguimiento de cobertura y estado del manuscrito.</li>
+<li>Visible al publico: objetivo, problema, marco actual, modulos y limites.</li>
+<li>Privado: evidencia no publicada, borradores internos y soportes no sanitizados.</li>
+</ul>
+#### 8. OpenClaw como plano de control asistivo PC-first
+<ul><li>Proposito: ofrecer una capa asistiva local-first para operar sesiones, canales remotos y modelos sin sustituir el canon ni la validacion humana.</li>
+<li>Fuentes principales: <code>runtime/openclaw/</code>, <code>docs/02_arquitectura/openclaw-control-plane.md</code>, <code>docs/03_operacion/openclaw-workspace-local.md</code>, <code>docs/03_operacion/flujo-escritorio-orange-pi.md</code>, <code>04_implementacion/gateway/</code>.</li>
+<li>Derivados: API local, bot Telegram, trazas SQLite, estado de proveedores y cobertura de implementacion en la wiki. Matrix permanece como derivado latente.</li>
+<li>Visible al publico: arquitectura general, contratos de sesion, politica <code>desktop-first</code>, Telegram como canal remoto activo y Matrix como extensión latente.</li>
+<li>Privado: secretos de proveedores, tokens de Matrix/Telegram, rutas sensibles del host y evidencia operativa fina.</li>
+<li>Regla operativa: la PC principal concentra el carril pesado con <code>desktop_compute</code> (Ollama DeepSeek) via Docker Compose; <code>tesis-edge</code> mantiene continuidad 24/7, relay, Telegram y runtime ligero. Matrix queda disponible solo como extensibilidad futura.</li>
+</ul>
+<h3>Relaciones clave</h3>
+<ul><li>Gobierno define las reglas con las que opera trazabilidad.</li>
+<li>Trazabilidad conserva evidencia de lo que planeacion y ejecucion producen.</li>
+<li>Planeacion orienta que se construye, valida o redacta.</li>
+<li>Canon y configuracion determinan las rutas oficiales y las salidas derivadas.</li>
+<li>Automatizacion convierte fuentes en vistas legibles sin duplicacion manual.</li>
+<li>Publicacion filtra la vista externa sin alterar la base privada.</li>
+<li>La tesis IoT recibe estructura, continuidad y explicabilidad gracias a todos los modulos anteriores.</li>
+<li>OpenClaw extiende la operacion asistiva del sistema, pero sigue subordinado a gobierno, trazabilidad y validacion humana.</li>
+</ul>
+<h3>Regla de lectura</h3></p><p>Si una persona necesita entender rapidamente el sistema:</p><p>1. Primero identifica el modulo implicado.
+2. Luego localiza sus fuentes canonicas.
+3. Despues revisa el flujo operativo asociado.
+4. Finalmente distingue que partes son privadas y cuales son publicas.</p><p><h2>Flujos operativos</h2></p><p><h3>Flujo 1. Retomar el sistema</h3></p><p>Objetivo: volver a entender el estado actual en pocos minutos.</p><p>Secuencia:</p><p>1. Leer <code>README_INICIO.md</code>.
+2. Revisar <code>00_sistema_tesis/manual_operacion_humana.md</code>.
+3. Ejecutar <code>python 07_scripts/tesis.py status</code>.
+4. Ejecutar <code>python 07_scripts/tesis.py next</code>.
+5. Si hace falta, ejecutar <code>python 07_scripts/tesis.py doctor</code>.</p><p>Salida esperada:
+<ul><li>entender que es el sistema;</li>
+<li>identificar bloque activo, siguiente entregable y riesgos;</li>
+<li>saber que modulo o archivo tocar despues.</li>
+</ul>
+Objetivo: incorporar trabajo nuevo sin romper soberania ni trazabilidad.</p><p><div class="mermaid-container"><pre class="mermaid">sequenceDiagram
+    participant T as Tesista Humano
+    participant C as Canon (YAML/CSV/MD)
+    participant E as Evidencia (Conversación)
+    participant A as Automatización (build_all)
+    participant D as Derivados (Wiki/Dash)</p><p>    T-&gt;&gt;C: Editar fuente de verdad
+    opt Cambio Crítico
+        T-&gt;&gt;E: Registrar evidencia fuente
+        E--&gt;&gt;T: source_event_id (evento interno no público)
+        T-&gt;&gt;C: Vincular VAL-STEP a evento interno no público
+    end
+    T-&gt;&gt;A: Ejecutar validación y auditoría
+    A-&gt;&gt;D: Materializar proyecciones
+    D--&gt;&gt;T: Revisar Wiki/Dashboard</pre></div></p><p>Secuencia:</p><p>1. Editar la fuente canonica correcta.
+2. Si el cambio afecta arquitectura, metodo, evidencia o gobernanza, registrar decision o bitacora.
+3. Si corresponde a una instruccion humana critica, vincularla a <code>VAL-STEP</code>.
+4. Si el <code>VAL-STEP</code> es nuevo y esta por encima del umbral de enforcement, registrar primero la evidencia fuente de conversacion.
+5. Regenerar y auditar artefactos derivados.</p><p>Salida esperada:
+<ul><li>cambio explicado desde su fuente de verdad;</li>
+<li>soporte humano verificable;</li>
+<li>proyecciones sincronizadas.</li>
+</ul>
+<h3>Flujo 3. Auditar el estado del sistema</h3></p><p>Objetivo: comprobar integridad, consistencia y operabilidad.</p><p>Secuencia:</p><p>1. Ejecutar <code>python 07_scripts/tesis.py audit --check</code>.
+2. Ejecutar <code>python 07_scripts/tesis.py source status --check</code>.
+3. Ejecutar <code>python 07_scripts/build_all.py</code>.
+4. Revisar wiki y dashboard generados si se requiere lectura humana rapida.</p><p>Salida esperada:
+<ul><li>estado de integridad del sistema;</li>
+<li>estado de evidencia fuente;</li>
+<li>estado de salida publica y artefactos derivados.</li>
+</ul>
+<h3>Flujo 4. Publicar la superficie publica</h3></p><p>Objetivo: exponer una vista tecnica evaluable sin abrir la base privada.</p><p>Secuencia:</p><p>1. Confirmar que la base privada ya paso auditorias.
+2. Ejecutar <code>python 07_scripts/tesis.py publish --build</code>.
+3. Revisar <code>06_dashboard/publico/index.md</code> y <code>manifest_publico.json</code>.
+4. Validar que no haya rutas privadas, hashes o referencias internas prohibidas.</p><p>Salida esperada:
+<ul><li>bundle publico regenerado;</li>
+<li>narrativa tecnica clara para terceros;</li>
+<li>sanitizacion intacta.</li>
+</ul>
+<h3>Flujo 5. Consultar el sistema desde la capa publica</h3></p><p>Objetivo: permitir que terceros entiendan y evalúen sin editar ni acceder a lo privado.</p><p>Secuencia:</p><p>1. Abrir el indice publico.
+2. Leer la pagina de sistema para entender proposito, modulos y limites.
+3. Recorrer wiki y dashboard para revisar planeacion, gobernanza, estado y cobertura.
+4. Usar la informacion para evaluar consistencia, madurez y direccion del proyecto.</p><p>Salida esperada:
+<ul><li>comprension tecnica suficiente para evaluacion externa;</li>
+<li>claridad sobre que informacion es publica y que informacion permanece interna.</li>
+</ul>
+<h3>Flujo 6. Operar por dominios aislados</h3></p><p>Objetivo: ejecutar tareas en Orange Pi sin mezclar permisos, red ni datos entre <code>sistema_tesis</code>, <code>openclaw</code> y <code>edge_iot</code>.</p><p>Secuencia:</p><p>1. Verificar identidad y servicio del dominio objetivo.
+2. Confirmar rutas permitidas de lectura y escritura.
+3. Confirmar si el dominio tiene red local, salida controlada o modo sin nube.
+4. Si hay intercambio con otro dominio, usar solo <code>inbox</code>, <code>outbox</code>, <code>spool</code> o CLI explícita.
+5. Ejecutar chequeos del dominio antes de operar componentes opcionales.</p><p>Salida esperada:
+<ul><li>servicio corriendo bajo la identidad correcta;</li>
+<li>sin acceso cruzado a workspaces ni secretos;</li>
+<li>intercambio trazable y reproducible.</li>
+</ul>
+<h3>Flujo 7. Observar salud y métricas por dominio</h3></p><p>Objetivo: revisar salud operativa sin mezclar logs ni métricas entre dominios.</p><p>Secuencia:</p><p>1. Verificar <code>prometheus.service</code>, <code>prometheus-node-exporter.service</code> y <code>tesis-observabilidad-collector.timer</code>.
+2. Confirmar que cada dominio escribe en su ruta de logs propia.
+3. Validar los archivos <code>.prom</code> en <code>/var/lib/node_exporter/textfile_collector</code>.
+4. Ejecutar <code>bash tests/smoke/test_observability_stack.sh</code> cuando se requiera postcheck manual.
+5. Revisar rotación y compresión en <code>/etc/logrotate.d/tesis-observabilidad</code>.</p><p>Salida esperada:
+<ul><li>observabilidad local funcional;</li>
+<li>métricas separadas por dominio;</li>
+<li>retención larga operable;</li>
+<li>sin exposición fuera de <code>localhost</code>.</li>
+</ul>
+<h3>Flujo 8. Recuperar <code>edge_iot</code> tras degradación o cuarentena</h3></p><p>Objetivo: inspeccionar y recuperar el dominio <code>edge_iot</code> sin romper el aislamiento.</p><p>Secuencia:</p><p>1. Verificar <code>systemctl status edge-iot-worker.service</code> y <code>systemctl status edge-iot-watchdog.timer</code>.
+2. Revisar <code>bash /srv/tesis/repo/ops/edge/edge-iot-resilience.sh status</code>.
+3. Leer <code>edge-iot-worker.log</code>, <code>edge-iot-watchdog.log</code> y <code>edge-iot-resilience.log</code>.
+4. Si el dominio está en <code>degraded_offline</code>, revisar causa externa y esperar o forzar reintento según criterio humano.
+5. Si el dominio está en <code>quarantined</code>, corregir la causa y ejecutar limpieza explícita de cuarentena.</p><p>Salida esperada:
+<ul><li>causa de degradación identificada;</li>
+<li>reintento o desbloqueo humano trazable;</li>
+<li>sin bucles infinitos de reinicio.</li>
+</ul>
+<h3>Flujo 9. Respaldar y restaurar por dominio</h3></p><p>Objetivo: proteger y validar recuperación de <code>sistema_tesis</code>, <code>openclaw</code> y <code>edge_iot</code> sin mezclar sus rutas.</p><p>Secuencia:</p><p>1. Ejecutar <code>bash /srv/tesis/repo/ops/respaldo/ejecutar_respaldo.sh</code>.
+2. Verificar checksum y manifiestos con <code>bash /srv/tesis/repo/ops/respaldo/verificar_respaldos.sh</code>.
+3. Restaurar cada dominio a sandbox con <code>ops/recuperacion/restaurar_desde_emmc.sh --mode sandbox</code>.
+4. Revisar el reporte consolidado de restauración.
+5. Usar <code>in_place</code> solo con bandera explícita y durante ventana controlada.</p><p>Salida esperada:
+<ul><li>artefactos independientes por dominio;</li>
+<li>snapshots locales por dominio;</li>
+<li>restore validado sin tocar el runtime activo;</li>
+<li>procedimiento in-place trazable y controlado.</li>
+</ul>
+<h3>Flujo 10. Auditar integración segura entre dominios</h3></p><p>Objetivo: demostrar que los canales declarados funcionan y que los accesos internos no autorizados fallan.</p><p>Secuencia:</p><p>1. Ejecutar <code>bash tests/smoke/test_domain_integration_security.sh</code>.
+2. Ejecutar <code>bash ops/seguridad/validar_integracion_entre_dominios.sh</code> para consolidar evidencia administrativa.
+3. Confirmar que <code>archivo_draft</code>, <code>spool_local</code> y <code>cli_explicita</code> pasan.
+4. Confirmar que fallan accesos a rutas, secretos y SQLite de otros dominios.
+5. Confirmar que cualquier intento de HTTP interdominio falla.
+6. Revisar <code>/var/log/tesis-admin/domain_integration_security_report_&lt;timestamp&gt;.log</code> como evidencia operativa.</p><p>Salida esperada:
+<ul><li>canales permitidos funcionando;</li>
+<li>accesos cruzados bloqueados;</li>
+<li>evidencia reproducible de enforcement real.</li>
+</ul>
+<h3>Flujo 11. Trabajar con Codex asistido por Serena MCP</h3></p><p>Objetivo: operar tareas de tesis con contexto compacto y acciones auditables desde VS Code sin sustituir la validacion humana ni la via CLI.</p><p>Secuencia:</p><p>1. Abrir el repositorio en la raiz correcta del workspace.
+2. Recargar VS Code y confirmar que <code>serena-local</code> aparezca como servidor MCP activo.
+3. Usar <code>context.fetch_compact</code> para recuperar solo el contexto minimo necesario.
+4. Usar <code>governance.preflight</code> antes de preparar o aplicar cambios sobre canon o rutas protegidas.
+5. Usar <code>canon.prepare_change</code> para revisar diff, riesgo y requisitos antes de tocar la fuente canonica.
+6. Usar <code>canon.apply_controlled_change</code> solo con <code>VAL-STEP</code> valido y evidencia fuente corroborada cuando la politica lo exija.
+7. Ejecutar <code>python 07_scripts/build_all.py</code> despues de cambios relevantes.</p><p>Salida esperada:
+<ul><li>contexto reducido sin perder referencias de origen;</li>
+<li>cambios guiados por gobernanza y no por memoria implicita del agente;</li>
+<li>traza MCP visible en <code>historial interno no público/serena_mcp_operations.jsonl</code>.</li>
+</ul>
+Referencia operativa: <code>00_sistema_tesis/documentacion_sistema/operacion_serena_mcp_codex.md</code></p><p><h3>Flujo 12. Registrar Serena para un runtime externo</h3></p><p>Objetivo: exponer Serena como MCP HTTP autenticado para un host separado de VS Code sin duplicar reglas de negocio.</p><p>Secuencia:</p><p>1. Definir <code>SERENA_BRIDGE_BEARER_TOKEN</code> en el entorno del host.
+2. Arrancar <code>python runtime/serena_bridge/bin/serena_bridge.py</code>.
+3. Verificar con <code>python 07_scripts/check_serena_access.py</code> que el bridge sea alcanzable.
+4. Registrar la URL del bridge en el host externo con auth <code>Bearer</code> y headers de identidad.
+5. Ejecutar <code>initialize</code>, <code>tools/list</code>, <code>context.fetch_compact</code> y <code>governance.preflight</code>.
+6. Confirmar que la traza MCP incluya identidad del host y <code>host_kind=external_runtime</code>.</p><p>Salida esperada:
+<ul><li>runtime externo consumiendo el mismo contrato <code>serena-local</code>;</li>
+<li>auth minima activa;</li>
+<li>misma gobernanza que el MCP local;</li>
+<li>traza diferenciada del host llamador;</li>
+</ul>
+<h3>Flujo 13. Trabajar con Caveman y Serena como politica base</h3></p><p>Objetivo: mantener el modo de trabajo conciso de Caveman y la primera capa de contexto de Serena como comportamiento normal para cualquier agente de IA en el repo.</p><p>Secuencia:</p><p>1. Verificar que <code>caveman</code> resuelva en el shell con <code>command -v caveman</code>.
+2. Confirmar que <code>caveman --help</code> responda y usar Caveman como modo base de ejecución y redacción.
+3. Verificar el estado de Serena con <code>python3 07_scripts/check_serena_access.py --json</code>.
+4. Si <code>serena-local</code> esta disponible y recomendado, usarlo primero para <code>context.fetch_compact</code> y <code>governance.preflight</code>.
+5. Si Serena no esta disponible, restaurarla primero antes de degradar a filesystem-only.
+6. Ejecutar <code>python 07_scripts/build_all.py</code> al cerrar cambios de politica o infraestructura.</p><p>Salida esperada:
+<ul><li>Caveman disponible y usado como modo base;</li>
+<li>Serena usada como primera capa de contexto cuando el perfil recomendado este disponible;</li>
+<li>trazabilidad y auditoria actualizadas sin perder la ruta operativa principal.</li>
+</ul>
+<h3>Flujo 14. Operar OpenClaw con PC-first y Telegram activo</h3></p><p>Objetivo: usar OpenClaw como capa asistiva sin mover la autoria principal fuera del escritorio ni degradar el edge a nodo pesado por defecto.</p><p>Secuencia:</p><p>1. Verificar que <code>ollama-pc</code> esté corriendo en <code>docker compose -f docker-compose.pc.yml</code> con <code>deepseek-r1:7b</code> disponible; confirmar <code>OPENCLAW_DESKTOP_COMPUTE_BASE_URL=http://ollama-pc:11434</code>.
+2. Confirmar en <code>pasarela estado</code> que <code>nodes.desktop.runtime=llamacpp</code> y que el edge mantiene su runtime local ligero.
+3. Operar sesiones desde <code>CLI</code>, <code>web_local</code> o <code>telegram</code>; todos los canales activos deben pasar por la misma <code>session-layer</code>.
+4. Mantener <code>Telegram</code> como plano remoto activo y <code>Matrix</code> solo como compatibilidad futura, fallback latente o notificacion cuando se reactive.
+5. Si la PC no esta disponible, permitir degradacion explicita a <code>ollama_local</code> o <code>local</code>, sin promover nube por defecto.
+6. Si una tarea requiere nube premium, exigir politica de sesion compatible y traza del cambio de carril.
+7. Registrar y revisar trazas, fallback reasons, proveedor/modelo efectivos y aprobaciones antes de cerrar la operacion.</p><p>Salida esperada:
+<ul><li>carril pesado resuelto por la PC principal;</li>
+<li>edge conservando continuidad 24/7 y relay remoto;</li>
+<li>canales alineados sobre un mismo contrato de sesion;</li>
+<li>politica <code>desktop-first</code> visible, verificable y auditable.</li>
+</ul>
+<h3>Regla transversal</h3></p><p>Todo flujo del sistema debe cumplir tres condiciones:
+<ul><li>tener una fuente canonica identificable;</li>
+<li>tener una salida humana legible;</li>
+<li>poder distinguir entre superficie canónica no pública y superficie publica.</li>
+</ul>
+<h2>Interaccion por actor</h2></p><p><h3>Tesista</h3></p><p>#### Que necesita poder hacer
+<ul><li>retomar el proyecto con baja friccion;</li>
+<li>decidir que fuente editar segun el tipo de cambio;</li>
+<li>registrar decisiones, evidencia y validaciones;</li>
+<li>auditar el sistema antes de cerrar trabajo;</li>
+<li>publicar una capa externa sanitizada.</li>
+</ul>
+#### Como interactua
+<ul><li>usa <code>README_INICIO.md</code> como puerta de entrada;</li>
+<li>usa el manual humano como ruta operativa;</li>
+<li>usa CLI y fuentes canonicas como superficie principal;</li>
+<li>usa la wiki y el dashboard como vistas derivadas de apoyo.</li>
+</ul>
+#### Lo que no debe hacer
+<ul><li>editar artefactos derivados a mano;</li>
+<li>usar la capa publica como fuente de verdad;</li>
+<li>asumir que una salida con asistencia de IA equivale a validacion humana;</li>
+<li>marcar una tarea principal como cerrada si los prerrequisitos siguen pendientes.</li>
+</ul>
+<h3>Lector publico</h3></p><p>#### Que necesita poder hacer
+<ul><li>entender para que existe el sistema;</li>
+<li>identificar los modulos del sistema y su relacion;</li>
+<li>entender los flujos principales de operacion;</li>
+<li>evaluar la tesis y su infraestructura documental desde una vista sanitizada;</li>
+<li>detectar limites, pendientes y reglas de acceso.</li>
+</ul>
+#### Como interactua
+<ul><li>entra por el bundle publico y la wiki derivada;</li>
+<li>lee la narrativa tecnica del sistema, no el canon no público;</li>
+<li>usa el dashboard para estado y la wiki para explicacion;</li>
+<li>interpreta la salida publica como derivada, no como repositorio editable.</li>
+</ul>
+#### Lo que no debe asumir
+<ul><li>que la parte publica contiene toda la evidencia;</li>
+<li>que la ausencia de un detalle implica ausencia de trazabilidad;</li>
+<li>que la asistencia con IA conduce autonomamente el sistema;</li>
+<li>que los pendientes tecnicos abiertos ya estan resueltos.</li>
+</ul>
+<h3>Asistencia con IA (instrumental)</h3></p><p>#### Funcion permitida
+<ul><li>acelerar estructuracion, redaccion, automatizacion y analisis;</li>
+<li>apoyar implementacion de scripts y artefactos documentales;</li>
+<li>producir salidas sujetas a revision humana proporcional al riesgo.</li>
+</ul>
+#### Limites
+<ul><li>no valida por si misma;</li>
+<li>no sustituye soberania humana;</li>
+<li>no debe exponer superficies privadas en la capa publica;</li>
+<li>no debe inventar especificacion tecnica cerrada cuando el canon aun muestra brechas.</li>
+</ul>
+<h3>Regla editorial</h3></p><p>Toda documentacion mejorada del sistema debe responder implicitamente a estas preguntas:
+<ul><li>que puede hacer el tesista con esta pagina;</li>
+<li>que puede entender un lector publico con esta pagina;</li>
+<li>que limites de acceso o interpretacion siguen vigentes.</li>
+</ul>
+<h2>Mapa rápido de términos e IDs</h2>
+<ul><li><code>VAL_STEP_{nnn}</code>: familia de validación o instrucción humana crítica trazada en canon.</li>
+<li><code>EVT_{nnnn}</code>: familia de evento canónico general, por ejemplo evidencia fuente.</li>
+<li><code>DEC-{nnnn}</code>: decisión formal.</li>
+<li><code>T-{nnn}</code>, <code>R-{nnn}</code>, <code>ENT-{nnn}</code>, <code>B{n}</code>, <code>F{n}</code>: planeación, riesgo, entregable, bloque y fase.</li>
+<li>Si un término o ID no es evidente, la referencia central es <code>glosario_terminologia_y_convenciones.md</code>.</li>
+</ul>
+<h2>Terminología de evidencia e ingestión</h2>
+<ul><li><code>paquete</code>: conjunto versionado de contexto o evidencia a integrar.</li>
+<li><code>staging</code>: zona temporal de verificación antes de integrar al canon.</li>
+<li><code>indice maestro</code>: registro consolidado de ingreso y destino de artefactos.</li>
+<li><code>evidencia</code>, <code>soporte</code>, <code>politica</code>, <code>modulo</code>, <code>rol</code>, <code>nivel</code>, <code>estado</code>, <code>accion</code>: etiquetas de clasificación que no deben confundirse entre sí.</li>
+</ul>
+<h2>Operación humana y superficies</h2>
+<ul><li><strong>superficie canónica no pública:</strong> canon, backlog, decisiones, bitácora, auditoría y evidencia íntegra.</li>
+<li><strong>Superficie pública:</strong> bundle público curado en <code>06_dashboard/publico/</code>, siempre derivado y no editable a mano.</li>
+<li><strong>Ruta humana principal:</strong> <code>00_sistema_tesis/manual_operacion_humana.md</code>.</li>
+<li><strong>IA opcional:</strong> ningún flujo crítico depende de IA para ejecutarse.</li>
+<li><strong>Aviso público:</strong> Este bundle público es un artefacto derivado y curado editorialmente. No se corrige a mano; se reconstruye desde la base canónica.</li>
+</ul>
+<h2>Estado de archivos canónicos</h2></p><p>|Clave|Ruta|Existe|Última modificación|
+|---|---|---|---|
+|sistema|00_sistema_tesis/config/sistema_tesis.yaml|sí|2026-05-06|
+|hipotesis|00_sistema_tesis/config/hipotesis.yaml|sí|2026-03-23|
+|bloques|00_sistema_tesis/config/bloques.yaml|sí|2026-04-27|
+|dashboard|00_sistema_tesis/config/dashboard.yaml|sí|2026-03-24|
+|publicacion|00_sistema_tesis/config/publicacion.yaml|sí|2026-05-14|
+|agent_identity|Identidad técnica no publicada por seguridad|sí|2026-03-26|
+|gobernanza_ia|00_sistema_tesis/config/ia_gobernanza.yaml|sí|2026-04-21|
+|wiki|00_sistema_tesis/config/wiki.yaml|sí|2026-05-01|
+|manual_operacion_humana|00_sistema_tesis/manual_operacion_humana.md|sí|2026-05-06|
+|backlog|01_planeacion/backlog.csv|sí|2026-05-01|
+|riesgos|01_planeacion/riesgos.csv|sí|2026-03-26|
+|roadmap|01_planeacion/roadmap.csv|sí|2026-03-23|
+|entregables|01_planeacion/entregables.csv|sí|2026-04-14|
+|decisiones|00_sistema_tesis/decisiones|sí|2026-05-14|
+|bitacora|00_sistema_tesis/bitacora|sí|2026-05-15|
+|reportes_semanales|00_sistema_tesis/reportes_semanales|sí|2026-05-13|
+|dashboard_generado|06_dashboard/generado/index.html|sí|2026-05-15|
+|bundle_publico|06_dashboard/publico/index.md|sí|2026-05-14|
+|bundle_publico_manifest|06_dashboard/publico/manifest_publico.json|sí|2026-05-14|
+|wiki_markdown_generada|06_dashboard/wiki/index.md|sí|2026-05-07|
+|wiki_html_generada|06_dashboard/generado/wiki/index.html|sí|2026-05-07|
+|wiki_manifest_generado|06_dashboard/generado/wiki_manifest.json|sí|2026-05-07|
+|readme_portada_generado|README.md|sí|2026-05-06|
+</p></div>
+      <footer class="public-update"><p>Última actualización: <strong>2026-05-14</strong></p></footer>
+  </main>
+</body>
+</html>

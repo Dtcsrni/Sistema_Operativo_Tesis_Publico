@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "posicion": "capa_asistiva_opcional",
+  "baseline_obligatorio": true,
+  "comparar": [
+    "productividad",
+    "trazabilidad",
+    "calidad_documental",
+    "apoyo_metodologico",
+    "costo_operativo",
+    "riesgo_de_alucinacion",
+    "aceptabilidad_etica"
+  ],
+  "fallo_de_openclaw_no_detiene_sistema": true
+}

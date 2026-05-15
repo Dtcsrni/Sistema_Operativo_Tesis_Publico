@@ -1,0 +1,270 @@
+{
+  "catalogos_meta": {
+    "tipos": [
+      "general",
+      "arquitectura",
+      "comunicaciones",
+      "control",
+      "validacion",
+      "integracion"
+    ],
+    "estados": [
+      "activa",
+      "en_revision",
+      "suspendida",
+      "cerrada"
+    ],
+    "prioridades": [
+      "baja",
+      "media",
+      "alta",
+      "critica"
+    ],
+    "evidencia": [
+      "ausente",
+      "parcial",
+      "fuerte"
+    ]
+  },
+  "hipotesis": [
+    {
+      "id": "HG",
+      "nombre_corto": "Superioridad integrada de arquitectura resiliente",
+      "descripcion": "Una arquitectura IoT que combine tolerancia a intermitencia, priorización contextual y lazo de control degradable puede mantener utilidad operativa superior a un esquema convencional en escenarios urbanos intermitentes representativos de Pachuca.",
+      "tipo": "general",
+      "estado": "activa",
+      "prioridad": "critica",
+      "variable_independiente_principal": "Diseño de arquitectura resiliente y políticas adaptativas",
+      "variables_dependientes_clave": [
+        "continuidad_util_de_telemetria",
+        "latencia_de_eventos_criticos",
+        "estabilidad_del_control",
+        "tasa_de_recuperacion_tras_falla"
+      ],
+      "metricas_clave": [
+        "porcentaje_de_muestras_utiles_entregadas",
+        "latencia_p95_de_eventos_criticos",
+        "error_integral_de_control",
+        "tiempo_medio_de_recuperacion"
+      ],
+      "bloques_asociados": [
+        "B2",
+        "B3",
+        "B4",
+        "B5",
+        "B6",
+        "B7"
+      ],
+      "evidencia_disponible": {
+        "teorica": "parcial",
+        "simulacion": "ausente",
+        "experimental": "ausente",
+        "integrada": "ausente"
+      },
+      "criterio_de_soporte": "Se considera soportada si la arquitectura propuesta supera consistentemente a la línea base en continuidad útil y control bajo escenarios intermitentes definidos, sin costos operativos desproporcionados.",
+      "notas": "Hipótesis paraguas para integración final de resultados."
+    },
+    {
+      "id": "H1",
+      "nombre_corto": "Buffer adaptativo reduce pérdida útil",
+      "descripcion": "El uso de almacenamiento local con políticas adaptativas de cola y reintento reduce la pérdida útil de telemetría frente a cortes intermitentes respecto de un envío oportunista sin persistencia.",
+      "tipo": "comunicaciones",
+      "estado": "activa",
+      "prioridad": "alta",
+      "variable_independiente_principal": "Política de buffer y reintento",
+      "variables_dependientes_clave": [
+        "perdida_util_de_paquetes",
+        "edad_de_informacion",
+        "consumo_energetico_de_reenvio"
+      ],
+      "metricas_clave": [
+        "delivery_ratio_util",
+        "age_of_information_p95",
+        "reintentos_por_muestra"
+      ],
+      "bloques_asociados": [
+        "B2",
+        "B4",
+        "B5",
+        "B6"
+      ],
+      "evidencia_disponible": {
+        "teorica": "parcial",
+        "simulacion": "ausente",
+        "experimental": "ausente",
+        "integrada": "ausente"
+      },
+      "criterio_de_soporte": "Soportada si mejora la entrega útil y mantiene la edad de información dentro de umbrales definidos para variables críticas.",
+      "notas": "Depende de definir taxonomía de intermitencia y presupuesto de memoria/energía."
+    },
+    {
+      "id": "H2",
+      "nombre_corto": "Topología híbrida mejora resiliencia",
+      "descripcion": "Una topología híbrida con nodos terminales y gateway con capacidades locales de continuidad ofrece mayor resiliencia de servicio que una topología exclusivamente centralizada ante fallas parciales de enlace.",
+      "tipo": "arquitectura",
+      "estado": "activa",
+      "prioridad": "alta",
+      "variable_independiente_principal": "Topología de red y acoplamiento de gateway",
+      "variables_dependientes_clave": [
+        "cobertura_funcional",
+        "degradacion_del_servicio",
+        "tiempo_de_recuperacion"
+      ],
+      "metricas_clave": [
+        "porcentaje_de_funciones_preservadas",
+        "tiempo_medio_de_recuperacion",
+        "uptime_operativo_util"
+      ],
+      "bloques_asociados": [
+        "B2",
+        "B4",
+        "B5",
+        "B6",
+        "B7"
+      ],
+      "evidencia_disponible": {
+        "teorica": "parcial",
+        "simulacion": "ausente",
+        "experimental": "ausente",
+        "integrada": "ausente"
+      },
+      "criterio_de_soporte": "Soportada si la topología híbrida conserva más funciones esenciales y recupera antes que la línea base centralizada.",
+      "notas": "Requiere definir línea base explícita para comparación."
+    },
+    {
+      "id": "H3",
+      "nombre_corto": "Priorización contextual protege variables críticas",
+      "descripcion": "La priorización contextual de tráfico y comandos preserva latencia y continuidad de variables críticas sin degradar de forma inaceptable las variables no críticas.",
+      "tipo": "control",
+      "estado": "activa",
+      "prioridad": "critica",
+      "variable_independiente_principal": "Política de priorización contextual",
+      "variables_dependientes_clave": [
+        "latencia_de_eventos_criticos",
+        "entrega_de_variables_no_criticas",
+        "equidad_de_servicio"
+      ],
+      "metricas_clave": [
+        "latencia_p95_critica",
+        "delivery_ratio_critico",
+        "degradacion_relativa_no_critica"
+      ],
+      "bloques_asociados": [
+        "B2",
+        "B3",
+        "B4",
+        "B5",
+        "B6"
+      ],
+      "evidencia_disponible": {
+        "teorica": "parcial",
+        "simulacion": "ausente",
+        "experimental": "ausente",
+        "integrada": "ausente"
+      },
+      "criterio_de_soporte": "Soportada si reduce latencia y pérdida de variables críticas bajo carga/intermitencia con impacto aceptable en tráfico secundario.",
+      "notas": "Necesita definir criticidad por escenario de uso."
+    },
+    {
+      "id": "H4",
+      "nombre_corto": "Control degradable mantiene estabilidad útil",
+      "descripcion": "Un esquema de control con modos nominal, degradado y seguro mantiene estabilidad útil del proceso mejor que un esquema sin degradación explícita bajo pérdida de conectividad.",
+      "tipo": "control",
+      "estado": "activa",
+      "prioridad": "alta",
+      "variable_independiente_principal": "Diseño del controlador y lógica de degradación",
+      "variables_dependientes_clave": [
+        "error_de_regulacion",
+        "oscilacion",
+        "cumplimiento_de_restricciones_operativas"
+      ],
+      "metricas_clave": [
+        "IAE",
+        "overshoot",
+        "porcentaje_de_tiempo_en_region_segura"
+      ],
+      "bloques_asociados": [
+        "B3",
+        "B4",
+        "B5",
+        "B6",
+        "B7"
+      ],
+      "evidencia_disponible": {
+        "teorica": "parcial",
+        "simulacion": "ausente",
+        "experimental": "ausente",
+        "integrada": "ausente"
+      },
+      "criterio_de_soporte": "Soportada si el modo degradado mantiene variables dentro de una banda operativa segura más tiempo que la línea base.",
+      "notas": "Importante explicitar límites de seguridad y escenarios de conmutación."
+    },
+    {
+      "id": "H5",
+      "nombre_corto": "Transferencia simulación a experimento es consistente",
+      "descripcion": "Las tendencias observadas en simulación para resiliencia, latencia crítica y recuperación pueden reproducirse experimentalmente con desviaciones aceptables para sostener validez de la arquitectura propuesta.",
+      "tipo": "validacion",
+      "estado": "activa",
+      "prioridad": "alta",
+      "variable_independiente_principal": "Correspondencia entre escenarios simulados y experimentales",
+      "variables_dependientes_clave": [
+        "desviacion_de_metricas",
+        "consistencia_de_tendencias",
+        "robustez_del_modelo"
+      ],
+      "metricas_clave": [
+        "error_relativo_por_metrica",
+        "correlacion_de_ranking_de_escenarios",
+        "consistencia_direccional"
+      ],
+      "bloques_asociados": [
+        "B4",
+        "B5",
+        "B6",
+        "B7"
+      ],
+      "evidencia_disponible": {
+        "teorica": "parcial",
+        "simulacion": "ausente",
+        "experimental": "ausente",
+        "integrada": "ausente"
+      },
+      "criterio_de_soporte": "Soportada si las tendencias principales se conservan y la desviación entre simulación y experimento permanece dentro del margen acordado.",
+      "notas": "Exige disciplina de instrumentación y definición de equivalencias entre escenarios."
+    },
+    {
+      "id": "H6",
+      "nombre_corto": "Perfil urbano de Pachuca aporta valor de diseño",
+      "descripcion": "La caracterización de patrones urbanos de intermitencia y despliegue en la Zona Metropolitana de Pachuca aporta restricciones y escenarios que cambian de forma relevante decisiones de arquitectura y priorización.",
+      "tipo": "integracion",
+      "estado": "activa",
+      "prioridad": "media",
+      "variable_independiente_principal": "Perfil contextual urbano de Pachuca",
+      "variables_dependientes_clave": [
+        "seleccion_de_escenarios",
+        "parametrizacion_de_intermitencia",
+        "relevancia_de_resultados"
+      ],
+      "metricas_clave": [
+        "numero_de_supuestos_reemplazados_por_contexto",
+        "cobertura_de_escenarios_contextuales",
+        "trazabilidad_contexto_a_diseno"
+      ],
+      "bloques_asociados": [
+        "B1",
+        "B2",
+        "B4",
+        "B6",
+        "B7"
+      ],
+      "evidencia_disponible": {
+        "teorica": "parcial",
+        "simulacion": "ausente",
+        "experimental": "ausente",
+        "integrada": "ausente"
+      },
+      "criterio_de_soporte": "Soportada si el contexto local modifica de manera explícita y trazable parámetros, escenarios o decisiones respecto de una formulación genérica.",
+      "notas": "No busca representatividad estadística total de la ciudad, sino relevancia metodológica para el caso de estudio."
+    }
+  ]
+}

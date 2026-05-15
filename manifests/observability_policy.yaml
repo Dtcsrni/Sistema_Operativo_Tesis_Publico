@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "stack": "prometheus_local",
+  "modo": "local_only",
+  "capas": [
+    "filesystem_logs",
+    "journald_soporte",
+    "node_exporter_host_metrics",
+    "textfile_collector_domain_metrics",
+    "prometheus_local_scrape"
+  ],
+  "logs": {
+    "dual_channel": true,
+    "dominios": {
+      "sistema_tesis": "/var/log/tesis-os",
+      "openclaw": "/var/log/openclaw",
+      "edge_iot": "/var/log/edge-iot",
+      "administrativo": "/var/log/tesis-admin"
+    }
+  },
+  "metricas": {
+    "prometheus": {
+      "service": "prometheus.service",
+      "listen": "127.0.0.1:9090",
+      "storage": "/var/lib/prometheus"
+    },
+    "node_exporter": {
+      "service": "prometheus-node-exporter.service",
+      "listen": "127.0.0.1:9100",
+      "textfile_collector_dir": "/var/lib/node_exporter/textfile_collector"
+    },
+    "collector": {
+      "service": "tesis-observabilidad-collector.service",
+      "timer": "tesis-observabilidad-collector.timer",
+      "domain": "administrativo"
+    }
+  }
+}

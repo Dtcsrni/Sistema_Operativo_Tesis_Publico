@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  openclaw-sovereign-core:
+    image: nucleo-openclaw:latest
+    container_name: openclaw-sovereign-core
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    command: ["python", "/workspace/runtime/openclaw/bin/start_sovereign.py"]
+    ports:
+      - "18789:18789"
+    env_file:
+      - config/env/openclaw.env
+    environment:
+      - OPENCLAW_CONTAINER=true
+      - OPENCLAW_WORKSPACE=/workspace
+      - OPENCLAW_REPO_ROOT=/workspace
+      - OPENCLAW_DATA_DIR=/workspace/runtime/openclaw/state
+      - OPENCLAW_CACHE_DIR=/workspace/runtime/openclaw/cache
+      - OPENCLAW_LOG_DIR=/workspace/runtime/openclaw/logs
+      - OPENCLAW_DB_PATH=/workspace/runtime/openclaw/state/openclaw.db
+      - OPENCLAW_HOST=0.0.0.0
+      - OPENCLAW_PORT=18789
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    volumes:
+      # Mapeo del repositorio de tesis
+      -  ruta local no pública 
+      # Persistencia de configuración y llaves
+      -  ruta local no pública 
+    networks:
+      openclaw-net:
+        aliases:
+          - pasarela-openclaw
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:18789/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+networks:
+  openclaw-net:
+    external: true
+    name: siot-network

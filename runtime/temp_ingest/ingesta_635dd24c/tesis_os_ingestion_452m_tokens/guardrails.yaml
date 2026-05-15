@@ -1,0 +1,63 @@
+version: "1.0"
+created_at: "2026-05-01T10:05:42Z"
+purpose: "Reglas de control operativo para agentes IA y delegación local en el sistema operativo de tesis."
+message_metadata_required:
+  - "message_id"
+  - "conversation_id"
+  - "origin"
+  - "origin_agent_id"
+  - "target_agent_id"
+  - "hop_count"
+  - "max_hops"
+  - "ttl_seconds"
+  - "message_hash"
+  - "parent_message_id"
+  - "cost_estimate_usd"
+  - "input_tokens"
+  - "output_tokens"
+loop_control:
+  max_hops_default: 3
+  max_agent_to_agent_replies: 3
+  dedupe_key: "message_hash"
+  ttl_seconds_default: 120
+  drop_if_origin_agent_equals_target_agent: true
+  pause_conversation_if_messages_per_minute_gt: 12
+  kill_switch_if_cost_per_minute_usd_gt: 0.25
+budget_control:
+  global_daily_usd: 2.0
+  global_monthly_usd: 40.0
+  per_agent_daily_usd:
+    investigacion: 1.2
+    soporte: 0.6
+    ventas: 0.8
+    pruebas: 0.3
+  alerts_percent:
+    - 50
+    - 80
+    - 95
+  hard_stop_percent: 100
+model_routing:
+  clasificacion: "modelo_local_pequeno_o_api_barata"
+  extraccion_entidades: "modelo_local_pequeno"
+  busqueda_documental: "rag_local"
+  resumen_largo: "tezkatli_local_primero"
+  codigo_critico: "codex_o_modelo_externo_mas_pruebas"
+  tesis_con_citas: "rag_local_mas_verificacion"
+  hardware_critico: "humano_en_el_circuito"
+metrics:
+  - "cache_hit_ratio"
+  - "tokens_input"
+  - "tokens_output"
+  - "ratio_input_output"
+  - "requests_per_minute"
+  - "cost_per_minute"
+  - "cost_per_agent"
+  - "loops_detected"
+  - "dedupe_drops"
+  - "abstention_rate"
+  - "factuality_score"
+policy:
+  no_unverified_pricing_in_final_reports: true
+  pricing_must_be_revalidated_before_procurement: true
+  no_destructive_shell_commands_without_approval: true
+  no_hardware_action_without_human_validation: true

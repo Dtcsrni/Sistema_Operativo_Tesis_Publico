@@ -1,0 +1,67 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Serena MCP HTTP",
+			"type": "shell",
+			"command": "${workspaceFolder}/.vscode/serena-http.sh",
+			"windows": {
+				"command": "${workspaceFolder}\\.vscode\\serena-http.cmd"
+			},
+			"isBackground": true,
+			"runOptions": {
+				"runOn": "folderOpen"
+			},
+			"problemMatcher": {
+				"owner": "serena-http",
+				"pattern": {
+					"regexp": "^(.*)$",
+					"message": 1
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": ".",
+					"endsPattern": "HTTP_READY"
+				}
+			},
+			"presentation": {
+				"reveal": "never",
+				"panel": "dedicated",
+				"clear": false
+			}
+		},
+		{
+			"label": "Watch Bench Runs",
+			"type": "shell",
+			"command": "${workspaceFolder}\\.venv\\Scripts\\python.exe 07_scripts/benchmarks/watch_runs.py --interval 15",
+			"windows": {
+				"command": "${workspaceFolder}\\python 07_scripts/benchmarks/watch_runs.py --interval 15"
+			},
+			"isBackground": true,
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": false
+			},
+			"runOptions": {
+				"runOn": "folderOpen"
+			}
+		},
+		{
+			"label": "Test: start_backends_auto",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"07_scripts/start_backends_auto_v2.py"
+			]
+		},
+		{
+			"label": "Test: start_backends_auto (final)",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"07_scripts/start_backends_auto.py"
+			]
+		}
+	]
+}

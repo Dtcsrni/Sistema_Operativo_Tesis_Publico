@@ -1,0 +1,83 @@
+{
+  "device": "Orange Pi 5 Plus (RK3588)",
+  "timestamp": "2026-04-27",
+  "hardware_acceleration": "RKLLM v1.2.3 (NPU)",
+  "model": "TinyLlama-1.1B-Chat-v1.0 (w8a8)",
+  "metrics": {
+    "ttft_ms": 150.5,
+    "tps": 18.2,
+    "avg_cpu_usage_pct": 12.5,
+    "avg_ram_usage_mb": 1450.0,
+    "peak_temp_c": 54.2
+  },
+  "stress_resilience": {
+    "burst_concurrency_max": 5,
+    "endurance_stability_pct": 99.5,
+    "context_saturation_penalty_ms": 450.0,
+    "thermal_stability_threshold_c": 65.0
+  },
+  "metrics_per_category": {
+    "critical_decision": {
+      "tps": 9.5,
+      "accuracy": "HIGH"
+    },
+    "iot_extraction": {
+      "tps": 12.2,
+      "accuracy": "PRECISE"
+    },
+    "contextual_rag": {
+      "tps": 10.1,
+      "accuracy": "HIGH"
+    },
+    "embedded_code": {
+      "tps": 8.8,
+      "accuracy": "VALID"
+    }
+  },
+  "isolation_test": "PASSED (Internal Only Network)",
+  "feasibility_analysis": {
+    "larger_models_support": "RK3588 soporta Llama-3-8B (w8a8) con RKLLM.",
+    "estimated_performance_8b": "~3-4 TPS (Aceptable para tareas asncronas)",
+    "estimated_performance_3b": "~8-10 TPS (Ideal para interaccin en tiempo real)",
+    "ram_requirement_8b": "9GB RAM (EXCEDE la capacidad física de 8GB del nodo)",
+    "recommendation": "Migrar a Llama-3.2-3B como límite superior para evitar OOM y permitir concurrencia de otros agentes."
+  },
+  "notes": "Rendimiento estable. Throttling inexistente con ventilacin activa.",
+  "ollama_cpu_benchmark": {
+    "step_id": "validación humana interna no pública",
+    "timestamp": "2026-05-04T10:30:21.916317+00:00",
+    "device": "Orange Pi 5 Plus (RK3588)",
+    "hardware_acceleration": "Ollama CPU (qwen:0.5b)",
+    "model": "qwen:0.5b",
+    "samples": [
+      {
+        "category": "iot_decision",
+        "status": "ok",
+        "latency_ms": 602.5,
+        "tokens_per_second": 0.0,
+        "output_preview": ""
+      },
+      {
+        "category": "edge_reasoning",
+        "status": "ok",
+        "latency_ms": 620.8,
+        "tokens_per_second": 0.0,
+        "output_preview": ""
+      },
+      {
+        "category": "code_gen",
+        "status": "ok",
+        "latency_ms": 544.5,
+        "tokens_per_second": 0.0,
+        "output_preview": ""
+      }
+    ],
+    "summary": {
+      "total": 3,
+      "ok": 3,
+      "avg_tps": 0.0,
+      "avg_latency_ms": 589.3
+    }
+  },
+  "last_updated": "2026-05-04T10:30:21.917318+00:00"
+}
