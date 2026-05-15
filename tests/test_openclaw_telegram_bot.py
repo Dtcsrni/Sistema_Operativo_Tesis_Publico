@@ -101,7 +101,7 @@ def test_status_command_degrades_when_probes_fail(tmp_path: Path, monkeypatch) -
 
     payload = dispatch_command("estado", "", repo_root=ROOT, store=store)
 
-    assert payload["status"] == "ok"
+    assert payload["status"] == "degraded"
     assert "runtime=degraded state=probe_error" in payload["text"]
     assert "runtime_error=probe caido" in payload["text"]
     assert "summary_error=none" in payload["text"]
@@ -163,7 +163,7 @@ def test_status_command_reports_last_backend_busy(tmp_path: Path, monkeypatch) -
     status_payload = dispatch_command("estado", "", repo_root=ROOT, store=store)
 
     assert chat_payload["status"] == "model_error"
-    assert "last_backend_busy=desktop_compute:mistral-nemo:12b" in status_payload["text"]
+    assert "last_backend_busy=llamacpp_local:mistral-nemo:12b" in status_payload["text"]
     assert "count=1" in status_payload["text"]
 
 
@@ -336,13 +336,15 @@ def test_approved_service_restart_executes_allowlisted_systemd(tmp_path: Path, m
 def test_research_uses_desktop_and_degrades_to_edge(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.setenv("OPENCLAW_DOMAINS_ENV_DIR", str(_write_domain_envs(tmp_path)))
     monkeypatch.setenv("OPENCLAW_DESKTOP_COMPUTE_ENABLED", "1")
+    monkeypatch.setenv("OPENCLAW_DESKTOP_RUNTIME", "llamacpp")
+    monkeypatch.setenv("OPENCLAW_DESKTOP_RUNTIME_BASE_URL", "http://127.0.0.1:21434")
     monkeypatch.setenv("OPENCLAW_TELEGRAM_EDGE_MODEL", "qwen3:4b")
     store = OpenClawStore(tmp_path / "openclaw.db")
     calls: list[tuple[str, str]] = []
 
     def fake_generate(*, base_url: str, model: str, prompt: str, timeout_seconds: int = 120):
         calls.append((base_url, model))
-        assert "Evidencia web read-only" in prompt
+        assert "Evidencia web read-only" in prompt or "Fuentes consultadas" in prompt
         if "21434" in base_url:
             return False, "desktop caido"
         return True, "respuesta edge"
@@ -353,6 +355,7 @@ def test_research_uses_desktop_and_degrades_to_edge(tmp_path: Path, monkeypatch)
         return True, ["qwen3:4b", "gemma3:4b"]
 
     monkeypatch.setattr("openclaw_local.telegram_bot.list_available_models", fake_list_available_models)
+    monkeypatch.setattr("openclaw_local.telegram_bot.llamacpp_ready", lambda base_url: "21434" in base_url)
     monkeypatch.setattr("openclaw_local.telegram_bot.llamacpp_generate", fake_generate)
     monkeypatch.setattr(
         "openclaw_local.telegram_bot.web_search",

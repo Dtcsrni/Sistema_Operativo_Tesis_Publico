@@ -63,9 +63,9 @@ jobs:
     permissions:
       pages: write
       id-token: write
-    # environment:
-    #   name: github-pages
-    #   url: ${{ steps.deployment.outputs.page_url }}
+    environment:
+      name: public-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Desplegar sitio público
         id: deployment

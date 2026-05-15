@@ -899,7 +899,7 @@ def _semantic_chat_profile(argument: str, *, repo_root: Path, state: dict[str, A
     max_chars = _env_int("OPENCLAW_CHAT_INTENT_PROMPT_MAX_CHARS", 800, minimum=160, maximum=4000)
     prompt = prompt[:max_chars]
     started = time.perf_counter()
-    ok, response = ollama_generate(
+    ok, response = llamacpp_generate(
         base_url=edge_base,
         model=model,
         prompt=prompt,
@@ -1865,6 +1865,13 @@ def _select_research_runtime(repo_root: Path, argument: str) -> tuple[str, str]:
     if desktop_enabled:
         desktop_request_kind = request_kind if request_kind != "standard" else ""
         desktop_candidates = _provider_measured_candidates(repo_root, desktop_provider, request_kind=desktop_request_kind)
+        for stable in (
+            os.getenv("OPENCLAW_DESKTOP_RUNTIME_MODEL", os.getenv("OPENCLAW_DESKTOP_COMPUTE_MODEL", "mistral-nemo:12b")),
+            "mistral-nemo:12b",
+            "deepseek-r1:7b",
+        ):
+            if stable and stable not in desktop_candidates:
+                desktop_candidates.append(stable)
     edge_candidates = _provider_measured_candidates(repo_root, "edge_inference", request_kind=request_kind)
     if request_kind == "knowledge" and desktop_enabled:
         model = _select_available_model(desktop_base, desktop_candidates, provider=desktop_provider)
@@ -2102,7 +2109,11 @@ def dispatch_command(
     elif command in {"start", "help", "ayuda"}:
         response = {"status": "ok", "text": _help_text()}
     elif command == "estado":
-        response = {"status": "ok", "text": _status_text(repo_root, store)}
+        text = _status_text(repo_root, store)
+        status = "degraded" if "runtime_error=" in text and "runtime_error=none" not in text else "ok"
+        if "preflight=degraded:" in text:
+            status = "degraded"
+        response = {"status": status, "text": text}
     elif command in {"costos", "presupuesto"}:
         response = {"status": "ok", "text": _costs_text()}
     elif command == "calidad":
@@ -2731,7 +2742,7 @@ def _chat_response(
                         timeout_seconds=timeout_seconds,
                     )
                 else:
-                    ok, response = ollama_generate(
+                    ok, response = llamacpp_generate(
                         base_url=candidate.base_url,
                         model=candidate.model,
                         prompt=prompt,
@@ -2805,7 +2816,7 @@ def _chat_response(
             else:
                 send_message(chat_id, f"<i>\u270d\ufe0f Refinando respuesta con <b>{synth_model}</b>...</i>")
                 synth_prompt = _build_chat_synthesis_prompt(argument, response, profile=profile, web=web_evidence)
-                synth_ok, synth_text = ollama_generate(
+                synth_ok, synth_text = llamacpp_generate(
                     base_url=synth_base,
                     model=synth_model,
                     prompt=synth_prompt,
@@ -3192,13 +3203,13 @@ def _research_response(
 
     with ProgressHeartbeat(chat_id, f"<i>🧠 Analizando con <b>{model}</b>...</i>", interval=15.0) as ph:
         provider_started = time.perf_counter()
-        ok, response = ollama_generate(base_url=base_url, model=model, prompt=prompt, timeout_seconds=180)
+        ok, response = llamacpp_generate(base_url=base_url, model=model, prompt=prompt, timeout_seconds=180)
         stage_ms["provider_ms"] = _elapsed_ms(provider_started)
         if not ok:
             fallback = os.getenv("OPENCLAW_TELEGRAM_EDGE_MODEL", "qwen3:4b")
             ph.update(f"<i>⚡ Modelo principal no disponible. Usando <b>{fallback}</b>...</i>")
             provider_started = time.perf_counter()
-            ok, response = ollama_generate(
+            ok, response = llamacpp_generate(
                 base_url=os.getenv("OPENCLAW_EDGE_OLLAMA_BASE_URL", "http://127.0.0.1:11434"),
                 model=fallback,
                 prompt=prompt,
@@ -3227,7 +3238,7 @@ def _research_response(
             else:
                 ph.update("<i>✍️ Redactando respuesta final...</i>")
             synth_prompt = _build_synthesis_prompt(argument, response, web=web)
-            synth_ok, synth_text = ollama_generate(
+            synth_ok, synth_text = llamacpp_generate(
                 base_url=synth_base,
                 model=synth_model,
                 prompt=synth_prompt,
