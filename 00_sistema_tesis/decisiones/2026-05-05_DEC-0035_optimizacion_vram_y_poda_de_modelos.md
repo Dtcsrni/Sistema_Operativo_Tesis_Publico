@@ -40,7 +40,7 @@ Se procede a la "Poda Tecnológica" de los siguientes modelos y sus artefactos r
 - **[AUD]:** Validación vía build_all.py / operabilidad humana
 
 
-[LID]:  ruta local no pública /00_sistema_tesis/decisiones/2026-05-05_DEC-0035_optimizacion_vram_y_poda_de_modelos.md
+[LID]:  ruta local no pública 
 [GOV]: AGENTS.md
 [AUD]: build_all.py
 

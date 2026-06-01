@@ -47,7 +47,7 @@ Se autoriza la ejecución controlada de modelos de hasta **7B parámetros** (esp
 - **[AUD]:** Validación vía build_all.py / operabilidad humana
 
 
-[LID]:  ruta local no pública /00_sistema_tesis/decisiones/2026-05-05_DEC-0036_restriccion_ram_edge.md
+[LID]:  ruta local no pública 
 [GOV]: AGENTS.md
 [AUD]: build_all.py
 

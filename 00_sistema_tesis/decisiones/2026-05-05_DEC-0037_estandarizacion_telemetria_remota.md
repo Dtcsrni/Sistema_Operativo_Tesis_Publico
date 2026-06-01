@@ -45,7 +45,7 @@ Se formaliza el **Sistema de Notificaciones de Progreso** como una función bás
 - **[AUD]:** Validación vía build_all.py / operabilidad humana
 
 
-[LID]:  ruta local no pública /00_sistema_tesis/decisiones/2026-05-05_DEC-0037_estandarizacion_telemetria_remota.md
+[LID]:  ruta local no pública 
 [GOV]: AGENTS.md
 [AUD]: build_all.py
 

@@ -225,7 +225,7 @@ Resultado: ✓ routing correcto, sin spillover
 - **[AUD]:** Validación vía build_all.py / operabilidad humana
 
 
-[LID]:  ruta local no pública /00_sistema_tesis/decisiones/2026-05-07_DEC-0038_opencode_executor_subordinado.md
+[LID]:  ruta local no pública 
 [GOV]: AGENTS.md
 [AUD]: build_all.py
 
