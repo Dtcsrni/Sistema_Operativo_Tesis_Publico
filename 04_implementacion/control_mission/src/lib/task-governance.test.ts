@@ -12,6 +12,8 @@ import {
   getFailureCountInStage,
 } from './task-governance';
 
+import fs from 'node:fs';
+
 const seededTaskIds: string[] = [];
 
 function seedTask(id: string, workspace = 'default') {
@@ -53,6 +55,51 @@ test('evidence gate requires deliverable + activity', () => {
   );
 
   assert.equal(hasStageEvidence(taskId), true);
+});
+
+test('hasStageEvidence verifies physical file existence and non-zero size', () => {
+  const taskId = crypto.randomUUID();
+  seedTask(taskId);
+
+  // Deliverable with non-existent path
+  const nonExistentPath = 'non_existent_file_test.txt';
+  run(
+    `INSERT INTO task_deliverables (id, task_id, deliverable_type, title, path, created_at)
+     VALUES (lower(hex(randomblob(16))), ?, 'file', 'index.html', ?, datetime('now'))`,
+    [taskId, nonExistentPath]
+  );
+
+  run(
+    `INSERT INTO task_activities (id, task_id, activity_type, message, created_at)
+     VALUES (lower(hex(randomblob(16))), ?, 'completed', 'did thing', datetime('now'))`,
+    [taskId]
+  );
+
+  // non-existent file should be invalid
+  assert.equal(hasStageEvidence(taskId), false);
+
+  // Create empty file (0 bytes)
+  const emptyPath = 'empty_test_file.txt';
+  fs.writeFileSync(emptyPath, '');
+
+  run(
+    `UPDATE task_deliverables SET path = ? WHERE task_id = ?`,
+    [emptyPath, taskId]
+  );
+
+  // empty file should be invalid
+  assert.equal(hasStageEvidence(taskId), false);
+
+  // Write content to file (> 0 bytes)
+  fs.writeFileSync(emptyPath, 'evidence report data');
+
+  // non-empty file should be valid
+  assert.equal(hasStageEvidence(taskId), true);
+
+  // Clean up
+  try {
+    fs.unlinkSync(emptyPath);
+  } catch {}
 });
 
 test('task cannot be done when status_reason indicates failure', () => {

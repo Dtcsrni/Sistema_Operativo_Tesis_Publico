@@ -23,7 +23,7 @@
     "base_url": "http://127.0.0.1:11434",
     "model": "qwen3:4b",
     "probe_status": "unavailable",
-    "probe_latency_ms": 2039.284,
+    "probe_latency_ms": 2035.277,
     "probe_error": "URLError:<urlopen error timed out>"
   },
   "llamacpp": {
@@ -38,7 +38,7 @@
     "fallback_used": false,
     "model": "DeepSeek-R1-Distill-Qwen-7B-Q4_K_M.gguf",
     "probe_status": "unavailable",
-    "probe_latency_ms": 2014.068,
+    "probe_latency_ms": 2015.953,
     "probe_error": "URLError:<urlopen error timed out>"
   },
   "desktop_compute": {
@@ -53,7 +53,7 @@
     "fallback_used": false,
     "model": "DeepSeek-R1-Distill-Qwen-7B-Q4_K_M.gguf",
     "probe_status": "unavailable",
-    "probe_latency_ms": 2014.068,
+    "probe_latency_ms": 2015.953,
     "probe_error": "URLError:<urlopen error timed out>"
   },
   "npu": {
@@ -74,8 +74,8 @@
     },
     "disk": {
       "total_bytes": 240055742464,
-      "used_bytes": 128660377600,
-      "free_bytes": 111395364864,
+      "used_bytes": 128681914368,
+      "free_bytes": 111373828096,
       "rootfs_device": "",
       "rootfs_fstype": "",
       "rootfs_on_nvme": false

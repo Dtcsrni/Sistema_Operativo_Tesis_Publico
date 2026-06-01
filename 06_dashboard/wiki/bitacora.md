@@ -350,7 +350,17 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
 
 ### Índices maestros
 
-- **Total de registros de validación:** `152`
+- **Total de registros de validación:** `153`
+
+??? "2026-06 — 1 validación(es)"
+
+    **[validación humana interna no pública] Registro 1 del mes**
+
+    - **Fecha:** `2026-06-01`
+    - **Decisión o referencia:** `PET-7d715d3b` (referencia operativa interna no enlazable)
+    - **Nivel de auditoría:** `MEDIO`
+    - **Disparador resumido:** integra el contexto de este pet
+    - **Confirmación resumida:** integra el contexto de este pet
 
 ??? "2026-05 — 55 validación(es)"
 

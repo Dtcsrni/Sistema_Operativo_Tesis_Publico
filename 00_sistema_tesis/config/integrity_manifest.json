@@ -1,5 +1,5 @@
 {
-    "00_sistema_tesis/canon/events.jsonl": "db6d7e82628d4076895627cbc02a5754a48496b400b02882c49feda34bd4ed5e",
+    "00_sistema_tesis/canon/events.jsonl": "6439144171813c0cd2f21f99829008dc6d7d23840d211f433672b5f6d0cd8dcf",
     "00_sistema_tesis/config/POLITICA_BACKUPS_V2.md": "c20a4ce66697402c30ed565aff3bb3fe687f2fb17bf1e29d09e1850c3143391a",
     "identidad técnica no publicada por seguridad": "a533526689e9c74e24911b91b80d93390ae1c2b8c6c44c8c8434e0101a737fb4",
     "00_sistema_tesis/config/ia_gobernanza.yaml": "3ed929391a6c625eb3bdd7ca38dbe9129c851d3ec07a01cccb4942f31a627640",
@@ -45,6 +45,7 @@
     "00_sistema_tesis/decisiones/2026-05-15_DEC-0045_migracion_infraestructura_docker_total.md": "f021aa91a923043f1ecc2f35a290bcbddddc111d7228844a99ae0bd82653a4de",
     "00_sistema_tesis/decisiones/2026-05-21_DEC-0046_arquitectura_abierta_autodescubrimiento_viabilidad_comercial.md": "68c03f2bcd7e1cb7510a66462a9f4bfa5c9d583745d3124e5a9eef3436219851",
     "00_sistema_tesis/decisiones/2026-05-29_DEC-0047_desacoplamiento_serena_mcp_del_siot.md": "1fd16e4930ddb21a986bd198c4684ece1511d8a43779712ae2d6484a427118ae",
+    "00_sistema_tesis/decisiones/2026-06-01_DEC-0048_adopcion_harness_engineering_agnostico.md": "3dcc0c5d84b0468006f7d3465de733a994258520b84aa86fa1d440b05a73fc24",
     "00_sistema_tesis/pendientes/ISSUE-0046_plan_maestro_arquitectura_distribuida_contextual.md": "ebc3f021a5b67fbaab9941d7b8314ede06386b6d19124599d93ed591a17b0c1d",
     "00_sistema_tesis/politicas/01_limpieza_y_backup.md": "f1ccca413f35bfcae287dead862655bb5f5638416365724384f3e79b23d254ea",
     "00_sistema_tesis/reportes_semanales/RESUMEN_INTEGRACION_OPENCODE_2026-05-07.md": "363540a41a890bea4d16517fb2b855585d3fcf4bffd8e67ba6193b8ca125967e",
