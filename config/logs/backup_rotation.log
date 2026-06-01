@@ -817,3 +817,15 @@
 [2026-06-01 02:24:15,752] INFO: - matriz_trazabilidad.md.20260507T041421Z.bak.gz | riesgo=critico | edad_dias=17.2 | size_kb=6.5
 [2026-06-01 02:24:15,752] INFO: - docker-compose.yml.20260513041323.bak.gz | riesgo=operativo | edad_dias=10.9 | size_kb=2.5
 [2026-06-01 02:24:15,752] INFO: - openclaw.env.20260513040619.bak.gz | riesgo=alto | edad_dias=10.9 | size_kb=1.2
+[2026-06-01 02:59:14,307] INFO: Detectados 13 backups en V:\Sistema_Operativo_Tesis_Posgrado\config\backups
+[2026-06-01 02:59:14,309] INFO: [BACKUP-ROTATE] Modo: DRY-RUN | Archivos: 13 -> 4 | MB: 0.21 -> 0.01
+[2026-06-01 02:59:14,309] INFO: [BACKUP-ROTATE] Candidatos a borrar: 9
+[2026-06-01 02:59:14,309] INFO: - 00_sistema_tesis_canon_events.jsonl.20260504_025840.bak.gz | riesgo=critico | edad_dias=28.0 | size_kb=110.1
+[2026-06-01 02:59:14,309] INFO: - 00_sistema_tesis_decisiones_2026-05-02_DEC-0031_adopcion_mission_control.md.20260504_025840.bak.gz | riesgo=critico | edad_dias=28.0 | size_kb=1.5
+[2026-06-01 02:59:14,309] INFO: - 00_sistema_tesis_decisiones_2026-05-02_DEC-0032_arquitectura_ingesta_consumption_pets.md.20260504_025840.bak.gz | riesgo=critico | edad_dias=28.0 | size_kb=2.7
+[2026-06-01 02:59:14,309] INFO: - log_sesiones_trabajo_registradas.md.20260514_165200.bak.gz | riesgo=critico | edad_dias=17.4 | size_kb=41.9
+[2026-06-01 02:59:14,309] INFO: - Dockerfile.tablero-gobernanza.20260514_backup.bak.gz | riesgo=operativo | edad_dias=17.2 | size_kb=1.0
+[2026-06-01 02:59:14,309] INFO: - log_sesiones_trabajo_registradas.md.20260507T041421Z.bak.gz | riesgo=critico | edad_dias=17.2 | size_kb=42.0
+[2026-06-01 02:59:14,309] INFO: - matriz_trazabilidad.md.20260507T041421Z.bak.gz | riesgo=critico | edad_dias=17.2 | size_kb=6.5
+[2026-06-01 02:59:14,309] INFO: - docker-compose.yml.20260513041323.bak.gz | riesgo=operativo | edad_dias=11.0 | size_kb=2.5
+[2026-06-01 02:59:14,309] INFO: - openclaw.env.20260513040619.bak.gz | riesgo=alto | edad_dias=11.0 | size_kb=1.2

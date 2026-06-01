@@ -1,6 +1,6 @@
 {
   "schema_version": "siot-observability-dashboard-v1",
-  "generated_at": "2026-06-01T08:24:03+00:00",
+  "generated_at": "2026-06-01T08:59:04+00:00",
   "mode": "public",
   "access": {
     "private_lan": false,
@@ -128,7 +128,7 @@
     "status": "ok",
     "bundle_path": "06_dashboard/publico/",
     "manifest_exists": true,
-    "age_seconds": 503,
+    "age_seconds": 2087,
     "files": 0,
     "source": "06_dashboard/publico/manifest_publico.json"
   },
@@ -180,8 +180,8 @@
     {
       "path": "00_sistema_tesis/config/openclaw_status.json",
       "exists": true,
-      "sha256": "53d9230283ea785fa6c75b0549e76db2c8db3ff6640389517eea41146ade115b",
-      "updated_at": "2026-06-01T08:15:38+00:00"
+      "sha256": "fa292afaafbf326edea1d8dc2073c48bb465156c93397fb2cc17387b8b24967b",
+      "updated_at": "2026-06-01T08:24:14+00:00"
     },
     {
       "path": "runtime/pc_control/benchmarks/index.json",
@@ -198,8 +198,8 @@
     {
       "path": "06_dashboard/publico/manifest_publico.json",
       "exists": true,
-      "sha256": "766eaa144076c37de0f25dfbad3242e97606cd108784f3c3faad299ad3dfd5ad",
-      "updated_at": "2026-06-01T08:15:39+00:00"
+      "sha256": "1580d319b5964fc9c1b9d78e28dc741cbdddc4ec169ca768795afddfbfb79c62",
+      "updated_at": "2026-06-01T08:24:17+00:00"
     }
   ]
 }
