@@ -1,0 +1,58 @@
+# Dockerfile para opencode-executor — Executor subordinado con DeepSeek
+# Basado en python:3.11-slim + OpenCode CLI
+
+FROM python:3.11-slim
+
+LABEL maintainer="Erick Renato Vega Ceron"
+LABEL description="OpenCode Executor Subordinado — Ejecución de tareas complejas con RAG Weaviate"
+LABEL version="1.0"
+
+# Instalar dependencias del sistema
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    git \
+    nodejs \
+    npm \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Instalar OpenCode CLI desde npm
+RUN npm install -g opencode-ai
+
+# Dependencias Python auxiliares
+RUN pip install --upgrade pip setuptools wheel && \
+    pip install litellm requests pydantic google-genai
+
+# Crear estructura de directorios
+RUN mkdir -p /app/runtime/workspaces /app/runtime/logs /app/runtime/cache
+
+# Copiar scripts necesarios
+COPY 07_scripts/preflight_rag_mandatory.py /app/07_scripts/
+COPY 07_scripts/*.py /app/07_scripts/
+COPY opencode.json /app/opencode.json
+
+# Copiar adaptadores/providers
+COPY runtime/providers /app/runtime/providers
+
+
+# Variables de entorno
+ENV OPENCLAW_REPO_ROOT=/app
+ENV OPENCLAW_DATA_DIR=/app/runtime/openclaw/state
+ENV OPENCLAW_CACHE_DIR=/app/runtime/openclaw/cache
+ENV OPENCLAW_LOG_DIR=/app/runtime/openclaw/logs
+ENV PYTHONUNBUFFERED=1
+
+# Modelo por defecto: DeepSeek vía endpoint OpenAI-compatible local
+ENV OPENCODE_MODEL=deepseek-r1:7b
+ENV OPENCODE_PROVIDER=openai-compatible
+ENV OPENCODE_BASE_URL=http://inferencia-llamacpp:8080/v1
+ENV OPENCODE_CONFIG=/app/opencode.json
+
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=20s \
+    CMD opencode --version || exit 1
+
+WORKDIR /app
+
+# Default: servidor headless de OpenCode para ejecución subordinada
+CMD ["opencode", "serve", "--hostname", "0.0.0.0", "--port", "4096"]

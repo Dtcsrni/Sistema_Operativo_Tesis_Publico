@@ -1,0 +1,9 @@
+{
+  "platform": "Windows-11-10.0.26200-SP0",
+  "machine": "AMD64",
+  "processor": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+  "python_version": "3.12.10",
+  "cpu_count": 16,
+  "memory_total": 17087643648,
+  "swap_total": 40264634368
+}

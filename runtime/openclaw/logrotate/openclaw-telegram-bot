@@ -1,0 +1,9 @@
+/var/log/openclaw/openclaw-telegram-bot.log {
+    weekly
+    rotate 8
+    compress
+    missingok
+    notifempty
+    copytruncate
+    create 0640 openclaw openclaw
+}

@@ -1,0 +1,108 @@
+{
+    "timestamp": "2026-04-27",
+    "hardware": "Desktop PC (Control Node)",
+    "processor": "High-End CPU/GPU Baseline",
+    "model": "Llama-3.2-3B-Instruct (Baseline Reference)",
+    "results": [
+        {
+            "category": "decision",
+            "task": "Decisi\u00f3n Cr\u00edtica",
+            "mean_latency_ms": 34.48,
+            "std_dev_lat": 3.24,
+            "moe_lat": 0.9,
+            "p95_latency": 38.36,
+            "p99_latency": 41.43,
+            "mean_tps": 45.3,
+            "sample_size": 50,
+            "env": {
+                "os": "Windows",
+                "os_release": "11",
+                "architecture": "AMD64",
+                "python_version": "3.14.3 (main, Feb  5 2026, 13:35:35)  [MINGW GCC 15.2.0 64 bit (AMD64)]",
+                "processor": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+                "timestamp_start": "2026-04-27T22:43:28.605517"
+            },
+            "integrity_hash": "e8fef6667b33132deb38a956177e78ff13905f7a299d9137ebf09816f0d93bda"
+        },
+        {
+            "category": "extraction",
+            "task": "Extracci\u00f3n IoT",
+            "mean_latency_ms": 24.22,
+            "std_dev_lat": 2.75,
+            "moe_lat": 0.76,
+            "p95_latency": 27.65,
+            "p99_latency": 29.79,
+            "mean_tps": 59.47,
+            "sample_size": 50,
+            "env": {
+                "os": "Windows",
+                "os_release": "11",
+                "architecture": "AMD64",
+                "python_version": "3.14.3 (main, Feb  5 2026, 13:35:35)  [MINGW GCC 15.2.0 64 bit (AMD64)]",
+                "processor": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+                "timestamp_start": "2026-04-27T22:44:28.985574"
+            },
+            "integrity_hash": "724e884d3d02012d7739642f2f98a723698afcfb2c17fd8183b01f1cd5a564f6"
+        },
+        {
+            "category": "rag",
+            "task": "RAG Contextual",
+            "mean_latency_ms": 25.71,
+            "std_dev_lat": 2.42,
+            "moe_lat": 0.67,
+            "p95_latency": 29.36,
+            "p99_latency": 30.21,
+            "mean_tps": 60.0,
+            "sample_size": 50,
+            "env": {
+                "os": "Windows",
+                "os_release": "11",
+                "architecture": "AMD64",
+                "python_version": "3.14.3 (main, Feb  5 2026, 13:35:35)  [MINGW GCC 15.2.0 64 bit (AMD64)]",
+                "processor": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+                "timestamp_start": "2026-04-27T22:45:29.335087"
+            },
+            "integrity_hash": "0d667ac1a7eebc7d4b2fb7dc48cc05533f607034b5e9c192cea6782dea87af53"
+        },
+        {
+            "category": "code",
+            "task": "L\u00f3gica Embebida",
+            "mean_latency_ms": 24.99,
+            "std_dev_lat": 2.46,
+            "moe_lat": 0.68,
+            "p95_latency": 27.86,
+            "p99_latency": 30.27,
+            "mean_tps": 60.57,
+            "sample_size": 50,
+            "env": {
+                "os": "Windows",
+                "os_release": "11",
+                "architecture": "AMD64",
+                "python_version": "3.14.3 (main, Feb  5 2026, 13:35:35)  [MINGW GCC 15.2.0 64 bit (AMD64)]",
+                "processor": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+                "timestamp_start": "2026-04-27T22:46:29.681581"
+            },
+            "integrity_hash": "409ba2e11a50917a6652c282e4f20558374b5f469bda73de1dc3b0e8a96d18ed"
+        },
+        {
+            "category": "heavy_reasoning",
+            "task": "Razonamiento Soberano Complejo",
+            "mean_latency_ms": 1202.14,
+            "std_dev_lat": 47.08,
+            "moe_lat": 13.05,
+            "p95_latency": 1267.83,
+            "p99_latency": 1292.1,
+            "mean_tps": 4.23,
+            "sample_size": 50,
+            "env": {
+                "os": "Windows",
+                "os_release": "11",
+                "architecture": "AMD64",
+                "python_version": "3.14.3 (main, Feb  5 2026, 13:35:35)  [MINGW GCC 15.2.0 64 bit (AMD64)]",
+                "processor": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+                "timestamp_start": "2026-04-27T22:47:29.984683"
+            },
+            "integrity_hash": "e173f1763f184a6c37e41e1cb8c0ec6a539985f1d1fdafdecb5a826e79d0dace"
+        }
+    ]
+}

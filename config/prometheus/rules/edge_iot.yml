@@ -1,0 +1,93 @@
+# ============================================================
+# Reglas de Alertas: Dominio edge_iot
+# Referencia: T-033 / DEC-0046 / validación humana interna no pública
+# ============================================================
+
+groups:
+  - name: edge_iot.availability
+    interval: 30s
+    rules:
+      # ── Nodo Edge sin enviar métricas (puede estar offline)
+      # IMPORTANTE: "sin métricas" != "caído". El Edge puede estar
+      # funcionando offline. Esta alerta activa la investigación,
+      # no implica fallo total. (Tesis: evidencia de intermitencia)
+      - alert: EdgeNodeSilent
+        expr: |
+          (time() - max by (node_id) (
+            timestamp(siot_edge_system_cpu_time_seconds_total{dominio="edge_iot"})
+          )) > 300
+        for: 2m
+        labels:
+          severity: warning
+          dominio: edge_iot
+        annotations:
+          summary: "Nodo Edge sin telemetría por >5 minutos"
+          description: "El nodo {{ $labels.node_id }} no ha enviado métricas en {{ $value | humanizeDuration }}. Posible escenario de intermitencia urbana o fallo."
+          runbook: "Verificar conectividad. Si el Edge opera en modo offline, esto es comportamiento esperado documentado en el experimento."
+
+      # ── Edge reconectado tras silencio (evento de interés para la tesis)
+      - alert: EdgeNodeReconnected
+        expr: |
+          (time() - max by (node_id) (
+            timestamp(siot_edge_system_cpu_time_seconds_total{dominio="edge_iot"})
+          )) < 60
+          AND
+          (time() - max by (node_id) (
+            timestamp(siot_edge_system_cpu_time_seconds_total{dominio="edge_iot"}) offset 5m
+          )) > 300
+        labels:
+          severity: info
+          dominio: edge_iot
+        annotations:
+          summary: "Nodo Edge reconectado al Hub"
+          description: "El nodo {{ $labels.node_id }} ha reestablecido telemetría. Buffer local enviado al Hub."
+
+  - name: edge_iot.resources
+    interval: 60s
+    rules:
+      # ── RAM crítica en el Edge (afecta inferencia NPU)
+      - alert: EdgeHighMemory
+        expr: |
+          (
+            siot_edge_system_memory_usage_bytes{dominio="edge_iot", state="used"}
+            /
+            siot_edge_system_memory_usage_bytes{dominio="edge_iot", state="total"}
+          ) > 0.90
+        for: 3m
+        labels:
+          severity: critical
+          dominio: edge_iot
+        annotations:
+          summary: "RAM del Edge al {{ $value | humanizePercentage }}"
+          description: "Uso de memoria crítico en {{ $labels.node_id }}. Riesgo de OOM para el proceso RKLLM/NPU."
+
+      # ── CPU sostenida alta (inferencia pesada o loop infinito)
+      - alert: EdgeHighCPU
+        expr: |
+          avg by (node_id) (
+            rate(siot_edge_system_cpu_time_seconds_total{dominio="edge_iot", state!="idle"}[5m])
+          ) > 0.85
+        for: 5m
+        labels:
+          severity: warning
+          dominio: edge_iot
+        annotations:
+          summary: "CPU del Edge sostenida >85% por 5 minutos"
+          description: "Nodo {{ $labels.node_id }} con CPU alta. Verificar carga de inferencia NPU."
+
+  - name: edge_iot.sensors
+    interval: 60s
+    rules:
+      # ── Sensor MQTT sin reportar (BLE desconectado o batería agotada)
+      - alert: SensorSilent
+        expr: |
+          (time() - max by (sensor_id) (
+            timestamp(siot_edge_mqtt_sensor_reading_total{dominio="edge_iot"})
+          )) > 600
+        for: 1m
+        labels:
+          severity: warning
+          dominio: edge_iot
+        annotations:
+          summary: "Sensor {{ $labels.sensor_id }} sin datos por >10 minutos"
+          description: "El sensor IoT {{ $labels.sensor_id }} no ha reportado lecturas. Verificar batería o enlace BLE."

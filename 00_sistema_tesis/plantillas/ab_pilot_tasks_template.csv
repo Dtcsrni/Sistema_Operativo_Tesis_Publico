@@ -1,0 +1,2 @@
+task_id,task_type,baseline_complexity,serena_input_tokens,serena_output_tokens,serena_cost_usd,serena_latency_ms,serena_accepted,serena_gate_failures,serena_rework
+T-017,documentacion,baja,1200,500,0.032,3000,True,0,False

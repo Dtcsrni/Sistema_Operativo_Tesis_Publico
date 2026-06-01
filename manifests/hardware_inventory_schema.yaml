@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "campos": [
+    "id",
+    "componente",
+    "fabricante",
+    "modelo",
+    "voltaje",
+    "corriente",
+    "interfaz",
+    "datasheet",
+    "estado",
+    "riesgo"
+  ]
+}

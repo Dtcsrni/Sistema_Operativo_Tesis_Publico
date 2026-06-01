@@ -1,0 +1,209 @@
+2026-05-04T21:03:42-0600 Watcher started; polling runtime\pc_control\benchmarks\runs every 15s
+2026-05-04T21:03:42-0600 New run_summary: BENCH-20260428T090330Z-380c8922 model=mistral-nemo:12b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260428T090330Z-380c8922.jsonl
+2026-05-04T21:03:42-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:42-0600 New run_summary: BENCH-20260428T090540Z-4e55540b model=mistral-nemo:12b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260428T090540Z-4e55540b.jsonl
+2026-05-04T21:03:43-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:43-0600 New run_summary: BENCH-20260428T090605Z-73703015 model=mistral-nemo:12b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260428T090605Z-73703015.jsonl
+2026-05-04T21:03:43-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:43-0600 New run_summary: BENCH-20260428T090631Z-2f0dd55b model=mistral-nemo:12b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260428T090631Z-2f0dd55b.jsonl
+2026-05-04T21:03:43-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:43-0600 New run_summary: BENCH-20260428T090657Z-5ad2a14d model=mistral-nemo:12b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260428T090657Z-5ad2a14d.jsonl
+2026-05-04T21:03:43-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:43-0600 New run_summary: BENCH-20260428T090721Z-d9e43fa4 model=mistral-nemo:12b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260428T090721Z-d9e43fa4.jsonl
+2026-05-04T21:03:43-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:43-0600 New run_summary: BENCH-20260428T104201Z-9cc91858 model=mistral-nemo:12b status=blocked_missing_model file=runtime\pc_control\benchmarks\runs\BENCH-20260428T104201Z-9cc91858.jsonl
+2026-05-04T21:03:44-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:44-0600 New run_summary: BENCH-20260428T104254Z-8cc3139d model=mistral-nemo:12b status=blocked_missing_model file=runtime\pc_control\benchmarks\runs\BENCH-20260428T104254Z-8cc3139d.jsonl
+2026-05-04T21:03:44-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:44-0600 New run_summary: BENCH-20260428T110619Z-895c8e74 model=mistral-nemo:12b status=partial_failure file=runtime\pc_control\benchmarks\runs\BENCH-20260428T110619Z-895c8e74.jsonl
+2026-05-04T21:03:44-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:44-0600 New run_summary: BENCH-20260428T125022Z-6c20e739 model=mistral-nemo:12b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260428T125022Z-6c20e739.jsonl
+2026-05-04T21:03:44-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:44-0600 New run_summary: BENCH-20260428T125052Z-67031fec model=mistral-nemo:12b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260428T125052Z-67031fec.jsonl
+2026-05-04T21:03:44-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:44-0600 New run_summary: BENCH-20260428T131432Z-dc957885 model=mistral-nemo:12b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260428T131432Z-dc957885.jsonl
+2026-05-04T21:03:44-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:44-0600 New run_summary: BENCH-20260504T102545Z-9ca2f0cd model=mistral-nemo:12b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260504T102545Z-9ca2f0cd.jsonl
+2026-05-04T21:03:44-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:44-0600 New run_summary: BENCH-20260504T203536Z-6cf3824f model=mistral-nemo:12b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260504T203536Z-6cf3824f.jsonl
+2026-05-04T21:03:45-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:45-0600 New run_summary: BENCH-20260504T204543Z-0659a15f model=qwen2.5:7b-instruct status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260504T204543Z-0659a15f.jsonl
+2026-05-04T21:03:45-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:45-0600 New run_summary: BENCH-20260504T204752Z-f1abe999 model=qwen2.5:7b-instruct status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260504T204752Z-f1abe999.jsonl
+2026-05-04T21:03:45-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:45-0600 New run_summary: BENCH-20260505T022952Z-df108780 model=qwen3:4b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260505T022952Z-df108780.jsonl
+2026-05-04T21:03:45-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:45-0600 New run_summary: BENCH-20260505T023034Z-391ddf4c model=mistral-nemo:12b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260505T023034Z-391ddf4c.jsonl
+2026-05-04T21:03:45-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:45-0600 New run_summary: BENCH-20260505T023656Z-0a6d1b6e model=qwen3:4b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260505T023656Z-0a6d1b6e.jsonl
+2026-05-04T21:03:46-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:46-0600 New run_summary: BENCH-20260505T024007Z-0ce30e49 model=hermes3:8b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260505T024007Z-0ce30e49.jsonl
+2026-05-04T21:03:46-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:03:46-0600 New run_summary: BENCH-20260505T024651Z-938f7197 model=qwen2.5-coder:14b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260505T024651Z-938f7197.jsonl
+2026-05-04T21:03:46-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:14:49-0600 New run_summary: BENCH-20260505T025913Z-d056f852 model=phi4:14b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260505T025913Z-d056f852.jsonl
+2026-05-04T21:14:49-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:19:20-0600 Watcher started; polling runtime\pc_control\benchmarks\runs every 15s
+2026-05-04T21:19:20-0600 Expecting models: phi4:14b, qwen3:14b, hermes3:3b, qwen2.5:1.5b, qwen2.5:0.5b
+2026-05-04T21:24:36-0600 Watcher started; polling runtime\pc_control\benchmarks\runs every 15s
+2026-05-04T21:24:36-0600 Expecting models: phi4:14b, qwen3:14b, hermes3:3b, qwen2.5:1.5b, qwen2.5:0.5b
+2026-05-04T21:32:08-0600 New run_summary: BENCH-20260505T031435Z-b9bbddf7 model=qwen3:14b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260505T031435Z-b9bbddf7.jsonl
+2026-05-04T21:32:08-0600 New run_summary: BENCH-20260505T031435Z-b9bbddf7 model=qwen3:14b status=ok
+2026-05-04T21:32:08-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:32:08-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:33:38-0600 Watcher started; polling runtime\pc_control\benchmarks\runs every 15s
+2026-05-04T21:33:38-0600 Expecting models: phi4:14b, qwen3:14b, hermes3:3b, qwen2.5:1.5b, qwen2.5:0.5b
+2026-05-04T21:35:30-0600 Telegram progress error: unsupported format string passed to NoneType.__format__
+2026-05-04T21:35:43-0600 Telegram progress error: send_message() got an unexpected keyword argument 'parse_mode'
+2026-05-04T21:36:39-0600 New run_summary: BENCH-20260505T033154Z-235b7aa4 model=qwen3:4b status=ok
+2026-05-04T21:36:39-0600 New run_summary: BENCH-20260505T033154Z-235b7aa4 model=qwen3:4b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260505T033154Z-235b7aa4.jsonl
+2026-05-04T21:36:39-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:36:39-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:36:39-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:37:42-0600 Watcher started; polling runtime\pc_control\benchmarks\runs every 15s
+2026-05-04T21:37:42-0600 Expecting models: phi4:14b, qwen3:14b, hermes3:3b, qwen2.5:1.5b, qwen2.5:0.5b
+2026-05-04T21:40:26-0600 New run_summary: BENCH-20260505T033637Z-a3a1347e model=hermes3:3b status=ok
+2026-05-04T21:40:26-0600 New run_summary: BENCH-20260505T033637Z-a3a1347e model=hermes3:3b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260505T033637Z-a3a1347e.jsonl
+2026-05-04T21:40:26-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:40:27-0600 New run_summary: BENCH-20260505T033637Z-a3a1347e model=hermes3:3b status=ok
+2026-05-04T21:40:27-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:42:26-0600 New run_summary: BENCH-20260505T034015Z-3eda83e8 model=qwen2.5:1.5b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260505T034015Z-3eda83e8.jsonl
+2026-05-04T21:42:26-0600 New run_summary: BENCH-20260505T034015Z-3eda83e8 model=qwen2.5:1.5b status=ok
+2026-05-04T21:42:26-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:42:26-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:42:27-0600 New run_summary: BENCH-20260505T034015Z-3eda83e8 model=qwen2.5:1.5b status=ok
+2026-05-04T21:42:27-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:43:17-0600 Watcher started; polling runtime\pc_control\benchmarks\runs every 15s
+2026-05-04T21:43:17-0600 Expecting models: phi4:14b, qwen3:14b, hermes3:3b, qwen2.5:1.5b, qwen2.5:0.5b
+2026-05-04T21:43:18-0600 Telegram startup notify sent: {'status': 'sent', 'detail': 'sent', 'message_id': 870}
+2026-05-04T21:43:26-0600 New run_summary: BENCH-20260505T034215Z-1e2c138c model=qwen2.5:0.5b status=ok file=runtime\pc_control\benchmarks\runs\BENCH-20260505T034215Z-1e2c138c.jsonl
+2026-05-04T21:43:26-0600 New run_summary: BENCH-20260505T034215Z-1e2c138c model=qwen2.5:0.5b status=ok
+2026-05-04T21:43:26-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:43:33-0600 New run_summary: BENCH-20260505T034215Z-1e2c138c model=qwen2.5:0.5b status=ok
+2026-05-04T21:43:33-0600 Updated CSV via 07_scripts\benchmarks\collect_run_summaries.py
+2026-05-04T21:43:33-0600 Failed to send model completion telegram: name 'latency' is not defined
+2026-05-04T21:43:33-0600 Telegram final notify: {'status': 'sent', 'detail': 'sent', 'message_id': 871}
+2026-05-04T21:45:04-0600 Telegram progress report result: {'status': 'sent', 'detail': 'sent', 'message_id': 872}
+2026-05-04T21:47:05-0600 Telegram progress report result: {'status': 'sent', 'detail': 'sent', 'message_id': 879}
+2026-05-04T21:47:26-0600 Watcher started; polling runtime\pc_control\benchmarks\runs every 15s
+2026-05-04T21:47:26-0600 Expecting models: phi4:14b, qwen3:14b, hermes3:3b, qwen2.5:1.5b, qwen2.5:0.5b
+2026-05-04T21:47:31-0600 Telegram startup notify sent: {'status': 'sent', 'detail': 'sent', 'message_id': 880}
+2026-05-04T21:47:44-0600 Watcher started; polling runtime\pc_control\benchmarks\runs every 15s
+2026-05-04T21:47:44-0600 Expecting models: phi4:14b, qwen3:14b, hermes3:3b, qwen2.5:1.5b, qwen2.5:0.5b
+2026-05-04T21:47:49-0600 Telegram startup notify sent: {'status': 'sent', 'detail': 'sent', 'message_id': 881}
+2026-05-04T21:49:34-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T21:51:35-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T21:53:35-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T21:55:35-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T21:57:35-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T21:59:35-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:01:35-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:03:35-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:05:35-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:07:36-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:09:36-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:11:36-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:13:36-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:15:36-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:17:36-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:19:36-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:21:36-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:23:37-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:25:37-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:27:37-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:29:38-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:31:38-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:33:39-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:35:40-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:37:40-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:39:40-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:41:40-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:43:41-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:45:41-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:47:41-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:49:41-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:51:41-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:53:42-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:55:42-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:57:42-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T22:59:42-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:01:42-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:03:43-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:05:43-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:07:43-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:09:43-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:11:44-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:13:44-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:15:44-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:17:44-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:19:44-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:21:44-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:23:45-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:25:45-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:27:45-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:29:45-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:31:46-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:33:46-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:35:46-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:37:46-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:39:46-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:41:46-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:43:47-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:45:47-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:47:47-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:49:48-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:51:48-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:53:48-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:55:49-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:57:49-0600 Telegram progress error: name 'platform' is not defined
+2026-05-04T23:59:49-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:01:50-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:03:50-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:05:51-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:07:51-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:09:52-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:11:52-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:13:53-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:15:53-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:17:54-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:19:54-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:21:54-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:23:54-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:25:54-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:27:55-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:29:55-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:31:55-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:33:55-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:35:55-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:37:56-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:39:56-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:41:56-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:43:56-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:45:56-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:47:56-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:49:57-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:51:57-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:53:57-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:55:57-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:57:57-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T00:59:57-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:01:57-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:03:58-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:05:58-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:07:58-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:09:59-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:11:59-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:13:59-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:16:00-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:18:00-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:20:01-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:22:01-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:24:01-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:26:01-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:28:01-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:30:02-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:32:02-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:34:02-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:36:02-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:38:02-0600 Telegram progress error: name 'platform' is not defined
+2026-05-05T01:40:03-0600 Telegram progress error: name 'platform' is not defined

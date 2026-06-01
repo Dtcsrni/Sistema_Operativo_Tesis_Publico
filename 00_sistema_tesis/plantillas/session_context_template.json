@@ -1,0 +1,13 @@
+{
+  "session_id": "[ID-SESION-GUID]",
+  "archetype": "[ARCHETYPE]",
+  "start_time": "YYYY-MM-DDTHH:MM:SS",
+  "parent_session_id": "[PARENT-ID]",
+  "active_pets": [],
+  "metadata": {
+    "node": "PC-MASTER",
+    "provider": "Antigravity",
+    "version": "1.0",
+    "privacy_level": "[PRIVACY-LEVEL]"
+  }
+}

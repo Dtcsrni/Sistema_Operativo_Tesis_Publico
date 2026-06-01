@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer de healthcheck del Sistema Operativo de Tesis
+
+[Timer]
+OnBootSec=3min
+OnUnitActiveSec=30min
+Unit=tesis-healthcheck.service
+
+[Install]
+WantedBy=timers.target

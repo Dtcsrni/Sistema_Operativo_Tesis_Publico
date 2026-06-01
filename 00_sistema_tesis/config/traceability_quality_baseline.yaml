@@ -1,0 +1,6 @@
+version: "1.0"
+ignored_findings:
+  - "validación humana interna no pública: contenido entre <<< >>> insuficiente (min 24 chars)"
+  - "matriz_trazabilidad.md:87: descripcion generica prohibida 'Cambio registrado en canon'"
+  - "matriz_trazabilidad.md:88: descripcion generica prohibida 'Cambio registrado en canon'"
+  - "00_sistema_tesis/decisiones/2026-04-27_DEC-0025_arquitectura_de_contenedores_para_el_nodo_de_control.md: estado propuesta con implementacion marcada [x]"

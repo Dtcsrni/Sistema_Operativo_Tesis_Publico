@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "modelo": "upstream_privado_downstream_publico",
+  "origen": "repositorio_privado_canonico",
+  "destino": "repositorio_publico_sanitizado",
+  "sitio_publicado_desde": "repositorio_publico_sanitizado/main",
+  "reglas": [
+    "sin_edicion_manual_en_publico",
+    "sin_secretos",
+    "sin_bitacora_privada",
+    "sin_canon_privado",
+    "sin_evidencia_privada",
+    "sin_pages_desde_upstream_privado"
+  ],
+  "comandos": [
+    "python 07_scripts/tesis.py publish --build",
+    "python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --branch main --check",
+    "python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push"
+  ]
+}

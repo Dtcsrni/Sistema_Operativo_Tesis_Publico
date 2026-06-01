@@ -1,0 +1,179 @@
+{
+  "generated_at": "2026-05-05T02:46:51+00:00",
+  "model": "hermes3:8b",
+  "header": {
+    "schema_version": "siot-benchmark-run-v1",
+    "record_type": "run_header",
+    "run_id": "BENCH-20260505T024007Z-0ce30e49",
+    "step_id": "validación humana interna no pública",
+    "protocol": "PEV-02",
+    "profile_id": "pc_moe_precision_battery:hermes3:8b",
+    "node": "pc_control",
+    "runtime": "ollama_local",
+    "model": "hermes3:8b",
+    "mode": "real",
+    "scientific_validity": "valid_candidate",
+    "git_commit": "176aeb13622ebb5ed93adbf719b13f17bc662b47",
+    "host_fingerprint": {
+      "platform": "Windows-11-10.0.26200-SP0",
+      "machine": "AMD64",
+      "processor": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+      "cpu_count": 16,
+      "memory_total_bytes": null,
+      "disk": {
+        "path": " ruta local no pública ",
+        "total_bytes": 240055742464,
+        "free_bytes": 141718704128
+      },
+      "gpu": {
+        "status": "ok",
+        "name": "NVIDIA GeForce RTX 4060 Ti",
+        "memory_total_mib": 8188,
+        "memory_used_mib": 1504,
+        "memory_free_mib": 6446,
+        "utilization_gpu_pct": 14,
+        "temperature_celsius": 48,
+        "driver_version": "596.36"
+      }
+    },
+    "model_fingerprint": {
+      "model": "hermes3:8b",
+      "status": "ok",
+      "ollama_id": "4f6b83f30b62",
+      "size": "4.7",
+      "raw": "hermes3:8b             4f6b83f30b62    4.7 GB    5 days ago"
+    },
+    "promptset_hash": "5383db474039a2caea1f6204a8c2d6551e53572230c59d1fdce6b62978c8fefb",
+    "methodology_references": [
+      {
+        "id": "iso_iec_25059_2023",
+        "name": "ISO/IEC 25059:2023 - Software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Quality model for AI systems",
+        "url": "https://www.iso.org/standard/80655.html",
+        "use": "Modelo de calidad primario para evaluacion de caracteristicas de IA (Robustez, Eficiencia, Fiabilidad)."
+      },
+      {
+        "id": "iso_iec_30141_2024",
+        "name": "ISO/IEC 30141:2024 - Internet of Things (IoT) — Reference Architecture",
+        "url": "https://www.iso.org/standard/84042.html",
+        "use": "Marco de referencia arquitectonico para la validacion del despliegue distribuido PC-Edge."
+      },
+      {
+        "id": "mlperf_inference",
+        "name": "MLCommons MLPerf Inference",
+        "url": "https://mlcommons.org/working-groups/benchmarks/inference/",
+        "use": "Disciplina de escenarios, reproducibilidad y reporte de rendimiento; no implica certificacion oficial."
+      },
+      {
+        "id": "lm_evaluation_harness",
+        "name": "EleutherAI lm-evaluation-harness",
+        "url": "https://github.com/EleutherAI/lm-evaluation-harness",
+        "use": "Compatibilidad con evaluacion estandarizada de LLMs cuando dependencias y datasets esten disponibles."
+      },
+      {
+        "id": "helm",
+        "name": "Stanford CRFM HELM",
+        "url": "https://crfm-helm.readthedocs.io/",
+        "use": "Reporte holistico, transparente y reproducible de prompts, salidas y metricas."
+      }
+    ],
+    "command": "python3 07_scripts/benchmarks/run_moe_benchmark.py",
+    "started_at": "2026-05-05T02:40:08+00:00"
+  },
+  "summary": {
+    "schema_version": "siot-benchmark-run-v1",
+    "record_type": "run_summary",
+    "run_id": "BENCH-20260505T024007Z-0ce30e49",
+    "step_id": "validación humana interna no pública",
+    "profile_id": "pc_moe_precision_battery:hermes3:8b",
+    "node": "pc_control",
+    "runtime": "ollama_local",
+    "model": "hermes3:8b",
+    "status": "ok",
+    "scientific_validity": "valid_scientific_evidence",
+    "ended_at": "2026-05-05T02:46:51+00:00",
+    "statistics": {
+      "sample_size": 24,
+      "mean_latency_ms": 14000.7847,
+      "std_dev_latency_ms": 1693.7562,
+      "margin_error_95_ms": 677.6436,
+      "p50_latency_ms": 14081.4886,
+      "p95_latency_ms": 16057.188,
+      "p99_latency_ms": 16232.2876,
+      "mean_tokens_per_second": 6.8341
+    },
+    "extra": {
+      "profile": {
+        "model": "hermes3:8b",
+        "role": "reasoning_specialist",
+        "task_count": 6,
+        "task_ids": [
+          "precision_factual",
+          "scientific_synthesis",
+          "coding_specialist",
+          "ambiguous_instruction",
+          "long_context_retrieval",
+          "router_decision"
+        ],
+        "precision_policy": {
+          "primary_objective": "precision",
+          "secondary_objective": "groundedness",
+          "minimum_confidence": 0.8,
+          "latency_guard_ms": 30000,
+          "prefer_specialist_over_fast_route": true
+        }
+      },
+      "model_role": "reasoning_specialist",
+      "model_notes": "Especialista en síntesis, razonamiento y consistencia narrativa.",
+      "tasks": [
+        "precision_factual",
+        "scientific_synthesis",
+        "coding_specialist",
+        "ambiguous_instruction",
+        "long_context_retrieval",
+        "router_decision"
+      ]
+    },
+    "previous_record_hash": "d53bae674265a5a94cbce0f0286df6b64d9bce529db73cfe6243690b51fc9030",
+    "record_hash": "9755a9dfc92184f0c4d622ba71026b1cc1118fde1d86a9fa7297cb8ee1019a29"
+  },
+  "extra": {
+    "profile": {
+      "model": "hermes3:8b",
+      "role": "reasoning_specialist",
+      "task_count": 6,
+      "task_ids": [
+        "precision_factual",
+        "scientific_synthesis",
+        "coding_specialist",
+        "ambiguous_instruction",
+        "long_context_retrieval",
+        "router_decision"
+      ],
+      "precision_policy": {
+        "primary_objective": "precision",
+        "secondary_objective": "groundedness",
+        "minimum_confidence": 0.8,
+        "latency_guard_ms": 30000,
+        "prefer_specialist_over_fast_route": true
+      }
+    },
+    "model_role": "reasoning_specialist",
+    "model_notes": "Especialista en síntesis, razonamiento y consistencia narrativa.",
+    "tasks": [
+      "precision_factual",
+      "scientific_synthesis",
+      "coding_specialist",
+      "ambiguous_instruction",
+      "long_context_retrieval",
+      "router_decision"
+    ]
+  },
+  "jsonl": "runtime\\pc_control\\benchmarks\\runs\\BENCH-20260505T024007Z-0ce30e49.jsonl",
+  "precision_policy": {
+    "primary_objective": "precision",
+    "secondary_objective": "groundedness",
+    "minimum_confidence": 0.8,
+    "latency_guard_ms": 30000,
+    "prefer_specialist_over_fast_route": true
+  }
+}

@@ -1,0 +1,24 @@
+# Poltica de Dominio: Operacin IoT (Edge)
+# [LID]: log_sesiones_trabajo_registradas.md
+
+domain:
+  id: edge-iot
+  name: "Dominio de Control de Actuadores y Sensores"
+  security_level: CRITICO
+  network:
+    internet_access: false
+    allowed_peers:
+      - edge-inference
+      - pc-hub-sync
+    ports:
+      - internal: 5000  # Worker API
+
+capabilities:
+  - gpio_access: true
+  - i2c_access: true
+  - uart_access: true
+
+guardrails:
+  - "Los comandos de actuacin deben ser validados por el mÃ³dulo de resiliencia antes de ejecucin fÃ­sica."
+  - "El estado del sistema se reporta al PC Hub mediante el canal de sincronizaciÃ³n cifrado."
+  - "Prohibido el acceso a /dev/rknpu desde este dominio (Aislamiento de IA)."

@@ -1,0 +1,88 @@
+site_name: Plataforma de Investigación para Tesis IoT
+site_description: Documentación técnica, trazabilidad y operación de una tesis de posgrado en IoT.
+site_author: Erick Vega
+repo_name: Repositorio del Proyecto
+
+theme:
+  name: material
+  language: es
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Merriweather
+    code: Fira Code
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+
+repo_url: https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico
+
+docs_dir: 06_dashboard/wiki
+
+plugins: []
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+
+extra_css:
+  - extra/wiki_premium.css
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js
+
+nav:
+  - Inicio: index.md
+  - Arquitectura Toltecayotl: arquitectura.md
+  - Agente y Casos de Uso: casos_uso.md
+  - Sistema: sistema.md
+  - Gobernanza: gobernanza.md
+  - Hipótesis: hipotesis.md
+  - Bloques de Trabajo: bloques.md
+  - Planeación: planeacion.md
+  - Decisiones: decisiones.md
+  - Bitácoras: bitacora.md
+  - Cobertura:
+      - Experimentos: experimentos.md
+      - Implementación: implementacion.md
+      - Tesis: tesis.md

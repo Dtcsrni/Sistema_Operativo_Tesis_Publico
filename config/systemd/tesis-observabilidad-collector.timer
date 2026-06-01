@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer de recoleccion local de metricas por dominio
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=2min
+Unit=tesis-observabilidad-collector.service
+
+[Install]
+WantedBy=timers.target

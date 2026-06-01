@@ -1,0 +1,16 @@
+{
+  "integridad": {
+    "hash_de_fuente": "hash omitido
+    "fidelidad_de_extraccion": 0.0,
+    "herramientas_utilizadas": []
+  },
+  "metadatos_epistemicos": {
+    "conceptos_primarios": [],
+    "puntaje_de_relevancia": 0,
+    "nivel_caveman_aplicado": "L1/L2/L3"
+  },
+  "trazabilidad": {
+    "step_id": "[validación humana interna no pública]",
+    "audit_level": "BAJO/MEDIO/ALTO/CRITICO"
+  }
+}

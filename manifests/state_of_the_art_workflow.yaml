@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "flujo": [
+    "busqueda",
+    "filtrado",
+    "verificacion",
+    "lectura",
+    "extraccion",
+    "matriz_literatura",
+    "sintesis_critica",
+    "relacion_con_hipotesis"
+  ],
+  "artefactos": [
+    "docs/05_reproducibilidad/matriz-de-literatura.md",
+    "docs/05_reproducibilidad/matriz-de-afirmaciones-y-evidencia.md",
+    "data_contracts/literature_matrix_schema.md"
+  ]
+}

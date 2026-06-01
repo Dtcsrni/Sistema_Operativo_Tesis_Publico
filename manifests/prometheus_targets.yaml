@@ -1,0 +1,27 @@
+{
+  "version": "1.0",
+  "targets": [
+    {
+      "job_name": "prometheus_local",
+      "targets": ["127.0.0.1:9090"],
+      "labels": {
+        "dominio": "administrativo",
+        "componente": "prometheus"
+      }
+    },
+    {
+      "job_name": "node_exporter_local",
+      "targets": ["127.0.0.1:9100"],
+      "labels": {
+        "dominio": "host",
+        "componente": "node_exporter"
+      },
+      "textfile_domains": [
+        "sistema_tesis",
+        "openclaw",
+        "edge_iot",
+        "administrativo"
+      ]
+    }
+  ]
+}

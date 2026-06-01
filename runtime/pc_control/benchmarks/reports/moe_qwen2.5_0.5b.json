@@ -1,0 +1,179 @@
+{
+  "generated_at": "2026-05-05T03:43:21+00:00",
+  "model": "qwen2.5:0.5b",
+  "header": {
+    "schema_version": "siot-benchmark-run-v1",
+    "record_type": "run_header",
+    "run_id": "BENCH-20260505T034215Z-1e2c138c",
+    "step_id": "validación humana interna no pública",
+    "protocol": "PEV-02",
+    "profile_id": "pc_moe_precision_battery:qwen2.5:0.5b",
+    "node": "pc_control",
+    "runtime": "ollama_local",
+    "model": "qwen2.5:0.5b",
+    "mode": "real",
+    "scientific_validity": "valid_candidate",
+    "git_commit": "176aeb13622ebb5ed93adbf719b13f17bc662b47",
+    "host_fingerprint": {
+      "platform": "Windows-11-10.0.26200-SP0",
+      "machine": "AMD64",
+      "processor": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+      "cpu_count": 16,
+      "memory_total_bytes": null,
+      "disk": {
+        "path": " ruta local no pública ",
+        "total_bytes": 240055742464,
+        "free_bytes": 141720080384
+      },
+      "gpu": {
+        "status": "ok",
+        "name": "NVIDIA GeForce RTX 4060 Ti",
+        "memory_total_mib": 8188,
+        "memory_used_mib": 1661,
+        "memory_free_mib": 6289,
+        "utilization_gpu_pct": 18,
+        "temperature_celsius": 50,
+        "driver_version": "596.36"
+      }
+    },
+    "model_fingerprint": {
+      "model": "qwen2.5:0.5b",
+      "status": "ok",
+      "ollama_id": "a8b0c5157701",
+      "size": "397",
+      "raw": "qwen2.5:0.5b           a8b0c5157701    397 MB    13 days ago"
+    },
+    "promptset_hash": "9a991c867d15dc153dd5c2646b291ed19444ce16f33698504e56edc9fa7d85de",
+    "methodology_references": [
+      {
+        "id": "iso_iec_25059_2023",
+        "name": "ISO/IEC 25059:2023 - Software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Quality model for AI systems",
+        "url": "https://www.iso.org/standard/80655.html",
+        "use": "Modelo de calidad primario para evaluacion de caracteristicas de IA (Robustez, Eficiencia, Fiabilidad)."
+      },
+      {
+        "id": "iso_iec_30141_2024",
+        "name": "ISO/IEC 30141:2024 - Internet of Things (IoT) — Reference Architecture",
+        "url": "https://www.iso.org/standard/84042.html",
+        "use": "Marco de referencia arquitectonico para la validacion del despliegue distribuido PC-Edge."
+      },
+      {
+        "id": "mlperf_inference",
+        "name": "MLCommons MLPerf Inference",
+        "url": "https://mlcommons.org/working-groups/benchmarks/inference/",
+        "use": "Disciplina de escenarios, reproducibilidad y reporte de rendimiento; no implica certificacion oficial."
+      },
+      {
+        "id": "lm_evaluation_harness",
+        "name": "EleutherAI lm-evaluation-harness",
+        "url": "https://github.com/EleutherAI/lm-evaluation-harness",
+        "use": "Compatibilidad con evaluacion estandarizada de LLMs cuando dependencias y datasets esten disponibles."
+      },
+      {
+        "id": "helm",
+        "name": "Stanford CRFM HELM",
+        "url": "https://crfm-helm.readthedocs.io/",
+        "use": "Reporte holistico, transparente y reproducible de prompts, salidas y metricas."
+      }
+    ],
+    "command": "python3 07_scripts/benchmarks/run_moe_benchmark.py",
+    "started_at": "2026-05-05T03:42:15+00:00"
+  },
+  "summary": {
+    "schema_version": "siot-benchmark-run-v1",
+    "record_type": "run_summary",
+    "run_id": "BENCH-20260505T034215Z-1e2c138c",
+    "step_id": "validación humana interna no pública",
+    "profile_id": "pc_moe_precision_battery:qwen2.5:0.5b",
+    "node": "pc_control",
+    "runtime": "ollama_local",
+    "model": "qwen2.5:0.5b",
+    "status": "ok",
+    "scientific_validity": "valid_scientific_evidence",
+    "ended_at": "2026-05-05T03:43:21+00:00",
+    "statistics": {
+      "sample_size": 24,
+      "mean_latency_ms": 1778.2733,
+      "std_dev_latency_ms": 305.4589,
+      "margin_error_95_ms": 122.209,
+      "p50_latency_ms": 1752.3575,
+      "p95_latency_ms": 2192.9594,
+      "p99_latency_ms": 2784.6504,
+      "mean_tokens_per_second": 61.2686
+    },
+    "extra": {
+      "profile": {
+        "model": "qwen2.5:0.5b",
+        "role": "ultra_tiny_fallback",
+        "task_count": 6,
+        "task_ids": [
+          "precision_factual",
+          "scientific_synthesis",
+          "coding_specialist",
+          "ambiguous_instruction",
+          "long_context_retrieval",
+          "router_decision"
+        ],
+        "precision_policy": {
+          "primary_objective": "precision",
+          "secondary_objective": "groundedness",
+          "minimum_confidence": 0.8,
+          "latency_guard_ms": 30000,
+          "prefer_specialist_over_fast_route": true
+        }
+      },
+      "model_role": "ultra_tiny_fallback",
+      "model_notes": "Fallback extremo para medir el piso mínimo operativo.",
+      "tasks": [
+        "precision_factual",
+        "scientific_synthesis",
+        "coding_specialist",
+        "ambiguous_instruction",
+        "long_context_retrieval",
+        "router_decision"
+      ]
+    },
+    "previous_record_hash": "012dc3aa45d64b7f2c92be4edc6a5439878110c4b100c24176e278e5c0083f41",
+    "record_hash": "c9d72e929f1eb4776176360290bc0341c95e9e6046fad40a07679e62e63a5b3f"
+  },
+  "extra": {
+    "profile": {
+      "model": "qwen2.5:0.5b",
+      "role": "ultra_tiny_fallback",
+      "task_count": 6,
+      "task_ids": [
+        "precision_factual",
+        "scientific_synthesis",
+        "coding_specialist",
+        "ambiguous_instruction",
+        "long_context_retrieval",
+        "router_decision"
+      ],
+      "precision_policy": {
+        "primary_objective": "precision",
+        "secondary_objective": "groundedness",
+        "minimum_confidence": 0.8,
+        "latency_guard_ms": 30000,
+        "prefer_specialist_over_fast_route": true
+      }
+    },
+    "model_role": "ultra_tiny_fallback",
+    "model_notes": "Fallback extremo para medir el piso mínimo operativo.",
+    "tasks": [
+      "precision_factual",
+      "scientific_synthesis",
+      "coding_specialist",
+      "ambiguous_instruction",
+      "long_context_retrieval",
+      "router_decision"
+    ]
+  },
+  "jsonl": "runtime\\pc_control\\benchmarks\\runs\\BENCH-20260505T034215Z-1e2c138c.jsonl",
+  "precision_policy": {
+    "primary_objective": "precision",
+    "secondary_objective": "groundedness",
+    "minimum_confidence": 0.8,
+    "latency_guard_ms": 30000,
+    "prefer_specialist_over_fast_route": true
+  }
+}

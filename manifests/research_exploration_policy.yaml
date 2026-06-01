@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "principios": [
+    "comprension_antes_que_repeticion",
+    "contraste_antes_que_adhesion",
+    "exploracion_guiada",
+    "profundidad_progresiva"
+  ],
+  "niveles": [
+    "introductorio",
+    "intermedio",
+    "avanzado",
+    "investigacion"
+  ],
+  "salidas": [
+    "ficha_de_estudio",
+    "matriz_de_exploracion",
+    "nota_de_contraste",
+    "decision_o_pendiente"
+  ]
+}

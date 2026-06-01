@@ -1,0 +1,28 @@
+# Poltica de Dominio: Inferencia LLM (Edge)
+# [LID]: log_sesiones_trabajo_registradas.md
+# [GOV]: config/domains/llm_policy.yaml
+
+domain:
+  id: edge-inference
+  name: "Dominio de Inferencia Local (RK3588)"
+  security_level: ALTO
+  network:
+    internet_access: false
+    allowed_peers:
+      - edge-iot-master
+      - pc-hub-bridge
+    ports:
+      - internal: 8080  # API de Inferencia (Internal)
+
+hardware:
+  acceleration:
+    device: /dev/rknpu
+    driver: rkllm_v1.x
+  resource_pinning:
+    memory_limit: 4GB
+    cpu_cores: [4, 5, 6, 7]  # Big cores del RK3588 para procesamiento post-NPU
+
+guardrails:
+  - "No se permite la salida de datos crudos fuera del dominio."
+  - "Toda respuesta debe pasar por un filtro de alineacin tica local (OpenClaw Lite)."
+  - "Aislamiento de volmenes: Solo lectura para modelos, lectura/escritura para logs de auditora."

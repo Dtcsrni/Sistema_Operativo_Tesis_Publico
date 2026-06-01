@@ -1,0 +1,278 @@
+{
+  "run_id": "RUN-20260504T172234",
+  "timestamp": "2026-05-04T17:23:29.592351",
+  "iterations": 3,
+  "confidence_level": 0.95,
+  "results": [
+    {
+      "task_id": "IOT_PARSING",
+      "latency": {
+        "mean": 2515.71,
+        "std_dev": 1998.63,
+        "ci_low": -687.55,
+        "ci_high": 5718.97
+      },
+      "tps": {
+        "mean": 0,
+        "std_dev": 0,
+        "ci_low": 0,
+        "ci_high": 0
+      },
+      "accuracy": "failed_accuracy",
+      "noise_sample": {
+        "total_cpu_percent": 24.6,
+        "total_mem_percent": 86.6,
+        "available_mem_gb": 2.14,
+        "top_processes": [
+          {
+            "pid": 0,
+            "memory_percent": 4.7941074666306145e-05,
+            "name": "System Idle Process",
+            "cpu_percent": 1197.5
+          },
+          {
+            "pid": 31480,
+            "memory_percent": 0.3355635521268099,
+            "name": "Antigravity.exe",
+            "cpu_percent": 93.8
+          },
+          {
+            "pid": 42120,
+            "memory_percent": 0.5340635717826505,
+            "name": "GoogleDriveFS.exe",
+            "cpu_percent": 63.5
+          },
+          {
+            "pid": 35408,
+            "memory_percent": 20.560464721601384,
+            "name": "vmmemWSL",
+            "cpu_percent": 45.7
+          },
+          {
+            "pid": 46300,
+            "memory_percent": 0.20875940963443013,
+            "name": "python.exe",
+            "cpu_percent": 28.1
+          }
+        ],
+        "timestamp": 1777936966.5150747
+      }
+    },
+    {
+      "task_id": "EMBEDDED_CODE",
+      "latency": {
+        "mean": 1547.76,
+        "std_dev": 64.37,
+        "ci_low": 1444.59,
+        "ci_high": 1650.94
+      },
+      "tps": {
+        "mean": 0,
+        "std_dev": 0,
+        "ci_low": 0,
+        "ci_high": 0
+      },
+      "accuracy": "failed_accuracy",
+      "noise_sample": {
+        "total_cpu_percent": 38.8,
+        "total_mem_percent": 87.8,
+        "available_mem_gb": 1.95,
+        "top_processes": [
+          {
+            "pid": 0,
+            "memory_percent": 4.7941074666306145e-05,
+            "name": "System Idle Process",
+            "cpu_percent": 906.7
+          },
+          {
+            "pid": 35408,
+            "memory_percent": 20.871937883708377,
+            "name": "vmmemWSL",
+            "cpu_percent": 161.3
+          },
+          {
+            "pid": 31480,
+            "memory_percent": 0.33534781729081153,
+            "name": "Antigravity.exe",
+            "cpu_percent": 92.8
+          },
+          {
+            "pid": 25740,
+            "memory_percent": 2.1037981795815126,
+            "name": "msedgewebview2.exe",
+            "cpu_percent": 87.3
+          },
+          {
+            "pid": 37216,
+            "memory_percent": 1.0896526860904725,
+            "name": "msedgewebview2.exe",
+            "cpu_percent": 84.2
+          }
+        ],
+        "timestamp": 1777936977.9483767
+      }
+    },
+    {
+      "task_id": "ACADEMIC_SYNTHESIS",
+      "latency": {
+        "mean": 1335.26,
+        "std_dev": 46.19,
+        "ci_low": 1261.23,
+        "ci_high": 1409.29
+      },
+      "tps": {
+        "mean": 0,
+        "std_dev": 0,
+        "ci_low": 0,
+        "ci_high": 0
+      },
+      "accuracy": "failed_accuracy",
+      "noise_sample": {
+        "total_cpu_percent": 19.0,
+        "total_mem_percent": 85.6,
+        "available_mem_gb": 2.29,
+        "top_processes": [
+          {
+            "pid": 0,
+            "memory_percent": 4.7941074666306145e-05,
+            "name": "System Idle Process",
+            "cpu_percent": 1269.0
+          },
+          {
+            "pid": 31480,
+            "memory_percent": 0.3354436994401441,
+            "name": "Antigravity.exe",
+            "cpu_percent": 93.7
+          },
+          {
+            "pid": 35408,
+            "memory_percent": 20.231708802077193,
+            "name": "vmmemWSL",
+            "cpu_percent": 65.9
+          },
+          {
+            "pid": 46300,
+            "memory_percent": 0.20355780303313592,
+            "name": "python.exe",
+            "cpu_percent": 27.4
+          },
+          {
+            "pid": 36992,
+            "memory_percent": 0.05592326359824613,
+            "name": "vmwp.exe",
+            "cpu_percent": 26.3
+          }
+        ],
+        "timestamp": 1777936987.7890286
+      }
+    },
+    {
+      "task_id": "LOGISTICS_REASONING",
+      "latency": {
+        "mean": 1923.55,
+        "std_dev": 424.52,
+        "ci_low": 1243.17,
+        "ci_high": 2603.94
+      },
+      "tps": {
+        "mean": 0,
+        "std_dev": 0,
+        "ci_low": 0,
+        "ci_high": 0
+      },
+      "accuracy": "failed_accuracy",
+      "noise_sample": {
+        "total_cpu_percent": 25.4,
+        "total_mem_percent": 86.3,
+        "available_mem_gb": 2.18,
+        "top_processes": [
+          {
+            "pid": 0,
+            "memory_percent": 4.7941074666306145e-05,
+            "name": "System Idle Process",
+            "cpu_percent": 1186.8
+          },
+          {
+            "pid": 35408,
+            "memory_percent": 21.76172422951502,
+            "name": "vmmemWSL",
+            "cpu_percent": 143.2
+          },
+          {
+            "pid": 31480,
+            "memory_percent": 0.33558752266414305,
+            "name": "Antigravity.exe",
+            "cpu_percent": 96.8
+          },
+          {
+            "pid": 36992,
+            "memory_percent": 0.055995175210245586,
+            "name": "vmwp.exe",
+            "cpu_percent": 23.2
+          },
+          {
+            "pid": 46300,
+            "memory_percent": 0.2089991150077617,
+            "name": "python.exe",
+            "cpu_percent": 19.6
+          }
+        ],
+        "timestamp": 1777936999.0388117
+      }
+    },
+    {
+      "task_id": "PRIVACY_AUDIT",
+      "latency": {
+        "mean": 1325.79,
+        "std_dev": 90.64,
+        "ci_low": 1180.52,
+        "ci_high": 1471.06
+      },
+      "tps": {
+        "mean": 0,
+        "std_dev": 0,
+        "ci_low": 0,
+        "ci_high": 0
+      },
+      "accuracy": "failed_accuracy",
+      "noise_sample": {
+        "total_cpu_percent": 23.6,
+        "total_mem_percent": 85.9,
+        "available_mem_gb": 2.24,
+        "top_processes": [
+          {
+            "pid": 0,
+            "memory_percent": 4.7941074666306145e-05,
+            "name": "System Idle Process",
+            "cpu_percent": 1199.4
+          },
+          {
+            "pid": 35408,
+            "memory_percent": 21.331884554056916,
+            "name": "vmmemWSL",
+            "cpu_percent": 190.1
+          },
+          {
+            "pid": 31480,
+            "memory_percent": 0.3355635521268099,
+            "name": "Antigravity.exe",
+            "cpu_percent": 96.5
+          },
+          {
+            "pid": 36992,
+            "memory_percent": 0.055995175210245586,
+            "name": "vmwp.exe",
+            "cpu_percent": 27.7
+          },
+          {
+            "pid": 23148,
+            "memory_percent": 4.102054083285153,
+            "name": "Antigravity.exe",
+            "cpu_percent": 27.2
+          }
+        ],
+        "timestamp": 1777937008.1886368
+      }
+    }
+  ]
+}

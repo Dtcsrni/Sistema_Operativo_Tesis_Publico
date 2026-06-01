@@ -1,0 +1,67 @@
+# ==============================================================================
+# Arneses de Desarrollo e Infraestructura de Pruebas (OpenClaw)
+# ==============================================================================
+# Este archivo orquesta los arneses de desarrollo y herramientas de OpenClaw,
+# desacoplados del stack operativo de producción de la tesis (SIOT).
+# Nota: Serena MCP no pertenece a OpenClaw, sino que es una herramienta de la
+# PC de desarrollo local (Tezkatli) para la gestión de contexto en el host.
+# ==============================================================================
+version: '3.8'
+
+services:
+  # Núcleo de OpenClaw (Arnés soberano legacy / Standalone)
+  openclaw-sovereign-core:
+    image: nucleo-openclaw:latest
+    container_name: openclaw-sovereign-core
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    command: ["python", "/workspace/runtime/openclaw/bin/start_sovereign.py"]
+    env_file:
+      - config/env/openclaw.env
+    environment:
+      - OPENCLAW_CONTAINER=true
+      - OPENCLAW_WORKSPACE=/workspace
+      - OPENCLAW_REPO_ROOT=/workspace
+      - OPENCLAW_DATA_DIR=/workspace/runtime/openclaw/state
+      - OPENCLAW_CACHE_DIR=/workspace/runtime/openclaw/cache
+      - OPENCLAW_LOG_DIR=/workspace/runtime/openclaw/logs
+      - OPENCLAW_DB_PATH=/workspace/runtime/openclaw/state/openclaw.db
+      - OPENCLAW_HOST=0.0.0.0
+      - OPENCLAW_PORT=18790
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    volumes:
+      # Mapeo del repositorio de tesis
+      -  ruta local no pública 
+      # Persistencia de configuración y llaves
+      -  ruta local no pública 
+    networks:
+      - siot-network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:18790/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+networks:
+  siot-network:
+    external: true
+    name: siot-network
+
+volumes:
+  # Volumen del canon del sistema de tesis (mapeado de forma externa para coherencia)
+  siot_canon_data:
+    external: true
+    name: siot_canon_data

@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "redactar": [
+    "rutas_locales",
+    "hashes_internos",
+    "VAL-STEP",
+    "EVT",
+    "canon_privado",
+    "bitacora_privada",
+    "evidencia_privada",
+    "secretos"
+  ],
+  "verificar_antes_publicar": [
+    "sin_file_uri",
+    "sin_sha256_crudo",
+    "sin_secretos",
+    "sin_rutas_privadas"
+  ]
+}

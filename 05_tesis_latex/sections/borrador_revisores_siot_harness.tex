@@ -1,0 +1,26 @@
+\chapter{Borrador para revisores: sistema operativo de tesis con harness engineering agnóstico}
+
+\section{Resumen}
+
+Este borrador presenta el Sistema Operativo de Tesis (SIOT) como una infraestructura local-first para coordinar investigación, desarrollo, trazabilidad y evaluación de agentes de inteligencia artificial en un proyecto de posgrado sobre telemetría y control adaptativo en entornos urbanos intermitentes. La contribución metodológica central es una capa de \emph{harness engineering} agnóstica a proveedor, modelo y runtime, diseñada para registrar ejecuciones, medir preparación técnica, preservar evidencia y reducir dependencia de memoria conversacional.
+
+\section{Problema}
+
+Los proyectos de investigación asistidos por IA tienden a combinar modelos locales, servicios en la nube, herramientas de código, bases documentales y revisores humanos. Sin un harness común, las ejecuciones quedan fragmentadas: cada agente reporta resultados con formatos distintos, las pruebas no siempre explican su cobertura, y la evidencia para revisores puede perder relación con los artefactos que la originaron.
+
+\section{Propuesta}
+
+SIOT introduce un harness transversal que envuelve los flujos existentes de construcción, auditoría, publicación y control de misiones. El harness declara un manifiesto de ejecución, registra trayectorias en JSONL, calcula un puntaje de readiness y genera una proyección pública sanitizada. La arquitectura evita acoplar el sistema a un agente particular; OpenClaw, Serena, scripts locales o modelos en la nube se representan bajo el mismo contrato.
+
+\section{Método de validación}
+
+La validación técnica se estructura en cuatro niveles. Primero, las pruebas unitarias verifican manifiesto, sanitización y cálculo de readiness. Segundo, el gate \texttt{build\_all.py --group harness --force} comprueba la integración. Tercero, \texttt{build\_all.py} audita el sistema completo. Cuarto, la publicación pública se valida con artefactos sanitizados y sin exposición de evidencia privada.
+
+\section{Resultados esperados para revisión}
+
+El resultado esperado es un sistema donde cada ciclo de trabajo de agentes produce evidencia auditable: estado Git, perfiles de build, artefactos, hashes, métricas de preparación y hallazgos de política. Esto facilita que revisores distingan entre ejecución técnica, calidad epistémica y validación humana formal.
+
+\section{Limitaciones}
+
+La plantilla Overleaf compartida no estuvo disponible como fuente descargable directa durante esta integración. Por ello, este borrador usa la plantilla local \texttt{05\_tesis\_latex/main.tex} como base reproducible. Si se requiere fidelidad visual exacta respecto al proyecto Overleaf, debe exportarse el ZIP fuente desde Overleaf e incorporarse al repositorio.
+

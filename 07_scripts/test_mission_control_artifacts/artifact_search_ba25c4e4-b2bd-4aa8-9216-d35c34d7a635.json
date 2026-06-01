@@ -1,0 +1,6 @@
+{
+  "note": "Simulación: no se hizo scraping real",
+  "url_sample": "https://example.com",
+  "example_com_status": 200,
+  "example_com_snippet": "<!doctype html><html lang=\"en\"><head><title>Example Domain</title><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><style>body{background:#eee;width:60vw;margin:15vh auto;font-famil"
+}

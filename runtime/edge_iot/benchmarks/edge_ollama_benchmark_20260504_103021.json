@@ -1,0 +1,36 @@
+{
+  "step_id": "validación humana interna no pública",
+  "timestamp": "2026-05-04T10:30:21.916317+00:00",
+  "device": "Orange Pi 5 Plus (RK3588)",
+  "hardware_acceleration": "Ollama CPU (qwen:0.5b)",
+  "model": "qwen:0.5b",
+  "samples": [
+    {
+      "category": "iot_decision",
+      "status": "ok",
+      "latency_ms": 602.5,
+      "tokens_per_second": 0.0,
+      "output_preview": ""
+    },
+    {
+      "category": "edge_reasoning",
+      "status": "ok",
+      "latency_ms": 620.8,
+      "tokens_per_second": 0.0,
+      "output_preview": ""
+    },
+    {
+      "category": "code_gen",
+      "status": "ok",
+      "latency_ms": 544.5,
+      "tokens_per_second": 0.0,
+      "output_preview": ""
+    }
+  ],
+  "summary": {
+    "total": 3,
+    "ok": 3,
+    "avg_tps": 0.0,
+    "avg_latency_ms": 589.3
+  }
+}

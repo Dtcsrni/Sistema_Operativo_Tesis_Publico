@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "niveles": {
+    "1": [
+      "articulos_arbitrados",
+      "surveys",
+      "normas",
+      "documentacion_oficial",
+      "datasets_oficiales",
+      "fabricante_oficial"
+    ],
+    "2": [
+      "tesis",
+      "informes_tecnicos_institucionales",
+      "memorias_congreso_con_trazabilidad"
+    ],
+    "3": [
+      "fuentes_grises_utiles_con_reserva",
+      "blogs_tecnicos_serios_para_implementacion"
+    ],
+    "4": [
+      "marketing",
+      "blogs_sin_respaldo",
+      "doi_no_comprobado",
+      "contenido_no_apto"
+    ]
+  }
+}

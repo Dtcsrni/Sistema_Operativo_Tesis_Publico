@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "obligaciones": [
+    "comparar_alternativas",
+    "explicitar_criterios",
+    "separar_evidencia_de_inferencia",
+    "registrar_contradicciones"
+  ],
+  "criterios": [
+    "madurez",
+    "riesgo",
+    "costo",
+    "compatibilidad",
+    "reproducibilidad",
+    "valor_metodologico"
+  ]
+}

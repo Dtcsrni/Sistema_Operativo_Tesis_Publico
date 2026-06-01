@@ -1,0 +1,5 @@
+{"timestamp": "2026-05-05T01:32:48.262147", "type": "INTEGRITY_CHECK", "file": "07_scripts\\ops\\orchestrate_ds_r1_pipeline.py", "sha256": "44ebbe24d022b06fa2cc54b9ef0d8c4666c1785ee85f5465079776de2e4c4c29", "expected": null, "status": "OK"}
+{"timestamp": "2026-05-05T01:32:48.263654", "type": "INTEGRITY_CHECK", "file": "07_scripts\\ops\\security_auditor.py", "sha256": "076939a5811f9559f2072955c043e63c2a0b179bba51345dd5e649f93a929eba", "expected": null, "status": "OK"}
+{"timestamp": "2026-05-05T01:32:48.264223", "type": "INTEGRITY_CHECK", "file": "runtime\\openclaw\\openclaw_local\\progress.py", "sha256": "101ffbd5ecd54b6af535079f33760ad35849f4195bfb85a10bcf0f14776fde05", "expected": null, "status": "OK"}
+{"timestamp": "2026-05-05T01:32:48.428064", "type": "STATIC_ANALYSIS", "vulnerabilities_found": 1, "status": "WARNING"}
+{"timestamp": "2026-05-05T01:32:48.602600", "type": "NETWORK_SCAN", "active_connections": 0, "status": "OK"}

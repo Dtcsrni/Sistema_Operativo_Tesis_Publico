@@ -1,0 +1,10 @@
+risk_id,riesgo,tipo,probabilidad,impacto,mitigacion,estado
+R-001,Deriva entre fuentes canónicas y artefactos generados,proceso,media,alto,Validar antes de generar y prohibir edición manual del dashboard,abierto
+R-002,Ambigüedad en la línea base de comparación,metodologico,alta,alto,Definir arquitectura base explícita en B2 con criterios y supuestos auditables,abierto
+R-003,Escenarios de intermitencia poco representativos del caso de estudio,metodologico,media,alto,Delimitar taxonomía contextual de Pachuca y registrar supuestos,abierto
+R-004,Sobrecarga operativa por exceso de documentación,gestion,media,medio,Mantener formatos mínimos, plantillas cortas y un solo punto de verdad por artefacto,abierto
+R-005,Dependencia excesiva de IA en tareas sustantivas,etica_y_calidad,media,alto,Aplicar doble vía humano+IA con manual operativo CLI guiada y revisión reforzada,abierto
+R-006,Desalineación entre simulación y experimento,tecnico,media,alto,Definir equivalencias de escenario e instrumentación desde B3-B5,abierto
+R-007,Consumo ineficiente del presupuesto de uso por sobrerazonamiento o exploración redundante,gestion,media,medio,Aplicar política de economía de uso y registrar relación entre consumo y avance funcional,abierto
+R-008,Exposición pública sin sanitización suficiente,seguridad,media,alto,Publicar solo mediante bundle sanitario derivado y validado por `tesis.py publish --check`,abierto
+R-009,Complejidad documental por duplicación entre capa humana y automatización,gestion,media,medio,Mantener una sola fuente privada y hacer que manual wiki y bundle público sean artefactos derivados o acoplados a fuentes canónicas,abierto

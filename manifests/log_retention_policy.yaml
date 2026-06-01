@@ -1,0 +1,31 @@
+{
+  "version": "1.0",
+  "retention_class": "larga",
+  "policy": {
+    "rotate": 90,
+    "frequency": "daily",
+    "size": "50M",
+    "compress": true,
+    "delaycompress": true,
+    "copytruncate": true,
+    "dateext": true
+  },
+  "domains": {
+    "sistema_tesis": {
+      "path": "/var/log/tesis-os",
+      "pattern": "*.log"
+    },
+    "openclaw": {
+      "path": "/var/log/openclaw",
+      "pattern": "*.log"
+    },
+    "edge_iot": {
+      "path": "/var/log/edge-iot",
+      "pattern": "*.log"
+    },
+    "administrativo": {
+      "path": "/var/log/tesis-admin",
+      "pattern": "*.log"
+    }
+  }
+}

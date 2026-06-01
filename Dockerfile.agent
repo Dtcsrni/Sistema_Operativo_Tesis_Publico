@@ -1,0 +1,95 @@
+# ==========================================
+# Dockerfile.agent — OpenClaw Intelligence Hub
+# Multi-stage: deps → runtime
+# Contexto mínimo: runtime/openclaw/ + config/ + 07_scripts/ops/
+# ==========================================
+
+# ── Stage 1: Instalación de deps Python + descarga de Playwright ─
+FROM python:3.12-slim AS python-deps
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers
+
+WORKDIR /build
+
+# Solo los manifests de deps — Docker cachea esta capa hasta que cambien los .txt
+COPY runtime/openclaw/requirements-web.txt requirements-web.txt
+COPY requirements-agent.txt requirements-agent.txt
+
+# Instalar en venv aislado (pip cache y egg-info NO llegan a la imagen final)
+RUN python -m venv /opt/venv && \
+    /opt/venv/bin/pip install --no-cache-dir --upgrade pip && \
+    /opt/venv/bin/pip install --no-cache-dir \
+        -r requirements-web.txt \
+        -r requirements-agent.txt
+
+# Descargar Playwright Chromium en path fijo (portable entre stages)
+ENV PATH="/opt/venv/bin:$PATH"
+RUN playwright install chromium
+
+# ── Stage 2: Runtime mínimo ──────────────────────────────────────
+FROM python:3.12-slim
+
+LABEL maintainer="Erick Renato Vega Ceron" \
+      project="OpenClaw-Agent"
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PATH="/opt/venv/bin:$PATH" \
+    PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers
+
+WORKDIR /app
+
+# Dependencias del sistema en runtime (Playwright, audio, git para auditoría)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    ffmpeg \
+    curl \
+    libnss3 \
+    libnspr4 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libcups2 \
+    libdrm2 \
+    libxkbcommon0 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxfixes3 \
+    libxrandr2 \
+    libgbm1 \
+    libasound2 \
+    libpango-1.0-0 \
+    libcairo2 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Usuario no-root para seguridad
+RUN useradd -m -u 1000 appuser
+
+# Copiar venv y browsers desde el stage builder (sin pip cache ni build artifacts)
+COPY --from=python-deps /opt/venv /opt/venv
+COPY --from=python-deps /opt/pw-browsers /opt/pw-browsers
+
+# ─── Copias quirúrgicas: solo lo que el agente necesita ──────────
+# Módulo principal del agente
+COPY --chown=appuser:appuser runtime/openclaw/openclaw_local /app/openclaw_local
+
+# Paquete openclaw completo (engine, requirements, etc.)
+COPY --chown=appuser:appuser runtime/openclaw /app/runtime/openclaw
+
+# Configuración de entorno (sin secrets; .env se monta en runtime vía compose)
+COPY --chown=appuser:appuser config /app/config
+
+# Scripts ops que el agente puede invocar en ejecución
+COPY --chown=appuser:appuser 07_scripts/ops /app/07_scripts/ops
+
+# Manifiestos de configuración (proveedores, registro de herramientas)
+COPY --chown=appuser:appuser manifests /app/manifests
+
+USER appuser
+
+# Salud del contenedor: verifica que el token esté inyectado
+HEALTHCHECK --interval=60s --timeout=10s --start-period=30s \
+  CMD python -c "import os; exit(0 if os.getenv('OPENCLAW_TELEGRAM_BOT_TOKEN') else 1)"
+
+CMD ["python", "-m", "runtime.openclaw.openclaw_local.telegram_bot"]

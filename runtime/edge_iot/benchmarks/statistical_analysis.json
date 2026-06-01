@@ -1,0 +1,18 @@
+{
+    "BaseInference": {
+        "mean_latency_ms": 152.06,
+        "std_dev_latency": 4.06,
+        "p95_latency": 157.03,
+        "p99_latency": 157.03,
+        "mean_tps": 9.87,
+        "sample_size": 10
+    },
+    "ContextSaturation": {
+        "mean_latency_ms": 446.07,
+        "std_dev_latency": 15.11,
+        "p95_latency": 481.86,
+        "p99_latency": 481.86,
+        "mean_tps": 7.9,
+        "sample_size": 10
+    }
+}

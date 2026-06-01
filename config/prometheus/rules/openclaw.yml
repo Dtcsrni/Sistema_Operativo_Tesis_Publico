@@ -1,0 +1,47 @@
+# ============================================================
+# Reglas de Alertas: Dominio openclaw (PC Hub)
+# Referencia: T-033 / DEC-0046 / validación humana interna no pública
+# ============================================================
+
+groups:
+  - name: openclaw.availability
+    interval: 30s
+    rules:
+      # ── Gateway OpenClaw caído
+      - alert: OpenClawGatewayDown
+        expr: up{dominio="openclaw", componente="openclaw_gateway"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          dominio: openclaw
+        annotations:
+          summary: "OpenClaw Gateway no disponible"
+          description: "El gateway central de OpenClaw no responde. Las solicitudes de agentes no serán procesadas."
+
+      # ── Telegram Bot sin heartbeat
+      - alert: TelegramBotUnhealthy
+        expr: up{dominio="openclaw", componente="telegram_bot"} == 0
+        for: 5m
+        labels:
+          severity: warning
+          dominio: openclaw
+        annotations:
+          summary: "Bot de Telegram sin respuesta"
+          description: "El canal de monitoreo Telegram está inactivo. Las alertas por Telegram no llegarán al Tesista."
+
+  - name: openclaw.performance
+    interval: 60s
+    rules:
+      # ── OTel Collector Hub con cola llena (Edge enviando demasiado)
+      - alert: OTelQueueNearFull
+        expr: |
+          otelcol_exporter_queue_size{dominio="sistema_tesis"} /
+          otelcol_exporter_queue_capacity{dominio="sistema_tesis"} > 0.80
+        for: 5m
+        labels:
+          severity: warning
+          dominio: openclaw
+        annotations:
+          summary: "Cola del OTel Collector al {{ $value | humanizePercentage }}"
+          description: "El Collector del Hub está procesando telemetría más lento de lo que recibe. Revisar exportadores."
+

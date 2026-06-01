@@ -1,0 +1,179 @@
+{
+  "generated_at": "2026-05-05T02:40:07+00:00",
+  "model": "mistral-nemo:12b",
+  "header": {
+    "schema_version": "siot-benchmark-run-v1",
+    "record_type": "run_header",
+    "run_id": "BENCH-20260505T023034Z-391ddf4c",
+    "step_id": "validación humana interna no pública",
+    "protocol": "PEV-02",
+    "profile_id": "pc_moe_precision_battery:mistral-nemo:12b",
+    "node": "pc_control",
+    "runtime": "ollama_local",
+    "model": "mistral-nemo:12b",
+    "mode": "real",
+    "scientific_validity": "valid_candidate",
+    "git_commit": "176aeb13622ebb5ed93adbf719b13f17bc662b47",
+    "host_fingerprint": {
+      "platform": "Windows-11-10.0.26200-SP0",
+      "machine": "AMD64",
+      "processor": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+      "cpu_count": 16,
+      "memory_total_bytes": null,
+      "disk": {
+        "path": " ruta local no pública ",
+        "total_bytes": 240055742464,
+        "free_bytes": 141719695360
+      },
+      "gpu": {
+        "status": "ok",
+        "name": "NVIDIA GeForce RTX 4060 Ti",
+        "memory_total_mib": 8188,
+        "memory_used_mib": 1539,
+        "memory_free_mib": 6411,
+        "utilization_gpu_pct": 28,
+        "temperature_celsius": 48,
+        "driver_version": "596.36"
+      }
+    },
+    "model_fingerprint": {
+      "model": "mistral-nemo:12b",
+      "status": "ok",
+      "ollama_id": "e7e06d107c6c",
+      "size": "7.1",
+      "raw": "mistral-nemo:12b       e7e06d107c6c    7.1 GB    13 days ago"
+    },
+    "promptset_hash": "ea4bf2f83717d3b7e5b25a85de9ba66d134e0b8cd22a6b4176a07a9c296239f9",
+    "methodology_references": [
+      {
+        "id": "iso_iec_25059_2023",
+        "name": "ISO/IEC 25059:2023 - Software engineering — Systems and software Quality Requirements and Evaluation (SQuaRE) — Quality model for AI systems",
+        "url": "https://www.iso.org/standard/80655.html",
+        "use": "Modelo de calidad primario para evaluacion de caracteristicas de IA (Robustez, Eficiencia, Fiabilidad)."
+      },
+      {
+        "id": "iso_iec_30141_2024",
+        "name": "ISO/IEC 30141:2024 - Internet of Things (IoT) — Reference Architecture",
+        "url": "https://www.iso.org/standard/84042.html",
+        "use": "Marco de referencia arquitectonico para la validacion del despliegue distribuido PC-Edge."
+      },
+      {
+        "id": "mlperf_inference",
+        "name": "MLCommons MLPerf Inference",
+        "url": "https://mlcommons.org/working-groups/benchmarks/inference/",
+        "use": "Disciplina de escenarios, reproducibilidad y reporte de rendimiento; no implica certificacion oficial."
+      },
+      {
+        "id": "lm_evaluation_harness",
+        "name": "EleutherAI lm-evaluation-harness",
+        "url": "https://github.com/EleutherAI/lm-evaluation-harness",
+        "use": "Compatibilidad con evaluacion estandarizada de LLMs cuando dependencias y datasets esten disponibles."
+      },
+      {
+        "id": "helm",
+        "name": "Stanford CRFM HELM",
+        "url": "https://crfm-helm.readthedocs.io/",
+        "use": "Reporte holistico, transparente y reproducible de prompts, salidas y metricas."
+      }
+    ],
+    "command": "python3 07_scripts/benchmarks/run_moe_benchmark.py",
+    "started_at": "2026-05-05T02:30:34+00:00"
+  },
+  "summary": {
+    "schema_version": "siot-benchmark-run-v1",
+    "record_type": "run_summary",
+    "run_id": "BENCH-20260505T023034Z-391ddf4c",
+    "step_id": "validación humana interna no pública",
+    "profile_id": "pc_moe_precision_battery:mistral-nemo:12b",
+    "node": "pc_control",
+    "runtime": "ollama_local",
+    "model": "mistral-nemo:12b",
+    "status": "ok",
+    "scientific_validity": "valid_scientific_evidence",
+    "ended_at": "2026-05-05T02:40:07+00:00",
+    "statistics": {
+      "sample_size": 24,
+      "mean_latency_ms": 20593.2335,
+      "std_dev_latency_ms": 17907.705,
+      "margin_error_95_ms": 7164.5742,
+      "p50_latency_ms": 23072.6619,
+      "p95_latency_ms": 26933.5214,
+      "p99_latency_ms": 94488.1225,
+      "mean_tokens_per_second": 4.3577
+    },
+    "extra": {
+      "profile": {
+        "model": "mistral-nemo:12b",
+        "role": "primary_orchestrator",
+        "task_count": 6,
+        "task_ids": [
+          "precision_factual",
+          "scientific_synthesis",
+          "coding_specialist",
+          "ambiguous_instruction",
+          "long_context_retrieval",
+          "router_decision"
+        ],
+        "precision_policy": {
+          "primary_objective": "precision",
+          "secondary_objective": "groundedness",
+          "minimum_confidence": 0.8,
+          "latency_guard_ms": 30000,
+          "prefer_specialist_over_fast_route": true
+        }
+      },
+      "model_role": "primary_orchestrator",
+      "model_notes": "Base generalista principal para respuestas precisas y estables.",
+      "tasks": [
+        "precision_factual",
+        "scientific_synthesis",
+        "coding_specialist",
+        "ambiguous_instruction",
+        "long_context_retrieval",
+        "router_decision"
+      ]
+    },
+    "previous_record_hash": "a26f2b682f13918d2666252ca7abb73f64830120854410bdbf9fa3d9ec755773",
+    "record_hash": "0cb73ecf3da88d830893ef3ef492a8c9cb7c287358284422201cf0a6ec905f9c"
+  },
+  "extra": {
+    "profile": {
+      "model": "mistral-nemo:12b",
+      "role": "primary_orchestrator",
+      "task_count": 6,
+      "task_ids": [
+        "precision_factual",
+        "scientific_synthesis",
+        "coding_specialist",
+        "ambiguous_instruction",
+        "long_context_retrieval",
+        "router_decision"
+      ],
+      "precision_policy": {
+        "primary_objective": "precision",
+        "secondary_objective": "groundedness",
+        "minimum_confidence": 0.8,
+        "latency_guard_ms": 30000,
+        "prefer_specialist_over_fast_route": true
+      }
+    },
+    "model_role": "primary_orchestrator",
+    "model_notes": "Base generalista principal para respuestas precisas y estables.",
+    "tasks": [
+      "precision_factual",
+      "scientific_synthesis",
+      "coding_specialist",
+      "ambiguous_instruction",
+      "long_context_retrieval",
+      "router_decision"
+    ]
+  },
+  "jsonl": "runtime\\pc_control\\benchmarks\\runs\\BENCH-20260505T023034Z-391ddf4c.jsonl",
+  "precision_policy": {
+    "primary_objective": "precision",
+    "secondary_objective": "groundedness",
+    "minimum_confidence": 0.8,
+    "latency_guard_ms": 30000,
+    "prefer_specialist_over_fast_route": true
+  }
+}

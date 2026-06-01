@@ -1,0 +1,13 @@
+{
+  "session_id": "c6631165-b95d-4afd-bfdb-26cda5a1a44a",
+  "archetype": "Diálogo",
+  "start_time": "2026-05-04T04:20:06.313039",
+  "parent_session_id": "2026-05-04_bitacora_dialogo_1.md",
+  "active_pets": [],
+  "metadata": {
+    "node": "PC-MASTER",
+    "provider": "Antigravity",
+    "version": "1.0",
+    "privacy_level": "HIGH"
+  }
+}
