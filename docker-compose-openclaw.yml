@@ -36,9 +36,9 @@ services:
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
     volumes:
       # Mapeo del repositorio de tesis
-      -  ruta local no pública 
+      - ./:/workspace:ro
       # Persistencia de configuración y llaves
-      -  ruta local no pública 
+      - openclaw_public_home:/home/appuser/.openclaw
     networks:
       - siot-network
     deploy:
@@ -65,3 +65,5 @@ volumes:
   siot_canon_data:
     external: true
     name: siot_canon_data
+  openclaw_public_home:
+    name: openclaw_public_home
