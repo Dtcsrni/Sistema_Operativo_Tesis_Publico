@@ -273,8 +273,8 @@
 </ul>
 ---</p><p><h2>2. Flujo de Vida de una Tarea</h2></p><p>Cuando el tesista emite un comando estructurado (ej. <code>/investiga</code> o <code>/chat</code>), OpenClaw inicia un pipeline riguroso de validación, enrutamiento, síntesis y registro.</p><p><div class="mermaid-container"><pre class="mermaid">graph TD
     A([Comando del Tesista]) --&gt; B{Gobernanza}
-    B -- Violación --&gt; C[Rechazo Inmediato]
-    B -- Permitido --&gt; D[Recuperación de Contexto]
+    B --&gt;|Violación| C[Rechazo Inmediato]
+    B --&gt;|Permitido| D[Recuperación de Contexto]
     D --&gt; E[Inyección de Persona y Límites]
     E --&gt; F[Routing Adaptativo]
     F --&gt; G[Inferencia LLM]
@@ -295,10 +295,10 @@
         Q4B_PC[Qwen 2.5: 4B]
     end</p><p>    subgraph Nodo Edge IoT (NPU)
         Q3B[Qwen 2.5: 3B RKLLM]
-    end</p><p>    R -. Lee Benchmark .-&gt; idx
-    R -- Tarea Compleja / Síntesis --&gt; H8B
-    R -- Tarea Simple / Alta Velocidad --&gt; Q4B_PC
-    R -- Operación Desconectada / IoT --&gt; Q3B</p><p>    classDef tech fill:#f9f9f9,stroke:#666,stroke-width:1px;
+    end</p><p>    R -.-&gt;|Lee Benchmark| idx
+    R --&gt;|&quot;Tarea Compleja / Síntesis&quot;| H8B
+    R --&gt;|&quot;Tarea Simple / Alta Velocidad&quot;| Q4B_PC
+    R --&gt;|&quot;Operación Desconectada / IoT&quot;| Q3B</p><p>    classDef tech fill:#f9f9f9,stroke:#666,stroke-width:1px;
     class H8B,Q4B_PC,Q3B tech;</pre></div></p><p><h3>Criterios de Enrutamiento</h3>
 <ul><li><strong>Hermes 3 (8B):</strong> Se selecciona si el archivo de benchmark (<code>index.json</code>) determina que el modelo supera los <strong>25 Tokens Por Segundo (TPS)</strong>. Al ser un modelo más grande, garantiza mayor calidad en síntesis académica, revisión de literatura y análisis complejo, siempre que la GPU local (RTX) soporte la carga eficientemente.</li>
 <li><strong>Qwen 2.5 (3B/4B):</strong> Actúan como baselines ultrarrápidos (hasta 85 TPS). Se priorizan para tareas mecánicas, consultas rápidas de estado, o cuando se opera desde el nodo Edge (Orange Pi 5 Plus usando inferencia nativa NPU).</li>

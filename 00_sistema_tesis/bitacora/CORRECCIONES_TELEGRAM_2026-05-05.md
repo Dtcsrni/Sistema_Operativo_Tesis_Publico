@@ -340,7 +340,7 @@ Completar la sincronización documental retroactiva con el resto de artefactos d
 - **Modo:** [N/A Retroactivo]
 - **Pregunta Crítica en Uso de IA:** [N/A Retroactivo]
 
-[LID]:  ruta local no pública 
+[LID]:  ruta local no pública /00_sistema_tesis/bitacora/CORRECCIONES_TELEGRAM_2026-05-05.md
 [GOV]: AGENTS.md
 [AUD]: build_all.py
 

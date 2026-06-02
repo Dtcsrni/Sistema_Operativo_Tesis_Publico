@@ -30,8 +30,7 @@ from .storage import OpenClawStore
 from .maestro_router import maestro_enabled, maestro_message_hash, maestro_profile_from_decision
 from .inference import (
     llamacpp_generate,
-    openai_compatible_generate,
-    gemini_api_generate
+    openai_compatible_generate
 )
 from .runtime_status import probe_runtime_status
 from .motor_calidad_toltecayotl import MotorDeCalidadToltecayotl
@@ -42,7 +41,7 @@ MUTATION_MARKERS = {"aplica", "borra", "cambia", "commit", "deploy", "edita", "e
 READ_ONLY_TOOLS = {"aprobaciones", "estado", "eventos", "equipo", "logs", "memoria", "modelos", "preflight", "doctor", "presupuesto", "secretos", "servicios"}
 AMBIGUOUS_ACTION_MARKERS = {"caracteristicas", "características", "equipo", "genera", "generar", "imagen", "resultado del escaneo", "scan", "scanner", "escaneo"}
 MODEL_REQUEST_MARKERS = {"con mistral", "ejecuta con", "modelo", "usa mistral", "usar mistral"}
-CLOUD_API_CHAT_PROVIDERS = {"gemini_api"}
+CLOUD_API_CHAT_PROVIDERS: set[str] = set()
 PC_INFERENCE_PROVIDERS = {"desktop_compute", "pc_native_llamacpp", "llamacpp_local", "external_llm_router", "openrouter_remote"}
 DEFAULT_BLOCKED_CHAT_MODELS = {"mistral", "mistral-nemo", "mistral-nemo:12b"}
 
@@ -206,10 +205,7 @@ class Orchestrator:
                 else:
                     prompt = self._safe_prompt(argument, state, profile)
                     
-                    if candidate.provider == "gemini_api":
-                        api_key = os.getenv("OPENCLAW_GEMINI_API_KEY", "").strip()
-                        ok, response = gemini_api_generate(api_key=api_key, prompt=prompt, model=candidate.model, timeout_seconds=candidate.timeout_seconds)
-                    elif candidate.provider in {"desktop_compute", "pc_native_llamacpp", "llamacpp_local", "edge_inference"}:
+                    if candidate.provider in {"desktop_compute", "pc_native_llamacpp", "llamacpp_local", "edge_inference"}:
                         # En el nuevo stack Docker, todos estos usan el protocolo OpenAI via llama.cpp
                         ok, response = llamacpp_generate(base_url=candidate.base_url, model=candidate.model, prompt=prompt, timeout_seconds=candidate.timeout_seconds)
                     elif candidate.provider == "openrouter_remote":
@@ -247,7 +243,7 @@ class Orchestrator:
                 contexto_mct = (
                     "OpenClaw integra el Motor de Calidad Toltecayotl (MCT) para auditar respuestas. "
                     "MCT evalua fidelidad contra el contexto fuente, consistencia logica y densidad de evidencia; "
-                    "usa un juez Gemini configurado por OPENCLAW_GEMINI_MODEL y persiste informes JSONL diarios "
+                    "usa auditoria local heuristica sin Gemini ni cloud pagado y persiste informes JSONL diarios "
                     "en runtime/openclaw/state/logs_calidad con id_de_solicitud, puntaje_epistemico_final, "
                     "hallazgos_de_auditoria y requiere_revision_humana. La validacion humana formal sigue fuera "
                     "del alcance automatico del agente."
@@ -317,15 +313,7 @@ class Orchestrator:
                 progress_callback(0, f"\n[Paso {step+1}/{max_steps}] Pensando...", "thinking")
             
             try:
-                if candidate.provider == "gemini_api":
-                    api_key = os.getenv("OPENCLAW_GEMINI_API_KEY", "").strip()
-                    ok, response = gemini_api_generate(
-                        api_key=api_key, 
-                        model=candidate.model, 
-                        prompt=current_prompt,
-                        timeout_seconds=candidate.timeout_seconds
-                    )
-                elif candidate.provider in {"edge_inference", "desktop_compute", "pc_native_llamacpp", "llamacpp_local"}:
+                if candidate.provider in {"edge_inference", "desktop_compute", "pc_native_llamacpp", "llamacpp_local"}:
                     # Usamos llamacpp_generate (OpenAI compatible) para el loop agentico
                     ok, response = llamacpp_generate(
                         base_url=candidate.base_url, 
@@ -456,14 +444,6 @@ class Orchestrator:
         ))
         
         candidates = []
-        if os.getenv("OPENCLAW_FORCE_GEMINI_CHAT", "").strip().lower() in {"1", "true", "yes", "on"}:
-            candidates.append(ChatBackendCandidate(
-                "gemini_api",
-                "https://generativelanguage.googleapis.com",
-                os.getenv("OPENCLAW_GEMINI_MODEL", "gemini-2.5-flash").strip() or "gemini-2.5-flash",
-                int(os.getenv("OPENCLAW_GEMINI_TIMEOUT", "120")),
-                "gemini",
-            ))
         if decision_provider == "openrouter_remote" and "openrouter_remote" in context_packet.allowed_providers:
             candidates.append(ChatBackendCandidate(
                 "openrouter_remote",
@@ -531,15 +511,7 @@ class Orchestrator:
             if not sem.acquire(blocking=False):
                 continue
             try:
-                if candidate.provider == "gemini_api":
-                    api_key = os.getenv("OPENCLAW_GEMINI_API_KEY", "").strip()
-                    ok, response = gemini_api_generate(
-                        api_key=api_key, 
-                        model=candidate.model, 
-                        prompt=full_prompt, 
-                        timeout_seconds=candidate.timeout_seconds
-                    )
-                elif candidate.provider in {"desktop_compute", "pc_native_llamacpp", "llamacpp_local", "edge_inference"}:
+                if candidate.provider in {"desktop_compute", "pc_native_llamacpp", "llamacpp_local", "edge_inference"}:
                     ok, response = llamacpp_generate(
                         base_url=candidate.base_url, 
                         model=candidate.model, 

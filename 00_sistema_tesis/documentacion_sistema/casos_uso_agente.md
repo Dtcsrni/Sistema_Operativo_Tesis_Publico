@@ -20,8 +20,8 @@ Cuando el tesista emite un comando estructurado (ej. `/investiga` o `/chat`), Op
 ```mermaid
 graph TD
     A([Comando del Tesista]) --> B{Gobernanza}
-    B -- Violación --> C[Rechazo Inmediato]
-    B -- Permitido --> D[Recuperación de Contexto]
+    B -->|Violación| C[Rechazo Inmediato]
+    B -->|Permitido| D[Recuperación de Contexto]
     D --> E[Inyección de Persona y Límites]
     E --> F[Routing Adaptativo]
     F --> G[Inferencia LLM]
@@ -62,10 +62,10 @@ graph LR
         Q3B[Qwen 2.5: 3B RKLLM]
     end
 
-    R -. Lee Benchmark .-> idx
-    R -- Tarea Compleja / Síntesis --> H8B
-    R -- Tarea Simple / Alta Velocidad --> Q4B_PC
-    R -- Operación Desconectada / IoT --> Q3B
+    R -.->|Lee Benchmark| idx
+    R -->|"Tarea Compleja / Síntesis"| H8B
+    R -->|"Tarea Simple / Alta Velocidad"| Q4B_PC
+    R -->|"Operación Desconectada / IoT"| Q3B
 
     classDef tech fill:#f9f9f9,stroke:#666,stroke-width:1px;
     class H8B,Q4B_PC,Q3B tech;

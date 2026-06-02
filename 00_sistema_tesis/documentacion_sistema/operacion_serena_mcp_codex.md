@@ -51,6 +51,11 @@ Adicionalmente, `OpenClaw` lo consume ahora como adapter interno de contexto/gob
 - `serena-local`: perfil recomendado y activo del workspace para el endpoint HTTP local `http://127.0.0.1:8765/mcp`. La tarea `Serena MCP HTTP` queda configurada con autoarranque al abrir la carpeta para que Serena permanezca disponible durante el trabajo agéntico normal.
 - `serena-local-py`: wrapper y ruta de diagnóstico por `stdio`, conservado en el repo pero deshabilitado temporalmente en `.vscode/mcp.json` por incompatibilidad práctica con `LocalProcess` de VS Code `1.115.0`.
 - El contrato lógico del servidor sigue siendo `serena-local`; `serena-local-py` no redefine herramientas, gobernanza ni `serverInfo.name`.
+- `docker-mcp-architecture`: gateway Docker MCP por `stdio` sobre el perfil `siot-architecture`. Publica Context7, Sequential Thinking, GitHub en lectura, Fetch y Filesystem restringido al workspace para arquitectura, revisión y economía de tokens.
+- `docker-mcp-runtime`: gateway Docker MCP por `stdio` sobre el perfil `siot-runtime`. Publica Fetch y Filesystem en modo lectura para inspección operativa de archivos del repo; las operaciones Docker reales siguen usando CLI/scripts locales hasta contar con un servidor Docker de inspección específico.
+- `docker-mcp-accessibility`: gateway Docker MCP por `stdio` sobre el perfil `siot-accessibility`. Publica Playwright con herramientas de navegación, snapshot, consola, red, screenshot e interacción básica; `browser_run_code_unsafe` queda fuera del allowlist.
+- `docker-mcp-observability`: gateway Docker MCP por `stdio` sobre el perfil `siot-observability`. Publica Grafana en modo consulta/lectura contra `http://127.0.0.1:3000` y Fetch; acciones mutantes de dashboards, alertas, incidentes o carpetas quedan fuera del allowlist.
+- No se publica perfil Figma en este workspace. Si alguna superficie de diseño lo requiere, debe incorporarse mediante una decisión separada y trazada.
 
 ## Bridge para runtimes externos
 
@@ -64,7 +69,7 @@ Adicionalmente, `OpenClaw` lo consume ahora como adapter interno de contexto/gob
 ## Limite entre host y runtime
 
 - VS Code puede cargar los perfiles MCP publicados en `.vscode/mcp.json`.
-- En el estado actual del workspace (`2026-04-12`), VS Code expone solo `serena-local` por HTTP con autoarranque del task local.
+- En el estado actual del workspace (`2026-06-01`), VS Code publica `serena-local` por HTTP y cuatro gateways Docker MCP por `stdio`: `docker-mcp-architecture`, `docker-mcp-runtime`, `docker-mcp-accessibility` y `docker-mcp-observability`.
 - Esta conversacion no hereda automaticamente los servidores MCP personalizados que viva dentro del host VS Code.
 - Que `serena-local-py` aparezca habilitado en la UI de VS Code no implica que el runtime del chat lo exponga como namespace o tool nativa.
 - Si se requiere acceso desde este chat, hace falta una de estas rutas:

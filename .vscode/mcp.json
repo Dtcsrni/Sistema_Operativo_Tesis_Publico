@@ -23,6 +23,90 @@
           "docs/**/*.md"
         ]
       }
+    },
+    "docker-mcp-architecture": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "mcp",
+        "gateway",
+        "run",
+        "--profile",
+        "siot-architecture",
+        "--block-secrets",
+        "--log-calls",
+        "--cpus",
+        "1",
+        "--memory",
+        "2Gb"
+      ],
+      "env": {
+        "SISTEMA_TESIS_MCP_PROFILE": "siot-architecture",
+        "SISTEMA_TESIS_MCP_HOST_KIND": "vscode"
+      }
+    },
+    "docker-mcp-runtime": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "mcp",
+        "gateway",
+        "run",
+        "--profile",
+        "siot-runtime",
+        "--block-secrets",
+        "--log-calls",
+        "--cpus",
+        "1",
+        "--memory",
+        "2Gb"
+      ],
+      "env": {
+        "SISTEMA_TESIS_MCP_PROFILE": "siot-runtime",
+        "SISTEMA_TESIS_MCP_HOST_KIND": "vscode"
+      }
+    },
+    "docker-mcp-accessibility": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "mcp",
+        "gateway",
+        "run",
+        "--profile",
+        "siot-accessibility",
+        "--block-secrets",
+        "--log-calls",
+        "--cpus",
+        "1",
+        "--memory",
+        "2Gb"
+      ],
+      "env": {
+        "SISTEMA_TESIS_MCP_PROFILE": "siot-accessibility",
+        "SISTEMA_TESIS_MCP_HOST_KIND": "vscode"
+      }
+    },
+    "docker-mcp-observability": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "mcp",
+        "gateway",
+        "run",
+        "--profile",
+        "siot-observability",
+        "--block-secrets",
+        "--log-calls",
+        "--cpus",
+        "1",
+        "--memory",
+        "2Gb"
+      ],
+      "env": {
+        "SISTEMA_TESIS_MCP_PROFILE": "siot-observability",
+        "SISTEMA_TESIS_MCP_HOST_KIND": "vscode"
+      }
     }
   }
 }

@@ -1511,15 +1511,15 @@ def test_voice_requires_call_mode_when_enabled(tmp_path: Path, monkeypatch) -> N
     assert "Modo llamada desactivado" in payload["text"]
 
 
-def test_chat_backend_candidates_include_gemini_only_when_enabled(monkeypatch) -> None:
+def test_chat_backend_candidates_never_include_gemini(monkeypatch) -> None:
     profile = {"request_kind": "reasoning", "complexity": "high"}
     monkeypatch.setenv("OPENCLAW_DESKTOP_COMPUTE_ENABLED", "0")
     monkeypatch.delenv("OPENCLAW_GEMINI_ENABLED", raising=False)
     disabled = _chat_backend_candidates(ROOT, profile)
-    assert all(candidate.provider != "gemini_api" for candidate in disabled)
+    assert all(candidate.provider not in {"gemini_api", "gemini_vertex_flash_3"} for candidate in disabled)
 
     monkeypatch.setenv("OPENCLAW_GEMINI_ENABLED", "1")
     monkeypatch.setenv("OPENCLAW_GEMINI_MODEL", "gemini-2.5-flash")
     enabled = _chat_backend_candidates(ROOT, profile)
 
-    assert any(candidate.provider == "gemini_api" and candidate.model == "gemini-2.5-flash" for candidate in enabled)
+    assert all(candidate.provider not in {"gemini_api", "gemini_vertex_flash_3"} for candidate in enabled)

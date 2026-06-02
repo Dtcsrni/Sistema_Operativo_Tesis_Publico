@@ -244,8 +244,6 @@ def _request_kind_for_intent(intent: str) -> str:
 def _candidate_provider_ids() -> list[str]:
     desktop = "llamacpp_local" if os.getenv("OPENCLAW_DESKTOP_RUNTIME", "").strip().lower() in {"", "llamacpp", "llamacpp_local"} else "desktop_compute"
     providers = [desktop, "local"]
-    if os.getenv("OPENCLAW_GEMINI_ENABLED", "0").strip().lower() in {"1", "true", "yes", "on"}:
-        providers.insert(0, "gemini_api")
     if os.getenv("OPENCLAW_EDGE_AUTO_FALLBACK", "0").strip().lower() in {"1", "true", "yes", "on"}:
         providers.extend(["edge_inference", "rknn_llm_experimental"])
     return providers
@@ -259,15 +257,15 @@ def _fallback_chain_for_intent(
     model_stats: dict[str, dict[str, Any]],
 ) -> list[str]:
     if intent == "chat_fast":
-        chain = ["gemini_api:google/gemini-3-flash-preview", "desktop_compute:hermes3:8b", "local:sin_modelo"]
+        chain = ["desktop_compute:hermes3:8b", "local:sin_modelo"]
     elif intent == "ops":
         chain = ["desktop_compute:hermes3:8b", "local:sin_modelo"]
     elif intent == "coding":
-        chain = ["desktop_compute:hermes3:8b", "gemini_api:google/gemini-3-flash-preview", "local:sin_modelo"]
+        chain = ["desktop_compute:hermes3:8b", "local:sin_modelo"]
     elif intent == "research_synthesis":
-        chain = ["gemini_api:google/gemini-3-flash-preview", "llamacpp_local:mistral-nemo:12b", "edge_inference:qwen3:4b"]
+        chain = ["llamacpp_local:mistral-nemo:12b", "desktop_compute:hermes3:8b", "edge_inference:qwen3:4b"]
     else:
-        chain = ["gemini_api:google/gemini-3-flash-preview", "desktop_compute:hermes3:8b", "local:sin_modelo"]
+        chain = ["desktop_compute:hermes3:8b", "local:sin_modelo"]
     if os.getenv("OPENCLAW_EDGE_AUTO_FALLBACK", "0").strip().lower() in {"1", "true", "yes", "on"}:
         chain.append("edge_inference:qwen3:4b")
     chain = [item for item in chain if _split_chain_item(item)[1] not in REALTIME_BLOCKED_MODELS]

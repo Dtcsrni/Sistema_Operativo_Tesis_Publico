@@ -12,14 +12,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-# Importar utilidades de inferencia y persona
+# Importar utilidades locales y persona
 try:
-    from .inference import gemini_api_generate
     from .persona import build_system_block
     from .epistemic import sha256_text
 except ImportError:
     # Fallback para ejecución fuera del paquete
-    def gemini_api_generate(*args, **kwargs): return False, "error_import", "unknown"
     def build_system_block(*args, **kwargs): return "Sistema de Calidad"
     def sha256_text(t): return "hash_placeholder"
 
@@ -54,8 +52,7 @@ class MotorDeCalidadToltecayotl:
         import os
         self.directorio_de_logs = Path(directorio_de_logs)
         self.directorio_de_logs.mkdir(parents=True, exist_ok=True)
-        self.modelo_juez = os.getenv("OPENCLAW_GEMINI_MODEL", "gemini-2.5-flash").strip() or "gemini-2.5-flash"
-        self.api_key = os.getenv("OPENCLAW_GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY", "")
+        self.modelo_juez = os.getenv("OPENCLAW_MCT_LOCAL_JUDGE_MODEL", "heuristica_local_toltecayotl_v1").strip() or "heuristica_local_toltecayotl_v1"
 
     def evaluar_respuesta(
         self,
@@ -114,23 +111,35 @@ class MotorDeCalidadToltecayotl:
         return informe
 
     def _ejecutar_auditoria_juez(self, prompt: str, contexto: str, respuesta: str) -> Tuple[bool, str, str]:
-        """Ejecuta el prompt de auditoría en Gemini 3 Flash con parámetros deterministas."""
-        instrucciones_auditor = (
-            "Evalua una respuesta academica de IA. Devuelve solo JSON valido con "
-            "las claves fidelidad, logica, hallazgos y es_valido. "
-            "fidelidad y logica deben ser numeros entre 0.0 y 1.0; hallazgos debe ser lista de strings.\n\n"
-            f"CONTEXTO:\n{contexto[:4000]}\n\n"
-            f"INSTRUCCION:\n{prompt[:2000]}\n\n"
-            f"RESPUESTA:\n{respuesta[:6000]}"
-        )
-        
-        return gemini_api_generate(
-            api_key=self.api_key,
-            prompt=instrucciones_auditor,
-            model=self.modelo_juez,
-            timeout_seconds=45,
-            json_mode=True,
-        )
+        """Ejecuta auditoría local conservadora, sin Gemini ni servicios cloud."""
+        contexto_lower = contexto.lower()
+        respuesta_lower = respuesta.lower()
+        terminos_contexto = {
+            token
+            for token in contexto_lower.replace("\n", " ").split()
+            if len(token) >= 6
+        }
+        terminos_respuesta = {
+            token
+            for token in respuesta_lower.replace("\n", " ").split()
+            if len(token) >= 6
+        }
+        cobertura = len(terminos_contexto & terminos_respuesta) / max(len(terminos_contexto), 1)
+        fidelidad = min(1.0, max(0.2, cobertura * 3.0))
+        logica = 0.8 if len(respuesta.strip()) >= 120 else 0.5
+        hallazgos = [
+            "Auditoria local heuristica; no usa Gemini ni cloud pagado.",
+            f"Cobertura lexica contexto-respuesta={cobertura:.3f}.",
+        ]
+        if fidelidad < 0.75:
+            hallazgos.append("Cobertura baja; requiere revision humana.")
+        payload = {
+            "fidelidad": round(fidelidad, 3),
+            "logica": round(logica, 3),
+            "hallazgos": hallazgos,
+            "es_valido": fidelidad >= 0.75,
+        }
+        return True, json.dumps(payload, ensure_ascii=False), self.modelo_juez
 
     def _analizar_testimonios_y_citas(self, respuesta: str, contexto: str) -> Dict[str, Any]:
         """Analiza la densidad de evidencia fáctica y citaciones en el texto."""

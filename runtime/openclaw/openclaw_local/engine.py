@@ -590,19 +590,13 @@ def _web_assisted_enabled() -> bool:
 
 def _preferred_web_assisted_provider(task: TaskEnvelope) -> str:
     explicit = str(task.extra_context.get("preferred_web_assisted", "") or "").strip().lower()
-    if explicit in {"chatgpt_plus_web_assisted", "gemini_web_assisted"}:
-        return explicit
-    if task.extra_context.get("prefer_chatgpt_plus") is True:
-        return "chatgpt_plus_web_assisted"
+    if explicit in {"chatgpt_plus_web_assisted"}:
+        return ""
     return ""
 
 
 def _cloud_providers_enabled(task: TaskEnvelope) -> bool:
-    if task.extra_context.get("allow_cloud") is True:
-        return True
-    if str(task.extra_context.get("network_mode", "")).strip().lower() == "cloud_allowed":
-        return True
-    return _env_flag_enabled("OPENCLAW_CLOUD_ENABLED", default=False)
+    return False
 
 
 def _desktop_compute_enabled(task: TaskEnvelope) -> bool:
@@ -735,68 +729,64 @@ def _candidate_provider_order(task: TaskEnvelope) -> list[str]:
     if task.domain == "profesional":
         preferred_web = _preferred_web_assisted_provider(task)
         if preferred_web:
-            order = [preferred_web, "openai_api", "groq_api", "edge_inference", "local"]
+            order = [preferred_web, "edge_inference", "local"]
             if preferred_web != "chatgpt_plus_web_assisted":
-                order.insert(1, "chatgpt_plus_web_assisted")
+                order.insert(1)
             return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task), task)
         if advanced_reasoning:
-            order = [desktop_provider, "edge_inference", "local", "chatgpt_plus_web_assisted", "openai_api", "groq_api"]
+            order = [desktop_provider, "edge_inference", "local", ]
             if not _desktop_compute_enabled(task):
                 order.remove(desktop_provider)
             return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task), task)
         if task.complexity == "high" or task.risk_level in {"high", "critical"} or precision_first:
             if _cloud_providers_enabled(task) and not _desktop_compute_enabled(task):
-                order = ["edge_inference", "local", "chatgpt_plus_web_assisted", "openai_api", "groq_api"]
+                order = ["edge_inference", "local", ]
                 return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order), task), task)
-            order = [desktop_provider, "edge_inference", "local", "chatgpt_plus_web_assisted", "groq_api", "openai_api"]
+            order = [desktop_provider, "edge_inference", "local", ]
             if not _desktop_compute_enabled(task):
                 order.remove(desktop_provider)
             return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task), task)
         if task.complexity == "medium":
             if _cloud_providers_enabled(task) and not _desktop_compute_requested(task):
-                order = ["groq_api", "edge_inference", "openai_api", "local"]
+                order = ["edge_inference", "local"]
                 return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order), task), task)
-            order = ["edge_inference", "local", desktop_provider, "groq_api", "openai_api"]
+            order = ["edge_inference", "local", desktop_provider]
             if not _desktop_compute_enabled(task) or not _desktop_compute_requested(task):
                 order.remove(desktop_provider)
             return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task), task)
-        order = ["local", "edge_inference", "groq_api"]
+        order = ["local", "edge_inference"]
         return _filter_edge_fallbacks(_append_npu_if_requested(order, task), task)
     if task.domain == "academico":
         preferred_web = _preferred_web_assisted_provider(task)
         if preferred_web:
-            order = [preferred_web, "gemini_vertex_flash_3", "gemini_web_assisted", "openai_api", "gemini_api", "groq_api", desktop_provider, "edge_inference", "local"]
-            if preferred_web != "chatgpt_plus_web_assisted":
-                order.insert(1, "chatgpt_plus_web_assisted")
+            order = [preferred_web, desktop_provider, "edge_inference", "local"]
             if not _desktop_compute_enabled(task):
                 order = [item for item in order if item != desktop_provider]
             return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task), task)
         if _task_requires_advanced_reasoning(task):
-            order = [desktop_provider, "gemini_vertex_flash_3", "edge_inference", "local", "chatgpt_plus_web_assisted", "gemini_web_assisted", "openai_api", "gemini_api", "groq_api"]
+            order = [desktop_provider, "edge_inference", "local"]
             if not _desktop_compute_enabled(task):
                 order = [item for item in order if item != desktop_provider]
             return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task), task)
         if task.complexity == "high" or task.requires_citations or precision_first:
             if _cloud_providers_enabled(task) and not _desktop_compute_enabled(task):
-                order = ["gemini_vertex_flash_3", "gemini_api", "gemini_web_assisted", "openai_api", "chatgpt_plus_web_assisted", "groq_api", "edge_inference", "local"]
+                order = ["edge_inference", "local"]
                 return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order), task), task)
-            order = [desktop_provider, "gemini_vertex_flash_3", "edge_inference", "local", "gemini_api", "gemini_web_assisted", "openai_api", "chatgpt_plus_web_assisted", "groq_api"]
+            order = [desktop_provider, "edge_inference", "local"]
             if not _desktop_compute_enabled(task):
                 order.remove(desktop_provider)
             return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task), task)
         if task.complexity == "medium":
             if _desktop_compute_enabled(task):
                 order = [desktop_provider]
-                if _cloud_providers_enabled(task):
-                    order.extend(["gemini_vertex_flash_3", "groq_api", "gemini_api", "gemini_web_assisted", "openai_api", "chatgpt_plus_web_assisted"])
                 order.extend(["edge_inference", "local"])
                 return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task), task)
             if _cloud_providers_enabled(task):
-                order = ["gemini_vertex_flash_3", "groq_api", "gemini_api", "gemini_web_assisted", "openai_api", "chatgpt_plus_web_assisted", "edge_inference", "local"]
+                order = ["edge_inference", "local"]
                 return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order), task), task)
             order = ["edge_inference", "local"]
             return _filter_edge_fallbacks(_append_npu_if_requested(order, task), task)
-        order = [desktop_provider, "gemini_vertex_flash_3", "edge_inference", "local", "groq_api", "gemini_api", "gemini_web_assisted", "openai_api", "chatgpt_plus_web_assisted"]
+        order = [desktop_provider, "edge_inference", "local"]
         if not _desktop_compute_enabled(task):
             order = [item for item in order if item != desktop_provider]
         return _filter_edge_fallbacks(_append_npu_if_requested(_maybe_insert_external_router(order, after=desktop_provider), task), task)
@@ -874,3 +864,4 @@ def _reasoning_quality_for(provider_id: str, provider_index: dict[str, Any]) -> 
     if "mid" in model_class or "heavy" in model_class:
         return "intermediate"
     return "basic"
+
