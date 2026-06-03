@@ -52,4 +52,4 @@ Walk the design tree with the user. Side effects inline as decisions crystallize
 - Áreas de fricción conocidas: pipeline benchmark, compilación RKLLM, integración Serena MCP, sistema Ledger
 - Refactoring mayor requiere Step ID del Tesista antes de ejecutar
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

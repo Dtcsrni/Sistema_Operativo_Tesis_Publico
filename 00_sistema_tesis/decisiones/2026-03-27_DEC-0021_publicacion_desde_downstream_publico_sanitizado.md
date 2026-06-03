@@ -25,4 +25,4 @@ Fijar como objetivo operativo que el sitio y la exposicion externa salgan del re
 [GOV]:  ruta local no pública 
 [AUD]:  ruta local no pública
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

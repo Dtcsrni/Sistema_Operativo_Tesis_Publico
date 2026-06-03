@@ -70,4 +70,4 @@ Registrar validación humana interna no pública, ejecutar `build_all.py`, hacer
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

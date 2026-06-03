@@ -18,7 +18,7 @@ Ofrecer una superficie híbrida `CLI + web + Telegram` para operar `openclaw` co
 - El servicio de pasarela ya volvió al esquema de imagen reconstruida; el workaround de bind mount quedó retirado.
 
 ## Runtime hibrido PC Hub
-- Usar Docker Compose (en PC) / VS Code como plano normal de autoría, Git, Serena, Caveman y cierre con `build_all.py`. Histórico: Se solía usar WSL; ahora todo es contenedorizado.
+- Usar Docker Compose (en PC) y un host agéntico MCP compatible como plano normal de autoría, Git, Serena, Caveman y cierre con `build_all.py`. Histórico: Se solía usar WSL; ahora todo es contenedorizado.
 - Usar Docker Compose como plano reproducible de servicios (`siot-docs`, `siot-agent`) y pruebas E2E.
 - No tratar el contenedor como repositorio soberano ni como sustituto de los guardrails.
 - Antes de mover cargas pesadas a Docker desde rutas `/mnt/*`, medir rendimiento; si el bind mount degrada, usar clon operativo en filesystem Linux/ext4 o volúmenes nombrados para estado/cache.
@@ -218,4 +218,4 @@ Ofrecer una superficie híbrida `CLI + web + Telegram` para operar `openclaw` co
 - La salida de `openclaw` se considera propuesta operativa hasta revisión humana.
 - La evidencia fuente y el `Step ID` se preservan fuera de la cola automática.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

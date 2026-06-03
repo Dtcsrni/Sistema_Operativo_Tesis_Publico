@@ -15,4 +15,4 @@
 - ¿Se detectaron inconsistencias o alucinaciones? [Sí/No]
 - Puntaje Epistémico Toltecayotl (Auto-evaluado): 0-100.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

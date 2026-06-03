@@ -27,4 +27,4 @@ La sesión establece que la infraestructura de la tesis debe operar bajo el prin
 - [ ] Validar la latencia de `mistral-nemo:12b` en tareas de larga duración.
 - [ ] Ejecutar auditoría completa del sistema con `build_all.py` tras los cambios de configuración.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

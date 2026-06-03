@@ -28,8 +28,8 @@ graph LR
         OBS[Observabilidad]
     end
 
-    REPO -- "git push/sync" --> OPI
-    OPI -- "logs/métricas/evidencia" --> REPO
+    REPO -->|"git push/sync"| OPI
+    OPI -->|"logs/métricas/evidencia"| REPO
 ```
 
 - **Escritorio primario (`desktop_workspace`):** Visual Studio Code en el PC como estación principal de autoría, diseño, análisis, construcción documental y mantenimiento del repositorio soberano.
@@ -217,4 +217,4 @@ La firma humana no se autoemite desde IA sin contexto trazable. Si un artefacto 
    - `python 07_scripts/build_all.py`
    - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

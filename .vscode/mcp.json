@@ -6,7 +6,7 @@
       "env": {
         "SERENA_MCP_DEBUG_LOG": "${workspaceFolder}/historial interno no público/serena_mcp_debug.log",
         "SISTEMA_TESIS_ROOT": "${workspaceFolder}",
-        "SISTEMA_TESIS_MCP_HOST_KIND": "vscode"
+        "SISTEMA_TESIS_MCP_HOST_KIND": "compatible_agent_host"
       },
       "dev": {
         "watch": [
@@ -42,7 +42,7 @@
       ],
       "env": {
         "SISTEMA_TESIS_MCP_PROFILE": "siot-architecture",
-        "SISTEMA_TESIS_MCP_HOST_KIND": "vscode"
+        "SISTEMA_TESIS_MCP_HOST_KIND": "compatible_agent_host"
       }
     },
     "docker-mcp-runtime": {
@@ -63,7 +63,7 @@
       ],
       "env": {
         "SISTEMA_TESIS_MCP_PROFILE": "siot-runtime",
-        "SISTEMA_TESIS_MCP_HOST_KIND": "vscode"
+        "SISTEMA_TESIS_MCP_HOST_KIND": "compatible_agent_host"
       }
     },
     "docker-mcp-accessibility": {
@@ -84,7 +84,7 @@
       ],
       "env": {
         "SISTEMA_TESIS_MCP_PROFILE": "siot-accessibility",
-        "SISTEMA_TESIS_MCP_HOST_KIND": "vscode"
+        "SISTEMA_TESIS_MCP_HOST_KIND": "compatible_agent_host"
       }
     },
     "docker-mcp-observability": {
@@ -105,7 +105,7 @@
       ],
       "env": {
         "SISTEMA_TESIS_MCP_PROFILE": "siot-observability",
-        "SISTEMA_TESIS_MCP_HOST_KIND": "vscode"
+        "SISTEMA_TESIS_MCP_HOST_KIND": "compatible_agent_host"
       }
     }
   }

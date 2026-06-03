@@ -121,7 +121,7 @@ def test_empty_scope_sections_are_marked_as_pending_coverage(isolated_repo: Path
 
     assert "Sin contenido operativo aún" in experiments_page
     assert "Sin contenido operativo aún" not in implementation_page  # Ahora tiene contenido
-    assert "Sin contenido operativo aún" in thesis_page
+    assert "Sin contenido operativo aún" not in thesis_page  # Ahora tiene contenido
 
 
 def test_validate_wiki_reports_missing_source_with_clear_error(tmp_path: Path) -> None:

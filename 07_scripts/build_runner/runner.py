@@ -51,6 +51,12 @@ class StepReport:
     returncode: int | None
     cache_hit: bool
     skip_reason: str | None = None
+    profile: str | None = None
+    selected_reason: str | None = None
+    timeout_seconds: float | None = None
+    timed_out: bool = False
+    command: list[str] | None = None
+    last_status: str | None = None
 
     def is_ok(self) -> bool:
         return self.status in ("ok", "slow", "soft_fail", "skipped")
@@ -68,6 +74,9 @@ def run_step(
     cache: "BuildCache | None" = None,
     force: bool = False,
     dry_run: bool = False,
+    profile: str | None = None,
+    selected_reason: str | None = None,
+    timeout_seconds: float | None = None,
 ) -> StepReport:
     """Ejecuta un BuildStep y retorna su StepReport.
 
@@ -90,6 +99,9 @@ def run_step(
             duration_seconds=0.0, budget_seconds=step.budget_s,
             status="skipped", returncode=None, cache_hit=False,
             skip_reason="skip_if",
+            profile=profile, selected_reason=selected_reason,
+            timeout_seconds=timeout_seconds, timed_out=False,
+            command=None, last_status="skip_if",
         )
 
     # -- Verificar cache incremental ------------------------------------------
@@ -101,6 +113,9 @@ def run_step(
             duration_seconds=0.0, budget_seconds=step.budget_s,
             status="skipped", returncode=None, cache_hit=True,
             skip_reason="cache_hit",
+            profile=profile, selected_reason=selected_reason,
+            timeout_seconds=timeout_seconds, timed_out=False,
+            command=None, last_status="cache_hit",
         )
 
     # -- Construir comando -----------------------------------------------------
@@ -119,17 +134,34 @@ def run_step(
             duration_seconds=0.0, budget_seconds=step.budget_s,
             status="skipped", returncode=None, cache_hit=False,
             skip_reason="dry_run",
+            profile=profile, selected_reason=selected_reason,
+            timeout_seconds=timeout_seconds, timed_out=False,
+            command=cmd, last_status="dry_run",
         )
 
     # -- Ejecutar -------------------------------------------------------------
     t0 = time.perf_counter()
     try:
-        result = subprocess.run(cmd, cwd=root, check=not step.soft_fail)
+        result = subprocess.run(cmd, cwd=root, check=not step.soft_fail, timeout=timeout_seconds)
         returncode = result.returncode
         raw_ok = returncode == 0
     except subprocess.CalledProcessError as exc:
         returncode = exc.returncode
         raw_ok = False
+    except subprocess.TimeoutExpired:
+        duration = round(time.perf_counter() - t0, 3)
+        print(RED(f"  [TIMEOUT] {step.label} -- {duration:.3f}s > limite {timeout_seconds:.1f}s"))
+        if cache is not None:
+            cache.record(step, "failed")
+        return StepReport(
+            label=step.label, script=step.script, args=step.args,
+            group=step.group, started_at_utc=started_at,
+            duration_seconds=duration, budget_seconds=step.budget_s,
+            status="failed", returncode=None, cache_hit=False,
+            profile=profile, selected_reason=selected_reason,
+            timeout_seconds=timeout_seconds, timed_out=True,
+            command=cmd, last_status="timeout",
+        )
 
     duration = round(time.perf_counter() - t0, 3)
 
@@ -157,12 +189,15 @@ def run_step(
         group=step.group, started_at_utc=started_at,
         duration_seconds=duration, budget_seconds=step.budget_s,
         status=status, returncode=returncode, cache_hit=False,
+        profile=profile, selected_reason=selected_reason,
+        timeout_seconds=timeout_seconds, timed_out=False,
+        command=cmd, last_status="completed",
     )
 
 
 # -- Generacion de perfiles ---------------------------------------------------
 
-def write_profile(reports: list[StepReport], profile_dir: Path) -> Path:
+def write_profile(reports: list[StepReport], profile_dir: Path, profile: str | None = None, partial: bool = False) -> Path:
     """Escribe el perfil JSON de la sesion de build (timestamped + latest)."""
     profile_dir.mkdir(parents=True, exist_ok=True)
     ts = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
@@ -176,6 +211,8 @@ def write_profile(reports: list[StepReport], profile_dir: Path) -> Path:
 
     payload = {
         "generated_at_utc": ts,
+        "profile": profile,
+        "partial": partial,
         "total_duration_seconds": round(sum(r.duration_seconds for r in reports), 3),
         "summary": {
             "total":    len(reports),

@@ -20,4 +20,4 @@ The more you know, the better you can help. But remember — you're learning abo
 
 - [Agent workspace](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/concepts/agent-workspace)
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

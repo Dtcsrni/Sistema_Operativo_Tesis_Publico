@@ -221,4 +221,4 @@ See `docs/CHARLIE_WORKFLOW.md` for complete details.
 
 Ready for production deployment.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

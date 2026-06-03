@@ -378,4 +378,4 @@ Los PETs se persisten en SQLite con la tabla `pet_bundles_ingestados`:
 - [ ] API REST para ingesta remota de PETs
 - [ ] Dashboard de auditoría de PETs ingestados
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

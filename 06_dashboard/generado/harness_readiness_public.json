@@ -12,7 +12,7 @@
     "harness_runs": "historial interno no público/harness_runs.jsonl",
     "latest_build_profile": "historial interno no público/build_all_profile_latest.json"
   },
-  "generated_at": "2026-06-02T01:16:26.640334+00:00",
+  "generated_at": "2026-06-03T10:58:39.849451+00:00",
   "policy_findings": [],
   "readiness_score": 93,
   "schema_version": "siot-harness-readiness-v1",

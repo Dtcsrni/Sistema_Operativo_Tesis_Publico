@@ -327,4 +327,4 @@ Este archivo es el índice central de todas las validaciones de soberanía human
 [validación humana interna no pública]: log_sesiones_trabajo_registradas.md#validación humana interna no pública
 [validación humana interna no pública]: log_sesiones_trabajo_registradas.md#validación humana interna no pública
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

@@ -1,5 +1,5 @@
 {
-  "synced_at": "2026-06-01 20:28:52",
+  "synced_at": "2026-06-03 05:00:02",
   "sync_mode": "mirror",
   "destination_label": "public_remote",
   "source_file_count": 2214,
@@ -10,9 +10,9 @@
   },
   "public_repo": {
     "branch": "gh-pages",
-    "commit_before_sync": "b1cf00b4c71d845bccaaf90389aee0236d95fe72"
+    "commit_before_sync": "861f6f4a91dba1378606263b28e38f01b1753240"
   },
-  "bundle_fingerprint": "c919a43382112bbbfb1ee5224090b96c4d52a15a0771c2557836343afe3ec48f",
+  "bundle_fingerprint": "c0fccec933aa0f20978f366c0a9274d723e4b9a3b9ebe2f881d4b10eee221f10",
   "private_exclusions": {
     "policy": "canonical_private_surfaces_filtered",
     "prefix_rules_count": 3,

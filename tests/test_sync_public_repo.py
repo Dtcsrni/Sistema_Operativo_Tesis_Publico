@@ -48,7 +48,7 @@ def test_public_sync_payloads_keep_pages_guarded_to_public_repo() -> None:
     payloads = render_payloads(source_map_mirror(ROOT), sanitize=True)
     pages_text = payloads[".github/workflows/pages.yml"].decode("utf-8")
     assert "Dtcsrni/Sistema_Operativo_Tesis_Publico" in pages_text
-    assert "refs/heads/main" in pages_text
+    assert "refs/heads/gh-pages" in pages_text
     assert "upload-pages-artifact" in pages_text
     assert "path: 06_dashboard/publico" in pages_text
 

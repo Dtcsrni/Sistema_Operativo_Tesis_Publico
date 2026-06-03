@@ -8,4 +8,4 @@
 ## Registro actual
 - `1.0.0`: baseline desktop-first para cierre B0 desde escritorio.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

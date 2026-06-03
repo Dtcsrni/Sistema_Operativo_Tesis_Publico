@@ -1,30 +1,31 @@
-# Operación Serena MCP con Codex en VS Code
+# Operación MCP Agnóstica para Agentes Compatibles
 
 ## Proposito
 
-Definir como operar Serena MCP desde VS Code con Codex sin perder soberania humana, trazabilidad ni claridad sobre la raiz real del workspace.
+Definir como operar Serena MCP y los perfiles Docker MCP desde cualquier host agéntico compatible sin perder soberania humana, trazabilidad ni claridad sobre la raiz real del workspace.
 
 ## Arquitectura operativa
 
-- **Host:** VS Code con Codex.
-- **Plano de autoría/control:** WSL + VS Code conserva Git, Codex, Caveman, Serena HTTP, trazabilidad y `build_all.py`.
+- **Host:** cualquier cliente MCP compatible, por ejemplo Codex Desktop, Codex en VS Code, Antigravity, Antigravity IDE, Cursor, Continue, JetBrains u otro runtime con soporte MCP.
+- **Plano de autoría/control:** el host agéntico conserva Git, Caveman, Serena HTTP, trazabilidad y `build_all.py` sobre la raiz real del repositorio.
 - **Plano reproducible de servicios:** Docker Compose ejecuta servicios del PC Hub (`siot-docs`, `siot-agent`) sin reemplazar el workspace soberano.
 - **Transporte recomendado en Windows local:** MCP por Streamable HTTP sobre `http://127.0.0.1:8765/mcp`.
-- **Transporte alterno:** `stdio`, conservado para pruebas y otros hosts.
+- **Transporte alterno:** `stdio`, conservado para pruebas y hosts que no puedan consumir HTTP local.
 - **Raiz efectiva:** `${workspaceFolder}`.
 - **Adaptador MCP:** `07_scripts/serena_mcp.py`.
 - **Gobernanza y permisos:** `07_scripts/serena_policy.py`.
 - **Ejecucion de operaciones:** `07_scripts/serena_core.py`.
 - **Configuracion del servidor:** `00_sistema_tesis/config/serena_mcp.json`.
-- **Integracion del workspace:** `.vscode/mcp.json`.
-- **Wrappers locales Windows:** `.vscode/serena-http.cmd` y `.vscode/serena-local-py.cmd`.
+- **Plantilla agnóstica de host:** `docs/03_operacion/mcp-agent-host-template.json`.
+- **Implementacion local de referencia:** `.vscode/mcp.json`.
+- **Wrappers locales Windows:** `.vscode/serena-http.cmd` y `.vscode/serena-local-py.cmd`; otros hosts pueden lanzar el mismo servidor por comando equivalente.
 
-Serena MCP no reemplaza `tesis.py` ni `ab_pilot.py`. Su funcion es exponer herramientas compactas y auditables para que Codex opere con menos contexto repetido y con enforcement explicito.
+Serena MCP no reemplaza `tesis.py` ni `ab_pilot.py`. Su funcion es exponer herramientas compactas y auditables para que cualquier agente compatible opere con menos contexto repetido y con enforcement explicito.
 Adicionalmente, `OpenClaw` lo consume ahora como adapter interno de contexto/gobernanza, sin incorporarlo al ruteo de proveedores de inferencia.
 
 ## Runtime hibrido WSL + Docker
 
-- WSL/VS Code es la superficie primaria de autoria, decisiones, Git, Serena, Caveman y cierre de auditoria.
+- El host agéntico local es la superficie primaria de autoria, decisiones, Git, Serena, Caveman y cierre de auditoria.
 - Docker es superficie de ejecucion reproducible para servicios, pruebas E2E y dependencias pesadas; no es la fuente de verdad del canon.
 - Los bind mounts desde rutas Windows o montajes `/mnt/*` pueden degradar rendimiento; para cargas pesadas se debe medir primero o usar clon operativo en filesystem Linux/ext4, volumen nombrado o cache persistente.
 - El canon no se mueve ni se convierte en volumen primario sin decision explicita y trazada.
@@ -41,10 +42,11 @@ Adicionalmente, `OpenClaw` lo consume ahora como adapter interno de contexto/gob
 ## Contrato común para hosts/agentes
 
 - `serena-local` se mantiene como nombre lógico común para hosts MCP compatibles.
-- `serena-local-py` se admite como alias operativo local del host Codex para fallback y diagnóstico por `stdio`.
+- `serena-local-py` se admite como alias operativo local para fallback y diagnóstico por `stdio`.
 - La plantilla mínima de conexión compartida vive en `docs/03_operacion/serena-mcp-host-template.json`.
+- La plantilla agnóstica completa para Serena + perfiles Docker MCP vive en `docs/03_operacion/mcp-agent-host-template.json`.
 - El contrato reutilizable para agentes externos e internos está documentado en `00_sistema_tesis/documentacion_sistema/contrato_serena_mcp_agentes.md`.
-- En esta fase, Copilot y Antigravity se consideran consumidores potenciales del mismo contrato MCP, sin assets específicos por host.
+- Codex Desktop, Codex en VS Code, Antigravity, Antigravity IDE, Copilot, Cursor, Continue, JetBrains y otros clientes MCP se consideran consumidores equivalentes del mismo contrato. Ningun host redefine las reglas de negocio.
 
 ## Perfiles MCP del workspace
 
@@ -64,22 +66,19 @@ Adicionalmente, `OpenClaw` lo consume ahora como adapter interno de contexto/gob
 - Endpoint por defecto: `http://127.0.0.1:8766/mcp/serena`.
 - Token requerido por defecto: variable `SERENA_BRIDGE_BEARER_TOKEN`.
 - Los hosts externos deben enviar headers de identidad para que la traza distinga `host_kind=external_runtime`.
-- VS Code no necesita este bridge para operar localmente; su uso principal es exponer Serena a runtimes separados del host.
+- Un host local que pueda registrar `http://127.0.0.1:8765/mcp` no necesita bridge. El bridge se usa cuando el runtime no hereda el localhost del agente, vive fuera del IDE o requiere endpoint autenticado.
 
 ## Limite entre host y runtime
 
-- VS Code puede cargar los perfiles MCP publicados en `.vscode/mcp.json`.
-- En el estado actual del workspace (`2026-06-01`), VS Code publica `serena-local` por HTTP y cuatro gateways Docker MCP por `stdio`: `docker-mcp-architecture`, `docker-mcp-runtime`, `docker-mcp-accessibility` y `docker-mcp-observability`.
-- Esta conversacion no hereda automaticamente los servidores MCP personalizados que viva dentro del host VS Code.
-- Que `serena-local-py` aparezca habilitado en la UI de VS Code no implica que el runtime del chat lo exponga como namespace o tool nativa.
-- Si se requiere acceso desde este chat, hace falta una de estas rutas:
-  1. que el runtime del chat permita registrar un MCP externo y apunte al mismo servidor local;
-  2. que exista un bridge HTTP que reexporte `serena-local` hacia el runtime del chat;
-  3. o usar VS Code como superficie principal para invocar Serena y este chat como apoyo sobre filesystem.
+- Cualquier host MCP puede registrar los perfiles publicados en `docs/03_operacion/mcp-agent-host-template.json`.
+- `.vscode/mcp.json` es solo una implementacion local de referencia para VS Code; no es la fuente unica de verdad del contrato.
+- En el estado actual del workspace (`2026-06-02`), el contrato publica `serena-local` por HTTP y cuatro gateways Docker MCP por `stdio`: `docker-mcp-architecture`, `docker-mcp-runtime`, `docker-mcp-accessibility` y `docker-mcp-observability`.
+- Una conversación o runtime de chat no hereda automaticamente los servidores MCP de otro host. Debe registrar los mismos servidores, consumir el bridge o delegar la invocación MCP al host que sí los expone.
+- Que un perfil exista en una configuracion de IDE no implica que otro runtime lo exponga como namespace o tool nativa.
 
 ## Herramientas visibles en el host
 
-El host debe ver estas 29 herramientas publicadas con `_` en el nombre para compatibilidad con VS Code:
+El host debe ver estas 29 herramientas publicadas con `_` en `tools/list` cuando el cliente normalice nombres MCP. Internamente Serena conserva nombres con `.` y acepta ambas formas en `tools/call`:
 
 1. `context_fetch_compact`
 2. `context_repo_map`
@@ -116,12 +115,12 @@ Internamente Serena conserva los nombres canónicos con puntos para traza, polí
 ## Checklist E2E de aceptacion humana
 
 1. Abrir el repositorio en la raiz correcta del workspace.
-2. Confirmar que `.vscode/mcp.json` exista y que `SISTEMA_TESIS_ROOT` apunte a `${workspaceFolder}`.
-3. Confirmar o permitir el autoarranque de la tarea `Serena MCP HTTP` para levantar el servidor local en `127.0.0.1:8765`.
-4. Confirmar que `.vscode/mcp.json` apunte a `http://127.0.0.1:8765/mcp`.
-5. Ejecutar `Developer: Reload Window` en VS Code.
-6. Aceptar la ejecución automática de tareas del workspace si VS Code la solicita (o fijar `"task.allowAutomaticTasks": "on"` en `.vscode/settings.json`).
-7. Abrir el panel MCP o la superficie de herramientas del host Codex.
+2. Registrar en el host MCP la plantilla `docs/03_operacion/mcp-agent-host-template.json` o su equivalente adaptado al cliente.
+3. Confirmar que `SISTEMA_TESIS_ROOT` apunte a la raiz real del repositorio.
+4. Confirmar que `serena-local` apunte a `http://127.0.0.1:8765/mcp` o al bridge autenticado si el host no comparte localhost.
+5. Reiniciar o recargar el host MCP segun su mecanismo propio.
+6. Aceptar trust/autorizacion del servidor MCP si el host lo solicita.
+7. Abrir el panel MCP o la superficie de herramientas del host agéntico.
 8. Confirmar que aparezca `serena-local` sin error de arranque.
 9. Confirmar que el host liste las 29 herramientas visibles en `serena-local`.
 10. Si se reactiva `serena-local-py` para diagnóstico, tratarlo solo como ruta auxiliar y no como requisito E2E del workspace.
@@ -129,8 +128,8 @@ Internamente Serena conserva los nombres canónicos con puntos para traza, polí
 12. Ejecutar `governance_preflight` sobre una ruta canónica o protegida.
 13. Confirmar que exista o se actualice `historial interno no público/serena_mcp_operations.jsonl`.
 14. Si el servidor no responde al `initialize`, revisar `historial interno no público/serena_mcp_debug.log`.
-15. Ejecutar `python3 07_scripts/check_serena_access.py --attempt-start-http` para verificar/recuperar `serena-local` y recordar la frontera entre host y runtime.
-16. Ejecutar `python3 07_scripts/check_agent_context_tools.py --attempt-start-http` para validar disponibilidad conjunta Caveman + Serena.
+15. Ejecutar `python3 07_scripts/serena/check_serena_access.py --attempt-start-http` para verificar/recuperar `serena-local` y recordar la frontera entre host y runtime.
+16. Ejecutar `python3 07_scripts/audit/check_agent_context_tools.py --attempt-start-http` para validar disponibilidad conjunta Caveman + Serena.
 17. Si se requiere un runtime externo, exportar `SERENA_BRIDGE_BEARER_TOKEN` y arrancar `python runtime/serena_bridge/bin/serena_bridge.py`.
 
 ## Prueba minima recomendada
@@ -161,7 +160,7 @@ Resultado esperado:
 - respuesta estructurada con `status`, `risk_level`, `write_scope`, `evidence` y `next_required_action`
 - si no se incluye `step_id`, la respuesta debe bloquear el cambio o marcarlo como pendiente de validacion humana
 
-## Flujo corto Codex + Serena MCP
+## Flujo corto agente + Serena MCP
 
 1. `context_fetch_compact` para ubicar contexto relevante sin abrir documentos completos.
 2. `context_bundle` para construir el paquete principal de contexto con presupuesto de caracteres, referencias y omisiones.
@@ -185,10 +184,10 @@ Resultado esperado:
 
 ## Regla de interpretacion
 
-- Si VS Code muestra `serena-local`, las 29 tools y una traza nueva en JSONL, la integracion E2E se considera operativa.
+- Si el host MCP muestra `serena-local`, las 29 tools y una traza nueva en JSONL, la integracion E2E se considera operativa.
 - Si además se reactiva `serena-local-py` y muestra las mismas 29 tools, el diagnóstico por `stdio` se considera operativo, pero no es requisito para el workspace actual.
-- Si solo existe `.vscode/mcp.json`, la integracion esta declarada pero no validada en uso real.
-- En Windows con host local, el launcher recomendado para uso bajo demanda es una tarea de VS Code que ejecute `.vscode/serena-http.cmd`.
+- Si solo existe una configuracion MCP sin `tools/list` exitoso, la integracion esta declarada pero no validada en uso real.
+- En Windows con host local, el launcher recomendado para uso bajo demanda es `.vscode/serena-http.cmd` o el comando equivalente del host para ejecutar `07_scripts/serena_mcp.py` por HTTP.
 - `serena-local-py` no redefine el contrato MCP; solo ofrece una ruta opcional de diagnóstico al mismo servidor lógico cuando se habilita manualmente.
 - Si hay espera infinita durante `initialize`, el archivo `serena_mcp_debug.log` debe indicar si el proceso arrancó, leyó el mensaje y escribió respuesta.
 - `serena_mcp_debug.log` y `serena_mcp_debug_http_check.log` son artefactos diagnósticos locales; sirven para depuración y no deben tratarse como evidencia principal de publicación.
@@ -196,12 +195,12 @@ Resultado esperado:
 
 ## Recuperacion rapida
 
-1. Ejecutar `Developer: Reload Window`.
-2. Confirmar trust del servidor MCP si VS Code lo solicita.
-3. Verificar `MCP: List Servers` y comprobar que `serena-local` siga visible como perfil activo.
-4. Correr `python 07_scripts/check_serena_access.py`.
+1. Reiniciar o recargar el host MCP.
+2. Confirmar trust del servidor MCP si el host lo solicita.
+3. Verificar la lista de servidores MCP del host y comprobar que `serena-local` siga visible como perfil activo.
+4. Correr `python 07_scripts/serena/check_serena_access.py`.
 5. Si `serena-local` falla por HTTP, primero recargar la ventana o relanzar la tarea `Serena MCP HTTP`; si `check_serena_access.py` muestra `stdio` sano pero no expuesto, tratar `serena-local-py` solo como diagnóstico local o reactivarlo manualmente bajo decisión explícita.
 6. Si el host sigue sin ver tools MCP aunque HTTP responda bien, asumir primero una limitacion del host/runtime antes que un fallo de negocio en Serena.
 7. Si un host externo no puede registrar `127.0.0.1`, desplegar el bridge detras de un tunel o reverse proxy con auth y registrar esa URL publica.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

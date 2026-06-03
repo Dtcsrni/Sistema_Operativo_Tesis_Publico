@@ -74,4 +74,4 @@ Se desacopla `servidor-contexto-serena` del stack de servicios principal del SIO
 [REF-AGENTS-MD]:  ruta local no pública 
 [VAL]: validación humana interna no pública | Erick Renato Vega Ceron | 2026-05-29 | evento interno no público
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

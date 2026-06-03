@@ -628,4 +628,4 @@ Estado de cobertura de firmware, gateway y analítica.
 - `04_implementacion/control_mission/VERIFICATION_CHECKLIST.md`
 - `04_implementacion/firmware/include/config_hardware.h`
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

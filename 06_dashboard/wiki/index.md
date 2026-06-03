@@ -20,7 +20,7 @@ Actualmente, el **7.7%** de los artefactos nucleares de esta tesis han sido veri
 
 ```mermaid
 graph LR
-  A[Soberanía Humana] --- B(7.7%)
+  A[Soberanía Humana] --- B("7.7%")
   style B fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
@@ -106,4 +106,4 @@ graph LR
 - La wiki debe reflejar directorios vacíos como cobertura pendiente, sin inventar contenido.
 - Toda salida debe poder regenerarse de forma determinista desde scripts versionados.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

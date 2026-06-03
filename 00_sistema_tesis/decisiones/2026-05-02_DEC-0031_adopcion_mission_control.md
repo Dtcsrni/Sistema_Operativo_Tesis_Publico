@@ -50,4 +50,4 @@ Ofrece la mejor integración nativa con OpenClaw y permite una visualización ri
 [GOV]:  ruta local no pública 
 [AUD]:  ruta local no pública
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

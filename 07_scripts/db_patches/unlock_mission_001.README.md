@@ -33,4 +33,4 @@ IMPORTANTE: Esta operación es manual y potencialmente destructiva. Sigue los pa
 
 El archivo `unlock_mission_001.sql` contiene una plantilla segura con SELECT previo y UPDATE entre transacciones.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

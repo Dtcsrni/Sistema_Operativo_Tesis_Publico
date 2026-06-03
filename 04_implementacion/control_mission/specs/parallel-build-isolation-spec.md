@@ -681,4 +681,4 @@ Allow one agent to "peek" at another workspace's changes without merging — use
 ### Automatic Rebase
 When Task A merges first, automatically rebase Task B's workspace onto the new main. Prevents merge conflicts from growing stale. Only for worktree strategy.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

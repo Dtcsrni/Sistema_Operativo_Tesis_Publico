@@ -74,4 +74,4 @@
 - `check_serena_access.py --json` reporto `serena-local` HTTP sano en `http://127.0.0.1:8765/mcp`.
 - Esta conversacion no expone herramientas Serena nativas; el trabajo se ejecuto por filesystem y comandos locales.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

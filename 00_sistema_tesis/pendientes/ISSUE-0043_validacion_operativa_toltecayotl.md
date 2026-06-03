@@ -59,4 +59,4 @@ Integridad SHA-256 verificada para los 3 PETs. Reportes en `05_registros_de_inge
 **Pendiente (requiere acción humana):**
 - NINGUNA. Issue cerrado.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

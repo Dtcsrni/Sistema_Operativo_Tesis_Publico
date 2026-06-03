@@ -62,4 +62,4 @@ OPENCLAW_MAESTRO_ENABLED=0
 
 Se habilita solo después de ejecutar la batería `maestro_moe_benchmark`, pruebas enfocadas y auditoría completa.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

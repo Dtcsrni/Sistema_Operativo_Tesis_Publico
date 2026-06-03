@@ -82,4 +82,4 @@ La resiliencia ante pérdida de datos en sistemas distribuidos IoT se robustece 
 }
 ```
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

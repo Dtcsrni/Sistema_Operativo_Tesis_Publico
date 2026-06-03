@@ -65,4 +65,4 @@ sudo systemctl restart siot-hw-monitor # Reinicio de señales
 tail -f /tmp/hw_daemon_debug.log        # Telemetría en tiempo real
 ```
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

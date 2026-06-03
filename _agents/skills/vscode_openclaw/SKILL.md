@@ -166,4 +166,4 @@ Esta skill funciona con cualquier agente compatible con el formato SKILL.md:
 No asumas herramientas especificas de un proveedor. Usa siempre las APIs
 declaradas en `contracts.py` y los modulos de `openclaw_local/`.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

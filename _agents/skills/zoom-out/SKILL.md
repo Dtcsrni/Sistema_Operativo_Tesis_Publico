@@ -15,4 +15,4 @@ Para el proyecto OpenClaw, el mapa debe incluir:
 - **Decisiones relevantes** (DEC-XXXX que afectan el módulo)
 - **Seams de test** existentes o ausentes
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

@@ -221,4 +221,4 @@ If ANY of these are false, take action instead of saying HEARTBEAT_OK.
 
 Full API documentation: See ORCHESTRATION.md in the mission-control project.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

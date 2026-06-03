@@ -26,4 +26,4 @@ Mission Control vive en `04_implementacion/control_mission/` y se expone en el s
 - Documentar cualquier cambio de contrato entre OpenClaw y Mission Control junto con su prueba de humo.
 - Si se agrega telemetria nueva, primero formalizar el contrato y luego conectar la UI.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

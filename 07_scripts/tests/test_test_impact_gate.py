@@ -55,6 +55,26 @@ class TestTestImpactGate(unittest.TestCase):
         ids = {item["id"] for item in report["selected_commands"]}
         self.assertEqual(ids, {"agent_ops_core_gate_dry"})
 
+    def test_run_tests_smart_change_selects_build_contracts(self) -> None:
+        report = gate.build_report(paths=["07_scripts/ops/run_tests_smart.py"])
+        ids = {item["id"] for item in report["selected_commands"]}
+        self.assertIn("build_all_contract", ids)
+
+    def test_manifest_change_selects_manifest_contracts(self) -> None:
+        report = gate.build_report(paths=["manifests/b0_external_gates.yaml"])
+        ids = {item["id"] for item in report["selected_commands"]}
+        self.assertIn("manifest_contracts", ids)
+
+    def test_mcp_doc_change_selects_multi_host_contract(self) -> None:
+        report = gate.build_report(paths=["docs/03_operacion/mcp-agent-host-template.json"])
+        ids = {item["id"] for item in report["selected_commands"]}
+        self.assertIn("mcp_multi_host_contract", ids)
+
+    def test_unknown_existing_change_gets_smoke_minimum(self) -> None:
+        report = gate.build_report(paths=["README.md"])
+        ids = {item["id"] for item in report["selected_commands"]}
+        self.assertEqual(ids, {"agile_smoke_minimum"})
+
 
 if __name__ == "__main__":
     unittest.main()

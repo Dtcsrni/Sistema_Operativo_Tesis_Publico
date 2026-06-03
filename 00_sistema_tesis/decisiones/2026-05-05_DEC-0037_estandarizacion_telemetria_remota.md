@@ -49,4 +49,4 @@ Se formaliza el **Sistema de Notificaciones de Progreso** como una función bás
 [GOV]: AGENTS.md
 [AUD]: build_all.py
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

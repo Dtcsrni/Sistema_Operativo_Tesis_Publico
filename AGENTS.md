@@ -122,4 +122,4 @@ Los siguientes skills están disponibles en `_agents/skills/` e integrados al fl
 Erick Renato Vega Ceron (Tesista Principal)
 2026-05-06
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

@@ -288,4 +288,4 @@ The following events are broadcast to all connected clients:
 - `agent_spawned` - Sub-agent started
 - `agent_completed` - Sub-agent finished
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

@@ -114,4 +114,4 @@ Previous stable commit: (check `git log` before deployment)
 **Date:** _____________  
 **Status:** _____________
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

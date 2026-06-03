@@ -51,4 +51,4 @@ El contenido trata principalmente sobre: PET OpenClaw contexto conversacion v1.
 ---
 *Este informe garantiza que el contenido ingestado es trazable y fundamentado. Bajo la política v2.2, los riesgos de alucinación han sido aislados para revisión humana.*
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

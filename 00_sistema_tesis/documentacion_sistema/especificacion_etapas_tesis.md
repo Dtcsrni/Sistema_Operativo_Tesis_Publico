@@ -148,4 +148,4 @@ Integrar la especificación, metodología, simulaciones, resultados experimental
 2. **Compilabilidad Estricta:** El compilador de LaTeX debe generar el PDF sin errores de sintaxis o referencias rotas.
 3. **Veracidad de Citas:** 100% de citas vinculadas a DOIs reales y literatura indexada, verificados por el orquestador agéntico.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

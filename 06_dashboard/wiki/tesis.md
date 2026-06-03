@@ -60,4 +60,4 @@ Estado de cobertura de capítulos y figuras.
 - `05_tesis/estado_arte/motores_epistemicos_y_fidelidad.pdf`
 - `05_tesis/estado_arte/motores_epistemicos_y_fidelidad.tex`
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

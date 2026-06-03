@@ -58,4 +58,4 @@ El nodo Edge (Orange Pi 5 Plus) utiliza sus LEDs integrados para proporcionar te
 **GID:** [GID-MC-PROTO-2026]
 **Status:** IMPLEMENTADO (v2.1 LED-Enhanced)
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

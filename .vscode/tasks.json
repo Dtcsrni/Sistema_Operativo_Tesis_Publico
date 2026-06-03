@@ -110,12 +110,42 @@
 			}
 		},
 		{
+			"label": "⚡ Auditoría Ágil Dev (build_all.py)",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"07_scripts/build_all.py",
+				"--profile", "dev",
+				"--fail-fast"
+			],
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true
+			}
+		},
+		{
 			"label": "🔍 Auditoría Completa (build_all.py)",
 			"type": "shell",
 			"command": "python",
 			"args": [
 				"07_scripts/build_all.py",
-				"--fail-fast", "--force", "--no-serena-gate"
+				"--profile", "full",
+				"--fail-fast"
+			],
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true
+			}
+		},
+		{
+			"label": "🚢 Auditoría Release (build_all.py)",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"07_scripts/build_all.py",
+				"--profile", "release"
 			],
 			"presentation": {
 				"reveal": "always",

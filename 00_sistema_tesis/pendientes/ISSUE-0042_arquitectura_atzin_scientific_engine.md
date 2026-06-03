@@ -49,4 +49,4 @@ Se normalizó el issue al formato del tracker local y se reconciliaron las decis
 
 - [x] Erick Renato Vega Ceron revisa los cambios, confirma que cumplen validación humana interna no pública y decide si el issue puede cerrarse como aceptado.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

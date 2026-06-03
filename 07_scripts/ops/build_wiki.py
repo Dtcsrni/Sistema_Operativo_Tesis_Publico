@@ -556,7 +556,7 @@ def render_index_page(wiki: dict, pages: list[dict], generated_at: str) -> str:
         "",
         "```mermaid",
         "graph LR",
-        f"  A[Soberanía Humana] --- B({sovereignty:.1f}%)",
+        f"  A[Soberanía Humana] --- B(\"{sovereignty:.1f}%\")",
         "  style B fill:#f9f,stroke:#333,stroke-width:4px",
         "```",
         ""

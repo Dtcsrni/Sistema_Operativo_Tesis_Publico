@@ -19,6 +19,9 @@ from __future__ import annotations
 
 import argparse
 import sys
+import time
+from dataclasses import replace
+from fnmatch import fnmatch
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,6 +34,24 @@ from common import preferred_python_executable
 
 PROFILE_DIR = ROOT / "00_sistema_tesis" / "bitacora" / "audit_history"
 
+SMOKE_LABELS = (
+    "Materializar proyecciones del canon",
+    "Auditar canon unificado",
+    "Validar estructura",
+    "Validar specs SDD",
+    "Evaluar Harness Readiness SIOT",
+    "Ejecutar suite de pruebas (pytest)",
+)
+
+DEV_LABELS = (
+    "Validar estructura",
+    "Validar specs SDD",
+    "Evaluar Harness Readiness SIOT",
+    "Ejecutar suite de pruebas (pytest)",
+)
+
+TEST_STEP_LABEL = "Ejecutar suite de pruebas (pytest)"
+
 
 # ── CLI ────────────────────────────────────────────────────────────────────────
 
@@ -40,6 +61,22 @@ def _build_parser() -> argparse.ArgumentParser:
         description="Build modular e incremental del proyecto SIOT.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
+    )
+    p.add_argument(
+        "--profile", choices=["dev", "changed", "smoke", "full", "release"], default="full",
+        help="Perfil de ejecución: dev/changed/smoke para ciclos ágiles; full/release para gates completos.",
+    )
+    p.add_argument(
+        "--max-step-seconds", type=float, default=None,
+        help="Timeout máximo por paso. Si se omite, no impone límite duro por paso.",
+    )
+    p.add_argument(
+        "--global-timeout", type=float, default=None,
+        help="Timeout máximo total del build en segundos.",
+    )
+    p.add_argument(
+        "--explain", action="store_true",
+        help="Mostrar por qué fue seleccionado cada paso.",
     )
     p.add_argument(
         "--group", "-g", action="append", metavar="GRUPO", default=[],
@@ -107,24 +144,44 @@ def _list_steps(cache: BuildCache | None) -> None:
 
 def _select_steps(args: argparse.Namespace):
     """Retorna la lista ordenada de pasos a ejecutar según los filtros CLI."""
+    return [item[0] for item in _select_steps_with_reasons(args)]
+
+
+def _select_steps_with_reasons(args: argparse.Namespace):
+    """Retorna pares (BuildStep, razón) según perfil y filtros CLI."""
     from build_runner.registry import BuildStep
 
-    # Sin filtros → todos
-    if not args.group and not args.tag and not args.only:
-        return list(STEPS)
-
-    selected: list[BuildStep] = []
+    selected: list[tuple[BuildStep, str]] = []
     seen: set[str] = set()
 
-    def _add(step: BuildStep) -> None:
+    def _add(step: BuildStep, reason: str) -> None:
         if step.label not in seen:
-            selected.append(step)
+            selected.append((_adapt_step_for_profile(step, args.profile), reason))
             seen.add(step.label)
+
+    # Los filtros explícitos conservan precedencia sobre perfiles ágiles.
+    if not args.group and not args.tag and not args.only:
+        if args.profile == "dev":
+            for label in DEV_LABELS:
+                _add(LABELS[label], "profile:dev")
+            return selected
+        if args.profile == "smoke":
+            for label in SMOKE_LABELS:
+                _add(LABELS[label], "profile:smoke")
+            return selected
+        if args.profile == "changed":
+            for step, reason in _changed_profile_steps():
+                _add(step, reason)
+            return selected
+        # full/release sin filtros → todos
+        for step in STEPS:
+            _add(step, f"profile:{args.profile}")
+        return selected
 
     # --only por nombre exacto
     for label in args.only:
         if label in LABELS:
-            _add(LABELS[label])
+            _add(LABELS[label], f"only:{label}")
         else:
             print(f"[WARN] Paso desconocido: '{label}'")
             print(f"       Pasos disponibles: {', '.join(LABELS.keys())}")
@@ -133,7 +190,7 @@ def _select_steps(args: argparse.Namespace):
     for group in args.group:
         if group in GROUPS:
             for step in GROUPS[group]:
-                _add(step)
+                _add(step, f"group:{group}")
         else:
             print(f"[WARN] Grupo desconocido: '{group}'. Grupos: {', '.join(sorted(ALL_GROUPS))}")
 
@@ -143,12 +200,66 @@ def _select_steps(args: argparse.Namespace):
         tag_set = set(args.tag)
         for step in STEPS:
             if tag_set & set(step.tags):
-                _add(step)
+                _add(step, f"tag:{','.join(sorted(tag_set & set(step.tags)))}")
 
     # Reordenar según el orden canónico de STEPS
     order = {step.label: i for i, step in enumerate(STEPS)}
-    selected.sort(key=lambda s: order.get(s.label, 9999))
+    selected.sort(key=lambda item: order.get(item[0].label, 9999))
     return selected
+
+
+def _adapt_step_for_profile(step, profile: str):
+    """Ajusta comandos de pasos compartidos sin mutar el registro global."""
+    if step.label != TEST_STEP_LABEL:
+        return step
+    if profile in {"dev", "smoke", "changed"}:
+        return replace(step, args=["--profile", profile, "--fast"])
+    if profile in {"full", "release"}:
+        return replace(step, args=["--profile", "full"])
+    return step
+
+
+def _changed_profile_steps():
+    from build_runner.registry import BuildStep
+    from ops import test_impact_gate
+
+    changed_paths = test_impact_gate.discover_changed_paths()
+    selected: list[tuple[BuildStep, str]] = []
+    seen: set[str] = set()
+
+    def _add(step: BuildStep, reason: str) -> None:
+        if step.label not in seen:
+            selected.append((step, reason))
+            seen.add(step.label)
+
+    for path in changed_paths:
+        for step in STEPS:
+            if _path_matches_any_watch(path, step.watch):
+                _add(step, f"watch:{path}")
+
+    impact_report = test_impact_gate.build_report(paths=changed_paths)
+    impact_ids = {item["id"] for item in impact_report.get("selected_commands", [])}
+    if impact_ids:
+        _add(LABELS[TEST_STEP_LABEL], "test-impact:" + ",".join(sorted(impact_ids)))
+
+    if not selected:
+        for label in SMOKE_LABELS:
+            _add(LABELS[label], "fallback:smoke")
+
+    order = {step.label: i for i, step in enumerate(STEPS)}
+    selected.sort(key=lambda item: order.get(item[0].label, 9999))
+    return selected
+
+
+def _path_matches_any_watch(path: str, patterns: list[str]) -> bool:
+    normalized = path.replace("\\", "/")
+    for pattern in patterns:
+        pat = pattern.replace("\\", "/")
+        if pat.endswith("/**") and normalized.startswith(pat[:-3] + "/"):
+            return True
+        if fnmatch(normalized, pat):
+            return True
+    return False
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
@@ -156,6 +267,10 @@ def _select_steps(args: argparse.Namespace):
 def main() -> int:
     parser = _build_parser()
     args = parser.parse_args()
+
+    if args.profile == "release":
+        args.force = True
+        args.fail_fast = True
 
     python_exe = preferred_python_executable()
 
@@ -192,23 +307,34 @@ def main() -> int:
         return 0
 
     # ── Selección de pasos ────────────────────────────────────────────────────
-    steps = _select_steps(args)
-    if not steps:
+    selected_steps = _select_steps_with_reasons(args)
+    if not selected_steps:
         print("[WARN] No se seleccionó ningún paso. Usa --list para ver los disponibles.")
         return 1
 
-    mode_label = "COMPLETO" if not (args.group or args.tag or args.only) else "PARCIAL"
+    mode_label = "COMPLETO" if args.profile in {"full", "release"} and not (args.group or args.tag or args.only) else "PARCIAL"
     force_label = " [FORCE]" if args.force else ""
     dry_label   = " [DRY-RUN]" if args.dry_run else ""
     cache_label = " [sin caché]" if args.no_cache else ""
-    print(f"\n[BUILD {mode_label}{force_label}{dry_label}{cache_label}] "
-          f"{len(steps)} paso(s) seleccionado(s)\n")
+    print(f"\n[BUILD {mode_label} profile={args.profile}{force_label}{dry_label}{cache_label}] "
+          f"{len(selected_steps)} paso(s) seleccionado(s)\n")
+
+    if args.explain:
+        for step, reason in selected_steps:
+            print(f"  - {step.label}: {reason}")
+        print()
 
     # ── Ejecución ─────────────────────────────────────────────────────────────
     reports: list[StepReport] = []
     hard_failed = False
+    started = time.perf_counter()
 
-    for step in steps:
+    for step, reason in selected_steps:
+        if args.global_timeout is not None and (time.perf_counter() - started) >= args.global_timeout:
+            print(f"\n[ABORT] global-timeout alcanzado ({args.global_timeout:.1f}s)")
+            hard_failed = True
+            break
+
         report = run_step(
             step=step,
             root=ROOT,
@@ -216,8 +342,13 @@ def main() -> int:
             cache=cache,
             force=args.force,
             dry_run=args.dry_run,
+            profile=args.profile,
+            selected_reason=reason,
+            timeout_seconds=args.max_step_seconds,
         )
         reports.append(report)
+        if not args.dry_run:
+            write_profile(reports, PROFILE_DIR, profile=args.profile, partial=True)
 
         if report.status == "failed":
             hard_failed = True
@@ -231,10 +362,10 @@ def main() -> int:
 
     # ── Perfil y resumen ──────────────────────────────────────────────────────
     if not args.dry_run:
-        profile_path = write_profile(reports, PROFILE_DIR)
+        profile_path = write_profile(reports, PROFILE_DIR, profile=args.profile, partial=False)
         print_summary(reports, profile_path, ROOT)
     else:
-        print(f"\n[DRY-RUN] {len(steps)} paso(s) se ejecutarían.")
+        print(f"\n[DRY-RUN] {len(selected_steps)} paso(s) se ejecutarían.")
 
     return 1 if hard_failed else 0
 

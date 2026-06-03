@@ -19,4 +19,4 @@ Se han registrado **20 fragmentos** de conocimiento exitosamente.
 ## 4. Acciones Derivadas
 - [ ] Validar nexos mediante `07_scripts/toltecayotl/validador_nexos_pet.py`.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

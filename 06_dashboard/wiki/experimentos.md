@@ -53,4 +53,4 @@ Estado de cobertura de simulación y validación experimental.
 - Cobertura: `pendiente`
 - Mensaje: Sin contenido operativo aún. La wiki refleja el estado real del repositorio y no inventa artefactos.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

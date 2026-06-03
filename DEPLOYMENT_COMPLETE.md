@@ -64,4 +64,4 @@ The bot is **operational**, with `desktop_compute` (DeepSeek/Ollama) as the prim
 
 **Deployment Note:** the edge must not depend on `/mnt/v`; Orange Pi uses `/srv/tesis/repo` as the stable runtime path.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

@@ -2056,4 +2056,4 @@ The user's job becomes: write a Product Program, swipe through ideas every morni
 
 Everything else is autonomous.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

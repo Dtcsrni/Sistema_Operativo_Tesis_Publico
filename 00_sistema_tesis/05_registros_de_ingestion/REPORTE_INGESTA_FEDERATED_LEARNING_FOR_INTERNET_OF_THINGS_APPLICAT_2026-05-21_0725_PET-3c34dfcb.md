@@ -62,4 +62,4 @@ nearly 850 ZB of data will be ...
 ---
 *Este informe garantiza que el contenido ingestado es trazable y fundamentado. Bajo la política v2.2, los riesgos de alucinación han sido aislados para revisión humana.*
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

@@ -1590,4 +1590,4 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
 - `RESUMEN_IN` [Resumen de Integración: OpenCode Executor Subordinado con RAG Weaviate](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/reportes_semanales/RESUMEN_INTEGRACION_OPENCODE_2026-05-07.md)
 - `2026-S13_r` [Resumen semanal 2026-S13](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/reportes_semanales/2026-S13_resumen_semanal.md)
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

@@ -127,4 +127,4 @@
 - **PM2:** Process `mission-control`, port 4000
 - **Plan reference:** `~/.claude/plans/effervescent-finding-mochi.md`
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

@@ -14,4 +14,4 @@
 
 Cada modo debe definir permisos, backend preferente, riesgo y trazabilidad.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

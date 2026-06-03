@@ -320,4 +320,4 @@ ls -la mission-control.db
 
 **Questions?** File an issue or check the documentation in `/docs`.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

@@ -68,4 +68,4 @@ curl -X POST \
   http://127.0.0.1:8082/api/control/request
 ```
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

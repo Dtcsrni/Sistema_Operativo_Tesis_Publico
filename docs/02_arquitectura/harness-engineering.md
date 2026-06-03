@@ -37,4 +37,4 @@ Una ejecución harness es aceptable si:
 3. `python 07_scripts/build_all.py` conserva `Fallidos: 0`.
 4. El artefacto público no contiene rutas privadas, prompts completos, secretos ni evidencia privada.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

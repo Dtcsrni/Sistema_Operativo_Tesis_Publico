@@ -25,4 +25,4 @@ Este paquete representa la auditoría técnica de un procesamiento masivo de 452
 - [ ] Mapear los reclamos (claims) del archivo CSV a nodos de Weaviate.
 - [ ] Validar la integridad de los fragmentos históricos frente al nuevo estándar PET.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

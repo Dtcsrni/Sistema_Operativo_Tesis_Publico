@@ -193,13 +193,85 @@ def select_commands(changed_paths: list[str]) -> list[ImpactTestCommand]:
                     ),
                 )
 
-        if path.startswith("07_scripts/build_runner/") or path == "07_scripts/build_all.py":
+        if path.startswith("07_scripts/build_runner/") or path in {"07_scripts/build_all.py", "07_scripts/ops/run_tests_smart.py"}:
             add_command(
                 commands,
                 ImpactTestCommand(
                     id="build_all_contract",
-                    command=["python3", "-m", "pytest", "tests/test_build_all.py", "-q"],
+                    command=["python3", "-m", "pytest", "tests/test_build_all.py", "07_scripts/tests/test_test_impact_gate.py", "-q"],
                     reason="cambio en build incremental o registro de pasos",
+                ),
+            )
+
+        if path.startswith("manifests/"):
+            add_command(
+                commands,
+                ImpactTestCommand(
+                    id="manifest_contracts",
+                    command=[
+                        "python3",
+                        "-m",
+                        "pytest",
+                        "tests/test_b0_architecture_contracts.py",
+                        "tests/test_domain_isolation.py",
+                        "-q",
+                    ],
+                    reason="cambio en manifiestos o contratos maquina-legibles",
+                ),
+            )
+
+        if path == ".vscode/mcp.json" or path.startswith("docs/03_operacion/") and "mcp" in Path(path).name.lower():
+            add_command(
+                commands,
+                ImpactTestCommand(
+                    id="mcp_multi_host_contract",
+                    command=[
+                        "python3",
+                        "-m",
+                        "unittest",
+                        "07_scripts.tests.test_check_serena_access",
+                        "07_scripts.tests.test_check_serena_multi_host_contract",
+                        "07_scripts.tests.test_serena_mcp",
+                        "-v",
+                    ],
+                    reason="cambio en configuracion o documentacion MCP multi-host",
+                ),
+            )
+
+        if path.startswith("00_sistema_tesis/config/"):
+            add_command(
+                commands,
+                ImpactTestCommand(
+                    id="system_config_structure",
+                    command=["python3", "07_scripts/audit/validate_structure.py"],
+                    reason="cambio en configuracion canonica del sistema",
+                ),
+            )
+
+        if path.startswith("00_sistema_tesis/bitacora/") or path.startswith("00_sistema_tesis/decisiones/"):
+            add_command(
+                commands,
+                ImpactTestCommand(
+                    id="traceability_quality",
+                    command=["python3", "07_scripts/audit/verify_traceability_quality.py", "--strict"],
+                    reason="cambio en bitacora, matriz o decisiones",
+                ),
+            )
+
+        if path.startswith("06_dashboard/") or path.startswith("00_sistema_tesis/documentacion_sistema/"):
+            add_command(
+                commands,
+                ImpactTestCommand(
+                    id="public_docs_contract",
+                    command=[
+                        "python3",
+                        "-m",
+                        "pytest",
+                        "tests/test_wiki_contracts.py",
+                        "tests/test_validate_public_text.py",
+                        "-q",
+                    ],
+                    reason="cambio en documentacion, wiki, dashboard o publicacion",
                 ),
             )
 
@@ -269,7 +341,23 @@ def select_commands(changed_paths: list[str]) -> list[ImpactTestCommand]:
                 ),
             )
 
-    if not commands:
+    if not commands and changed_paths:
+        add_command(
+            commands,
+            ImpactTestCommand(
+                id="agile_smoke_minimum",
+                command=[
+                    "python3",
+                    "-m",
+                    "pytest",
+                    "tests/test_build_all.py",
+                    "07_scripts/tests/test_test_impact_gate.py",
+                    "-q",
+                ],
+                reason="fallback smoke minimo para cambio sin mapeo especifico",
+            ),
+        )
+    elif not commands:
         add_command(
             commands,
             ImpactTestCommand(

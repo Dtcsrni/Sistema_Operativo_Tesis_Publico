@@ -42,4 +42,4 @@ Este documento establece los Indicadores Clave de Rendimiento (KPIs) con objetiv
 *   **Fórmula:**
     $$\text{Costo Misión} = \text{Tokens Cloud} \times \text{Tarifa Cloud} \le \$0.05 \text{ USD}$$
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

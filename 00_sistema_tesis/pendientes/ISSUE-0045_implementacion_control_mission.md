@@ -44,4 +44,4 @@ Se requiere la implementación del repositorio `openclaw-mission-control` para e
 - Validar la arquitectura de control propuesta para Mission Control.
 - Proceder con las fases de configuración del entorno (Convex) y la integración con el Motor Epistémico Toltecayotl.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

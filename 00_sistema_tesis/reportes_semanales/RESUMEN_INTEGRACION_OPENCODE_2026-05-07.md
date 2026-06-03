@@ -226,4 +226,4 @@ python 07_scripts/build_all.py
 **Responsable:** GitHub Copilot (con supervisión de Tesista)  
 **Criterio de Éxito:** Todos los componentes listos para pruebas E2E
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

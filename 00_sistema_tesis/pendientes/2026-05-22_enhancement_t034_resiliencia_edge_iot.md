@@ -68,4 +68,4 @@ Validado formalmente en validación humana interna no pública. Se han realizado
 
 ## ESE
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

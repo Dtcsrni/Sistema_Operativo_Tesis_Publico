@@ -57,4 +57,4 @@ Para eliminar la dependencia del texto generado (síntesis) y evitar alucinacion
 [GOV]: ../../07_scripts/guardrails.py
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

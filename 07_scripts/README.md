@@ -121,4 +121,4 @@ Tras la reorganización (ISSUE-0044), los scripts se agrupan por responsabilidad
 - La IA es opcional; la operación principal debe seguir siendo legible para humanos.
 - Si un cambio afecta gobernanza, arquitectura o método, registra decisión y vuelve a auditar.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

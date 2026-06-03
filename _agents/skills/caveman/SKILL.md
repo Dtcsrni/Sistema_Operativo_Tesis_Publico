@@ -48,4 +48,4 @@ Example — soberanía:
 ## Nota OpenClaw
 Este skill es el mismo que referencia la "Política Caveman" en §6 de AGENTS.md. La política de activación shell (`command -v caveman`) y este skill son complementarios: la política controla el binary del host, este skill controla el modo de comunicación del agente.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

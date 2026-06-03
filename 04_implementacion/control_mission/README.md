@@ -904,4 +904,4 @@ If Autensa has been useful to you, consider buying me a coffee!
   <strong>Stop managing a backlog. Start shipping on autopilot.</strong> 🚀
 </p>
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

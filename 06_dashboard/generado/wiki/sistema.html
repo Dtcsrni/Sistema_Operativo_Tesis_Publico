@@ -297,10 +297,10 @@
 <li>Criterio de bajo rozamiento: retomar el proyecto en menos de 3 minutos desde README_INICIO.md</li>
 </ul>
 <h2>Narrativa del sistema</h2></p><p><h2>Proposito y alcance del sistema</h2></p><p><h3>Que es</h3></p><p>El Sistema Operativo de la Tesis es la capa de gobierno documental, tecnico y operativo que permite conducir una tesis de posgrado sin perder soberania humana, trazabilidad de evidencia ni capacidad de explicacion publica.</p><p><div class="mermaid-container"><pre class="mermaid">graph LR
-    H[Tesista Humano] -- &quot;Autoría / Validación&quot; --&gt; S[Sistema Operativo]
-    S -- &quot;Gobernanza / Trazabilidad&quot; --&gt; T[Tesis IoT]
-    T -- &quot;Evidencia Técnica&quot; --&gt; S
-    S -- &quot;Proyección Pública&quot; --&gt; P[Evaluación Externa]</pre></div></p><p>No sustituye la tesis. Gobierna la tesis.</p><p><h3>Por que existe</h3></p><p>Existe para resolver cuatro problemas simultaneos:</p><p>1. Evitar que decisiones, cambios y resultados queden dispersos o dependan de memoria informal.
+    H[Tesista Humano] --&gt;|&quot;Autoría / Validación&quot;| S[Sistema Operativo]
+    S --&gt;|&quot;Gobernanza / Trazabilidad&quot;| T[Tesis IoT]
+    T --&gt;|&quot;Evidencia Técnica&quot;| S
+    S --&gt;|&quot;Proyección Pública&quot;| P[Evaluación Externa]</pre></div></p><p>No sustituye la tesis. Gobierna la tesis.</p><p><h3>Por que existe</h3></p><p>Existe para resolver cuatro problemas simultaneos:</p><p>1. Evitar que decisiones, cambios y resultados queden dispersos o dependan de memoria informal.
 2. Mantener control humano explicito cuando se usa automatizacion o asistencia con IA.
 3. Separar con rigor la base privada canonica de la superficie publica divulgable.
 4. Permitir retomar, auditar, defender y publicar el sistema sin reconstruir contexto desde cero.</p><p><h3>Que protege</h3></p><p>Protege:
@@ -518,20 +518,21 @@ Objetivo: incorporar trabajo nuevo sin romper soberania ni trazabilidad.</p><p><
 <li>accesos cruzados bloqueados;</li>
 <li>evidencia reproducible de enforcement real.</li>
 </ul>
-<h3>Flujo 11. Trabajar con Codex asistido por Serena MCP</h3></p><p>Objetivo: operar tareas de tesis con contexto compacto y acciones auditables desde VS Code sin sustituir la validacion humana ni la via CLI.</p><p>Secuencia:</p><p>1. Abrir el repositorio en la raiz correcta del workspace.
-2. Recargar VS Code y confirmar que <code>serena-local</code> aparezca como servidor MCP activo.
-3. Usar <code>context.fetch_compact</code> para recuperar solo el contexto minimo necesario.
-4. Usar <code>governance.preflight</code> antes de preparar o aplicar cambios sobre canon o rutas protegidas.
-5. Usar <code>canon.prepare_change</code> para revisar diff, riesgo y requisitos antes de tocar la fuente canonica.
-6. Usar <code>canon.apply_controlled_change</code> solo con <code>VAL-STEP</code> valido y evidencia fuente corroborada cuando la politica lo exija.
-7. Ejecutar <code>python 07_scripts/build_all.py</code> despues de cambios relevantes.</p><p>Salida esperada:
+<h3>Flujo 11. Trabajar con un agente asistido por Serena MCP</h3></p><p>Objetivo: operar tareas de tesis con contexto compacto y acciones auditables desde cualquier host MCP compatible sin sustituir la validacion humana ni la via CLI.</p><p>Secuencia:</p><p>1. Abrir el repositorio en la raiz correcta del workspace.
+2. Registrar <code>docs/03_operacion/mcp-agent-host-template.json</code> o una configuracion equivalente en el host MCP.
+3. Recargar el host y confirmar que <code>serena-local</code> aparezca como servidor MCP activo.
+4. Usar <code>context.fetch_compact</code> para recuperar solo el contexto minimo necesario.
+5. Usar <code>governance.preflight</code> antes de preparar o aplicar cambios sobre canon o rutas protegidas.
+6. Usar <code>canon.prepare_change</code> para revisar diff, riesgo y requisitos antes de tocar la fuente canonica.
+7. Usar <code>canon.apply_controlled_change</code> solo con <code>VAL-STEP</code> valido y evidencia fuente corroborada cuando la politica lo exija.
+8. Ejecutar <code>python 07_scripts/build_all.py</code> despues de cambios relevantes.</p><p>Salida esperada:
 <ul><li>contexto reducido sin perder referencias de origen;</li>
 <li>cambios guiados por gobernanza y no por memoria implicita del agente;</li>
 <li>traza MCP visible en <code>historial interno no público/serena_mcp_operations.jsonl</code>.</li>
 </ul>
-Referencia operativa: <code>00_sistema_tesis/documentacion_sistema/operacion_serena_mcp_codex.md</code></p><p><h3>Flujo 12. Registrar Serena para un runtime externo</h3></p><p>Objetivo: exponer Serena como MCP HTTP autenticado para un host separado de VS Code sin duplicar reglas de negocio.</p><p>Secuencia:</p><p>1. Definir <code>SERENA_BRIDGE_BEARER_TOKEN</code> en el entorno del host.
+Referencia operativa: <code>00_sistema_tesis/documentacion_sistema/operacion_serena_mcp_codex.md</code></p><p><h3>Flujo 12. Registrar Serena para un runtime externo</h3></p><p>Objetivo: exponer Serena como MCP HTTP autenticado para un runtime que no comparte el localhost del host agéntico sin duplicar reglas de negocio.</p><p>Secuencia:</p><p>1. Definir <code>SERENA_BRIDGE_BEARER_TOKEN</code> en el entorno del host.
 2. Arrancar <code>python runtime/serena_bridge/bin/serena_bridge.py</code>.
-3. Verificar con <code>python 07_scripts/check_serena_access.py</code> que el bridge sea alcanzable.
+3. Verificar con <code>python 07_scripts/serena/check_serena_access.py</code> que el bridge sea alcanzable.
 4. Registrar la URL del bridge en el host externo con auth <code>Bearer</code> y headers de identidad.
 5. Ejecutar <code>initialize</code>, <code>tools/list</code>, <code>context.fetch_compact</code> y <code>governance.preflight</code>.
 6. Confirmar que la traza MCP incluya identidad del host y <code>host_kind=external_runtime</code>.</p><p>Salida esperada:
@@ -667,7 +668,7 @@ Referencia operativa: <code>00_sistema_tesis/documentacion_sistema/operacion_ser
 |wiki_manifest_generado|06_dashboard/generado/wiki_manifest.json|sí|2026-06-01|
 |readme_portada_generado|README.md|sí|2026-06-01|
 </p></div>
-      <footer class="public-update"><p>Última actualización: <strong>2026-06-01</strong></p></footer>
+      <footer class="public-update"><p>Última actualización: <strong>2026-06-03</strong></p></footer>
   </main>
 </body>
 </html>

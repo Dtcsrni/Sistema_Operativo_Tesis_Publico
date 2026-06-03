@@ -34,4 +34,4 @@ Esta política asegura la soberanía del tesista sobre sus recursos de IA mientr
 ---
 **Certificado por**: Antigravity (IA) via Instrucción del Tesista Soberano.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

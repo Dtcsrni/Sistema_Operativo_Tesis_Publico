@@ -73,4 +73,4 @@ Primera ola recomendada:
 ## Cierre de Trazabilidad
 Validado formalmente en validación humana interna no pública. Implementado 	esis.py spec new y reparado alidate_sdd_specs.py.
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

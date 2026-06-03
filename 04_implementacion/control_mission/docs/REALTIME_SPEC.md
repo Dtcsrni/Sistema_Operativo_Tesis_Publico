@@ -328,4 +328,4 @@ broadcast({
 6. Task moves to REVIEW in real-time
 7. All without refreshing the page
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

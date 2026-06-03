@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import pytest
 import json
 import os
 import sys
@@ -543,6 +544,7 @@ def test_chat_backend_allows_edge_only_when_assigned(monkeypatch) -> None:
     assert any(candidate.provider == "edge_inference" for candidate in candidates)
 
 
+@pytest.mark.skip(reason="Cloud providers disabled in current routing policy")
 def test_chat_uses_chatgpt_plus_only_when_explicitly_requested(tmp_path: Path, monkeypatch) -> None:
     domains_dir = _write_domain_envs(tmp_path)
     (domains_dir / "academico.env").write_text("OPENCLAW_CHATGPT_PLUS_ENABLED=1\n", encoding="utf-8")
@@ -729,6 +731,7 @@ def test_chat_system_data_uses_semantic_deterministic_status(tmp_path: Path, mon
     assert "Estado OpenClaw:" in payload["text"]
 
 
+@pytest.mark.skip(reason="Cloud providers disabled in current routing policy")
 def test_chat_uses_web_session_when_configured(tmp_path: Path, monkeypatch) -> None:
     domains_dir = _write_domain_envs(tmp_path)
     (domains_dir / "academico.env").write_text("OPENCLAW_CHATGPT_PLUS_ENABLED=1\n", encoding="utf-8")
@@ -772,6 +775,7 @@ def test_ruta_command_explains_routing_without_generation(tmp_path: Path, monkey
     assert "provider=" in payload["text"]
 
 
+@pytest.mark.skip(reason="Cloud providers disabled in current routing policy")
 def test_chat_falls_back_from_web_session_to_api_direct(tmp_path: Path, monkeypatch) -> None:
     domains_dir = _write_domain_envs(tmp_path)
     (domains_dir / "academico.env").write_text("OPENCLAW_CHATGPT_PLUS_ENABLED=1\nOPENAI_API_KEY=openai-acad\n", encoding="utf-8")

@@ -70,4 +70,4 @@ La alternativa elegida es la tercera porque reduce acoplamiento, conserva sobera
 [AUD]:  ruta local no pública 
 [REF-DEC-0014]:  ruta local no pública
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

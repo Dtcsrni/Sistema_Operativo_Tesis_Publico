@@ -49,4 +49,4 @@ Este documento queda bajo la protección de los guardrails del sistema. Cualquie
 Erick Renato Vega Ceron (Tesista Principal)
 2026-04-29
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

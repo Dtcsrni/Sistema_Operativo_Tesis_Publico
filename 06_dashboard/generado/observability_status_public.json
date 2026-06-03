@@ -1,6 +1,6 @@
 {
   "schema_version": "siot-observability-dashboard-v1",
-  "generated_at": "2026-06-02T01:14:52+00:00",
+  "generated_at": "2026-06-03T10:54:19+00:00",
   "mode": "public",
   "access": {
     "private_lan": false,
@@ -104,10 +104,10 @@
   ],
   "runtime": {
     "orchestrator": "OpenClaw",
-    "state": "openclaw_ready",
-    "active_runtime": "local",
+    "state": "desktop_llamacpp_ready",
+    "active_runtime": "llamacpp_local",
     "openclaw_status": "ok",
-    "serena_status": "ok",
+    "serena_status": "down",
     "telegram_status": "degraded"
   },
   "benchmarks": [
@@ -128,11 +128,17 @@
     "status": "ok",
     "bundle_path": "06_dashboard/publico/",
     "manifest_exists": true,
-    "age_seconds": 50220,
+    "age_seconds": 523,
     "files": 0,
     "source": "06_dashboard/publico/manifest_publico.json"
   },
   "alerts": [
+    {
+      "severity": "down",
+      "owner": "openclaw",
+      "impact": "serena_status",
+      "next_step": "Revisar pestaña OpenClaw/Agentes."
+    },
     {
       "severity": "stale",
       "owner": "pc_control",
@@ -174,8 +180,8 @@
     {
       "path": "00_sistema_tesis/config/openclaw_status.json",
       "exists": true,
-      "sha256": "c26ece9504470e7dbd218a519e5bfd2e936c4581ec9974bcee0d0ea1e198fcad",
-      "updated_at": "2026-06-01T11:17:49+00:00"
+      "sha256": "a0ea4b113a334d70ea0ce6f92f13b4abf894cf7a31b14a49435ab13231f49ea2",
+      "updated_at": "2026-06-03T10:46:21+00:00"
     },
     {
       "path": "runtime/pc_control/benchmarks/index.json",
@@ -192,8 +198,8 @@
     {
       "path": "06_dashboard/publico/manifest_publico.json",
       "exists": true,
-      "sha256": "54dcaf8f3b9287283d0d9f73963fc74b284f65b1243c0aeaa8441fb39cba28b8",
-      "updated_at": "2026-06-01T11:17:51+00:00"
+      "sha256": "fd0405b9b2156a54f5cc927733e4d3f13e243296a020f0a5885e847a4352888e",
+      "updated_at": "2026-06-03T10:45:35+00:00"
     }
   ]
 }

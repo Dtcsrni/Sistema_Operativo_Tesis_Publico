@@ -90,4 +90,4 @@ category: enhancement
 ---
 ```
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._
