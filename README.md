@@ -218,6 +218,6 @@ python 07_scripts/report_consistency.py
 - [`06_dashboard/generado/hoja_maestra_consolidada.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/hoja_maestra_consolidada.csv)
 - [`reporte interno no publicado`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
 
-_Generado automáticamente el 2026-06-01._
+_Generado automáticamente el 2026-06-03._
 
 _Última actualización: `2026-06-03`._

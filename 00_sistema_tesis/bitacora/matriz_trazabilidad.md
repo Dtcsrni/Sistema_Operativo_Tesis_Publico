@@ -166,6 +166,7 @@ Este archivo es el índice central de todas las validaciones de soberanía human
 | 2026-05-29 | [validación humana interna no pública] | [DEC-0045] | Desacoplamiento total de Serena MCP de Docker y reconocimiento como herramienta local del host de desarrollo (PC Tezkatli) | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md) |
 | 2026-05-29 | [validación humana interna no pública] | DEC-0047 | validación humana interna no pública: DEC-0047 Aceptada. Serena MCP herramienta host PC Tezkatli. Fixes pytest.ini y task-governance.test.ts aceptados. Build EXIT:0. | alto | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md) |
 | 2026-06-01 | [validación humana interna no pública] | PET-7d715d3b | Ingesta de PET_Tesis_IoT_LoRa_Mesh_Edge_2026-06-01.zip (Brechas, Hipótesis H1-H3, Variables, Hardware) | MEDIO | Rigor Científico | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md) |
+| 2026-06-03 | [validación humana interna no pública] | WIKI-AUD | Aprobacion verbal de correcciones wiki y test local-first. Build EXIT:0 | ALTO | Responsabilidad (ISO 42001) | [x] Validado | [Log](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md) |
 
 ---
 **Navegación:**
@@ -173,6 +174,7 @@ Este archivo es el índice central de todas las validaciones de soberanía human
 - [Consultar Libro Mayor](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md)
 - [Auditoría del Sistema](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md)
 
+[validación humana interna no pública]: log_sesiones_trabajo_registradas.md#validación humana interna no pública
 [validación humana interna no pública]: log_sesiones_trabajo_registradas.md#validación humana interna no pública
 [validación humana interna no pública]: log_sesiones_trabajo_registradas.md#validación humana interna no pública
 [validación humana interna no pública]: log_sesiones_trabajo_registradas.md#validación humana interna no pública

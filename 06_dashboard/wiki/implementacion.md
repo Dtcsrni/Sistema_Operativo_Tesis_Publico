@@ -3,7 +3,7 @@
 Estado de cobertura de firmware, gateway y analítica.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-06-01`
+- **Fecha:** `2026-06-03`
 - **Estado:** `OK`
 - **Fuentes:** `04_implementacion`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.

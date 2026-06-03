@@ -3,7 +3,7 @@
 Arquitectura teórica, routing adaptativo y fase reflexiva del agente OpenClaw.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-06-01`
+- **Fecha:** `2026-06-03`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/documentacion_sistema/casos_uso_agente.md`, `00_sistema_tesis/documentacion_sistema/guias_tareas_agente.md`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
