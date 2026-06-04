@@ -5,7 +5,7 @@
 
 ## Estado actual
 
-- **Generado:** `2026-06-01`
+- **Generado:** `2026-06-04`
 - **Versión del sistema:** `0.1.0`
 - **Estado global:** `arquitectura_formal_reforzada`
 - **Bloque activo:** `B1`

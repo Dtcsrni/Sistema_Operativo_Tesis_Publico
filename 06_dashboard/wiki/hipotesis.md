@@ -3,7 +3,7 @@
 Hipótesis activas, criterios de soporte, evidencia y relación con bloques.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-06-03`
+- **Fecha:** `2026-06-04`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/config/hipotesis.yaml`, `00_sistema_tesis/config/bloques.yaml`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.

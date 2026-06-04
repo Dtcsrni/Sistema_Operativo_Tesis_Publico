@@ -13,7 +13,7 @@ class TestSyncManager(unittest.TestCase):
 
     def tearDown(self):
         if self.test_dir.exists():
-            shutil.rmtree(self.test_dir)
+            shutil.rmtree(self.test_dir, ignore_errors=True)
 
     def test_get_pending_files(self):
         # Crear archivo de prueba

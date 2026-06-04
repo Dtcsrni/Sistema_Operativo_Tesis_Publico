@@ -3,7 +3,7 @@
 Estado de cobertura de capítulos y figuras.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-06-01`
+- **Fecha:** `2026-06-04`
 - **Estado:** `OK`
 - **Fuentes:** `05_tesis`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -60,4 +60,4 @@ Estado de cobertura de capítulos y figuras.
 - `05_tesis/estado_arte/motores_epistemicos_y_fidelidad.pdf`
 - `05_tesis/estado_arte/motores_epistemicos_y_fidelidad.tex`
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

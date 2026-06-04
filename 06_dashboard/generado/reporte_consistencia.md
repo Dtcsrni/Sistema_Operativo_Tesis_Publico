@@ -1,6 +1,6 @@
 # Reporte de consistencia
 
-    - Fecha de generación: 2026-06-03
+    - Fecha de generación: 2026-06-04
 - Proyecto: SIOT
 - Versión del sistema: 0.1.0
 

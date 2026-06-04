@@ -31,6 +31,12 @@ def isolated_repo(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
             "brain", "tmp", "temp",
         ),
     )
+    import stat
+    for p in repo.rglob("*"):
+        try:
+            p.chmod(stat.S_IWRITE)
+        except OSError:
+            pass
     monkeypatch.setattr(common, "ROOT", repo)
     monkeypatch.setattr(build_wiki_module, "ROOT", repo)
     monkeypatch.setattr(validate_wiki_module, "ROOT", repo)

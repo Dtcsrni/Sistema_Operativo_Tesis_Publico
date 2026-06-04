@@ -3,7 +3,7 @@
 Estructura del sistema, topología, contenedores y diagramas C4.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-06-01`
+- **Fecha:** `2026-06-04`
 - **Estado:** `OK`
 - **Fuentes:** `docs/02_arquitectura/arquitectura-general.md`, `docs/02_arquitectura/diagramas_c4.md`, `docs/02_arquitectura/mapa-de-interconexiones.md`, `docs/02_arquitectura/mapa-de-servicios.md`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -228,4 +228,4 @@ OpenClaw no es prerequisito del sistema base ni del pipeline edge.
 
 ---
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

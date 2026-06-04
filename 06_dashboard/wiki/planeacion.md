@@ -3,7 +3,7 @@
 Backlog, riesgos, roadmap y entregables del sistema.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-06-03`
+- **Fecha:** `2026-06-04`
 - **Estado:** `OK`
 - **Fuentes:** `01_planeacion/backlog.csv`, `01_planeacion/riesgos.csv`, `01_planeacion/roadmap.csv`, `01_planeacion/entregables.csv`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.

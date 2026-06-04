@@ -13,9 +13,7 @@ from build_dashboard import main as build_dashboard_main
 from build_wiki import build_wiki
 from publication import publication_bundle_status
 from validate_public_text import validate_public_text, validate_public_text_payloads
-
 from common import ROOT
-
 
 @pytest.fixture
 def isolated_repo(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
@@ -35,6 +33,12 @@ def isolated_repo(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
             "brain", "tmp", "temp",
         ),
     )
+    import stat
+    for p in repo.rglob("*"):
+        try:
+            p.chmod(stat.S_IWRITE)
+        except OSError:
+            pass
     monkeypatch.setattr(common, "ROOT", repo)
     monkeypatch.setattr(build_wiki_module, "ROOT", repo)
     monkeypatch.setattr(build_dashboard_module, "ROOT", repo)

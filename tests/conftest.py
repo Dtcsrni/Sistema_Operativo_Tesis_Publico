@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 scripts_dir = ROOT / "07_scripts"
 sys.path.insert(0, str(scripts_dir))
-for subdir in ["ops", "audit", "utils", "benchmarks", "build_runner", "toltecayotl", "ai_tools"]:
+for subdir in ["ops", "audit", "utils", "benchmarks", "build_runner", "toltecayotl", "ai_tools", "serena"]:
     sys.path.insert(0, str(scripts_dir / subdir))
 
 # Setup dummy environment to isolate test execution

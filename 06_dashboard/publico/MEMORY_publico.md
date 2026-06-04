@@ -5,7 +5,7 @@
 
 ## Estado actual
 
-- **Generado:** `2026-06-01`
+- **Generado:** `2026-06-04`
 - **Versión del sistema:** `0.1.0`
 - **Estado global:** `arquitectura_formal_reforzada`
 - **Bloque activo:** `B1`
@@ -20,11 +20,11 @@
 
 ## Últimos cambios validados
 
+- **validación humana interna no pública** · `2026-06-03` · Aprobacion verbal de correcciones wiki y test local-first. Build EXIT:0 · soporte WIKI-AUD
 - **validación humana interna no pública** · `2026-06-01` · Ingesta de PET_Tesis_IoT_LoRa_Mesh_Edge_2026-06-01.zip (Brechas, Hipótesis H1-H3, Variables, Hardware) · soporte PET-7d715d3b
 - **validación humana interna no pública** · `2026-05-29` · validación humana interna no pública: DEC-0047 Aceptada. Serena MCP herramienta host PC Tezkatli. Fixes pytest.ini y task-governance.test.ts aceptados. Build EXIT:0. · soporte DEC-0047
 - **validación humana interna no pública** · `2026-05-29` · Desacoplamiento total de Serena MCP de Docker y reconocimiento como herramienta local del host de desarrollo (PC Tezkatli) · soporte [DEC-0045]
 - **validación humana interna no pública** · `2026-05-27` · Automatización de inicio y resiliencia de servicios locales · soporte [DEC-0014]
-- **validación humana interna no pública** · `2026-05-26` · Misiones de investigacion LaTeX y KPIs SMART · soporte [DEC-0014]
 
 ## Próximos pendientes críticos
 
@@ -51,4 +51,4 @@
 - `01_planeacion/entregables.csv`
 - `01_planeacion/riesgos.csv`
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._

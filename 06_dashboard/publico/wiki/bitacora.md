@@ -3,7 +3,7 @@
 Registro de sesiones, trabajo asistido y aprendizaje operativo.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-06-01`
+- **Fecha:** `2026-06-04`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/bitacora`, `00_sistema_tesis/reportes_semanales`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -350,9 +350,9 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
 
 ### Índices maestros
 
-- **Total de registros de validación:** `153`
+- **Total de registros de validación:** `154`
 
-??? "2026-06 — 1 validación(es)"
+??? "2026-06 — 2 validación(es)"
 
     **[validación humana interna no pública] Registro 1 del mes**
 
@@ -361,6 +361,14 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
     - **Nivel de auditoría:** `MEDIO`
     - **Disparador resumido:** integra el contexto de este pet
     - **Confirmación resumida:** integra el contexto de este pet
+
+    **[validación humana interna no pública] Registro 2 del mes**
+
+    - **Fecha:** `2026-06-03`
+    - **Decisión o referencia:** `WIKI-AUD` (referencia operativa interna no enlazable)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Confirmas tu aprobación verbal sobre las correcciones realizadas a la wiki y las actualizaciones del arnés de pruebas para registrar el Step ID validación humana interna no pública?
+    - **Confirmación resumida:** si confirmo, push, pull, sync, y verifica ci/cd o mejora/corrige hasta que pase
 
 ??? "2026-05 — 55 validación(es)"
 
@@ -1590,4 +1598,4 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
 - `RESUMEN_IN` [Resumen de Integración: OpenCode Executor Subordinado con RAG Weaviate](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/reportes_semanales/RESUMEN_INTEGRACION_OPENCODE_2026-05-07.md)
 - `2026-S13_r` [Resumen semanal 2026-S13](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/reportes_semanales/2026-S13_resumen_semanal.md)
 
-_Última actualización: `2026-06-01`._
+_Última actualización: `2026-06-03`._
