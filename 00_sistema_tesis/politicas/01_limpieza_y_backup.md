@@ -51,4 +51,4 @@ Aplica a archivos temporales, logs de trabajo, backups locales, caches, artefact
 - No tocar archivos protegidos por `<!-- SISTEMA_TESIS:PROTEGIDO -->` sin mecanismo de guardrails correspondiente.
 - No confundir archivos de respaldo con documentación vigente si están explícitamente referenciados por el sistema.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

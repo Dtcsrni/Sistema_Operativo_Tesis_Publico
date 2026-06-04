@@ -840,4 +840,4 @@ This spec adds four major capabilities to Mission Control:
 
 These concepts are adapted from Gas Town's architecture but built natively for MC's Next.js + SQLite stack. The implementation is backward-compatible — existing single-task workflows are unchanged. Convoy mode is opt-in and additive.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

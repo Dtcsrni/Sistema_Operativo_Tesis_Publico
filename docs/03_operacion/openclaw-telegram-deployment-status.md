@@ -168,4 +168,4 @@ docker compose ps | grep siot-agent
 
 **The OpenClaw Telegram bot is now fully deployed, enabled, and actively polling Telegram for incoming messages. No further infrastructure work required.**
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

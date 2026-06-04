@@ -41,9 +41,9 @@
       "network_profile": "egress_controlado_localhost_in"
     },
     "edge_iot": {
-      "usuario": "edgeiot",
-      "grupo": "edgeiot",
-      "servicios": ["edge-iot-worker", "edge-iot-watchdog"],
+      "usuario": "edge_ops",
+      "grupo": "docker",
+      "servicios": ["siot-edge", "edge-iot-watchdog"],
       "rutas_read_only": [],
       "rutas_read_write": ["/var/lib/edge-iot", "/var/lib/edge-iot/runtime", "/var/log/edge-iot", "/srv/tesis/workspace/edge", "/srv/tesis/intercambio/edge"],
       "rutas_prohibidas": [

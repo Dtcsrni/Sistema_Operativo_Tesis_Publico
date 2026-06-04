@@ -2,4 +2,4 @@
 
 Usar `data_contracts/literature_matrix_schema.md` como contrato minimo.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

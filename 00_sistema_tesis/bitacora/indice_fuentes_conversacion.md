@@ -9,21 +9,21 @@ La evidencia cruda vive en `evidencia privada no publicada/conversaciones_codex/
 
 | Step ID | Proveniencia | Verificación de cita | Source EVT | Sesión | Estado repo |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| validación humana interna no pública | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
-| validación humana interna no pública | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
-| validación humana interna no pública | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
-| validación humana interna no pública | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
-| validación humana interna no pública | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
-| validación humana interna no pública | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
-| validación humana interna no pública | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
-| validación humana interna no pública | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
-| validación humana interna no pública | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
-| validación humana interna no pública | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
-| validación humana interna no pública | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
-| validación humana interna no pública | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
-| validación humana interna no pública | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
-| validación humana interna no pública | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
-| validación humana interna no pública | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| validación humana interna no pública | corroborated_conversation_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| validación humana interna no pública | corroborated_conversation_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| validación humana interna no pública | corroborated_conversation_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| validación humana interna no pública | corroborated_conversation_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| validación humana interna no pública | corroborated_conversation_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| validación humana interna no pública | corroborated_conversation_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| validación humana interna no pública | corroborated_conversation_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| validación humana interna no pública | corroborated_conversation_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| validación humana interna no pública | corroborated_conversation_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| validación humana interna no pública | corroborated_conversation_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| validación humana interna no pública | corroborated_conversation_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| validación humana interna no pública | corroborated_conversation_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| validación humana interna no pública | corroborated_conversation_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| validación humana interna no pública | corroborated_conversation_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
+| validación humana interna no pública | corroborated_conversation_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
 | validación humana interna no pública | legacy_unverified_source | internal_canon_only | N/A | N/A | legacy_unverified_source |
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260326-ingestion-iot-v10 | ok |
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | codex-local-20260326-docs-restructure | ok |
@@ -137,17 +137,32 @@ La evidencia cruda vive en `evidencia privada no publicada/conversaciones_codex/
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 61e4bfba-916e-48cd-bcda-0884bdb96a74 | ok |
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | audit-historicos | ok |
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | b6902365-5f66-4075-9106-d1f6eaaaf5d4 | ok |
-| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | e91b42f5-da7d-4c1f-a471-0e2c196ce54f | fail |
-|  |  |  |  |  | repo_error: validación humana interna no pública no coincide con la cita registrada en evento interno no público. |
-|  |  |  |  |  | repo_error: validación humana interna no pública tiene hash de cita distinto al registrado en evento interno no público. |
-| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | e91b42f5-da7d-4c1f-a471-0e2c196ce54f | fail |
-|  |  |  |  |  | repo_error: validación humana interna no pública no coincide con la cita registrada en evento interno no público. |
-|  |  |  |  |  | repo_error: validación humana interna no pública tiene hash de cita distinto al registrado en evento interno no público. |
-| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | e91b42f5-da7d-4c1f-a471-0e2c196ce54f | fail |
-|  |  |  |  |  | repo_error: validación humana interna no pública no coincide con la cita registrada en evento interno no público. |
-|  |  |  |  |  | repo_error: validación humana interna no pública tiene hash de cita distinto al registrado en evento interno no público. |
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | e91b42f5-da7d-4c1f-a471-0e2c196ce54f | ok |
 | validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | e91b42f5-da7d-4c1f-a471-0e2c196ce54f | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | e91b42f5-da7d-4c1f-a471-0e2c196ce54f | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | e91b42f5-da7d-4c1f-a471-0e2c196ce54f | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | e91b42f5-da7d-4c1f-a471-0e2c196ce54f | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 0ab08ab6-826e-4886-8956-25fcb8081d42 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 2e3a1332-d176-485d-9f69-9f3afbab837a | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 2e3a1332-d176-485d-9f69-9f3afbab837a | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 2e3a1332-d176-485d-9f69-9f3afbab837a | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 2e3a1332-d176-485d-9f69-9f3afbab837a | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 2e3a1332-d176-485d-9f69-9f3afbab837a | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 2e3a1332-d176-485d-9f69-9f3afbab837a | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 2e3a1332-d176-485d-9f69-9f3afbab837a | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 2e3a1332-d176-485d-9f69-9f3afbab837a | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 2e3a1332-d176-485d-9f69-9f3afbab837a | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 2e3a1332-d176-485d-9f69-9f3afbab837a | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 2e3a1332-d176-485d-9f69-9f3afbab837a | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 2e3a1332-d176-485d-9f69-9f3afbab837a | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 2e3a1332-d176-485d-9f69-9f3afbab837a | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 122eb1f0-6ece-44e9-bd50-26d1a33fa71d | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 774ea825-2b27-41cc-8bc0-b553cad099c9 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | a3baaf7c-858b-4fdb-bd7c-efb4d6e4ae39 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 02547a59 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | SES-2026-05-29-SERENA-DEC0047 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 0d686740 | ok |
+| validación humana interna no pública | corroborated_conversation_source | verified_against_source | evento interno no público | 0d686740 | ok |
 
 **Navegación:**
 - [Volver al Ledger](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/bitacora/log_sesiones_trabajo_registradas.md)
@@ -157,4 +172,4 @@ La evidencia cruda vive en `evidencia privada no publicada/conversaciones_codex/
 [GOV]: ../config/ia_gobernanza.yaml
 [AUD]: ../../07_scripts/build_all.py
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

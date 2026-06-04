@@ -3,7 +3,7 @@
 Glosario, familias de IDs, referencias globales y convenciones de nomenclatura del sistema.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-05-15`
+- **Fecha:** `2026-06-04`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md`, `00_sistema_tesis/03_metadatos/sistema_operativo_tesis_iot__convencion_de_nombres__v09.json`, `01_planeacion/backlog_guia.md`, `00_sistema_tesis/config/ia_gobernanza.yaml`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -107,20 +107,20 @@ Cada entrada de este glosario indica:
 ```mermaid
 graph TD
     subgraph "Nivel Estratégico"
-        F[F: Fase / Roadmap]
-        B[B: Bloque Macro]
+        F["F: Fase / Roadmap"]
+        B["B: Bloque Macro"]
     end
 
     subgraph "Nivel Táctico"
-        ENT[ENT: Entregable]
-        R[R: Riesgo]
-        T[T: Tarea]
+        ENT["ENT: Entregable"]
+        R["R: Riesgo"]
+        T["T: Tarea"]
     end
 
     subgraph "Nivel Operativo (Canon)"
-        VAL[VAL-STEP: Validación Humana]
-        DEC[DEC: Decisión]
-        EVT[EVT: Evento / Evidencia]
+        VAL["VAL-STEP: Validación Humana"]
+        DEC["DEC: Decisión"]
+        EVT["EVT: Evento / Evidencia"]
     end
 
     F --> B
@@ -482,4 +482,4 @@ graph TD
 
 En la capa publica pueden explicarse familias y semantica de IDs, por ejemplo `VAL_STEP_{nnn}` o `EVT_{nnnn}`, pero no deben exponerse instancias privadas completas, hashes sensibles ni rutas internas no publicables.
 
-_Última actualización: `2026-05-14`._
+_Última actualización: `2026-06-03`._

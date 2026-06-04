@@ -12,6 +12,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[2]
 SPEC_PATH = ROOT / "00_sistema_tesis" / "pendientes" / "2026-05-13_spec_agent_ops_core_optimizacion_holistica.md"
 MISSION_CONTROL_DB = ROOT / "04_implementacion" / "control_mission" / "mission-control.db"
+PYTHON = sys.executable or "python"
 
 STANDARD_KEYS = (
     "status",
@@ -153,7 +154,7 @@ def parse_json_output(text: str) -> dict[str, Any]:
 
 
 def check_agent_context_tools() -> dict[str, Any]:
-    command = ["python3", "07_scripts/audit/check_agent_context_tools.py", "--attempt-start-http", "--json"]
+    command = [PYTHON, "07_scripts/audit/check_agent_context_tools.py", "--attempt-start-http", "--json"]
     try:
         result = run_command(command, timeout=90)
     except Exception as exc:
@@ -184,7 +185,7 @@ def check_agent_context_tools() -> dict[str, Any]:
 
 
 def check_serena_access() -> dict[str, Any]:
-    command = ["python3", "07_scripts/serena/check_serena_access.py", "--attempt-start-http", "--json"]
+    command = [PYTHON, "07_scripts/serena/check_serena_access.py", "--attempt-start-http", "--json"]
     try:
         result = run_command(command, timeout=90)
     except Exception as exc:
@@ -215,7 +216,7 @@ def check_serena_access() -> dict[str, Any]:
 
 
 def check_serena_contract() -> dict[str, Any]:
-    command = ["python3", "07_scripts/serena/check_serena_multi_host_contract.py", "--json"]
+    command = [PYTHON, "07_scripts/serena/check_serena_multi_host_contract.py", "--json"]
     try:
         result = run_command(command, timeout=60)
     except Exception as exc:
@@ -379,7 +380,7 @@ def traceability_gate(step_id: str) -> dict[str, Any]:
 
 
 def check_test_impact() -> dict[str, Any]:
-    command = ["python3", "07_scripts/ops/test_impact_gate.py", "--json"]
+    command = [PYTHON, "07_scripts/ops/test_impact_gate.py", "--json"]
     try:
         result = run_command(command, timeout=60)
     except Exception as exc:
@@ -411,7 +412,7 @@ def check_test_impact() -> dict[str, Any]:
 
 
 def check_human_validation(step_id: str) -> dict[str, Any]:
-    command = ["python3", "07_scripts/ops/human_validation_gate.py", "--json"]
+    command = [PYTHON, "07_scripts/ops/human_validation_gate.py", "--json"]
     if step_id.strip():
         command.extend(["--step-id", step_id.strip()])
     try:
@@ -435,11 +436,15 @@ def check_human_validation(step_id: str) -> dict[str, Any]:
             affected_paths=["07_scripts/ops/human_validation_gate.py"],
             next_action="repair_human_validation_gate",
         )
+    payload_status = str(payload.get("status", "blocked"))
+    blocking_reason = str(payload.get("blocking_reason", ""))
+    if payload_status == "blocked" and blocking_reason == "missing_step_id":
+        payload_status = "degraded"
     return standard_result(
-        status=str(payload.get("status", "blocked")),
+        status=payload_status,
         available=bool(payload.get("available")),
         recommended=bool(payload.get("recommended")),
-        blocking_reason=str(payload.get("blocking_reason", "")),
+        blocking_reason=blocking_reason,
         affected_paths=list(payload.get("affected_paths", [])),
         required_step_id=str(payload.get("required_step_id", "")),
         next_action=str(payload.get("next_action", "none")),

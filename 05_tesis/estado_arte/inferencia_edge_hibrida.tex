@@ -1,0 +1,36 @@
+\documentclass[11pt]{article}
+\usepackage[spanish,mexico]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\geometry{margin=2.5cm}
+\title{Estado del arte: inferencia edge hibrida local--nube}
+\author{Sistema Operativo de Tesis de Posgrado}
+\date{31 de mayo de 2026}
+\begin{document}
+\maketitle
+
+\section*{Resumen}
+La inferencia edge contemporanea se organiza como continuo local--edge--cloud. El criterio tecnico dominante no es ejecutar el modelo mas grande en el borde, sino colocar cada tarea donde minimiza latencia, costo, riesgo de privacidad y consumo energetico.
+
+\section*{Hallazgos}
+\begin{enumerate}[leftmargin=*]
+\item La literatura 2025 sobre edge intelligence enfatiza compresion de modelos, aceleradores dedicados y evaluacion por restricciones reales de memoria, energia y temperatura.
+\item El offloading edge--cloud se usa cuando la tarea excede al nodo local o requiere modelos de razonamiento pesado.
+\item Para equipos con GPU local, llama.cpp/Ollama y modelos GGUF cuantizados siguen siendo una ruta practica para privacidad y costos bajos.
+\item La nube debe reservarse para validacion cruzada, modelos multimodales pesados o tareas publicas/redactadas.
+\end{enumerate}
+
+\section*{Estado operativo en Tezkatli}
+El carril local validado usa llama.cpp en Docker CUDA, expuesto en \texttt{127.0.0.1:8085/v1}, con el modelo \texttt{DeepSeek-R1-Distill-Qwen-7B-Q4\_K\_M.gguf}. El carril nube validado usa Gemini 2.5 Flash para contenido academico publico o redactado. El nodo NPU edge permanece experimental hasta contar con modelo RKLLM convertido y benchmark valido.
+
+\section*{Referencias seleccionadas}
+\begin{itemize}[leftmargin=*]
+\item Edge Intelligence: A Review of Deep Neural Network Inference in Resource-Limited Environments, Electronics 2025.
+\item Computation offloading in the edge-to-cloud compute continuum: a survey of federated architectural solutions, Cluster Computing 2025.
+\item MLCommons MLPerf Inference, metodologia de referencia para medicion reproducible.
+\item llama.cpp server, API compatible con OpenAI para inferencia local GGUF.
+\end{itemize}
+\end{document}

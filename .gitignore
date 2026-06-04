@@ -12,6 +12,7 @@ __pycache__/
 mi_llave_secreta_backup.asc
 00_sistema_tesis/bitacora/audit_history/governance_gate/
 00_sistema_tesis/bitacora/audit_history/security_report_*.json
+00_sistema_tesis/bitacora/audit_history/serena_mcp_debug*.log
 build_log.txt
 final_audit_v*.txt
 hash_result.txt
@@ -31,6 +32,7 @@ runtime/models/
 *.dll
 
 # Runtime y Cache
+tests/tmp/
 runtime/openclaw/state/
 runtime/toltecayotl/cache/
 scratch/

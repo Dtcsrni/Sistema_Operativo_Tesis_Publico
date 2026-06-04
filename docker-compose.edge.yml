@@ -83,7 +83,58 @@ services:
       siot-edge-gw:
         condition: service_healthy
     command: ["python3", "runtime/edge_sync/sync_manager.py"]
-  
+
+  # ── OpenTelemetry Collector Edge (T-033 / DEC-0046)
+  # Push de métricas al Hub con buffer local para intermitencia
+  otel-collector-edge:
+    image: otel/opentelemetry-collector-contrib:latest
+    container_name: otel-collector-edge
+    profiles:
+      - metrics
+    restart: unless-stopped
+    command: ["--config=/etc/otel/collector-edge.yml"]
+    environment:
+      - SIOT_HUB_OTEL_ENDPOINT=${SIOT_HUB_URL:-http://pc-hub:4317}
+    volumes:
+      - ./config/otel/collector-edge.yml:/etc/otel/collector-edge.yml:ro
+      - /var/lib/otel/buffer:/var/lib/otel/buffer  # Buffer persistente
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - "4317:4317"   # OTLP gRPC (contenedores → collector)
+      - "4318:4318"   # OTLP HTTP
+      - "9101:9101"   # Debug métricas local (sin Hub)
+      - "13133:13133" # Health check
+    networks:
+      - siot-iot-net
+      - siot-inference-net
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:13133/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # ── Node Exporter (T-033): métricas hardware Orange Pi
+  # CPU, RAM, temperatura, disco — consumido por OTel Collector local
+  node-exporter-edge:
+    image: prom/node-exporter:latest
+    container_name: node-exporter-edge
+    profiles:
+      - metrics
+    restart: unless-stopped
+    pid: host
+    network_mode: host  # Necesario para métricas de red del host
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.rootfs=/rootfs"
+      - "--path.sysfs=/host/sys"
+      - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
+      - "--collector.thermal_zone"  # Temperatura NPU/SoC
+      - "--web.listen-address=:9100"
+
 networks:
   siot-iot-net:
     driver: bridge

@@ -62,7 +62,7 @@ METHODOLOGY_REFERENCES = [
 BENCHMARK_PROFILES = {
     "pc_mistral_nemo_12b_extensive": {
         "node": "pc_control",
-        "runtime": "ollama_local",
+        "runtime": "edge_inference",
         "model": PRIMARY_PC_MODEL,
         "warmup_iterations": 5,
         "measurement_iterations": 50,
@@ -71,7 +71,7 @@ BENCHMARK_PROFILES = {
     },
     "pc_model_comparison": {
         "node": "pc_control",
-        "runtime": "ollama_local",
+        "runtime": "edge_inference",
         "model": PRIMARY_PC_MODEL,
         "comparison_models": ["qwen2.5-coder:14b", "qwen3:14b", "phi4:14b"],
         "warmup_iterations": 2,
@@ -234,7 +234,7 @@ MOE_BENCHMARK_PROFILE_ID = "pc_moe_precision_battery"
 
 BENCHMARK_PROFILES[MOE_BENCHMARK_PROFILE_ID] = {
     "node": "pc_control",
-    "runtime": "ollama_local",
+    "runtime": "edge_inference",
     "model": PRIMARY_PC_MODEL,
     "models": MOE_DEFAULT_MODEL_ORDER,
     "task_families": list(MOE_TASK_FAMILIES.keys()),

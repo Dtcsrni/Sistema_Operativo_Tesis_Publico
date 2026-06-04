@@ -7,8 +7,10 @@ const statusToJira: Record<TaskStatus, string> = {
   assigned: 'To Do',
   pending_dispatch: 'To Do',
   in_progress: 'In Progress',
+  convoy_active: 'In Progress',
   testing: 'In Review',
   review: 'In Review',
+  verification: 'In Review',
   done: 'Done',
 };
 

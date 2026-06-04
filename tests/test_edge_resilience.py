@@ -46,9 +46,9 @@ def test_edge_watchdog_systemd_units_are_isolated() -> None:
     timer = (ROOT / "config/systemd/edge-iot-watchdog.timer").read_text(encoding="utf-8")
     smoke = (ROOT / "tests/smoke/test_edge_resilience.sh").read_text(encoding="utf-8")
 
-    assert "User=edgeiot" in service
-    assert "Group=edgeiot" in service
-    assert "ReadWritePaths=/var/lib/edge-iot /var/log/edge-iot /srv/tesis/workspace/edge /srv/tesis/intercambio/edge" in service
+    assert "User=edge_ops" in service
+    assert "Group=docker" in service
+    assert "ReadWritePaths=/var/lib/edge-iot /var/log/edge-iot /var/run/docker.sock" in service
     assert "OnUnitActiveSec=2min" in timer
     assert "edge-iot-watchdog.service" in smoke
 

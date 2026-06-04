@@ -141,10 +141,10 @@ def _preferred_provider_order(task: TaskEnvelope, snapshot: AdaptiveRoutingSnaps
     desktop = _desktop_provider_id()
     request_kind = str(task.extra_context.get("request_kind") or task.extra_context.get("request_profile") or "").lower()
     if request_kind in {"coding", "code"}:
-        return _filter_edge_fallbacks([desktop, "openrouter_remote", "deterministic_local", "local", "openai_api", "groq_api"], task)
+        return _filter_edge_fallbacks([desktop, "deterministic_local", "local"], task)
     if task.domain == "academico" or task.requires_citations or task.complexity == "high":
-        return _filter_edge_fallbacks([desktop, "openrouter_remote", "deterministic_local", "local", "gemini_api", "openai_api", "chatgpt_plus_web_assisted", "groq_api"], task)
-    return _filter_edge_fallbacks([desktop, "deterministic_local", "local", "openrouter_remote", "groq_api", "openai_api"], task)
+        return _filter_edge_fallbacks([desktop, "deterministic_local", "local"], task)
+    return _filter_edge_fallbacks([desktop, "deterministic_local", "local"], task)
 
 
 def _edge_execution_requested(task: TaskEnvelope) -> bool:

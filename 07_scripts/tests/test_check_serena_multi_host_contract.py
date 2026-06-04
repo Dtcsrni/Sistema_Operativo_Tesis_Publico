@@ -9,6 +9,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
+sys.path.insert(0, str(ROOT / "07_scripts" / "serena"))
 
 import check_serena_multi_host_contract as contract  # noqa: E402
 from utils.data_io import dump_structured_path  # noqa: E402

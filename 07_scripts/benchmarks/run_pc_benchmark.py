@@ -83,7 +83,7 @@ def main() -> int:
     header = build_run_header(
         profile_id=args.profile_id,
         node=args.node,
-        runtime="ollama_local",
+        runtime="edge_inference",
         model=args.model,
         step_id=args.step_id,
         command="python3 07_scripts/run_pc_benchmark.py",

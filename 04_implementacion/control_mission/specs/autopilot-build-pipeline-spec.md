@@ -252,4 +252,4 @@ Total: ~3.5 hours. No new tables. No new agents. No new API routes (just field a
 - Branch protection rule awareness (Phase 2)
 - Deploy-on-merge pipeline (Phase 3)
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

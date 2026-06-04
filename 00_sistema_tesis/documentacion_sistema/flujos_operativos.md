@@ -146,9 +146,9 @@ Objetivo: inspeccionar y recuperar el dominio `edge_iot` sin romper el aislamien
 
 Secuencia:
 
-1. Verificar `systemctl status edge-iot-worker.service` y `systemctl status edge-iot-watchdog.timer`.
+1. Verificar `systemctl status siot-edge.service` y `systemctl status edge-iot-watchdog.timer`.
 2. Revisar `bash /srv/tesis/repo/ops/edge/edge-iot-resilience.sh status`.
-3. Leer `edge-iot-worker.log`, `edge-iot-watchdog.log` y `edge-iot-resilience.log`.
+3. Leer logs del journal con `journalctl -u siot-edge.service`, y archivos `edge-iot-watchdog.log` y `edge-iot-resilience.log`.
 4. Si el dominio está en `degraded_offline`, revisar causa externa y esperar o forzar reintento según criterio humano.
 5. Si el dominio está en `quarantined`, corregir la causa y ejecutar limpieza explícita de cuarentena.
 
@@ -196,19 +196,20 @@ Salida esperada:
 - accesos cruzados bloqueados;
 - evidencia reproducible de enforcement real.
 
-## Flujo 11. Trabajar con Codex asistido por Serena MCP
+## Flujo 11. Trabajar con un agente asistido por Serena MCP
 
-Objetivo: operar tareas de tesis con contexto compacto y acciones auditables desde VS Code sin sustituir la validacion humana ni la via CLI.
+Objetivo: operar tareas de tesis con contexto compacto y acciones auditables desde cualquier host MCP compatible sin sustituir la validacion humana ni la via CLI.
 
 Secuencia:
 
 1. Abrir el repositorio en la raiz correcta del workspace.
-2. Recargar VS Code y confirmar que `serena-local` aparezca como servidor MCP activo.
-3. Usar `context.fetch_compact` para recuperar solo el contexto minimo necesario.
-4. Usar `governance.preflight` antes de preparar o aplicar cambios sobre canon o rutas protegidas.
-5. Usar `canon.prepare_change` para revisar diff, riesgo y requisitos antes de tocar la fuente canonica.
-6. Usar `canon.apply_controlled_change` solo con `VAL-STEP` valido y evidencia fuente corroborada cuando la politica lo exija.
-7. Ejecutar `python 07_scripts/build_all.py` despues de cambios relevantes.
+2. Registrar `docs/03_operacion/mcp-agent-host-template.json` o una configuracion equivalente en el host MCP.
+3. Recargar el host y confirmar que `serena-local` aparezca como servidor MCP activo.
+4. Usar `context.fetch_compact` para recuperar solo el contexto minimo necesario.
+5. Usar `governance.preflight` antes de preparar o aplicar cambios sobre canon o rutas protegidas.
+6. Usar `canon.prepare_change` para revisar diff, riesgo y requisitos antes de tocar la fuente canonica.
+7. Usar `canon.apply_controlled_change` solo con `VAL-STEP` valido y evidencia fuente corroborada cuando la politica lo exija.
+8. Ejecutar `python 07_scripts/build_all.py` despues de cambios relevantes.
 
 Salida esperada:
 
@@ -220,13 +221,13 @@ Referencia operativa: `00_sistema_tesis/documentacion_sistema/operacion_serena_m
 
 ## Flujo 12. Registrar Serena para un runtime externo
 
-Objetivo: exponer Serena como MCP HTTP autenticado para un host separado de VS Code sin duplicar reglas de negocio.
+Objetivo: exponer Serena como MCP HTTP autenticado para un runtime que no comparte el localhost del host agéntico sin duplicar reglas de negocio.
 
 Secuencia:
 
 1. Definir `SERENA_BRIDGE_BEARER_TOKEN` en el entorno del host.
 2. Arrancar `python runtime/serena_bridge/bin/serena_bridge.py`.
-3. Verificar con `python 07_scripts/check_serena_access.py` que el bridge sea alcanzable.
+3. Verificar con `python 07_scripts/serena/check_serena_access.py` que el bridge sea alcanzable.
 4. Registrar la URL del bridge en el host externo con auth `Bearer` y headers de identidad.
 5. Ejecutar `initialize`, `tools/list`, `context.fetch_compact` y `governance.preflight`.
 6. Confirmar que la traza MCP incluya identidad del host y `host_kind=external_runtime`.
@@ -286,4 +287,4 @@ Todo flujo del sistema debe cumplir tres condiciones:
 - tener una salida humana legible;
 - poder distinguir entre superficie canónica no pública y superficie publica.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

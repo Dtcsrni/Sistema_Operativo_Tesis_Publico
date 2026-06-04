@@ -11,7 +11,7 @@ import argparse
 import re
 
 from common import ROOT, load_yaml_json
-from publication import DEFAULT_PUBLICATION_CONFIG, TEXT_SUFFIXES, load_publication_config
+from publication import DEFAULT_PUBLICATION_CONFIG, TEXT_SUFFIXES, load_publication_config, expected_publication_outputs
 
 PROHIBITED_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("placeholder redactado", re.compile(r"\[[^\]]*_(?:redactad[ao]|privad[ao]|intern[ao])[^\]]*\]")),
@@ -74,9 +74,7 @@ def validate_public_text(root: Path) -> list[str]:
     manifest_path = root / publication["salida"]["manifest"]
     if manifest_path.exists():
         try:
-            manifest = load_yaml_json(manifest_path)
-            manifest_outputs = {str(a["output"]).replace("\\", "/").lstrip("./") for a in manifest.get("artifacts", [])}
-            manifest_outputs.add(publication["salida"]["manifest"].replace("\\", "/").lstrip("./"))
+            manifest_outputs = {str(p).replace("\\", "/").lstrip("./") for p in expected_publication_outputs(publication)}
             
             actual_files = set()
             for path in sorted(output_root.rglob("*")):

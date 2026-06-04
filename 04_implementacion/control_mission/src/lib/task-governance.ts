@@ -1,16 +1,60 @@
 import { queryAll, queryOne, run, transaction } from '@/lib/db';
 import { notifyLearner } from '@/lib/learner';
-import type { Task } from '@/lib/types';
+import type { Task, TaskDeliverable } from '@/lib/types';
+import { existsSync, statSync } from 'fs';
 
 const ACTIVE_STATUSES = ['assigned', 'in_progress', 'convoy_active', 'testing', 'review', 'verification'];
 
 export function hasStageEvidence(taskId: string): boolean {
-  const deliverable = queryOne<{ count: number }>('SELECT COUNT(*) as count FROM task_deliverables WHERE task_id = ?', [taskId]);
+  const deliverables = queryAll<TaskDeliverable>('SELECT * FROM task_deliverables WHERE task_id = ?', [taskId]);
   const activity = queryOne<{ count: number }>(
     `SELECT COUNT(*) as count FROM task_activities WHERE task_id = ? AND activity_type IN ('completed','file_created','updated')`,
     [taskId]
   );
-  return Number(deliverable?.count || 0) > 0 && Number(activity?.count || 0) > 0;
+
+  const hasActivity = Number(activity?.count || 0) > 0;
+  if (!hasActivity || deliverables.length === 0) {
+    return false;
+  }
+
+  // Check if at least one deliverable physically exists and is valid
+  let hasPhysicalDeliverable = false;
+  for (const del of deliverables) {
+    if (del.deliverable_type === 'file') {
+      if (!del.path) {
+        // Fallback for legacy/test rows without path
+        hasPhysicalDeliverable = true;
+      } else {
+        const normalizedPath = del.path.replace(/^~/, process.env.HOME || '');
+        if (existsSync(normalizedPath)) {
+          try {
+            const stats = statSync(normalizedPath);
+            if (stats.size > 0) {
+              hasPhysicalDeliverable = true;
+            } else {
+              console.warn(`[GOVERNANCE] File deliverable ${del.path} is empty (0 bytes)`);
+            }
+          } catch (err) {
+            console.error(`[GOVERNANCE] Error checking stats for ${normalizedPath}:`, err);
+          }
+        } else {
+          console.warn(`[GOVERNANCE] File deliverable ${del.path} does not exist on disk`);
+        }
+      }
+    } else if (del.deliverable_type === 'url') {
+      // URL deliverables don't have files on disk, we count them as valid if present and non-empty
+      if (del.path && del.path.trim().length > 0) {
+        hasPhysicalDeliverable = true;
+      }
+    } else {
+      // Other types (artifacts, text notes, etc.) are valid if they have path or description
+      if ((del.path && del.path.trim().length > 0) || (del.description && del.description.trim().length > 0)) {
+        hasPhysicalDeliverable = true;
+      }
+    }
+  }
+
+  return hasPhysicalDeliverable;
 }
 
 export function canUseBoardOverride(request: Request): boolean {

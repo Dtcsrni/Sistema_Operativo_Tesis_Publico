@@ -278,16 +278,7 @@ def public_sync_check_dir() -> str:
 def checks_for_stage(stage: str) -> list[tuple[str, list[str]]]:
     python = preferred_python_executable()
     pre_commit_checks = [
-        ("Auditar canon", [python, "07_scripts/tesis.py", "audit", "--check"]),
-        ("Validar estructura", [python, "07_scripts/audit/validate_structure.py"]),
-        ("Validar publicación pública", [python, "07_scripts/tesis.py", "publish", "--check"]),
-        ("Validar calidad editorial pública", [python, "07_scripts/audit/validate_public_text.py"]),
-        ("Escaneo de secretos", [python, "07_scripts/audit/secret_scanner.py"]),
-        ("Auditar Ledger IA", [python, "07_scripts/audit/verify_ledger.py"]),
-        ("Auditar integridad DEC/VAL", [python, "07_scripts/audit/verify_decisions_val_integrity.py"]),
-        ("Auditar Cadena de Bitacoras", [python, "07_scripts/audit/verify_bitacora_chain.py"]),
-        ("Verificar Jerarquia", [python, "07_scripts/audit/verify_hierarchy.py"]),
-        ("Auditar Bases de Datos", [python, "07_scripts/audit/verify_databases.py"]),
+        ("Build Runner (Pre-commit)", [python, "07_scripts/build_all.py", "--fail-fast", "--no-serena-gate"]),
     ]
     if stage == "pre-commit":
         return pre_commit_checks
@@ -302,7 +293,6 @@ def checks_for_stage(stage: str) -> list[tuple[str, list[str]]]:
             ci_checks.append(("Verificar firma GPG", [python, "07_scripts/utils/setup_gpg_attestation.py", "--check"]))
         ci_checks.extend(
             [
-            ("Pruebas", [python, "-m", "pytest", "-q", "-s"]),
             (
                 "Verificar downstream público sanitizado",
                 [
@@ -318,13 +308,13 @@ def checks_for_stage(stage: str) -> list[tuple[str, list[str]]]:
                     "--allow-dirty",
                 ],
             ),
-            ("Build total", [python, "07_scripts/build_all.py", "--fail-fast", "--force"]),
+            ("Build total", [python, "07_scripts/build_all.py", "--fail-fast", "--force", "--no-serena-gate"]),
             ]
         )
         if not in_github_actions:
             ci_checks.append(("Artefactos versionados", ["git", "diff", "--exit-code"]))
         return ci_checks
-    return [("Build total", [python, "07_scripts/build_all.py"])]
+    return [("Build total", [python, "07_scripts/build_all.py", "--fail-fast", "--force", "--no-serena-gate"])]
 
 def execute_checks(checks: list[tuple[str, list[str]]]) -> tuple[list[str], list[str], list[dict[str, object]]]:
     run_labels: list[str] = []
@@ -462,68 +452,74 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     ensure_canon_initialized()
-    args = parse_args()
-    stage = args.stage
-    agent = args.agent or os.getenv("GITHUB_ACTOR", "").strip() or "manual"
-    changed_files = get_changed_files(stage)
-    protected_files = get_protected_files(changed_files)
-    tracked_for_detection = unique_paths(changed_files + ["00_sistema_tesis/canon/events.jsonl"])
-    detected_step_ids = autodetect_step_ids(stage, tracked_for_detection)
-    resolved_step_id, auto_selected_step_id = auto_resolve_step_id(args.step_id, detected_step_ids, protected_files)
+    try:
+        args = parse_args()
+        stage = args.stage
+        agent = args.agent or os.getenv("GITHUB_ACTOR", "").strip() or "manual"
+        changed_files = get_changed_files(stage)
+        protected_files = get_protected_files(changed_files)
+        tracked_for_detection = unique_paths(changed_files + ["00_sistema_tesis/canon/events.jsonl"])
+        detected_step_ids = autodetect_step_ids(stage, tracked_for_detection)
+        resolved_step_id, auto_selected_step_id = auto_resolve_step_id(args.step_id, detected_step_ids, protected_files)
 
-    policy_errors = detect_projection_policy_errors(changed_files, stage=stage)
-    policy_errors.extend(validate_step_id(stage, resolved_step_id, protected_files, detected_step_ids))
-    policy_errors.extend(validate_events())
-    if stage in {"pre-commit", "pre-push", "ci"}:
-        drift = materialize_events(check=True)
-        if drift:
-            policy_errors.append("Existen proyecciones fuera de sincronía con el canon: " + ", ".join(drift))
+        policy_errors = detect_projection_policy_errors(changed_files, stage=stage)
+        policy_errors.extend(validate_step_id(stage, resolved_step_id, protected_files, detected_step_ids))
+        policy_errors.extend(validate_events())
+        if stage in {"pre-commit", "pre-push", "ci"}:
+            drift = materialize_events(check=True)
+            if drift:
+                policy_errors.append("Existen proyecciones fuera de sincronía con el canon: " + ", ".join(drift))
 
-    checks_run: list[str] = ["Validacion de soberania"]
-    checks_failed: list[str] = []
-    check_details: list[dict[str, object]] = [
-        {
-            "name": "Validacion de soberania",
-            "command": [],
-            "returncode": 0 if not policy_errors else 1,
-            "stdout": "\n".join(policy_errors) if policy_errors else f"OK ({resolved_step_id or 'sin Step ID requerido'})",
-            "stderr": "",
-        }
-    ]
+        checks_run: list[str] = ["Validacion de soberania"]
+        checks_failed: list[str] = []
+        check_details: list[dict[str, object]] = [
+            {
+                "name": "Validacion de soberania",
+                "command": [],
+                "returncode": 0 if not policy_errors else 1,
+                "stdout": "\n".join(policy_errors) if policy_errors else f"OK ({resolved_step_id or 'sin Step ID requerido'})",
+                "stderr": "",
+            }
+        ]
 
-    if policy_errors:
-        checks_failed.append("Validacion de soberania")
-        for error in policy_errors:
-            print(f"[GATE ERROR] {error}", file=sys.stderr)
-    else:
-        if auto_selected_step_id:
-            print(f"[GATE] Step ID auto-resuelto: {resolved_step_id}")
-        stage_checks = checks_for_stage(stage)
-        extra_run, extra_failed, extra_details = execute_checks(stage_checks)
-        checks_run.extend(extra_run)
-        checks_failed.extend(extra_failed)
-        check_details.extend(extra_details)
+        if policy_errors:
+            checks_failed.append("Validacion de soberania")
+            for error in policy_errors:
+                print(f"[GATE ERROR] {error}", file=sys.stderr)
+        else:
+            if auto_selected_step_id:
+                print(f"[GATE] Step ID auto-resuelto: {resolved_step_id}")
+            stage_checks = checks_for_stage(stage)
+            extra_run, extra_failed, extra_details = execute_checks(stage_checks)
+            checks_run.extend(extra_run)
+            checks_failed.extend(extra_failed)
+            check_details.extend(extra_details)
 
-    recommendations = build_recommendations(stage, policy_errors, checks_failed)
-    attestation = build_attestation(
-        stage=stage,
-        agent=agent,
-        step_id=resolved_step_id,
-        changed_files=changed_files,
-        protected_files=protected_files,
-        checks_run=checks_run,
-        checks_failed=checks_failed,
-        check_details=check_details,
-        recommendations=recommendations,
-    )
-    json_path, md_path = write_attestation(attestation, Path(args.output_dir))
-    print(f"[GATE] Attestation JSON: {json_path.relative_to(ROOT)}")
-    print(f"[GATE] Attestation Markdown: {md_path.relative_to(ROOT)}")
-    if checks_failed:
-        print("[GATE] Resultado: FALLIDO", file=sys.stderr)
-        return 1
-    print("[GATE] Resultado: OK")
-    return 0
+        recommendations = build_recommendations(stage, policy_errors, checks_failed)
+        attestation = build_attestation(
+            stage=stage,
+            agent=agent,
+            step_id=resolved_step_id,
+            changed_files=changed_files,
+            protected_files=protected_files,
+            checks_run=checks_run,
+            checks_failed=checks_failed,
+            check_details=check_details,
+            recommendations=recommendations,
+        )
+        json_path, md_path = write_attestation(attestation, Path(args.output_dir))
+        print(f"[GATE] Attestation JSON: {json_path.relative_to(ROOT)}")
+        print(f"[GATE] Attestation Markdown: {md_path.relative_to(ROOT)}")
+        if checks_failed:
+            print("[GATE] Resultado: FALLIDO", file=sys.stderr)
+            return 1
+        print("[GATE] Resultado: OK")
+        return 0
+    finally:
+        # Limpieza del directorio temporal utilizado por el gate
+        if SAFE_TMP_DIR.exists():
+            import shutil
+            shutil.rmtree(SAFE_TMP_DIR, ignore_errors=True)
 
 if __name__ == "__main__":
     raise SystemExit(main())

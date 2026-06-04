@@ -11,6 +11,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
+sys.path.insert(0, str(ROOT / "07_scripts" / "serena"))
 
 from serena_core import apply_controlled_change, append_trace_record  # noqa: E402
 from serena_policy import classify_write_scope, preflight, validate_step_and_source  # noqa: E402

@@ -2,11 +2,11 @@
 title: "SPEC: Agent Ops Core para Optimizacion Holistica"
 date: 2026-05-13
 category: specification
-status: implementation-ready
+status: closed
 owner: "Tesista Principal / HOA"
 decisions: ["DEC-0014", "DEC-0023", "DEC-0031", "DEC-0041", "DEC-0042"]
-step_id: "PENDIENTE"
-trace_status: "pendiente_de_validacion_humana"
+step_id: "validación humana interna no pública"
+trace_status: "validado"
 ---
 
 # SPEC: Agent Ops Core para Optimizacion Holistica
@@ -95,7 +95,7 @@ El sistema de pruebas debe diferenciar tres niveles:
 2. **Integracion justificada:** pruebas que levantan contenedores, Mission Control completo, OpenClaw runtime amplio o rutas con dependencias externas. Solo se recomiendan cuando cambian rutas de integracion o configuracion.
 3. **Auditoria total:** `build_all.py` completo. Solo se ejecuta como cierre posterior a implementacion y trazabilidad, o por cambio transversal de alto riesgo.
 
-`test_impact_gate.py` debe producir un `impact_key` por hash de rutas cambiadas y comandos seleccionados. El historial `test_impact_history.jsonl` permite detectar `previous_ok_same_impact`; cuando aparece, el agente puede omitir repeticion exacta o ejecutar solo smoke si no hubo nuevos cambios.
+`test_impact_gate.py` debe producir un `impact_digest` por hash de rutas cambiadas y comandos seleccionados. El historial `test_impact_history.jsonl` permite detectar `previous_ok_same_impact`; cuando aparece, el agente puede omitir repeticion exacta o ejecutar solo smoke si no hubo nuevos cambios.
 
 El historial no valida por si mismo. Solo evita redundancia tecnica; la validacion humana y canonica siguen dependiendo de Step ID.
 
@@ -186,4 +186,7 @@ Agent Ops Core reduce consumo de contexto al forzar descubrimiento compacto, lim
 }
 ```
 
-_Última actualización: `2026-05-15`._
+## Cierre de Trazabilidad
+Validado formalmente en validación humana interna no pública.
+
+_Última actualización: `2026-06-03`._

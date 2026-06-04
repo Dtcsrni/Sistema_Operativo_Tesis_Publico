@@ -70,4 +70,4 @@ sha256=371209409caff5651036ecc8cfd04f733ef66b5a41998fd4964e1f7dc891d387
 ---
 *Este informe garantiza que el contenido ingestado es trazable y fundamentado. Si existen riesgos, deben ser mitigados antes de la integración al canon.*
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

@@ -243,4 +243,4 @@ if (hasDeliverables) {
 
 **Remember:** Every sub-agent action should be visible in Mission Control. If it's not logged, it didn't happen!
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

@@ -2,4 +2,4 @@
 
 Cruza fuente, nivel de evidencia, acuerdo/desacuerdo, vacio detectado y accion posterior.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

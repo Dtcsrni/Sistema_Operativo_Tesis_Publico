@@ -22,4 +22,4 @@ if [ ! -f /etc/tesis-os/backup.env ]; then
   sudo install -m 0640 "${REPO_ROOT}/config/env/backup.env.example" /etc/tesis-os/backup.env
 fi
 sudo systemctl daemon-reload
-sudo systemctl enable tesis-healthcheck.timer tesis-backup.timer tesis-sync.timer edge-iot-worker.service edge-iot-watchdog.timer
+sudo systemctl enable tesis-healthcheck.timer tesis-backup.timer tesis-sync.timer siot-edge.service edge-iot-watchdog.timer

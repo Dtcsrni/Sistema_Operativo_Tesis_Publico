@@ -93,7 +93,7 @@ def validate_sdd_spec(path: Path) -> list[str]:
         if f"## {section}" not in body:
             errors.append(f"falta seccion SDD: {section}")
 
-    if kind == "spec" and "step_id: \"PENDIENTE\"" not in text and "step_id: PENDIENTE" not in text:
+    if kind == "spec" and status != "closed" and "step_id: \"PENDIENTE\"" not in text and "step_id: PENDIENTE" not in text:
         errors.append("spec debe dejar step_id como PENDIENTE hasta validacion humana explicita")
 
     if re.search(r"(?im)^\s*-\s*\[x\]", body):
@@ -116,9 +116,9 @@ def validate_specs(root: Path = ROOT) -> dict[str, Any]:
         frontmatter, body = parse_frontmatter(text)
         if not is_sdd_spec(path, frontmatter, body):
             continue
-        checked.append(str(path.relative_to(root)))
+        checked.append(path.relative_to(root).as_posix())
         for error in validate_sdd_spec(path):
-            errors.append(f"{path.relative_to(root)}: {error}")
+            errors.append(f"{path.relative_to(root).as_posix()}: {error}")
     return {"checked": checked, "errors": errors}
 
 

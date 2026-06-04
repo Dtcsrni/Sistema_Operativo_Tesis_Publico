@@ -61,6 +61,8 @@ def llamacpp_generate(*, base_url: str, model: str, prompt: str, timeout_seconds
         return False, "llamacpp_empty_choices"
     message = choices[0].get("message", {}) if isinstance(choices[0], dict) else {}
     content = str(message.get("content", "")).strip()
+    if not content:
+        content = str(message.get("reasoning_content", "")).strip()
     return (True, content) if content else (False, "llamacpp_empty_text")
 
 def openai_compatible_generate(
@@ -107,6 +109,8 @@ def openai_compatible_generate(
         return False, f"{provider_label}_empty_choices"
     message = choices[0].get("message", {}) if isinstance(choices[0], dict) else {}
     content = str(message.get("content", "")).strip()
+    if not content:
+        content = str(message.get("reasoning_content", "")).strip()
     return (True, content) if content else (False, f"{provider_label}_empty_text")
 
 def gemini_api_generate(
@@ -115,46 +119,9 @@ def gemini_api_generate(
     prompt: str,
     timeout_seconds: int = 60,
     model: str = "gemini-1.5-pro",
+    json_mode: bool = False,
 ) -> tuple[bool, str]:
-    endpoint = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
-    payload = json.dumps(
-        {
-            "contents": [{"parts": [{"text": prompt}]}],
-            "generationConfig": {
-                "temperature": 0.2,
-                "topK": 40,
-                "topP": 0.95,
-                "maxOutputTokens": 2048,
-            },
-        },
-        ensure_ascii=False,
-    ).encode("utf-8")
-    req = request.Request(endpoint, data=payload, method="POST")
-    req.add_header("Content-Type", "application/json")
-    try:
-        with request.urlopen(req, timeout=timeout_seconds) as response:
-            data = json.loads(response.read().decode("utf-8", errors="replace"))
-    except error.HTTPError as exc:
-        detail = exc.read().decode("utf-8", errors="replace") if hasattr(exc, "read") else str(exc)
-        return False, f"gemini_api_http_error:{detail[:220]}"
-    except Exception as exc:
-        return False, f"gemini_api_unavailable:{type(exc).__name__}:{exc}"
-
-    candidates = data.get("candidates", [])
-    if not candidates:
-        return False, f"gemini_api_empty_candidates:{data.get('promptFeedback', 'no_feedback')}"
-    
-    parts = candidates[0].get("content", {}).get("parts", [])
-    if not parts:
-        return False, "gemini_api_empty_parts"
-    text = "\n".join(
-        str(part.get("text", ""))
-        for part in parts
-        if isinstance(part, dict) and str(part.get("text", "")).strip()
-    ).strip()
-    if not text:
-        return False, "gemini_api_empty_text"
-    return True, text
+    return False, "gemini_api_disabled_by_local_first_policy"
     
 def warmup_chat_models(repo_root: Path) -> dict[str, Any]:
     if not _env_flag("OPENCLAW_MODEL_WARMUP_ON_START", default=True):

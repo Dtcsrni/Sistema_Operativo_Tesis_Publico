@@ -17,9 +17,10 @@ from datetime import datetime
 
 from common import ROOT, now_stamp
 
+import os
 DEFAULT_POLICY_PATH = ROOT / "00_sistema_tesis" / "config" / "backup_rotation_policy.json"
-BACKUP_DIR = ROOT / "config" / "backups"
-LOG_DIR = ROOT / "config" / "logs"
+BACKUP_DIR = Path(os.environ.get("TESIS_ROTATE_BACKUP_DIR", str(ROOT / "config" / "backups")))
+LOG_DIR = Path(os.environ.get("TESIS_ROTATE_LOG_DIR", str(ROOT / "config" / "logs")))
 BACKUP_NAME_PATTERN = re.compile(r"^(?P<stem>.+)\.(?P<stamp>\d{8}_\d{6})\.bak$")
 STAMP_FORMAT = "%Y%m%d_%H%M%S"
 RISK_ORDER = {"operativo": 0, "alto": 1, "critico": 2}

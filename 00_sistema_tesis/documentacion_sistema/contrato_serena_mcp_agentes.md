@@ -40,7 +40,7 @@ Definir a `serena-local` como contrato MCP común del proyecto para hosts extern
 28. `canon_apply_multi_change`
 29. `trace_append_operation`
 
-El host compatible con VS Code debe ver nombres con `_` en `tools/list`. Internamente el contrato canonico conserva nombres con punto (`context.fetch_compact`, `governance.preflight`, etc.) y el servidor acepta ambas formas en `tools/call`.
+Todo host MCP compatible debe ver nombres con `_` en `tools/list` cuando normalice nombres de herramientas. Internamente el contrato canonico conserva nombres con punto (`context.fetch_compact`, `governance.preflight`, etc.) y el servidor acepta ambas formas en `tools/call`.
 
 ## Requisitos mínimos de identidad y entorno
 - `SISTEMA_TESIS_ROOT`: raíz efectiva del repositorio.
@@ -51,23 +51,23 @@ El host compatible con VS Code debe ver nombres con `_` en `tools/list`. Interna
 - `SISTEMA_TESIS_AGENT_RUNTIME`
 
 ## Consumidores objetivo en esta fase
-- **Codex en VS Code:** integración MCP directa sobre host externo.
+- **Hosts agénticos locales:** Codex Desktop, Codex en VS Code, Antigravity, Antigravity IDE, Cursor, Continue, JetBrains, Copilot u otros clientes MCP pueden registrar directamente el servidor local o el bridge.
 - **OpenClaw:** adapter interno que consume el contrato MCP sin entrar al `provider_registry`.
-- **Hosts compatibles adicionales:** Copilot, Antigravity, Cursor, Continue, JetBrains u otros clientes MCP pueden reutilizar el mismo contrato sin requerir cambios de negocio en `serena_mcp.py`.
 - **Runtimes separados del IDE:** deben usar el bridge HTTP autenticado si no heredan el MCP del host.
 
 ## Frontera entre host y runtime
 
 - El contrato `serena-local` describe el servidor y sus herramientas, no garantiza que cualquier runtime de chat herede automaticamente el acceso del host.
-- VS Code puede descubrir el servidor por `.vscode/mcp.json`, iniciar el transporte configurado y presentar las tools en su UI.
-- Un runtime de chat separado solo podra invocarlo si soporta registrar MCP externos o si recibe un bridge que reexporte el servidor.
+- Cualquier host MCP puede descubrir el servidor mediante una configuracion equivalente a `docs/03_operacion/mcp-agent-host-template.json`, iniciar el transporte configurado y presentar las tools en su UI.
+- `.vscode/mcp.json` es una implementacion local de referencia, no la fuente unica de verdad.
+- Un runtime de chat separado solo podra invocarlo si soporta registrar MCP externos, si consume el bridge autenticado o si delega la invocacion al host que si expone el MCP.
 - `serena-local-py` se considera un alias operativo del host para `stdio`; no es un segundo contrato de negocio ni cambia `serverInfo.name`.
-- En el workspace actual (`2026-04-28`), `serena-local` es el unico perfil publicado y su disponibilidad operativa esperada se sostiene mediante autoarranque del task HTTP al abrir la carpeta.
-- En el estado actual del workspace (`2026-04-28`), `serena-local-py` no esta publicado en `.vscode/mcp.json`; su backend puede seguir sano localmente, pero eso no lo vuelve automaticamente disponible ni recomendado para los agentes del host activo.
+- En el workspace actual (`2026-06-02`), `serena-local` y los perfiles Docker MCP recomendados se describen en `docs/03_operacion/mcp-agent-host-template.json`.
+- En el estado actual del workspace (`2026-06-02`), `serena-local-py` queda como diagnostico por `stdio`; su backend puede seguir sano localmente, pero eso no lo vuelve automaticamente disponible ni recomendado para los agentes del host activo.
 - La politica operativa debe distinguir entre perfil expuesto y backend saludable: los agentes deben usar Serena a traves del perfil realmente publicado y recomendado por `check_serena_access.py`.
 - La verificacion operativa recomendada del repo es `python3 07_scripts/check_agent_context_tools.py --attempt-start-http --json`.
 - La verificacion del contrato multi-host es `python3 07_scripts/check_serena_multi_host_contract.py --json`.
-- Cuando un runtime externo necesite consumir Serena sin vivir dentro del host VS Code, la via oficial es el bridge HTTP autenticado en `runtime/serena_bridge/bin/serena_bridge.py`.
+- Cuando un runtime externo necesite consumir Serena sin compartir el localhost del host agéntico, la via oficial es el bridge HTTP autenticado en `runtime/serena_bridge/bin/serena_bridge.py`.
 
 ## Criterios E2E
 - El host descubre `serena-local`.
@@ -84,6 +84,7 @@ El host compatible con VS Code debe ver nombres con `_` en `tools/list`. Interna
 ## Referencias
 - `00_sistema_tesis/documentacion_sistema/operacion_serena_mcp_codex.md`
 - `docs/03_operacion/openclaw-workspace-local.md`
+- `docs/03_operacion/mcp-agent-host-template.json`
 - `docs/03_operacion/serena-mcp-host-template.json`
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

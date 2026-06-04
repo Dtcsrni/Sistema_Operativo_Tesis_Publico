@@ -16,7 +16,7 @@ except ImportError:
     sys.exit(1)
 
 # URL del gateway
-GATEWAY_URL = "ws://localhost:18789"
+GATEWAY_URL = "ws://localhost:18790"
 GATEWAY_TOKEN = "38fd7f653b48a66207f73cfd2d0d56fee2c362b7721026df"
 
 def dispatch_test_task():

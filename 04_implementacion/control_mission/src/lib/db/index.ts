@@ -40,15 +40,17 @@ export function getDb(): Database.Database {
     // This handles both new and existing databases
     runMigrations(db);
 
-    // Recover orphaned autopilot cycles from prior crash/restart
-    import('@/lib/autopilot/recovery').then(({ recoverOrphanedCycles }) =>
-      recoverOrphanedCycles().catch(err => console.warn('[Recovery] Failed:', err))
-    );
+    if (process.env.NODE_ENV !== 'test') {
+      // Recover orphaned autopilot cycles from prior crash/restart
+      import('@/lib/autopilot/recovery').then(({ recoverOrphanedCycles }) =>
+        recoverOrphanedCycles().catch(err => console.warn('[Recovery] Failed:', err))
+      );
 
-    // Keep Mission Control's agent catalog synced with OpenClaw-installed agents
-    ensureCatalogSyncScheduled();
-    // Task watchdog: monitor active tasks and auto-recover when stale
-    import('@/lib/task-watchdog').then(({ ensureTaskWatchdogScheduled }) => ensureTaskWatchdogScheduled());
+      // Keep Mission Control's agent catalog synced with OpenClaw-installed agents
+      ensureCatalogSyncScheduled();
+      // Task watchdog: monitor active tasks and auto-recover when stale
+      import('@/lib/task-watchdog').then(({ ensureTaskWatchdogScheduled }) => ensureTaskWatchdogScheduled());
+    }
     
     if (isNewDb) {
       console.log('[DB] New database created at:', DB_PATH);

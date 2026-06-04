@@ -24,4 +24,4 @@ Se han registrado **1 fragmentos** de conocimiento exitosamente.
 ---
 *Generado automáticamente por el Ingestor Toltecayotl.*
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

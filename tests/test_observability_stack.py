@@ -62,7 +62,7 @@ def test_bootstrap_and_smoke_install_observability_stack() -> None:
 
 def test_systemd_units_and_overrides_append_logs_and_bind_localhost() -> None:
     openclaw = (ROOT / "config/systemd/openclaw-gateway.service").read_text(encoding="utf-8")
-    edge = (ROOT / "config/systemd/edge-iot-worker.service").read_text(encoding="utf-8")
+    edge = (ROOT / "config/systemd/siot-edge.service").read_text(encoding="utf-8")
     health = (ROOT / "config/systemd/tesis-healthcheck.service").read_text(encoding="utf-8")
     backup = (ROOT / "config/systemd/tesis-backup.service").read_text(encoding="utf-8")
     collector = (ROOT / "config/systemd/tesis-observabilidad-collector.service").read_text(encoding="utf-8")
@@ -70,7 +70,7 @@ def test_systemd_units_and_overrides_append_logs_and_bind_localhost() -> None:
     node_override = (ROOT / "config/systemd-overrides/prometheus-node-exporter.service.d/override.conf").read_text(encoding="utf-8")
 
     assert "StandardOutput=append:/var/log/openclaw/openclaw-gateway.log" in openclaw
-    assert "StandardOutput=append:/var/log/edge-iot/edge-iot-worker.log" in edge
+    assert "StandardOutput=journal" in edge
     assert "StandardOutput=append:/var/log/tesis-os/tesis-healthcheck.log" in health
     assert "StandardOutput=append:/var/log/tesis-admin/tesis-backup.log" in backup
     assert "EnvironmentFile=/etc/tesis-os/observabilidad.env" in collector

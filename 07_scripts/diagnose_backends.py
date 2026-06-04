@@ -14,9 +14,9 @@ from urllib import request, error
 from collections import defaultdict
 
 # Configuración de backends desde env
-EDGE_BASE = os.getenv("OPENCLAW_EDGE_OLLAMA_BASE_URL", "http://127.0.0.1:11434")
-DESKTOP_RUNTIME_BASE = os.getenv("OPENCLAW_DESKTOP_RUNTIME_BASE", "http://127.0.0.1:8000")
-DESKTOP_COMPUTE_BASE = os.getenv("OPENCLAW_DESKTOP_COMPUTE_BASE_URL", "http://127.0.0.1:8001")
+EDGE_BASE = os.getenv("OPENCLAW_EDGE_INFERENCE_BASE_URL", os.getenv("OPENCLAW_EDGE_OLLAMA_BASE_URL", "http://127.0.0.1:8085/v1"))
+DESKTOP_RUNTIME_BASE = os.getenv("OPENCLAW_DESKTOP_RUNTIME_BASE_URL", os.getenv("OPENCLAW_DESKTOP_RUNTIME_BASE", "http://127.0.0.1:8085/v1"))
+DESKTOP_COMPUTE_BASE = os.getenv("OPENCLAW_DESKTOP_COMPUTE_BASE_URL", "http://127.0.0.1:8085/v1")
 
 print("\n" + "="*80)
 print("🔧 DIAGNÓSTICO DE BACKENDS - OpenClaw Telegram Bot")
@@ -25,7 +25,7 @@ print("="*80 + "\n")
 # 1. Verificar configuración
 print("1️⃣  CONFIGURACIÓN DE BACKENDS")
 print("-" * 80)
-print(f"  🌐 Edge (Ollama):            {EDGE_BASE}")
+print(f"  🌐 Edge (LlamaCPP):          {EDGE_BASE}")
 print(f"  💻 Desktop Runtime:          {DESKTOP_RUNTIME_BASE}")
 print(f"  💻 Desktop Compute:          {DESKTOP_COMPUTE_BASE}")
 print()
@@ -33,17 +33,17 @@ print()
 backends_to_check = {
     "edge": {
         "url": EDGE_BASE,
-        "endpoint": "/api/tags",
-        "type": "ollama"
+        "endpoint": "/models" if EDGE_BASE.rstrip("/").endswith("/v1") else "/v1/models",
+        "type": "openai_compat"
     },
     "desktop_runtime": {
         "url": DESKTOP_RUNTIME_BASE,
-        "endpoint": "/v1/models",
+        "endpoint": "/models" if DESKTOP_RUNTIME_BASE.rstrip("/").endswith("/v1") else "/v1/models",
         "type": "openai_compat"
     },
     "desktop_compute": {
         "url": DESKTOP_COMPUTE_BASE,
-        "endpoint": "/v1/models",
+        "endpoint": "/models" if DESKTOP_COMPUTE_BASE.rstrip("/").endswith("/v1") else "/v1/models",
         "type": "openai_compat"
     }
 }
@@ -168,28 +168,42 @@ print("\n\n5️⃣  PRUEBA DE INFERENCIA")
 print("-" * 80)
 
 if backend_status.get("edge", {}).get("ok"):
-    print("  Intentando inferencia en Edge (Ollama)...")
+    print("  Intentando inferencia en Edge (LlamaCPP)...")
     try:
+        # Usar formato compatible con API standard/llama.cpp
         payload = json.dumps({
-            "model": "qwen3:4b",
-            "prompt": "Responde en una frase: ¿Cuánto es 2+2?",
-            "stream": False
+            "model": os.getenv("OPENCLAW_TELEGRAM_EDGE_MODEL", "qwen3:4b"),
+            "messages": [{"role": "user", "content": "Responde en una frase: ¿Cuánto es 2+2?"}],
+            "max_tokens": 16,
+            "temperature": 0.2
         }).encode("utf-8")
-        
+
+        # Resolver endpoint correcto (/v1/chat/completions)
+        edge_url = EDGE_BASE.rstrip("/")
+        if not edge_url.endswith("/v1"):
+            edge_url += "/v1"
+        edge_url += "/chat/completions"
+
         req = request.Request(
-            EDGE_BASE.rstrip("/") + "/api/generate",
+            edge_url,
             data=payload,
             method="POST"
         )
         req.add_header("Content-Type", "application/json")
-        
+
         start = time.time()
         with request.urlopen(req, timeout=30) as resp:
             data = json.loads(resp.read().decode("utf-8"))
             latency = (time.time() - start) * 1000
-            result = data.get("response", "").strip()[:100]
+
+            # Parsear respuesta de inferencia compat
+            choices = data.get("choices") or []
+            result = ""
+            if choices and isinstance(choices[0], dict):
+                result = str((choices[0].get("message") or {}).get("content", "")).strip()
+
             print(f"  ✅ Respuesta recibida en {latency:.0f}ms")
-            print(f"     '{result}'")
+            print(f"     '{result[:100]}'")
     except Exception as e:
         print(f"  ❌ Error en inferencia: {type(e).__name__}: {e}")
 

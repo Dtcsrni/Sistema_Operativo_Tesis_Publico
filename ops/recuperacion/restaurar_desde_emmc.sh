@@ -31,9 +31,9 @@ done
 [ -n "${manifest_path}" ] || usage
 [ -f "${manifest_path}" ] || { echo "RESTORE_FAIL:manifest_missing"; exit 1; }
 
-bash /srv/tesis/repo/ops/respaldo/verificar_respaldos.sh "${manifest_path}" >/dev/null
+bash "$(dirname "$0")/../respaldo/verificar_respaldos.sh" "${manifest_path}" >/dev/null
 
-artifact_path="$(python3 - "$manifest_path" "$domain" "$TESIS_BACKUP_POLICY" <<'PY'
+artifact_path="$(python3 - "$manifest_path" "$domain" "$TESIS_BACKUP_POLICY" <<'PY' | tr -d '\r'
 import json, sys
 from pathlib import Path
 manifest = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
@@ -73,9 +73,9 @@ else
   exit 1
 fi
 
-tar -xzf "${artifact_path}" -C "${target}"
+tar --force-local -xzf "${artifact_path}" -C "${target}"
 
-validation_report="$(python3 - "$manifest_path" "$target" "$mode" <<'PY'
+validation_report="$(python3 - "$manifest_path" "$target" "$mode" <<'PY' | tr -d '\r'
 import json
 import sys
 from pathlib import Path
@@ -102,7 +102,7 @@ PY
 
 report_path="${report_root}/restore_${domain}_${mode}.json"
 printf '%s\n' "${validation_report}" > "${report_path}"
-status="$(python3 - "$report_path" <<'PY'
+status="$(python3 - "$report_path" <<'PY' | tr -d '\r'
 import json, sys
 from pathlib import Path
 print(json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))["status"])

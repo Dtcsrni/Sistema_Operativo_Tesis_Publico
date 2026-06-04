@@ -30,6 +30,15 @@ class BuildStep:
     skip_if: Callable[[], bool] | None = None
 
 
+def is_docker_down() -> bool:
+    import subprocess
+    try:
+        res = subprocess.run(["docker", "info"], capture_output=True, timeout=2)
+        return res.returncode != 0
+    except Exception:
+        return True
+
+
 # ── Registro completo de pasos ─────────────────────────────────────────────────
 # Orden es el orden de ejecución por defecto.
 # Las dependencias implícitas se garantizan por orden (ej. canon antes de audit).
@@ -290,6 +299,15 @@ STEPS: list[BuildStep] = [
 
     # ── Grupo: openclaw ───────────────────────────────────────────────────────
     BuildStep(
+        label="Ejecutar suite de pruebas (pytest)",
+        script="07_scripts/ops/run_tests_smart.py",
+        args=[],
+        group="openclaw",
+        tags=["openclaw", "test"],
+        watch=["runtime/**", "tests/**", "07_scripts/**"],
+        budget_s=15.0,
+    ),
+    BuildStep(
         label="Mantenimiento DB Mission Control",
         script="07_scripts/ops/db_maintenance.py",
         args=["04_implementacion/control_mission/mission-control.db", "--repair"],
@@ -313,6 +331,24 @@ STEPS: list[BuildStep] = [
         group="openclaw",
         tags=["openclaw", "tokens"],
         watch=["runtime/openclaw/**"],
+    ),
+
+    # ── Grupo: harness ───────────────────────────────────────────────────────
+    BuildStep(
+        label="Evaluar Harness Readiness SIOT",
+        script="07_scripts/harness/cli.py",
+        args=["verify", "--json"],
+        group="harness",
+        tags=["harness", "agents", "validate", "observability"],
+        watch=[
+            "07_scripts/harness/**",
+            "07_scripts/ops/run_tests_smart.py",
+            "07_scripts/build_runner/**",
+            "runtime/openclaw/**",
+            "04_implementacion/control_mission/**",
+            "00_sistema_tesis/config/**",
+        ],
+        budget_s=5.0,
     ),
 
     # ── Grupo: backups ────────────────────────────────────────────────────────
@@ -387,6 +423,7 @@ STEPS: list[BuildStep] = [
         group="infra",
         tags=["infra"],
         soft_fail=True,
+        skip_if=is_docker_down,
     ),
     BuildStep(
         label="Auditoría remota de Nodo Edge",

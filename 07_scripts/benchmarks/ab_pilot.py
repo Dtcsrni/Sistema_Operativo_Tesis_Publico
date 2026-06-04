@@ -26,7 +26,7 @@ DEFAULT_CSV_TEMPLATE_PATH = "00_sistema_tesis/plantillas/ab_pilot_tasks_template
 
 KNOWN_ROUTES = (
     "serena",
-    "ollama_local",
+    "edge_inference",
     "pc_native_llamacpp",
     "context7_docs",
     "github_models_free",
@@ -114,7 +114,7 @@ def default_plan_payload() -> dict[str, Any]:
                 "task_type": "resumen_capitulo",
                 "baseline_complexity": "media",
                 "serena": _default_route_payload(1800, 700, 0.045, 4200),
-                "ollama_local": _default_route_payload(700, 300, 0.0, 8500),
+                "edge_inference": _default_route_payload(700, 300, 0.0, 8500),
                 "wsl_native": _default_route_payload(1200, 450, 0.0, 2500),
             }
         ],
@@ -127,7 +127,7 @@ def default_csv_template_rows() -> list[dict[str, Any]]:
             "task_type": "documentacion",
             "baseline_complexity": "baja",
             **_default_csv_route("serena", 1200, 500, 0.032, 3000),
-            **_default_csv_route("ollama_local", 700, 280, 0.0, 8500),
+            **_default_csv_route("edge_inference", 700, 280, 0.0, 8500),
             **_default_csv_route("pc_native_llamacpp", 950, 420, 0.0, 4200),
             **_default_csv_route("context7_docs", 600, 250, 0.0, 2400),
             **_default_csv_route("github_models_free", 800, 320, 0.0, 4500),

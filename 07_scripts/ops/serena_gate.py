@@ -10,7 +10,28 @@ import sys
 from pathlib import Path
 
 
+def check_docker_daemon() -> bool:
+    try:
+        res = subprocess.run(["docker", "info"], capture_output=True, timeout=3)
+        return res.returncode == 0
+    except Exception:
+        return False
+
+
 def main() -> int:
+    # Verificar primero si Docker está activo para dar un error amigable
+    if not check_docker_daemon():
+        print("=" * 80, file=sys.stderr)
+        print("[ERROR] El motor de Docker (Docker Daemon) no está activo en este host.", file=sys.stderr)
+        print("        El stack de servicios de la tesis y Serena MCP requieren Docker.", file=sys.stderr)
+        print("-" * 80, file=sys.stderr)
+        print("Para solucionarlo:", file=sys.stderr)
+        print("  1. Inicie la aplicación Docker Desktop.", file=sys.stderr)
+        print("  2. O ejecute el Smart Launcher: python 07_scripts/ops/siot_launcher.py", file=sys.stderr)
+        print("  3. Si desea omitir este check en su build local, use: --no-serena-gate", file=sys.stderr)
+        print("=" * 80, file=sys.stderr)
+        return 2
+
     script = Path(__file__).resolve().parents[1] / "serena" / "check_serena_access.py"
     cmd = [sys.executable, str(script), "--json"]
     try:

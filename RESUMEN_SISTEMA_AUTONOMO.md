@@ -118,4 +118,4 @@ LLAMACPP_PATH= ruta local no pública  Files\llama.cpp (opcional)
 
 *Todas las mejoras están implementadas, documentadas y listas para validación humana.*
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

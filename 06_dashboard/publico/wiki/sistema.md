@@ -3,7 +3,7 @@
 Propósito, alcance, módulos, flujos e interacción del sistema operativo de tesis.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-05-15`
+- **Fecha:** `2026-06-04`
 - **Estado:** `OK`
 - **Fuentes:** `README_INICIO.md`, `00_sistema_tesis/manual_operacion_humana.md`, `00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`, `00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`, `00_sistema_tesis/documentacion_sistema/flujos_operativos.md`, `00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/publicacion.yaml`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -84,10 +84,10 @@ El Sistema Operativo de la Tesis es la capa de gobierno documental, tecnico y op
 
 ```mermaid
 graph LR
-    H[Tesista Humano] -- "Autoría / Validación" --> S[Sistema Operativo]
-    S -- "Gobernanza / Trazabilidad" --> T[Tesis IoT]
-    T -- "Evidencia Técnica" --> S
-    S -- "Proyección Pública" --> P[Evaluación Externa]
+    H[Tesista Humano] -->|"Autoría / Validación"| S[Sistema Operativo]
+    S -->|"Gobernanza / Trazabilidad"| T[Tesis IoT]
+    T -->|"Evidencia Técnica"| S
+    S -->|"Proyección Pública"| P[Evaluación Externa]
 ```
 
 No sustituye la tesis. Gobierna la tesis.
@@ -414,9 +414,9 @@ Objetivo: inspeccionar y recuperar el dominio `edge_iot` sin romper el aislamien
 
 Secuencia:
 
-1. Verificar `systemctl status edge-iot-worker.service` y `systemctl status edge-iot-watchdog.timer`.
+1. Verificar `systemctl status siot-edge.service` y `systemctl status edge-iot-watchdog.timer`.
 2. Revisar `bash /srv/tesis/repo/ops/edge/edge-iot-resilience.sh status`.
-3. Leer `edge-iot-worker.log`, `edge-iot-watchdog.log` y `edge-iot-resilience.log`.
+3. Leer logs del journal con `journalctl -u siot-edge.service`, y archivos `edge-iot-watchdog.log` y `edge-iot-resilience.log`.
 4. Si el dominio está en `degraded_offline`, revisar causa externa y esperar o forzar reintento según criterio humano.
 5. Si el dominio está en `quarantined`, corregir la causa y ejecutar limpieza explícita de cuarentena.
 
@@ -464,19 +464,20 @@ Salida esperada:
 - accesos cruzados bloqueados;
 - evidencia reproducible de enforcement real.
 
-### Flujo 11. Trabajar con Codex asistido por Serena MCP
+### Flujo 11. Trabajar con un agente asistido por Serena MCP
 
-Objetivo: operar tareas de tesis con contexto compacto y acciones auditables desde VS Code sin sustituir la validacion humana ni la via CLI.
+Objetivo: operar tareas de tesis con contexto compacto y acciones auditables desde cualquier host MCP compatible sin sustituir la validacion humana ni la via CLI.
 
 Secuencia:
 
 1. Abrir el repositorio en la raiz correcta del workspace.
-2. Recargar VS Code y confirmar que `serena-local` aparezca como servidor MCP activo.
-3. Usar `context.fetch_compact` para recuperar solo el contexto minimo necesario.
-4. Usar `governance.preflight` antes de preparar o aplicar cambios sobre canon o rutas protegidas.
-5. Usar `canon.prepare_change` para revisar diff, riesgo y requisitos antes de tocar la fuente canonica.
-6. Usar `canon.apply_controlled_change` solo con `VAL-STEP` valido y evidencia fuente corroborada cuando la politica lo exija.
-7. Ejecutar `python 07_scripts/build_all.py` despues de cambios relevantes.
+2. Registrar `docs/03_operacion/mcp-agent-host-template.json` o una configuracion equivalente en el host MCP.
+3. Recargar el host y confirmar que `serena-local` aparezca como servidor MCP activo.
+4. Usar `context.fetch_compact` para recuperar solo el contexto minimo necesario.
+5. Usar `governance.preflight` antes de preparar o aplicar cambios sobre canon o rutas protegidas.
+6. Usar `canon.prepare_change` para revisar diff, riesgo y requisitos antes de tocar la fuente canonica.
+7. Usar `canon.apply_controlled_change` solo con `VAL-STEP` valido y evidencia fuente corroborada cuando la politica lo exija.
+8. Ejecutar `python 07_scripts/build_all.py` despues de cambios relevantes.
 
 Salida esperada:
 
@@ -488,13 +489,13 @@ Referencia operativa: `00_sistema_tesis/documentacion_sistema/operacion_serena_m
 
 ### Flujo 12. Registrar Serena para un runtime externo
 
-Objetivo: exponer Serena como MCP HTTP autenticado para un host separado de VS Code sin duplicar reglas de negocio.
+Objetivo: exponer Serena como MCP HTTP autenticado para un runtime que no comparte el localhost del host agéntico sin duplicar reglas de negocio.
 
 Secuencia:
 
 1. Definir `SERENA_BRIDGE_BEARER_TOKEN` en el entorno del host.
 2. Arrancar `python runtime/serena_bridge/bin/serena_bridge.py`.
-3. Verificar con `python 07_scripts/check_serena_access.py` que el bridge sea alcanzable.
+3. Verificar con `python 07_scripts/serena/check_serena_access.py` que el bridge sea alcanzable.
 4. Registrar la URL del bridge en el host externo con auth `Bearer` y headers de identidad.
 5. Ejecutar `initialize`, `tools/list`, `context.fetch_compact` y `governance.preflight`.
 6. Confirmar que la traza MCP incluya identidad del host y `host_kind=external_runtime`.
@@ -658,24 +659,24 @@ Toda documentacion mejorada del sistema debe responder implicitamente a estas pr
 |hipotesis|00_sistema_tesis/config/hipotesis.yaml|sí|2026-03-23|
 |bloques|00_sistema_tesis/config/bloques.yaml|sí|2026-04-27|
 |dashboard|00_sistema_tesis/config/dashboard.yaml|sí|2026-03-24|
-|publicacion|00_sistema_tesis/config/publicacion.yaml|sí|2026-05-14|
+|publicacion|00_sistema_tesis/config/publicacion.yaml|sí|2026-05-15|
 |agent_identity|Identidad técnica no publicada por seguridad|sí|2026-03-26|
-|gobernanza_ia|00_sistema_tesis/config/ia_gobernanza.yaml|sí|2026-04-21|
+|gobernanza_ia|00_sistema_tesis/config/ia_gobernanza.yaml|sí|2026-05-21|
 |wiki|00_sistema_tesis/config/wiki.yaml|sí|2026-05-01|
-|manual_operacion_humana|00_sistema_tesis/manual_operacion_humana.md|sí|2026-05-06|
-|backlog|01_planeacion/backlog.csv|sí|2026-05-01|
+|manual_operacion_humana|00_sistema_tesis/manual_operacion_humana.md|sí|2026-06-03|
+|backlog|01_planeacion/backlog.csv|sí|2026-05-26|
 |riesgos|01_planeacion/riesgos.csv|sí|2026-03-26|
 |roadmap|01_planeacion/roadmap.csv|sí|2026-03-23|
 |entregables|01_planeacion/entregables.csv|sí|2026-04-14|
-|decisiones|00_sistema_tesis/decisiones|sí|2026-05-14|
-|bitacora|00_sistema_tesis/bitacora|sí|2026-05-15|
+|decisiones|00_sistema_tesis/decisiones|sí|2026-06-01|
+|bitacora|00_sistema_tesis/bitacora|sí|2026-06-04|
 |reportes_semanales|00_sistema_tesis/reportes_semanales|sí|2026-05-13|
-|dashboard_generado|06_dashboard/generado/index.html|sí|2026-05-15|
-|bundle_publico|06_dashboard/publico/index.md|sí|2026-05-14|
-|bundle_publico_manifest|06_dashboard/publico/manifest_publico.json|sí|2026-05-14|
-|wiki_markdown_generada|06_dashboard/wiki/index.md|sí|2026-05-07|
-|wiki_html_generada|06_dashboard/generado/wiki/index.html|sí|2026-05-07|
-|wiki_manifest_generado|06_dashboard/generado/wiki_manifest.json|sí|2026-05-07|
-|readme_portada_generado|README.md|sí|2026-05-06|
+|dashboard_generado|06_dashboard/generado/index.html|sí|2026-06-04|
+|bundle_publico|06_dashboard/publico/index.md|sí|2026-06-04|
+|bundle_publico_manifest|06_dashboard/publico/manifest_publico.json|sí|2026-06-04|
+|wiki_markdown_generada|06_dashboard/wiki/index.md|sí|2026-06-04|
+|wiki_html_generada|06_dashboard/generado/wiki/index.html|sí|2026-06-04|
+|wiki_manifest_generado|06_dashboard/generado/wiki_manifest.json|sí|2026-06-04|
+|readme_portada_generado|README.md|sí|2026-06-03|
 
-_Última actualización: `2026-05-14`._
+_Última actualización: `2026-06-03`._

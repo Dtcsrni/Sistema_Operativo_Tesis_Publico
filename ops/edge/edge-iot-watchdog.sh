@@ -25,7 +25,7 @@ if [ "${EDGE_IOT_QUARANTINE_UNTIL}" -gt 0 ] && ! edge_iot_quarantine_active; the
 fi
 
 service_active=0
-if systemctl is-active --quiet edge-iot-worker.service; then
+if systemctl is-active --quiet siot-edge.service; then
   service_active=1
 fi
 
@@ -47,7 +47,7 @@ if [ "${service_active}" -eq 0 ]; then
   edge_iot_record_failure "hard_failure_service_inactive"
   if [ "${EDGE_IOT_FAILURE_COUNT}" -gt "${EDGE_IOT_MAX_CONSECUTIVE_FAILURES}" ]; then
     edge_iot_enter_quarantine "hard_failure_limit_exceeded"
-    systemctl stop edge-iot-worker.service || true
+    systemctl stop siot-edge.service || true
     echo "EDGE_IOT_WATCHDOG_QUARANTINED"
     exit 0
   fi
@@ -55,7 +55,7 @@ if [ "${service_active}" -eq 0 ]; then
   edge_iot_set_state "recovering"
   edge_iot_log_event "warn" "watchdog_restart_hard_failure" "count=${EDGE_IOT_FAILURE_COUNT}"
   sleep "${EDGE_IOT_BACKOFF_SEC}"
-  systemctl restart edge-iot-worker.service
+  systemctl restart siot-edge.service
   echo "EDGE_IOT_WATCHDOG_RECOVERING_HARD"
   exit 0
 fi
@@ -68,14 +68,14 @@ edge_iot_log_event "warn" "watchdog_degraded_offline" "count=${EDGE_IOT_FAILURE_
 if [ "${EDGE_IOT_FAILURE_COUNT}" -ge "${EDGE_IOT_SOFT_FAILURE_RESTART_THRESHOLD}" ]; then
   if [ "${EDGE_IOT_FAILURE_COUNT}" -gt "${EDGE_IOT_MAX_CONSECUTIVE_FAILURES}" ]; then
     edge_iot_enter_quarantine "soft_failure_limit_exceeded"
-    systemctl stop edge-iot-worker.service || true
+    systemctl stop siot-edge.service || true
     echo "EDGE_IOT_WATCHDOG_QUARANTINED"
     exit 0
   fi
   EDGE_IOT_LAST_RECOVERY_AT="$(edge_iot_iso_now)"
   edge_iot_set_state "recovering"
   sleep "${EDGE_IOT_BACKOFF_SEC}"
-  systemctl restart edge-iot-worker.service
+  systemctl restart siot-edge.service
   edge_iot_log_event "warn" "watchdog_restart_soft_failure" "count=${EDGE_IOT_FAILURE_COUNT}"
   echo "EDGE_IOT_WATCHDOG_RECOVERING_SOFT"
   exit 0

@@ -14,7 +14,7 @@ python-telegram-bot~=21.0
 # Procesamiento de documentos (Token Economy)
 markitdown~=0.1.5
 pypdf~=4.1
-docling~=2.0  # Motor principal de alta fidelidad (IBM)
+# docling~=2.0  # Motor principal de alta fidelidad (IBM) (Comentado para optimizar tamaño e IO de imagen Docker)
 
 # Protocolo Matrix (canal secundario)
 matrix-nio~=0.21

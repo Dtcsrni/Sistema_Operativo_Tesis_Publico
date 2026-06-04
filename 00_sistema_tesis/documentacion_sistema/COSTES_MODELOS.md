@@ -86,4 +86,4 @@ Para aumentar cuotas: GCP Console → Vertex AI → Quotas & Limits → Request.
 
 ❌ **No uses Gemini directo sin revisar billing.**
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

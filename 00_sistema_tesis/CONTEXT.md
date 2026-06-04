@@ -138,4 +138,4 @@ Directorio con el contexto estructurado v09 del proyecto (`.md`, `.jsonl`, `.sql
 ### pendientes/
 Directorio de issues locales del sistema de triage (`00_sistema_tesis/pendientes/`). Gestionado por el skill `triage`.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

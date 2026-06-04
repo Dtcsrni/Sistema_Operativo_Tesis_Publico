@@ -6,10 +6,10 @@ El Sistema Operativo de la Tesis es la capa de gobierno documental, tecnico y op
 
 ```mermaid
 graph LR
-    H[Tesista Humano] -- "Autoría / Validación" --> S[Sistema Operativo]
-    S -- "Gobernanza / Trazabilidad" --> T[Tesis IoT]
-    T -- "Evidencia Técnica" --> S
-    S -- "Proyección Pública" --> P[Evaluación Externa]
+    H[Tesista Humano] -->|"Autoría / Validación"| S[Sistema Operativo]
+    S -->|"Gobernanza / Trazabilidad"| T[Tesis IoT]
+    T -->|"Evidencia Técnica"| S
+    S -->|"Proyección Pública"| P[Evaluación Externa]
 ```
 
 No sustituye la tesis. Gobierna la tesis.
@@ -73,4 +73,4 @@ El sistema debe describir:
 
 El sistema no debe describir como cerrado lo que en planeacion o decisiones siga pendiente de formalizacion tecnica profunda.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

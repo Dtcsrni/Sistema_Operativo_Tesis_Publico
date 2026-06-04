@@ -62,4 +62,4 @@ Se ha decidido unificar la funcionalidad de Jira en la rama principal (`main`) d
 [GOV]: AGENTS.md
 [AUD]: matriz_trazabilidad.md
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

@@ -2,4 +2,4 @@
 
 La plataforma debe capturar busquedas, inclusiones/exclusiones, contradicciones, vacios y efecto sobre decisiones del proyecto.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

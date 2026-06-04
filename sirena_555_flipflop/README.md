@@ -112,4 +112,4 @@ Estado tecnico: `EXPORTADO_SIN_APROBACION_HUMANA`.
 - PDF/SVG exportados y no vacios.
 - No se marca aprobacion humana autonoma.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

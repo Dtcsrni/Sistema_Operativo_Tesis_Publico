@@ -32,4 +32,10 @@ Se establece formalmente que la **Metodología Ágil** (fundamentada en el Manif
 - Toda la planificación futura, resolución de issues y desarrollo de skills debe abordarse desde una perspectiva iterativa.
 - Se mantendrá el rigor documental y de trazabilidad criptográfica, pero adaptado a ciclos rápidos y revisiones continuas.
 
-_Última actualización: `2026-05-15`._
+## Referencias
+
+[LID]:  ruta local no pública 
+[GOV]:  ruta local no pública 
+[AUD]:  ruta local no pública
+
+_Última actualización: `2026-06-03`._

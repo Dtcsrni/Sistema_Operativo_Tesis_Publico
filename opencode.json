@@ -5,7 +5,7 @@
       "npm": "@ai-sdk/openai-compatible",
       "name": "Ollama (local)",
       "options": {
-        "baseURL": "http://ollama-pc:11434/v1"
+        "baseURL": "http://inferencia-llamacpp:8080/v1"
       },
       "models": {
         "deepseek-r1:7b": {

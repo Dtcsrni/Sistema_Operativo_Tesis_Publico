@@ -62,4 +62,4 @@ with AdvancedProgressMonitor(chat_id, title, total_items=100) as monitor:
 ## Mantenimiento
 Para ajustar la estética de los iconos o el algoritmo de ETA, modificar directamente [`runtime/openclaw/openclaw_local/progress.py`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/_agents/runtime/openclaw/openclaw_local/progress.py).
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

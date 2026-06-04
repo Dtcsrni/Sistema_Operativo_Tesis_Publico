@@ -36,4 +36,4 @@
 2. Consolidar B2 con arquitectura propuesta y línea base.
 3. Traducir hipótesis a métricas y escenarios de prueba.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

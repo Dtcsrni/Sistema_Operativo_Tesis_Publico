@@ -28,13 +28,13 @@ def send_event(event_type, message, metadata=None):
         )
         with urllib.request.urlopen(req, timeout=5) as response:
             result = json.loads(response.read().decode('utf-8'))
-            print(f"✓ Evento enviado: {result['id']}")
+            print(f"[OK] Evento enviado: {result['id']}")
             return True
     except urllib.error.URLError as e:
-        print(f"✗ Error de conexión: {e}")
+        print(f"[FAIL] Error de conexión: {e}")
         return False
     except Exception as e:
-        print(f"✗ Error: {e}")
+        print(f"[FAIL] Error: {e}")
         return False
 
 def test_telemetry():
@@ -79,7 +79,7 @@ def test_telemetry():
         }
     )
     
-    print("\n[✓] Pruebas completadas. Verifica http://localhost:4000 para ver los eventos.")
+    print("\n[OK] Pruebas completadas. Verifica http://localhost:4000 para ver los eventos.")
 
 if __name__ == "__main__":
     test_telemetry()

@@ -38,7 +38,7 @@ Los subsistemas principales son:
 - publicación derivada y superficie pública;
 - tesis IoT como objeto gobernado por el sistema.
 
-## Principio operativo
+## Principio operativo: Operación humana y superficies
 
 - **superficie canónica no pública:** canon, backlog, decisiones, bitácora, auditoría y evidencia completa.
 - **Superficie pública:** bundle público curado en `06_dashboard/publico/`, derivado y no editable a mano.
@@ -71,6 +71,31 @@ Si retomas el proyecto o necesitas explicar el sistema desde cero:
 7. Si vas a preparar despliegue, revisa [`docs/02_arquitectura/arquitectura-general.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md), [`docs/02_arquitectura/topologia-de-almacenamiento.md`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/publico/NOTA_SEGURIDAD_Y_ACCESO.md) y `bootstrap/`.
 8. Si quieres diagnóstico inmediato, ejecuta `python 07_scripts/tesis.py status` y `python 07_scripts/tesis.py next`.
 9. Si vas a iniciar trabajo técnico con bajo ruido, ejecuta `python 07_scripts/check_agent_tooling.py`.
+
+## Arranque del stack local (OpenClaw + Servicios)
+
+Para levantar todos los servicios locales de una vez, ejecuta desde la raíz del repo:
+
+```powershell
+.\iniciar_servicios_locales.ps1
+```
+
+Este script:
+- Carga `.env` automáticamente (incluyendo `OPENCLAW_GEMINI_API_KEY`).
+- Libera los puertos `18789`, `8001`, `4000`, `8082` y `8765` si están ocupados.
+- Arranca en segundo plano: API de Persistencia PET (8001), Pasarela OpenClaw (18789), Serena MCP (8765), Dashboard de Observabilidad (8082) y Mission Control Next.js (4000).
+
+**Arranque automático en VS Code:** Al abrir el workspace, la tarea `🚀 Iniciar Stack Completo (OpenClaw)` se ejecuta automáticamente en background. Si necesitas relanzarla manualmente: `Terminal → Ejecutar tarea → 🚀 Iniciar Stack Completo (OpenClaw)`.
+
+| Puerto | Servicio |
+|--------|----------|
+| `4000` | Mission Control (chat, observabilidad) |
+| `8001` | API de Persistencia PET |
+| `8082` | Dashboard de Observabilidad |
+| `8765` | Serena MCP HTTP |
+| `18789` | Pasarela OpenClaw (Gateway) |
+
+
 
 ## Mapa de navegación y rastreo
 
@@ -184,4 +209,4 @@ No se corrigen manualmente los artefactos derivados. Se regeneran.
 - confirmación verbal corroborada con transcripción para `VAL-STEP` nuevos;
 - TDD para automatización, validadores y software nuevo.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

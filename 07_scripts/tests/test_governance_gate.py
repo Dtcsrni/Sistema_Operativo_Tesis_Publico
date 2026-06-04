@@ -165,9 +165,9 @@ class TestGovernanceGate(unittest.TestCase):
 
     def test_ci_checks_use_repo_preferred_python(self):
         checks = checks_for_stage("ci")
-        test_check = next(item for item in checks if item[0] == "Pruebas")
+        test_check = next(item for item in checks if item[0] == "Build total")
         self.assertEqual(test_check[1][0], preferred_python_executable())
-        self.assertEqual(test_check[1][1:], ["-m", "pytest", "-q", "-s"])
+        self.assertEqual(test_check[1][1:], ["07_scripts/build_all.py", "--fail-fast", "--force", "--no-serena-gate"])
 
     def test_ci_checks_include_public_downstream_verification(self):
         checks = checks_for_stage("ci")
@@ -181,7 +181,7 @@ class TestGovernanceGate(unittest.TestCase):
             checks = checks_for_stage("ci")
         labels = [item[0] for item in checks]
         self.assertNotIn("Verificar firma GPG", labels)
-        self.assertIn("Pruebas", labels)
+        self.assertIn("Build total", labels)
 
 if __name__ == "__main__":
     unittest.main()

@@ -16,7 +16,7 @@ services:
       WORKSPACE_BASE_PATH: /app/workspace
       PROJECTS_PATH: /app/workspace/projects
       NEXT_PUBLIC_PET_API_BASE_URL: ${NEXT_PUBLIC_PET_API_BASE_URL:-http://localhost:8001}
-      OPENCLAW_GATEWAY_URL: http://host.docker.internal:18789
+      OPENCLAW_GATEWAY_URL: http://host.docker.internal:18790
     volumes:
       - ./mission-control.db:/app/data/mission-control.db
       - mission-control-workspace:/app/workspace

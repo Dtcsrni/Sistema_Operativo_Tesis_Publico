@@ -458,4 +458,4 @@ Steps 1-4 are backend resilience. Steps 5-8 are the UI. They can be built in par
 2. **Activity log retention**: How long to keep entries? Recommendation: 30 days, with a cleanup cron.
 3. **Cost tracking granularity**: The current `recordCostEvent` uses `cost_usd: 0` (placeholder). Do we want to query OpenClaw for actual token usage per session? This is possible via `sessions.history` but adds complexity.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

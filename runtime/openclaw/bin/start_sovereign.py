@@ -15,7 +15,7 @@ def run_telegram_bot():
 def run_gateway_server():
     print("[INIT] Lanzando Hilo de Misiones (Pasarela Gateway)...")
     host = os.getenv("OPENCLAW_HOST", "0.0.0.0")
-    port = os.getenv("OPENCLAW_PORT", "18789")
+    port = os.getenv("OPENCLAW_PORT", "18790")
     
     env = os.environ.copy()
     env["PYTHONPATH"] = "/workspace/runtime/openclaw:/workspace"

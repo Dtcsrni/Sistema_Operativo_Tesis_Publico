@@ -23,7 +23,7 @@ ENV OPENCLAW_LOG_DIR=/app/runtime/openclaw/logs
 ENV PYTHONUNBUFFERED=1
 ENV OPENCODE_MODEL=deepseek-r1:7b
 ENV OPENCODE_PROVIDER=ollama
-ENV OPENCODE_BASE_URL=http://ollama-pc:11434/v1
+ENV OPENCODE_BASE_URL=http://inferencia-llamacpp:8080/v1
 ENV OPENCODE_CONFIG=/app/opencode.json
 
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=20s \

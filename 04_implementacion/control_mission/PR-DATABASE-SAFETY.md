@@ -78,4 +78,4 @@ No other files were modified.
 - **Upgraded databases with data:** Migration 013 now preserves data instead of silently wiping it
 - **Public API:** `runMigrations()` and `getMigrationStatus()` signatures unchanged
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

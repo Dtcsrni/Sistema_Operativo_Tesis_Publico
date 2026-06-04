@@ -110,4 +110,4 @@ curl -X POST http://localhost:4000/api/events `
 - Los eventos se guardan en BD aunque el UI no los muestre (SSE local limitation)
 - Verificar en BD: `sqlite3 mission-control.db "SELECT * FROM events LIMIT 5;"`
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

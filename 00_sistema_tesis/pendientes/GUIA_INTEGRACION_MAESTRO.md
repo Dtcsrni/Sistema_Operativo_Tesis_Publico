@@ -47,4 +47,4 @@ La Orange Pi permanece como asistente científico secundario operativo: estado, 
 
 Maestro no valida autónomamente. La activación por defecto y cualquier cierre canónico requieren Step ID humano y registro trazable en ledger/matriz.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

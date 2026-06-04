@@ -110,7 +110,7 @@ class TestABPilot(unittest.TestCase):
                       "task_id": "T-1",
                       "task_type": "documentacion",
                       "serena": {"input_tokens": 120, "output_tokens": 40, "cost_usd": 0.01, "latency_ms": 900, "accepted": true, "gate_failures": 0, "rework": false},
-                      "ollama_local": {"input_tokens": 80, "output_tokens": 30, "cost_usd": 0.0, "latency_ms": 1400, "accepted": true, "gate_failures": 0, "rework": false}
+                      "edge_inference": {"input_tokens": 80, "output_tokens": 30, "cost_usd": 0.0, "latency_ms": 1400, "accepted": true, "gate_failures": 0, "rework": false}
                     }
                   ]
                 }
@@ -127,8 +127,8 @@ class TestABPilot(unittest.TestCase):
                     context=ab_pilot.ExecutionContext(session_id="sesion-1", step_id="VAL-STEP-999", source_event_id="EVT-0001"),
                 )
 
-            self.assertEqual(report_payload["summary"]["winner"], "ollama_local")
-            self.assertIn("ollama_local", report_payload["summary"])
+            self.assertEqual(report_payload["summary"]["winner"], "edge_inference")
+            self.assertIn("edge_inference", report_payload["summary"])
             self.assertIn("serena", report_payload["summary"])
 
     def test_evaluate_plan_emits_trace(self):

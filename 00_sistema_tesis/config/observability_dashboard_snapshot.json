@@ -1,6 +1,6 @@
 {
   "schema_version": "siot-observability-dashboard-v1",
-  "generated_at": "2026-05-15T10:36:20+00:00",
+  "generated_at": "2026-06-04T04:44:07+00:00",
   "mode": "private",
   "access": {
     "private_lan": true,
@@ -11,7 +11,7 @@
   },
   "overall_status": "stale",
   "status_counts": {
-    "unknown": 23,
+    "unknown": 22,
     "stale": 2,
     "ok": 1
   },
@@ -42,8 +42,8 @@
         },
         "disk": {
           "total_bytes": 240055742464,
-          "used_bytes": 124045852672,
-          "free_bytes": 116009889792,
+          "used_bytes": 139360178176,
+          "free_bytes": 100695564288,
           "rootfs_device": "",
           "rootfs_fstype": "",
           "rootfs_on_nvme": false
@@ -76,7 +76,7 @@
       ],
       "status": "unknown",
       "services": [
-        "edge-iot-worker",
+        "siot-edge",
         "edge-iot-watchdog"
       ],
       "host": "tesis-edge",
@@ -90,7 +90,7 @@
       "type": "systemd_timer",
       "criticality": "media",
       "status": "unknown",
-      "last_check": "2026-05-15T10:36:12+00:00",
+      "last_check": "2026-06-04T04:44:03+00:00",
       "latency_ms": 0,
       "detail": "deep_host_probe_disabled",
       "diagnostic_request": {
@@ -110,7 +110,7 @@
       "type": "systemd_timer",
       "criticality": "alta",
       "status": "unknown",
-      "last_check": "2026-05-15T10:36:12+00:00",
+      "last_check": "2026-06-04T04:44:03+00:00",
       "latency_ms": 0,
       "detail": "deep_host_probe_disabled",
       "diagnostic_request": {
@@ -130,7 +130,7 @@
       "type": "systemd_timer",
       "criticality": "media",
       "status": "unknown",
-      "last_check": "2026-05-15T10:36:12+00:00",
+      "last_check": "2026-06-04T04:44:03+00:00",
       "latency_ms": 0,
       "detail": "deep_host_probe_disabled",
       "diagnostic_request": {
@@ -150,7 +150,7 @@
       "type": "systemd_service",
       "criticality": "opcional",
       "status": "unknown",
-      "last_check": "2026-05-15T10:36:12+00:00",
+      "last_check": "2026-06-04T04:44:03+00:00",
       "latency_ms": 0,
       "detail": "deep_host_probe_disabled",
       "diagnostic_request": {
@@ -170,7 +170,7 @@
       "type": "systemd_service",
       "criticality": "opcional",
       "status": "unknown",
-      "last_check": "2026-05-15T10:36:12+00:00",
+      "last_check": "2026-06-04T04:44:03+00:00",
       "latency_ms": 0,
       "detail": "deep_host_probe_disabled",
       "diagnostic_request": {
@@ -190,7 +190,7 @@
       "type": "runtime_local",
       "criticality": "experimental",
       "status": "unknown",
-      "last_check": "2026-05-15T10:36:12+00:00",
+      "last_check": "2026-06-04T04:44:03+00:00",
       "latency_ms": 0,
       "detail": "deep_host_probe_disabled",
       "diagnostic_request": {
@@ -205,18 +205,18 @@
       "source": "manifests/service_matrix.yaml"
     },
     {
-      "id": "edge-iot-worker",
+      "id": "siot-edge",
       "domain": "edge_iot",
       "type": "systemd_service",
       "criticality": "alta",
       "status": "unknown",
-      "last_check": "2026-05-15T10:36:12+00:00",
+      "last_check": "2026-06-04T04:44:03+00:00",
       "latency_ms": 0,
       "detail": "deep_host_probe_disabled",
       "diagnostic_request": {
         "orchestrator": "openclaw",
         "intent": "diagnose_service",
-        "service_id": "edge-iot-worker",
+        "service_id": "siot-edge",
         "requires_human_approval": true
       },
       "dependencies": [
@@ -230,7 +230,7 @@
       "type": "systemd_timer",
       "criticality": "alta",
       "status": "unknown",
-      "last_check": "2026-05-15T10:36:12+00:00",
+      "last_check": "2026-06-04T04:44:03+00:00",
       "latency_ms": 0,
       "detail": "deep_host_probe_disabled",
       "diagnostic_request": {
@@ -240,7 +240,7 @@
         "requires_human_approval": true
       },
       "dependencies": [
-        "edge-iot-worker"
+        "siot-edge"
       ],
       "source": "manifests/service_matrix.yaml"
     },
@@ -250,7 +250,7 @@
       "type": "systemd_service",
       "criticality": "media",
       "status": "unknown",
-      "last_check": "2026-05-15T10:36:12+00:00",
+      "last_check": "2026-06-04T04:44:03+00:00",
       "latency_ms": 0,
       "detail": "deep_host_probe_disabled",
       "diagnostic_request": {
@@ -270,7 +270,7 @@
       "type": "systemd_service",
       "criticality": "media",
       "status": "unknown",
-      "last_check": "2026-05-15T10:36:12+00:00",
+      "last_check": "2026-06-04T04:44:03+00:00",
       "latency_ms": 0,
       "detail": "deep_host_probe_disabled",
       "diagnostic_request": {
@@ -290,7 +290,7 @@
       "type": "systemd_timer",
       "criticality": "media",
       "status": "unknown",
-      "last_check": "2026-05-15T10:36:12+00:00",
+      "last_check": "2026-06-04T04:44:03+00:00",
       "latency_ms": 0,
       "detail": "deep_host_probe_disabled",
       "diagnostic_request": {
@@ -336,24 +336,11 @@
     {
       "id": "inferencia-llamacpp",
       "status": "unknown",
-      "image": "ghcr.io/ggerganov/llama.cpp:full",
+      "image": "ghcr.io/ggml-org/llama.cpp:server-cuda",
       "ports": [
         "8085:8080"
       ],
       "internal_port": "8080",
-      "depends_on": [],
-      "latency_ms": 0,
-      "detail": "sin puerto interno declarado",
-      "source": "docker-compose.yml"
-    },
-    {
-      "id": "servidor-contexto-serena",
-      "status": "unknown",
-      "image": "siot-serena-mcp:latest",
-      "ports": [
-        "8765:8765"
-      ],
-      "internal_port": "8765",
       "depends_on": [],
       "latency_ms": 0,
       "detail": "sin puerto interno declarado",
@@ -367,8 +354,7 @@
       "internal_port": "",
       "depends_on": [
         "db-vectorial-weaviate",
-        "inferencia-llamacpp",
-        "servidor-contexto-serena"
+        "inferencia-llamacpp"
       ],
       "latency_ms": 0,
       "detail": "sin puerto interno declarado",
@@ -448,8 +434,8 @@
   ],
   "runtime": {
     "orchestrator": "OpenClaw",
-    "state": "openclaw_ready",
-    "active_runtime": "local",
+    "state": "desktop_llamacpp_ready",
+    "active_runtime": "llamacpp_local",
     "openclaw_status": "ok",
     "serena_status": "down",
     "caveman_status": "degraded",
@@ -459,12 +445,12 @@
         "id": "desktop_compute",
         "label": "Desktop Compute",
         "probe": {
-          "status": "down",
-          "detail": "inferencia-llamacpp:8080 gaierror",
-          "latency_ms": 1268.766
+          "status": "ok",
+          "detail": "127.0.0.1:8085",
+          "latency_ms": 0.452
         },
         "source": "config/env/openclaw.env",
-        "status": "down"
+        "status": "ok"
       },
       {
         "id": "edge_ollama",
@@ -482,8 +468,8 @@
         "label": "Serena HTTP",
         "probe": {
           "status": "down",
-          "detail": "servidor-contexto-serena:8765 gaierror",
-          "latency_ms": 1270.334
+          "detail": "localhost:8765 TimeoutError",
+          "latency_ms": 2024.177
         },
         "source": "config/env/openclaw.env",
         "status": "down"
@@ -540,7 +526,7 @@
       "latest_run_id": "BENCH-20260505T034215Z-1e2c138c",
       "latest_validity": "valid_scientific_evidence",
       "latest_record_hash": "c9d72e929f1eb4776176360290bc0341c95e9e6046fad40a07679e62e63a5b3f",
-      "age_seconds": 888778,
+      "age_seconds": 2595645,
       "source": "runtime/pc_control/benchmarks/index.json"
     },
     {
@@ -549,7 +535,7 @@
       "latest_run_id": "BENCH-20260428T124603Z-94dfc28b",
       "latest_validity": "invalid_for_scientific_claim",
       "latest_record_hash": "48182fffcccea11eb7a1a2145213ca227bc30405016c641da9d6d9f0f0c4c3d8",
-      "age_seconds": 1401460,
+      "age_seconds": 3108328,
       "source": "runtime/edge_iot/benchmarks/index.json"
     }
   ],
@@ -557,7 +543,7 @@
     "status": "ok",
     "bundle_path": "06_dashboard/publico/",
     "manifest_exists": true,
-    "age_seconds": 1931,
+    "age_seconds": 194,
     "files": 0,
     "source": "06_dashboard/publico/manifest_publico.json"
   },
@@ -679,8 +665,8 @@
     {
       "path": "manifests/service_matrix.yaml",
       "exists": true,
-      "sha256": "6e48865d746da71396b79c3bc60944869b518bed0a453ef5815863fde68e5932",
-      "updated_at": "2026-04-12T06:58:52+00:00"
+      "sha256": "1cbbeee901b285788f1b051f48f459ec4b1bd59cce55b7f45ae58d98e8ee3072",
+      "updated_at": "2026-05-26T10:01:21+00:00"
     },
     {
       "path": "manifests/operational_topology.yaml",
@@ -697,8 +683,8 @@
     {
       "path": "00_sistema_tesis/config/openclaw_status.json",
       "exists": true,
-      "sha256": "8e2b8ba504640995d27379f656ac7360c5de6f72ba298fc0eb8e98555036c9a3",
-      "updated_at": "2026-05-15T07:25:40+00:00"
+      "sha256": "fc6758fddc4264238b21267ba67c408a9184c9fa4b74235d8399b75299ba2eed",
+      "updated_at": "2026-06-04T04:41:37+00:00"
     },
     {
       "path": "runtime/pc_control/benchmarks/index.json",
@@ -715,8 +701,8 @@
     {
       "path": "06_dashboard/publico/manifest_publico.json",
       "exists": true,
-      "sha256": "baa91aeed40be22a7959bdb8932ee1e8eeb73e71437b7e20cc919a781128ff36",
-      "updated_at": "2026-05-15T10:04:08+00:00"
+      "sha256": "4bc617bab3b85fc075f48d5a54466d71c7e4d5a38617c6f006dec7a982311b2a",
+      "updated_at": "2026-06-04T04:40:52+00:00"
     }
   ]
 }

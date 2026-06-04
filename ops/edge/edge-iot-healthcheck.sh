@@ -14,7 +14,7 @@ test -d "${EDGE_IOT_STATE_DIR}"
 test -d "${EDGE_IOT_RUNTIME_DIR}"
 test -f "${EDGE_IOT_STATE_DIR}/last_start.txt" || true
 
-if ! systemctl is-active --quiet edge-iot-worker.service; then
+if ! systemctl is-active --quiet siot-edge.service; then
   echo "EDGE_IOT_HEALTH_FAIL service_inactive"
   exit 1
 fi

@@ -153,7 +153,7 @@ def _run_model_battery(
     header = build_run_header(
         profile_id=profile_id,
         node=node,
-        runtime="ollama_local",
+        runtime="edge_inference",
         model=model,
         step_id=step_id,
         command="python3 07_scripts/benchmarks/run_moe_benchmark.py",

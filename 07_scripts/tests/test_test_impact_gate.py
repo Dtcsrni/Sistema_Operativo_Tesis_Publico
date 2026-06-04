@@ -40,6 +40,8 @@ class TestTestImpactGate(unittest.TestCase):
             second = gate.build_report(paths=["07_scripts/ops/agent_ops_core_gate.py"], history_path=history)
         self.assertEqual(second["redundancy_hint"], "previous_ok_same_impact")
         self.assertEqual(second["history_match"]["result_status"], "ok")
+        self.assertIn("impact_digest", second)
+        self.assertNotIn("impact_key", second)
 
     def test_mcp_contract_shape_not_available_by_default(self) -> None:
         report = gate.build_report(paths=["07_scripts/ops/test_impact_gate.py"])
@@ -52,6 +54,26 @@ class TestTestImpactGate(unittest.TestCase):
         self.assertEqual(report["changed_paths"], [])
         ids = {item["id"] for item in report["selected_commands"]}
         self.assertEqual(ids, {"agent_ops_core_gate_dry"})
+
+    def test_run_tests_smart_change_selects_build_contracts(self) -> None:
+        report = gate.build_report(paths=["07_scripts/ops/run_tests_smart.py"])
+        ids = {item["id"] for item in report["selected_commands"]}
+        self.assertIn("build_all_contract", ids)
+
+    def test_manifest_change_selects_manifest_contracts(self) -> None:
+        report = gate.build_report(paths=["manifests/b0_external_gates.yaml"])
+        ids = {item["id"] for item in report["selected_commands"]}
+        self.assertIn("manifest_contracts", ids)
+
+    def test_mcp_doc_change_selects_multi_host_contract(self) -> None:
+        report = gate.build_report(paths=["docs/03_operacion/mcp-agent-host-template.json"])
+        ids = {item["id"] for item in report["selected_commands"]}
+        self.assertIn("mcp_multi_host_contract", ids)
+
+    def test_unknown_existing_change_gets_smoke_minimum(self) -> None:
+        report = gate.build_report(paths=["README.md"])
+        ids = {item["id"] for item in report["selected_commands"]}
+        self.assertEqual(ids, {"agile_smoke_minimum"})
 
 
 if __name__ == "__main__":

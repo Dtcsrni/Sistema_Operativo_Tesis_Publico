@@ -53,11 +53,15 @@ def transcribe_audio(
     language: str = "es",
     timeout_seconds: int = 60,
 ) -> dict[str, Any]:
-    provider = os.getenv("OPENCLAW_TELEGRAM_STT_PROVIDER", "openai").strip().lower()
+    provider = os.getenv("OPENCLAW_TELEGRAM_STT_PROVIDER", "disabled").strip().lower()
+    if provider in {"", "disabled", "none", "local"}:
+        return {"status": "error", "error": f"stt_provider_disabled:{provider or 'unset'}"}
+    if provider == "openai":
+        return {"status": "error", "error": "openai_stt_disabled_by_local_first_policy"}
     if provider != "openai":
         return {"status": "error", "error": f"stt_provider_not_supported:{provider}"}
 
-    api_key = os.getenv("OPENAI_API_KEY", "").strip()
+    api_key = ""
     if not api_key:
         return {"status": "error", "error": "openai_api_key_missing"}
 
@@ -78,7 +82,7 @@ def transcribe_audio(
         }
     }
     body, content_type = _encode_multipart_form_data(fields=fields, files=files)
-    req = request.Request("https://api.openai.com/v1/audio/transcriptions", data=body, method="POST")
+    req = request.Request("http://127.0.0.1:0/disabled", data=body, method="POST")
     req.add_header("Authorization", f"Bearer {api_key}")
     req.add_header("Content-Type", content_type)
 
@@ -109,11 +113,15 @@ def synthesize_speech(
     target_dir: Path,
     timeout_seconds: int = 60,
 ) -> dict[str, Any]:
-    provider = os.getenv("OPENCLAW_TELEGRAM_TTS_PROVIDER", "openai").strip().lower()
+    provider = os.getenv("OPENCLAW_TELEGRAM_TTS_PROVIDER", "disabled").strip().lower()
+    if provider in {"", "disabled", "none", "local"}:
+        return {"status": "error", "error": f"tts_provider_disabled:{provider or 'unset'}"}
+    if provider == "openai":
+        return {"status": "error", "error": "openai_tts_disabled_by_local_first_policy"}
     if provider != "openai":
         return {"status": "error", "error": f"tts_provider_not_supported:{provider}"}
 
-    api_key = os.getenv("OPENAI_API_KEY", "").strip()
+    api_key = ""
     if not api_key:
         return {"status": "error", "error": "openai_api_key_missing"}
 
@@ -126,7 +134,7 @@ def synthesize_speech(
     target_dir.mkdir(parents=True, exist_ok=True)
     output_path = target_dir / f"tts_{uuid4().hex[:12]}.mp3"
     payload = json.dumps({"model": model, "voice": voice, "format": "mp3", "input": clipped}, ensure_ascii=False).encode("utf-8")
-    req = request.Request("https://api.openai.com/v1/audio/speech", data=payload, method="POST")
+    req = request.Request("http://127.0.0.1:0/disabled", data=payload, method="POST")
     req.add_header("Authorization", f"Bearer {api_key}")
     req.add_header("Content-Type", "application/json")
 

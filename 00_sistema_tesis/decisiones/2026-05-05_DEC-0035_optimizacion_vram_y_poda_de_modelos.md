@@ -44,4 +44,4 @@ Se procede a la "Poda Tecnológica" de los siguientes modelos y sus artefactos r
 [GOV]: AGENTS.md
 [AUD]: build_all.py
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

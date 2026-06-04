@@ -3,7 +3,7 @@
 Registro de decisiones de arquitectura, método y operación.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-05-15`
+- **Fecha:** `2026-06-04`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/decisiones`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -48,6 +48,11 @@ Registro de decisiones de arquitectura, método y operación.
 
 ## Decisiones registradas
 
+- `2026-06-01` [DEC-0048: Adopción de Harness Engineering Agnóstico](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-06-01_DEC-0048_adopcion_harness_engineering_agnostico.md)
+- `2026-05-29` [Contexto y Problema](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-29_DEC-0047_desacoplamiento_serena_mcp_del_siot.md)
+- `2026-05-21` [DEC-0046: Principio de Arquitectura Abierta, Auto-Descubrimiento Seguro y Viabilidad Comercial](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-21_DEC-0046_arquitectura_abierta_autodescubrimiento_viabilidad_comercial.md)
+- `2026-05-15` [Contexto y Problema](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-15_DEC-0045_migracion_infraestructura_docker_total.md)
+- `2026-05-15` [Contexto y Problema](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-15_DEC-0044_adopcion_metodologia_agil.md)
 - `2026-05-13` [DEC-0043: IntegraciÃ³n de Jira en el Centro de Control de Misiones](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-13_DEC-0043_integracion_jira_control_misiones.md)
 - `2026-05-08` [DEC-0042: Políticas de Estandarización y Calidad Agnóstica (FRE/PVC)](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-08_DEC-0042_politicas_de_estandarizacion_y_calidad_agnostica.md)
 - `2026-05-08` [DEC-0041: Motor de Calidad Toltecayotl (MCT) - Evaluación de Calidad Epistémica](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-08_DEC-0041_motor_de_evaluacion_de_calidad_epistemica.md)
@@ -89,4 +94,4 @@ Registro de decisiones de arquitectura, método y operación.
 - `2026-03-23` [DEC-0002 Gobernanza de IA instrumental y registro de uso](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-23_DEC-0002_gobernanza_ia_instrumental.md)
 - `2026-03-23` [DEC-0001 Arquitectura base del sistema operativo de tesis](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-23_DEC-0001_arquitectura_sistema_tesis.md)
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

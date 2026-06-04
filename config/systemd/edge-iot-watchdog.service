@@ -1,16 +1,16 @@
 [Unit]
-Description=Watchdog híbrido del dominio edge_iot
-After=edge-iot-worker.service
-Wants=edge-iot-worker.service
+Description=Watchdog híbrido del dominio edge_iot (T-034)
+After=siot-edge.service
+Wants=siot-edge.service
 ConditionPathExists=/srv/tesis/repo/ops/edge/edge-iot-watchdog.sh
 
 [Service]
 Type=oneshot
-EnvironmentFile=/etc/tesis-os/edge-iot.env
+EnvironmentFile=/srv/tesis/repo/config/env/domains/edge.env
 ExecStart=/bin/bash -lc '/srv/tesis/repo/ops/edge/edge-iot-watchdog.sh'
-User=edgeiot
-Group=edgeiot
-WorkingDirectory=/srv/tesis/workspace/edge
+User=edge_ops
+Group=docker
+WorkingDirectory=/srv/tesis/repo
 NoNewPrivileges=yes
 PrivateTmp=yes
 ProtectSystem=strict
@@ -19,7 +19,7 @@ ProtectControlGroups=yes
 ProtectKernelTunables=yes
 ProtectKernelModules=yes
 RestrictAddressFamilies=AF_UNIX
-ReadOnlyPaths=/srv/tesis/repo /etc/tesis-os/edge-iot.env
-ReadWritePaths=/var/lib/edge-iot /var/log/edge-iot /srv/tesis/workspace/edge /srv/tesis/intercambio/edge
+ReadOnlyPaths=/srv/tesis/repo
+ReadWritePaths=/var/lib/edge-iot /var/log/edge-iot /var/run/docker.sock
 StandardOutput=append:/var/log/edge-iot/edge-iot-watchdog.log
 StandardError=append:/var/log/edge-iot/edge-iot-watchdog.log

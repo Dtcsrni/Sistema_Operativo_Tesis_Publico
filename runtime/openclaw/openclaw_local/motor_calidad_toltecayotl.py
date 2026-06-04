@@ -12,14 +12,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-# Importar utilidades de inferencia y persona
+# Importar utilidades locales y persona
 try:
-    from .inference import gemini_api_generate
     from .persona import build_system_block
     from .epistemic import sha256_text
 except ImportError:
     # Fallback para ejecución fuera del paquete
-    def gemini_api_generate(*args, **kwargs): return False, "error_import", "unknown"
     def build_system_block(*args, **kwargs): return "Sistema de Calidad"
     def sha256_text(t): return "hash_placeholder"
 
@@ -54,8 +52,7 @@ class MotorDeCalidadToltecayotl:
         import os
         self.directorio_de_logs = Path(directorio_de_logs)
         self.directorio_de_logs.mkdir(parents=True, exist_ok=True)
-        self.modelo_juez = "gemini-3-flash-preview"
-        self.api_key = os.getenv("OPENCLAW_GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY", "")
+        self.modelo_juez = os.getenv("OPENCLAW_MCT_LOCAL_JUDGE_MODEL", "heuristica_local_toltecayotl_v1").strip() or "heuristica_local_toltecayotl_v1"
 
     def evaluar_respuesta(
         self,
@@ -75,15 +72,17 @@ class MotorDeCalidadToltecayotl:
         
         if not juez_ok:
             logger.error("Fallo en la ejecución del juez de calidad Toltecayotl.")
-            return self._crear_informe_de_error(id_de_solicitud, "Fallo en el juez de calidad")
+            informe_error = self._crear_informe_de_error(id_de_solicitud, "Fallo en el juez de calidad")
+            self._guardar_informe(informe_error)
+            return informe_error
 
         # 2. Analizar Citaciones y Testimonios (Heurística Local)
         datos_de_citacion = self._analizar_testimonios_y_citas(respuesta_ia, contexto_fuente)
         
         # 3. Consolidar Informe de Calidad
         try:
-            auditoria = json.loads(datos_del_juez)
-        except:
+            auditoria = json.loads(self._extraer_json(datos_del_juez))
+        except Exception:
             auditoria = {"fidelidad": 0.5, "logica": 0.5, "hallazgos": ["Error parseando JSON del juez"]}
 
         fidelidad = auditoria.get("fidelidad", 0.0)
@@ -112,53 +111,65 @@ class MotorDeCalidadToltecayotl:
         return informe
 
     def _ejecutar_auditoria_juez(self, prompt: str, contexto: str, respuesta: str) -> Tuple[bool, str, str]:
-        """Ejecuta el prompt de auditoría en Gemini 3 Flash con parámetros deterministas."""
-        instrucciones_auditor = f"""
-        ACTÚA COMO UN AUDITOR ACADÉMICO MEXICANO DE ALTO NIVEL.
-        Tu tarea es evaluar la fidelidad de una respuesta de IA frente al contexto de la tesis Toltecayotl.
-        
-        CONTEXTO DE INVESTIGACIÓN:
-        {contexto[:12000]}
-        
-        INSTRUCCIÓN ORIGINAL:
-        {prompt}
-        
-        RESPUESTA A EVALUAR:
-        {respuesta}
-        
-        REGLAS DE EVALUACIÓN:
-        1. La 'fidelidad' mide si la IA inventó datos o se mantuvo estrictamente en el contexto.
-        2. La 'logica' mide la coherencia del razonamiento paso a paso.
-        3. Identifica 'hallazgos' específicos de inconsistencias o aciertos técnicos.
-
-        RESPONDE ÚNICAMENTE EN FORMATO JSON CON ESTA ESTRUCTURA (ESPAÑOL MEXICANO):
-        {{
-          "fidelidad": 0.0-1.0,
-          "logica": 0.0-1.0,
-          "hallazgos": ["hallazgo 1", "hallazgo 2"],
-          "es_valido": true/false
-        }}
-        """
-        
-        return gemini_api_generate(
-            api_key=self.api_key,
-            prompt=instrucciones_auditor,
-            model=self.modelo_juez,
-            timeout_seconds=45
-        )
+        """Ejecuta auditoría local conservadora, sin Gemini ni servicios cloud."""
+        contexto_lower = contexto.lower()
+        respuesta_lower = respuesta.lower()
+        terminos_contexto = {
+            token
+            for token in contexto_lower.replace("\n", " ").split()
+            if len(token) >= 6
+        }
+        terminos_respuesta = {
+            token
+            for token in respuesta_lower.replace("\n", " ").split()
+            if len(token) >= 6
+        }
+        cobertura = len(terminos_contexto & terminos_respuesta) / max(len(terminos_contexto), 1)
+        fidelidad = min(1.0, max(0.2, cobertura * 3.0))
+        logica = 0.8 if len(respuesta.strip()) >= 120 else 0.5
+        hallazgos = [
+            "Auditoria local heuristica; no usa Gemini ni cloud pagado.",
+            f"Cobertura lexica contexto-respuesta={cobertura:.3f}.",
+        ]
+        if fidelidad < 0.75:
+            hallazgos.append("Cobertura baja; requiere revision humana.")
+        payload = {
+            "fidelidad": round(fidelidad, 3),
+            "logica": round(logica, 3),
+            "hallazgos": hallazgos,
+            "es_valido": fidelidad >= 0.75,
+        }
+        return True, json.dumps(payload, ensure_ascii=False), self.modelo_juez
 
     def _analizar_testimonios_y_citas(self, respuesta: str, contexto: str) -> Dict[str, Any]:
         """Analiza la densidad de evidencia fáctica y citaciones en el texto."""
         import re
         citaciones = re.findall(r'\[[a-zA-Z0-9_-]{3,}\]', respuesta)
+        citas_disponibles = re.findall(r'\[[a-zA-Z0-9_-]{3,}\]', contexto)
         conteo_afirmaciones = len([s for s in respuesta.split('.') if len(s.strip()) > 20])
-        densidad = len(citaciones) / max(conteo_afirmaciones, 1)
+        if not citas_disponibles:
+            densidad = 1.0
+        else:
+            densidad = len(citaciones) / max(conteo_afirmaciones, 1)
         
         return {
             "total_citas": len(citaciones),
             "densidad": round(densidad, 3),
             "formato_valido": True
         }
+
+    def _extraer_json(self, texto: str) -> str:
+        """Extrae JSON aun si el juez lo envuelve en Markdown o texto auxiliar."""
+        import re
+        texto = texto.strip()
+        bloque = re.search(r"```(?:json)?\s*(.*?)\s*```", texto, re.DOTALL | re.IGNORECASE)
+        if bloque:
+            return bloque.group(1).strip()
+        inicio = texto.find("{")
+        fin = texto.rfind("}")
+        if inicio != -1 and fin != -1 and fin > inicio:
+            return texto[inicio : fin + 1]
+        return texto
 
     def _guardar_informe(self, informe: InformeDeCalidadToltecayotl):
         """Persiste el informe en el log diario de calidad."""

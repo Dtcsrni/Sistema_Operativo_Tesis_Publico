@@ -36,7 +36,7 @@ def test_openclaw_doctor_reports_domains_and_store(tmp_path: Path) -> None:
     env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
     env["OPENCLAW_FORCE_ORANGE_PI_MODEL"] = "Orange Pi 5 Plus"
     env["OPENCLAW_FORCE_ROOT_DEVICE"] = "/dev/nvme0n1p1"
-    env["OPENCLAW_FORCE_OLLAMA_READY"] = "1"
+    env["OPENCLAW_FORCE_EDGE_READY"] = "1"
     Path(env["OPENCLAW_CACHE_DIR"]).mkdir()
     Path(env["OPENCLAW_LOG_DIR"]).mkdir()
     Path(env["OPENCLAW_ENV_FILE"]).write_text("OPENCLAW_PORT=18789\n", encoding="utf-8")
@@ -51,7 +51,7 @@ def test_openclaw_doctor_reports_domains_and_store(tmp_path: Path) -> None:
 
     payload = json.loads(result.stdout)
     assert payload["status"] == "ok"
-    assert payload["deployment_state"] in {"ollama_ready", "npu_experimental_ready"}
+    assert payload["deployment_state"] in {"edge_inference_ready", "npu_experimental_ready"}
     assert "academico" in payload["domains"]
     assert "local" in payload["proveedores"]
     assert payload["store"]["db_path"].endswith("openclaw.db")
@@ -87,6 +87,7 @@ def test_openclaw_web_session_login_requires_gui_or_x11_forwarding(tmp_path: Pat
     env["OPENCLAW_WEB_SESSION_USER_DATA_DIR"] = str(tmp_path / "web-session-profile")
     env.pop("DISPLAY", None)
     env.pop("WAYLAND_DISPLAY", None)
+    env["OPENCLAW_FORCE_NO_GUI"] = "1"
 
     result = subprocess.run(
         [PYTHON_BIN, str(CLI), "sesion-web", "login", "--timeout", "5"],
@@ -282,7 +283,7 @@ def test_openclaw_run_dry_run_creates_approval_for_mutation(tmp_path: Path) -> N
     assert payload["dry_run"] is True
     assert payload["decision"]["requires_human_gate"] is True
     assert payload["approval_id"].startswith("APR-")
-    assert payload["decision"]["provider"] == "desktop_compute"
+    assert payload["decision"]["provider"] == "llamacpp_local"
     if payload["serena"]["status"] != "ok":
         print(f"\nSERENA FAILURE IN {payload['task']['task_id']}: {payload['serena'].get('error')}")
         print(f"SERENA HEALTH: {payload['serena'].get('healthcheck')}")
@@ -770,7 +771,7 @@ def test_openclaw_provider_status_and_benchmark_reflect_local_runtimes(tmp_path:
     env["OPENCLAW_LOG_DIR"] = str(tmp_path / "log")
     env["OPENCLAW_ENV_FILE"] = str(tmp_path / "openclaw.env")
     env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
-    env["OPENCLAW_FORCE_OLLAMA_READY"] = "1"
+    env["OPENCLAW_FORCE_EDGE_READY"] = "1"
     env["OPENCLAW_FORCE_NPU_READY"] = "1"
     env["OPENCLAW_BENCHMARK_SIMULATION"] = "1"
     Path(env["OPENCLAW_CACHE_DIR"]).mkdir(parents=True)
@@ -798,8 +799,8 @@ def test_openclaw_provider_status_and_benchmark_reflect_local_runtimes(tmp_path:
     benchmark_payload = json.loads(benchmark.stdout)
 
     assert status_payload["runtime_status"]["state"] == "npu_experimental_ready"
-    assert benchmark_payload["active_runtime"] == "ollama_local"
-    assert benchmark_payload["recommended_runtime"] == "ollama_local"
+    assert benchmark_payload["active_runtime"] == "edge_inference"
+    assert benchmark_payload["recommended_runtime"] == "edge_inference"
     assert status_payload["secretos"]["domains"]["profesional"]["providers"]["groq_api"]["status"] == "ready"
 
 
@@ -810,7 +811,7 @@ def test_openclaw_provider_benchmark_can_promote_npu_only_when_enabled(tmp_path:
     env["OPENCLAW_LOG_DIR"] = str(tmp_path / "log")
     env["OPENCLAW_ENV_FILE"] = str(tmp_path / "openclaw.env")
     env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
-    env["OPENCLAW_FORCE_OLLAMA_READY"] = "1"
+    env["OPENCLAW_FORCE_EDGE_READY"] = "1"
     env["OPENCLAW_FORCE_NPU_READY"] = "1"
     env["OPENCLAW_BENCHMARK_SIMULATION"] = "1"
     env["OPENCLAW_NPU_AUTO_PROMOTE"] = "1"
@@ -829,7 +830,7 @@ def test_openclaw_provider_benchmark_can_promote_npu_only_when_enabled(tmp_path:
 
     benchmark_payload = json.loads(benchmark.stdout)
 
-    assert benchmark_payload["active_runtime"] == "ollama_local"
+    assert benchmark_payload["active_runtime"] == "edge_inference"
     assert benchmark_payload["recommended_runtime"] == "rknn_llm_experimental"
 
 
@@ -921,7 +922,7 @@ def test_openclaw_diagnostico_medir_persists_node_report(tmp_path: Path) -> None
     env["OPENCLAW_DATA_DIR"] = str(tmp_path / "openclaw")
     env["OPENCLAW_DOMAINS_ENV_DIR"] = str(_write_domain_envs(tmp_path))
     env["OPENCLAW_BENCHMARK_SIMULATION"] = "1"
-    env["OPENCLAW_FORCE_OLLAMA_READY"] = "1"
+    env["OPENCLAW_FORCE_EDGE_READY"] = "1"
 
     result = subprocess.run(
         [PYTHON_BIN, str(CLI), "diagnostico", "medir", "--node", "tesis-edge"],

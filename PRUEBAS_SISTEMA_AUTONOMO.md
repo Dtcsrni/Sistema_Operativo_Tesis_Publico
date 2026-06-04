@@ -259,4 +259,4 @@ python 07_scripts/diagnose_backends.py
 
 *Ejecutar estos tests y confirmar todos los criterios de aceptación antes de marcar como completado.*
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

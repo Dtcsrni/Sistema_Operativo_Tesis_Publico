@@ -119,7 +119,7 @@ SERVICE_CONTROL_ALLOWLIST = {
     "tunnel": "openclaw-desktop-tunnel.service",
 }
 PC_INFERENCE_PROVIDERS = {"desktop_compute", "pc_native_llamacpp", "llamacpp_local", "external_llm_router", "openrouter_remote"}
-CLOUD_API_CHAT_PROVIDERS = {"gemini_api", "gemini_vertex_flash_3"}
+CLOUD_API_CHAT_PROVIDERS: set[str] = set()
 EDGE_INFERENCE_PROVIDERS = {"edge_inference", "rknn_llm_experimental"}
 DEFAULT_BLOCKED_CHAT_MODELS = {"mistral", "mistral-nemo", "mistral-nemo:12b"}
 
@@ -768,18 +768,13 @@ def warmup_chat_models(repo_root: Path) -> dict[str, Any]:
 
     edge_base = os.getenv("OPENCLAW_EDGE_INFERENCE_BASE_URL", os.getenv("OPENCLAW_EDGE_OLLAMA_BASE_URL", "http://127.0.0.1:11434"))
     desktop_base = os.getenv("OPENCLAW_DESKTOP_COMPUTE_BASE_URL", "http://127.0.0.1:21434")
-    gemini_enabled = _env_flag("OPENCLAW_GEMINI_ENABLED", default=False) or _env_flag("OPENCLAW_CLOUD_PROVIDERS_ENABLED", default=False)
-    gemini_model = os.getenv("OPENCLAW_GEMINI_MODEL", "gemini-2.5-flash").strip() or "gemini-2.5-flash"
     edge_models = _csv_env("OPENCLAW_WARMUP_MODELS", os.getenv("OPENCLAW_TELEGRAM_EDGE_MODEL", "qwen3:4b"))
     desktop_models = _csv_env("OPENCLAW_DESKTOP_WARMUP_MODELS", os.getenv("OPENCLAW_DESKTOP_COMPUTE_MODEL", "mistral-nemo:12b"))
     timeout_seconds = _env_int("OPENCLAW_MODEL_WARMUP_TIMEOUT", 45, minimum=5, maximum=180)
     results: list[dict[str, Any]] = []
 
     def warm_gemini(model: str) -> None:
-        if not model or not gemini_enabled:
-            return
-        ok, detail, selected_model = _gemini_api_generate("warmup", model=model, timeout_seconds=timeout_seconds)
-        results.append({"provider": "gemini_api", "model": selected_model, "status": "ok" if ok else "error", "detail": detail})
+        return
 
     def warm(base_url: str, provider: str, model: str) -> None:
         if not model:
@@ -790,7 +785,6 @@ def warmup_chat_models(repo_root: Path) -> dict[str, Any]:
         ok, detail = warmup_ollama_model(base_url=base_url, model=model, timeout_seconds=timeout_seconds)
         results.append({"provider": provider, "model": model, "status": "ok" if ok else "error", "detail": detail})
 
-    warm_gemini(gemini_model)
     for model in edge_models:
         warm(edge_base, "edge_inference", model)
     if _env_flag("OPENCLAW_DESKTOP_COMPUTE_ENABLED", default=True):
@@ -1515,8 +1509,8 @@ def _chat_backend_candidates(repo_root: Path, profile: dict[str, str]) -> list[C
     external_router_enabled = _env_flag("OPENCLAW_EXTERNAL_ROUTER_ENABLED", default=False)
     external_router_base = os.getenv("OPENCLAW_EXTERNAL_ROUTER_BASE_URL", "").strip()
     external_router_model = os.getenv("OPENCLAW_EXTERNAL_ROUTER_MODEL", "").strip()
-    gemini_enabled = _env_flag("OPENCLAW_GEMINI_ENABLED", default=False) or _env_flag("OPENCLAW_CLOUD_PROVIDERS_ENABLED", default=False)
-    gemini_model = os.getenv("OPENCLAW_GEMINI_MODEL", "gemini-2.5-flash").strip() or "gemini-2.5-flash"
+    gemini_enabled = False
+    gemini_model = ""
 
     edge_allowed = _edge_chat_allowed(profile)
     edge_candidates = _provider_measured_candidates(repo_root, "edge_inference", request_kind=request_kind) if edge_allowed else []
@@ -1576,7 +1570,7 @@ def _chat_backend_candidates(repo_root: Path, profile: dict[str, str]) -> list[C
     gemini_candidate = (
         ChatBackendCandidate(
             "gemini_api",
-            os.getenv("OPENCLAW_GEMINI_API_BASE_URL", "https://generativelanguage.googleapis.com").rstrip("/"),
+            os.getenv("OPENCLAW_GEMINI_API_BASE_URL", "").rstrip("/"),
             gemini_model,
             _env_int("OPENCLAW_GEMINI_TIMEOUT", 90, minimum=10, maximum=300),
             "gemini_controlado",
@@ -1584,7 +1578,7 @@ def _chat_backend_candidates(repo_root: Path, profile: dict[str, str]) -> list[C
         if gemini_enabled and gemini_model
         else None
     )
-    gemini_vertex_enabled = _env_flag("OPENCLAW_GEMINI_VERTEX_ENABLED", default=False)
+    gemini_vertex_enabled = False
     gemini_vertex_candidate = (
         ChatBackendCandidate(
             "gemini_vertex_flash_3",
@@ -1688,10 +1682,12 @@ def _backend_semaphore(candidate: ChatBackendCandidate) -> threading.BoundedSema
 
 def _openai_chat_generate(prompt: str, *, timeout_seconds: int = 120) -> tuple[bool, str, str]:
     provider = os.getenv("OPENCLAW_TELEGRAM_CHAT_PROVIDER", "openai").strip().lower()
+    if provider == "openai":
+        return False, "openai_chat_disabled_by_local_first_policy", ""
     if provider != "openai":
         return False, f"chat_provider_not_supported:{provider}", ""
 
-    api_key = os.getenv("OPENAI_API_KEY", "").strip()
+    api_key = ""
     if not api_key:
         return False, "openai_api_key_missing", ""
 
@@ -1709,7 +1705,7 @@ def _openai_chat_generate(prompt: str, *, timeout_seconds: int = 120) -> tuple[b
         },
         ensure_ascii=False,
     ).encode("utf-8")
-    req = request.Request("https://api.openai.com/v1/chat/completions", data=payload, method="POST")
+    req = request.Request("http://127.0.0.1:0/disabled", data=payload, method="POST")
     req.add_header("Authorization", f"Bearer {api_key}")
     req.add_header("Content-Type", "application/json")
 
@@ -1735,64 +1731,12 @@ def _openai_chat_generate(prompt: str, *, timeout_seconds: int = 120) -> tuple[b
 
 
 def _gemini_api_generate(prompt: str, *, model: str, timeout_seconds: int = 120) -> tuple[bool, str, str]:
-    api_key = (
-        os.getenv("OPENCLAW_GEMINI_API_KEY", "").strip()
-        or os.getenv("GEMINI_API_KEY", "").strip()
-        or os.getenv("GOOGLE_API_KEY", "").strip()
-    )
-    if not api_key:
-        return False, "gemini_api_key_missing", model
-
-    selected_model = model.strip() or os.getenv("OPENCLAW_GEMINI_MODEL", "gemini-2.5-flash").strip() or "gemini-2.5-flash"
-    endpoint = os.getenv("OPENCLAW_GEMINI_API_BASE_URL", "https://generativelanguage.googleapis.com").rstrip("/")
-    url = f"{endpoint}/v1beta/models/{parse.quote(selected_model, safe='')}:generateContent?key={parse.quote(api_key, safe='')}"
-    payload = json.dumps(
-        {
-            "contents": [{"role": "user", "parts": [{"text": prompt}]}],
-            "generationConfig": {"temperature": float(os.getenv("OPENCLAW_GEMINI_TEMPERATURE", "0.2"))},
-        },
-        ensure_ascii=False,
-    ).encode("utf-8")
-    req = request.Request(url, data=payload, method="POST")
-    req.add_header("Content-Type", "application/json")
-
-    try:
-        with request.urlopen(req, timeout=timeout_seconds) as response:
-            body = json.loads(response.read().decode("utf-8", errors="replace"))
-    except error.HTTPError as exc:
-        detail = exc.read().decode("utf-8", errors="replace") if hasattr(exc, "read") else str(exc)
-        return False, f"gemini_http_error:{detail[:300]}", selected_model
-    except (error.URLError, TimeoutError, json.JSONDecodeError, ValueError) as exc:
-        return False, f"gemini_error:{exc}", selected_model
-
-    parts: list[str] = []
-    for candidate in body.get("candidates", []) if isinstance(body, dict) else []:
-        content = candidate.get("content", {}) if isinstance(candidate, dict) else {}
-        for part in content.get("parts", []) if isinstance(content, dict) else []:
-            text = part.get("text", "") if isinstance(part, dict) else ""
-            if text:
-                parts.append(str(text))
-    text = "\n".join(parts).strip()
-    if not text:
-        return False, "gemini_empty_text", selected_model
-    return True, text, selected_model
+    return False, "gemini_api_disabled_by_local_first_policy", model
     
     
 def _gemini_vertex_generate(prompt: str, *, model: str = "gemini-3-flash", timeout_seconds: int = 120) -> tuple[bool, str, str]:
-    """Generación via Vertex AI (Google Cloud) con control de costos."""
-    if get_provider is None:
-        return False, "vertex_provider_init_error", model
-        
-    try:
-        # Usar el ID registrado en openclaw_provider_registry.yaml
-        provider = get_provider("gemini_vertex_flash_3")
-        if not provider:
-            return False, "gemini_vertex_flash_3_not_found", model
-            
-        ok, response, model_name = provider.send(prompt)
-        return ok, response, model_name
-    except Exception as e:
-        return False, f"gemini_vertex_error:{str(e)}", model
+    """Gemini Vertex queda deshabilitado por política local-first."""
+    return False, "gemini_vertex_disabled_by_local_first_policy", model
 
 
 def _chat_session_generate(prompt: str, *, timeout_seconds: int = 180) -> tuple[bool, str, str]:
@@ -2967,7 +2911,7 @@ def _voice_response(
             "text": (
                 "No pude transcribir audio en este momento. "
                 f"detalle={transcript.get('error', 'stt_no_disponible')}. "
-                "Puedes reenviar como texto o revisar OPENAI_API_KEY."
+                "Puedes reenviar como texto; STT cloud esta deshabilitado por politica local-first."
             ),
         }
         _remember_turn(store, chat_id=chat_id, command="voz", user_text="<voice>", response=response, state_override=state)

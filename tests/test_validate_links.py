@@ -23,13 +23,40 @@ def isolated_repo(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     shutil.copytree(
         ROOT,
         repo,
-        ignore=shutil.ignore_patterns(".git", ".venv", ".pytest_cache", "__pycache__"),
+        ignore=shutil.ignore_patterns(
+            # Control de versiones y entornos
+            ".git", ".venv", ".pytest_cache", "__pycache__",
+            # Dependencias de Node y builds
+            "node_modules", ".next", "dist", "build",
+            # Directorios grandes de datos y runtime (runtime ~27GB, 04_implementacion ~1GB)
+            "runtime", "04_implementacion", "03_datos", "scratch",
+            "sirena_555_flipflop", "bootstrap",
+            # Temporales y caches de pytest
+            "brain", "tmp", "temp",
+        ),
     )
+    import stat
+    for p in repo.rglob("*"):
+        try:
+            p.chmod(stat.S_IWRITE)
+        except OSError:
+            pass
     monkeypatch.setattr(common, "ROOT", repo)
     monkeypatch.setattr(build_wiki_module, "ROOT", repo)
     monkeypatch.setattr(build_dashboard_module, "ROOT", repo)
     monkeypatch.setattr(publication_module, "ROOT", repo)
     monkeypatch.setattr(validate_links_module, "ROOT", repo)
+
+    # Crear directorio dummy 04_implementacion para pasar las validaciones de cobertura y enlaces
+    impl_dir = repo / "04_implementacion"
+    impl_dir.mkdir(parents=True, exist_ok=True)
+    (impl_dir / "dummy.txt").write_text("contenido operativo mock para test", encoding="utf-8")
+
+    # Crear estructura dummy para enlaces de bootstrap
+    boot_dir = repo / "bootstrap" / "orangepi"
+    boot_dir.mkdir(parents=True, exist_ok=True)
+    (boot_dir / "10_primer-arranque.sh").write_text("# dummy", encoding="utf-8")
+
     return repo
 
 

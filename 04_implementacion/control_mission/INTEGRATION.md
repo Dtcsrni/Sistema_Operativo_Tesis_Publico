@@ -75,4 +75,4 @@ python toltecayotl_orchestrator.py
 - [docs/AGENT_PROTOCOL.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/04_implementacion/control_mission/docs/AGENT_PROTOCOL.md) - Protocolo de agentes
 - [docs/REALTIME_SPEC.md](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/04_implementacion/control_mission/docs/REALTIME_SPEC.md) - Especificación real-time
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

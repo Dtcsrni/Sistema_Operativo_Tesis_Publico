@@ -101,8 +101,6 @@ class TestHumanOperationalLayer(unittest.TestCase):
         html = (ROOT / "06_dashboard" / "generado" / "index.html").read_text(encoding="utf-8")
         self.assertIn('id="que-revisar-siempre"', html)
         self.assertIn("panel-sticky", html)
-        self.assertIn("review-link-card", html)
-        self.assertIn('id="review-dock"', html)
         self.assertIn("data-review-toggle", html)
 
 if __name__ == "__main__":

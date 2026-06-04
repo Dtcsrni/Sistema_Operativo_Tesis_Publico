@@ -9,6 +9,7 @@ from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
+sys.path.insert(0, str(ROOT / "07_scripts" / "serena"))
 
 from check_serena_access import (  # noqa: E402
     attempt_start_http,

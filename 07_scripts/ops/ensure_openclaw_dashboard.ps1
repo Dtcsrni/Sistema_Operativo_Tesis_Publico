@@ -1,5 +1,5 @@
 param(
-    [int]$Port = 18789,
+    [int]$Port = 18790,
     [int]$WaitSeconds = 30,
     [switch]$NoOpen,
     [switch]$EnsureOnly,
@@ -17,13 +17,35 @@ function Test-GatewayListener {
     param([int]$TargetPort)
 
     $listener = Get-NetTCPConnection `
-        -LocalAddress 127.0.0.1 `
         -LocalPort $TargetPort `
         -State Listen `
         -ErrorAction SilentlyContinue |
         Select-Object -First 1
 
     return $null -ne $listener
+}
+
+function Get-GatewayListenerSummary {
+    param([int]$TargetPort)
+
+    $listeners = Get-NetTCPConnection `
+        -LocalPort $TargetPort `
+        -State Listen `
+        -ErrorAction SilentlyContinue
+
+    if (-not $listeners) {
+        return "No listener found on port $TargetPort."
+    }
+
+    return ($listeners | ForEach-Object {
+        $processName = "unknown"
+        try {
+            $processName = (Get-Process -Id $_.OwningProcess -ErrorAction Stop).ProcessName
+        } catch {
+            $processName = "pid-$($_.OwningProcess)"
+        }
+        "$($_.LocalAddress):$($_.LocalPort) pid=$($_.OwningProcess) process=$processName"
+    }) -join "; "
 }
 
 function Test-DashboardHttp {
@@ -73,7 +95,8 @@ function Start-GatewayIfNeeded {
     }
 
     if (Test-GatewayListener -TargetPort $TargetPort) {
-        throw "Port 127.0.0.1:$TargetPort is listening, but it did not return the OpenClaw dashboard HTTP response."
+        $summary = Get-GatewayListenerSummary -TargetPort $TargetPort
+        throw "Port $TargetPort is listening, but it did not return the OpenClaw dashboard HTTP response. Listener: $summary"
     }
 
     $openclaw = Get-OpenClawCommandPath

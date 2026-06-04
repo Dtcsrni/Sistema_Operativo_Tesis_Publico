@@ -572,4 +572,4 @@ This is the first stable, tested, and working release of Mission Control.
 [1.0.0]: https://github.com/crshdn/mission-control/releases/tag/v1.0.0
 [0.1.0]: https://github.com/crshdn/mission-control/releases/tag/v0.1.0
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

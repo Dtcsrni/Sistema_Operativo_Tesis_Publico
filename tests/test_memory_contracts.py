@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from build_memory import render_memory
-from validate_memory import validate
+from ops.build_memory import render_memory
+from audit.validate_memory import validate
 from common import ROOT, load_yaml_json
 
 

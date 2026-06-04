@@ -105,4 +105,4 @@ Ejecutada **2026-05-13**:
 **Implementación:** 2026-05-13  
 **Próxima revisión:** 2026-08-13
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

@@ -3,7 +3,7 @@
 Registro de sesiones, trabajo asistido y aprendizaje operativo.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-05-15`
+- **Fecha:** `2026-06-04`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/bitacora`, `00_sistema_tesis/reportes_semanales`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -350,9 +350,27 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
 
 ### Índices maestros
 
-- **Total de registros de validación:** `128`
+- **Total de registros de validación:** `154`
 
-??? "2026-05 — 31 validación(es)"
+??? "2026-06 — 2 validación(es)"
+
+    **[validación humana interna no pública] Registro 1 del mes**
+
+    - **Fecha:** `2026-06-01`
+    - **Decisión o referencia:** `PET-7d715d3b` (referencia operativa interna no enlazable)
+    - **Nivel de auditoría:** `MEDIO`
+    - **Disparador resumido:** integra el contexto de este pet
+    - **Confirmación resumida:** integra el contexto de este pet
+
+    **[validación humana interna no pública] Registro 2 del mes**
+
+    - **Fecha:** `2026-06-03`
+    - **Decisión o referencia:** `WIKI-AUD` (referencia operativa interna no enlazable)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Confirmas tu aprobación verbal sobre las correcciones realizadas a la wiki y las actualizaciones del arnés de pruebas para registrar el Step ID validación humana interna no pública?
+    - **Confirmación resumida:** si confirmo, push, pull, sync, y verifica ci/cd o mejora/corrige hasta que pase
+
+??? "2026-05 — 55 validación(es)"
 
     **[validación humana interna no pública] Registro 1 del mes**
 
@@ -601,6 +619,198 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
     - **Nivel de auditoría:** `ALTO`
     - **Disparador resumido:** Instrucción humana directa registrada sin pregunta previa del agente.
     - **Confirmación resumida:** continúa
+
+    **[validación humana interna no pública] Registro 32 del mes**
+
+    - **Fecha:** `2026-05-15`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Cierre de sesión de infraestructura de control.
+    - **Confirmación resumida:** elimina lo relacionado a ollama , y limpia.
+
+    **[validación humana interna no pública] Registro 33 del mes**
+
+    - **Fecha:** `2026-05-15`
+    - **Decisión o referencia:** [DEC-0044](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-15_DEC-0044_adopcion_metodologia_agil.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Rectificación de la postura arquitectónica sobre las fases del proyecto.
+    - **Confirmación resumida:** elimina lo relacionado a ollama , y limpia.
+
+    **[validación humana interna no pública] Registro 34 del mes**
+
+    - **Fecha:** `2026-05-15`
+    - **Decisión o referencia:** [DEC-0045](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-15_DEC-0045_migracion_infraestructura_docker_total.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Migración total a Docker e inferencia llama.cpp.
+    - **Confirmación resumida:** evita que agentes creen stubs documentados como ya operativos, funcinales o correctos. Si se llegan a crear stubs, maquetas, placeholders, entre otros, se deberu00e1 documentar para no tomarlo NUNCA como pieza funcional/operativa/probada.
+
+    **[validación humana interna no pública] Registro 35 del mes**
+
+    - **Fecha:** `2026-05-15`
+    - **Decisión o referencia:** [DEC-0045](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-15_DEC-0045_migracion_infraestructura_docker_total.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Instrucción humana directa registrada sin pregunta previa del agente.
+    - **Confirmación resumida:** elimina lo relacionado a ollama , y limpia.
+
+    **[validación humana interna no pública] Registro 36 del mes**
+
+    - **Fecha:** `2026-05-15`
+    - **Decisión o referencia:** [DEC-0045](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-15_DEC-0045_migracion_infraestructura_docker_total.md)
+    - **Nivel de auditoría:** `CRITICO`
+    - **Disparador resumido:** Instrucción humana directa registrada sin pregunta previa del agente.
+    - **Confirmación resumida:** evita que agentes creen stubs documentados como ya operativos, funcinales o correctos. Si se llegan a crear stubs, maquetas, placeholders, entre otros, se deberu00e1 documentar para no tomarlo NUNCA como pieza funcional/operativa/probada.
+
+    **[validación humana interna no pública] Registro 37 del mes**
+
+    - **Fecha:** `2026-05-21`
+    - **Decisión o referencia:** `ISSUE-0043` (referencia operativa interna no enlazable)
+    - **Nivel de auditoría:** `CRÍTICO`
+    - **Disparador resumido:** Solicitud de sincronización PC→Edge y cierre de Fase B0 (ISSUE-0043) tras conexión del nodo Edge.
+    - **Confirmación resumida:** ya he conectado el nodo edge. Toma el step id adecuado
+
+    **[validación humana interna no pública] Registro 38 del mes**
+
+    - **Fecha:** `2026-05-21`
+    - **Decisión o referencia:** `ISSUE-0047` (referencia operativa interna no enlazable)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Validación y cierre de ciclo
+    - **Confirmación resumida:** si hay evidencia real de que ha quedado verdaderamente satisfecho, entonces procede a cerrarlo y continuar
+
+    **[validación humana interna no pública] Registro 39 del mes**
+
+    - **Fecha:** `2026-05-21`
+    - **Decisión o referencia:** [DEC-0045](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-15_DEC-0045_migracion_infraestructura_docker_total.md)
+    - **Nivel de auditoría:** `CRÍTICO`
+    - **Disparador resumido:** Validación y cierre de ciclo
+    - **Confirmación resumida:** 1. si, llama.cpp se configure con aceleración CUDA/NVIDIA. y 2. separados. Apruebo
+
+    **[validación humana interna no pública] Registro 40 del mes**
+
+    - **Fecha:** `2026-05-21`
+    - **Decisión o referencia:** `SPEC-AGENT-OPS` (referencia operativa interna no enlazable)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Instrucción humana directa registrada sin pregunta previa del agente.
+    - **Confirmación resumida:** yes, implement it
+
+    **[validación humana interna no pública] Registro 41 del mes**
+
+    - **Fecha:** `2026-05-21`
+    - **Decisión o referencia:** `2026-05-06_enhancement_sdd_eficiencia_agentes.md` (referencia operativa interna no enlazable)
+    - **Nivel de auditoría:** `MEDIO`
+    - **Disparador resumido:** Instrucción humana directa registrada sin pregunta previa del agente.
+    - **Confirmación resumida:** yes, implement it
+
+    **[validación humana interna no pública] Registro 42 del mes**
+
+    - **Fecha:** `2026-05-21`
+    - **Decisión o referencia:** `2026-05-21_enhancement_t031_hardening_edge_iot.md` (referencia operativa interna no enlazable)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Instrucción humana directa registrada sin pregunta previa del agente.
+    - **Confirmación resumida:** continua, aprobado
+
+    **[validación humana interna no pública] Registro 43 del mes**
+
+    - **Fecha:** `2026-05-21`
+    - **Decisión o referencia:** `2026-05-21_enhancement_t032_servicios_edge_iot.md` (referencia operativa interna no enlazable)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Instrucción humana directa registrada sin pregunta previa del agente.
+    - **Confirmación resumida:** si implementar, y aprovechar para optimizar la orange pi (Nodo Edge)
+
+    **[validación humana interna no pública] Registro 44 del mes**
+
+    - **Fecha:** `2026-05-22`
+    - **Decisión o referencia:** `2026-05-21_enhancement_t033_observabilidad_separada_por_dominio.md` (referencia operativa interna no enlazable)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Instrucción humana directa registrada sin pregunta previa del agente.
+    - **Confirmación resumida:** si
+
+    **[validación humana interna no pública] Registro 45 del mes**
+
+    - **Fecha:** `2026-05-22`
+    - **Decisión o referencia:** `2026-05-22_enhancement_t034_resiliencia_edge_iot.md` (referencia operativa interna no enlazable)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Instrucción humana directa registrada sin pregunta previa del agente.
+    - **Confirmación resumida:** si, implementa
+
+    **[validación humana interna no pública] Registro 46 del mes**
+
+    - **Fecha:** `2026-05-22`
+    - **Decisión o referencia:** `T-035` (referencia operativa interna no enlazable)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Instrucción humana directa registrada sin pregunta previa del agente.
+    - **Confirmación resumida:** si
+
+    **[validación humana interna no pública] Registro 47 del mes**
+
+    - **Fecha:** `2026-05-22`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Acepta cerrar validación humana interna no pública Mistral Nemo 12B benchmarking?
+    - **Confirmación resumida:** si, cierralos
+
+    **[validación humana interna no pública] Registro 48 del mes**
+
+    - **Fecha:** `2026-05-22`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Acepta cerrar validación humana interna no pública?
+    - **Confirmación resumida:** si, cierralos
+
+    **[validación humana interna no pública] Registro 49 del mes**
+
+    - **Fecha:** `2026-05-22`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Acepta cerrar validación humana interna no pública?
+    - **Confirmación resumida:** si, cierralos
+
+    **[validación humana interna no pública] Registro 50 del mes**
+
+    - **Fecha:** `2026-05-24`
+    - **Decisión o referencia:** [DEC-0028](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-04-29_DEC-0028_toltecayotl_epistemic_inference_engine_architecture.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Acepta cerrar validación humana interna no pública ISSUE-0042 Toltecayotl?
+    - **Confirmación resumida:** si, cierralos
+
+    **[validación humana interna no pública] Registro 51 del mes**
+
+    - **Fecha:** `2026-05-24`
+    - **Decisión o referencia:** [DEC-0032](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-02_DEC-0032_arquitectura_ingesta_consumption_pets.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** ¿Autoriza la eliminación de estos elementos y el registro del paso de validación correspondiente?
+    - **Confirmación resumida:** si
+
+    **[validación humana interna no pública] Registro 52 del mes**
+
+    - **Fecha:** `2026-05-26`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Instrucción humana directa registrada sin pregunta previa del agente.
+    - **Confirmación resumida:** si, apruebo las misiones de investigacion y KPIs
+
+    **[validación humana interna no pública] Registro 53 del mes**
+
+    - **Fecha:** `2026-05-27`
+    - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
+    - **Nivel de auditoría:** `CRÍTICO`
+    - **Disparador resumido:** ¿Cómo evitar el problema de congelamiento del chat por colisión de puertos y variables de entorno?
+    - **Confirmación resumida:** abre y verifica que todos los portales y sus sistemas funcionen
+
+    **[validación humana interna no pública] Registro 54 del mes**
+
+    - **Fecha:** `2026-05-29`
+    - **Decisión o referencia:** [DEC-0045](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-15_DEC-0045_migracion_infraestructura_docker_total.md)
+    - **Nivel de auditoría:** `ALTO`
+    - **Disparador resumido:** Aceptación y autorización de desacoplamiento de Serena del stack operativo de la tesis.
+    - **Confirmación resumida:** si, hazlo, serena, así como caveman es parte de los arneses del proyecto siot y no del stack de la tesis o del sistema de tesis
+
+    **[validación humana interna no pública] Registro 55 del mes**
+
+    - **Fecha:** `2026-05-29`
+    - **Decisión o referencia:** [DEC-0047](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-29_DEC-0047_desacoplamiento_serena_mcp_del_siot.md)
+    - **Nivel de auditoría:** `alto`
+    - **Disparador resumido:** Instrucción humana directa registrada sin pregunta previa del agente.
+    - **Confirmación resumida:** lo valido, toma el stepid adecuado
 
 ??? "2026-04 — 72 validación(es)"
 
@@ -1187,7 +1397,7 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
     - **Fecha:** `2026-03-24`
     - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
     - **Nivel de auditoría:** `CRÁTICO`
-    - **Disparador resumido:** Instrucción humana directa registrada sin pregunta previa del agente.
+    - **Disparador resumido:** Validación y cierre de ciclo
     - **Confirmación resumida:** "asegurate de siempre preguntarme y vincular mis decisiones y respuestas a los elementos de trazabilidad, especialmente si requieren validación humana."
 
     **[validación humana interna no pública] Registro 2 del mes**
@@ -1195,7 +1405,7 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
     - **Fecha:** `2026-03-24`
     - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
     - **Nivel de auditoría:** `ALTO`
-    - **Disparador resumido:** "¿Este nivel de detalle y vinculación por Step ID te parece el método confiable que buscas?"
+    - **Disparador resumido:** Validación y cierre de ciclo
     - **Confirmación resumida:** "si. Implementa"
 
     **[validación humana interna no pública] Registro 3 del mes**
@@ -1203,7 +1413,7 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
     - **Fecha:** `2026-03-24`
     - **Decisión o referencia:** `[WIKI-AUD]` (referencia operativa interna no enlazable)
     - **Nivel de auditoría:** `MEDIO`
-    - **Disparador resumido:** "La wiki es funcional y correcta según sus validadores internos. La falta de completitud en secciones específicas es nominal y esperada. El fallo de auditoría externa es por red. Recomendación: Iniciar firmas de bloques."
+    - **Disparador resumido:** Validación y cierre de ciclo
     - **Confirmación resumida:** "funciona ya la wiki y está completa, y correcta?"
 
     **[validación humana interna no pública] Registro 4 del mes**
@@ -1211,7 +1421,7 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
     - **Fecha:** `2026-03-24`
     - **Decisión o referencia:** `[GOV-FIX]` (referencia operativa interna no enlazable)
     - **Nivel de auditoría:** `ALTO`
-    - **Disparador resumido:** "Rectificación de auditoría: El error previo atribuyó erróneamente el fallo a la falta de red. Se confirma conectividad (Google 200, Wikipedia Main 200). Los fallos en `verify_standards.py` se deben a URLs incorrectas (ej. NIST RMF 404) y fallos de validación de descriptores cla...
+    - **Disparador resumido:** Validación y cierre de ciclo
     - **Confirmación resumida:** "\"sin éxito debido a la falta de conexión a red en este entorno.\"?\"
 
     **[validación humana interna no pública] Registro 5 del mes**
@@ -1219,7 +1429,7 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
     - **Fecha:** `2026-03-24`
     - **Decisión o referencia:** `[BIT-IMP]` (referencia operativa interna no enlazable)
     - **Nivel de auditoría:** `ALTO`
-    - **Disparador resumido:** "Propongo un sistema de 'Cadena de Confianza' donde cada bitácora referencia el hash de la anterior. Además, automatizaremos la creación de sesiones y la validación de integridad."
+    - **Disparador resumido:** Validación y cierre de ciclo
     - **Confirmación resumida:** "mejora el sistema de bitácora"
 
     **[validación humana interna no pública] Registro 6 del mes**
@@ -1227,7 +1437,7 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
     - **Fecha:** `2026-03-24`
     - **Decisión o referencia:** `[BIT-DIAG]` (referencia operativa interna no enlazable)
     - **Nivel de auditoría:** `MEDIO`
-    - **Disparador resumido:** "La infraestructura de gestión está completa. Faltan la delimitación formal del caso de estudio (B1), la definición de la línea base de comparación (B2) y el diseño detallado de los componentes de resiliencia (B2) antes de la implementación física."
+    - **Disparador resumido:** Validación y cierre de ciclo
     - **Confirmación resumida:** "¿que faltaria en la arquitectura para poder empezar el desarrollo de la tesis?"
 
     **[validación humana interna no pública] Registro 7 del mes**
@@ -1243,7 +1453,7 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
     - **Fecha:** `2026-03-26`
     - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
     - **Nivel de auditoría:** `ALTO`
-    - **Disparador resumido:** Instrucción humana directa registrada sin pregunta previa del agente.
+    - **Disparador resumido:** Validación y cierre de ciclo
     - **Confirmación resumida:** "nada debe ser hardcodeado nunca. Implementa eso como política general del proyecto e implementalo"
 
     **[validación humana interna no pública] Registro 9 del mes**
@@ -1259,7 +1469,7 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
     - **Fecha:** `2026-03-26`
     - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
     - **Nivel de auditoría:** `ALTO`
-    - **Disparador resumido:** "Se corrige la heurística del gate para commits del ledger y se valida con pruebas y build completo."
+    - **Disparador resumido:** Validación y cierre de ciclo
     - **Confirmación resumida:** "revisa y corrige el error del gate que detecta múltiples Step IDs en el diff protegido".
 
     **[validación humana interna no pública] Registro 11 del mes**
@@ -1267,7 +1477,7 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
     - **Fecha:** `2026-03-26`
     - **Decisión o referencia:** [DEC-0014](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-24_DEC-0014_protocolo_de_colaboración_humano-agente.md)
     - **Nivel de auditoría:** `ALTO`
-    - **Disparador resumido:** "Se ajusta la política del gate para rangos multi-commit y se valida con push dry-run, pruebas y build completo."
+    - **Disparador resumido:** Validación y cierre de ciclo
     - **Confirmación resumida:** "corrige tambien el caso pre-push porque VS Code bloquea sincronizar cambios".
 
     **[validación humana interna no pública] Registro 12 del mes**
@@ -1291,7 +1501,7 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
     - **Fecha:** `2026-03-26`
     - **Decisión o referencia:** [DEC-0017](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-03-26_DEC-0017_operacion_humana_dual_y_superficies_privada_publica.md)
     - **Nivel de auditoría:** `ALTO`
-    - **Disparador resumido:** Instrucción humana directa registrada sin pregunta previa del agente.
+    - **Disparador resumido:** Validación y cierre de ciclo
     - **Confirmación resumida:** "vamos a cerrar con esta conversación, implementa toda la política de trazabilidad (incluyendo bitácora, etc) para pasar a otra conversación si consideras que ya no hay pendientes de lo tratado en esta"
 
     **[validación humana interna no pública] Registro 15 del mes**
@@ -1388,4 +1598,4 @@ Cada registro conserva fecha, referencia operativa, nivel de auditoría y sínte
 - `RESUMEN_IN` [Resumen de Integración: OpenCode Executor Subordinado con RAG Weaviate](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/reportes_semanales/RESUMEN_INTEGRACION_OPENCODE_2026-05-07.md)
 - `2026-S13_r` [Resumen semanal 2026-S13](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/reportes_semanales/2026-S13_resumen_semanal.md)
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

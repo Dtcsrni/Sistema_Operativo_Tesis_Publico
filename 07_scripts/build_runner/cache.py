@@ -17,6 +17,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -32,6 +33,8 @@ class BuildCache:
         self._root = root
         self._path = cache_dir / CACHE_FILE_NAME
         self._data: dict[str, dict] = self._load()
+        self._glob_cache: dict[str, list[Path]] = {}
+        self._hash_cache: dict[Path, str] = {}
 
     # ── Persistencia ──────────────────────────────────────────────────────────
 
@@ -52,12 +55,76 @@ class BuildCache:
 
     # ── Fingerprint ───────────────────────────────────────────────────────────
 
+    def _glob_to_regex(self, pattern: str) -> re.Pattern:
+        """Convierte un patrón de glob a expresión regular compatible con ** y *."""
+        p = pattern.replace("\\", "/")
+        p = p.replace("/**/", "__SLASH_DOUBLE_STAR_SLASH__")
+        if p.endswith("/**"):
+            p = p[:-3] + "__SLASH_DOUBLE_STAR_END__"
+        if p.startswith("**/"):
+            p = "__DOUBLE_STAR_SLASH_START__" + p[3:]
+        p = p.replace("**", "__DOUBLE_STAR__")
+        p = p.replace("*", "__SINGLE_STAR__")
+        p = p.replace("?", "__QUESTION_MARK__")
+        
+        escaped = re.escape(p)
+        
+        replacements = {
+            "__SLASH_DOUBLE_STAR_SLASH__": r"/(?:.*/)?",
+            "__SLASH_DOUBLE_STAR_END__": r"(?:/.*)?",
+            "__DOUBLE_STAR_SLASH_START__": r"(?:.*/)?",
+            "__DOUBLE_STAR__": r".*",
+            "__SINGLE_STAR__": r"[^/]*",
+            "__QUESTION_MARK__": r"[^/]",
+        }
+        
+        regex_str = escaped
+        for placeholder, regex_val in replacements.items():
+            regex_str = regex_str.replace(placeholder, regex_val)
+            
+        return re.compile("^" + regex_str + "$", re.IGNORECASE)
+
+    def _get_all_files(self) -> list[str]:
+        """Obtiene recursivamente todos los archivos del repositorio omitiendo directorios pesados."""
+        if hasattr(self, "_all_files_cache"):
+            return self._all_files_cache
+
+        ignored_dirs = {
+            ".git", ".github", ".venv", "venv", "node_modules", ".next",
+            ".pytest_cache", ".serena", "tmp", ".tmp", "brain", "scratch",
+            "__pycache__", ".openclaw", ".vscode", "out", "dist", "models", "backups"
+        }
+        
+        all_files: list[str] = []
+        root_str = str(self._root)
+        
+        for root, dirs, files in os.walk(root_str):
+            dirs[:] = [d for d in dirs if d not in ignored_dirs]
+            for file in files:
+                full_path = os.path.join(root, file)
+                rel_path = os.path.relpath(full_path, root_str)
+                rel_path_slash = rel_path.replace("\\", "/")
+                all_files.append(rel_path_slash)
+                
+        self._all_files_cache = all_files
+        return all_files
+
     def _resolve_files(self, watch_patterns: list[str]) -> list[Path]:
         """Resuelve globs desde ROOT y retorna lista ordenada de archivos existentes."""
         files: list[Path] = []
+        all_repo_files = self._get_all_files()
+        
         for pattern in watch_patterns:
-            matched = sorted(self._root.glob(pattern))
-            files.extend(f for f in matched if f.is_file())
+            if pattern in self._glob_cache:
+                files.extend(self._glob_cache[pattern])
+                continue
+            
+            rx = self._glob_to_regex(pattern)
+            matched_rel_paths = [f for f in all_repo_files if rx.match(f)]
+            file_paths = [self._root / f for f in matched_rel_paths]
+            self._glob_cache[pattern] = file_paths
+            files.extend(file_paths)
+            
         return sorted(set(files))
 
     def compute_fingerprint(self, step: "BuildStep") -> str | None:
@@ -73,12 +140,18 @@ class BuildCache:
             return "empty_watch"
         h = hashlib.sha256()
         for f in files:
-            try:
-                with f.open("rb") as fd:
-                    while chunk := fd.read(65536):
-                        h.update(chunk)
-            except OSError:
-                pass
+            file_hash = self._hash_cache.get(f)
+            if file_hash is None:
+                try:
+                    fh = hashlib.sha256()
+                    with f.open("rb") as fd:
+                        while chunk := fd.read(65536):
+                            fh.update(chunk)
+                    file_hash = fh.hexdigest()
+                except OSError:
+                    file_hash = "error"
+                self._hash_cache[f] = file_hash
+            h.update(file_hash.encode("ascii"))
         return h.hexdigest()
 
     # ── Hit / Miss ────────────────────────────────────────────────────────────

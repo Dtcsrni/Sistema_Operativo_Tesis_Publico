@@ -37,4 +37,4 @@ from 07_scripts.ops.fault_analyzer import FaultAnalyzer
 - `DEC-0037`: Política de Total Awareness.
 - `INC-0025`: Análisis del límite de RAM en runtime local (histórico: WSL → actual: contenedores Docker).
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

@@ -136,4 +136,4 @@ El tesista debe:
 *Generado por: Sistema Agéntico OpenClaw*  
 *Fecha: 2026-05-05 10:XX UTC*
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

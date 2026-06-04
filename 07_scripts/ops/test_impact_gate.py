@@ -33,7 +33,7 @@ IGNORED_IMPACT_SUFFIXES = (
 
 
 @dataclass(frozen=True)
-class TestCommand:
+class ImpactTestCommand:
     id: str
     command: list[str]
     reason: str
@@ -70,7 +70,7 @@ def existing(paths: list[str]) -> list[str]:
     return [path for path in paths if (ROOT / path).exists()]
 
 
-def add_command(commands: dict[str, TestCommand], command: TestCommand) -> None:
+def add_command(commands: dict[str, ImpactTestCommand], command: ImpactTestCommand) -> None:
     commands.setdefault(command.id, command)
 
 
@@ -82,24 +82,35 @@ def direct_python_test_for(path: str) -> str | None:
     return None
 
 
-def select_commands(changed_paths: list[str]) -> list[TestCommand]:
-    commands: dict[str, TestCommand] = {}
+def select_commands(changed_paths: list[str]) -> list[ImpactTestCommand]:
+    commands: dict[str, ImpactTestCommand] = {}
     for path in changed_paths:
         direct = direct_python_test_for(path)
         if direct:
-            add_command(
-                commands,
-                TestCommand(
-                    id=f"unittest:{direct}",
-                    command=["python3", "-m", "unittest", direct, "-v"],
-                    reason=f"archivo de prueba modificado: {path}",
-                ),
-            )
+            p_parts = Path(path).parts
+            if "07_scripts" in p_parts:
+                add_command(
+                    commands,
+                    ImpactTestCommand(
+                        id=f"unittest:{direct}",
+                        command=["python3", "-m", "unittest", direct, "-v"],
+                        reason=f"archivo de prueba modificado: {path}",
+                    ),
+                )
+            else:
+                add_command(
+                    commands,
+                    ImpactTestCommand(
+                        id=f"pytest:{direct}",
+                        command=["python3", "-m", "pytest", path, "-q"],
+                        reason=f"archivo de prueba modificado: {path}",
+                    ),
+                )
 
         if path == "07_scripts/ops/agent_ops_core_gate.py" or "spec_agent_ops_core" in path:
             add_command(
                 commands,
-                TestCommand(
+                ImpactTestCommand(
                     id="agent_ops_core_gate_unit",
                     command=["python3", "-m", "unittest", "07_scripts.tests.test_agent_ops_core_gate", "-v"],
                     reason="cambio en Agent Ops Core o su spec",
@@ -107,7 +118,7 @@ def select_commands(changed_paths: list[str]) -> list[TestCommand]:
             )
             add_command(
                 commands,
-                TestCommand(
+                ImpactTestCommand(
                     id="agent_ops_core_gate_dry",
                     command=["python3", "07_scripts/ops/agent_ops_core_gate.py", "--no-live", "--json"],
                     reason="validar reporte sistemico sin checks externos",
@@ -117,7 +128,7 @@ def select_commands(changed_paths: list[str]) -> list[TestCommand]:
         if path == "07_scripts/ops/test_impact_gate.py":
             add_command(
                 commands,
-                TestCommand(
+                ImpactTestCommand(
                     id="test_impact_gate_unit",
                     command=["python3", "-m", "unittest", "07_scripts.tests.test_test_impact_gate", "-v"],
                     reason="cambio en selector incremental de pruebas",
@@ -125,7 +136,7 @@ def select_commands(changed_paths: list[str]) -> list[TestCommand]:
             )
             add_command(
                 commands,
-                TestCommand(
+                ImpactTestCommand(
                     id="test_impact_gate_dry",
                     command=["python3", "07_scripts/ops/test_impact_gate.py", "--paths", path, "--json"],
                     reason="validar salida JSON del selector incremental",
@@ -135,7 +146,7 @@ def select_commands(changed_paths: list[str]) -> list[TestCommand]:
         if path == "07_scripts/ops/human_validation_gate.py":
             add_command(
                 commands,
-                TestCommand(
+                ImpactTestCommand(
                     id="human_validation_gate_unit",
                     command=["python3", "-m", "unittest", "07_scripts.tests.test_human_validation_gate", "-v"],
                     reason="cambio en gate de validacion humana",
@@ -143,7 +154,7 @@ def select_commands(changed_paths: list[str]) -> list[TestCommand]:
             )
             add_command(
                 commands,
-                TestCommand(
+                ImpactTestCommand(
                     id="human_validation_gate_dry",
                     command=["python3", "07_scripts/ops/human_validation_gate.py", "--json"],
                     reason="validar salida dry-run sin mutar canon",
@@ -153,7 +164,7 @@ def select_commands(changed_paths: list[str]) -> list[TestCommand]:
         if path.startswith("07_scripts/serena/") or path in {"07_scripts/serena_mcp.py", "07_scripts/serena_http_supervisor.py"}:
             add_command(
                 commands,
-                TestCommand(
+                ImpactTestCommand(
                     id="serena_contract_tests",
                     command=[
                         "python3",
@@ -175,27 +186,99 @@ def select_commands(changed_paths: list[str]) -> list[TestCommand]:
             if candidate.exists():
                 add_command(
                     commands,
-                    TestCommand(
+                    ImpactTestCommand(
                         id=f"audit:{stem}",
                         command=["python3", "-m", "unittest", f"07_scripts.tests.test_{stem}", "-v"],
                         reason=f"prueba directa para {path}",
                     ),
                 )
 
-        if path.startswith("07_scripts/build_runner/") or path == "07_scripts/build_all.py":
+        if path.startswith("07_scripts/build_runner/") or path in {"07_scripts/build_all.py", "07_scripts/ops/run_tests_smart.py"}:
             add_command(
                 commands,
-                TestCommand(
+                ImpactTestCommand(
                     id="build_all_contract",
-                    command=["python3", "-m", "pytest", "tests/test_build_all.py", "-q"],
+                    command=["python3", "-m", "pytest", "tests/test_build_all.py", "07_scripts/tests/test_test_impact_gate.py", "-q"],
                     reason="cambio en build incremental o registro de pasos",
+                ),
+            )
+
+        if path.startswith("manifests/"):
+            add_command(
+                commands,
+                ImpactTestCommand(
+                    id="manifest_contracts",
+                    command=[
+                        "python3",
+                        "-m",
+                        "pytest",
+                        "tests/test_b0_architecture_contracts.py",
+                        "tests/test_domain_isolation.py",
+                        "-q",
+                    ],
+                    reason="cambio en manifiestos o contratos maquina-legibles",
+                ),
+            )
+
+        if path == ".vscode/mcp.json" or path.startswith("docs/03_operacion/") and "mcp" in Path(path).name.lower():
+            add_command(
+                commands,
+                ImpactTestCommand(
+                    id="mcp_multi_host_contract",
+                    command=[
+                        "python3",
+                        "-m",
+                        "unittest",
+                        "07_scripts.tests.test_check_serena_access",
+                        "07_scripts.tests.test_check_serena_multi_host_contract",
+                        "07_scripts.tests.test_serena_mcp",
+                        "-v",
+                    ],
+                    reason="cambio en configuracion o documentacion MCP multi-host",
+                ),
+            )
+
+        if path.startswith("00_sistema_tesis/config/"):
+            add_command(
+                commands,
+                ImpactTestCommand(
+                    id="system_config_structure",
+                    command=["python3", "07_scripts/audit/validate_structure.py"],
+                    reason="cambio en configuracion canonica del sistema",
+                ),
+            )
+
+        if path.startswith("00_sistema_tesis/bitacora/") or path.startswith("00_sistema_tesis/decisiones/"):
+            add_command(
+                commands,
+                ImpactTestCommand(
+                    id="traceability_quality",
+                    command=["python3", "07_scripts/audit/verify_traceability_quality.py", "--strict"],
+                    reason="cambio en bitacora, matriz o decisiones",
+                ),
+            )
+
+        if path.startswith("06_dashboard/") or path.startswith("00_sistema_tesis/documentacion_sistema/"):
+            add_command(
+                commands,
+                ImpactTestCommand(
+                    id="public_docs_contract",
+                    command=[
+                        "python3",
+                        "-m",
+                        "pytest",
+                        "tests/test_wiki_contracts.py",
+                        "tests/test_validate_public_text.py",
+                        "-q",
+                    ],
+                    reason="cambio en documentacion, wiki, dashboard o publicacion",
                 ),
             )
 
         if path.startswith("runtime/openclaw/") or path.startswith("config/env/openclaw"):
             add_command(
                 commands,
-                TestCommand(
+                ImpactTestCommand(
                     id="openclaw_focused",
                     command=[
                         "python3",
@@ -217,7 +300,7 @@ def select_commands(changed_paths: list[str]) -> list[TestCommand]:
             if related_ts:
                 add_command(
                     commands,
-                    TestCommand(
+                    ImpactTestCommand(
                         id="mission_control_related_ts",
                         command=["npx", "tsx", "--test", "--test-concurrency=1", *related_ts],
                         reason="pruebas TypeScript relacionadas con Mission Control",
@@ -227,7 +310,7 @@ def select_commands(changed_paths: list[str]) -> list[TestCommand]:
             else:
                 add_command(
                     commands,
-                    TestCommand(
+                    ImpactTestCommand(
                         id="mission_control_unit_all",
                         command=["npm", "test"],
                         reason="cambio Mission Control sin prueba directa localizada",
@@ -239,7 +322,7 @@ def select_commands(changed_paths: list[str]) -> list[TestCommand]:
         if path.startswith("docker-compose") or Path(path).name.startswith("Dockerfile"):
             add_command(
                 commands,
-                TestCommand(
+                ImpactTestCommand(
                     id="docker_stack_focused",
                     command=["python3", "-m", "pytest", "tests/test_docker_stack.py", "-q"],
                     reason="cambio en Docker/Compose",
@@ -251,17 +334,33 @@ def select_commands(changed_paths: list[str]) -> list[TestCommand]:
         if path.startswith("00_sistema_tesis/pendientes/"):
             add_command(
                 commands,
-                TestCommand(
+                ImpactTestCommand(
                     id="sdd_specs",
                     command=["python3", "07_scripts/audit/validate_sdd_specs.py", "--json"],
                     reason="cambio en specs o pendientes SDD",
                 ),
             )
 
-    if not commands:
+    if not commands and changed_paths:
         add_command(
             commands,
-            TestCommand(
+            ImpactTestCommand(
+                id="agile_smoke_minimum",
+                command=[
+                    "python3",
+                    "-m",
+                    "pytest",
+                    "tests/test_build_all.py",
+                    "07_scripts/tests/test_test_impact_gate.py",
+                    "-q",
+                ],
+                reason="fallback smoke minimo para cambio sin mapeo especifico",
+            ),
+        )
+    elif not commands:
+        add_command(
+            commands,
+            ImpactTestCommand(
                 id="agent_ops_core_gate_dry",
                 command=["python3", "07_scripts/ops/agent_ops_core_gate.py", "--no-live", "--json"],
                 reason="fallback minimo cuando no hay mapeo especifico",
@@ -294,7 +393,7 @@ def file_digest(path: str) -> str:
     return h.hexdigest()
 
 
-def impact_key(changed_paths: list[str], commands: list[TestCommand]) -> str:
+def impact_digest(changed_paths: list[str], commands: list[ImpactTestCommand]) -> str:
     h = hashlib.sha256()
     for path in sorted(changed_paths):
         h.update(file_digest(path).encode("ascii"))
@@ -318,9 +417,9 @@ def load_history(path: Path) -> list[dict[str, Any]]:
     return entries
 
 
-def history_match(history: list[dict[str, Any]], key: str) -> dict[str, Any] | None:
+def history_match(history: list[dict[str, Any]], digest: str) -> dict[str, Any] | None:
     for entry in reversed(history):
-        if entry.get("impact_key") == key:
+        if entry.get("impact_digest") == digest or entry.get("impact_key") == digest:
             return entry
     return None
 
@@ -329,7 +428,7 @@ def append_history(path: Path, report: dict[str, Any], result_status: str) -> No
     path.parent.mkdir(parents=True, exist_ok=True)
     record = {
         "recorded_at": datetime.now(UTC).isoformat(),
-        "impact_key": report["impact_key"],
+        "impact_digest": report["impact_digest"],
         "result_status": result_status,
         "changed_paths": report["changed_paths"],
         "selected_command_ids": [item["id"] for item in report["selected_commands"]],
@@ -346,9 +445,9 @@ def build_report(
     changed_paths = sorted(path for path in (paths if paths is not None else discover_changed_paths()) if not is_ignored_impact_path(path))
     changed_paths = existing(changed_paths)
     commands = select_commands(changed_paths)
-    key = impact_key(changed_paths, commands)
+    digest = impact_digest(changed_paths, commands)
     history = load_history(history_path)
-    previous = history_match(history, key)
+    previous = history_match(history, digest)
     integration = [cmd for cmd in commands if cmd.requires_justification]
     status = "degraded" if integration else "ok"
     redundancy = "previous_ok_same_impact" if previous and previous.get("result_status") == "ok" else "none"
@@ -356,7 +455,7 @@ def build_report(
         "status": status,
         "repo_root": str(ROOT),
         "changed_paths": changed_paths,
-        "impact_key": key,
+        "impact_digest": digest,
         "history_path": str(history_path.relative_to(ROOT) if history_path.is_relative_to(ROOT) else history_path),
         "history_match": previous,
         "redundancy_hint": redundancy,

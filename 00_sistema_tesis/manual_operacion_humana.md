@@ -1,4 +1,4 @@
-# Manual de Operación Humana
+# Manual de Operación humana
 
 Este manual es la ruta operativa del tesista. Explica cómo usar el sistema; la explicación conceptual del por qué existe y cómo se organiza vive en `README_INICIO.md` y en `00_sistema_tesis/documentacion_sistema/`.
 
@@ -28,8 +28,8 @@ graph LR
         OBS[Observabilidad]
     end
 
-    REPO -- "git push/sync" --> OPI
-    OPI -- "logs/métricas/evidencia" --> REPO
+    REPO -->|"git push/sync"| OPI
+    OPI -->|"logs/métricas/evidencia"| REPO
 ```
 
 - **Escritorio primario (`desktop_workspace`):** Visual Studio Code en el PC como estación principal de autoría, diseño, análisis, construcción documental y mantenimiento del repositorio soberano.
@@ -94,7 +94,7 @@ graph LR
 5. Tratar `/srv/tesis/repo` como clon operativo local de despliegue y supervisión, no como repositorio principal de autoría.
 6. Registrar cualquier desviación real de hardware, almacenamiento o servicios en bitácora/decisión.
 7. Para actualizar el clon operativo desde el escritorio, preferir `bash /srv/tesis/repo/ops/actualizacion/sync_repo_desde_desktop.sh repo+postcheck`; ese perfil también limpia ruido edge-volatil que no aporta al runtime (`.pytest_cache`, `__pycache__`, bytecode, backups y staging privado).
-8. Usar `repo-only` si solo se alineará el clon local, y `repo+restart-edge` si el cambio exige reiniciar `edge-iot-worker.service`.
+8. Usar `repo-only` si solo se alineará el clon local, y `repo+restart-edge` si el cambio exige reiniciar `siot-edge.service`.
 9. Acceder por SSH al host `tesis-edge` con el usuario dedicado `tesisai` y la llave definida en `ORANGEPI_KEY_PATH`; no usar contraseña.
 
 ### Operación permitida en Orange Pi
@@ -196,7 +196,7 @@ La firma humana no se autoemite desde IA sin contexto trazable. Si un artefacto 
 - `06_dashboard/generado/index.html`
 - `06_dashboard/publico/index.md`
 
-## Publicación dual (privado + repo público derivado)
+## Publicación dual público/privado (repo público derivado)
 
 1. Mantener este repositorio como fuente soberana privada.
 2. Crear o usar un repositorio GitHub público derivado.
@@ -217,4 +217,4 @@ La firma humana no se autoemite desde IA sin contexto trazable. Si un artefacto 
    - `python 07_scripts/build_all.py`
    - `python 07_scripts/sync_public_repo.py --mode mirror --target-dir ../Sistema_Operativo_Tesis_Publico --repo-url https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico.git --branch main --push`
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

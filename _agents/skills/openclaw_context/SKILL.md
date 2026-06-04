@@ -117,4 +117,4 @@ python -m py_compile runtime/openclaw/openclaw_local/telegram_bot.py
 python 07_scripts/build_all.py
 ```
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

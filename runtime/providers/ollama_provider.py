@@ -7,7 +7,7 @@ import requests
 
 
 class OllamaProvider:
-    def __init__(self, base_url: str = "http://ollama-pc:11434", model: str = "deepseek-r1:7b"):
+    def __init__(self, base_url: str = "http://inferencia-llamacpp:8080", model: str = "deepseek-r1:7b"):
         self.base_url = base_url.rstrip("/")
         self.model = model
     

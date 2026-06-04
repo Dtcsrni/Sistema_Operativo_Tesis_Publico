@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15",
+  "generated_at": "2026-06-04",
   "verification": {
     "status": "ok",
     "required_page_fields": [
@@ -185,14 +185,14 @@
   "sources": [
     {
       "path": "README_INICIO.md",
-      "sha256": "03a630dd4da9aad98114a31f7c6beaa6f302bed717a44fb0218269dfd1054536",
-      "modified": "2026-04-21",
+      "sha256": "a34131ced7b45ef063c96c022ed0f656d44bbba017b919abf60cc0722f164da6",
+      "modified": "2026-05-28",
       "kind": "file"
     },
     {
       "path": "00_sistema_tesis/documentacion_sistema/casos_uso_agente.md",
-      "sha256": "31599ce97360e67808dc5c6cdfbbb5e03641b8325e307aff3e0c6ac0310b41b3",
-      "modified": "2026-04-29",
+      "sha256": "6938e0c40d5a2347315fea085b5ff63956ccdf9100f9200df23e316cf942cfb6",
+      "modified": "2026-06-03",
       "kind": "file"
     },
     {
@@ -203,14 +203,14 @@
     },
     {
       "path": "00_sistema_tesis/manual_operacion_humana.md",
-      "sha256": "bb5658d50156def16ecf019dd84322afed531f20b7b93ca5d390a46ea6ec327a",
-      "modified": "2026-05-06",
+      "sha256": "cbbd6b1333b9a83e219950470a398cc2d26b3566149da72bd8355348f736d618",
+      "modified": "2026-06-03",
       "kind": "file"
     },
     {
       "path": "00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md",
-      "sha256": "ba9b4821470bb1b33c686cc7b53540930715fab8cd84d3e21b29a1607e08f73a",
-      "modified": "2026-04-25",
+      "sha256": "77df9e45836243716e51fa4aada34afaaaf410de6ebc8fb0856b43b5c030c69b",
+      "modified": "2026-06-03",
       "kind": "file"
     },
     {
@@ -221,8 +221,8 @@
     },
     {
       "path": "00_sistema_tesis/documentacion_sistema/flujos_operativos.md",
-      "sha256": "633fe8292aeae57d2b72438a11199df619b3cbbc88da731d753ea0075e90b97c",
-      "modified": "2026-05-13",
+      "sha256": "5a0243c2389d91b47bd5dc151acc365a2c20bc172dd43491604128a29d09b768",
+      "modified": "2026-06-03",
       "kind": "file"
     },
     {
@@ -233,8 +233,8 @@
     },
     {
       "path": "00_sistema_tesis/documentacion_sistema/glosario_terminologia_y_convenciones.md",
-      "sha256": "28a1350936c8c97772773ae8dacf86701990153b12e2be3f244962edc5808616",
-      "modified": "2026-04-25",
+      "sha256": "ac35e5bbe6e3bb85e68e579b85d3851fe76fdbb5e97ec7784cc1193cec730dcd",
+      "modified": "2026-06-03",
       "kind": "file"
     },
     {
@@ -269,20 +269,20 @@
     },
     {
       "path": "00_sistema_tesis/config/ia_gobernanza.yaml",
-      "sha256": "8ded422193290f820bc14f0c2d5ea63965871ca838db9ddfe77a10d4b3d0e445",
-      "modified": "2026-04-21",
+      "sha256": "3ed929391a6c625eb3bdd7ca38dbe9129c851d3ec07a01cccb4942f31a627640",
+      "modified": "2026-05-21",
       "kind": "file"
     },
     {
       "path": "00_sistema_tesis/config/publicacion.yaml",
-      "sha256": "48f522fe46f0611ac7b7b6dab3bb758a78c3a622713308b84e8ab48d49353614",
-      "modified": "2026-05-14",
+      "sha256": "8681aa211a8bcd42707408841264b534702ed57ff48da739b188ad4e4e2aead0",
+      "modified": "2026-05-15",
       "kind": "file"
     },
     {
       "path": "01_planeacion/backlog.csv",
-      "sha256": "b3bdda24a96360a32a9289733fed0fe487d23e2bb4b80f7f7189ea6ec97ffcc1",
-      "modified": "2026-05-01",
+      "sha256": "f7597ff733c7e045dfd73fab1a9536adbe92d0f742f3dc8d4b96b123ed6996fc",
+      "modified": "2026-05-26",
       "kind": "file"
     },
     {
@@ -306,13 +306,13 @@
     {
       "path": "00_sistema_tesis/decisiones",
       "sha256": null,
-      "modified": "2026-05-14",
+      "modified": "2026-06-01",
       "kind": "directory"
     },
     {
       "path": "00_sistema_tesis/bitacora",
       "sha256": null,
-      "modified": "2026-05-15",
+      "modified": "2026-06-04",
       "kind": "directory"
     },
     {
@@ -330,13 +330,13 @@
     {
       "path": "04_implementacion",
       "sha256": null,
-      "modified": "2026-05-15",
+      "modified": "2026-06-01",
       "kind": "directory"
     },
     {
       "path": "05_tesis",
       "sha256": null,
-      "modified": "2026-03-23",
+      "modified": "2026-06-01",
       "kind": "directory"
     }
   ]

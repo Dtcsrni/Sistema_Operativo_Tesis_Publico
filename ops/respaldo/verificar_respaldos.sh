@@ -56,7 +56,7 @@ current = sha.hexdigest()
 if current != expected:
     raise SystemExit("VERIFY_FAIL:checksum_mismatch")
 expected_checksum_sig = checksum_signature_path.read_text(encoding="utf-8").strip()
-current_checksum_sig = hmac.new(sign_key, str(artifact).encode("utf-8"), hashlib.sha256).hexdigest()
+current_checksum_sig = hmac.new(sign_key, artifact.as_posix().encode("utf-8"), hashlib.sha256).hexdigest()
 if expected_checksum_sig != current_checksum_sig:
     raise SystemExit("VERIFY_FAIL:checksum_signature_mismatch")
 expected_manifest_sig = manifest_signature_path.read_text(encoding="utf-8").strip()

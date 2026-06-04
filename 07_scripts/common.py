@@ -308,11 +308,42 @@ def write_text_if_changed(path: Path, content: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
+IGNORED_COVERAGE_DIRS = {
+    ".git",
+    ".next",
+    ".tmp",
+    ".venv",
+    "__pycache__",
+    "backups",
+    "db-backups",
+    "dist",
+    "node_modules",
+    "out",
+    "tmp",
+}
+
+
+def _is_ignored_coverage_path(path: Path, directory: Path) -> bool:
+    try:
+        rel_parts = path.relative_to(directory).parts
+    except ValueError:
+        return False
+    return any(part in IGNORED_COVERAGE_DIRS for part in rel_parts)
+
+
 def directory_markdown_status(relative_dir: str) -> dict:
     directory = ROOT / relative_dir
-    markdown_files = sorted(path for path in directory.rglob("*.md") if path.is_file())
+    markdown_files = sorted(
+        path
+        for path in directory.rglob("*.md")
+        if path.is_file() and not _is_ignored_coverage_path(path, directory)
+    )
     non_keep_files = sorted(
-        path for path in directory.rglob("*") if path.is_file() and path.name != ".gitkeep"
+        path
+        for path in directory.rglob("*")
+        if path.is_file()
+        and path.name != ".gitkeep"
+        and not _is_ignored_coverage_path(path, directory)
     )
     return {
         "relative_dir": relative_dir,

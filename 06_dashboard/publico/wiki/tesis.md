@@ -3,7 +3,7 @@
 Estado de cobertura de capítulos y figuras.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-05-15`
+- **Fecha:** `2026-06-04`
 - **Estado:** `OK`
 - **Fuentes:** `05_tesis`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -49,7 +49,15 @@ Estado de cobertura de capítulos y figuras.
 
 - Ruta: `05_tesis`
 - Existe: `sí`
-- Cobertura: `pendiente`
-- Mensaje: Sin contenido operativo aún. La wiki refleja el estado real del repositorio y no inventa artefactos.
+- Cobertura: `parcial_o_activa`
 
-_Última actualización: `2026-05-14`._
+## Archivos detectados
+
+- `05_tesis/estado_arte/control_misiones_agenticas.pdf`
+- `05_tesis/estado_arte/control_misiones_agenticas.tex`
+- `05_tesis/estado_arte/inferencia_edge_hibrida.pdf`
+- `05_tesis/estado_arte/inferencia_edge_hibrida.tex`
+- `05_tesis/estado_arte/motores_epistemicos_y_fidelidad.pdf`
+- `05_tesis/estado_arte/motores_epistemicos_y_fidelidad.tex`
+
+_Última actualización: `2026-06-03`._

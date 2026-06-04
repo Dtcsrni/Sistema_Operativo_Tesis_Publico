@@ -70,4 +70,4 @@ Se actualizarán los perfiles `academic` y `scientific` para inyectar estas inst
 [GOV]: AGENTS.md
 [AUD]: matriz_trazabilidad.md
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

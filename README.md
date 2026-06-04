@@ -109,9 +109,9 @@ Empieza por estos archivos:
 - **T-007** · `B1` · Delimitar formalmente el caso de estudio en la Zona Metropolitana de Pachuca · prioridad `critica` · objetivo `2026-03-30`
 - **T-010** · `B2` · Definir arquitectura base de comparación contra la propuesta · prioridad `critica` · objetivo `2026-04-05`
 - **T-011** · `B2` · Formalizar componentes flujos y modos de degradación de la arquitectura propuesta · prioridad `critica` · objetivo `2026-04-08`
-- **T-031** · `B0` · Aplicar hardening del SO de Orange Pi para el dominio edge_iot sin afectar sistema_tesis ni openclaw · prioridad `critica` · objetivo `2026-04-10`
-- **T-038** · `B0` · Emitir checklist de aceptación para instalación productiva en Orange Pi con evidencia trazable · prioridad `critica` · objetivo `2026-04-17`
-- **T-050** · `B0` · Emitir criterio formal de arquitectura correcta funcional segura efectiva y eficiente con evidencia reproducible · prioridad `critica` · objetivo `2026-04-18`
+- **T-008** · `B1` · Definir taxonomía inicial de intermitencia urbana relevante para la tesis · prioridad `alta` · objetivo `2026-04-02`
+- **T-009** · `B1` · Identificar variables críticas y no críticas por escenario operativo · prioridad `alta` · objetivo `2026-04-04`
+- **T-012** · `B2` · Refinar hipótesis en variables métricas y criterios de soporte ejecutables · prioridad `alta` · objetivo `2026-04-10`
 
 ## Riesgos abiertos
 
@@ -122,9 +122,9 @@ Empieza por estos archivos:
 
 ## Decisiones recientes
 
-- **2026-05-13** · [DEC-0043: IntegraciÃ³n de Jira en el Centro de Control de Misiones](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-13_DEC-0043_integracion_jira_control_misiones.md)
-- **2026-05-08** · [DEC-0042: Políticas de Estandarización y Calidad Agnóstica (FRE/PVC)](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-08_DEC-0042_politicas_de_estandarizacion_y_calidad_agnostica.md)
-- **2026-05-08** · [DEC-0041: Motor de Calidad Toltecayotl (MCT) - Evaluación de Calidad Epistémica](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-08_DEC-0041_motor_de_evaluacion_de_calidad_epistemica.md)
+- **2026-06-01** · [DEC-0048: Adopción de Harness Engineering Agnóstico](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-06-01_DEC-0048_adopcion_harness_engineering_agnostico.md)
+- **2026-05-29** · [Contexto y Problema](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-29_DEC-0047_desacoplamiento_serena_mcp_del_siot.md)
+- **2026-05-21** · [DEC-0046: Principio de Arquitectura Abierta, Auto-Descubrimiento Seguro y Viabilidad Comercial](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/00_sistema_tesis/decisiones/2026-05-21_DEC-0046_arquitectura_abierta_autodescubrimiento_viabilidad_comercial.md)
 
 ## Operación
 
@@ -218,6 +218,6 @@ python 07_scripts/report_consistency.py
 - [`06_dashboard/generado/hoja_maestra_consolidada.csv`](https://github.com/Dtcsrni/Sistema_Operativo_Tesis_Publico/blob/main/06_dashboard/generado/hoja_maestra_consolidada.csv)
 - [`reporte interno no publicado`](06_dashboard/wiki/nota_seguridad_y_acceso.md)
 
-_Generado automáticamente el 2026-05-14._
+_Generado automáticamente el 2026-06-03._
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

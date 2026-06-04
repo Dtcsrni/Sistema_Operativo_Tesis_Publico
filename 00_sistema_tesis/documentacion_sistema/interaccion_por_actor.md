@@ -71,4 +71,4 @@ Toda documentacion mejorada del sistema debe responder implicitamente a estas pr
 - que puede entender un lector publico con esta pagina;
 - que limites de acceso o interpretacion siguen vigentes.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

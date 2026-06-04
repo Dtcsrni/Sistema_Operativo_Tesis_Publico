@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import pytest
 import json
 import os
 import sys
@@ -543,6 +544,7 @@ def test_chat_backend_allows_edge_only_when_assigned(monkeypatch) -> None:
     assert any(candidate.provider == "edge_inference" for candidate in candidates)
 
 
+@pytest.mark.skip(reason="Cloud providers disabled in current routing policy")
 def test_chat_uses_chatgpt_plus_only_when_explicitly_requested(tmp_path: Path, monkeypatch) -> None:
     domains_dir = _write_domain_envs(tmp_path)
     (domains_dir / "academico.env").write_text("OPENCLAW_CHATGPT_PLUS_ENABLED=1\n", encoding="utf-8")
@@ -729,6 +731,7 @@ def test_chat_system_data_uses_semantic_deterministic_status(tmp_path: Path, mon
     assert "Estado OpenClaw:" in payload["text"]
 
 
+@pytest.mark.skip(reason="Cloud providers disabled in current routing policy")
 def test_chat_uses_web_session_when_configured(tmp_path: Path, monkeypatch) -> None:
     domains_dir = _write_domain_envs(tmp_path)
     (domains_dir / "academico.env").write_text("OPENCLAW_CHATGPT_PLUS_ENABLED=1\n", encoding="utf-8")
@@ -772,6 +775,7 @@ def test_ruta_command_explains_routing_without_generation(tmp_path: Path, monkey
     assert "provider=" in payload["text"]
 
 
+@pytest.mark.skip(reason="Cloud providers disabled in current routing policy")
 def test_chat_falls_back_from_web_session_to_api_direct(tmp_path: Path, monkeypatch) -> None:
     domains_dir = _write_domain_envs(tmp_path)
     (domains_dir / "academico.env").write_text("OPENCLAW_CHATGPT_PLUS_ENABLED=1\nOPENAI_API_KEY=openai-acad\n", encoding="utf-8")
@@ -1002,6 +1006,7 @@ def test_chat_falls_back_to_edge_when_desktop_models_are_unavailable(tmp_path: P
 def test_chat_escalates_to_desktop_for_heavy_requests_and_sends_typing(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.setenv("OPENCLAW_DOMAINS_ENV_DIR", str(_write_domain_envs(tmp_path)))
     monkeypatch.setenv("OPENCLAW_DESKTOP_COMPUTE_ENABLED", "1")
+    monkeypatch.setenv("OPENCLAW_DESKTOP_RUNTIME", "ollama")
     store = OpenClawStore(tmp_path / "openclaw.db")
     typing_calls: list[tuple[str, str]] = []
     model_calls: list[tuple[str, str]] = []
@@ -1022,6 +1027,7 @@ def test_chat_escalates_to_desktop_for_heavy_requests_and_sends_typing(tmp_path:
     monkeypatch.setattr("openclaw_local.telegram_bot.send_chat_action", fake_send_chat_action)
     monkeypatch.setattr("openclaw_local.telegram_bot.list_available_models", fake_list_available_models)
     monkeypatch.setattr("openclaw_local.telegram_bot.llamacpp_generate", fake_generate)
+    monkeypatch.setattr("openclaw_local.telegram_bot.llamacpp_ready", lambda base_url: True)
 
     payload = dispatch_command("chat", "revisa este bug en el script de Python y corrige el error", repo_root=ROOT, store=store)
 
@@ -1509,15 +1515,15 @@ def test_voice_requires_call_mode_when_enabled(tmp_path: Path, monkeypatch) -> N
     assert "Modo llamada desactivado" in payload["text"]
 
 
-def test_chat_backend_candidates_include_gemini_only_when_enabled(monkeypatch) -> None:
+def test_chat_backend_candidates_never_include_gemini(monkeypatch) -> None:
     profile = {"request_kind": "reasoning", "complexity": "high"}
     monkeypatch.setenv("OPENCLAW_DESKTOP_COMPUTE_ENABLED", "0")
     monkeypatch.delenv("OPENCLAW_GEMINI_ENABLED", raising=False)
     disabled = _chat_backend_candidates(ROOT, profile)
-    assert all(candidate.provider != "gemini_api" for candidate in disabled)
+    assert all(candidate.provider not in {"gemini_api", "gemini_vertex_flash_3"} for candidate in disabled)
 
     monkeypatch.setenv("OPENCLAW_GEMINI_ENABLED", "1")
     monkeypatch.setenv("OPENCLAW_GEMINI_MODEL", "gemini-2.5-flash")
     enabled = _chat_backend_candidates(ROOT, profile)
 
-    assert any(candidate.provider == "gemini_api" and candidate.model == "gemini-2.5-flash" for candidate in enabled)
+    assert all(candidate.provider not in {"gemini_api", "gemini_vertex_flash_3"} for candidate in enabled)

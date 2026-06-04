@@ -3,7 +3,7 @@
 Backlog, riesgos, roadmap y entregables del sistema.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-05-15`
+- **Fecha:** `2026-06-04`
 - **Estado:** `OK`
 - **Fuentes:** `01_planeacion/backlog.csv`, `01_planeacion/riesgos.csv`, `01_planeacion/roadmap.csv`, `01_planeacion/entregables.csv`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -51,7 +51,7 @@ Backlog, riesgos, roadmap y entregables del sistema.
 
 ## Lectura rápida
 
-- Tareas pendientes o en progreso: `15`
+- Tareas pendientes o en progreso: `7`
 - Riesgos abiertos: `8`
 - Entregables definidos: `15`
 
@@ -129,4 +129,4 @@ gantt
 |ENT-014|Arquitectura formal del sistema operativo de tesis|listo|docs/02_arquitectura/arquitectura-general.md|
 |ENT-015|Conformidad y eficiencia operativa del sistema de tesis|pendiente|tests/integration/test_repo_layout.sh|
 
-_Última actualización: `2026-05-14`._
+_Última actualización: `2026-06-03`._

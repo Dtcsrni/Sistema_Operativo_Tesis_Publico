@@ -38,4 +38,4 @@ Cada dominio publica al menos:
 ## Límite operativo
 La observabilidad es local al host y no sustituye la trazabilidad documental del sistema.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

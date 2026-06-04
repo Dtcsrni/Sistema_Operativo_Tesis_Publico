@@ -10,7 +10,7 @@ import unittest
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "07_scripts"))
+sys.path.insert(0, str(ROOT / "07_scripts" / "utils"))
 
 import agent_task_router  # noqa: E402
 
@@ -28,10 +28,10 @@ class TestAgentTaskRouter(unittest.TestCase):
             "sensitive_path_prefixes": ["00_sistema_tesis/evidencia_privada/", "00_sistema_tesis/canon/"],
             "route_preferences": {
                 "docs_external": ["context7_docs", "serena", "wsl_native"],
-                "academic_heavy": ["pc_native_llamacpp", "ollama_local", "serena", "wsl_native"],
+                "academic_heavy": ["pc_native_llamacpp", "edge_inference", "serena", "wsl_native"],
                 "public_cloud": ["github_models_free", "context7_docs", "serena", "wsl_native"],
                 "repo_governance": ["serena", "wsl_native"],
-                "default": ["serena", "ollama_local", "wsl_native"],
+                "default": ["serena", "edge_inference", "wsl_native"],
             },
             "quality_gate_defaults": {"max_gate_failures": 0},
         }

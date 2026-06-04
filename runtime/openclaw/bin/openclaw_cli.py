@@ -580,13 +580,13 @@ def cmd_diagnostico_medir(args: argparse.Namespace) -> int:
 def cmd_diagnostico_proveedores(_: argparse.Namespace) -> int:
     store = _store()
     providers = {
-        "ollama_local": os.getenv("OPENCLAW_EDGE_OLLAMA_BASE_URL", "http://127.0.0.1:11434").rstrip("/") + "/api/tags",
+        "edge_inference": os.getenv("OPENCLAW_EDGE_OLLAMA_BASE_URL", "http://127.0.0.1:11434").rstrip("/") + "/api/tags",
         "desktop_compute": os.getenv("OPENCLAW_DESKTOP_COMPUTE_BASE_URL", "http://127.0.0.1:21434").rstrip("/") + "/api/tags",
         "pc_native_llamacpp": os.getenv("OPENCLAW_DESKTOP_RUNTIME_BASE_URL", os.getenv("OPENCLAW_DESKTOP_COMPUTE_BASE_URL", "http://127.0.0.1:21434")).rstrip("/") + "/health",
         "chatgpt_plus_web_assisted": "http://127.0.0.1:0/disabled",
-        "openai_api": "https://api.openai.com/v1/models",
-        "groq_api": "https://api.groq.com/openai/v1/models",
-        "gemini_api": "https://generativelanguage.googleapis.com/v1beta/models",
+        "openai_api": "http://127.0.0.1:0/disabled",
+        "groq_api": "http://127.0.0.1:0/disabled",
+        "gemini_api": "http://127.0.0.1:0/disabled",
         "rknn_llm_experimental": "http://127.0.0.1:0/disabled",
         "comfyui": os.getenv("OPENCLAW_COMFYUI_BASE_URL", "http://127.0.0.1:28000").rstrip("/") + "/system_stats",
         "telegram": "https://api.telegram.org",
@@ -600,12 +600,8 @@ def cmd_diagnostico_proveedores(_: argparse.Namespace) -> int:
         latency_ms: float | None = None
         error_code = ""
         if provider in {"openai_api", "groq_api", "gemini_api"}:
-            env_name = {"openai_api": "OPENAI_API_KEY", "groq_api": "GROQ_API_KEY", "gemini_api": "GEMINI_API_KEY"}[provider]
-            if not os.getenv(env_name, "").strip():
-                status = "misconfigured"
-                error_code = f"missing_{env_name.lower()}"
-            else:
-                status, latency_ms, error_code = _http_probe(url, timeout=4.0)
+            status = "disabled"
+            error_code = "cloud_paid_provider_disabled_by_policy"
         elif provider in {"chatgpt_plus_web_assisted", "rknn_llm_experimental"}:
             status = "degraded"
             error_code = "manual_or_optional_provider"
@@ -1342,7 +1338,7 @@ def build_parser() -> argparse.ArgumentParser:
     gateway_sub = gateway.add_subparsers(dest="gateway_command", required=True)
     gateway_serve = gateway_sub.add_parser("servir", aliases=["serve"])
     gateway_serve.add_argument("--host", default=os.getenv("OPENCLAW_HOST", "127.0.0.1"))
-    gateway_serve.add_argument("--puerto", "--port", dest="port", type=int, default=int(os.getenv("OPENCLAW_PORT", "18789")))
+    gateway_serve.add_argument("--puerto", "--port", dest="port", type=int, default=int(os.getenv("OPENCLAW_PORT", "18790")))
     gateway_serve.set_defaults(func=cmd_gateway_serve)
     gateway_status = gateway_sub.add_parser("estado", aliases=["status"])
     gateway_status.set_defaults(func=cmd_gateway_status)

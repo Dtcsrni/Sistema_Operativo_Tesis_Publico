@@ -25,11 +25,11 @@ def check_backend_ready(host, port, timeout=3):
 
 def start_ollama_edge():
     """Intenta iniciar Ollama en Orange Pi (via SSH)."""
-    print("[CHECK] Intentando iniciar Ollama en Orange Pi (192.168.1.124)...")
+    orangepi_ip = os.getenv("SIOT_EDGE_IP", "192.168.1.124")
+    orangepi_user = os.getenv("SIOT_EDGE_USER", "ErickV")
+    orangepi_port = int(os.getenv("SIOT_EDGE_SSH_PORT", "22"))
 
-    orangepi_ip = "192.168.1.124"
-    orangepi_user = "ErickV"
-    orangepi_port = 22
+    print("[CHECK] Intentando iniciar Ollama en Orange Pi ({}:{})...".format(orangepi_ip, orangepi_port))
 
     key_path = os.getenv("ORANGEPI_KEY_PATH", str(Path.home() / ".ssh" / "id_ed25519_orangepi_nopass"))
 
@@ -224,16 +224,16 @@ def ensure_backends_ready(verbose=False):
     """Verifica disponibilidad de backends y los inicia si es necesario."""
     status = {"edge": False, "desktop": False, "timestamp": time.time()}
 
-    edge_host = "192.168.1.124"
-    edge_port = 11434
-    desktop_host = "127.0.0.1"
-    desktop_port = 21434
+    edge_host = os.getenv("SIOT_EDGE_IP", "192.168.1.124")
+    edge_port = int(os.getenv("SIOT_EDGE_PORT", "11434"))
+    desktop_host = os.getenv("OPENCLAW_LLAMACPP_BIND_HOST", "127.0.0.1")
+    desktop_port = int(os.getenv("OPENCLAW_LLAMACPP_BIND_PORT", "21434"))
 
     print("\n" + "="*70)
     print("VERIFICACION Y AUTOARRANQUE DE BACKENDS")
     print("="*70 + "\n")
 
-    print("1) Edge (Ollama - Orange Pi 192.168.1.124:11434)")
+    print("1) Edge (Ollama - Orange Pi {}:{})".format(edge_host, edge_port))
     if check_backend_ready(edge_host, edge_port):
         print("   [OK] Disponible")
         status["edge"] = True
@@ -244,7 +244,7 @@ def ensure_backends_ready(verbose=False):
         else:
             print("   [WARN] No se pudo iniciar Edge automaticamente")
 
-    print("\n2) Desktop (LlamaCPP - 127.0.0.1:21434)")
+    print("\n2) Desktop (LlamaCPP - {}:{})".format(desktop_host, desktop_port))
     if check_backend_ready(desktop_host, desktop_port):
         print("   [OK] Disponible")
         status["desktop"] = True

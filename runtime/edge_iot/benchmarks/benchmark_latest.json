@@ -45,39 +45,39 @@
   "notes": "Rendimiento estable. Throttling inexistente con ventilacin activa.",
   "ollama_cpu_benchmark": {
     "step_id": "validación humana interna no pública",
-    "timestamp": "2026-05-04T10:30:21.916317+00:00",
+    "timestamp": "2026-05-26T04:43:09.936177+00:00",
     "device": "Orange Pi 5 Plus (RK3588)",
-    "hardware_acceleration": "Ollama CPU (qwen:0.5b)",
-    "model": "qwen:0.5b",
+    "hardware_acceleration": "Ollama CPU (qwen3:4b)",
+    "model": "qwen3:4b",
     "samples": [
       {
         "category": "iot_decision",
         "status": "ok",
-        "latency_ms": 602.5,
-        "tokens_per_second": 0.0,
+        "latency_ms": 25837.3,
+        "tokens_per_second": 5.41,
         "output_preview": ""
       },
       {
         "category": "edge_reasoning",
         "status": "ok",
-        "latency_ms": 620.8,
-        "tokens_per_second": 0.0,
+        "latency_ms": 19428.7,
+        "tokens_per_second": 5.48,
         "output_preview": ""
       },
       {
         "category": "code_gen",
         "status": "ok",
-        "latency_ms": 544.5,
-        "tokens_per_second": 0.0,
+        "latency_ms": 18980.2,
+        "tokens_per_second": 5.32,
         "output_preview": ""
       }
     ],
     "summary": {
       "total": 3,
       "ok": 3,
-      "avg_tps": 0.0,
-      "avg_latency_ms": 589.3
+      "avg_tps": 5.4,
+      "avg_latency_ms": 21415.4
     }
   },
-  "last_updated": "2026-05-04T10:30:21.917318+00:00"
+  "last_updated": "2026-05-26T04:43:09.945200+00:00"
 }

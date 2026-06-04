@@ -353,4 +353,4 @@ wait
 ### OpenClaw Sessions
 - `GET /api/openclaw/sessions?session_type=subagent&status=active` - Count active sub-agents
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

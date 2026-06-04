@@ -1,0 +1,14 @@
+{
+  "pet_version": "2.2",
+  "created": "2026-06-01T10:41:44.116364",
+  "topic": "Tesis IoT LoRa P2P/mesh MQTT edge resiliencia urbana",
+  "files": [
+    "contenido_literal.txt",
+    "resumen_de_investigacion.md",
+    "matriz_brechas_contribuciones.csv",
+    "protocolo_experimental_minimo.md",
+    "referencias_base.bib"
+  ],
+  "fragment_count": 24,
+  "note": "Los fragmentos con AUTORIDAD IA son propuestas o inferencias; los fragmentos Documento_Externo y Hardware_Spec resumen evidencia de documentos del proyecto y especificaciones."
+}

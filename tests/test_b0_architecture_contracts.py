@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 from common import ROOT
-from validate_b0_architecture import validate
+from audit.validate_b0_architecture import validate
 
 
 def _load_json(relative_path: str) -> dict:

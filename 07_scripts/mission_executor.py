@@ -43,7 +43,7 @@ def get_mission_control_url() -> str:
     return (os.environ.get("MISSION_CONTROL_URL") or f"http://localhost:{os.environ.get('PORT', '4000')}").rstrip("/")
 
 def get_gateway_url() -> str:
-    return (os.environ.get("GATEWAY_URL") or "http://localhost:18789").rstrip("/")
+    return (os.environ.get("GATEWAY_URL") or "http://localhost:18790").rstrip("/")
 
 def get_mc_db_conn() -> sqlite3.Connection:
     conn = sqlite3.connect(str(MC_DB), timeout=30)

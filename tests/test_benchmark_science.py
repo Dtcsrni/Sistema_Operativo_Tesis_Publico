@@ -26,7 +26,7 @@ def test_benchmark_jsonl_hash_chain_and_summary(tmp_path: Path) -> None:
     header = build_run_header(
         profile_id="pc_mistral_nemo_12b_extensive",
         node="pc_control",
-        runtime="ollama_local",
+        runtime="edge_inference",
         model="mistral-nemo:12b",
         step_id="VAL-STEP-TEST",
         command="pytest",
@@ -70,7 +70,7 @@ def test_non_real_mode_is_rejected() -> None:
         build_run_header(
             profile_id="pc_mistral_nemo_12b_extensive",
             node="pc_control",
-            runtime="ollama_local",
+            runtime="edge_inference",
             model="mistral-nemo:12b",
             step_id="VAL-STEP-TEST",
             command="pytest",

@@ -975,4 +975,4 @@ useEffect(() => {
 6. Kill agent session manually — verify zombie detection + "Session dead" badge
 7. If task had output, verify "work appears complete" message + "Complete" button in banner
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

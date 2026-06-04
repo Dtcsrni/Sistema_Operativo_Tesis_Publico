@@ -1,6 +1,6 @@
 const { chromium } = require('playwright');
 
-const URL = process.env.TARGET_URL || 'http://host.docker.internal:18789/';
+const URL = process.env.TARGET_URL || 'http://host.docker.internal:18790/';
 
 (async () => {
   const browser = await chromium.launch({ headless: true });

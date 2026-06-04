@@ -1,9 +1,8 @@
 """
-Sistema de selección de providers con fallback automático y control de costos.
+Sistema de selección de providers local-first.
 - Intenta usar el provider preferido (p. ej. ollama).
-- Si falla, intenta fallback (p. ej. gemini).
-- Integra cost_limiter para no exceder presupuesto.
-- Registra en auditoría qué provider se usó y costo.
+- No registra Gemini ni proveedores cloud pagados como fallback automático.
+- Registra en auditoría qué provider local se usó.
 """
 import os
 import sys
@@ -21,17 +20,7 @@ class ProviderRegistry:
     
     def __init__(self):
         self.providers = {}
-        self.cost_limiter = None
         self._register_defaults()
-        self._init_cost_limiter()
-    
-    def _init_cost_limiter(self):
-        """Inicializa cost limiter"""
-        try:
-            from cost_limiter import get_cost_limiter
-            self.cost_limiter = get_cost_limiter(daily_budget=114.53)
-        except ImportError:
-            pass
 
     def _register_defaults(self):
         """Registra los providers disponibles."""
@@ -42,17 +31,7 @@ class ProviderRegistry:
         except ImportError:
             logger.debug("OllamaProvider no disponible")
         
-        # Gemini (fallback cloud - FLASH por defecto)
-        try:
-            from gemini import GeminiProvider
-            self.providers["gemini"] = GeminiProvider
-            self.providers["gemini-flash"] = GeminiProvider
-            self.providers["gemini-1.5-flash"] = GeminiProvider
-            self.providers["gemini-3-flash"] = GeminiProvider
-            self.providers["gemini_vertex_flash_3"] = GeminiProvider
-            self.providers["gemini-pro"] = GeminiProvider
-        except ImportError:
-            logger.debug("GeminiProvider no disponible")
+        logger.debug("Providers cloud pagados deshabilitados por política local-first")
     
     def get_provider(self, name: str, **kwargs):
         """Obtiene instancia de un provider."""
@@ -95,25 +74,22 @@ class ProviderRegistry:
     def create_smart_hybrid(
         self,
         max_daily_spend: float = 114.53,
-        fallback_to_gemini: bool = True,
-        gemini_model: str = "gemini-3-flash"  # Flash v3 por defecto (Superior Calidad)
+        fallback_to_gemini: bool = False,
+        gemini_model: str = ""
     ) -> Dict[str, Any]:
         """
-        Selecciona provider inteligentemente basado en presupuesto disponible.
+        Selecciona provider local. Mantiene la firma histórica por compatibilidad,
+        pero no ejecuta Gemini ni ningún fallback cloud pagado.
         
         Estrategia:
-        1. Intenta Ollama primero (siempre, $0 costo)
-        2. Si Ollama falla y fallback_to_gemini=True:
-           - Verifica presupuesto con cost_limiter
-           - Si presupuesto OK: usa Gemini Flash (económico)
-           - Si presupuesto bajo: rechaza y falla
-        3. Si todo falla: excepción
+        1. Intenta Ollama primero (siempre, $0 costo).
+        2. Si Ollama falla, lanza excepción para evitar gasto cloud accidental.
         
         Retorna: {
             "provider": instance,
-            "mode": "local" | "hybrid_fallback",
-            "model": "ollama" | "gemini-1.5-flash" | "gemini-2.5-pro",
-            "cost": "$0" | "$~0.025/1K" | "$~0.15/1K"
+            "mode": "local",
+            "model": "ollama",
+            "cost": "$0"
         }
         """
         # Intentar Ollama primero
@@ -131,40 +107,7 @@ class ProviderRegistry:
         except Exception as e:
             logger.debug(f"Ollama no disponible: {e}")
         
-        # Fallback a Gemini si se permite
-        if not fallback_to_gemini:
-            raise RuntimeError("Ollama unavailable and fallback_to_gemini=False")
-        
-        # Verificar presupuesto para Gemini
-        if self.cost_limiter:
-            can_use, est_cost, reason = self.cost_limiter.can_use_gemini(
-                model=gemini_model,
-                input_tokens=1000,  # Estimación típica
-                output_tokens=1000,
-                enforce=True
-            )
-            logger.debug(f"Budget check: {reason}")
-            if not can_use:
-                raise RuntimeError(f"Presupuesto insuficiente: {reason}")
-        
-        # Crear Gemini
-        try:
-            from gemini import GeminiProvider
-            prov = GeminiProvider(
-                project=os.getenv("GOOGLE_CLOUD_PROJECT", "project-d72bb17e-5918-431c-ba5"),
-                model=gemini_model,
-                enforce_budget=True
-            )
-            cost_desc = "$~0.025/1K" if "flash" in gemini_model else "$~0.15/1K"
-            return {
-                "provider": prov,
-                "mode": "hybrid_fallback",
-                "model": gemini_model,
-                "cost": cost_desc,
-                "description": f"Gemini {gemini_model} (fallback, con costo)"
-            }
-        except Exception as e:
-            raise RuntimeError(f"Gemini también falló: {e}")
+        raise RuntimeError("Ollama unavailable; cloud paid fallbacks disabled by local-first policy")
 
 
 # Registry global
@@ -197,10 +140,9 @@ def create_local_only(primary: str = "ollama", **kwargs):
 
 def create_smart_hybrid(**kwargs):
     """
-    Crea provider inteligentemente con fallback a Gemini si presupuesto lo permite.
-    Modo recomendado para máxima optimización.
+    Crea provider local-only. Nombre histórico conservado por compatibilidad.
     """
-    logger.info("Modo SMART HYBRID: Ollama primero, Gemini si presupuesto OK")
+    logger.info("Modo LOCAL-FIRST: Ollama primero, sin Gemini ni cloud pagado")
     return _registry.create_smart_hybrid(**kwargs)
 
 

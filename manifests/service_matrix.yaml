@@ -175,13 +175,13 @@
       ]
     },
     {
-      "id": "edge-iot-worker",
+      "id": "siot-edge",
       "dominio": "edge_iot",
       "tipo": "systemd_service",
       "criticidad": "alta",
-      "comando": "systemctl start edge-iot-worker.service",
-      "usuario": "edgeiot",
-      "grupo": "edgeiot",
+      "comando": "systemctl start siot-edge.service",
+      "usuario": "edge_ops",
+      "grupo": "docker",
       "network_profile": "edge_restringido",
       "read_only_paths": [
         "/srv/tesis/repo",
@@ -242,7 +242,7 @@
         "protect_system": "strict"
       },
       "dependencias": [
-        "edge-iot-worker"
+        "siot-edge"
       ]
     },
     {

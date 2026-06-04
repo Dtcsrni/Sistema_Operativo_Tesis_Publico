@@ -236,12 +236,12 @@
       <h1>Agente y Casos de Uso</h1>
       <div class="stamp">
         <span class="material-icons" style="font-size: 16px;">update</span>
-        Generado el 2026-05-15
+        Generado el 2026-06-04
       </div>
     </header>
     <div class="markdown-body"><p><h1>Agente y Casos de Uso</h1></p><p>Arquitectura teórica, routing adaptativo y fase reflexiva del agente OpenClaw.
 <ul><li><strong>Tesista:</strong> <code>Erick Renato Vega Ceron</code></li>
-<li><strong>Fecha:</strong> <code>2026-05-15</code></li>
+<li><strong>Fecha:</strong> <code>2026-06-04</code></li>
 <li><strong>Estado:</strong> <code>OK</code></li>
 <li><strong>Fuentes:</strong> <code>00_sistema_tesis/documentacion_sistema/casos_uso_agente.md</code>, <code>00_sistema_tesis/documentacion_sistema/guias_tareas_agente.md</code></li>
 <li><strong>Aviso:</strong> Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.</li>
@@ -273,8 +273,8 @@
 </ul>
 ---</p><p><h2>2. Flujo de Vida de una Tarea</h2></p><p>Cuando el tesista emite un comando estructurado (ej. <code>/investiga</code> o <code>/chat</code>), OpenClaw inicia un pipeline riguroso de validación, enrutamiento, síntesis y registro.</p><p><div class="mermaid-container"><pre class="mermaid">graph TD
     A([Comando del Tesista]) --&gt; B{Gobernanza}
-    B -- Violación --&gt; C[Rechazo Inmediato]
-    B -- Permitido --&gt; D[Recuperación de Contexto]
+    B --&gt;|Violación| C[Rechazo Inmediato]
+    B --&gt;|Permitido| D[Recuperación de Contexto]
     D --&gt; E[Inyección de Persona y Límites]
     E --&gt; F[Routing Adaptativo]
     F --&gt; G[Inferencia LLM]
@@ -295,10 +295,10 @@
         Q4B_PC[Qwen 2.5: 4B]
     end</p><p>    subgraph Nodo Edge IoT (NPU)
         Q3B[Qwen 2.5: 3B RKLLM]
-    end</p><p>    R -. Lee Benchmark .-&gt; idx
-    R -- Tarea Compleja / Síntesis --&gt; H8B
-    R -- Tarea Simple / Alta Velocidad --&gt; Q4B_PC
-    R -- Operación Desconectada / IoT --&gt; Q3B</p><p>    classDef tech fill:#f9f9f9,stroke:#666,stroke-width:1px;
+    end</p><p>    R -.-&gt;|Lee Benchmark| idx
+    R --&gt;|&quot;Tarea Compleja / Síntesis&quot;| H8B
+    R --&gt;|&quot;Tarea Simple / Alta Velocidad&quot;| Q4B_PC
+    R --&gt;|&quot;Operación Desconectada / IoT&quot;| Q3B</p><p>    classDef tech fill:#f9f9f9,stroke:#666,stroke-width:1px;
     class H8B,Q4B_PC,Q3B tech;</pre></div></p><p><h3>Criterios de Enrutamiento</h3>
 <ul><li><strong>Hermes 3 (8B):</strong> Se selecciona si el archivo de benchmark (<code>index.json</code>) determina que el modelo supera los <strong>25 Tokens Por Segundo (TPS)</strong>. Al ser un modelo más grande, garantiza mayor calidad en síntesis académica, revisión de literatura y análisis complejo, siempre que la GPU local (RTX) soporte la carga eficientemente.</li>
 <li><strong>Qwen 2.5 (3B/4B):</strong> Actúan como baselines ultrarrápidos (hasta 85 TPS). Se priorizan para tareas mecánicas, consultas rápidas de estado, o cuando se opera desde el nodo Edge (Orange Pi 5 Plus usando inferencia nativa NPU).</li>
@@ -358,7 +358,7 @@
 | <strong>Diagnóstico</strong> | <code>/status</code> | N/A (Scripts) | Total |</p><p>&gt; [!IMPORTANT]
 &gt; Recuerda que toda acción significativa debe quedar reflejada en el Ledger. La IA propone, pero el Tesista Soberano certifica.
 </p></div>
-      <footer class="public-update"><p>Última actualización: <strong>2026-05-14</strong></p></footer>
+      <footer class="public-update"><p>Última actualización: <strong>2026-06-03</strong></p></footer>
   </main>
 </body>
 </html>

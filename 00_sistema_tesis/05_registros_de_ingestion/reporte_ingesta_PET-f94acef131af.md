@@ -8,4 +8,4 @@
 ## Resumen
 Registrados **23 fragmentos** con motor v1.9 (Xexelotl Híbrido).
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

@@ -198,4 +198,4 @@ Stop managing a backlog. Start shipping on autopilot.
 
 Autensa v2 is available now for OpenClaw users. Check it out at github dot com slash openclaw slash autensa.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

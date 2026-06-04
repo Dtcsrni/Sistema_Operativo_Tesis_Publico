@@ -298,7 +298,7 @@ def render_observability_command_center(snapshot: dict) -> str:
           <p>{escape(str(item.get('evidence', 'Sin evidencia')))}</p>
           <small>{escape(str(item.get('owner', 'sin dueño')))} · {escape(str(item.get('next_step', 'Sin siguiente paso')))}</small>
         </article>
-        """
+"""
         for item in alerts
     ) or '<p class="muted">No hay alertas priorizadas en el snapshot actual.</p>'
 
@@ -1888,7 +1888,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!link) return;
     const href = link.getAttribute('href');
     if (href && (href.endsWith('.md') || link.classList.contains('narrative-trigger'))) {
-      const cleanPath = href.split('#')[0].replace(/^(\.\.\/)+/, '');
+      const cleanPath = href.split('#')[0].replace(/^(\\.\\.\\/)+/, '');
       const knownPath = Object.keys(window.SIOT_NARRATIVA || {}).find(k => k === cleanPath || k.endsWith(cleanPath));
       if (knownPath) {
         if (jumpToNarrative(knownPath)) {
@@ -1965,6 +1965,7 @@ self.addEventListener('fetch', (event) => {
     manifest_path = ROOT / dashboard["salida"]["manifest"]
     sw_path = ROOT / dashboard["salida"]["service_worker"]
     icon_path = ROOT / dashboard["salida"]["icon"]
+    html = "\n".join(line.rstrip() for line in html.splitlines()) + "\n"
     write_text_if_changed(html_path, html)
     write_text_if_changed(css_path, css.strip() + "\n")
     write_text_if_changed(js_path, js.strip() + "\n")

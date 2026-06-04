@@ -129,4 +129,4 @@ npm run build
 pm2 restart all
 ```
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

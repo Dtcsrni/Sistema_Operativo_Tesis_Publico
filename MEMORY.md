@@ -5,7 +5,7 @@
 
 ## Estado actual
 
-- **Generado:** `2026-05-15`
+- **Generado:** `2026-06-04`
 - **Versión del sistema:** `0.1.0`
 - **Estado global:** `arquitectura_formal_reforzada`
 - **Bloque activo:** `B1`
@@ -20,20 +20,20 @@
 
 ## Últimos cambios validados
 
-- **validación humana interna no pública** · `2026-05-14` · Estabilización y endurecimiento de gobernanza CI/CD y auditoría de integridad. · soporte [DEC-0014]
-- **validación humana interna no pública** · `2026-05-14` · Endurecimiento de políticas de gobernanza para despliegue público · soporte [DEC-0014]
-- **validación humana interna no pública** · `2026-05-05` · Resolución de incidente: puente de telemetría satélite · soporte [INC-0024]
-- **validación humana interna no pública** · `2026-05-05` · Consolidación documental del experimento DeepSeek-R1-7B · soporte [BENCH-ANALYSIS]
-- **validación humana interna no pública** · `2026-05-05` · Plan experimental DeepSeek-R1-7B (NPU) · soporte [DEC-0036]
+- **validación humana interna no pública** · `2026-06-03` · Aprobacion verbal de correcciones wiki y test local-first. Build EXIT:0 · soporte WIKI-AUD
+- **validación humana interna no pública** · `2026-06-01` · Ingesta de PET_Tesis_IoT_LoRa_Mesh_Edge_2026-06-01.zip (Brechas, Hipótesis H1-H3, Variables, Hardware) · soporte PET-7d715d3b
+- **validación humana interna no pública** · `2026-05-29` · validación humana interna no pública: DEC-0047 Aceptada. Serena MCP herramienta host PC Tezkatli. Fixes pytest.ini y task-governance.test.ts aceptados. Build EXIT:0. · soporte DEC-0047
+- **validación humana interna no pública** · `2026-05-29` · Desacoplamiento total de Serena MCP de Docker y reconocimiento como herramienta local del host de desarrollo (PC Tezkatli) · soporte [DEC-0045]
+- **validación humana interna no pública** · `2026-05-27` · Automatización de inicio y resiliencia de servicios locales · soporte [DEC-0014]
 
 ## Próximos pendientes críticos
 
 - **T-007** · `B1` · Delimitar formalmente el caso de estudio en la Zona Metropolitana de Pachuca · prioridad `critica` · estado `pendiente`
 - **T-010** · `B2` · Definir arquitectura base de comparación contra la propuesta · prioridad `critica` · estado `pendiente`
 - **T-011** · `B2` · Formalizar componentes flujos y modos de degradación de la arquitectura propuesta · prioridad `critica` · estado `pendiente`
-- **T-031** · `B0` · Aplicar hardening del SO de Orange Pi para el dominio edge_iot sin afectar sistema_tesis ni openclaw · prioridad `critica` · estado `pendiente`
-- **T-038** · `B0` · Emitir checklist de aceptación para instalación productiva en Orange Pi con evidencia trazable · prioridad `critica` · estado `pendiente`
-- **T-050** · `B0` · Emitir criterio formal de arquitectura correcta funcional segura efectiva y eficiente con evidencia reproducible · prioridad `critica` · estado `en_progreso`
+- **T-008** · `B1` · Definir taxonomía inicial de intermitencia urbana relevante para la tesis · prioridad `alta` · estado `pendiente`
+- **T-009** · `B1` · Identificar variables críticas y no críticas por escenario operativo · prioridad `alta` · estado `pendiente`
+- **T-012** · `B2` · Refinar hipótesis en variables métricas y criterios de soporte ejecutables · prioridad `alta` · estado `pendiente`
 
 ## Riesgos prioritarios
 
@@ -51,4 +51,4 @@
 - `01_planeacion/entregables.csv`
 - `01_planeacion/riesgos.csv`
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

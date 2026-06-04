@@ -52,6 +52,7 @@ services:
       - /var/run:uid=101,gid=101,mode=1777
     volumes:
       - siot_canon_data:/app/00_sistema_tesis:ro
+      - ./06_dashboard/generado:/usr/share/nginx/html:ro
     networks:
       - siot-network
     healthcheck:
@@ -91,7 +92,7 @@ services:
 
   # 3. INFERENCIA LOCAL (llama.cpp Direct GGUF)
   inferencia-llamacpp:
-    image: ghcr.io/ggerganov/llama.cpp:full
+    image: ghcr.io/ggml-org/llama.cpp:server-cuda
     container_name: inferencia-llamacpp
     init: true
     restart: unless-stopped
@@ -103,7 +104,6 @@ services:
       - siot_models_cache:/.cache
     # Argumentos para el servidor: API compatible con proveedor de IA no publicado
     command:
-      - --server
       - --host
       - 0.0.0.0
       - --port
@@ -129,30 +129,7 @@ services:
       timeout: 10s
       retries: 5
 
-  # 4. SERVIDOR DE CONTEXTO (Serena MCP)
-  servidor-contexto-serena:
-    build:
-      context: .
-      dockerfile: Dockerfile.serena
-    image: siot-serena-mcp:latest
-    container_name: servidor-contexto-serena
-    init: true
-    restart: unless-stopped
-    ports:
-      - "8765:8765"
-    environment:
-      - SERENA_MCP_DEBUG_LOG=/app/runtime/logs/serena_mcp_debug.log
-    volumes:
-      - siot_canon_data:/app/00_sistema_tesis
-      - ./06_dashboard:/app/06_dashboard
-      - ./runtime:/app/runtime
-    networks:
-      - siot-network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8765/mcp"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
+
 
   # 5. BOT AGENTE TELEGRAM (Cerebro Operativo)
   bot-agente-telegram:
@@ -169,8 +146,10 @@ services:
       - config/env/openclaw.env
     environment:
       - SISTEMA_TESIS_RUNTIME=docker-agent-bot
-      - OPENCLAW_SERENA_URL=http://servidor-contexto-serena:8765/mcp
+      - OPENCLAW_SERENA_URL=http://host.docker.internal:8765/mcp
       - OPENCLAW_DESKTOP_COMPUTE_BASE_URL=http://inferencia-llamacpp:8080/v1
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - siot_canon_data:/app/00_sistema_tesis
       - siot_openclaw_state:/app/runtime/openclaw/state
@@ -179,8 +158,6 @@ services:
       - ./07_scripts:/app/07_scripts:ro
     depends_on:
       db-vectorial-weaviate:
-        condition: service_healthy
-      servidor-contexto-serena:
         condition: service_healthy
       inferencia-llamacpp:
         condition: service_healthy
@@ -250,6 +227,7 @@ services:
     environment:
       - DATABASE_PATH=/app/data/mission-control.db
       - NEXT_PUBLIC_PET_API_BASE_URL=http://localhost:8001
+      - PET_API_INTERNAL_URL=http://api-persistencia-pet:8001
       - OPENCLAW_GATEWAY_URL=ws://gateway-orchestrator-api:18789
     volumes:
       - ./04_implementacion/control_mission/mission-control.db:/app/data/mission-control.db
@@ -305,5 +283,6 @@ services:
     volumes:
       - ./06_dashboard/generado:/app/06_dashboard/generado
       - ./runtime/observability:/app/runtime/observability
+      - ./07_scripts:/app/07_scripts:ro
     networks:
       - siot-network

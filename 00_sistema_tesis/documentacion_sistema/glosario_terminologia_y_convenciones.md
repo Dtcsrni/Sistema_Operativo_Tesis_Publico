@@ -27,20 +27,20 @@ Cada entrada de este glosario indica:
 ```mermaid
 graph TD
     subgraph "Nivel Estratégico"
-        F[F: Fase / Roadmap]
-        B[B: Bloque Macro]
+        F["F: Fase / Roadmap"]
+        B["B: Bloque Macro"]
     end
 
     subgraph "Nivel Táctico"
-        ENT[ENT: Entregable]
-        R[R: Riesgo]
-        T[T: Tarea]
+        ENT["ENT: Entregable"]
+        R["R: Riesgo"]
+        T["T: Tarea"]
     end
 
     subgraph "Nivel Operativo (Canon)"
-        VAL[VAL-STEP: Validación Humana]
-        DEC[DEC: Decisión]
-        EVT[EVT: Evento / Evidencia]
+        VAL["VAL-STEP: Validación Humana"]
+        DEC["DEC: Decisión"]
+        EVT["EVT: Evento / Evidencia"]
     end
 
     F --> B
@@ -402,4 +402,4 @@ graph TD
 
 En la capa publica pueden explicarse familias y semantica de IDs, por ejemplo `VAL_STEP_{nnn}` o `EVT_{nnnn}`, pero no deben exponerse instancias privadas completas, hashes sensibles ni rutas internas no publicables.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

@@ -3,7 +3,7 @@
 Políticas del sistema, soberanía humana, trazabilidad y disciplina de automatización responsable.
 
 - **Tesista:** `Erick Renato Vega Ceron`
-- **Fecha:** `2026-05-15`
+- **Fecha:** `2026-06-04`
 - **Estado:** `OK`
 - **Fuentes:** `00_sistema_tesis/documentacion_sistema/proposito_y_alcance.md`, `00_sistema_tesis/documentacion_sistema/mapa_de_modulos.md`, `00_sistema_tesis/documentacion_sistema/interaccion_por_actor.md`, `00_sistema_tesis/config/sistema_tesis.yaml`, `00_sistema_tesis/config/ia_gobernanza.yaml`, `00_sistema_tesis/config/publicacion.yaml`
 - **Aviso:** Esta wiki es un artefacto generado. Edita las fuentes canónicas y vuelve a construir.
@@ -70,7 +70,7 @@ Políticas del sistema, soberanía humana, trazabilidad y disciplina de automati
 - La asistencia con IA apoya el trabajo humano; no sustituye juicio metodológico, validación experimental ni autoría responsable.
 - Todo flujo crítico del sistema debe tener una vía manual explícita y operable sin depender de IA.
 - Toda salida con asistencia de IA debe tratarse como borrador o insumo hasta su revisión humana proporcional al riesgo.
-- El trabajo asistido debe fortalecer aprendizaje, criterio técnico y capacidad de explicación del tesista.
+- La IA es opcional; todo trabajo asistido debe fortalecer aprendizaje, criterio técnico y capacidad de explicación del tesista.
 - El marco es agnóstico a herramientas y proveedores; se gobierna por función, riesgo y evidencia, no por marca.
 - Toda salida con asistencia de IA debe someterse a revisión humana proporcional al riesgo.
 - Se impone el protocolo de 'Human-Agent Handshake' (DEC-0014) para toda validación de infraestructura o método.
@@ -114,4 +114,4 @@ Políticas del sistema, soberanía humana, trazabilidad y disciplina de automati
 - El ledger detallado, la matriz interna completa, las transcripciones y la evidencia fuente permanecen fuera de la superficie pública.
 - La arquitectura IoT se describe hasta el marco canónico vigente; los pendientes abiertos deben mostrarse como pendientes y no como diseño cerrado.
 
-_Última actualización: `2026-05-14`._
+_Última actualización: `2026-06-03`._

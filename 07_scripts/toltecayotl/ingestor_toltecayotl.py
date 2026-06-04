@@ -89,17 +89,42 @@ class IngestorToltecayotl:
         return fragmentos_totales
 
     def _extraer_con_rigor(self, texto: str, nombre_sub_fuente: str) -> List[Dict[str, Any]]:
+        texto = texto.replace("\r\n", "\n").replace("\r", "\n")
         lista = []
-        patron = r"(?:FRAGMENTO:|\[)(F\d+)(?:]|)\n(?:HASH_SHA256:|sha256=)\s*([0-9a-f]{64})\n(?:AUTORIDAD:|autoridad=)?\s*(.*?)\n(?:CERTEZA:|certeza=)?\s*(.*?)\n(?:FUNDAMENTO:|fundamento=)?\s*(.*?)\n(?:TEXTO_LITERAL:|literal=<<<)\n(.*?)\n(?:FIN_FRAGMENTO|>>>)"
-        bloques = re.findall(patron, texto, re.S)
-        for fid, sha_decl, aut, cert, fund, cont in bloques:
-            aut_s = aut.strip() or "IA_Sugerida"
-            fund_s = fund.strip() or "N/A"
+        # Find all blocks of fragments, matching FRAGMENTO: Fxxx ... FIN_FRAGMENTO or [Fxxx] ... >>>
+        bloques = re.findall(r"(?:FRAGMENTO:\s*|\[)(F\d+)(?:\]|)\n(.*?)\n(?:FIN_FRAGMENTO|>>>)", texto, re.S)
+        for fid, block_content in bloques:
+            lines = block_content.split("\n")
+            headers = {}
+            literal_lines = []
+            in_literal = False
+            for line in lines:
+                if in_literal:
+                    literal_lines.append(line)
+                elif line.startswith("TEXTO_LITERAL:") or line.startswith("literal=<<<"):
+                    in_literal = True
+                else:
+                    parts = line.split(":", 1)
+                    if len(parts) == 2:
+                        headers[parts[0].strip().upper()] = parts[1].strip()
+                    else:
+                        parts_eq = line.split("=", 1)
+                        if len(parts_eq) == 2:
+                            headers[parts_eq[0].strip().upper()] = parts_eq[1].strip()
+            
+            sha_decl = headers.get("HASH_SHA256") or headers.get("SHA256")
+            if not sha_decl:
+                continue
+            
+            cont = "\n".join(literal_lines)
+            aut_s = headers.get("AUTORIDAD") or "IA_Sugerida"
+            fund_s = headers.get("FUNDAMENTO") or "N/A"
+            cert_s = headers.get("CERTEZA") or "Propuesta"
             
             # Fiscal Epistémico: Lógica de Alucinación v2.2
             estado = "verificado"
             if aut_s == "IA":
-                if fund_s == "N/A" or "Sintesis" in fund_s or "generada" in fund_s:
+                if fund_s == "N/A" or "Sintesis" in fund_s or "generada" in fund_s or "Síntesis" in fund_s:
                     estado = "RIESGO_DE_ALUCINACION"
                 if re.search(r"https?://", fund_s) or "doi.org" in fund_s:
                     estado = "verificado_externo"
@@ -109,7 +134,7 @@ class IngestorToltecayotl:
             lista.append({
                 "id_del_fragmento": sha_decl, "contenido_original": cont,
                 "autoridad_del_dato": aut_s,
-                "grado_de_certeza": cert.strip() or "Propuesta",
+                "grado_de_certeza": cert_s,
                 "fundamento_del_dato": fund_s,
                 "metadatos_de_procedencia": {"archivo_fuente": self.ruta_fuente.name, "archivo_interno": nombre_sub_fuente, "id_bloque_agente": fid},
                 "auditoria_de_ingesta": {"fecha": self.marca_de_tiempo.isoformat(), "version": "2.2", "estado": estado}

@@ -1,6 +1,6 @@
 # Reporte de consistencia
 
-    - Fecha de generación: 2026-05-15
+    - Fecha de generación: 2026-06-04
 - Proyecto: SIOT
 - Versión del sistema: 0.1.0
 
@@ -10,9 +10,9 @@
 - Hipótesis definidas: 7
 - Hipótesis activas: 7
 - Tareas en backlog: 50
-- Tareas pendientes: 14
+- Tareas pendientes: 7
 - Riesgos abiertos: 8
-- Decisiones registradas: 40
+- Decisiones registradas: 45
 - Errores de validación de wiki: 0
 - Resúmenes semanales con economía de uso: 1/2
 - Bitácoras con economía de uso: 21/25
@@ -44,4 +44,4 @@ Antes de sacar conclusiones fuertes, conviene cerrar cobertura completa de econo
 - documentacion, backlog, bitacora y traduccion documental: usar `bajo`. Subir si si la tarea se convierte en decision de alcance, metodo o arquitectura. Bajar si mantener bajo cuando sea trabajo transformacional o administrativo.
 - automatizacion y scripts acotados: usar `medio`. Subir si si la automatizacion afecta consistencia global, modelo de datos o evidencia trazable. Bajar si si es ajuste menor, formato o plumbing evidente.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

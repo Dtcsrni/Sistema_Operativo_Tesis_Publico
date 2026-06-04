@@ -254,6 +254,8 @@ def generate_web_session_response(prompt: str, *, timeout_seconds: int = 60) -> 
 
 
 def _gui_session_available() -> bool:
+    if os.getenv("OPENCLAW_FORCE_NO_GUI") == "1":
+        return False
     if os.name == "nt":
         return True
     return bool(os.getenv("DISPLAY", "").strip() or os.getenv("WAYLAND_DISPLAY", "").strip())

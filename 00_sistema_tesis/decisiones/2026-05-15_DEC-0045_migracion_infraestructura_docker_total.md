@@ -54,4 +54,10 @@ Se reemplaza Ollama por `llama.cpp` (servidor nativo) en el PC para:
 - **Riesgos**: Requiere gestión manual de archivos `.gguf` en `runtime/models`.
 - **Acciones**: Actualizar todos los archivos de configuración y el motor de routing (`engine.py`).
 
-_Última actualización: `2026-05-15`._
+## Referencias
+
+[LID]:  ruta local no pública 
+[GOV]:  ruta local no pública 
+[AUD]:  ruta local no pública
+
+_Última actualización: `2026-06-03`._

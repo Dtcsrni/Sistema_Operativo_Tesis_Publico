@@ -62,6 +62,96 @@
 			"args": [
 				"07_scripts/start_backends_auto.py"
 			]
+		},
+		{
+			"label": "🚀 Iniciar Stack Completo (OpenClaw)",
+			"type": "shell",
+			"command": "powershell.exe",
+			"args": [
+				"-ExecutionPolicy", "Bypass",
+				"-File", "${workspaceFolder}\\iniciar_servicios_locales.ps1"
+			],
+			"isBackground": true,
+			"runOptions": {
+				"runOn": "folderOpen"
+			},
+			"problemMatcher": {
+				"owner": "stack-local",
+				"pattern": {
+					"regexp": "^(.*)$",
+					"message": 1
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "INICIANDO SERVICIOS",
+					"endsPattern": "Todos los servicios locales han sido iniciados"
+				}
+			},
+			"presentation": {
+				"reveal": "silent",
+				"panel": "dedicated",
+				"clear": true
+			}
+		},
+		{
+			"label": "🧪 Pruebas (sin Docker/Telegram)",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"-m", "pytest",
+				"tests/", "07_scripts/tests/",
+				"-k", "not docker and not telegram",
+				"--tb=short", "-q"
+			],
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true
+			}
+		},
+		{
+			"label": "⚡ Auditoría Ágil Dev (build_all.py)",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"07_scripts/build_all.py",
+				"--profile", "dev",
+				"--fail-fast"
+			],
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true
+			}
+		},
+		{
+			"label": "🔍 Auditoría Completa (build_all.py)",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"07_scripts/build_all.py",
+				"--profile", "full",
+				"--fail-fast"
+			],
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true
+			}
+		},
+		{
+			"label": "🚢 Auditoría Release (build_all.py)",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"07_scripts/build_all.py",
+				"--profile", "release"
+			],
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated",
+				"clear": true
+			}
 		}
 	]
 }

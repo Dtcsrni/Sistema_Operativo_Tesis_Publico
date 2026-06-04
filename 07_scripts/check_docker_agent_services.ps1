@@ -41,7 +41,7 @@ foreach ($file in $composeFiles) {
             if ($block -match '(^|\n)\s*command:') { $hasCommand = $true }
             if ($block -match 'healthcheck:') { $hasHealthcheck = $true }
             if ($block -match '07_scripts') { $has07Scripts = $true }
-            if ($block -match ':/workspace(\s|$)') { $has07Scripts = $true }
+            if ($block -match ':/workspace(?::[a-zA-Z,]+)?(\s|$)') { $has07Scripts = $true }
 
             $results += [PSCustomObject]@{
                 File = $file

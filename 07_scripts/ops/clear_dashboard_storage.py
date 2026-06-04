@@ -1,6 +1,6 @@
 from playwright.sync_api import sync_playwright
 
-URL = "http://127.0.0.1:18789/"
+URL = "http://127.0.0.1:18790/"
 
 def main():
     with sync_playwright() as p:

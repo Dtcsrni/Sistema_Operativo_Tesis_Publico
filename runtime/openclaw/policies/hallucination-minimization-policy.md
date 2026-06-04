@@ -4,4 +4,4 @@ Toda afirmacion no verificada debe etiquetarse y escalar a fuentes primarias cua
 
 Referencias: `manifests/openclaw_evaluation_policy.yaml`, `manifests/domain_boundaries.yaml`, `manifests/hardware_validation_policy.yaml`.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

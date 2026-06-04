@@ -229,4 +229,4 @@ Resultado: ✓ routing correcto, sin spillover
 [GOV]: AGENTS.md
 [AUD]: build_all.py
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

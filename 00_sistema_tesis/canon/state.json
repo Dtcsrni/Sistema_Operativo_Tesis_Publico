@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-05-15",
+  "generated_at": "2026-06-03",
   "canon": {
-    "event_count": 334,
+    "event_count": 379,
     "latest_event_id": "validación humana interna no pública",
     "latest_step_id": "validación humana interna no pública",
     "projection_paths": [
@@ -34,23 +34,23 @@
     ]
   },
   "counts_by_type": {
-    "agent_activity": 33,
+    "agent_activity": 34,
     "artifact_signed": 8,
     "canon_repair": 2,
     "conversation": 1,
     "conversation_source": 1,
-    "conversation_source_registered": 129,
+    "conversation_source_registered": 152,
     "handshake": 1,
-    "human_validation": 133,
+    "human_validation": 154,
     "operational_deployment": 6,
     "session_recorded": 19,
     "technical_trace_registered": 1
   },
   "source_evidence": {
     "enforcement_from_step_id": "validación humana interna no pública",
-    "registered_sources": 129,
-    "human_validations_with_source": 117,
-    "human_validations_requiring_source": 117,
+    "registered_sources": 152,
+    "human_validations_with_source": 138,
+    "human_validations_requiring_source": 138,
     "legacy_without_source": 16
   },
   "openclaw": {

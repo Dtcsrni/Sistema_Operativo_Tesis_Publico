@@ -187,6 +187,7 @@ def render_payloads(source_map: dict[str, Path], *, sanitize: bool) -> dict[str,
                     generated_at=generated_at,
                 )
                 sanitized_text = _rewrite_invalid_hrefs_to_public_note(sanitized_text, rel_path)
+                sanitized_text = _rewrite_public_operational_files(sanitized_text, rel_path)
                 payload = sanitized_text.encode("utf-8")
             except UnicodeDecodeError:
                 # Si falla utf-8, lo tratamos como binario
@@ -270,6 +271,30 @@ def _rewrite_invalid_hrefs_to_public_note(text: str, source_rel: str) -> str:
     rewritten = HTML_HREF_PATTERN.sub(replace_html, rewritten)
     return rewritten
 
+def _rewrite_public_operational_files(text: str, rel_path: str) -> str:
+    if rel_path != "docker-compose-openclaw.yml":
+        return text
+
+    redacted_mount_pattern = re.compile(r"^(\s*)-\s+ruta local no pública\s*$", re.MULTILINE)
+    replacements = iter(
+        (
+            r"\1- ./:/workspace:ro",
+            r"\1- openclaw_public_home:/home/appuser/.openclaw",
+        )
+    )
+
+    def replace_mount(match: re.Match[str]) -> str:
+        try:
+            replacement = next(replacements)
+        except StopIteration:
+            return match.group(0)
+        return match.expand(replacement)
+
+    rewritten = redacted_mount_pattern.sub(replace_mount, text)
+    if "\n  openclaw_public_home:" not in rewritten and "openclaw_public_home:/home/appuser/.openclaw" in rewritten:
+        rewritten = rewritten.rstrip() + "\n  openclaw_public_home:\n    name: openclaw_public_home\n"
+    return rewritten
+
 def validate_sync_payloads(payloads: dict[str, bytes]) -> list[str]:
     errors: list[str] = []
     publication = load_publication_config()
@@ -315,8 +340,8 @@ def validate_sync_payloads(payloads: dict[str, bytes]) -> list[str]:
         pages_text = pages_payload.decode("utf-8", errors="ignore")
         if PUBLIC_REPO_NAME not in pages_text:
             errors.append("El workflow de Pages no restringe el despliegue al repo público derivado.")
-        if "refs/heads/main" not in pages_text:
-            errors.append("El workflow de Pages no fija `main` como rama de despliegue.")
+        if "refs/heads/gh-pages" not in pages_text:
+            errors.append("El workflow de Pages no fija `gh-pages` como rama de despliegue protegida.")
         if "upload-pages-artifact" not in pages_text:
             errors.append("El workflow de Pages no publica artefacto estático con `upload-pages-artifact`.")
         if "path: 06_dashboard/publico" not in pages_text:

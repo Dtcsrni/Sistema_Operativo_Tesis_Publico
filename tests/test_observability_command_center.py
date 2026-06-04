@@ -21,8 +21,8 @@ def test_observability_snapshot_models_compose_and_governed_control() -> None:
     assert snapshot["access"]["executes_actions"] is False
     assert snapshot["control_policy"]["direct_docker_socket"] is False
     assert snapshot["control_policy"]["requires_human_approval_for_mutation"] is True
-    assert any(service["id"] == "tablero-gobernanza" for service in snapshot["compose_stack"])
-    assert any(service["id"] == "observabilidad-command-center" for service in snapshot["compose_stack"])
+    assert any(service["id"] == "hub-misiones-web" for service in snapshot["compose_stack"])
+    assert any(service["id"] == "monitor-telemetria" for service in snapshot["compose_stack"])
     assert snapshot["notification_policy"]["telegram_suppression"] == "suppress_when_dashboard_heartbeat_active"
 
 
@@ -55,8 +55,7 @@ def test_compose_declares_observability_command_center_with_token() -> None:
     compose = (ROOT / "docker-compose.yml").read_text(encoding="utf-8")
     env_example = (ROOT / ".env.example").read_text(encoding="utf-8")
 
-    assert "observabilidad-command-center:" in compose
-    assert "SIOT_OBSERVABILITY_TOKEN=${SIOT_OBSERVABILITY_TOKEN:-}" in compose
+    assert "monitor-telemetria:" in compose
     assert "./runtime/observability:/app/runtime/observability" in compose
     assert "serve_observability_dashboard.py" in compose
     assert "SIOT_OBSERVABILITY_TOKEN=change-me-local-only" in env_example

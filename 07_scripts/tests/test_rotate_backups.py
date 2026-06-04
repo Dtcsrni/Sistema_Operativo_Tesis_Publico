@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "07_scripts"))
 
-from rotate_backups import classify_risk, plan_rotation, read_backups  # noqa: E402
+from ops.rotate_backups import classify_risk, plan_rotation, read_backups  # noqa: E402
 
 def base_policy() -> dict:
     return {
@@ -44,13 +44,15 @@ class TestRotateBackups(unittest.TestCase):
             (backup_dir / old_name).write_text("x", encoding="utf-8")
             (backup_dir / fresh_name).write_text("x", encoding="utf-8")
 
-            import rotate_backups as mod
+            import ops.rotate_backups as mod
 
             prev = mod.BACKUP_DIR
             mod.BACKUP_DIR = backup_dir
+            import logging
+            logger = logging.getLogger("test")
             try:
-                entries = read_backups(base_policy())
-                to_delete, summary = plan_rotation(entries, base_policy())
+                entries = read_backups(base_policy(), logger)
+                to_delete, summary = plan_rotation(entries, base_policy(), logger)
                 deleted = {item.path.name for item in to_delete}
                 self.assertIn(old_name, deleted)
                 self.assertNotIn(fresh_name, deleted)

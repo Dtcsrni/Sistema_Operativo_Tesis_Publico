@@ -133,4 +133,4 @@ The default workflow (`Builder → Tester → Reviewer → Verifier → Done`) w
 
 The goal: you describe what you want, and the pipeline iterates until it's right — without you having to manage each step.
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

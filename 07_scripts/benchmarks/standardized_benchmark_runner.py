@@ -75,7 +75,7 @@ def compute_record_hash(record):
     return hashlib.sha256(data.encode('utf-8')).hexdigest()
 
 class StandardizedRunner:
-    def __init__(self, task_name, prompt, category="general", node_type=DEFAULT_NODE_TYPE, output_log=None, model="mistral-nemo:12b", runtime="ollama_local", profile_id="edge_npu", step_id="VAL-STEP-PENDING", mode="real"):
+    def __init__(self, task_name, prompt, category="general", node_type=DEFAULT_NODE_TYPE, output_log=None, model="mistral-nemo:12b", runtime="edge_inference", profile_id="edge_npu", step_id="VAL-STEP-PENDING", mode="real"):
         self.task_name = task_name
         self.prompt = prompt
         self.category = category

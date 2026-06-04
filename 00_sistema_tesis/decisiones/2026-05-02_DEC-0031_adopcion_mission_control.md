@@ -1,10 +1,10 @@
 <!-- SISTEMA_TESIS:PROTEGIDO -->
-<!-- GID: DEC-0031 | 2026-05-02 | v1.0 | Propuesta -->
+<!-- GID: DEC-0031 | 2026-05-02 | v1.0 | Aprobado -->
 
 # DEC-0031 Adopción de Mission Control para Supervisión Agéntica
 
 - Fecha: 2026-05-02
-- Estado: propuesta
+- Estado: aceptada
 - Alcance: arquitectura | operación
 - Relacionada con bloques: B1, B5
 - Relacionada con hipótesis: HG, H2
@@ -35,8 +35,8 @@ Ofrece la mejor integración nativa con OpenClaw y permite una visualización ri
 
 ## Criterio de Aceptación Humana
 
-- [ ] El Tesista aprueba la arquitectura de Mission Control.
-  - [ ] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
+- [x] El Tesista aprueba la arquitectura de Mission Control.
+  - [x] Pre-checks: [Integridad][LID] · [Ética][GOV] · [Auditoría][AUD] · Contexto explícito · Confirmación verificable · Reproducibilidad mínima
   - **Soporte:** [validación humana interna no pública]
   - **Texto exacto de confirmación verbal:** "openclaw-mission-control"
   - **Hash de confirmación verbal:** `hash omitido:omitido`
@@ -50,4 +50,4 @@ Ofrece la mejor integración nativa con OpenClaw y permite una visualización ri
 [GOV]:  ruta local no pública 
 [AUD]:  ruta local no pública
 
-_Última actualización: `2026-05-15`._
+_Última actualización: `2026-06-03`._

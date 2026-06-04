@@ -34,13 +34,13 @@ def test_ready_notification_separates_base_runtime_from_chat_provider(tmp_path: 
     result = notifier.dispatch_ready_notification(
         host="127.0.0.1",
         port=18789,
-        runtime_status={"state": "npu_experimental_ready", "active_runtime": "ollama_local"},
+        runtime_status={"state": "npu_experimental_ready", "active_runtime": "edge_inference"},
     )
 
     assert result["status"] == "sent"
     assert captured["bot_token"] == "token"
     assert captured["chat_id"] == "123"
-    assert "Runtime base: ollama_local" in captured["text"]
+    assert "Runtime base: edge_inference" in captured["text"]
     assert "Chat: web_session (modelo real se reporta al responder)" in captured["text"]
     assert "model=gpt-5.4" not in captured["text"]
 
@@ -92,12 +92,12 @@ def test_ready_notification_cooldown_uses_openclaw_data_dir(tmp_path: Path, monk
     first = notifier.dispatch_ready_notification(
         host="127.0.0.1",
         port=18789,
-        runtime_status={"state": "npu_experimental_ready", "active_runtime": "ollama_local"},
+        runtime_status={"state": "npu_experimental_ready", "active_runtime": "edge_inference"},
     )
     second = notifier.dispatch_ready_notification(
         host="127.0.0.1",
         port=18789,
-        runtime_status={"state": "npu_experimental_ready", "active_runtime": "ollama_local"},
+        runtime_status={"state": "npu_experimental_ready", "active_runtime": "edge_inference"},
     )
 
     assert first["status"] == "sent"
@@ -127,12 +127,12 @@ def test_ready_notification_cooldown_has_tmp_fallback(tmp_path: Path, monkeypatc
     first = notifier.dispatch_ready_notification(
         host="127.0.0.1",
         port=18789,
-        runtime_status={"state": "ready", "active_runtime": "ollama_local"},
+        runtime_status={"state": "ready", "active_runtime": "edge_inference"},
     )
     second = notifier.dispatch_ready_notification(
         host="127.0.0.1",
         port=18789,
-        runtime_status={"state": "ready", "active_runtime": "ollama_local"},
+        runtime_status={"state": "ready", "active_runtime": "edge_inference"},
     )
 
     assert first["status"] == "sent"

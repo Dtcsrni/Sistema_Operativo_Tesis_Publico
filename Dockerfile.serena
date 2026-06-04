@@ -36,7 +36,7 @@ EXPOSE 8765
 
 # Healthcheck: verifica que el puerto 8765 esté respondiendo
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD curl -f http://localhost:8765/mcp || exit 1
+  CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8765/mcp')" || exit 1
 
 # Comando de inicio para el servidor HTTP de Serena
 CMD ["python", "07_scripts/serena_mcp.py", "--transport", "http", "--host", "0.0.0.0", "--port", "8765"]

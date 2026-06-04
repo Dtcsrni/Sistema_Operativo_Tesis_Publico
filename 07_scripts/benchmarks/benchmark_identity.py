@@ -45,7 +45,7 @@ def get_npu_info():
 def get_model_identity(runtime, model_name):
     identity = {"requested": model_name, "actual": "unknown", "status": "unknown"}
     
-    if runtime == "ollama_local":
+    if runtime == "edge_inference":
         try:
             # Intentar local primero
             try:
@@ -75,7 +75,7 @@ def get_model_identity(runtime, model_name):
         
     return identity
 
-def get_full_identity(runtime="ollama_local", model_name="mistral-nemo:12b"):
+def get_full_identity(runtime="edge_inference", model_name="mistral-nemo:12b"):
     return {
         "node_name": platform.node(),
         "os": f"{platform.system()} {platform.release()}",

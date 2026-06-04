@@ -1382,6 +1382,71 @@ def cmd_pet_list(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_spec_new(args: argparse.Namespace) -> int:
+    import datetime
+    from pathlib import Path
+    
+    date_str = datetime.datetime.now().strftime("%Y-%m-%d")
+    slug = args.title.lower().replace(" ", "_").replace("/", "_")
+    slug = "".join(c for c in slug if c.isalnum() or c == "_")
+    
+    filename = f"{date_str}_{args.category}_{slug}.md"
+    filepath = Path("00_sistema_tesis/pendientes") / filename
+    
+    template = f"""---
+title: "{args.title}"
+date: {date_str}
+category: {args.category}
+status: needs-triage
+owner: "Tesista Principal / HOA"
+decisions: []
+step_id: "PENDIENTE"
+trace_status: "pendiente_de_validacion_humana"
+---
+
+# {args.title}
+
+## Objetivo
+
+[Describe el propósito del cambio]
+
+## Alcance
+
+[Qué se incluye y qué no]
+
+## Rutas Afectadas
+
+[Archivos o componentes que cambiarán]
+
+## Gates Publicos
+
+[Condiciones para no afectar la estabilidad]
+
+## Pruebas y Aceptacion
+
+[Cómo se verificará]
+
+## Rollback
+
+[Plan de contingencia]
+
+## Cierre de Trazabilidad
+
+[Dejar vacío hasta el final]
+
+## FRE
+
+[Formato de Respuesta Epistémica si aplica]
+
+## ESE
+
+[Esquema de Salida Estructurada si aplica]
+"""
+    filepath.parent.mkdir(parents=True, exist_ok=True)
+    filepath.write_text(template, encoding="utf-8")
+    print(f"Spec SDD creada exitosamente: {filepath}")
+    return 0
+
 def cmd_task_close(args: argparse.Namespace) -> int:
     ensure_canon_initialized()
     backlog_path = ROOT / "01_planeacion" / "backlog.csv"
@@ -1553,6 +1618,13 @@ def build_parser() -> argparse.ArgumentParser:
     event_append.add_argument("--approval-payload", default="{}")
     event_append.add_argument("--proposal-status", default="draft_pending_human_review")
     event_append.set_defaults(func=cmd_event_append)
+
+    spec = subparsers.add_parser("spec")
+    spec_subparsers = spec.add_subparsers(dest="spec_command", required=True)
+    spec_new = spec_subparsers.add_parser("new")
+    spec_new.add_argument("--title", required=True, help="Título de la especificación")
+    spec_new.add_argument("--category", required=True, choices=["enhancement", "bug", "specification", "research"], help="Categoría de la spec")
+    spec_new.set_defaults(func=cmd_spec_new)
 
     task = subparsers.add_parser("task")
     task_subparsers = task.add_subparsers(dest="task_command", required=True)
