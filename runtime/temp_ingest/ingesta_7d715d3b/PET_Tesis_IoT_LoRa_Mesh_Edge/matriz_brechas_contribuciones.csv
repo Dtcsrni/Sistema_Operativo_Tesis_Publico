@@ -1,7 +1,0 @@
-Problema del estado del arte,Evidencia base,Brecha,Contribución propuesta,Métrica de evaluación,Riesgo
-Zonas sombra LoRa urbanas,CityWAN: blind spots y brecha gateway-cobertura,Cobertura marginal cara,Relay LoRa P2P/mesh y micro-gateway,"Cobertura efectiva, WDR, PDR",Necesita medición real
-Escalabilidad e interferencia en LoRa denso,"Premsankar et al.: colisiones, dropped messages",Optimización de parámetros no basta,Política dinámica con SF/TP/ruta/criticidad,"PDR, latencia, energía",Complejidad experimental
-Mesh LoRa incompleto,Surveys 2020/2024,"Ruteo, energía y seguridad siguen abiertos",Ruteo energy-aware y semantic-aware,"eta, WDR, AoI",Sobreregulación si se intenta protocolo completo
-MQTT en redes débiles,Mutant MQTT QoS-0,Retransmitir todo consume ancho de banda,Retransmisión selectiva por criticidad,"Entrega crítica, retardo, tráfico",Puede aumentar latencia
-Modelos LoRa no generalizan,Azevedo 2024,Falta calibración local,Dataset Pachuca y ajuste de parámetros,"RMSE RSSI/SNR, path loss",Requiere campaña de medición
-Digitalización transporte público MX,BID/ITDP 2025,Falta telemetría operativa de bajo costo,Caso transporte urbano experimental,"Disponibilidad de datos, WDR",No prometer escala municipal

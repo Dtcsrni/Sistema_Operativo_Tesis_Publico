@@ -1,5 +1,0 @@
-Informe de prueba - 2026-05-21T10:00:45Z
-Tareas creadas:
-- id=74f85bc5-e6c2-489d-a254-29ab74038560 tipo=herramientas artifact=07_scripts\test_mission_control_artifacts\artifact_tools_74f85bc5-e6c2-489d-a254-29ab74038560.txt
-- id=ba25c4e4-b2bd-4aa8-9216-d35c34d7a635 tipo=busqueda_web artifact=07_scripts\test_mission_control_artifacts\artifact_search_ba25c4e4-b2bd-4aa8-9216-d35c34d7a635.json
-- id=fc6d4ba2-4044-45b6-a547-3c36fe9842f9 tipo=probe_sistemas artifact=07_scripts\test_mission_control_artifacts\artifact_probe_fc6d4ba2-4044-45b6-a547-3c36fe9842f9.json

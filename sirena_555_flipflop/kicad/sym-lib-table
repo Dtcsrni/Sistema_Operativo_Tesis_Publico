@@ -1,3 +1,0 @@
-(sym_lib_table
-  (lib (name "Sirena")(type "KiCad")(uri "${KIPRJMOD}/sirena.kicad_sym")(options "")(descr "Simbolos locales generados para sirena_555_flipflop"))
-)
