@@ -1,3 +1,0 @@
-Simulación de ejecución de herramientas:
-- echo Hello
-- date

@@ -1,0 +1,248 @@
+{
+  "generated_at": "2026-08-09",
+  "status": "ok",
+  "scope": "wiki_publica_unica",
+  "artifacts": [
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/404.html"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/diagrams/arquitectura-siot.svg"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/diagrams/ciclo-experimental.svg"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/diagrams/mapa-evidencia.svg"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/images/favicon.png"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/images/wsn-general-structure-michel-bakni.svg"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/bundle.79ae519e.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/bundle.79ae519e.min.js.map"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.ar.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.da.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.de.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.du.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.el.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.es.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.fi.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.fr.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.he.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.hi.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.hu.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.hy.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.it.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.ja.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.jp.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.kn.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.ko.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.multi.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.nl.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.no.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.pt.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.ro.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.ru.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.sa.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.stemmer.support.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.sv.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.ta.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.te.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.th.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.tr.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.vi.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/min/lunr.zh.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/tinyseg.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/lunr/wordcut.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/workers/search.2c215733.min.js"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/javascripts/workers/search.2c215733.min.js.map"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/styles/siot-dark.css"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/stylesheets/main.484c7ddc.min.css"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/stylesheets/main.484c7ddc.min.css.map"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/stylesheets/palette.ab4e12ef.min.css"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/assets/stylesheets/palette.ab4e12ef.min.css.map"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/contexto/index.html"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/evidencia/index.html"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/gobernanza/index.html"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/index.html"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/manifest_publico.json"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/metodo/index.html"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/propuesta/index.html"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/reproducibilidad/index.html"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/search/search_index.json"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/sitemap.xml"
+    },
+    {
+      "source": "docs/wiki",
+      "output": "06_publicacion/publico/site/sitemap.xml.gz"
+    }
+  ],
+  "rendering": "mkdocs-material"
+}
